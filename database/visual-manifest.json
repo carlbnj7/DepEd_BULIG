@@ -1,0 +1,2145 @@
+{
+  "1": {
+    "lesson": 1,
+    "title": "Pre-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 7
+  },
+  "2": {
+    "lesson": 1,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 7
+  },
+  "3": {
+    "lesson": 1,
+    "title": "Pre-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 7
+  },
+  "4": {
+    "lesson": 1,
+    "title": "Pre-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 7
+  },
+  "5": {
+    "lesson": 1,
+    "title": "Pre-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 7
+  },
+  "6": {
+    "lesson": 1,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 87
+  },
+  "7": {
+    "lesson": 1,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 87
+  },
+  "8": {
+    "lesson": 1,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 87
+  },
+  "9": {
+    "lesson": 1,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 87
+  },
+  "10": {
+    "lesson": 1,
+    "title": "Post-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 87
+  },
+  "11": {
+    "lesson": 2,
+    "title": "Pre-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 8
+  },
+  "12": {
+    "lesson": 2,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 8
+  },
+  "13": {
+    "lesson": 2,
+    "title": "Pre-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 8
+  },
+  "14": {
+    "lesson": 2,
+    "title": "Pre-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 8
+  },
+  "15": {
+    "lesson": 2,
+    "title": "Pre-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 8
+  },
+  "16": {
+    "lesson": 2,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 88
+  },
+  "17": {
+    "lesson": 2,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 88
+  },
+  "18": {
+    "lesson": 2,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 88
+  },
+  "19": {
+    "lesson": 2,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 88
+  },
+  "20": {
+    "lesson": 2,
+    "title": "Post-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 88
+  },
+  "21": {
+    "lesson": 3,
+    "title": "Pre-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 9
+  },
+  "22": {
+    "lesson": 3,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 9
+  },
+  "23": {
+    "lesson": 3,
+    "title": "Pre-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 9
+  },
+  "24": {
+    "lesson": 3,
+    "title": "Pre-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 9
+  },
+  "25": {
+    "lesson": 3,
+    "title": "Pre-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 9
+  },
+  "26": {
+    "lesson": 3,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 89
+  },
+  "27": {
+    "lesson": 3,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 89
+  },
+  "28": {
+    "lesson": 3,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 89
+  },
+  "29": {
+    "lesson": 3,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 89
+  },
+  "30": {
+    "lesson": 3,
+    "title": "Post-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 89
+  },
+  "31": {
+    "lesson": 4,
+    "title": "Pre-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 10
+  },
+  "32": {
+    "lesson": 4,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 10
+  },
+  "33": {
+    "lesson": 4,
+    "title": "Pre-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 10
+  },
+  "34": {
+    "lesson": 4,
+    "title": "Pre-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 10
+  },
+  "35": {
+    "lesson": 4,
+    "title": "Pre-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 10
+  },
+  "36": {
+    "lesson": 4,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 90
+  },
+  "37": {
+    "lesson": 4,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 90
+  },
+  "38": {
+    "lesson": 4,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 90
+  },
+  "39": {
+    "lesson": 4,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 90
+  },
+  "40": {
+    "lesson": 4,
+    "title": "Post-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 90
+  },
+  "41": {
+    "lesson": 5,
+    "title": "Pre-assessment · 1",
+    "images": [
+      "assets/images/level1/lesson05/image-210.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 11
+  },
+  "42": {
+    "lesson": 5,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 11
+  },
+  "43": {
+    "lesson": 5,
+    "title": "Pre-assessment · 3",
+    "images": [
+      "assets/images/level1/lesson05/image-298.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 11
+  },
+  "44": {
+    "lesson": 5,
+    "title": "Pre-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 11
+  },
+  "45": {
+    "lesson": 5,
+    "title": "Pre-assessment · 5",
+    "images": [
+      "assets/images/level1/lesson05/image-235.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 11
+  },
+  "46": {
+    "lesson": 5,
+    "title": "Post-assessment · 1",
+    "images": [
+      "assets/images/level1/lesson05/image-203.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 91
+  },
+  "47": {
+    "lesson": 5,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 91
+  },
+  "48": {
+    "lesson": 5,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": true,
+    "external_picture": "a rainbow",
+    "source_page": 91
+  },
+  "49": {
+    "lesson": 5,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 91
+  },
+  "50": {
+    "lesson": 5,
+    "title": "Post-assessment · 5",
+    "images": [
+      "assets/images/level1/lesson05/image-204.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 91
+  },
+  "51": {
+    "lesson": 6,
+    "title": "Pre-assessment · 1",
+    "images": [
+      "assets/images/level1/lesson06/image-299.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 12
+  },
+  "52": {
+    "lesson": 6,
+    "title": "Pre-assessment · 2",
+    "images": [
+      "assets/images/level1/lesson06/image-213.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 12
+  },
+  "53": {
+    "lesson": 6,
+    "title": "Pre-assessment · 3",
+    "images": [
+      "assets/images/level1/lesson06/image-337.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 12
+  },
+  "54": {
+    "lesson": 6,
+    "title": "Pre-assessment · 4",
+    "images": [
+      "assets/images/level1/lesson06/image-193.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 12
+  },
+  "55": {
+    "lesson": 6,
+    "title": "Pre-assessment · 5",
+    "images": [
+      "assets/images/level1/lesson06/image-432.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 12
+  },
+  "56": {
+    "lesson": 6,
+    "title": "Post-assessment · 1",
+    "images": [
+      "assets/images/level1/lesson06/image-225.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 92
+  },
+  "57": {
+    "lesson": 6,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": true,
+    "external_picture": "a tree with apples",
+    "source_page": 92
+  },
+  "58": {
+    "lesson": 6,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": true,
+    "external_picture": "a boy playing with a ball",
+    "source_page": 92
+  },
+  "59": {
+    "lesson": 6,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": true,
+    "external_picture": "a book on a table",
+    "source_page": 92
+  },
+  "60": {
+    "lesson": 6,
+    "title": "Post-assessment · 5",
+    "images": [],
+    "requires_picture": true,
+    "external_picture": "a rainbow over a lake",
+    "source_page": 92
+  },
+  "61": {
+    "lesson": 7,
+    "title": "Pre-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "62": {
+    "lesson": 7,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "63": {
+    "lesson": 7,
+    "title": "Pre-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "64": {
+    "lesson": 7,
+    "title": "Pre-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "65": {
+    "lesson": 7,
+    "title": "Pre-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "66": {
+    "lesson": 7,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "67": {
+    "lesson": 7,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "68": {
+    "lesson": 7,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "69": {
+    "lesson": 7,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "70": {
+    "lesson": 7,
+    "title": "Post-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "71": {
+    "lesson": 8,
+    "title": "Pre-assessment · 1",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "72": {
+    "lesson": 8,
+    "title": "Pre-assessment · 2",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "73": {
+    "lesson": 8,
+    "title": "Pre-assessment · 3",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "74": {
+    "lesson": 8,
+    "title": "Post-assessment · 1",
+    "images": [
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "75": {
+    "lesson": 8,
+    "title": "Post-assessment · 2",
+    "images": [
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "76": {
+    "lesson": 8,
+    "title": "Post-assessment · 3",
+    "images": [
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "77": {
+    "lesson": 9,
+    "title": "Pre-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "78": {
+    "lesson": 9,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "79": {
+    "lesson": 9,
+    "title": "Pre-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "80": {
+    "lesson": 9,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "81": {
+    "lesson": 9,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "82": {
+    "lesson": 9,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "83": {
+    "lesson": 10,
+    "title": "Pre-assessment · 1",
+    "images": [
+      "assets/images/level1/lesson10/image-285.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "84": {
+    "lesson": 10,
+    "title": "Pre-assessment · 2",
+    "images": [
+      "assets/images/level1/lesson10/image-285.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "85": {
+    "lesson": 10,
+    "title": "Pre-assessment · 3",
+    "images": [
+      "assets/images/level1/lesson10/image-285.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 13
+  },
+  "86": {
+    "lesson": 10,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "87": {
+    "lesson": 10,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "88": {
+    "lesson": 10,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 93
+  },
+  "89": {
+    "lesson": 11,
+    "title": "Pre-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 14
+  },
+  "90": {
+    "lesson": 11,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 14
+  },
+  "91": {
+    "lesson": 11,
+    "title": "Pre-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 14
+  },
+  "92": {
+    "lesson": 11,
+    "title": "Pre-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 14
+  },
+  "93": {
+    "lesson": 11,
+    "title": "Pre-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 14
+  },
+  "94": {
+    "lesson": 11,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 95
+  },
+  "95": {
+    "lesson": 11,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 95
+  },
+  "96": {
+    "lesson": 11,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 95
+  },
+  "97": {
+    "lesson": 11,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 95
+  },
+  "98": {
+    "lesson": 11,
+    "title": "Post-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 95
+  },
+  "99": {
+    "lesson": 12,
+    "title": "Pre-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 14
+  },
+  "100": {
+    "lesson": 12,
+    "title": "Pre-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 14
+  },
+  "101": {
+    "lesson": 12,
+    "title": "Pre-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 14
+  },
+  "102": {
+    "lesson": 12,
+    "title": "Post-assessment · 1",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 94
+  },
+  "103": {
+    "lesson": 12,
+    "title": "Post-assessment · 2",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 94
+  },
+  "104": {
+    "lesson": 12,
+    "title": "Post-assessment · 3",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 94
+  },
+  "105": {
+    "lesson": 12,
+    "title": "Post-assessment · 4",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 94
+  },
+  "106": {
+    "lesson": 12,
+    "title": "Post-assessment · 5",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 94
+  },
+  "107": {
+    "lesson": 1,
+    "title": "Hello Circle",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 47
+  },
+  "108": {
+    "lesson": 1,
+    "title": "Look and share",
+    "images": [
+      "assets/images/level1/lesson01/image-97.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 48
+  },
+  "109": {
+    "lesson": 1,
+    "title": "Sentence starter",
+    "images": [
+      "assets/images/level1/lesson01/image-97.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 16
+  },
+  "110": {
+    "lesson": 1,
+    "title": "Sentence starter",
+    "images": [
+      "assets/images/level1/lesson01/image-97.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 16
+  },
+  "111": {
+    "lesson": 1,
+    "title": "Sentence starter",
+    "images": [
+      "assets/images/level1/lesson01/image-97.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 16
+  },
+  "112": {
+    "lesson": 1,
+    "title": "Sentence starter",
+    "images": [
+      "assets/images/level1/lesson01/image-97.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 16
+  },
+  "113": {
+    "lesson": 1,
+    "title": "Pair-and-Share",
+    "images": [
+      "assets/images/level1/lesson01/image-97.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 48
+  },
+  "114": {
+    "lesson": 2,
+    "title": "Action Song",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 50
+  },
+  "115": {
+    "lesson": 2,
+    "title": "Secret Agent Mission Trail",
+    "images": [
+      "assets/images/level1/lesson02/image-104.jpeg",
+      "assets/images/level1/lesson02/image-105.jpeg",
+      "assets/images/level1/lesson02/image-106.jpeg",
+      "assets/images/level1/lesson02/image-108.jpeg",
+      "assets/images/level1/lesson02/image-109.jpeg",
+      "assets/images/level1/lesson02/image-107.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 51
+  },
+  "116": {
+    "lesson": 2,
+    "title": "Secret Agent Mission Trail",
+    "images": [
+      "assets/images/level1/lesson02/image-104.jpeg",
+      "assets/images/level1/lesson02/image-105.jpeg",
+      "assets/images/level1/lesson02/image-106.jpeg",
+      "assets/images/level1/lesson02/image-108.jpeg",
+      "assets/images/level1/lesson02/image-109.jpeg",
+      "assets/images/level1/lesson02/image-107.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 51
+  },
+  "117": {
+    "lesson": 2,
+    "title": "Secret Agent Mission Trail",
+    "images": [
+      "assets/images/level1/lesson02/image-104.jpeg",
+      "assets/images/level1/lesson02/image-105.jpeg",
+      "assets/images/level1/lesson02/image-106.jpeg",
+      "assets/images/level1/lesson02/image-108.jpeg",
+      "assets/images/level1/lesson02/image-109.jpeg",
+      "assets/images/level1/lesson02/image-107.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 51
+  },
+  "118": {
+    "lesson": 2,
+    "title": "Secret Agent Mission Trail",
+    "images": [
+      "assets/images/level1/lesson02/image-104.jpeg",
+      "assets/images/level1/lesson02/image-105.jpeg",
+      "assets/images/level1/lesson02/image-106.jpeg",
+      "assets/images/level1/lesson02/image-108.jpeg",
+      "assets/images/level1/lesson02/image-109.jpeg",
+      "assets/images/level1/lesson02/image-107.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 51
+  },
+  "119": {
+    "lesson": 2,
+    "title": "Secret Agent Mission Trail",
+    "images": [
+      "assets/images/level1/lesson02/image-104.jpeg",
+      "assets/images/level1/lesson02/image-105.jpeg",
+      "assets/images/level1/lesson02/image-106.jpeg",
+      "assets/images/level1/lesson02/image-108.jpeg",
+      "assets/images/level1/lesson02/image-109.jpeg",
+      "assets/images/level1/lesson02/image-107.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 51
+  },
+  "120": {
+    "lesson": 2,
+    "title": "Secret Agent Mission Trail",
+    "images": [
+      "assets/images/level1/lesson02/image-104.jpeg",
+      "assets/images/level1/lesson02/image-105.jpeg",
+      "assets/images/level1/lesson02/image-106.jpeg",
+      "assets/images/level1/lesson02/image-108.jpeg",
+      "assets/images/level1/lesson02/image-109.jpeg",
+      "assets/images/level1/lesson02/image-107.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 51
+  },
+  "121": {
+    "lesson": 2,
+    "title": "Secret Agent Mission Trail",
+    "images": [
+      "assets/images/level1/lesson02/image-104.jpeg",
+      "assets/images/level1/lesson02/image-105.jpeg",
+      "assets/images/level1/lesson02/image-106.jpeg",
+      "assets/images/level1/lesson02/image-108.jpeg",
+      "assets/images/level1/lesson02/image-109.jpeg",
+      "assets/images/level1/lesson02/image-107.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 51
+  },
+  "122": {
+    "lesson": 2,
+    "title": "Secret Agent Mission Trail",
+    "images": [
+      "assets/images/level1/lesson02/image-104.jpeg",
+      "assets/images/level1/lesson02/image-105.jpeg",
+      "assets/images/level1/lesson02/image-106.jpeg",
+      "assets/images/level1/lesson02/image-108.jpeg",
+      "assets/images/level1/lesson02/image-109.jpeg",
+      "assets/images/level1/lesson02/image-107.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 51
+  },
+  "123": {
+    "lesson": 2,
+    "title": "Mission card",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 16
+  },
+  "124": {
+    "lesson": 2,
+    "title": "Mission card",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 16
+  },
+  "125": {
+    "lesson": 2,
+    "title": "Mission card",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 16
+  },
+  "126": {
+    "lesson": 2,
+    "title": "Mission card",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 16
+  },
+  "127": {
+    "lesson": 3,
+    "title": "Follow My Lead",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 53
+  },
+  "128": {
+    "lesson": 3,
+    "title": "Look and share",
+    "images": [
+      "assets/images/level1/lesson03/image-102.jpeg",
+      "assets/images/level1/lesson03/image-103.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 53
+  },
+  "129": {
+    "lesson": 3,
+    "title": "Kind directions",
+    "images": [
+      "assets/images/level1/lesson03/image-102.jpeg",
+      "assets/images/level1/lesson03/image-103.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 54
+  },
+  "130": {
+    "lesson": 3,
+    "title": "Kind directions",
+    "images": [
+      "assets/images/level1/lesson03/image-102.jpeg",
+      "assets/images/level1/lesson03/image-103.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 54
+  },
+  "131": {
+    "lesson": 3,
+    "title": "Kind directions",
+    "images": [
+      "assets/images/level1/lesson03/image-102.jpeg",
+      "assets/images/level1/lesson03/image-103.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 54
+  },
+  "132": {
+    "lesson": 3,
+    "title": "Kind directions",
+    "images": [
+      "assets/images/level1/lesson03/image-102.jpeg",
+      "assets/images/level1/lesson03/image-103.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 54
+  },
+  "133": {
+    "lesson": 3,
+    "title": "Kind directions",
+    "images": [
+      "assets/images/level1/lesson03/image-102.jpeg",
+      "assets/images/level1/lesson03/image-103.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 54
+  },
+  "134": {
+    "lesson": 3,
+    "title": "Role-Play Activity",
+    "images": [
+      "assets/images/level1/lesson03/image-102.jpeg",
+      "assets/images/level1/lesson03/image-103.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 55
+  },
+  "135": {
+    "lesson": 3,
+    "title": "Scenario card 2",
+    "images": [
+      "assets/images/level1/lesson03/image-102.jpeg",
+      "assets/images/level1/lesson03/image-103.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 17
+  },
+  "136": {
+    "lesson": 4,
+    "title": "Word Clue",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 56
+  },
+  "137": {
+    "lesson": 4,
+    "title": "Word Clue",
+    "images": [
+      "assets/images/level1/lesson04/image-384.jpeg",
+      "assets/images/level1/lesson04/image-219.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 57
+  },
+  "138": {
+    "lesson": 4,
+    "title": "Sizes and color",
+    "images": [
+      "assets/images/level1/lesson04/page-018.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 18
+  },
+  "139": {
+    "lesson": 4,
+    "title": "Color and shapes",
+    "images": [
+      "assets/images/level1/lesson04/page-019.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 19
+  },
+  "140": {
+    "lesson": 4,
+    "title": "Shapes and how things feel",
+    "images": [
+      "assets/images/level1/lesson04/page-020.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 20
+  },
+  "141": {
+    "lesson": 4,
+    "title": "How things look and feelings",
+    "images": [
+      "assets/images/level1/lesson04/page-021.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 21
+  },
+  "142": {
+    "lesson": 4,
+    "title": "Feelings and numbers",
+    "images": [
+      "assets/images/level1/lesson04/page-022.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 22
+  },
+  "143": {
+    "lesson": 4,
+    "title": "Describing words",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 58
+  },
+  "144": {
+    "lesson": 4,
+    "title": "Describing words",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 58
+  },
+  "145": {
+    "lesson": 4,
+    "title": "Describing words",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 58
+  },
+  "146": {
+    "lesson": 4,
+    "title": "Describing words",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 58
+  },
+  "147": {
+    "lesson": 4,
+    "title": "Describe It! Share It!",
+    "images": [
+      "assets/images/level1/lesson04/image-219.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 59
+  },
+  "148": {
+    "lesson": 5,
+    "title": "Quick Share",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 60
+  },
+  "149": {
+    "lesson": 5,
+    "title": "Picture discussion",
+    "images": [
+      "assets/images/level1/lesson05/image-210.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 61
+  },
+  "150": {
+    "lesson": 5,
+    "title": "Sentence starter",
+    "images": [
+      "assets/images/level1/lesson05/image-210.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 61
+  },
+  "151": {
+    "lesson": 5,
+    "title": "Sentence starter",
+    "images": [
+      "assets/images/level1/lesson05/image-210.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 61
+  },
+  "152": {
+    "lesson": 5,
+    "title": "Sentence starter",
+    "images": [
+      "assets/images/level1/lesson05/image-210.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 61
+  },
+  "153": {
+    "lesson": 5,
+    "title": "Sentence starter",
+    "images": [
+      "assets/images/level1/lesson05/image-210.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 61
+  },
+  "154": {
+    "lesson": 5,
+    "title": "Picture Card Pack",
+    "images": [
+      "assets/images/level1/lesson05/page-023.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 23
+  },
+  "155": {
+    "lesson": 5,
+    "title": "Picture Card Pack",
+    "images": [
+      "assets/images/level1/lesson05/page-024.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 24
+  },
+  "156": {
+    "lesson": 5,
+    "title": "Picture Card Pack",
+    "images": [
+      "assets/images/level1/lesson05/page-025.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 25
+  },
+  "157": {
+    "lesson": 6,
+    "title": "Quick Draw",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 63
+  },
+  "158": {
+    "lesson": 6,
+    "title": "Listen and draw",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 64
+  },
+  "159": {
+    "lesson": 6,
+    "title": "Check and discuss",
+    "images": [
+      "assets/images/level1/lesson06/image-215.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 64
+  },
+  "160": {
+    "lesson": 6,
+    "title": "Talk about details",
+    "images": [
+      "assets/images/level1/lesson06/image-215.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 64
+  },
+  "161": {
+    "lesson": 6,
+    "title": "Talk about details",
+    "images": [
+      "assets/images/level1/lesson06/image-215.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 64
+  },
+  "162": {
+    "lesson": 6,
+    "title": "Pair Describe and Draw",
+    "images": [
+      "assets/images/level1/lesson06/image-222.jpeg",
+      "assets/images/level1/lesson06/image-223.jpeg",
+      "assets/images/level1/lesson06/image-224.jpeg",
+      "assets/images/level1/lesson06/image-225.jpeg",
+      "assets/images/level1/lesson06/image-226.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 65
+  },
+  "163": {
+    "lesson": 7,
+    "title": "Guess the Next Picture",
+    "images": [
+      "assets/images/level1/lesson07/image-227.jpeg",
+      "assets/images/level1/lesson07/image-228.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 66
+  },
+  "164": {
+    "lesson": 7,
+    "title": "Picture Story Chain",
+    "images": [
+      "assets/images/level1/lesson07/image-227.jpeg",
+      "assets/images/level1/lesson07/image-228.jpeg",
+      "assets/images/level1/lesson07/image-229.jpeg",
+      "assets/images/level1/lesson07/image-230.jpeg",
+      "assets/images/level1/lesson07/image-231.jpeg",
+      "assets/images/level1/lesson07/image-232.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 67
+  },
+  "165": {
+    "lesson": 7,
+    "title": "Group Picture Story Chain",
+    "images": [
+      "assets/images/level1/lesson07/page-068.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 68
+  },
+  "166": {
+    "lesson": 7,
+    "title": "Group Picture Story Chain",
+    "images": [
+      "assets/images/level1/lesson07/page-069.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 69
+  },
+  "167": {
+    "lesson": 7,
+    "title": "Group Picture Story Chain",
+    "images": [
+      "assets/images/level1/lesson07/page-070.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 70
+  },
+  "168": {
+    "lesson": 7,
+    "title": "Share your story",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 70
+  },
+  "169": {
+    "lesson": 8,
+    "title": "Mystery Picture Peek",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 72
+  },
+  "170": {
+    "lesson": 8,
+    "title": "See & Say",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg",
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 73
+  },
+  "171": {
+    "lesson": 8,
+    "title": "Picture Question Circle",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg",
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 73
+  },
+  "172": {
+    "lesson": 8,
+    "title": "Picture Question Circle",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg",
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 73
+  },
+  "173": {
+    "lesson": 8,
+    "title": "Picture Question Circle",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg",
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 73
+  },
+  "174": {
+    "lesson": 8,
+    "title": "Picture Question Circle",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg",
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 73
+  },
+  "175": {
+    "lesson": 8,
+    "title": "Picture Question Circle",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg",
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 73
+  },
+  "176": {
+    "lesson": 8,
+    "title": "My Connection Share",
+    "images": [
+      "assets/images/level1/lesson08/image-235.jpeg",
+      "assets/images/level1/lesson08/image-236.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 73
+  },
+  "177": {
+    "lesson": 8,
+    "title": "Let’s talk",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 74
+  },
+  "178": {
+    "lesson": 9,
+    "title": "Rhyme & Clap Dance",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 75
+  },
+  "179": {
+    "lesson": 9,
+    "title": "The Itsy-Bitsy Spider",
+    "images": [
+      "assets/images/level1/lesson09/image-281.jpeg",
+      "assets/images/level1/lesson09/image-282.jpeg",
+      "assets/images/level1/lesson09/image-279.jpeg",
+      "assets/images/level1/lesson09/image-280.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 76
+  },
+  "180": {
+    "lesson": 9,
+    "title": "Talk about the poem",
+    "images": [
+      "assets/images/level1/lesson09/image-281.jpeg",
+      "assets/images/level1/lesson09/image-282.jpeg",
+      "assets/images/level1/lesson09/image-279.jpeg",
+      "assets/images/level1/lesson09/image-280.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 76
+  },
+  "181": {
+    "lesson": 9,
+    "title": "Pick & Explore",
+    "images": [
+      "assets/images/level1/lesson09/page-028.jpg",
+      "assets/images/level1/lesson09/page-029.jpg",
+      "assets/images/level1/lesson09/page-030.jpg",
+      "assets/images/level1/lesson09/page-031.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 76
+  },
+  "182": {
+    "lesson": 9,
+    "title": "Practice with a Buddy & Props",
+    "images": [
+      "assets/images/level1/lesson09/page-028.jpg",
+      "assets/images/level1/lesson09/page-029.jpg",
+      "assets/images/level1/lesson09/page-030.jpg",
+      "assets/images/level1/lesson09/page-031.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 77
+  },
+  "183": {
+    "lesson": 9,
+    "title": "Polish with the Teacher",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 77
+  },
+  "184": {
+    "lesson": 9,
+    "title": "Little Voices Showcase",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 77
+  },
+  "185": {
+    "lesson": 10,
+    "title": "Hello, Friend! Circle",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 78
+  },
+  "186": {
+    "lesson": 10,
+    "title": "Our Toys, Our Stories",
+    "images": [
+      "assets/images/level1/lesson10/image-285.jpeg",
+      "assets/images/level1/lesson10/image-286.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 79
+  },
+  "187": {
+    "lesson": 10,
+    "title": "Toy Show & Tell Chat",
+    "images": [
+      "assets/images/level1/lesson10/image-285.jpeg",
+      "assets/images/level1/lesson10/image-286.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 79
+  },
+  "188": {
+    "lesson": 10,
+    "title": "Find a Toy Match",
+    "images": [
+      "assets/images/level1/lesson10/image-285.jpeg",
+      "assets/images/level1/lesson10/image-286.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 79
+  },
+  "189": {
+    "lesson": 10,
+    "title": "Make a Toy Story Together",
+    "images": [
+      "assets/images/level1/lesson10/image-285.jpeg",
+      "assets/images/level1/lesson10/image-286.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 80
+  },
+  "190": {
+    "lesson": 10,
+    "title": "Share Our Toy Stories",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 80
+  },
+  "191": {
+    "lesson": 11,
+    "title": "Word Catch!",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 81
+  },
+  "192": {
+    "lesson": 11,
+    "title": "Guess My Word Friend!",
+    "images": [
+      "assets/images/level1/lesson11/image-292.jpeg",
+      "assets/images/level1/lesson11/image-293.jpeg",
+      "assets/images/level1/lesson11/image-294.jpeg",
+      "assets/images/level1/lesson11/image-295.jpeg",
+      "assets/images/level1/lesson11/image-296.jpeg",
+      "assets/images/level1/lesson11/image-297.jpeg",
+      "assets/images/level1/lesson11/image-298.jpeg",
+      "assets/images/level1/lesson11/image-299.jpeg",
+      "assets/images/level1/lesson11/image-300.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 81
+  },
+  "193": {
+    "lesson": 11,
+    "title": "Word Friends on the Board",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 82
+  },
+  "194": {
+    "lesson": 11,
+    "title": "How words connect",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 82
+  },
+  "195": {
+    "lesson": 11,
+    "title": "Word Chain Game",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 82
+  },
+  "196": {
+    "lesson": 11,
+    "title": "Why Word Friends?",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 82
+  },
+  "197": {
+    "lesson": 11,
+    "title": "Why Word Friends?",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 82
+  },
+  "198": {
+    "lesson": 12,
+    "title": "Copy the Sound!",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 84
+  },
+  "199": {
+    "lesson": 12,
+    "title": "Tongue twister",
+    "images": [
+      "assets/images/level1/lesson12/image-291.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 83
+  },
+  "200": {
+    "lesson": 12,
+    "title": "Tongue twister",
+    "images": [
+      "assets/images/level1/lesson12/image-289.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 83
+  },
+  "201": {
+    "lesson": 12,
+    "title": "Tongue twister",
+    "images": [
+      "assets/images/level1/lesson12/image-290.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 83
+  },
+  "202": {
+    "lesson": 12,
+    "title": "Let’s talk",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 84
+  },
+  "203": {
+    "lesson": 12,
+    "title": "Let’s talk",
+    "images": [],
+    "requires_picture": false,
+    "external_picture": null,
+    "source_page": 84
+  },
+  "204": {
+    "lesson": 12,
+    "title": "Tongue Twister Game",
+    "images": [
+      "assets/images/level1/lesson12/image-289.jpeg",
+      "assets/images/level1/lesson12/image-290.jpeg",
+      "assets/images/level1/lesson12/image-291.jpeg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 84
+  },
+  "205": {
+    "lesson": 1,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson01/page-047.jpg",
+      "assets/images/level1/lesson01/page-048.jpg",
+      "assets/images/level1/lesson01/page-049.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 47
+  },
+  "206": {
+    "lesson": 1,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson01/page-035.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 35
+  },
+  "207": {
+    "lesson": 2,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson02/page-050.jpg",
+      "assets/images/level1/lesson02/page-051.jpg",
+      "assets/images/level1/lesson02/page-052.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 50
+  },
+  "208": {
+    "lesson": 2,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson02/page-035.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 35
+  },
+  "209": {
+    "lesson": 3,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson03/page-052.jpg",
+      "assets/images/level1/lesson03/page-053.jpg",
+      "assets/images/level1/lesson03/page-054.jpg",
+      "assets/images/level1/lesson03/page-055.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 52
+  },
+  "210": {
+    "lesson": 3,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson03/page-035.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 35
+  },
+  "211": {
+    "lesson": 4,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson04/page-056.jpg",
+      "assets/images/level1/lesson04/page-057.jpg",
+      "assets/images/level1/lesson04/page-058.jpg",
+      "assets/images/level1/lesson04/page-059.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 56
+  },
+  "212": {
+    "lesson": 4,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson04/page-036.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 36
+  },
+  "213": {
+    "lesson": 5,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson05/page-060.jpg",
+      "assets/images/level1/lesson05/page-061.jpg",
+      "assets/images/level1/lesson05/page-062.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 60
+  },
+  "214": {
+    "lesson": 5,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson05/page-036.jpg",
+      "assets/images/level1/lesson05/page-037.jpg",
+      "assets/images/level1/lesson05/page-038.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 36
+  },
+  "215": {
+    "lesson": 6,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson06/page-063.jpg",
+      "assets/images/level1/lesson06/page-064.jpg",
+      "assets/images/level1/lesson06/page-065.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 63
+  },
+  "216": {
+    "lesson": 6,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson06/page-039.jpg",
+      "assets/images/level1/lesson06/page-040.jpg",
+      "assets/images/level1/lesson06/page-041.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 39
+  },
+  "217": {
+    "lesson": 7,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson07/page-066.jpg",
+      "assets/images/level1/lesson07/page-067.jpg",
+      "assets/images/level1/lesson07/page-068.jpg",
+      "assets/images/level1/lesson07/page-069.jpg",
+      "assets/images/level1/lesson07/page-070.jpg",
+      "assets/images/level1/lesson07/page-071.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 66
+  },
+  "218": {
+    "lesson": 7,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson07/page-043.jpg",
+      "assets/images/level1/lesson07/page-044.jpg",
+      "assets/images/level1/lesson07/page-045.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 43
+  },
+  "219": {
+    "lesson": 8,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson08/page-072.jpg",
+      "assets/images/level1/lesson08/page-073.jpg",
+      "assets/images/level1/lesson08/page-074.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 72
+  },
+  "220": {
+    "lesson": 8,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson08/page-045.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 45
+  },
+  "221": {
+    "lesson": 9,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson09/page-075.jpg",
+      "assets/images/level1/lesson09/page-076.jpg",
+      "assets/images/level1/lesson09/page-077.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 75
+  },
+  "222": {
+    "lesson": 10,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson10/page-078.jpg",
+      "assets/images/level1/lesson10/page-079.jpg",
+      "assets/images/level1/lesson10/page-080.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 78
+  },
+  "223": {
+    "lesson": 11,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson11/page-081.jpg",
+      "assets/images/level1/lesson11/page-082.jpg",
+      "assets/images/level1/lesson11/page-083.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 81
+  },
+  "224": {
+    "lesson": 12,
+    "title": "Teacher-guided lesson checklist",
+    "images": [
+      "assets/images/level1/lesson12/page-083.jpg",
+      "assets/images/level1/lesson12/page-084.jpg",
+      "assets/images/level1/lesson12/page-085.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 83
+  },
+  "225": {
+    "lesson": 12,
+    "title": "Additional intervention materials",
+    "images": [
+      "assets/images/level1/lesson12/page-042.jpg"
+    ],
+    "requires_picture": true,
+    "external_picture": null,
+    "source_page": 42
+  }
+}

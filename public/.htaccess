@@ -1,0 +1,6 @@
+Options -Indexes
+<FilesMatch "\.(php|phtml|phar)$">
+<IfModule mod_headers.c>
+Header set X-Content-Type-Options "nosniff"
+</IfModule>
+</FilesMatch>
