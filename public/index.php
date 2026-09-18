@@ -20,8 +20,25 @@ try{
  ob_end_flush();
 }catch(Throwable $ex){
  if(db_in_transaction_safe())db()->rollBack();ob_end_clean();$isPublic=$ex instanceof RuntimeException&&!($ex instanceof PDOException);$code=$isPublic&&in_array($ex->getCode(),[400,401,403,404,429],true)?$ex->getCode():($isPublic?400:500);http_response_code($code);error_log((string)$ex);
- $message=$isPublic?$ex->getMessage():'The app could not load its database. Please check the setup instructions and database configuration.';
+ $message=$isPublic?$ex->getMessage():bulig_setup_diagnostic($ex);
  if(($_POST['action']??'')==='draft'||str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>false,'error'=>$message]);exit;}
  head('Let’s try again','error-page');echo '<main class="card"><h1>'.($code===500?'A little setup is needed.':'Let’s check that.').'</h1><p>'.e($message).'</p><a class="btn primary" href="?page=dashboard">Return to BULIG '.icon('arrow').'</a><p class="muted">If you were completing an activity, return to its lesson to recover your saved draft.</p></main>';foot();
 }
 function db_in_transaction_safe():bool{try{return db()->inTransaction();}catch(Throwable $e){return false;}}
+
+// Only safe categories and code locations are shown; no SQL, credentials, or records.
+function bulig_setup_diagnostic(Throwable $error):string{
+ $location=basename($error->getFile()).':'.$error->getLine();
+ if($error instanceof PDOException){
+  $number=(int)($error->errorInfo[1]??0);
+  $state=(string)($error->errorInfo[0]??$error->getCode());
+  if(!preg_match('/^[A-Z0-9]{1,8}$/D',$state))$state='unknown';
+  $reasons=[1045=>'Database login was rejected. Check the database password and user permissions.',1044=>'The database user does not have access to this database.',1049=>'The configured database does not exist.',1146=>'A required database table is missing. The database and application versions do not match.',1054=>'A required database column is missing. The database and application versions do not match.',2002=>'PHP could not reach the database server. Check the database host and connection settings.',2006=>'The database connection was closed.',1064=>'A database query has a syntax error.'];
+  $reason=$reasons[$number]??'A database operation failed.';
+  if(str_contains(strtolower($error->getMessage()),'could not find driver'))$reason='PDO MySQL is not enabled for this website PHP configuration.';
+  return 'BULIG diagnostic: SQLSTATE '.$state.' / MySQL '.$number.'. '.$reason.' Location: '.$location;
+ }
+ $reason='A PHP application error occurred.';
+ if(preg_match('/Call to undefined function ([a-zA-Z0-9_]+)\(/',$error->getMessage(),$m))$reason='A required PHP function is unavailable: '.$m[1].'.';
+ return 'BULIG diagnostic: '.get_class($error).'. '.$reason.' Location: '.$location;
+}
