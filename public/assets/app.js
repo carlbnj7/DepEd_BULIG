@@ -59,3 +59,5 @@ for(const img of document.querySelectorAll('[data-activity-image]')){
  img.addEventListener('error',failure);img.addEventListener('load',updateImageAudit);if(img.complete&&!img.naturalWidth)failure();
 }
 updateImageAudit();
+
+for(const grade of document.querySelectorAll('[data-grade-filter]'))grade.addEventListener('change',()=>{grade.form.querySelector('[name=section_id]').value='0';grade.form.requestSubmit();});
