@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require __DIR__.'/../app/bootstrap.php';require __DIR__.'/../app/actions.php';require __DIR__.'/../app/views.php';
+require __DIR__.'/../app/bootstrap.php';require __DIR__.'/../app/actions.php';require __DIR__.'/../app/views.php';require __DIR__.'/../app/teacher_demo.php';
 ob_start();
 try{
  if($_SERVER['REQUEST_METHOD']==='POST')action();
@@ -8,9 +8,21 @@ try{
  if(!$u){if($page!=='login')go('?page=login');login_view();}
  elseif($page==='login'){go('?page=dashboard');}
  elseif($page==='source'){
+  $level=(int)($_GET['level']??1);
+  if(in_array($level,[2,3],true)){
+   $n=(int)($_GET['n']??1);$meta=level2_manifest()['levels'][(string)$level];$key=$level===2?'2a':'2b';
+   if($n<1||$n>$meta['page_count'])fail('Page not found.',404);
+   if($u['role']==='pupil'){
+    if(!in_array($n,$meta['pupil_pages'],true)||!level_available((int)$u['id'],$level))fail('This source page is reserved for your teacher or is not available yet.',403);
+   }
+   if(isset($_GET['image'])){header('Content-Type: image/webp');readfile(__DIR__.'/../storage/'.$key.'/page-'.sprintf('%03d',$n).'.webp');exit;}
+   head('Official '.level_label($level).' · page '.$n,'source-page');echo '<main><a class="btn secondary" href="?page=dashboard">Back to dashboard</a><h1>Official '.e(level_label($level)).' · PDF page '.$n.'</h1><img src="?page=source&amp;level='.$level.'&amp;n='.$n.'&amp;image=1" alt="Original module page '.$n.'"></main>';foot();
+  }else{
   $n=(int)($_GET['n']??1);$p=one('SELECT * FROM source_pages WHERE page_number=?',[$n]);if(!$p)fail('Page not found.',404);head('Official module · page '.$n,'source-page');echo '<main><a class="btn secondary" href="?page=dashboard">Back to dashboard</a><h1>Official Level 1 module · PDF page '.$n.'</h1><img src="'.e($p['image_path']).'" alt="Original module page '.$n.'"><details><summary>Extracted text</summary><pre class="source-text">'.e($p['text_content']).'</pre></details></main>';foot();
+  }
  }
- elseif($page==='download_source'){require_role('admin','teacher');header('Content-Type: application/pdf');header('Content-Disposition: attachment; filename="BULIG-Level-1-Original.pdf"');readfile(__DIR__.'/../storage/level1-original.pdf');}
+ elseif($page==='download_source'){require_role('admin','teacher');$level=(int)($_GET['level']??1);$key=[1=>'1',2=>'2a',3=>'2b'][$level]??null;if(!$key)fail('Module not found.',404);header('Content-Type: application/pdf');header('Content-Disposition: attachment; filename="BULIG-Level-'.$key.'-Original.pdf"');readfile(__DIR__.'/../storage/level'.$key.'-original.pdf');}
+ elseif($page==='class_demo'){require_role('teacher');class_demo_view($u);}
  elseif($page==='lesson'){require_role('pupil');lesson_view($u);}
  else{
   $permissions=['visual_audit'=>['admin'],'sections'=>['teacher'],'accounts'=>['admin','teacher'],'review'=>['teacher'],'pupil'=>['teacher'],'guide'=>['teacher','admin'],'content'=>['admin'],'edit_activity'=>['admin'],'media'=>['admin'],'issues'=>['admin'],'settings'=>['admin'],'achievements'=>['pupil'],'profile'=>['admin','teacher','pupil'],'dashboard'=>['admin','teacher','pupil']];if(!isset($permissions[$page]))fail('Page not found.',404);require_role(...$permissions[$page]);shell($u,$page);

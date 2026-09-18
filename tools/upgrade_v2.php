@@ -4,7 +4,7 @@ if(PHP_SAPI!=='cli'){http_response_code(404);exit;}
 require __DIR__.'/../app/bootstrap.php';
 try{
  db()->exec('CREATE TABLE IF NOT EXISTS schema_migrations(version VARCHAR(80) PRIMARY KEY,applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)');
- foreach(['001_v2_structure','002_content','003_existing_progress','004_visuals','005_level7'] as $version){
+ foreach(['001_v2_structure','002_content','003_existing_progress','004_visuals','005_level7','006_pupil_details','007_level2_content'] as $version){
   if(val('SELECT 1 FROM schema_migrations WHERE version=?',[$version])){echo "$version already applied.\n";continue;}
   $sql=file_get_contents(__DIR__.'/../database/migrations/'.$version.'.sql');
   if($version==='001_v2_structure'){

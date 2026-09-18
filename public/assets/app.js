@@ -38,7 +38,7 @@ for(const select of document.querySelectorAll('[data-section-filter]'))select.ad
 const canvas=$('#drawing-canvas');
 if(canvas){const ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=5;let drawing=false;const output=$('#drawing-data');if(output.value){const image=new Image();image.onload=()=>ctx.drawImage(image,0,0,canvas.width,canvas.height);image.src=output.value;}function point(event){const r=canvas.getBoundingClientRect();return [(event.clientX-r.left)*canvas.width/r.width,(event.clientY-r.top)*canvas.height/r.height];}canvas.addEventListener('pointerdown',event=>{if(form.dataset.draft!=='on')return;drawing=true;canvas.setPointerCapture(event.pointerId);ctx.strokeStyle=$('#pen-color').value;ctx.beginPath();ctx.moveTo(...point(event));});canvas.addEventListener('pointermove',event=>{if(!drawing)return;ctx.lineTo(...point(event));ctx.stroke();});function finish(){if(!drawing)return;drawing=false;output.value=canvas.toDataURL('image/png');drawingDirty=true;draft();}canvas.addEventListener('pointerup',finish);canvas.addEventListener('pointercancel',finish);$('#clear-drawing').addEventListener('click',()=>{if(form.dataset.draft!=='on')return;ctx.clearRect(0,0,canvas.width,canvas.height);output.value='';draft();});}
 const mic=$('#recognize');
-if(mic){const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;const status=$('#speech-status');let recognition=null,active=false;if(!Recognition){mic.disabled=true;status.textContent='Speech recognition is unavailable here. Type your answer or ask your teacher.';}else{mic.addEventListener('click',()=>{if(active){recognition.stop();return;}recognition=new Recognition();recognition.lang='en-US';recognition.continuous=false;recognition.interimResults=false;recognition.onstart=()=>{active=true;mic.textContent='Stop listening';status.textContent='Listening…';window.speechSynthesis?.cancel();};recognition.onresult=event=>{const heard=event.results[0][0].transcript;$('#response').value=heard;$('#transcript').value=heard;status.textContent='Check the words — the microphone can mishear.';showWords($('#expected-text').value,heard);draft();};recognition.onerror=event=>{status.textContent=event.error==='not-allowed'?'Microphone permission was not granted. You can type your answer.':'We could not hear clearly. Try again or type your answer.';};recognition.onend=()=>{active=false;mic.textContent='Speak Answer';};try{recognition.start();}catch{status.textContent='Microphone could not start. Try typing your answer.';}});window.addEventListener('pagehide',()=>recognition?.abort());}}
+if(mic){const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;const status=$('#speech-status');let recognition=null,active=false;if(!Recognition){mic.disabled=true;status.textContent='Speech recognition is unavailable here. Type your answer or ask your teacher.';}else{mic.addEventListener('click',()=>{if(active){recognition.stop();return;}recognition=new Recognition();recognition.lang='en-US';recognition.continuous=false;recognition.interimResults=false;recognition.onstart=()=>{active=true;mic.textContent='Stop listening';status.textContent='Listening…';window.speechSynthesis?.cancel();};recognition.onresult=event=>{const heard=event.results[0][0].transcript;$('#response').value=canvas&&$('.worksheet-panel')?[$('#response').value,heard].filter(Boolean).join('\n'):heard;$('#transcript').value=heard;status.textContent='Check the words — the microphone can mishear.';showWords($('#expected-text').value,heard);draft();};recognition.onerror=event=>{status.textContent=event.error==='not-allowed'?'Microphone permission was not granted. You can type your answer.':'We could not hear clearly. Try again or type your answer.';};recognition.onend=()=>{active=false;mic.textContent='Speak Answer';};try{recognition.start();}catch{status.textContent='Microphone could not start. Try typing your answer.';}});window.addEventListener('pagehide',()=>recognition?.abort());}}
 function showWords(expected,heard){const el=$('#word-feedback');el.replaceChildren();if(!expected)return;const words=s=>s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim().split(/\s+/).filter(Boolean);const a=words(expected),b=words(heard),d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=0;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));const result=[];let i=a.length,j=b.length;while(i||j){if(i&&j&&d[i][j]===d[i-1][j-1]+(a[i-1]===b[j-1]?0:1)){result.push({word:a[i-1],ok:a[i-1]===b[j-1]});i--;j--;}else if(i&&d[i][j]===d[i-1][j]+1){result.push({word:a[i-1],ok:false});i--;}else{result.push({word:'+'+b[j-1],ok:false});j--;}}const p=document.createElement('p');p.textContent='Recognized word match: '+Math.round(Math.max(0,1-d[a.length][b.length]/Math.max(1,a.length))*100)+'% · Your teacher reviews pronunciation.';el.append(p);for(const item of result.reverse()){const span=document.createElement('span');span.className='word-chip'+(item.ok?'':' missed');span.textContent=item.word;el.append(span);}}
 
 // Accessible mobile navigation drawer with focus containment and Escape dismissal.
@@ -61,3 +61,41 @@ for(const img of document.querySelectorAll('[data-activity-image]')){
 updateImageAudit();
 
 for(const grade of document.querySelectorAll('[data-grade-filter]'))grade.addEventListener('change',()=>{grade.form.querySelector('[name=section_id]').value='0';grade.form.requestSubmit();});
+
+$('#worksheet-zoom')?.addEventListener('click',event=>{const panel=$('.worksheet-panel');const enlarged=panel.classList.toggle('enlarged');event.currentTarget.setAttribute('aria-pressed',String(enlarged));event.currentTarget.textContent=enlarged?'Fit sheet':'Enlarge sheet';});
+
+$('#worksheet-pen')?.addEventListener('click',event=>{const pan=$('.worksheet-panel').classList.toggle('pan-mode');event.currentTarget.setAttribute('aria-pressed',String(!pan));event.currentTarget.textContent=pan?'Use pen':'Move sheet';});
+
+// Teacher Class Demo: local slide navigation only; never submits learning actions.
+const demo=document.querySelector('#class-demo');
+if(demo){
+ const slides=[...demo.querySelectorAll('.demo-template')],stage=$('#demo-stage'),jump=$('#demo-jump'),lesson=$('#demo-lesson');
+ let current=Number(demo.dataset.start)||0;
+ function showSlide(index){
+  if(index<0||index>=slides.length)return;
+  window.speechSynthesis?.cancel();current=index;
+  const slide=slides[index];stage.replaceChildren(slide.content.cloneNode(true));stage.scrollTop=0;
+  for(const img of stage.querySelectorAll('img[data-src]')){
+   img.addEventListener('error',()=>{const note=img.closest('figure')?.querySelector('.image-load-error');if(note)note.hidden=false;});
+   img.src=img.dataset.src;img.removeAttribute('data-src');
+  }
+  narration.dataset.text=slide.dataset.narration||'';
+  jump.value=String(index);
+  const first=slides.findIndex(s=>s.dataset.lesson===slide.dataset.lesson);lesson.value=String(first);
+  $('#demo-counter').textContent='Slide '+(index+1)+' of '+slides.length;
+  $('#demo-prev').disabled=index===0;$('#demo-next').disabled=index===slides.length-1;
+  $('#demo-help').textContent=index===slides.length-1?'End of this level · Review any slide or exit demo':'Arrow keys move between slides · F for full screen';
+  const url=new URL(location.href);url.searchParams.set('activity',slide.dataset.id);history.replaceState(null,'',url);
+ }
+ $('#demo-prev').addEventListener('click',()=>showSlide(current-1));$('#demo-next').addEventListener('click',()=>showSlide(current+1));
+ jump.addEventListener('change',()=>showSlide(Number(jump.value)));lesson.addEventListener('change',()=>showSlide(Number(lesson.value)));
+ $('#demo-zoom').addEventListener('click',event=>{const enlarged=stage.classList.toggle('pictures-enlarged');event.currentTarget.setAttribute('aria-pressed',String(enlarged));event.currentTarget.textContent=enlarged?'Fit pictures':'Enlarge pictures';});
+ async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else if(demo.requestFullscreen)await demo.requestFullscreen();else $('#demo-help').textContent='Full screen is unavailable here. Use your browser’s full-screen command.';}catch{$('#demo-help').textContent='Full screen could not open. Use your browser’s full-screen command.';}}
+ $('#demo-fullscreen').addEventListener('click',fullscreen);
+ document.addEventListener('fullscreenchange',()=>{$('#demo-fullscreen').textContent=document.fullscreenElement?'Exit full screen':'Full screen';});
+ document.addEventListener('keydown',event=>{
+  if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+  if(event.key==='ArrowRight'){event.preventDefault();showSlide(current+1);}else if(event.key==='ArrowLeft'){event.preventDefault();showSlide(current-1);}else if(event.key==='Home'){event.preventDefault();showSlide(0);}else if(event.key==='End'){event.preventDefault();showSlide(slides.length-1);}else if(event.key.toLowerCase()==='f'){event.preventDefault();fullscreen();}
+ });
+ showSlide(current);
+}

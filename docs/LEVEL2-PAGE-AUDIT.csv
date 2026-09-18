@@ -1,0 +1,330 @@
+module,pdf_page,purpose,lesson_positions
+2a,1,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,2,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,3,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,4,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,5,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,6,Pupil worksheet and teacher source,1
+2a,7,Pupil worksheet and teacher source,1
+2a,8,Pupil worksheet and teacher source,1
+2a,9,Pupil worksheet and teacher source,1
+2a,10,Pupil worksheet and teacher source,1
+2a,11,Pupil worksheet and teacher source,1
+2a,12,Pupil worksheet and teacher source,1
+2a,13,Pupil worksheet and teacher source,1
+2a,14,Pupil worksheet and teacher source,1
+2a,15,Pupil worksheet and teacher source,1
+2a,16,Pupil worksheet and teacher source,1
+2a,17,Pupil worksheet and teacher source,1
+2a,18,Pupil worksheet and teacher source,1
+2a,19,Pupil worksheet and teacher source,1
+2a,20,Pupil worksheet and teacher source,1
+2a,21,Pupil worksheet and teacher source,1
+2a,22,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,23,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,24,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,25,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,26,"Teacher source only (guide, protocol, answer key, front matter or blank)",2
+2a,27,"Teacher source only (guide, protocol, answer key, front matter or blank)",2
+2a,28,"Teacher source only (guide, protocol, answer key, front matter or blank)",2
+2a,29,Pupil worksheet and teacher source,2
+2a,30,Pupil worksheet and teacher source,2
+2a,31,Pupil worksheet and teacher source,2
+2a,32,"Teacher source only (guide, protocol, answer key, front matter or blank)",3
+2a,33,"Teacher source only (guide, protocol, answer key, front matter or blank)",3
+2a,34,Pupil worksheet and teacher source,3
+2a,35,Pupil worksheet and teacher source,3
+2a,36,Pupil worksheet and teacher source,3
+2a,37,Pupil worksheet and teacher source,3
+2a,38,"Teacher source only (guide, protocol, answer key, front matter or blank)",4
+2a,39,"Teacher source only (guide, protocol, answer key, front matter or blank)",4
+2a,40,Pupil worksheet and teacher source,4
+2a,41,Pupil worksheet and teacher source,4
+2a,42,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,43,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,44,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,45,"Teacher source only (guide, protocol, answer key, front matter or blank)",5
+2a,46,"Teacher source only (guide, protocol, answer key, front matter or blank)",5
+2a,47,Pupil worksheet and teacher source,5
+2a,48,Pupil worksheet and teacher source,5
+2a,49,"Teacher source only (guide, protocol, answer key, front matter or blank)",6
+2a,50,"Teacher source only (guide, protocol, answer key, front matter or blank)",6
+2a,51,Pupil worksheet and teacher source,6
+2a,52,Pupil worksheet and teacher source,6
+2a,53,Pupil worksheet and teacher source,6
+2a,54,"Teacher source only (guide, protocol, answer key, front matter or blank)",7
+2a,55,"Teacher source only (guide, protocol, answer key, front matter or blank)",7
+2a,56,Pupil worksheet and teacher source,7
+2a,57,Pupil worksheet and teacher source,7
+2a,58,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,59,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,60,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,61,"Teacher source only (guide, protocol, answer key, front matter or blank)",8
+2a,62,Pupil worksheet and teacher source,8
+2a,63,Pupil worksheet and teacher source,8
+2a,64,"Teacher source only (guide, protocol, answer key, front matter or blank)",9
+2a,65,"Teacher source only (guide, protocol, answer key, front matter or blank)",9
+2a,66,Pupil worksheet and teacher source,9
+2a,67,Pupil worksheet and teacher source,9
+2a,68,"Teacher source only (guide, protocol, answer key, front matter or blank)",10
+2a,69,"Teacher source only (guide, protocol, answer key, front matter or blank)",10
+2a,70,Pupil worksheet and teacher source,10
+2a,71,Pupil worksheet and teacher source,10
+2a,72,Pupil worksheet and teacher source,10
+2a,73,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,74,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,75,"Teacher source only (guide, protocol, answer key, front matter or blank)",11
+2a,76,"Teacher source only (guide, protocol, answer key, front matter or blank)",11
+2a,77,Pupil worksheet and teacher source,11
+2a,78,Pupil worksheet and teacher source,11
+2a,79,Pupil worksheet and teacher source,11
+2a,80,"Teacher source only (guide, protocol, answer key, front matter or blank)",12
+2a,81,"Teacher source only (guide, protocol, answer key, front matter or blank)",12
+2a,82,Pupil worksheet and teacher source,12
+2a,83,Pupil worksheet and teacher source,12
+2a,84,"Teacher source only (guide, protocol, answer key, front matter or blank)",13
+2a,85,"Teacher source only (guide, protocol, answer key, front matter or blank)",13
+2a,86,Pupil worksheet and teacher source,13
+2a,87,Pupil worksheet and teacher source,13
+2a,88,Pupil worksheet and teacher source,13
+2a,89,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,90,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,91,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,92,"Teacher source only (guide, protocol, answer key, front matter or blank)",14
+2a,93,"Teacher source only (guide, protocol, answer key, front matter or blank)",14
+2a,94,Pupil worksheet and teacher source,14
+2a,95,Pupil worksheet and teacher source,14
+2a,96,Pupil worksheet and teacher source,14
+2a,97,Pupil worksheet and teacher source,15
+2a,98,"Teacher source only (guide, protocol, answer key, front matter or blank)",15
+2a,99,"Teacher source only (guide, protocol, answer key, front matter or blank)",15
+2a,100,Pupil worksheet and teacher source,15
+2a,101,Pupil worksheet and teacher source,15
+2a,102,Pupil worksheet and teacher source,15
+2a,103,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,104,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,105,"Teacher source only (guide, protocol, answer key, front matter or blank)",16
+2a,106,"Teacher source only (guide, protocol, answer key, front matter or blank)",16
+2a,107,Pupil worksheet and teacher source,16
+2a,108,Pupil worksheet and teacher source,16
+2a,109,"Teacher source only (guide, protocol, answer key, front matter or blank)",17
+2a,110,"Teacher source only (guide, protocol, answer key, front matter or blank)",17
+2a,111,Pupil worksheet and teacher source,17
+2a,112,Pupil worksheet and teacher source,17
+2a,113,Pupil worksheet and teacher source,17
+2a,114,Pupil worksheet and teacher source,17
+2a,115,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,116,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,117,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,118,"Teacher source only (guide, protocol, answer key, front matter or blank)",18
+2a,119,"Teacher source only (guide, protocol, answer key, front matter or blank)",18
+2a,120,"Teacher source only (guide, protocol, answer key, front matter or blank)",18
+2a,121,Pupil worksheet and teacher source,18
+2a,122,Pupil worksheet and teacher source,18
+2a,123,Pupil worksheet and teacher source,18
+2a,124,Pupil worksheet and teacher source,18
+2a,125,"Teacher source only (guide, protocol, answer key, front matter or blank)",19
+2a,126,"Teacher source only (guide, protocol, answer key, front matter or blank)",19
+2a,127,"Teacher source only (guide, protocol, answer key, front matter or blank)",19
+2a,128,"Teacher source only (guide, protocol, answer key, front matter or blank)",19
+2a,129,"Teacher source only (guide, protocol, answer key, front matter or blank)",19
+2a,130,Pupil worksheet and teacher source,19
+2a,131,Pupil worksheet and teacher source,19
+2a,132,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,133,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,134,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,135,"Teacher source only (guide, protocol, answer key, front matter or blank)",20
+2a,136,"Teacher source only (guide, protocol, answer key, front matter or blank)",20
+2a,137,"Teacher source only (guide, protocol, answer key, front matter or blank)",20
+2a,138,Pupil worksheet and teacher source,20
+2a,139,Pupil worksheet and teacher source,20
+2a,140,"Teacher source only (guide, protocol, answer key, front matter or blank)",21
+2a,141,"Teacher source only (guide, protocol, answer key, front matter or blank)",21
+2a,142,Pupil worksheet and teacher source,21
+2a,143,Pupil worksheet and teacher source,21
+2a,144,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2a,145,Pupil worksheet and teacher source,22
+2a,146,Pupil worksheet and teacher source,22
+2a,147,Pupil worksheet and teacher source,22
+2a,148,Pupil worksheet and teacher source,22
+2a,149,Pupil worksheet and teacher source,22
+2a,150,Pupil worksheet and teacher source,22
+2a,151,Pupil worksheet and teacher source,22
+2a,152,Pupil worksheet and teacher source,22
+2a,153,Pupil worksheet and teacher source,22
+2a,154,Pupil worksheet and teacher source,22
+2a,155,Pupil worksheet and teacher source,22
+2b,1,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,2,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,3,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,4,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,5,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,6,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,7,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,8,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,9,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,10,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,11,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,12,Pupil worksheet and teacher source,1
+2b,13,Pupil worksheet and teacher source,1
+2b,14,Pupil worksheet and teacher source,1
+2b,15,Pupil worksheet and teacher source,1
+2b,16,Pupil worksheet and teacher source,1
+2b,17,Pupil worksheet and teacher source,1
+2b,18,Pupil worksheet and teacher source,1
+2b,19,Pupil worksheet and teacher source,1
+2b,20,"Teacher source only (guide, protocol, answer key, front matter or blank)",1
+2b,21,Pupil worksheet and teacher source,1
+2b,22,Pupil worksheet and teacher source,1
+2b,23,Pupil worksheet and teacher source,1
+2b,24,"Teacher source only (guide, protocol, answer key, front matter or blank)",1
+2b,25,"Teacher source only (guide, protocol, answer key, front matter or blank)",1
+2b,26,"Teacher source only (guide, protocol, answer key, front matter or blank)",1
+2b,27,"Teacher source only (guide, protocol, answer key, front matter or blank)",1
+2b,28,"Teacher source only (guide, protocol, answer key, front matter or blank)",1
+2b,29,"Teacher source only (guide, protocol, answer key, front matter or blank)",1
+2b,30,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,31,Pupil worksheet and teacher source,2
+2b,32,Pupil worksheet and teacher source,3
+2b,33,Pupil worksheet and teacher source,4
+2b,34,Pupil worksheet and teacher source,5
+2b,35,Pupil worksheet and teacher source,6
+2b,36,Pupil worksheet and teacher source,7
+2b,37,Pupil worksheet and teacher source,8
+2b,38,Pupil worksheet and teacher source,9
+2b,39,Pupil worksheet and teacher source,10
+2b,40,Pupil worksheet and teacher source,11
+2b,41,Pupil worksheet and teacher source,12
+2b,42,Pupil worksheet and teacher source,"12,13"
+2b,43,Pupil worksheet and teacher source,14
+2b,44,Pupil worksheet and teacher source,15
+2b,45,Pupil worksheet and teacher source,16
+2b,46,Pupil worksheet and teacher source,17
+2b,47,Pupil worksheet and teacher source,18
+2b,48,Pupil worksheet and teacher source,19
+2b,49,Pupil worksheet and teacher source,20
+2b,50,Pupil worksheet and teacher source,21
+2b,51,Pupil worksheet and teacher source,22
+2b,52,Pupil worksheet and teacher source,23
+2b,53,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,54,Pupil worksheet and teacher source,24
+2b,55,Pupil worksheet and teacher source,24
+2b,56,Pupil worksheet and teacher source,24
+2b,57,Pupil worksheet and teacher source,24
+2b,58,Pupil worksheet and teacher source,24
+2b,59,Pupil worksheet and teacher source,24
+2b,60,Pupil worksheet and teacher source,24
+2b,61,Pupil worksheet and teacher source,24
+2b,62,"Teacher source only (guide, protocol, answer key, front matter or blank)",24
+2b,63,"Teacher source only (guide, protocol, answer key, front matter or blank)",24
+2b,64,"Teacher source only (guide, protocol, answer key, front matter or blank)",24
+2b,65,"Teacher source only (guide, protocol, answer key, front matter or blank)",24
+2b,66,"Teacher source only (guide, protocol, answer key, front matter or blank)",24
+2b,67,"Teacher source only (guide, protocol, answer key, front matter or blank)",24
+2b,68,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,69,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,70,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,71,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,72,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,73,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,74,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,75,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,76,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,77,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,78,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,79,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,80,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,81,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,82,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,83,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,84,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,85,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,86,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,87,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,88,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,89,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,90,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,91,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,92,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,93,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,94,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,95,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,96,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,97,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,98,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,99,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,100,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,101,"Teacher source only (guide, protocol, answer key, front matter or blank)","2,3,4,5"
+2b,102,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,103,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,104,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,105,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,106,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,107,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,108,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,109,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,110,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,111,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,112,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,113,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,114,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,115,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,116,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,117,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,118,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,119,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,120,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,121,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,122,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,123,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,124,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,125,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,126,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,127,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,128,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,129,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,130,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,131,"Teacher source only (guide, protocol, answer key, front matter or blank)","6,7,8"
+2b,132,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,133,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,134,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,135,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,136,"Teacher source only (guide, protocol, answer key, front matter or blank)",
+2b,137,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,138,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,139,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,140,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,141,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,142,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,143,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,144,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,145,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,146,"Teacher source only (guide, protocol, answer key, front matter or blank)","9,10,11"
+2b,147,"Teacher source only (guide, protocol, answer key, front matter or blank)","12,13,14,15,16"
+2b,148,"Teacher source only (guide, protocol, answer key, front matter or blank)","12,13,14,15,16"
+2b,149,"Teacher source only (guide, protocol, answer key, front matter or blank)","12,13,14,15,16"
+2b,150,"Teacher source only (guide, protocol, answer key, front matter or blank)","12,13,14,15,16"
+2b,151,"Teacher source only (guide, protocol, answer key, front matter or blank)","12,13,14,15,16"
+2b,152,"Teacher source only (guide, protocol, answer key, front matter or blank)","12,13,14,15,16"
+2b,153,"Teacher source only (guide, protocol, answer key, front matter or blank)","12,13,14,15,16"
+2b,154,"Teacher source only (guide, protocol, answer key, front matter or blank)","12,13,14,15,16"
+2b,155,"Teacher source only (guide, protocol, answer key, front matter or blank)","17,18,19"
+2b,156,"Teacher source only (guide, protocol, answer key, front matter or blank)","17,18,19"
+2b,157,"Teacher source only (guide, protocol, answer key, front matter or blank)","17,18,19"
+2b,158,"Teacher source only (guide, protocol, answer key, front matter or blank)","17,18,19"
+2b,159,"Teacher source only (guide, protocol, answer key, front matter or blank)","17,18,19"
+2b,160,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,161,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,162,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,163,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,164,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,165,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,166,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,167,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,168,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,169,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,170,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,171,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,172,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,173,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"
+2b,174,"Teacher source only (guide, protocol, answer key, front matter or blank)","20,21,22,23"

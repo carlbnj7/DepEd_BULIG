@@ -42,7 +42,7 @@ function activities(int $lid,int $pid=0):array{return rows("SELECT a.*,c.status,
 function lesson_available(int $pid,int $lid):bool{
  $l=one('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=? AND l.published=1',[$lid]);if(!$l)return false;
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$l['level_id']]))return false;
- if((int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid])!==(int)$l['level_id'])return false;
+ if(!level_available($pid,(int)$l['level_id']))return false;
  return !val('SELECT COUNT(*) FROM lessons l LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.module_id=? AND l.position<? AND l.published=1 AND p.completed_at IS NULL',[$pid,$l['module_id'],$l['position']]);
 }
 function completion_ok(?array $row):bool{return $row&&in_array($row['status'],['approved','completed'],true);}
@@ -90,7 +90,7 @@ function sync_assessments(int $pid,int $lid):void{
 }
 function refresh_progress(int $pid,int $lid):void{sync_assessments($pid,$lid);}
 function award_badges(int $pid):void{
- $v=['activity'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'lesson'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'streak'=>(int)val('SELECT longest_streak FROM pupil_streaks WHERE pupil_id=?',[$pid]),'reading'=>(int)val("SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.status IN ('approved','completed') AND a.type='reading'",[$pid]),'perfect'=>(int)val("SELECT COUNT(*) FROM assessment_attempts WHERE pupil_id=? AND status IN ('reviewed','submitted') AND score=max_score AND max_score>0",[$pid])];$v['level']=$v['lesson'];
+ $v=['activity'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'lesson'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'streak'=>(int)val('SELECT longest_streak FROM pupil_streaks WHERE pupil_id=?',[$pid]),'reading'=>(int)val("SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.status IN ('approved','completed') AND a.type='reading'",[$pid]),'perfect'=>(int)val("SELECT COUNT(*) FROM assessment_attempts WHERE pupil_id=? AND status IN ('reviewed','submitted') AND score=max_score AND max_score>0",[$pid])];$v['level']=(int)val('SELECT COUNT(*) FROM pupil_progress p JOIN lessons l ON l.id=p.lesson_id JOIN modules m ON m.id=l.module_id WHERE p.pupil_id=? AND p.completed_at IS NOT NULL AND m.level_id=1',[$pid]);
  foreach(rows('SELECT * FROM badges WHERE active=1') as $b)if(($v[$b['rule_type']]??0)>=$b['threshold_value'])q('INSERT IGNORE INTO pupil_badges(pupil_id,badge_id) VALUES(?,?)',[$pid,$b['id']]);
  q('INSERT IGNORE INTO pupil_rewards(pupil_id,reward_id) SELECT ?,id FROM rewards WHERE active=1 AND required_xp<=?',[$pid,$v['xp']]);
 }
@@ -100,7 +100,7 @@ function progress_stats(int $pid):array{
  return $s+['xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'completed'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'approved'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'pending'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status='submitted'",[$pid])];
 }
 function checked_image(string $path):string{
- if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
+ if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
 }
 function save_uploaded_image(string $field):string{
  if(empty($_FILES[$field])||$_FILES[$field]['error']!==UPLOAD_ERR_OK)fail('Choose an image smaller than 4 MB.');$f=$_FILES[$field];if($f['size']>4*1024*1024)fail('Image must be smaller than 4 MB.');
@@ -122,7 +122,7 @@ function visual_manifest():array{
  static $m=null;if($m===null){$f=__DIR__.'/../database/visual-manifest.json';$m=is_file($f)?json_decode(file_get_contents($f),true):[];}return $m?:[];
 }
 function local_image_file(string $path):?string{
- if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
+ if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
  $root=realpath(__DIR__.'/../public');$f=realpath($root.'/'.$path);
  return $f&&str_starts_with($f,$root.DIRECTORY_SEPARATOR)&&is_file($f)&&is_readable($f)?$f:null;
 }
@@ -156,4 +156,23 @@ function save_pupil_details(int $id,array $details):void{
 }
 function profile_avatar_choices():array{
  return ['boy-1'=>['Boy 1 · Side-part hair','male'],'boy-2'=>['Boy 2 · Curly hair','male'],'boy-3'=>['Boy 3 · Glasses','male'],'girl-1'=>['Girl 1 · Bob haircut','female'],'girl-2'=>['Girl 2 · Braids','female'],'girl-3'=>['Girl 3 · Ponytail and glasses','female']];
+}
+
+function level_available(int $pid,int $level):bool{
+ if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))return false;
+ $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);
+ if(!$start||$level<$start)return false;
+ if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1',[$level]))return false;
+ foreach(rows('SELECT id,published FROM bulig_levels WHERE id>=? AND id<? ORDER BY id',[$start,$level]) as $prior){
+  if(!$prior['published'])return false;
+  $counts=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1',[$pid,$prior['id']]);
+  if(!$counts['total']||$counts['total']!=$counts['done'])return false;
+ }
+ return true;
+}
+function lesson_level(int $lid):int{return (int)val('SELECT m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);}
+function level2_manifest():array{static $m;return $m??=json_decode(file_get_contents(__DIR__.'/../database/level2-manifest.json'),true);}
+function next_learning_lesson(int $pid):?array{
+ foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.published=1 AND p.completed_at IS NULL ORDER BY m.level_id,l.position',[$pid]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
+ return null;
 }
