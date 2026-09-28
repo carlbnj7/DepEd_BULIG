@@ -43,6 +43,7 @@ function lesson_available(int $pid,int $lid):bool{
  $l=one('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=? AND l.published=1',[$lid]);if(!$l)return false;
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$l['level_id']]))return false;
  if(!level_available($pid,(int)$l['level_id']))return false;
+ if((int)$l['level_id']<(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]))return true;
  return !val('SELECT COUNT(*) FROM lessons l LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.module_id=? AND l.position<? AND l.published=1 AND p.completed_at IS NULL',[$pid,$l['module_id'],$l['position']]);
 }
 function completion_ok(?array $row):bool{return $row&&in_array($row['status'],['approved','completed'],true);}
@@ -112,6 +113,8 @@ function save_uploaded_image(string $field):string{
 
 // Keep the gallery and single-image fields compatible with existing imports.
 function activity_images(array $a):array{
+ $reviewed=level1_visual_override($a);if($reviewed!==null)return array_column($reviewed['images'],'src');
+ $native=level2_native_images($a);if($native!==null)return $native;
  $paths=json_decode($a['image_paths']??'[]',true);
  if(!is_array($paths))$paths=[];
  $paths=array_values(array_filter($paths,fn($v)=>is_string($v)&&trim($v)!==''));
@@ -161,7 +164,7 @@ function profile_avatar_choices():array{
 function level_available(int $pid,int $level):bool{
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))return false;
  $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);
- if(!$start||$level<$start)return false;
+ if(!$start)return false;
  if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1',[$level]))return false;
  foreach(rows('SELECT id,published FROM bulig_levels WHERE id>=? AND id<? ORDER BY id',[$start,$level]) as $prior){
   if(!$prior['published'])return false;
@@ -173,6 +176,10 @@ function level_available(int $pid,int $level):bool{
 function lesson_level(int $lid):int{return (int)val('SELECT m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);}
 function level2_manifest():array{static $m;return $m??=json_decode(file_get_contents(__DIR__.'/../database/level2-manifest.json'),true);}
 function next_learning_lesson(int $pid):?array{
- foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.published=1 AND p.completed_at IS NULL ORDER BY m.level_id,l.position',[$pid]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
+ foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id JOIN pupil_level_assignments assigned ON assigned.pupil_id=? LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=assigned.pupil_id WHERE m.level_id>=assigned.level_id AND l.published=1 AND p.completed_at IS NULL ORDER BY m.level_id,l.position',[$pid]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
  return null;
 }
+
+require_once __DIR__.'/level2_cards.php';
+
+require_once __DIR__.'/presentation.php';

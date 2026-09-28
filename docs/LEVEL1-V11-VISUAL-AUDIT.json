@@ -1,0 +1,1802 @@
+[
+  {
+    "activity_id": 1,
+    "lesson": 1,
+    "source_page": 7,
+    "prompt": "“Tell me your name and age.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 2,
+    "lesson": 1,
+    "source_page": 7,
+    "prompt": "“What is one thing you like to do for fun?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 3,
+    "lesson": 1,
+    "source_page": 7,
+    "prompt": "“Who lives with you at home?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 4,
+    "lesson": 1,
+    "source_page": 7,
+    "prompt": "“Tell me one thing about your mom, dad, or sibling.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 5,
+    "lesson": 1,
+    "source_page": 7,
+    "prompt": "“What is your family’s favorite food to eat together?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 6,
+    "lesson": 1,
+    "source_page": 87,
+    "prompt": "“Introduce yourself: tell me your name, age, and one thing that makes you happy.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 7,
+    "lesson": 1,
+    "source_page": 87,
+    "prompt": "“Describe your family—how many members are there, and what does your family like to do together?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 8,
+    "lesson": 1,
+    "source_page": 87,
+    "prompt": "“Tell me about a time you had fun with your family.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 9,
+    "lesson": 1,
+    "source_page": 87,
+    "prompt": "“What is something special about one of your family members?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 10,
+    "lesson": 1,
+    "source_page": 87,
+    "prompt": "“Share one thing you love about your home.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 11,
+    "lesson": 2,
+    "source_page": 8,
+    "prompt": "“Stand up.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 12,
+    "lesson": 2,
+    "source_page": 8,
+    "prompt": "“Walk to the window and point at something blue.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 13,
+    "lesson": 2,
+    "source_page": 8,
+    "prompt": "“Pick up the pencil and put it on the table.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 14,
+    "lesson": 2,
+    "source_page": 8,
+    "prompt": "“Turn around and clap your hands once.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 15,
+    "lesson": 2,
+    "source_page": 8,
+    "prompt": "“Go to the front of the room and wave at me.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 16,
+    "lesson": 2,
+    "source_page": 88,
+    "prompt": "“Close the door gently, and walk back to your seat.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 17,
+    "lesson": 2,
+    "source_page": 88,
+    "prompt": "“Open your book to page 5, and put it on your lap.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 18,
+    "lesson": 2,
+    "source_page": 88,
+    "prompt": "“Jump twice, and sit down quietly.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 19,
+    "lesson": 2,
+    "source_page": 88,
+    "prompt": "“Draw a circle on the board and return to your seat.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 20,
+    "lesson": 2,
+    "source_page": 88,
+    "prompt": "“Give one crayon to your seatmate and keep the other.” (2-step)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 21,
+    "lesson": 3,
+    "source_page": 9,
+    "prompt": "“If you want your friend to pass you a pencil, what will you say?” (1- instruction)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 22,
+    "lesson": 3,
+    "source_page": 9,
+    "prompt": "“You want your sibling to do something for you. How will you say it?” (1- instruction)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 23,
+    "lesson": 3,
+    "source_page": 9,
+    "prompt": "“What would you say to ask someone to open the window?” (1-instruction)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 24,
+    "lesson": 3,
+    "source_page": 9,
+    "prompt": "“If you want your mom to give you a snack, what will you say?” (1-instruction)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 25,
+    "lesson": 3,
+    "source_page": 9,
+    "prompt": "“Tell me how to ask a classmate if you need help.” (1-instruction)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 26,
+    "lesson": 3,
+    "source_page": 89,
+    "prompt": "“Ask your younger sister to keep her toys away—say two instructions in one sentence.” (e.g., “Please pick up your toys and put them in the box.”)",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 27,
+    "lesson": 3,
+    "source_page": 89,
+    "prompt": "“Tell your friend how to get a book from the shelf and give it to you—use two instructions.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 28,
+    "lesson": 3,
+    "source_page": 89,
+    "prompt": "“What would you say to ask someone to set the table: one instruction for the plate, one for the fork?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 29,
+    "lesson": 3,
+    "source_page": 89,
+    "prompt": "“Ask your brother to turn off the TV and come to dinner—say it clearly with two steps.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 30,
+    "lesson": 3,
+    "source_page": 89,
+    "prompt": "“Tell me two instructions to ask a classmate to clean up their desk.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 31,
+    "lesson": 4,
+    "source_page": 10,
+    "prompt": "“Look at this red apple—what color is it?”",
+    "status": "corrected",
+    "reason": "Provide the red apple named in the question."
+  },
+  {
+    "activity_id": 32,
+    "lesson": 4,
+    "source_page": 10,
+    "prompt": "“Look at this big box—what word tells the size of the box?”",
+    "status": "corrected",
+    "reason": "Provide an unambiguous big box."
+  },
+  {
+    "activity_id": 33,
+    "lesson": 4,
+    "source_page": 10,
+    "prompt": "“Look at this round ball—what shape is the ball?”",
+    "status": "corrected",
+    "reason": "Provide the round ball named in the question."
+  },
+  {
+    "activity_id": 34,
+    "lesson": 4,
+    "source_page": 10,
+    "prompt": "“Look at this tall tree—what word tells us how high it is?”",
+    "status": "corrected",
+    "reason": "Provide the tall tree named in the question."
+  },
+  {
+    "activity_id": 35,
+    "lesson": 4,
+    "source_page": 10,
+    "prompt": "“Look at this short pencil—what word tells us the length of the object?”",
+    "status": "corrected",
+    "reason": "Provide a clear length comparison."
+  },
+  {
+    "activity_id": 36,
+    "lesson": 4,
+    "source_page": 90,
+    "prompt": "“Describe this teddy bear—tell me its color, size, and how it feels.”",
+    "status": "corrected",
+    "reason": "Provide a visible teddy bear to describe."
+  },
+  {
+    "activity_id": 37,
+    "lesson": 4,
+    "source_page": 90,
+    "prompt": "“Look at this square book—tell me two more words to describe it (e.g., heavy, thick).”",
+    "status": "corrected",
+    "reason": "Provide the square book named in the question."
+  },
+  {
+    "activity_id": 38,
+    "lesson": 4,
+    "source_page": 90,
+    "prompt": "“Describe this small, blue car—use three describing words.”",
+    "status": "corrected",
+    "reason": "Provide the small blue car named in the question."
+  },
+  {
+    "activity_id": 39,
+    "lesson": 4,
+    "source_page": 90,
+    "prompt": "“Look at this long measuring tape—what word tells us how far it stretches?”",
+    "status": "corrected",
+    "reason": "Provide the long measuring tape named in the question."
+  },
+  {
+    "activity_id": 40,
+    "lesson": 4,
+    "source_page": 90,
+    "prompt": "“Describe your classroom—use two words for its size and one for its color.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 41,
+    "lesson": 5,
+    "source_page": 11,
+    "prompt": "“I’m showing you a picture of a dog—what do you think about it?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 42,
+    "lesson": 5,
+    "source_page": 11,
+    "prompt": "“What is your favorite toy? Tell me one thing you like about it.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 43,
+    "lesson": 5,
+    "source_page": 11,
+    "prompt": "“Look at this picture of a park—what would you do there?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 44,
+    "lesson": 5,
+    "source_page": 11,
+    "prompt": "“What is your favorite cartoon? Tell me why you like it.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 45,
+    "lesson": 5,
+    "source_page": 11,
+    "prompt": "“Look at this picture of ice cream—do you like it? Why or why not?”",
+    "status": "corrected",
+    "reason": "Replace unrelated picnic picture with ice cream."
+  },
+  {
+    "activity_id": 46,
+    "lesson": 5,
+    "source_page": 91,
+    "prompt": "“I’m showing you a picture of a birthday party—tell me what you think about it.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 47,
+    "lesson": 5,
+    "source_page": 91,
+    "prompt": "“Tell me about your favorite game—how to play it and why you like it.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 48,
+    "lesson": 5,
+    "source_page": 91,
+    "prompt": "“Look at this picture of a rainbow—what do you feel when you see a rainbow? Why?”",
+    "status": "corrected",
+    "reason": "Supply the missing rainbow scene."
+  },
+  {
+    "activity_id": 49,
+    "lesson": 5,
+    "source_page": 91,
+    "prompt": "“What is your favorite subject in school? Explain what you like to do during your class.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 50,
+    "lesson": 5,
+    "source_page": 91,
+    "prompt": "“Look at this picture of a forest—what would you explore there and why?”",
+    "status": "corrected",
+    "reason": "Replace festival scene with a forest."
+  },
+  {
+    "activity_id": 51,
+    "lesson": 6,
+    "source_page": 12,
+    "prompt": "“I’m showing you a picture of a sun—describe it so I can draw it.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 52,
+    "lesson": 6,
+    "source_page": 12,
+    "prompt": "“Describe this picture of a bird—tell me its color and shape.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 53,
+    "lesson": 6,
+    "source_page": 12,
+    "prompt": "“I’m showing you a picture of a house—describe what it looks like.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 54,
+    "lesson": 6,
+    "source_page": 12,
+    "prompt": "“Describe this picture of a flower—tell me its color and how many petals it has.”",
+    "status": "corrected",
+    "reason": "Use a clear flower with countable petals."
+  },
+  {
+    "activity_id": 55,
+    "lesson": 6,
+    "source_page": 12,
+    "prompt": "“Look at the picture of a car—describe its shape and color.”",
+    "status": "corrected",
+    "reason": "Replace ambiguous van-and-picnic illustration with a clear car."
+  },
+  {
+    "activity_id": 56,
+    "lesson": 6,
+    "source_page": 92,
+    "prompt": "“I’m showing you a picture of a cat sitting on a chair—describe it: color of the cat, shape of the chair, where the cat is sitting.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 57,
+    "lesson": 6,
+    "source_page": 92,
+    "prompt": "“Describe this picture of a tree with apples—tell me the tree’s color, how many apples, and if the apples are big or small.”",
+    "status": "corrected",
+    "reason": "Supply the missing apple tree."
+  },
+  {
+    "activity_id": 58,
+    "lesson": 6,
+    "source_page": 92,
+    "prompt": "“I’m showing you a picture of a boy playing with a ball—describe the boy’s clothes, the ball’s color, and what he’s doing.”",
+    "status": "corrected",
+    "reason": "Supply the missing boy-and-ball picture."
+  },
+  {
+    "activity_id": 59,
+    "lesson": 6,
+    "source_page": 92,
+    "prompt": "“Describe this picture of a book on a table—tell me the book’s color, the table’s shape, and where the book is on the table.”",
+    "status": "corrected",
+    "reason": "Supply the missing book-on-table scene."
+  },
+  {
+    "activity_id": 60,
+    "lesson": 6,
+    "source_page": 92,
+    "prompt": "“I’m showing you a picture of a rainbow over a lake—describe the colors of the rainbow, the lake’s color, and where the rainbow is.”",
+    "status": "corrected",
+    "reason": "Supply the missing rainbow scene."
+  },
+  {
+    "activity_id": 61,
+    "lesson": 7,
+    "source_page": 13,
+    "prompt": "“Tell me a short story about something you did yesterday—start with ‘I’.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 62,
+    "lesson": 7,
+    "source_page": 13,
+    "prompt": "“Tell me a story about a time you played with a friend—use ‘I’ when talking about yourself.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 63,
+    "lesson": 7,
+    "source_page": 13,
+    "prompt": "“Tell me a short made-up story about a magical animal—start with ‘I saw a magical…’.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 64,
+    "lesson": 7,
+    "source_page": 13,
+    "prompt": "“Tell me a story about something that made you happy—use ‘I’.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 65,
+    "lesson": 7,
+    "source_page": 13,
+    "prompt": "“Tell me a short story about going to the park—start with ‘I went to the park…’.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 66,
+    "lesson": 7,
+    "source_page": 93,
+    "prompt": "“Tell your partner your story in first person—speak clearly so they can hear all the details.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 67,
+    "lesson": 7,
+    "source_page": 93,
+    "prompt": "“Now, retell your partner’s story to me—include at least two key details (e.g., who was in it, what happened).”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 68,
+    "lesson": 7,
+    "source_page": 93,
+    "prompt": "“Tell your story again—make sure to start with ‘I’ and keep it in order.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 69,
+    "lesson": 7,
+    "source_page": 93,
+    "prompt": "“Retell your partner’s story—use ‘he/she/they’ when talking about the people in it.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 70,
+    "lesson": 7,
+    "source_page": 93,
+    "prompt": "“Tell me one key detail from your partner’s story that you liked.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 71,
+    "lesson": 8,
+    "source_page": 13,
+    "prompt": "Point to one thing in the picture and name it.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 72,
+    "lesson": 8,
+    "source_page": 13,
+    "prompt": "What color is the [object] in the picture?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 73,
+    "lesson": 8,
+    "source_page": 13,
+    "prompt": "Tell me about something big and/or small you see on the picture.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 74,
+    "lesson": 8,
+    "source_page": 93,
+    "prompt": "Tell a short story (2-3 sentences) about the picture.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 75,
+    "lesson": 8,
+    "source_page": 93,
+    "prompt": "What might happen after the scene in the picture?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 76,
+    "lesson": 8,
+    "source_page": 93,
+    "prompt": "How would you feel if you were in this picture?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 77,
+    "lesson": 9,
+    "source_page": 13,
+    "prompt": "Clap the rhythm of a nursery rhyme (e.g., \"Twinkle, Twinkle\").",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 78,
+    "lesson": 9,
+    "source_page": 13,
+    "prompt": "Repeat a line from a simple poem after the teacher.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 79,
+    "lesson": 9,
+    "source_page": 13,
+    "prompt": "Do you like poems that rhyme? Why?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 80,
+    "lesson": 9,
+    "source_page": 93,
+    "prompt": "Recite the entire poem with actions.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 81,
+    "lesson": 9,
+    "source_page": 93,
+    "prompt": "What is the poem mostly about? (Example: \"It’s about rain.\")",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 82,
+    "lesson": 9,
+    "source_page": 93,
+    "prompt": "Draw a picture of your favorite part of the poem.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 83,
+    "lesson": 10,
+    "source_page": 13,
+    "prompt": "Describe what the people or animals in the picture are doing. (Example: \"The girl is jumping.\")",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 84,
+    "lesson": 10,
+    "source_page": 13,
+    "prompt": "What do you think the weather is like in the picture? How do you know?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 85,
+    "lesson": 10,
+    "source_page": 13,
+    "prompt": "Ask a friend: \"What do you like about this picture?\"",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 86,
+    "lesson": 10,
+    "source_page": 93,
+    "prompt": "Create a group story: Each student adds one sentence. (Example: \"Once, a dog met a cat...\")",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 87,
+    "lesson": 10,
+    "source_page": 93,
+    "prompt": "Act out a problem-solving scenario (e.g., sharing crayons).",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 88,
+    "lesson": 10,
+    "source_page": 93,
+    "prompt": "Ask a friend: \"What did you enjoy doing today?\"",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 89,
+    "lesson": 11,
+    "source_page": 14,
+    "prompt": "“I say ‘cat’—what’s one word that makes you think of ‘cat’?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 90,
+    "lesson": 11,
+    "source_page": 14,
+    "prompt": "“I say ‘sun’—what’s one word that goes with ‘sun’?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 91,
+    "lesson": 11,
+    "source_page": 14,
+    "prompt": "“I say ‘book’—what’s one word related to ‘book’?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 92,
+    "lesson": 11,
+    "source_page": 14,
+    "prompt": "“I say ‘water’—what’s one word that makes you think of ‘water’?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 93,
+    "lesson": 11,
+    "source_page": 14,
+    "prompt": "“I say ‘friend’—what’s one word that goes with ‘friend’?”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 94,
+    "lesson": 11,
+    "source_page": 95,
+    "prompt": "“I say ‘dog’—tell me two words related to ‘dog’ and explain why (e.g., ‘bone’ because dogs like bones).”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 95,
+    "lesson": 11,
+    "source_page": 95,
+    "prompt": "“I say ‘school’—tell me three words that go with ‘school’.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 96,
+    "lesson": 11,
+    "source_page": 95,
+    "prompt": "“I say ‘rain’—tell me two words related to ‘rain’ and say what they have to do with rain.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 97,
+    "lesson": 11,
+    "source_page": 95,
+    "prompt": "“I say ‘toy’—tell me three words that make you think of ‘toy’.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 98,
+    "lesson": 11,
+    "source_page": 95,
+    "prompt": "“I say ‘food’—tell me two words related to ‘food’ and explain why.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 99,
+    "lesson": 12,
+    "source_page": 14,
+    "prompt": "“Say this slowly: ‘Red lorry, yellow lorry.’”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 100,
+    "lesson": 12,
+    "source_page": 14,
+    "prompt": "“Say this slowly: ‘She sells seashells by the seashore.’”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 101,
+    "lesson": 12,
+    "source_page": 14,
+    "prompt": "“Say this slowly: ‘Six sick sheep shepherds’ sheep.’”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 102,
+    "lesson": 12,
+    "source_page": 94,
+    "prompt": "“Say ‘Red lorry, yellow lorry’ two times in a row—speak clearly, not too fast.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 103,
+    "lesson": 12,
+    "source_page": 94,
+    "prompt": "“Say ‘She sells seashells by the seashore’ once—make sure I can hear every word.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 104,
+    "lesson": 12,
+    "source_page": 94,
+    "prompt": "“Say ‘Peter Piper picked a peck of pickled peppers’ slowly, then a little faster (still clear!).”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 105,
+    "lesson": 12,
+    "source_page": 94,
+    "prompt": "“Say ‘Six sick sheep shepherds’ sheep’ two times—don’t mix up the words.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 106,
+    "lesson": 12,
+    "source_page": 94,
+    "prompt": "“Say ‘How much wood would a woodchuck chuck?’ once—speak with a steady pace.”",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 107,
+    "lesson": 1,
+    "source_page": 47,
+    "prompt": "Hello, my name is [name]",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 108,
+    "lesson": 1,
+    "source_page": 48,
+    "prompt": "Who do you see in this picture? What do you like to do with your own family?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 109,
+    "lesson": 1,
+    "source_page": 16,
+    "prompt": "My name is …",
+    "status": "corrected",
+    "reason": "Personal name and age prompts do not use an unrelated family photograph."
+  },
+  {
+    "activity_id": 110,
+    "lesson": 1,
+    "source_page": 16,
+    "prompt": "I am _____ years old.",
+    "status": "corrected",
+    "reason": "Personal name and age prompts do not use an unrelated family photograph."
+  },
+  {
+    "activity_id": 111,
+    "lesson": 1,
+    "source_page": 16,
+    "prompt": "My family has …",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 112,
+    "lesson": 1,
+    "source_page": 16,
+    "prompt": "We like to …",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 113,
+    "lesson": 1,
+    "source_page": 48,
+    "prompt": "Student A uses the sentence starters to share about themselves and their family. Student B listens, then shares their own information.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 114,
+    "lesson": 2,
+    "source_page": 50,
+    "prompt": "Head, Shoulders, Knees, and Toes",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 115,
+    "lesson": 2,
+    "source_page": 51,
+    "prompt": "Go to the chair",
+    "status": "corrected",
+    "reason": "Match going to the chair."
+  },
+  {
+    "activity_id": 116,
+    "lesson": 2,
+    "source_page": 51,
+    "prompt": "Go to the door, then close it.",
+    "status": "corrected",
+    "reason": "Match the door direction."
+  },
+  {
+    "activity_id": 117,
+    "lesson": 2,
+    "source_page": 51,
+    "prompt": "Pick up the book, then give it to me",
+    "status": "corrected",
+    "reason": "Show picking up then giving the book in order."
+  },
+  {
+    "activity_id": 118,
+    "lesson": 2,
+    "source_page": 51,
+    "prompt": "When I said ‘Go to the door and close it,’ what was the first thing you did? The second thing?",
+    "status": "corrected",
+    "reason": "Match the door direction."
+  },
+  {
+    "activity_id": 119,
+    "lesson": 2,
+    "source_page": 51,
+    "prompt": "Why is it important to listen to all the direction before you start?",
+    "status": "corrected",
+    "reason": "This is an in-person direction; remove unrelated chair/book images."
+  },
+  {
+    "activity_id": 120,
+    "lesson": 2,
+    "source_page": 51,
+    "prompt": "Go to the window and tap it twice.",
+    "status": "corrected",
+    "reason": "This is an in-person direction; remove unrelated chair/book images."
+  },
+  {
+    "activity_id": 121,
+    "lesson": 2,
+    "source_page": 51,
+    "prompt": "Pick up one pencil and put it on the table.",
+    "status": "corrected",
+    "reason": "This is an in-person direction; remove unrelated chair/book images."
+  },
+  {
+    "activity_id": 122,
+    "lesson": 2,
+    "source_page": 51,
+    "prompt": "Run to the whiteboard, then sit down in your chair.",
+    "status": "corrected",
+    "reason": "This is an in-person direction; remove unrelated chair/book images."
+  },
+  {
+    "activity_id": 123,
+    "lesson": 2,
+    "source_page": 16,
+    "prompt": "Run to the door, then close it.",
+    "status": "corrected",
+    "reason": "Match the door direction."
+  },
+  {
+    "activity_id": 124,
+    "lesson": 2,
+    "source_page": 16,
+    "prompt": "Go to your chair, then sit down.",
+    "status": "corrected",
+    "reason": "Show going to the chair then sitting."
+  },
+  {
+    "activity_id": 125,
+    "lesson": 2,
+    "source_page": 16,
+    "prompt": "Pick-up the book, then give it to me.",
+    "status": "corrected",
+    "reason": "Show picking up then giving the book in order."
+  },
+  {
+    "activity_id": 126,
+    "lesson": 2,
+    "source_page": 16,
+    "prompt": "Sit down and keep quiet.",
+    "status": "corrected",
+    "reason": "Match sit down."
+  },
+  {
+    "activity_id": 127,
+    "lesson": 3,
+    "source_page": 53,
+    "prompt": "Pick up one block and put it on your desk",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 128,
+    "lesson": 3,
+    "source_page": 53,
+    "prompt": "Have you ever seen a room like this? If your younger sister made this mess, what would you say to ask her to clean it up?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 129,
+    "lesson": 3,
+    "source_page": 54,
+    "prompt": "Can you please keep your toys away and put them in the toy box?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 130,
+    "lesson": 3,
+    "source_page": 54,
+    "prompt": "Can you pick up your cars and put them on the shelf?",
+    "status": "corrected",
+    "reason": "Use the messy room containing cars, without an unrelated tidying scene."
+  },
+  {
+    "activity_id": 131,
+    "lesson": 3,
+    "source_page": 54,
+    "prompt": "What polite words did I use when asking my sister?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 132,
+    "lesson": 3,
+    "source_page": 54,
+    "prompt": "What was the first step I asked her to do? The second step? Why is order important?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 133,
+    "lesson": 3,
+    "source_page": 54,
+    "prompt": "How do you think your sister would feel if you asked nicely vs. yelling?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 134,
+    "lesson": 3,
+    "source_page": 55,
+    "prompt": "Your younger sister left her dolls on the bed. What 2 things will you ask her to do?",
+    "status": "corrected",
+    "reason": "Spoken role-play scenario: remove unrelated photographs that do not depict the dolls-on-bed or litter scenario."
+  },
+  {
+    "activity_id": 135,
+    "lesson": 3,
+    "source_page": 17,
+    "prompt": "Your younger brother throws his trash anywhere. What 2 things will you ask him to do?",
+    "status": "corrected",
+    "reason": "Spoken role-play scenario: remove unrelated photographs that do not depict the dolls-on-bed or litter scenario."
+  },
+  {
+    "activity_id": 136,
+    "lesson": 4,
+    "source_page": 56,
+    "prompt": "I’m thinking of something in this room that’s red. Can you guess what it is?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 137,
+    "lesson": 4,
+    "source_page": 57,
+    "prompt": "Which drawing tells you more about the cat? Why?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 138,
+    "lesson": 4,
+    "source_page": 18,
+    "prompt": "Point to each word and its picture, and say the word aloud.",
+    "status": "corrected",
+    "reason": "Display the individual source cards instead of the entire worksheet."
+  },
+  {
+    "activity_id": 139,
+    "lesson": 4,
+    "source_page": 19,
+    "prompt": "Point to each word and its picture, and say the word aloud.",
+    "status": "corrected",
+    "reason": "Display the individual source cards instead of the entire worksheet."
+  },
+  {
+    "activity_id": 140,
+    "lesson": 4,
+    "source_page": 20,
+    "prompt": "Point to each word and its picture, and say the word aloud.",
+    "status": "corrected",
+    "reason": "Display the individual source cards instead of the entire worksheet."
+  },
+  {
+    "activity_id": 141,
+    "lesson": 4,
+    "source_page": 21,
+    "prompt": "Point to each word and its picture, and say the word aloud.",
+    "status": "corrected",
+    "reason": "Display the individual source cards instead of the entire worksheet."
+  },
+  {
+    "activity_id": 142,
+    "lesson": 4,
+    "source_page": 22,
+    "prompt": "Point to each word and its picture, and say the word aloud.",
+    "status": "corrected",
+    "reason": "Display the individual source cards instead of the entire worksheet."
+  },
+  {
+    "activity_id": 143,
+    "lesson": 4,
+    "source_page": 58,
+    "prompt": "What describing words can we use for this?",
+    "status": "corrected",
+    "reason": "Provide the object referenced by this."
+  },
+  {
+    "activity_id": 144,
+    "lesson": 4,
+    "source_page": 58,
+    "prompt": "Why do we use describing words when we talk?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 145,
+    "lesson": 4,
+    "source_page": 58,
+    "prompt": "Can we use more than one describing word for something? Let’s try with the box – is it square, blue, or both?",
+    "status": "corrected",
+    "reason": "Match both blue and square in the sentence."
+  },
+  {
+    "activity_id": 146,
+    "lesson": 4,
+    "source_page": 58,
+    "prompt": "What describing words can we use for places, like a park?",
+    "status": "corrected",
+    "reason": "Match the park example."
+  },
+  {
+    "activity_id": 147,
+    "lesson": 4,
+    "source_page": 59,
+    "prompt": "One student looks at the picture and thinks of 2-3 describing words for it. They say the describing words aloud and their partner guesses what’s in the picture. Pairs switch roles after 5 minutes.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 148,
+    "lesson": 5,
+    "source_page": 60,
+    "prompt": "Say one sentence about something you love.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 149,
+    "lesson": 5,
+    "source_page": 61,
+    "prompt": "Who likes dogs? What do you see in this picture? What do you think the dog is feeling?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 150,
+    "lesson": 5,
+    "source_page": 61,
+    "prompt": "I see…",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 151,
+    "lesson": 5,
+    "source_page": 61,
+    "prompt": "I think…",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 152,
+    "lesson": 5,
+    "source_page": 61,
+    "prompt": "I like…",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 153,
+    "lesson": 5,
+    "source_page": 61,
+    "prompt": "It makes me feel…",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 154,
+    "lesson": 5,
+    "source_page": 23,
+    "prompt": "One student picks a picture from the pack and shares their thoughts using at least 2 sentence starters. The other students listen, then one peer asks a follow-up question. Everyone in the group takes a turn picking a picture and sharing.",
+    "status": "corrected",
+    "reason": "Display the individual source cards instead of the entire worksheet."
+  },
+  {
+    "activity_id": 155,
+    "lesson": 5,
+    "source_page": 24,
+    "prompt": "One student picks a picture from the pack and shares their thoughts using at least 2 sentence starters. The other students listen, then one peer asks a follow-up question. Everyone in the group takes a turn picking a picture and sharing.",
+    "status": "corrected",
+    "reason": "Display the individual source cards instead of the entire worksheet."
+  },
+  {
+    "activity_id": 156,
+    "lesson": 5,
+    "source_page": 25,
+    "prompt": "One student picks a picture from the pack and shares their thoughts using at least 2 sentence starters. The other students listen, then one peer asks a follow-up question. Everyone in the group takes a turn picking a picture and sharing.",
+    "status": "corrected",
+    "reason": "Display the individual source cards instead of the entire worksheet."
+  },
+  {
+    "activity_id": 157,
+    "lesson": 6,
+    "source_page": 63,
+    "prompt": "a small, blue square",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 158,
+    "lesson": 6,
+    "source_page": 64,
+    "prompt": "First, there’s a big, green tree branch in the middle. On top of the branch, there’s a small, red bird with a yellow beak. Next to the bird, there’s a bright yellow flower with five petals. The sky behind is light blue.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 159,
+    "lesson": 6,
+    "source_page": 64,
+    "prompt": "What details helped you draw it right?",
+    "status": "corrected",
+    "reason": "Match every stated drawing detail; shown after the listen-and-draw task."
+  },
+  {
+    "activity_id": 160,
+    "lesson": 6,
+    "source_page": 64,
+    "prompt": "What would happen if I forgot to say ‘small’ about the bird? Or ‘next to the bird’ about the flower?",
+    "status": "corrected",
+    "reason": "Match every stated drawing detail; shown after the listen-and-draw task."
+  },
+  {
+    "activity_id": 161,
+    "lesson": 6,
+    "source_page": 64,
+    "prompt": "Why is it important to describe things in order (e.g., ‘first the branch, then the bird’)?",
+    "status": "corrected",
+    "reason": "Match every stated drawing detail; shown after the listen-and-draw task."
+  },
+  {
+    "activity_id": 162,
+    "lesson": 6,
+    "source_page": 65,
+    "prompt": "The Describer looks at their picture and describes it using key details and the visual aid words. The Drawer listens carefully and draws what they hear—they can ask clarifying questions. After 5 minutes, have pairs switch roles with a new secret picture.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 163,
+    "lesson": 7,
+    "source_page": 66,
+    "prompt": "What do you see in this picture? What do you think will happen next?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 164,
+    "lesson": 7,
+    "source_page": 67,
+    "prompt": "Once upon a time, there was a little cat named Mimi. She woke up early in her cozy bed. Mimi jumped out of bed and walked outside to the garden.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 165,
+    "lesson": 7,
+    "source_page": 68,
+    "prompt": "The first student looks at the first picture and says one sentence. The next student looks at the second picture and says a sentence that connects to the first. Continue until all pictures are used and the story has an ending. One student from each group will share the complete story with the class.",
+    "status": "corrected",
+    "reason": "Preserve the source reading order of both story groups."
+  },
+  {
+    "activity_id": 166,
+    "lesson": 7,
+    "source_page": 69,
+    "prompt": "The first student looks at the first picture and says one sentence. The next student looks at the second picture and says a sentence that connects to the first. Continue until all pictures are used and the story has an ending. One student from each group will share the complete story with the class.",
+    "status": "corrected",
+    "reason": "Use only the original ordered story illustrations, not the printed directions."
+  },
+  {
+    "activity_id": 167,
+    "lesson": 7,
+    "source_page": 70,
+    "prompt": "The first student looks at the first picture and says one sentence. The next student looks at the second picture and says a sentence that connects to the first. Continue until all pictures are used and the story has an ending. One student from each group will share the complete story with the class.",
+    "status": "corrected",
+    "reason": "Use only the original ordered story illustrations, not the printed directions."
+  },
+  {
+    "activity_id": 168,
+    "lesson": 7,
+    "source_page": 70,
+    "prompt": "How did working together help us make the story?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 169,
+    "lesson": 8,
+    "source_page": 72,
+    "prompt": "What do you think this is? What do you think is in the rest of the picture?",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 170,
+    "lesson": 8,
+    "source_page": 73,
+    "prompt": "Look closely at the picture, and when you see something, stand up and say what it is.",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 171,
+    "lesson": 8,
+    "source_page": 73,
+    "prompt": "Who is in the picture?",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 172,
+    "lesson": 8,
+    "source_page": 73,
+    "prompt": "What are the children doing?",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 173,
+    "lesson": 8,
+    "source_page": 73,
+    "prompt": "Where are they?",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 174,
+    "lesson": 8,
+    "source_page": 73,
+    "prompt": "When do you think this is happening?",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 175,
+    "lesson": 8,
+    "source_page": 73,
+    "prompt": "Why do you think they’re happy?",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 176,
+    "lesson": 8,
+    "source_page": 73,
+    "prompt": "Now, think about a time you did something like what’s in the picture. Can you share 1 or 2 sentences about it?",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 177,
+    "lesson": 8,
+    "source_page": 74,
+    "prompt": "What did we learn today about pictures?",
+    "status": "corrected",
+    "reason": "Keep the same playground scene for all Picture Talk questions."
+  },
+  {
+    "activity_id": 178,
+    "lesson": 9,
+    "source_page": 75,
+    "prompt": "cat – hat; dog – frog; bird – word",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 179,
+    "lesson": 9,
+    "source_page": 76,
+    "prompt": "Itsy bitsy spider climbed up the waterspout. down came the rain and washed the spider out; out came the sun and dried up all the rain; and the itsy-bitsy spider climbed up the spout again.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 180,
+    "lesson": 9,
+    "source_page": 76,
+    "prompt": "Who knows this poem? What does the spider do? How did the voice sound? Was it happy? Silly?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 181,
+    "lesson": 9,
+    "source_page": 76,
+    "prompt": "Students choose a poem they know or like (based on the pictures). The teacher helps each student point to the words as they say the poem aloud once.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 182,
+    "lesson": 9,
+    "source_page": 77,
+    "prompt": "Buddies take turns reciting: Speak loud! Smile! Add a dance!",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 183,
+    "lesson": 9,
+    "source_page": 77,
+    "prompt": "The teacher circulates to listen to 1–2 lines from each student, giving quick feedback.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 184,
+    "lesson": 9,
+    "source_page": 77,
+    "prompt": "What was fun about reciting your poem?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 185,
+    "lesson": 10,
+    "source_page": 78,
+    "prompt": "Hi! My name is [Teacher’s name]. How are you, [Student’s name]?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 186,
+    "lesson": 10,
+    "source_page": 79,
+    "prompt": "Who has a toy at home? What’s your toy like?",
+    "status": "corrected",
+    "reason": "Replace weather scenes with the toys discussed in the sentences."
+  },
+  {
+    "activity_id": 187,
+    "lesson": 10,
+    "source_page": 79,
+    "prompt": "Students take turns showing their toy (or picture) and sharing 1–2 things about it. After each share, friends ask a simple question: “What color is it?” or “Do you like it?”",
+    "status": "corrected",
+    "reason": "Replace weather scenes with the toys discussed in the sentences."
+  },
+  {
+    "activity_id": 188,
+    "lesson": 10,
+    "source_page": 79,
+    "prompt": "Do you have a [car/doll/teddy]? We both have a [toy]!",
+    "status": "corrected",
+    "reason": "Replace weather scenes with the toys discussed in the sentences."
+  },
+  {
+    "activity_id": 189,
+    "lesson": 10,
+    "source_page": 80,
+    "prompt": "Pairs pick a toy from the Chat Box. They create a 2-sentence story together. Add simple actions while saying the story.",
+    "status": "corrected",
+    "reason": "Replace weather scenes with the toys discussed in the sentences."
+  },
+  {
+    "activity_id": 190,
+    "lesson": 10,
+    "source_page": 80,
+    "prompt": "What was fun about talking to your friend today?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 191,
+    "lesson": 11,
+    "source_page": 81,
+    "prompt": "Teacher says a word (e.g., “red”). Student catches the ball and says a word friend (e.g., “apple”).",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 192,
+    "lesson": 11,
+    "source_page": 81,
+    "prompt": "What words do you think of? Meow? Milk? Paws?",
+    "status": "corrected",
+    "reason": "Match the cat word-association prompt instead of showing nine unrelated objects."
+  },
+  {
+    "activity_id": 193,
+    "lesson": 11,
+    "source_page": 82,
+    "prompt": "What words go with cat?",
+    "status": "corrected",
+    "reason": "Match the cat word-association prompt instead of showing nine unrelated objects."
+  },
+  {
+    "activity_id": 194,
+    "lesson": 11,
+    "source_page": 82,
+    "prompt": "“Milk” → goes with cat. “Small” → opposite of big. “Happy” → same as glad.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 195,
+    "lesson": 11,
+    "source_page": 82,
+    "prompt": "Teacher gives a starting word (e.g., “sun”). Each student adds a word friend (e.g., “sun” → “hot” → “ice cream” → “sprinkles”).",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 196,
+    "lesson": 11,
+    "source_page": 82,
+    "prompt": "Why is ‘cat’ friends with ‘milk’?",
+    "status": "corrected",
+    "reason": "Match the cat word-association prompt instead of showing nine unrelated objects."
+  },
+  {
+    "activity_id": 197,
+    "lesson": 11,
+    "source_page": 82,
+    "prompt": "How do word friends help us talk?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 198,
+    "lesson": 12,
+    "source_page": 84,
+    "prompt": "/p/ like popping popcorn! Repeat with /b/ (bounce like a ball) and /s/ (slither like a snake).",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 199,
+    "lesson": 12,
+    "source_page": 83,
+    "prompt": "Peter Piper picked pickled peppers.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 200,
+    "lesson": 12,
+    "source_page": 83,
+    "prompt": "Betty Botter bought butter.",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 201,
+    "lesson": 12,
+    "source_page": 83,
+    "prompt": "Six snails slide slowly.",
+    "status": "corrected",
+    "reason": "Replace seven-snail source picture to match Six snails."
+  },
+  {
+    "activity_id": 202,
+    "lesson": 12,
+    "source_page": 84,
+    "prompt": "Why is ‘Peter Piper’ tricky to say?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 203,
+    "lesson": 12,
+    "source_page": 84,
+    "prompt": "How do tongue twisters help us?",
+    "status": "retained",
+    "reason": "Relevant original visual or personal/oral/physical activity without a fixed picture."
+  },
+  {
+    "activity_id": 204,
+    "lesson": 12,
+    "source_page": 84,
+    "prompt": "In small groups, students pick a tongue twister. Say it slowly, then fast. Friends give a thumbs up if they hear the sounds clearly! Add fun: Hop or clap while saying it!",
+    "status": "corrected",
+    "reason": "Offer the three matching tongue-twister illustrations."
+  },
+  {
+    "activity_id": 205,
+    "lesson": 1,
+    "source_page": 47,
+    "prompt": "39 LESSON PLAN 1: ORAL LANGUAGE – TALKING ABOUT ONESELF AND ONE’S FAMILY I. OBJECTIVES At the end of the 45-minute lesson, the students will be able to: 1. Share at least 3 key details about oneself (name, age, favorite activity) using clear voice and proper pronunciation; 2. Talk about 2-3 family members and one thing they like to do together; 3. Maintain eye contact with their audience when speaking. II. SUBJECT MATTER Topic: Sharing Information About Oneself and One’s Family References: Adapted from elementary oral communication curricula and early childhood language development resources Materials: Visual aid (chart) with sentence starters: \"My name is…\", \"I am years old…\", \"My family has…\", \"We like to…\" Picture cards (e.g., of a child, parents, siblings, toys, activities like playing, eating) \"About Me\" worksheet (simple, with spaces for drawing and writing key details) Evaluation checklist III. PROCEDURE 1. PREPARATORY ACTIVITIES Warm-Up Lead a \"Hello Circle\" – students stand in a circle, take turns saying \"Hello, my name is [name]\" while waving to the class. Encourage them to speak loudly enough for everyone to hear. 40 Motivation Show a colorful picture of a happy family doing an activity (e.g., picnicking). Ask: \"Who do you see in this picture?\" and \"What do you like to do with your own family?\" Let 2-3 students share a quick thought to get them excited to talk more. 2. DEVELOPMENTAL ACTIVITIES Introduce Key Details: Display the visual aid with sentence starters. Explain that when we talk about ourselves and our family, we can use these sentences to make our ideas clear. Modeling: Share your own example in simple terms: \"Hi, my name is [Teacher’s Name]. I am [age]. My favorite activity is reading. My family has [2 people] – my mom and dad. We like to cook together on weekends!\" Use picture cards to point to each detail as you speak. Practice Sentence Starters: Have the class repeat the sentence starters together 2-3 times to build confidence. 3. GUIDED PRACTICE Pair-and-Share Activity: Divide students into pairs. Give each pair a set of picture cards to use as clues. 1. Student A uses the sentence starters to share about themselves and their family. 41 2. Student B listens, then shares their own information. 3. Circulate around pairs to support: remind them to speak clearly, make eye contact, and use the picture cards if they get stuck. After 8 minutes, ask 2-3 volunteer pairs to share one thing they learned about each other with the class. IV. EVALUATION Use an informal checklist to assess each student during pair-and-share: 1 2 3 4 Pupil mentioned Pupil mentioned Pupil mentioned Pupil mentioned only his name 2 – 3 details 4 details about 5 or more details about himself himself about himself V. AGREEMENT For homework, students will: Talk to one family member about their favorite activity. Draw a picture of themselves and that family member doing that activity. Be ready to share what they learned with the class in our next lesson.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 206,
+    "lesson": 1,
+    "source_page": 35,
+    "prompt": "28 Additional Intervention Material Learning Competency: Talk about oneself and one’s family Instruction: Tell me something about yourself. Rubrics 1 2 3 4 Pupil mentioned Pupil mentioned Pupil mentioned Pupil mentioned only his name 2 – 3 details 4 details about 5 or more details about himself himself about himself Additional Intervention Material Learning Competency: Follow one to two steps directions Instructions: 1. Go to the door and close it. 2. Run back to your seat. Rubrics 1 2 3 4 Pupil attempted Pupil executed Pupil executed Pupil executed to do what has wrongly what incompletely accurately what been said. has been said. what has been has been said. said Additional Intervention Material Instructions: You ask your younger sister to keep her toys away. What will you say? Give her at least two instructions. Rubrics 1 2 3 4 Pupil give Pupil gave 1 Pupil gave 2 Pupil gave incomplete/inaccurate accurate accurate and more than 2 direction. direction. complete accurate and directions. complete directions.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 207,
+    "lesson": 2,
+    "source_page": 50,
+    "prompt": "42 LESSON PLAN 2: ORAL LANGUAGE – FOLLOWING 1-TO-2-STEP ORAL DIRECTIONS I. OBJECTIVES At the end of the 45-minute lesson, the students will be able to: 1. Listen carefully to follow 1-step and 2-step oral directions accurately; 2. Repeat the directions in their own words before completing them; 3. Perform the actions in the correct order. II. SUBJECT MATTER Topic: Following 1-to-2-Step Oral Directions References: Adapted from elementary oral language curricula and motor skill development resources Materials: Visual aid (chart) with action words and pictures: go, close, run, pick up, sit, give Simple props (classroom items): door, chair, book, pencil, toy \"Mission Card\" set (with pre-written 1-2 step directions) Informal evaluation checklist III. PROCEDURE 1. PREPARATORY ACTIVITIES Warm-Up (5 minutes): Lead the class in an \"Action Song\" (e.g., \"Head, Shoulders, Knees, and Toes\") – have them follow along with your oral cues to practice listening and moving. Motivation (5 minutes): Say: \"Today, you’re all secret agents on a special mission! To complete the mission, you need to listen very carefully to my directions. If you follow them right, you’ll get a ‘Secret Agent Badge’ at the end!\" Show a fun, hand-drawn badge to build excitement. 43 2. DEVELOPMENTAL ACTIVITIES Introduce 1-Step Directions: Display the visual aid with action words. Give a simple 1-step direction (e.g., \"Go to the chair\") and do it yourself to model. Ask 3-4 students to try one at a time, reminding them to listen first. Introduce 2-Step Directions: Explain that 2-step directions have two actions to do in order. Model with: \"Go to the door, then close it.\" Point to the visual cards for \"go\" and \"close\" as you speak. Have students repeat the direction back to you before trying it. Practice Repeating Directions: Teach them the phrase, \"Let me say that back: [repeat direction]\" to make sure they understand. Practice with 2-3 more 2-step directions (e.g., \"Pick up the book, then give it to me\"). 3. ANALYSIS / DISCUSSION (5 minutes) Ask: \"When I said ‘Go to the door and close it,’ what was the first thing you did? The second thing?\" (Let students share to confirm order.) Follow up: \"Why is it important to listen to all the direction before you start?\" (e.g., \"So, you don’t forget the second step,\" \"So, you do it right\") Remind them: \"Repeating the direction back helps you make sure you heard it correctly!\"ss 4. GUIDED PRACTICE (10 minutes) Secret Agent Mission Trail: Set up 3 simple stations around the classroom. Give each small group (4-5 students) a \"Mission Card\" with a 1 or 2-step direction for each station. Station 1: \"Go to the window and tap it twice.\" Station 2: \"Pick up one pencil and put it on the table.\" Station 3: \"Run to the whiteboard, then sit down in your chair.\" Each student takes a turn leading their group through a station: they read the mission card aloud, their group repeats it back, then everyone does the action together. Circulate to support and remind students to follow order and speak clearly 44 IV. EVALUATION (5 minutes) Give 1-2 steps directions orally. Rate the learner’s performance based on the rubrics. Rubrics 1 2 3 4 Pupil attempted Pupil executed Pupil executed Pupil executed to do what has wrongly what incompletely accurately what been said. has been said. what has been has been said. said V. AGREEMENT For homework, students will: Be a \"family helper\" by following one 2-step direction from a parent or guardian (e.g., \"Set one plate on the table and put a fork next to it\"). Ask their family member to give them a \"thumbs up\" if they did it right. Share what direction they followed with the class in our next lesson.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 208,
+    "lesson": 2,
+    "source_page": 35,
+    "prompt": "28 Additional Intervention Material Learning Competency: Talk about oneself and one’s family Instruction: Tell me something about yourself. Rubrics 1 2 3 4 Pupil mentioned Pupil mentioned Pupil mentioned Pupil mentioned only his name 2 – 3 details 4 details about 5 or more details about himself himself about himself Additional Intervention Material Learning Competency: Follow one to two steps directions Instructions: 1. Go to the door and close it. 2. Run back to your seat. Rubrics 1 2 3 4 Pupil attempted Pupil executed Pupil executed Pupil executed to do what has wrongly what incompletely accurately what been said. has been said. what has been has been said. said Additional Intervention Material Instructions: You ask your younger sister to keep her toys away. What will you say? Give her at least two instructions. Rubrics 1 2 3 4 Pupil give Pupil gave 1 Pupil gave 2 Pupil gave incomplete/inaccurate accurate accurate and more than 2 direction. direction. complete accurate and directions. complete directions.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 209,
+    "lesson": 3,
+    "source_page": 52,
+    "prompt": "LESSON PLAN 3: ORAL LANGUAGE – GIVING AND FOLLOWING 1-TO-2- STEP ORAL DIRECTIONS IN DAILY SITUATIONS I. OBJECTIVE At the end of the 45-minute lesson, the students will be able to: 1. Give clear 1-2 step oral directions using polite language (e.g., \"can you,\" \"please\"); 2. Follow 1-2 step directions given by a peer; 3. Identify 2 key elements of effective directions (clarity, order) and polite communication. II. SUBJECT MATTER Topic: Giving and Following 1-2-Step Directions (e.g., Asking a Sibling to Tidy Up Toys) References: Adapted from elementary oral communication curricula and social skills development resources 45 Materials: Visual aid (chart) with: Polite phrase starters: \"Can you…?\", \"Please…\", \"Thank you!\" Action words with pictures: keep away, put in, pick up, close Toy props (dolls, cars, blocks, a toy box) Scenario cards (e.g., \"Your younger sister left toys on the floor\", \"Your brother left books on the couch\") Informal evaluation checklist III. PROCEDURE 1. PREPARATORY ACTIVITIES Warm-Up (5 minutes): Lead a \"Follow My Lead\" game: Give 1-2 step directions (e.g., \"Pick up one block and put it on your desk\") and have the class do them together. This review following directions before moving to giving them. Motivation (5 minutes): Show a photo of a messy playroom with toys scattered. Ask: \"Have you ever seen a room like this? If your younger sister made this mess, what would you say to ask her to clean it up?\" Let 2-3 students share quick ideas, then say: \"Today, we’ll learn to ask nicely with clear steps so she knows exactly what to do!\" 2. DEVELOPMENTAL ACTIVITIES (15 minutes) Introduce Polite Directions: Display the visual aid with polite phrases. Explain that when asking someone to do something, we use kind words like \"can you\" and \"please\" to be respectful. 46 Model Giving 2-Step Directions: Use the toy props to act out the scenario: \"Let’s pretend this doll is my younger sister, and these toys are on the floor. I’ll say: “‘Can you please keep your toys away and put them in the toy box?’\" Point to the action pictures (\"keep away,\" \"put in\") as you speak to show order. Practice Making Directions: Have the class repeat the model direction together. Then, guide them to make their own 2-step direction for the same scenario (e.g., \"Can you pick up your cars and put them on the shelf?\"). 3. ANALYSIS / DISCUSSION Ask: \"What polite words did I use when asking my sister?\" (Let students point to the visual aid.) Follow up: \"What was the first step I asked her to do? The second step? Why is order important?\" (e.g., \"So, she doesn’t get confused,\" \"So, she does everything needed\"). Ask: \"How do you think your sister would feel if you asked nicely vs. yelling?\" (Emphasize that polite language helps others want to help.) 4. GUIDED PRACTICE Role-Play Activity: Divide students into pairs. Give each pair a scenario card and toy props. 1. One student plays the \"older sibling\" and gives a clear 2-step direction using polite language. 2. The other student plays the \"younger sibling,\" listens, and follows the directions. 3. Pairs switch roles after 5 minutes. 47 Circulate around pairs to support: Remind them to use polite phrases, keep directions clear, and follow steps in order. Example scenario prompt for pairs: \"Your younger sister left her dolls on the bed. What 2 things will you ask her to do?\" IV. EVALUATION Use an informal checklist to assess each student during the role-play: Uses polite Gives clear Listens language (can 2-step directions carefully and Criteria you, please) in the correct follows peer’s when giving order directions directions accurately Excellent Good Satisfactory Note: Assess by observing each pair once. Give positive feedback like, \"Great job asking nicely!\" or \"Perfect order of steps!\" V. AGREEMENT For homework, students will: Find a time to give one 2-step direction to a family member (sibling, parent, or grandparent) using polite language (e.g., \"Can you please pass the spoon and put it on my plate?\"). Ask the family member if they understood the directions. Share what direction they gave and how it went with the class in our next lesson.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 210,
+    "lesson": 3,
+    "source_page": 35,
+    "prompt": "28 Additional Intervention Material Learning Competency: Talk about oneself and one’s family Instruction: Tell me something about yourself. Rubrics 1 2 3 4 Pupil mentioned Pupil mentioned Pupil mentioned Pupil mentioned only his name 2 – 3 details 4 details about 5 or more details about himself himself about himself Additional Intervention Material Learning Competency: Follow one to two steps directions Instructions: 1. Go to the door and close it. 2. Run back to your seat. Rubrics 1 2 3 4 Pupil attempted Pupil executed Pupil executed Pupil executed to do what has wrongly what incompletely accurately what been said. has been said. what has been has been said. said Additional Intervention Material Instructions: You ask your younger sister to keep her toys away. What will you say? Give her at least two instructions. Rubrics 1 2 3 4 Pupil give Pupil gave 1 Pupil gave 2 Pupil gave incomplete/inaccurate accurate accurate and more than 2 direction. direction. complete accurate and directions. complete directions.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 211,
+    "lesson": 4,
+    "source_page": 56,
+    "prompt": "48 LESSON PLAN 4: ORAL LANGUAGE – USING DESCRIBING WORDS FOR PEOPLE, OBJECTS, THINGS, AND PLACES I. OBJECTIVE At the end of the 45-minute lesson, the students will be able to: 1. Use describing words to talk about people, objects, things, and places. (color, shape, size, height, weight, length, distance, etc.) 2. Match describing words to the attributes of what they are talking about. II. SUBJECT MATTER Topic: Recognizing and Using Describing Words (Attributes: Color, Shape, Size, Height, Weight, Length, Distance) References: Adapted from elementary oral language curricula and vocabulary development resources Materials: Visual aid (chart) titled \"My Describing Word Toolkit\" – with words and pictures: red, round, big, tall, heavy, long, far, cozy Props with different attributes: colored blocks, toys (ball, box, car, doll), books (thick, thin), plants (tall, short), photos of places (sunny park, quiet room) \"Describe It!\" cards (with pictures of people, objects, or places) Informal evaluation checklist III. PROCEDURE 1. PREPARATORY ACTIVITIES Warm-Up (5 minutes): Lead a \"Word Clue\" game: Say, \"I’m thinking of something in this room that’s red. Can you guess what it is?\" Have students call out guesses, then reveal the object. Repeat with 3-4 more clues (e.g., \"It’s round,\" \"It’s big\"). 49 Motivation (5 minutes): Show a plain drawing of a cat and a colorful, detailed drawing of the same cat. Ask: \"Which drawing tells you more about the cat? Why?\" Explain: \"Today, we’ll learn about ‘describing words’ – these are like magic clues that help us tell others exactly what something looks like, feels like, or where it is!\" 2. DEVELOPMENTAL ACTIVITIES Introduce Describing Words: Display the \"Describing Word Toolkit\" chart. Point to each word and its picture, and say: \"These words describe attributes – what something is like. ‘Red’ is a color, ‘round’ is a shape, ‘big’ is a size, and ‘far’ is a distance.\" Have students repeat each word aloud. Describing words toolkit (see intervention materials) 1. Colors Red, blue, green, yellow, orange, purple, pink, black, white, brown 2. Sizes Big, small, tall, short, long, tiny, huge 3. Shapes Round, square, triangle, circle, flat 50 4. How things feel Soft, hard, smooth, rough, sticky, fuzzy, warm, cold 5. How things look Bright, dark, shiny, dull, clean, dirty, wet, dry 6. Feelings (for people/animals) Happy, sad, angry, scared, excited, sleepy, friendly 7. Numbers (to describe how many) One, two, three, many, few, some Model Using Describing Words: Pick up a red, round ball and say: \"This is a red, round ball. It’s also small enough to hold in my hand.\" Then point to a tall plant: \"This is a tall, green plant that’s near the window.\" Model for a person too: \"My friend Lila has curly, brown hair and she is happy today.\" Practice Naming Attributes: Hold up different props (e.g., thick book, heavy toy car) and ask: \"What describing words can we use for this?\" Have students share ideas and match them to the chart. 3. ANALYSIS / DISCUSSION Ask: \"Why do we use describing words when we talk?\" (Let students share: \"So others can picture what we’re talking about,\" \"To be clear,\" \"To make stories more fun\"). Follow up: \"Can we use more than one describing word for something? Let’s try with the box – is it square, blue, or both?\" (Emphasize that we can combine words to give more details). Ask: \"What describing words can we use for places, like a park?\" (e.g., \"sunny,\" \"big,\" \"busy\"). 51 4. GUIDED PRACTICE \"Describe It! Share It!\" Activity: Divide students into pairs. Give each pair a \"Describe It!\" card with a picture (e.g., a cozy bedroom, a small yellow bird, a tall boy). 1. One student looks at the picture and thinks of 2-3 describing words for it. 2. They say the describing words aloud (e.g., \"It’s cozy, quiet, and has a big bed\") and their partner guesses what’s in the picture. 3. Pairs switch roles after 5 minutes. Circulate to support: Remind students to use words from the toolkit and match them to the picture’s attributes. IV. EVALUATION Use an informal checklist to assess each student during the pair activity: Recognizes Uses describing Matches and names at words to talk about describing Criteria least 4 people/objects/places words to the describing correct words attributes Excellent Good Satisfactory Note: Assess by listening to each pair’s descriptions. Give positive feedback like, \"Great use of ‘cozy’ for the bedroom!\" or \"Perfect – ‘tall’ matches the boy!\" V. AGREEMENT For homework, students will: 1. Pick one thing at home (a toy, a pet, a room) and think of 3 describing words for it. 2. Tell a family member about it using those words (e.g., \"My dog is brown, fluffy, and small\"). Be ready to share their description with the class in our next lesson.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 212,
+    "lesson": 4,
+    "source_page": 36,
+    "prompt": "29 Additional Intervention Material Learning Competency: Use describing words for people, objects, things and places (color, shape, size, height, weight, length, distance, etc.) Instructions: Show a red ball. Teacher says: Tell me something about the object I am holding. Rubrics 1 2 3 4 Pupil says “ball” Pupil says “a Pupil says “A Pupil says “It is ball” red ball” a red ball.” (or tell more something about it.) Additional Intervention Material Learning Competency: Talk about topics of interest Instruction: Tell me what you think about this picture. Additional Intervention Material Learning Competency: Asking Questions Instructions: Things you should know: • Number of Players: 2-10 • Setup: Choose 1 player to be “it,” and have them think of a secret person, place or thing. • Object of the game: Other players attempt to guess the secret person, place, or thing, but they only get 20 questions to do so.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 213,
+    "lesson": 5,
+    "source_page": 60,
+    "prompt": "52 LESSON PLAN 5: ORAL LANGUAGE – TALKING ABOUT TOPICS OF INTEREST THROUGH PICTURE DISCUSSION I. OBJECTIVE At the end of the 45-minute lesson, the students will be able to: 1. Share their thoughts, feelings, and observations about a picture on a topic of interest; 2. Use simple sentence starters to organize their ideas clearly; 3. Listen respectfully to peers’ thoughts and ask one follow-up question. II. SUBJECT MATTER Topic: Talking About Topics of Interest (e.g., Toys, Pets, Parks, Festivals) \"Tell Me What You Think About This Picture\" References: Adapted from elementary oral communication curricula and expressive language development resources Materials: Visual aid (chart) with sentence starters: \"I see…\", \"I think…\", \"I like…\", \"It makes me feel…\" Colorful pictures of kid-friendly topics (e.g., a dog playing in a park, a birthday party with toys, a colorful festival, a cozy pet corner) \"Picture Card Packs\" (one pack per small group, with 3-4 pictures on different interests) informal evaluation checklist. 1. PREPARATORY ACTIVITIES Warm-Up Lead a \"Quick Share\" circle: Ask students to say one sentence about something they love (e.g., \"I love my cat\" or \"I love playing with blocks\"). Encourage them to speak clearly and look at the class. valuation checklist 53 Motivation Hold up a bright picture of a dog playing in a sunny park. Ask: \"Who likes dogs? What do you see in this picture? What do you think the dog is feeling?\" Let 2-3 students call out quick ideas, then say: \"Today, we’ll learn to share our thoughts about pictures we like – and hear what our friends think too!\" 2. DEVELOPMENTAL ACTIVITIES Introduce Picture Discussion: Display the visual aid with sentence starters. Explain: \"When we talk about a picture, these sentences help us share what’s in our minds clearly. ‘I see’ tells what’s in the picture, ‘I think’ tells our ideas, and ‘I like’ tells what we enjoy about it.\" Model Sharing Thoughts: Focus on the dog park picture and share your own ideas: \"I see a brown dog running with a red ball. I think the dog is happy because it’s playing in the sun. I like this picture because it makes me want to go to the park too!\" Point to each sentence starter on the chart as you speak. Practice Sentence Starters: Have the class repeat the sentence starters together. Then, guide them to share one thought about the dog picture using one of the starters (e.g., \"I see green grass\" or \"It makes me feel happy\"). 3. ANALYSIS / DISCUSSION Ask: \"What did I do to help you understand my thoughts about the picture?\" (Let students point to the sentence starters.) Follow up: \"Why is it fun to talk about pictures we like?\" (e.g., \"Because we can share what we love,\" \"We can learn what our friends like too\"). Remind them: \"When others are talking, we listen carefully – that’s how we show we care about their ideas. We can even ask a small question, like ‘Why do you like that?’ to learn more!\" 54 4. GUIDED PRACTICE \"Picture Talk\" Groups: Divide students into small groups (4-5 students each) and give each group a \"Picture Card Pack\" with topics they’ll enjoy. 1. One student picks a picture from the pack and shares their thoughts using at least 2 sentence starters. 2. The other students listen, then one peer asks a follow-up question (e.g., \"What do you think the cat in the picture is eating?\"). 3. Everyone in the group takes a turn picking a picture and sharing. Circulate around groups to support: Remind them to use the sentence starters, speak clearly, and listen respectfully. III. EVALUATION Use an informal checklist to assess each student during group discussion: Shares Uses at least 2 Listens thoughts/observations sentence respectfully to Criteria about the picture starters to peers and asks organize ideas a follow-up question Excellent Good Satisfactory Note: Assess by observing each student’s participation. Give positive feedback like, \"Great use of ‘I think’!\" or \"Nice question – that helped us learn more!\" IV. AGREEMENT For homework, students will: 1. - Find a picture at home (in a book, on a calendar, or on a device with family help) of something they love. 2. - Talk to a family member about it using the sentence starters: \"I see…\", \"I think…\", \"I like…\". Be ready to share their picture and thoughts with the class in our next lesson.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 214,
+    "lesson": 5,
+    "source_page": 36,
+    "prompt": "29 Additional Intervention Material Learning Competency: Use describing words for people, objects, things and places (color, shape, size, height, weight, length, distance, etc.) Instructions: Show a red ball. Teacher says: Tell me something about the object I am holding. Rubrics 1 2 3 4 Pupil says “ball” Pupil says “a Pupil says “A Pupil says “It is ball” red ball” a red ball.” (or tell more something about it.) Additional Intervention Material Learning Competency: Talk about topics of interest Instruction: Tell me what you think about this picture. Additional Intervention Material Learning Competency: Asking Questions Instructions: Things you should know: • Number of Players: 2-10 • Setup: Choose 1 player to be “it,” and have them think of a secret person, place or thing. • Object of the game: Other players attempt to guess the secret person, place, or thing, but they only get 20 questions to do so.\n\n30 \"This game works best with a small to medium-sized group of people, so that everyone gets a chance to ask a question. Choose a random player to be “it.” This could be the youngest player in the group, the player who’s had the most recent birthday, or something silly, like who can eat a piece of pizza the fastest. Question 1 Think of a person, place, or thing for other players to guess if you’re “it. ”Think of someone or something that you know enough about to answer some basic questions about, and keep it a secret! If you choose a person, they can be living, deceased, or even fictional. Make sure you choose a person, place, or thing that most people in your group know about. • For example, your item could be “Manny Pacquiao,” since he is famous enough that most people will be able to make guesses about him. You could also choose something like your town, Philippines, or even clouds or the sun. • Avoid items like “my mom” or “my dog” unless you are with your siblings or best friends, since the players might not know enough about them to guess. Question 2 Ask yes-or-no questions if you're not \"it. \"If you’re not “it,” your goal is to figure out what the “it” person is thinking of by asking questions to narrow down the possibilities. Try using a fairly general opening question that can be answered with “yes” or “no” to narrow down your options.\n\n31 For example: • “Is it alive?” • “Is it an object?” • “Is it fictional?” • “Is it bigger than a toaster? Question 3 Take turns asking more specific yes-or-no questions to narrow it down. You can ask questions in any order that you’d like, but make sure each player gets to ask at least 1 question. If a player asks a question that can’t be answered with “yes” or “no,” ask them to rephrase it so that it can be, since the person who’s “it” can only say “yes” or “no.” • For example, a player couldn’t ask, “How old are they?” or “What do they look like?” They could ask, “Are they older than 50?” or, “Do they have blonde hair?” Think about the questions that have already been asked before you ask new questions. For example, you could go from \"Is it a person?\" to \"Is it a man?\" to \"Are they alive?\" to \"Do they live in the Philippines?\" Play until you reach 10 questions or someone guesses the right answer. Become the next “it” person if you guess the correct answer. The person who guesses the right answer is next to be “it,” and they think up their own secret person, place, or thing. If no one guessed the person, place, or thing at all, whoever wants to go next can have a turn. Keep the game going until everyone has had a chance to be “it.” • If someone guesses correctly but they’ve already been “it,” let someone else have a turn instead. Giving everyone a turn makes the game more inclusive and lets everybody have some fun!",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 215,
+    "lesson": 6,
+    "source_page": 63,
+    "prompt": "55 LESSON PLAN 6: ORAL LANGUAGE – DESCRIBE AND DRAW I. OBJECTIVE At the end of the 45-minute lesson, the students will be able to: 1. Use specific describing words (color, shape, size, position) to clearly describe a picture; 2. Listen carefully to a peer’s description and draw what they hear; 3. Identify 2-3 key details that make a description easy to understand. II. SUBJECT MATTER Topic: \"Describe and Draw\" – Using Oral Language to Share Visual Details References: Adapted from elementary oral communication curricula and expressive/receptive language development resources Materials: Teacher’s model picture (colorful, with clear details: e.g., a red bird on a green tree branch next to a yellow flower) Set of \"secret pictures\" (one per pair, different from each other, with simple, distinct elements) Paper and crayons for each student Visual aid (chart) with key describing words: color words, round, square, big, small, on top, next to, under Informal evaluation checklist III. PROCEDURE 1. PREPARATORY ACTIVITIES Warm-Up Lead a \"Quick Draw\" game: Say, \"I’m going to describe something—draw what you hear!\" Describe a simple object (e.g., \"a small, blue square\") and have students draw it. Show their drawings and talk about how clear words helped them. Motivation Hold up your model picture (but don’t show it to the class yet). Say: \"I have a secret picture! If I describe it well enough, you’ll be able to draw it without even seeing it. Want to try? Today, we’ll play a ‘Describe and Draw’ game where we’re like ‘picture messengers’—using words to send images to our friends!\" 56 2. DEVELOPMENTAL ACTIVITIES Introduce Key Description Details: Display the visual aid. Explain: \"When we describe a picture, we need to share details like what color things are, what shape they are, how big they are, and where they are. These details help the person drawing know exactly what to put on their paper.\" Teacher Modeling: Show the model picture to the class for 10 seconds, then hide it. Describe it slowly and clearly: \"First, there’s a big, green tree branch in the middle. On top of the branch, there’s a small, red bird with a yellow beak. Next to the bird, there’s a bright yellow flower with five petals. The sky behind is light blue.\" As you describe, point to the words on the visual aid. Have students draw along as you speak. Check and Discuss: Show the model picture again and let students compare their drawings. Ask: \"What details helped you draw it right?\" (e.g., \"‘on top’ told me where the bird was,\" \"‘red’ told me its color\"). 3. ANALYSIS / DISCUSSION Ask: \"What would happen if I forgot to say ‘small’ about the bird? Or ‘next to the bird’ about the flower?\" (Let students share: \"I might draw a big bird,\" \"I might put the flower somewhere else\"). Follow up: \"Why is it important to describe things in order (e.g., ‘first the branch, then the bird’)?\" (e.g., \"So the drawer knows what to draw first,\" \"It’s easier to follow\"). Remind students: \"As a describer, your job is to be clear. As a drawer, your job is to listen closely—no peeking at the picture!\" 4. GUIDED PRACTICE Pair \"Describe and Draw\" Activity: Divide students into pairs. Give one student in each pair a \"secret picture\" (they must not show it 57 to their partner). Assign roles: Describer (has the picture) and Drawer (listens and draws). 1. The Describer looks at their picture and describes it using key details and the visual aid words. 2. The Drawer listens carefully and draws what they hear—they can ask clarifying questions (e.g., \"Is the cat big or small?\"). 3. After 5 minutes, have pairs switch roles with a new secret picture. Circulate around pairs to support: Remind Describers to use specific details and Drawers to listen actively. IV. EVALUATION Use an informal checklist to assess each student in both roles Uses specific Captures key Listens Criteria describing words details from the respectfully and (color, shape, description asks clarifying position) As Drawer questions (when As Describer drawing) Excellent Good Satisfactory Note: Assess by observing pairs and looking at their drawings. Give positive feedback like, \"Great job saying ‘under the tree’—that helped your partner draw it right!\" V. AGREEMENT For homework, students will: 1. Pick a favorite toy at home (e.g., a doll, car, teddy bear). 2. Describe the toy in detail to a family member, who will draw it based on their description. 3. Bring both the toy and the family’s drawing to share with the class in our next lesson.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 216,
+    "lesson": 6,
+    "source_page": 39,
+    "prompt": "32 Additional Intervention Material DESCRIBE and DRAW Instructions: 1. Show a picture. The picture might be a page from a storybook that the children are familiar with, or a picture like one of these. 2. Ask children what they see. “What do you see in the pictures?” or “What do you notice?” Learners’ answers may vary. Accept their responses. We want to get children to begin to describe what they see in their own words. • “I see a house.” • “I see a door.” • “I see a girl flying.” • “I see a weird tree.” • “I see squares.” 3. Take the children's lead and respond to their ideas by asking follow-up questions. • \"Where do you see the squares? Where do you see the tree?\" • \"Can you tell me more about the ?\" • \"What do you notice about what’s in the back corner?\" • \"How do you know that this is a triangle? Are those both triangles?\" 4. Ask students to draw what they see. • Keep the picture available; this is not a memory task. • This is not a tracing task either. We are asking children to draw what they see. (Expect a wide variety!) • Children often begin by drawing portions of the picture (just the tree, just the oval for the body of the tree, etc.)\n\n33 5. Move around and check in with them as they are drawing. You can ask questions based on what they drew to get them to add detail to their drawing. It is important to remember that the children should not think that the drawing has to look exactly like the picture. “You draw what YOU see.” (You might want to remind children that what they see might be different from what someone else sees.) 6. As children finish, ask them to tell you about what they drew. Older children could describe their own drawing to a partner, and vice versa. After discussion, children should go back and add detail to their own drawing. 7. Consider sharing a couple of examples of children's drawings and ask the child to describe to the class what they drew. Let other children add what they see. Use this as an opportunity to highlight one idea you want to engage the group in (perhaps noticing a particular shape, or using specific language such as above or below, or describing where an object is in relation to other objects).\n\n34",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 217,
+    "lesson": 7,
+    "source_page": 66,
+    "prompt": "58 LESSON PLAN 7: ORAL LANGUAGE USING PICTURE STORY CHAIN STRATEGY I. OBJECTIVES By the end of the lesson, students will be able to: 1. Identify key elements (characters, setting, action) in a sequence of pictures. 2. Contribute at least one sentence to a group \"picture story chain.\" 3. Speak clearly and listen attentively when participating in the group activity. II. SUBJECT MATTER Topic: Oral Language Development through Picture Story Chain Strategy: Picture Story Chain (collaborative storytelling using a sequence of images) Materials: 5-6 colorful, simple picture cards (no text) showing a logical sequence (e.g., a cat waking up → going outside → finding a ball → playing with it → going home → sleeping again) Whiteboard or chart paper Marker Sticky notes for student contributions Skills: Speaking, listening, sequencing, critical thinking Values Integration: Cooperation, respect for others’ ideas III. LEARNING PROCEDURE A. MOTIVATION \"Guess the Next Picture\" Game: Show the first 2 picture cards one by one. Ask: \"What do you see in this picture? What do you think will happen next?\" Let 2-3 students share their guesses to activate prior knowledge and spark curiosity. 59 B. LESSON PROPER 1. INTRODUCTION TO PICTURE STORY CHAIN Show all 4-5 picture cards in order on the board. Explain: “Today, we’ll make a story together using these pictures! This is called a 'Picture Story Chain.' Each of you will add one sentence to the story, just like linking chains together.\" Point to each picture and ask students to name what they see (e.g., \"This is a cat. This is a garden. This is a ball.\") to build vocabulary. 2. MODELING THE ACTIVITY Start the story with the first picture: \"Once upon a time, there was a little cat named Mimi. She woke up early in her cozy bed.\" Move to the second picture and add: \"Mimi jumped out of bed and walked outside to the garden. Write these sentences on the chart paper to show how the story builds. Emphasize: \"Each sentence should connect to the picture and the one before it!\" 60 3. GROUP PICTURE STORY CHAIN Divide the class into 5 small groups (4-5 students each). Group 1 Group 2 61 Group 3 Group 4 62 Group 5 Give each group a set of the picture cards arranged in order. Instructions for groups: • The first student looks at the first picture and says one sentence. • The next student looks at the second picture and says a sentence that connects to the first. • Continue until all pictures are used and the story has an ending. • One student from each group will share the complete story with the class. Roam around groups to support: Encourage shy students to participate (e.g., \"Can you say, 'Mimi found a red ball'?\") Help students connect their sentences (e.g., \"Great! After Mimi plays with the ball, what happens next?\") Write key sentences on sticky notes for each group to display. C. GENERALIZATION Gather the class and have both groups share their stories. Ask: \"How did working together help us make the story?\" (Expected answer: \"We shared ideas, listened to each other, and made a long story together.\") Conclude: \"Pictures can help us tell stories, and when we work in a chain, we can make amazing stories with our friends!\" 63 IV. EVALUATION Formative Assessment: Observe students during the group activity and check if they: Contribute at least one sentence. Speak clearly. Listen to others. Use a simple checklist to record participation and understanding. V. ASSIGNMENT At home, ask students to find 3 simple pictures (from a book or magazine) and make a short story with their family using the picture story chain strategy. They will share their story with the class in the next lesson. VI. REFLECTION (For teacher’s use only: Note which students struggled with speaking/listening, which pictures were most effective, and adjustments for future lessons.) Picture Card Suggestion (Description for Visuals): 1. A small cat lying in a bed with eyes closed. 2. The cat standing by an open door, looking outside. 3. The cat in a garden with green grass and flowers. 4. The cat playing with a red ball. 5. The cat walking back towards the house with the ball. 6. The cat back in bed, sleeping with the ball beside it.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 218,
+    "lesson": 7,
+    "source_page": 43,
+    "prompt": "36 Additional Intervention Material STORY CHAIN Learning Competency: Retelling a short story. Instructions: A Story Chain is a simple method of passing a story around the class, giving each student plenty of practice in storytelling. Prepare a Story Choose short stories that can be told in 1-3 minutes. You may consider these sample stories suggested. Running the Activity Let the pupils come together in pairs. Each pair is given a short picture story. Give them time to work through it by making their own story about the pictures. At the teachers signal, students A will tell the story to student B. Break up the pair and each child gets a new partner. They take turns in retelling the story they heard from their first partners to the new partner. You can do this several times. At the end you get individuals from the class to recite the last story they heard and then compare it with the original, see if it has improved in the storytelling, see what facts have changed completely and maybe see if the original storyteller can actually recognize their story! Sample stories: Story 1 Mia and the Shiny Stone I have a cat named Mia. It is an orange cat. While playing in the garden, Mia found a shiny blue stone. She found it under the red rose buds. The stone was so smooth and bright that Mia held it gently in her paws. Suddenly, the stone made a tiny ding sound! Mia’s ears perked up. Story 2 Pip the Rabbit and the Wobbly Carrot My father bought me a rabbit. I named him Pip. Pip, is a white rabbit. It dug up a purple carrot. It felt soft and wobbly in his teeth. Pip was about to take a bite but the carrot jiggled on its own! Story 3 Lila the Bird’s Lost Song My sister Jessa has a blue bird that forgot how to sing. It did not cheep. No trills, no sound, just silence. The bird found a tiny paper note under a tree and pecked it. The note made a sweet tinkle sound.\n\n37 Story 4 \"The Shell at the Beach\" \"Yesterday, I walked along the sandy beach and found a small shell. It glowed purple and green in the sun! I held it to my ear and listened to the sound of the sea. I wanted to keep it forever.\" Story 5 \"The Bell on the Playground\" \"At recess today, I found a tiny brass bell under the slide. When I shook it, it sounded like soft music! I showed it to my friend Leo. Then we took turns ringing it. It was the prettiest sound I’d ever heard.\" Story 6 \"The Feather in the Garden\" \"One morning, I was watering flowers in the garden. A feather floated down. It was soft and white, and it fluttered in the wind before landing in my hand. I think it came from the big bird in the tree above our house.\" Unknown word: fluttered (moved lightly up and down) Story 7 \"The Toy in My Closet\" \"I was cleaning my closet and found an old toy car I’d forgotten. When I pushed it, the wheels whirred fast across the floor! It was red and shiny, even after all these years. I couldn’t wait to play with it again.\" Unknown word: whirred (made a soft, buzzing sound) Story 8 \"The Stone in the Forest\" \"On our walk in the forest, I spotted a smooth stone by the path. It was polished until it looked like glass. It was like the color of the sky. I put it in my pocket to show my mom. My Mom loves pretty rocks.\" Unknown word: polished (made smooth and shiny) Story 9 \"The Butterfly on the Flower\" \"I sat on the porch and watched a butterfly land on a pink rose. Its wings were orange and black, and it darted from flower to flower. I held my breath so I wouldn’t scare it away. It stayed for five whole minutes!\" Unknown word: darted (moved quickly and suddenly) Story 10 \"The Note in the Library\" \"I was looking for a book in the library when I found a note under a shelf. It was scrawled in colorful crayon and said, ‘Meet me at the park!’ I wondered who wrote it—maybe my friend Lila?\" Unknown word: scrawled (written quickly and messily)\n\n38 Story 11 \"The Leaf on the Bench\" \"I sat on the park bench and picked up a leaf from the ground. It was crimson—a bright, deep red—like a little fire! I pressed it between two pages of my notebook to keep it safe. It’s my favorite leaf ever.\" Unknown word: crimson (a dark red color) Story 12 \"The Cookie Cutter in the Kitchen\" \"I was helping mom bake cookies when I found a tiny cookie cutter in the drawer. It had an intricate shape—like a little star with lots of points! We used it to make star cookies, and they tasted so good.\" Unknown word: intricate (having many small, detailed parts) Story 13 \"The Button at the Bus Stop\" \"While waiting for the bus, I found a button on the ground. It was silver and it glinted in the sunlight. It is like a tiny moon! I showed it to the bus driver. The driver helped me put it in the ‘lost and found’ box.\" Unknown word: glinted (shone with a quick, bright flash) Additional Intervention Material PICTURE TALK Picture talk activities are engaging ways to enhance children's communication skills, imagination, and comprehension through discussions bas ed on images. What is a Picture Talk Activity? A picture talk activity involves using images to spark discussions among children. This method encourages kids to observe, analyze, and express their thoughts about the pictures, fostering their communication and literacy skills. It can be adapted to various topics, making it a versatile tool for learning. Steps to Create Picture Talk Activities 1. Choose a Topic: Select a theme that interests the children, such as nature, family, or sports. This helps to engage them more effectively. 2. Select a Picture: Find a picture that aligns with the chosen topic. It should be visually stimulating and rich in details to encourage discussion. 3. Project the Image: Display the picture on a screen or print it out for the children to see. This allows everyone to focus on the same visual stimulus.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 219,
+    "lesson": 8,
+    "source_page": 72,
+    "prompt": "64 LESSON PLAN 8: ORAL LANGUAGE USING PICTURE TALK ACTIVITIES I. OBJECTIVES By the end of the lesson, students will be able to: 1. Describe visible details in a picture using simple words and phrases. 2. Ask and answer basic questions about the picture (who, what, where, when, why). 3. Share a short personal connection to the picture in 1-2 clear sentences. II. SUBJECT MATTER Topic: Oral Language Development through Picture Talk Activities: \"See & Say,\" \"Picture Question Circle,\" \"My Connection Share\" Materials: 1 large, colorful, detailed picture (e.g., a group of children playing at a park with slides, swings, trees, a dog, and ice cream vendor) Smaller copies of the same picture for each group (optional) Whiteboard or chart paper Marker \"Question Cards\" (with who/what/where/when/why written on them) Skills: Speaking, listening, observing, questioning Values Integration: Sharing, active listening, appreciating others’ experiences III. . LEARNING PROCEDURE A. MOTIVATION \"Mystery Picture Peek:\" Hold up the large picture with most of it covered, showing only a small part (e.g., the dog’s tail). Ask: \"What do you think this is? What do you think is in the rest of the picture?\" Let 3-4 students guess, then reveal the full picture with a big \"ta-da!\" to build excitement. 65 B. LESSON PROPER 1. ACTIVITY 1: SEE & SAY Display the large picture prominently. Explain: \"Let’s play 'See & Say'! Look closely at the picture, and when you see something, stand up and say what it is. For example: 'I see a slide!'\" Let students take turns sharing what they notice. As they speak, write key words on the board (e.g., children, park, slide, dog, ice cream). Encourage more details: \"Great! What color is the slide?\" or \"How many children do you see?\" Check-in: Point to words on the board and ask students to point to the corresponding item in the picture. 2. ACTIVITY 2: PICTURE QUESTION CIRCLE Have students sit in a large circle. Give out the 5 \"Question Cards\" to 5 different students. Instructions: 1. The student with the \"who\" card asks: \"Who is in the picture?\" Let 2-3 students answer. 2. Pass the card to the next person, then the \"what\" card holder asks: \"What are the children doing?\" 3. Continue with \"where\" (\"Where are they?\"), \"when\" (\"When do you think this is happening?\"), and \"why\" (\"Why do you think they’re happy?\"). Model how to ask questions clearly and how to listen before answering. For shy students, offer sentence starters: \"I think they’re at...\" or \"Maybe it’s because...\" 3. ACTIVITY 3: \"MY CONNECTION SHARE\" Explain: \"Now, think about a time you did something like what’s in the picture. Can you share 1 or 2 sentences about it?\" 66 Model with your own connection: \"I remember going to the park with my friend. We played on the swings and ate ice cream!\" Let students share in pairs first (to build confidence), then invite 4-5 pairs to share their connections with the class. Praise all contributions: \"That’s a wonderful story! I’m glad you had fun at the park too.\" C. GENERALIZATION Gather students back together and ask: \"What did we learn today about pictures?\" (Expected answers: \"Pictures have many things to see,\" \"We can ask questions about them,\" \"We can tell stories about our own lives from them.\") Conclude: \"Pictures are like secret doors to talking and sharing stories. You can use any picture to practice speaking!\" IV. EVALUATION Formative Assessment: Ask each student to say one thing they saw in the picture or one connection they made. Use a simple smiley face checklist to record if they spoke clearly and participated V. ASSIGNMENT At home, find a picture in a book or on a calendar. Tell your family 3 things you see in it and one time you did something similar. Be ready to share with the class tomorrow! VI. REFLECTION (For teacher’s use only: Note which students struggled with questioning/sharing connections, which parts of the picture sparked the most discussion, and adjustments for future lessons.) Picture Description (for the main visual): A bright, sunny park with green grass and tall trees. Three children (2 girls, 1 boy) are playing – one on the slide, one on the swings, and one petting a brown dog. An ice cream vendor with a colorful cart stands nearby, handing an ice cream cone to a girl. There are blue skies with white clouds, and a bench where a woman is sitting and reading a book.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 220,
+    "lesson": 8,
+    "source_page": 45,
+    "prompt": "38 Story 11 \"The Leaf on the Bench\" \"I sat on the park bench and picked up a leaf from the ground. It was crimson—a bright, deep red—like a little fire! I pressed it between two pages of my notebook to keep it safe. It’s my favorite leaf ever.\" Unknown word: crimson (a dark red color) Story 12 \"The Cookie Cutter in the Kitchen\" \"I was helping mom bake cookies when I found a tiny cookie cutter in the drawer. It had an intricate shape—like a little star with lots of points! We used it to make star cookies, and they tasted so good.\" Unknown word: intricate (having many small, detailed parts) Story 13 \"The Button at the Bus Stop\" \"While waiting for the bus, I found a button on the ground. It was silver and it glinted in the sunlight. It is like a tiny moon! I showed it to the bus driver. The driver helped me put it in the ‘lost and found’ box.\" Unknown word: glinted (shone with a quick, bright flash) Additional Intervention Material PICTURE TALK Picture talk activities are engaging ways to enhance children's communication skills, imagination, and comprehension through discussions bas ed on images. What is a Picture Talk Activity? A picture talk activity involves using images to spark discussions among children. This method encourages kids to observe, analyze, and express their thoughts about the pictures, fostering their communication and literacy skills. It can be adapted to various topics, making it a versatile tool for learning. Steps to Create Picture Talk Activities 1. Choose a Topic: Select a theme that interests the children, such as nature, family, or sports. This helps to engage them more effectively. 2. Select a Picture: Find a picture that aligns with the chosen topic. It should be visually stimulating and rich in details to encourage discussion. 3. Project the Image: Display the picture on a screen or print it out for the children to see. This allows everyone to focus on the same visual stimulus.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 221,
+    "lesson": 9,
+    "source_page": 75,
+    "prompt": "67 LESSON PLAN 9: RECITE, CLAP & SMILE – “Little Voices Shining Through Poems\" I. OBJECTIVES By the end of the lesson, students will be able to: 1. Recite a short, familiar poem or nursery rhyme with a clear, loud voice. 2. Match their tone (happy, silly, soft) to the poem’s feeling. 3. Use simple gestures or actions to go with key words in the poem. 4. Listen respectfully to peers’ recitations and give a positive \"thumbs up.\" II. MATERIALS Picture Poem Pack: Short, colorful poems/nursery rhymes with big images (e.g., \"Twinkle, Twinkle, Little Star,\" \"Baa, Baa, Black Sheep,\" \"Five Little Ducks,\" \"The Itsy-Bitsy Spider\"). Audio clips of fun, upbeat recitations (with sound effects, e.g., a \"quack\" for ducks, \"twinkle\" chimes). Visual \"Smile & Shine Recitation” Checklist\" (with emojis: = clear voice, = happy tone, = gestures). Simple props (stuffed animals, toy spiders, paper stars, tiny hats) for performances. A \"Shining Star\" sticker for each student. III. PROCEDURE A. Warm-Up: \"Rhyme & Clap Dance\" Gather students in a circle. The teacher says a rhyming word pair (e.g., \"cat – hat\") and claps twice. Students repeat the words and clap back. Add simple dances: \"dog – frog\" → jump like a frog; \"bird – word\" → flap wings. Goal: Get them moving, practicing rhymes, and using their voices confidently. 68 B. Motivation The Itsy-Bitsy Spider by Anonymous Itsy bitsy spider climbed up the waterspout. down came the rain and washed the spider out; out came the sun and dried up all the rain; and the itsy-bitsy spider climbed up the spout again. Hold up a picture poem book, \"The Itsy-Bitsy Spider\" and point to the images. Ask: \"Who knows this poem? What does the spider do?\" Play a 1-minute audio clip of the poem with a silly, wiggly voice and \"spider crawl\" sound effects. C. LESSON PROPER \"How did the voice sound? Was it happy? Silly?\" Explain: \"Today, we’ll pick a poem, practice saying it with our best voice, and add dances – just like the audio!\" Main Activity: \"My Turn to Recite!\" (15 minutes) Break into 3 simple, hands-on steps: Step 1: Pick & Explore (5 minutes) Lay out the Picture Poem Pack on tables. Students choose a poem they know or like (based on the pictures). The teacher helps each student point to the words as they say the poem aloud once (to practice reading along with their voice). Example: A student picks \"Five Little Ducks\" and points to each duck as they count down. Step 2: Practice with a Buddy & Props (7 minutes) Pair students up (buddy up a confident reciter with a quieter one). 69 Give each pair a prop (e.g., stuffed duck for \"Five Little Ducks,\" toy spider for \"Itsy Bitsy\"). Buddies take turns reciting: Use the Smile & Shine Checklist to remind each other: \"Speak loud!\" \"Smile!\" \"Add a dance!\" Example: For \"Twinkle, Twinkle,\" students hold up paper stars and twirl them in the air when they say \"twinkle.\" Step 3: Polish with the Teacher (3 minutes) The teacher circulates to listen to 1–2 lines from each student, giving quick feedback: \"Great job wiggling like a spider!\" or \"Try speaking a little louder so I can hear you better!\" Closure: \"Little Voices Showcase\" (5 minutes) Invite 4–5 volunteers to recite their poem for the class (or have all pairs share in small \"mini-circles\" if time is tight). After each recitation, the class gives a positive response: \"Thumbs up for [student’s name]!\" or a quick clap. Ask 1–2 students: \"What was fun about reciting your poem?\" (e.g., \"Jumping like a duck!\") End with a class cheer: \"Recite, clap, smile – our little voices shine!\" Give every student a \"Shining Star\" sticker for participating. IV. EVALUATION (Formative) Use the visual Smile & Shine Checklist to observe: Clear, audible voice Tone matches the poem’s feeling (happy, silly, etc.) Simple gestures/actions to support key words Observe participation in the warm-up, buddy practice, and showcase. Check that students listen respectfully to peers.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 222,
+    "lesson": 10,
+    "source_page": 78,
+    "prompt": "70 LESSON PLAN 10: TALK, PLAY & SHARE – LITTLE VOICES CONNECTING Communicative Language Teaching (CLT) Strategy I. OBJECTIVES By the end of the lesson, students will be able to: 1. Greet peers and ask simple questions (e.g., \"What’s your name?\" \"What do you have?\"). 2. Share personal information about a favorite toy (e.g., \"This is my teddy. He’s soft.\"). 4. Collaborate with a friend to create a short, simple \"toy story\" using spoken words. 5. Listen respectfully to peers and respond with a simple comment (e.g., \"Cool!\" \"I like it too!\"). II. MATERIAL Stuffed toys or toy pictures (one per student; or let students bring their own favorite toy). \"Talking Flashcards\" with simple questions/responses (e.g., \"What’s this?\" → \"It’s a...\"). A \"Chat Box\" with small items (toy car, doll, ball) for picking prompts. Visual \"Talk & Connect Checklist\" (emojis: = greet, = ask, = share, = listen). \"Friendship Sticker\" for each student. III. PROCEDURE 1. Preparatory Activities A. Warm-Up/Motivation: \"Hello, Friend! Circle\" (5 minutes) Gather students in a circle. The teacher models: \"Hi! My name is [Teacher’s name]. How are you, [Student’s name]?\" 71 Students take turns greeting the friend next to them, using the same pattern. Add a fun twist: they can wave, high-five, or do a silly dance while greeting. Goal: Practice real, face-to-face interaction and basic greetings. 2. Developmental Activities Introduction: \"Our Toys, Our Stories\" (5 minutes) Hold up a stuffed toy and say: \"This is my bunny. Her name is Floppy. She likes to jump!\" Ask: \"Who has a toy at home? What’s your toy like?\" Let 2–3 students share quickly. 3. Analysis/Discussion Explain: \"Today, we’ll talk to our friends about our toys—ask them questions, share stories, and play together with words!\" Show the Talk & Connect Checklist and point to each emoji: \"These are our super skills for talking today!\" 4. Guided Practice Main Activity: \"Chat & Play Stations\" Divide students into 3 small groups. Rotate stations every 5 minutes (keep it fast-paced for little attention spans!). Station 1: \"Toy Show & Tell Chat\" Task: Students take turns showing their toy (or picture) and sharing 1–2 things about it (e.g., \"This is my car. It goes ‘vroom!’\"). Peer Interaction: After each share, friends ask a simple question (using flashcards as a guide): \"What color is it?\" or \"Do you like it?\" Why it’s CLT: Real sharing and question-asking about personal things. Station 2: \"Find a Toy Match\" Task: Students walk around the station with their toy/picture. They ask each other: \"Do you have a [car/doll/teddy]?\" Goal: Find a friend with the same type of toy. Once they match, they high-five and say: \"We both have a [toy]!\" Why it’s CLT: Real-world \"searching and matching\" conversation. 72 Station 3: \"Make a Toy Story Together\" Task: Pairs pick a toy from the Chat Box. They create a 2-sentence story together (e.g., \"This is a ball. The ball bounces to the dog!\"). Bonus: Add simple actions (bounce like a ball, bark like a dog) while saying the story. Why it’s CLT: Collaborative communication to create something meaningful. Closure: \"Share Our Toy Stories\" (5 minutes) Invite 3–4 pairs to share their short toy story with the class. After each story, the class responds with a positive comment: \"That’s funny!\" or \"I love your ball! “Ask 1–2 students: \"What was fun about talking to your friend today?\" (e.g., \"I found a friend with a teddy too!\"). End with a class cheer: \"Talk, play, share—we’re great at caring and sharing!\" Give every student a \"Friendship Sticker\" for using their talking skills. IV. EVALUATION Use the visual Talk & Connect Checklist to observe: Greets peers appropriately. Asks simple questions. Shares ideas clearly (even if words are simple). Listens when others talk. Note how students interact—do they take turns? Do they respond to their friends’ words? No formal testing—focus on participation and effort to communicate.",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 223,
+    "lesson": 11,
+    "source_page": 81,
+    "prompt": "73 LESSON PLAN 11: ORAL LANGUAGE – WORD FRIENDS (WORD ASSOCIATION) I. OBJECTIVE At the end of the lesson, the pupils are expected to: 1. Think of words that go together (e.g., “cat” → “milk,” “paws,” “meow”). 2. Find 3 ways words connect: same meaning, opposites, or things that go together. 3. Share their word friends and explain why they connect. II. SUBJECT MATTER Topic: Word Friends (How Words Connect) Materials: Big pictures (cat, cake, park, sun). Toy props (toy cat, ball, small umbrella). Smiley face stickers. Simple chart with examples: Same meaning: “happy” → “glad.” Opposites: “big” → “small.” Things that go together: “bread” → “butter.” III. PROCEDURE 1. Warm-Up: “Word Catch!” (5 minutes) Game: Toss a soft ball. Teacher says a word (e.g., “red”). Student catches the ball and says a word friend (e.g., “apple”). Class claps if it makes sense! 2. Motivation: “Guess My Word Friend!” (5 minutes) Hold up a toy cat. Ask: “What words do you think of? Meow? Milk? Paws?” Say: “Today, we’ll play with word friends—words that love to go together!” 74 3. Activity 1: “Word Friends on the Board” (10 minutes) Step 1: Stick a picture of a cat on the board. Ask: “What words go with cat?” Students shout out (e.g., “milk,” “tail”). Add their words with sticky notes. Step 2: Show how words connect: “Milk” → goes with cat. “Small” → opposite of big. “Happy” → same as glad. 4. Activity 2: “Word Chain Game” (10 minutes) Groups of 4: Sit in circles. Teacher gives a starting word (e.g., “sun”). Each student adds a word friend (e.g., “sun” → “hot” → “ice cream” → “sprinkles”). Use props (e.g., toy umbrella for “rain”) to help them think! 5. Wrap-Up: “Why Word Friends?” (5 minutes) Ask: “Why is ‘cat’ friends with ‘milk’?” (They go together!) “How do word friends help us talk?” (They make stories fun!) Sticker Time: Give everyone a smiley sticker for participating! IV. EVALUATION Observe: Did the student share a word friend? Did they try to explain the connection (even with gestures)? Symbols: = Shared 3+ words and explained. = Shared 1-2 words. = Tried their best! V. HOMEWORK 1. Draw & Tell: Draw a cat or sun and tell your family 2-word friends. 2. Bring a Prop: Bring a small toy or picture of their favorite word friend for show-and-tell next class. 75 TEACHER TIPS Use actions (e.g., meowing for “cat”) to help explain connections. Keep it silly! If a student says “cat → spaceship,” ask, “Why?” and laugh together. Sing a goodbye song: “Bye-bye, word friends, see you soon!”",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 224,
+    "lesson": 12,
+    "source_page": 83,
+    "prompt": "LESSON PLAN 12: ORAL LANGUAGE – FUN WITH TONGUE TWISTERS I. OBJECTIVE At the end of the lesson, the pupils are expected to: 1. Say simple tongue twisters clearly, focusing on sounds like /p/, /b/, and /s/. 2. Practice saying tongue twisters slowly, then faster. II. SUBJECT MATTER Topic: Tongue Twisters for Clear Speaking References: Grade 1 Phonics Activities Materials: Big posters with 3 tongue twisters (with pictures): 1. “Peter Piper picked pickled peppers.” (Picture: Peter and peppers) 2. “Betty Botter bought butter.” (Picture: Betty and butter) 3. “Six snails slide slowly.” (Picture: snails sliding) Sound cards with pictures (e.g., popcorn for /p/, ball for /b/, snake for /s/). “Tongue Twister Stars/Badge” stickers. Thumbs-up chart for group activities. 76 III. PROCEDURE 1. Preparatory Activities A. Warm-Up (5 minutes): Play “Copy the Sound!”: Teacher says: “/p/ like popping popcorn!” (Students mimic popping and say /p/). Repeat with /b/ (bounce like a ball) and /s/ (slither like a snake). B. Motivation (3 minutes): Say: “Let’s play with silly sentences that twist our tongues! Who can say ‘Peter Piper’ fast without mixing up words?” 2. Developmental Activities Introduce Tongue Twisters: Show the poster and read “Peter Piper” slowly. Clap for each word. Point to the /p/ sound card every time you say “p.” Say it faster like a robot! Group Practice: Repeat with “Betty Botter” (/b/ sound) and “Six snails” (/s/ sound). Students take turns saying one line in pairs. 3. Analysis/Discussion Ask: “Why is ‘Peter Piper’ tricky to say?” (They’ll say: “Too many /p/ sounds!”). “How do tongue twisters help us?” (Answer: “They make our mouths strong for clear talking!”). 4. Guided Practice Tongue Twister Game: In small groups, students pick a tongue twister. 77 Say it slowly, then fast. Friends give a thumbs up if they hear the sounds clearly! Add fun: Hop or clap while saying it! IV. EVALUATION Use a simple checklist: Give “Tongue Twister Star” stickers to everyone who tries! Criteria (Great!) (Good!) (Keep Trying!) Says sounds clearly Tries slow and fast Participates with a smile V. AGREEMENT For homework: 1. Practice one tongue twister with your family. 2. Draw a picture of your favorite tongue twister (e.g., Peter Piper or snails). NOTE FOR TEACHER: Keep it playful! Praise effort over perfection. Use lots of movements (clapping, hopping) to make sounds memorable",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  },
+  {
+    "activity_id": 225,
+    "lesson": 12,
+    "source_page": 42,
+    "prompt": "35 Additional Intervention Material TONGUE TWISTER 1. Sheena leads, Sheila needs. 2. How can a clam cram in a clean cream can? 3. Top chopstick shops stock top chopsticks. 4. Selfish shellfish. 5. I saw a kitten eating chicken in the kitchen. 6. Near an ear, a nearer ear, a nearly eerie ear. 7. Roberta ran rings around the Roman ruins. 8. He threw three free throws. 9. A happy hippo hopped and hiccupped. 10. Toy boat. Toy boat. Toy boat. 11. Smelly shoes and socks shock sisters. 12. Four fine fresh fish for you. 13. Red lorry, yellow lorry (x3) 14. Freshly-fried flying fish. (x3)",
+    "status": "source-reference",
+    "reason": "Original reference material."
+  }
+]
