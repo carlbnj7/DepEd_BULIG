@@ -1,5 +1,5 @@
 <?php
-// For XAMPP, default root/empty password works locally. Use a restricted DB user on a real server.
+
 return [
     'host' => getenv('BULIG_DB_HOST') ?: '127.0.0.1',
     'port' => getenv('BULIG_DB_PORT') ?: '3306',
