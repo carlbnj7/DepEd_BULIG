@@ -1,0 +1,5682 @@
+{
+  "assets/images/level2a/art-006-ca5ebc2380d8.webp": {
+    "level": "2a",
+    "pdf_page": 6,
+    "xref": 70,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-006-6e738cf0c668.webp": {
+    "level": "2a",
+    "pdf_page": 6,
+    "xref": 69,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-006-007748cd15dc.webp": {
+    "level": "2a",
+    "pdf_page": 6,
+    "xref": 68,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-006-7efb90e0c3c8.webp": {
+    "level": "2a",
+    "pdf_page": 6,
+    "xref": 67,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-006-78254f8ead5d.webp": {
+    "level": "2a",
+    "pdf_page": 6,
+    "xref": 71,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-007-80e9e2a37052.webp": {
+    "level": "2a",
+    "pdf_page": 7,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      170.0,
+      244.0,
+      290.0,
+      320.0
+    ]
+  },
+  "assets/images/level2a/art-007-8a80db32683d.webp": {
+    "level": "2a",
+    "pdf_page": 7,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      180.0,
+      319.0,
+      252.0,
+      412.0
+    ]
+  },
+  "assets/images/level2a/art-007-2bc6ee332564.webp": {
+    "level": "2a",
+    "pdf_page": 7,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      180.0,
+      426.0,
+      300.0,
+      510.0
+    ]
+  },
+  "assets/images/level2a/art-007-8f0fb930caf5.webp": {
+    "level": "2a",
+    "pdf_page": 7,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      164.0,
+      531.0,
+      286.0,
+      604.0
+    ]
+  },
+  "assets/images/level2a/art-007-03ab523eae8c.webp": {
+    "level": "2a",
+    "pdf_page": 7,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      156.0,
+      631.0,
+      321.0,
+      708.0
+    ]
+  },
+  "assets/images/level2a/art-008-9cf49d014c89.webp": {
+    "level": "2a",
+    "pdf_page": 8,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      139.0,
+      247.0,
+      219.0,
+      316.0
+    ]
+  },
+  "assets/images/level2a/art-008-21873ea66bd8.webp": {
+    "level": "2a",
+    "pdf_page": 8,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      146.0,
+      316.0,
+      201.0,
+      395.0
+    ]
+  },
+  "assets/images/level2a/art-008-ffd83bd40631.webp": {
+    "level": "2a",
+    "pdf_page": 8,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      130.0,
+      403.0,
+      215.0,
+      465.0
+    ]
+  },
+  "assets/images/level2a/art-008-e66ab6c9d403.webp": {
+    "level": "2a",
+    "pdf_page": 8,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      125.0,
+      527.0,
+      195.0,
+      586.0
+    ]
+  },
+  "assets/images/level2a/art-009-72763c4b89e2.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 107,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-a092564c3493.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 121,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-405874a11b95.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 122,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-01ad08e1e9ed.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 109,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-7beac6d39fe4.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 123,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-1e4e41802f27.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 110,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-8abd363902a8.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 111,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-db4f25fcd572.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 124,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-efb45793740f.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 112,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-4b758891bbd0.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 114,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-c6fcc1bab402.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 125,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-1ee37e97872d.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 115,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-06c8b091f47c.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 116,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-8b2d5e9176fa.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 126,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-4f00635629a6.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 117,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-aeef83ac5172.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 96,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-938c1f701152.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 118,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-009-18f33d850805.webp": {
+    "level": "2a",
+    "pdf_page": 9,
+    "xref": 120,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-54c314d9a93a.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 138,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-2be2c616f92b.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 135,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-8bfa9881cc91.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 147,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-150710df42d9.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 139,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-6eedf4f8a281.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 140,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-38024a4fb91d.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 148,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-f23ab9df4ab2.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 141,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-2aca130811eb.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 149,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-ac5543130d4d.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 136,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-c71edd0c0dd1.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 150,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-db0f721150e8.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 157,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-5dc1152213d4.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 143,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-623043df18e3.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 151,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-191bae52412d.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 144,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-6d9711030bd6.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 137,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-a741873ec997.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 153,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-ffb144fe2541.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 152,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-bcffe6eb9061.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 154,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-b2ec9dbe5493.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 146,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-d5696762a711.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 155,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-010-cd88f798e6a2.webp": {
+    "level": "2a",
+    "pdf_page": 10,
+    "xref": 145,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-011-8f24e95c6e7a.webp": {
+    "level": "2a",
+    "pdf_page": 11,
+    "xref": 226,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-011-2d8ccece9d85.webp": {
+    "level": "2a",
+    "pdf_page": 11,
+    "xref": 228,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-011-bb5fec32cd43.webp": {
+    "level": "2a",
+    "pdf_page": 11,
+    "xref": 229,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-011-fe11945e7ec7.webp": {
+    "level": "2a",
+    "pdf_page": 11,
+    "xref": 230,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-011-24acb2c4c977.webp": {
+    "level": "2a",
+    "pdf_page": 11,
+    "xref": 231,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-011-a1f2e5c2a262.webp": {
+    "level": "2a",
+    "pdf_page": 11,
+    "xref": 232,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-011-38c7eb462abc.webp": {
+    "level": "2a",
+    "pdf_page": 11,
+    "xref": 233,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-011-069fb8cbe120.webp": {
+    "level": "2a",
+    "pdf_page": 11,
+    "xref": 234,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-012-72c6da4d634a.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      120.0,
+      165.0,
+      238.0,
+      264.0
+    ]
+  },
+  "assets/images/level2a/art-012-fd42b4047f8e.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      290.0,
+      165.0,
+      385.0,
+      252.0
+    ]
+  },
+  "assets/images/level2a/art-012-317905b7417d.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      464.0,
+      180.0,
+      588.0,
+      251.0
+    ]
+  },
+  "assets/images/level2a/art-012-be048eb55e3c.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      117.0,
+      320.0,
+      218.0,
+      379.0
+    ]
+  },
+  "assets/images/level2a/art-012-9acfbad4a582.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      282.0,
+      293.0,
+      377.0,
+      387.0
+    ]
+  },
+  "assets/images/level2a/art-012-f6c1d0e18445.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      476.0,
+      285.0,
+      562.0,
+      410.0
+    ]
+  },
+  "assets/images/level2a/art-012-1cd780e60a8b.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      125.0,
+      487.0,
+      242.0,
+      540.0
+    ]
+  },
+  "assets/images/level2a/art-012-6e68c0fc0833.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      304.0,
+      487.0,
+      359.0,
+      546.0
+    ]
+  },
+  "assets/images/level2a/art-012-6a621b10ab80.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      464.0,
+      483.0,
+      558.0,
+      544.0
+    ]
+  },
+  "assets/images/level2a/art-012-1a0206747219.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      140.0,
+      578.0,
+      209.0,
+      681.0
+    ]
+  },
+  "assets/images/level2a/art-012-f0dba443360f.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      304.0,
+      589.0,
+      355.0,
+      681.0
+    ]
+  },
+  "assets/images/level2a/art-012-c0b21b41f2f8.webp": {
+    "level": "2a",
+    "pdf_page": 12,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      455.0,
+      643.0,
+      570.0,
+      699.0
+    ]
+  },
+  "assets/images/level2a/art-013-fcc3a9112685.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      315.0,
+      184.0,
+      370.0
+    ]
+  },
+  "assets/images/level2a/art-013-1cf68452a44e.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      394.0,
+      184.0,
+      448.0
+    ]
+  },
+  "assets/images/level2a/art-013-187b0f9a6593.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      461.0,
+      184.0,
+      506.0
+    ]
+  },
+  "assets/images/level2a/art-013-44d42de9dc22.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      514.0,
+      184.0,
+      553.0
+    ]
+  },
+  "assets/images/level2a/art-013-74f81c5e7280.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      564.0,
+      184.0,
+      613.0
+    ]
+  },
+  "assets/images/level2a/art-013-6418d2d3e44c.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      624.0,
+      184.0,
+      666.0
+    ]
+  },
+  "assets/images/level2a/art-013-e5ed55db81c1.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      675.0,
+      184.0,
+      716.0
+    ]
+  },
+  "assets/images/level2a/art-013-1740c2a25d8d.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      725.0,
+      184.0,
+      767.0
+    ]
+  },
+  "assets/images/level2a/art-013-c27634b8bb73.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      780.0,
+      184.0,
+      827.0
+    ]
+  },
+  "assets/images/level2a/art-013-b24fcfd1ca5a.webp": {
+    "level": "2a",
+    "pdf_page": 13,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      80.0,
+      840.0,
+      184.0,
+      885.0
+    ]
+  },
+  "assets/images/level2a/art-014-efb45793740f.webp": {
+    "level": "2a",
+    "pdf_page": 14,
+    "xref": 112,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-014-f27969520976.webp": {
+    "level": "2a",
+    "pdf_page": 14,
+    "xref": 279,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-014-65d5fce00bc1.webp": {
+    "level": "2a",
+    "pdf_page": 14,
+    "xref": 280,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-014-75ffd653d951.webp": {
+    "level": "2a",
+    "pdf_page": 14,
+    "xref": 281,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-014-d79a9f55ae6a.webp": {
+    "level": "2a",
+    "pdf_page": 14,
+    "xref": 283,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-2621ace31b89.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 287,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-538950a4d671.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 290,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-8264e459d02c.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 293,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-06b374f5ead1.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 291,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-f5e3a07959f5.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 294,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-f2bac3b7452c.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 295,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-48520c83623c.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 288,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-ad8fd15baa74.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 289,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-38be2c977b46.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 296,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-015-4d4651b33d4a.webp": {
+    "level": "2a",
+    "pdf_page": 15,
+    "xref": 297,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-016-ac1645de41d1.webp": {
+    "level": "2a",
+    "pdf_page": 16,
+    "xref": 300,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-016-2a310fcc75a3.webp": {
+    "level": "2a",
+    "pdf_page": 16,
+    "xref": 301,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-016-42df76721184.webp": {
+    "level": "2a",
+    "pdf_page": 16,
+    "xref": 303,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-016-b61de4b2666d.webp": {
+    "level": "2a",
+    "pdf_page": 16,
+    "xref": 304,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-016-daf0ec6a703b.webp": {
+    "level": "2a",
+    "pdf_page": 16,
+    "xref": 305,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-016-a960b55213de.webp": {
+    "level": "2a",
+    "pdf_page": 16,
+    "xref": 310,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-017-c78f3514cd10.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      112.0,
+      326.0,
+      220.0,
+      436.0
+    ]
+  },
+  "assets/images/level2a/art-017-88ce042aaabd.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      350.0,
+      327.0,
+      474.0,
+      425.0
+    ]
+  },
+  "assets/images/level2a/art-017-919409e18147.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      481.0,
+      329.0,
+      584.0,
+      425.0
+    ]
+  },
+  "assets/images/level2a/art-017-688aeebe944a.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      110.0,
+      447.0,
+      220.0,
+      544.0
+    ]
+  },
+  "assets/images/level2a/art-017-686a4bddd42d.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      477.0,
+      462.0,
+      530.0
+    ]
+  },
+  "assets/images/level2a/art-017-d2aa59000c18.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      485.0,
+      448.0,
+      591.0,
+      536.0
+    ]
+  },
+  "assets/images/level2a/art-017-9673168401c5.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      129.0,
+      552.0,
+      202.0,
+      640.0
+    ]
+  },
+  "assets/images/level2a/art-017-ee61207b3a90.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      366.0,
+      547.0,
+      446.0,
+      640.0
+    ]
+  },
+  "assets/images/level2a/art-017-8cc8851eee53.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      495.0,
+      558.0,
+      591.0,
+      640.0
+    ]
+  },
+  "assets/images/level2a/art-017-6e935ced927d.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      128.0,
+      660.0,
+      235.0,
+      749.0
+    ]
+  },
+  "assets/images/level2a/art-017-b142ae011de7.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      347.0,
+      671.0,
+      466.0,
+      750.0
+    ]
+  },
+  "assets/images/level2a/art-017-1b42fc4d5fcf.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      480.0,
+      648.0,
+      560.0,
+      762.0
+    ]
+  },
+  "assets/images/level2a/art-017-09f85a0756dc.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      138.0,
+      776.0,
+      203.0,
+      857.0
+    ]
+  },
+  "assets/images/level2a/art-017-b7a7d13a8fce.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      344.0,
+      774.0,
+      497.0,
+      860.0
+    ]
+  },
+  "assets/images/level2a/art-017-54bcc1726e95.webp": {
+    "level": "2a",
+    "pdf_page": 17,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      499.0,
+      776.0,
+      590.0,
+      860.0
+    ]
+  },
+  "assets/images/level2a/art-018-dadd03f08c07.webp": {
+    "level": "2a",
+    "pdf_page": 18,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      130.0,
+      209.0,
+      234.0,
+      298.0
+    ]
+  },
+  "assets/images/level2a/art-018-c97da2bb22c5.webp": {
+    "level": "2a",
+    "pdf_page": 18,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      135.0,
+      303.0,
+      245.0,
+      374.0
+    ]
+  },
+  "assets/images/level2a/art-018-4a0be8f142d9.webp": {
+    "level": "2a",
+    "pdf_page": 18,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      136.0,
+      397.0,
+      251.0,
+      473.0
+    ]
+  },
+  "assets/images/level2a/art-018-f192020f0534.webp": {
+    "level": "2a",
+    "pdf_page": 18,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      136.0,
+      479.0,
+      251.0,
+      556.0
+    ]
+  },
+  "assets/images/level2a/art-018-f78a9c5160f8.webp": {
+    "level": "2a",
+    "pdf_page": 18,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      135.0,
+      576.0,
+      261.0,
+      675.0
+    ]
+  },
+  "assets/images/level2a/art-020-429c7d9c23b4.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 338,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-efcaa0db294b.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 328,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-0bd1a9954a02.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 329,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-ae55229bf4ac.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 330,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-5a087c6ce86e.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 332,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-ddbdf9516505.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 333,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-0b65b2ad210f.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 334,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-7b5a22ee9193.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 335,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-c368cfcdd2d1.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 339,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-67f62f0b1bfe.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 336,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-3b0c79e71856.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 337,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-020-c77f5b96b152.webp": {
+    "level": "2a",
+    "pdf_page": 20,
+    "xref": 340,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-029-ff389b3c0d7a.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      157.0,
+      207.0,
+      280.0,
+      310.0
+    ]
+  },
+  "assets/images/level2a/art-029-899fb64ca611.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      332.0,
+      220.0,
+      476.0,
+      303.0
+    ]
+  },
+  "assets/images/level2a/art-029-d401bca0587f.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      144.0,
+      322.0,
+      269.0,
+      417.0
+    ]
+  },
+  "assets/images/level2a/art-029-21c1380fdfe0.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      293.0,
+      307.0,
+      430.0,
+      419.0
+    ]
+  },
+  "assets/images/level2a/art-029-9cbecec68257.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      436.0,
+      335.0,
+      616.0,
+      435.0
+    ]
+  },
+  "assets/images/level2a/art-029-6c70f7829aed.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      155.0,
+      434.0,
+      357.0,
+      543.0
+    ]
+  },
+  "assets/images/level2a/art-029-b9832086034b.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      381.0,
+      437.0,
+      533.0,
+      566.0
+    ]
+  },
+  "assets/images/level2a/art-029-bbac00e198e8.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      155.0,
+      551.0,
+      380.0,
+      645.0
+    ]
+  },
+  "assets/images/level2a/art-029-974f31040d2d.webp": {
+    "level": "2a",
+    "pdf_page": 29,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      437.0,
+      568.0,
+      612.0,
+      672.0
+    ]
+  },
+  "assets/images/level2a/art-030-48d65bea19fa.webp": {
+    "level": "2a",
+    "pdf_page": 30,
+    "xref": 588,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-030-7e2f6436dabf.webp": {
+    "level": "2a",
+    "pdf_page": 30,
+    "xref": 589,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-030-0722cd7ce8ce.webp": {
+    "level": "2a",
+    "pdf_page": 30,
+    "xref": 592,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-030-55803f1e502e.webp": {
+    "level": "2a",
+    "pdf_page": 30,
+    "xref": 594,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-030-e741920184c4.webp": {
+    "level": "2a",
+    "pdf_page": 30,
+    "xref": 585,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-da439a96a79c.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 562,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-724881a449d7.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 617,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-13c068b9ba02.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 618,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-8f21e033502c.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 626,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-7e2f6436dabf.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 627,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-25951ae3e8a8.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 628,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-997745334db3.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 629,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-ff8a6f0fcb30.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 630,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-a9fbb63aa902.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 631,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-14858cc7efa2.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 632,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-031-6339f9ac2c23.webp": {
+    "level": "2a",
+    "pdf_page": 31,
+    "xref": 633,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-9a988c10178a.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 646,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-5b343c9275c2.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 648,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-9611af62bb4d.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 649,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-9b4e0e083647.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 654,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-53fc373d5cad.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 655,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-bc9d6692e80d.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 656,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-46c8b527544a.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 657,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-a4f8c3c3544a.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 658,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-f893de39c37c.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 659,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-034-cee27a81a0fa.webp": {
+    "level": "2a",
+    "pdf_page": 34,
+    "xref": 660,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-035-186da097fa4f.webp": {
+    "level": "2a",
+    "pdf_page": 35,
+    "xref": 665,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-035-7e2f6436dabf.webp": {
+    "level": "2a",
+    "pdf_page": 35,
+    "xref": 589,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-035-8dc7e98cb115.webp": {
+    "level": "2a",
+    "pdf_page": 35,
+    "xref": 666,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-035-8282a95b1df8.webp": {
+    "level": "2a",
+    "pdf_page": 35,
+    "xref": 692,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-036-6abe824422da.webp": {
+    "level": "2a",
+    "pdf_page": 36,
+    "xref": 700,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-036-225e89793008.webp": {
+    "level": "2a",
+    "pdf_page": 36,
+    "xref": 699,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-036-0fcf031d026b.webp": {
+    "level": "2a",
+    "pdf_page": 36,
+    "xref": 701,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-036-0d53df895905.webp": {
+    "level": "2a",
+    "pdf_page": 36,
+    "xref": 702,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-036-3331167f1618.webp": {
+    "level": "2a",
+    "pdf_page": 36,
+    "xref": 703,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-036-8ee8f549a45c.webp": {
+    "level": "2a",
+    "pdf_page": 36,
+    "xref": 704,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-dc1819c2c296.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 720,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-b210f4c98ab7.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 722,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-6ef3b346eb13.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 724,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-c04d428323b2.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 725,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-54a3b9e22ce9.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 727,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-2d477c074128.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 728,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-ebd14d44a498.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 730,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-f19f619d37fc.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 732,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-b294bcb05bea.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 734,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-471478a59b73.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 736,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-040-2b9554e122ce.webp": {
+    "level": "2a",
+    "pdf_page": 40,
+    "xref": 714,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-041-6bb0c195802c.webp": {
+    "level": "2a",
+    "pdf_page": 41,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      183.0,
+      449.0,
+      269.0,
+      510.0
+    ]
+  },
+  "assets/images/level2a/art-041-a972cff59ca0.webp": {
+    "level": "2a",
+    "pdf_page": 41,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      158.0,
+      515.0,
+      301.0,
+      580.0
+    ]
+  },
+  "assets/images/level2a/art-041-a7c07e97b14b.webp": {
+    "level": "2a",
+    "pdf_page": 41,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      189.0,
+      583.0,
+      267.0,
+      671.0
+    ]
+  },
+  "assets/images/level2a/art-041-4a3863b7c8fe.webp": {
+    "level": "2a",
+    "pdf_page": 41,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      168.0,
+      671.0,
+      307.0,
+      745.0
+    ]
+  },
+  "assets/images/level2a/art-047-fc0c5882ff83.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 818,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-84265e0e8ad2.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 819,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-2e7eb1db21e3.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 821,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-243d28ccefc0.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 823,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-9cd3c7bc4aeb.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 824,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-698b342600ea.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 825,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-12dc62ebc456.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 826,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-afd1a691a780.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 827,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-6ceac51ce7f1.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 828,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-047-497bf7b99a3f.webp": {
+    "level": "2a",
+    "pdf_page": 47,
+    "xref": 829,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-122f861ee617.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 836,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-c6951bf77829.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 832,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-a3af0530b81e.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 833,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-d1f895d619bd.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 835,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-af6b7b8464a8.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 837,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-83b84159f6cd.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 838,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-43ff1b10cba0.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 839,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-55e2843c75c8.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 840,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-6f202ebf4945.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 841,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-f240f261309a.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 848,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-8fc57ef9ef64.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 847,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-e3833e77d92b.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 846,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-96eb9b149fe0.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 842,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-1c4b26fd8e46.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 843,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-048-a9e5bdf8d458.webp": {
+    "level": "2a",
+    "pdf_page": 48,
+    "xref": 845,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-f90db35c5970.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 865,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-f0d2bc445f74.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 866,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-ae049e2072a9.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 867,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-34c7e830fa61.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 872,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-1dce449ecf1c.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 869,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-3e4e3f6c5d8a.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 878,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-d4573a6470b4.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 870,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-d061672cd586.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 871,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-6e84bc9c1e2e.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 863,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-5dd6ddd5ea0c.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 864,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-b70e62c3d403.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 873,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-cec12121a6fb.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 874,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-2b74f4f542e2.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 875,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-6386bfb1b596.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 876,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-051-80d7282ed410.webp": {
+    "level": "2a",
+    "pdf_page": 51,
+    "xref": 877,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-052-f77ae9f8cbd4.webp": {
+    "level": "2a",
+    "pdf_page": 52,
+    "xref": 881,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-057-69e3283a1d04.webp": {
+    "level": "2a",
+    "pdf_page": 57,
+    "xref": 970,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-057-a1ae70e3cb59.webp": {
+    "level": "2a",
+    "pdf_page": 57,
+    "xref": 971,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-057-7dc5abcc272e.webp": {
+    "level": "2a",
+    "pdf_page": 57,
+    "xref": 972,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-057-44c97eb81d89.webp": {
+    "level": "2a",
+    "pdf_page": 57,
+    "xref": 974,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-057-87eb5d1e2c0c.webp": {
+    "level": "2a",
+    "pdf_page": 57,
+    "xref": 976,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-057-340d42f03028.webp": {
+    "level": "2a",
+    "pdf_page": 57,
+    "xref": 978,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-057-f7f42d39f0dc.webp": {
+    "level": "2a",
+    "pdf_page": 57,
+    "xref": 979,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-057-4f0a71d3f48d.webp": {
+    "level": "2a",
+    "pdf_page": 57,
+    "xref": 980,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-063-ab631e9fdd31.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      167.0,
+      290.0,
+      267.0,
+      361.0
+    ]
+  },
+  "assets/images/level2a/art-063-71052d485a72.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      274.0,
+      290.0,
+      365.0,
+      361.0
+    ]
+  },
+  "assets/images/level2a/art-063-2f180e80fb11.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      374.0,
+      290.0,
+      471.0,
+      361.0
+    ]
+  },
+  "assets/images/level2a/art-063-ef6de336110a.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      167.0,
+      367.0,
+      267.0,
+      437.0
+    ]
+  },
+  "assets/images/level2a/art-063-06e781ff1c13.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      274.0,
+      367.0,
+      365.0,
+      437.0
+    ]
+  },
+  "assets/images/level2a/art-063-551fbc6602aa.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      374.0,
+      367.0,
+      471.0,
+      437.0
+    ]
+  },
+  "assets/images/level2a/art-063-c4bd3fe9f319.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      167.0,
+      443.0,
+      267.0,
+      514.0
+    ]
+  },
+  "assets/images/level2a/art-063-37831e798419.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      274.0,
+      443.0,
+      365.0,
+      514.0
+    ]
+  },
+  "assets/images/level2a/art-063-c91570598d1d.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      374.0,
+      443.0,
+      471.0,
+      514.0
+    ]
+  },
+  "assets/images/level2a/art-063-5331b24e8d36.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      167.0,
+      521.0,
+      267.0,
+      589.0
+    ]
+  },
+  "assets/images/level2a/art-063-01ea93b858c0.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      274.0,
+      521.0,
+      365.0,
+      589.0
+    ]
+  },
+  "assets/images/level2a/art-063-7b6aaa249da5.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      374.0,
+      521.0,
+      471.0,
+      589.0
+    ]
+  },
+  "assets/images/level2a/art-063-f2b518f2eaf3.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      167.0,
+      597.0,
+      267.0,
+      665.0
+    ]
+  },
+  "assets/images/level2a/art-063-b598cbb70c93.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      274.0,
+      597.0,
+      365.0,
+      665.0
+    ]
+  },
+  "assets/images/level2a/art-063-fb03bf3a070a.webp": {
+    "level": "2a",
+    "pdf_page": 63,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      374.0,
+      597.0,
+      471.0,
+      665.0
+    ]
+  },
+  "assets/images/level2a/art-066-8e6d8562e8ec.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      230.0,
+      331.0,
+      340.0,
+      375.0
+    ]
+  },
+  "assets/images/level2a/art-066-8909ac302526.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      349.0,
+      330.0,
+      415.0,
+      375.0
+    ]
+  },
+  "assets/images/level2a/art-066-6e62e211ff63.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      453.0,
+      330.0,
+      533.0,
+      375.0
+    ]
+  },
+  "assets/images/level2a/art-066-412246f62364.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      234.0,
+      406.0,
+      317.0,
+      459.0
+    ]
+  },
+  "assets/images/level2a/art-066-d1dd959266e5.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      405.0,
+      415.0,
+      459.0
+    ]
+  },
+  "assets/images/level2a/art-066-e93da8447f0f.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      461.0,
+      406.0,
+      535.0,
+      459.0
+    ]
+  },
+  "assets/images/level2a/art-066-07cc8edc78d2.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      234.0,
+      480.0,
+      312.0,
+      535.0
+    ]
+  },
+  "assets/images/level2a/art-066-56597b8c06e6.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      361.0,
+      480.0,
+      401.0,
+      535.0
+    ]
+  },
+  "assets/images/level2a/art-066-41bcc656cf22.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      458.0,
+      480.0,
+      535.0,
+      535.0
+    ]
+  },
+  "assets/images/level2a/art-066-8396fbbaa6f0.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      238.0,
+      558.0,
+      309.0,
+      608.0
+    ]
+  },
+  "assets/images/level2a/art-066-e9b52b574de8.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      347.0,
+      556.0,
+      403.0,
+      609.0
+    ]
+  },
+  "assets/images/level2a/art-066-fb65515e7a9b.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      468.0,
+      555.0,
+      528.0,
+      609.0
+    ]
+  },
+  "assets/images/level2a/art-066-6257d11b6b24.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      239.0,
+      629.0,
+      295.0,
+      675.0
+    ]
+  },
+  "assets/images/level2a/art-066-d383a5f5396e.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      629.0,
+      401.0,
+      675.0
+    ]
+  },
+  "assets/images/level2a/art-066-b4ab949184c2.webp": {
+    "level": "2a",
+    "pdf_page": 66,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      467.0,
+      629.0,
+      528.0,
+      675.0
+    ]
+  },
+  "assets/images/level2a/art-071-04adf1d6d3b8.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      174.0,
+      363.0,
+      302.0,
+      421.0
+    ]
+  },
+  "assets/images/level2a/art-071-3b2be8e25578.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      341.0,
+      340.0,
+      420.0,
+      427.0
+    ]
+  },
+  "assets/images/level2a/art-071-aaa79922cf03.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      498.0,
+      358.0,
+      560.0,
+      431.0
+    ]
+  },
+  "assets/images/level2a/art-071-e84d38d6cb10.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      195.0,
+      452.0,
+      257.0,
+      535.0
+    ]
+  },
+  "assets/images/level2a/art-071-b1913b39664a.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      329.0,
+      466.0,
+      426.0,
+      545.0
+    ]
+  },
+  "assets/images/level2a/art-071-1df8d0300e0c.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      461.0,
+      487.0,
+      598.0,
+      545.0
+    ]
+  },
+  "assets/images/level2a/art-071-7cda7649b067.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      196.0,
+      619.0,
+      258.0,
+      691.0
+    ]
+  },
+  "assets/images/level2a/art-071-5c047aa48674.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      295.0,
+      635.0,
+      410.0,
+      691.0
+    ]
+  },
+  "assets/images/level2a/art-071-3e0f0ed87afa.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      462.0,
+      618.0,
+      533.0,
+      691.0
+    ]
+  },
+  "assets/images/level2a/art-071-0f13461b8f96.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      188.0,
+      724.0,
+      254.0,
+      800.0
+    ]
+  },
+  "assets/images/level2a/art-071-e555e2a65508.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      321.0,
+      737.0,
+      379.0,
+      797.0
+    ]
+  },
+  "assets/images/level2a/art-071-2122057bb3af.webp": {
+    "level": "2a",
+    "pdf_page": 71,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      444.0,
+      738.0,
+      554.0,
+      786.0
+    ]
+  },
+  "assets/images/level2a/art-072-17bdc4bbf783.webp": {
+    "level": "2a",
+    "pdf_page": 72,
+    "xref": 1188,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-072-7db61a0d8ed1.webp": {
+    "level": "2a",
+    "pdf_page": 72,
+    "xref": 1187,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-072-444753935470.webp": {
+    "level": "2a",
+    "pdf_page": 72,
+    "xref": 1190,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-077-6bde8bd44d38.webp": {
+    "level": "2a",
+    "pdf_page": 77,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      93.0,
+      419.0,
+      223.0,
+      493.0
+    ]
+  },
+  "assets/images/level2a/art-077-16dd96a7e5c5.webp": {
+    "level": "2a",
+    "pdf_page": 77,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      106.0,
+      504.0,
+      211.0,
+      585.0
+    ]
+  },
+  "assets/images/level2a/art-077-8a9af6fcf4b7.webp": {
+    "level": "2a",
+    "pdf_page": 77,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      85.0,
+      601.0,
+      225.0,
+      670.0
+    ]
+  },
+  "assets/images/level2a/art-077-b3f7d60416f7.webp": {
+    "level": "2a",
+    "pdf_page": 77,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      101.0,
+      691.0,
+      207.0,
+      769.0
+    ]
+  },
+  "assets/images/level2a/art-082-ac2ac68102eb.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1238,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-40ecf60ae851.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1205,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-79d36254258c.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1240,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-c633cd0f73a9.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1242,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-a2fe302bffa1.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1243,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-6e29dd3436a6.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1244,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-bb3cfaa668da.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1245,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-fbcb84bfa644.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1246,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-f9587fcf505d.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1247,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-082-c37590931c4c.webp": {
+    "level": "2a",
+    "pdf_page": 82,
+    "xref": 1250,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-accbad82da4a.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1257,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-b6fe93a49340.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1255,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-d136a222a5a9.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1258,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-4a05b3267a7d.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1265,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-e61a64382d33.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1262,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-053c699416b4.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1266,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-4ae421ebd6a3.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1268,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-042c924dc352.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1269,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-1944432c1549.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1270,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-083-0565026aac95.webp": {
+    "level": "2a",
+    "pdf_page": 83,
+    "xref": 1279,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-086-5e437739d645.webp": {
+    "level": "2a",
+    "pdf_page": 86,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      490.0,
+      703.0,
+      597.0,
+      887.0
+    ]
+  },
+  "assets/images/level2a/art-086-fee054655307.webp": {
+    "level": "2a",
+    "pdf_page": 86,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      198.0,
+      320.0,
+      355.0,
+      411.0
+    ]
+  },
+  "assets/images/level2a/art-088-cb64cb8596a2.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1306,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-cc837e36f28d.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1307,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-11a6176bdbda.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1308,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-5a4ec6001b5c.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1310,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-7d97f25fff0e.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1312,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-97ef7d22e926.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1313,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-9b37cc0a20c7.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1317,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-fe60f93a2aaa.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1318,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-b8a7c8ba8ede.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1319,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-088-fb0324f964dc.webp": {
+    "level": "2a",
+    "pdf_page": 88,
+    "xref": 1320,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-094-ff8178869b42.webp": {
+    "level": "2a",
+    "pdf_page": 94,
+    "xref": 1356,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-094-eff299b5360b.webp": {
+    "level": "2a",
+    "pdf_page": 94,
+    "xref": 1353,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-094-8679c7e59a0e.webp": {
+    "level": "2a",
+    "pdf_page": 94,
+    "xref": 1354,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-094-8d6de75840b2.webp": {
+    "level": "2a",
+    "pdf_page": 94,
+    "xref": 1357,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-095-a24d59fac7f1.webp": {
+    "level": "2a",
+    "pdf_page": 95,
+    "xref": 1361,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-095-42c1c01662d8.webp": {
+    "level": "2a",
+    "pdf_page": 95,
+    "xref": 1362,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-096-87d73d767946.webp": {
+    "level": "2a",
+    "pdf_page": 96,
+    "xref": 1368,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-096-dd0c794ec330.webp": {
+    "level": "2a",
+    "pdf_page": 96,
+    "xref": 1371,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-096-1f05ec1a0d60.webp": {
+    "level": "2a",
+    "pdf_page": 96,
+    "xref": 1377,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-096-f545566832d7.webp": {
+    "level": "2a",
+    "pdf_page": 96,
+    "xref": 1380,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-097-da439a96a79c.webp": {
+    "level": "2a",
+    "pdf_page": 97,
+    "xref": 562,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-097-150710df42d9.webp": {
+    "level": "2a",
+    "pdf_page": 97,
+    "xref": 139,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-100-6e84bc9c1e2e.webp": {
+    "level": "2a",
+    "pdf_page": 100,
+    "xref": 863,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-100-ae049e2072a9.webp": {
+    "level": "2a",
+    "pdf_page": 100,
+    "xref": 867,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-100-8c14f71d179c.webp": {
+    "level": "2a",
+    "pdf_page": 100,
+    "xref": 1430,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-101-210b17074765.webp": {
+    "level": "2a",
+    "pdf_page": 101,
+    "xref": 1446,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-101-8663ced41bca.webp": {
+    "level": "2a",
+    "pdf_page": 101,
+    "xref": 1452,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-102-7b62a96ace08.webp": {
+    "level": "2a",
+    "pdf_page": 102,
+    "xref": 1460,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-102-38024a4fb91d.webp": {
+    "level": "2a",
+    "pdf_page": 102,
+    "xref": 148,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-102-8c8438464e2e.webp": {
+    "level": "2a",
+    "pdf_page": 102,
+    "xref": 1466,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-102-a87a6f9cfc3d.webp": {
+    "level": "2a",
+    "pdf_page": 102,
+    "xref": 1469,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-102-eb960d2f9829.webp": {
+    "level": "2a",
+    "pdf_page": 102,
+    "xref": 1470,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-102-c9fa460ad293.webp": {
+    "level": "2a",
+    "pdf_page": 102,
+    "xref": 1471,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-107-3bc25f82ed41.webp": {
+    "level": "2a",
+    "pdf_page": 107,
+    "xref": 1664,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-107-114751b2eb02.webp": {
+    "level": "2a",
+    "pdf_page": 107,
+    "xref": 1674,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-107-313454b564e4.webp": {
+    "level": "2a",
+    "pdf_page": 107,
+    "xref": 1682,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-107-adfc6b758038.webp": {
+    "level": "2a",
+    "pdf_page": 107,
+    "xref": 1690,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-107-6c97ec67b94a.webp": {
+    "level": "2a",
+    "pdf_page": 107,
+    "xref": 1696,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-107-fe6fdd9bc298.webp": {
+    "level": "2a",
+    "pdf_page": 107,
+    "xref": 1709,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-108-6920d1ac7c24.webp": {
+    "level": "2a",
+    "pdf_page": 108,
+    "xref": 1794,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-108-6c51c8af4273.webp": {
+    "level": "2a",
+    "pdf_page": 108,
+    "xref": 1795,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-108-dd0b1dd90d83.webp": {
+    "level": "2a",
+    "pdf_page": 108,
+    "xref": 1796,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-108-3a034be6d0d0.webp": {
+    "level": "2a",
+    "pdf_page": 108,
+    "xref": 1797,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-108-96d387741cbe.webp": {
+    "level": "2a",
+    "pdf_page": 108,
+    "xref": 1798,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-111-0654353196e0.webp": {
+    "level": "2a",
+    "pdf_page": 111,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      237.0,
+      175.0,
+      368.0,
+      260.0
+    ]
+  },
+  "assets/images/level2a/art-111-85442127b27e.webp": {
+    "level": "2a",
+    "pdf_page": 111,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      438.0,
+      175.0,
+      562.0,
+      299.0
+    ]
+  },
+  "assets/images/level2a/art-111-21177e0f9334.webp": {
+    "level": "2a",
+    "pdf_page": 111,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      299.0,
+      309.0,
+      363.0,
+      405.0
+    ]
+  },
+  "assets/images/level2a/art-111-a8a8b42493cc.webp": {
+    "level": "2a",
+    "pdf_page": 111,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      437.0,
+      312.0,
+      546.0,
+      411.0
+    ]
+  },
+  "assets/images/level2a/art-111-0478cd48edfa.webp": {
+    "level": "2a",
+    "pdf_page": 111,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      258.0,
+      430.0,
+      357.0,
+      504.0
+    ]
+  },
+  "assets/images/level2a/art-111-6cd6b14effc4.webp": {
+    "level": "2a",
+    "pdf_page": 111,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      444.0,
+      434.0,
+      550.0,
+      537.0
+    ]
+  },
+  "assets/images/level2a/art-111-9acb09513e61.webp": {
+    "level": "2a",
+    "pdf_page": 111,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      275.0,
+      561.0,
+      358.0,
+      631.0
+    ]
+  },
+  "assets/images/level2a/art-111-42eec4ebd661.webp": {
+    "level": "2a",
+    "pdf_page": 111,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      440.0,
+      550.0,
+      546.0,
+      653.0
+    ]
+  },
+  "assets/images/level2a/art-112-f09c287032ac.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      93.0,
+      360.0,
+      173.0,
+      441.0
+    ]
+  },
+  "assets/images/level2a/art-112-46b5359a0899.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      223.0,
+      358.0,
+      307.0,
+      444.0
+    ]
+  },
+  "assets/images/level2a/art-112-4f3eb2820e97.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      354.0,
+      363.0,
+      444.0,
+      434.0
+    ]
+  },
+  "assets/images/level2a/art-112-13dd50e611df.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      480.0,
+      358.0,
+      590.0,
+      444.0
+    ]
+  },
+  "assets/images/level2a/art-112-2c91466abd51.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      93.0,
+      477.0,
+      213.0,
+      562.0
+    ]
+  },
+  "assets/images/level2a/art-112-0589938b2e28.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      228.0,
+      477.0,
+      335.0,
+      556.0
+    ]
+  },
+  "assets/images/level2a/art-112-58a7bd3310a0.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      359.0,
+      476.0,
+      426.0,
+      559.0
+    ]
+  },
+  "assets/images/level2a/art-112-24cae0a0fb2d.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      489.0,
+      480.0,
+      575.0,
+      552.0
+    ]
+  },
+  "assets/images/level2a/art-112-5fb9ac187fcb.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      93.0,
+      615.0,
+      206.0,
+      691.0
+    ]
+  },
+  "assets/images/level2a/art-112-8c7979ca9b7f.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      228.0,
+      604.0,
+      324.0,
+      681.0
+    ]
+  },
+  "assets/images/level2a/art-112-4c22065c4fa1.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      341.0,
+      614.0,
+      469.0,
+      685.0
+    ]
+  },
+  "assets/images/level2a/art-112-2d840d4eac3c.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      489.0,
+      616.0,
+      580.0,
+      682.0
+    ]
+  },
+  "assets/images/level2a/art-112-886a6e934bbf.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      103.0,
+      722.0,
+      192.0,
+      803.0
+    ]
+  },
+  "assets/images/level2a/art-112-a98481f5426c.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      230.0,
+      727.0,
+      305.0,
+      806.0
+    ]
+  },
+  "assets/images/level2a/art-112-8927a99677f1.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      728.0,
+      466.0,
+      807.0
+    ]
+  },
+  "assets/images/level2a/art-112-32f281e16d03.webp": {
+    "level": "2a",
+    "pdf_page": 112,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      477.0,
+      721.0,
+      595.0,
+      806.0
+    ]
+  },
+  "assets/images/level2a/art-113-932c385b8b93.webp": {
+    "level": "2a",
+    "pdf_page": 113,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      147.0,
+      381.0,
+      197.0,
+      425.0
+    ]
+  },
+  "assets/images/level2a/art-113-08df41e277c9.webp": {
+    "level": "2a",
+    "pdf_page": 113,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      148.0,
+      426.0,
+      197.0,
+      462.0
+    ]
+  },
+  "assets/images/level2a/art-113-4caf3584b814.webp": {
+    "level": "2a",
+    "pdf_page": 113,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      150.0,
+      471.0,
+      197.0,
+      531.0
+    ]
+  },
+  "assets/images/level2a/art-113-e9d9d59e8ddb.webp": {
+    "level": "2a",
+    "pdf_page": 113,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      146.0,
+      537.0,
+      203.0,
+      581.0
+    ]
+  },
+  "assets/images/level2a/art-113-861aa1d8de9d.webp": {
+    "level": "2a",
+    "pdf_page": 113,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      147.0,
+      587.0,
+      207.0,
+      633.0
+    ]
+  },
+  "assets/images/level2a/art-121-c25a0c6ee5f0.webp": {
+    "level": "2a",
+    "pdf_page": 121,
+    "xref": 2076,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-121-7adb9bab08fc.webp": {
+    "level": "2a",
+    "pdf_page": 121,
+    "xref": 2095,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-121-2eda81f0e7b0.webp": {
+    "level": "2a",
+    "pdf_page": 121,
+    "xref": 2096,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-121-ddbdf9516505.webp": {
+    "level": "2a",
+    "pdf_page": 121,
+    "xref": 333,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-121-fb0324f964dc.webp": {
+    "level": "2a",
+    "pdf_page": 121,
+    "xref": 1320,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-121-86b7ac080eea.webp": {
+    "level": "2a",
+    "pdf_page": 121,
+    "xref": 2099,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-123-b6fe93a49340.webp": {
+    "level": "2a",
+    "pdf_page": 123,
+    "xref": 1255,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-123-9e7a67c2665d.webp": {
+    "level": "2a",
+    "pdf_page": 123,
+    "xref": 2106,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-123-9acd202b8079.webp": {
+    "level": "2a",
+    "pdf_page": 123,
+    "xref": 2107,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-123-7eb4aa495749.webp": {
+    "level": "2a",
+    "pdf_page": 123,
+    "xref": 2108,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-123-5b1238d7bbd6.webp": {
+    "level": "2a",
+    "pdf_page": 123,
+    "xref": 2113,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-86b7ac080eea.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2099,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-39d6dd6cdc20.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2143,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-9e7a67c2665d.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2106,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-bb425219d151.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2142,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-7a64d4529686.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2147,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-af64df2ac6e3.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2145,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-49d5aea08642.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2149,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-0ffd2648a64d.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2151,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-514ced9fbb59.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2144,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-130-bba88a98edc1.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "xref": 2148,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-138-0874d28ba2cb.webp": {
+    "level": "2a",
+    "pdf_page": 138,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      508.0,
+      420.0,
+      563.0
+    ]
+  },
+  "assets/images/level2a/art-138-5ccb3d2e8b35.webp": {
+    "level": "2a",
+    "pdf_page": 138,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      578.0,
+      422.0,
+      628.0
+    ]
+  },
+  "assets/images/level2a/art-138-efe1270461c4.webp": {
+    "level": "2a",
+    "pdf_page": 138,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      639.0,
+      420.0,
+      684.0
+    ]
+  },
+  "assets/images/level2a/art-138-56c1e79feabe.webp": {
+    "level": "2a",
+    "pdf_page": 138,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      698.0,
+      421.0,
+      742.0
+    ]
+  },
+  "assets/images/level2a/art-138-b0d7890507b7.webp": {
+    "level": "2a",
+    "pdf_page": 138,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      345.0,
+      749.0,
+      420.0,
+      801.0
+    ]
+  },
+  "assets/images/level2a/art-139-06d11ad76226.webp": {
+    "level": "2a",
+    "pdf_page": 139,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      338.0,
+      466.0,
+      402.0,
+      518.0
+    ]
+  },
+  "assets/images/level2a/art-139-376e7313232f.webp": {
+    "level": "2a",
+    "pdf_page": 139,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      330.0,
+      533.0,
+      400.0,
+      582.0
+    ]
+  },
+  "assets/images/level2a/art-139-522663872d7f.webp": {
+    "level": "2a",
+    "pdf_page": 139,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      321.0,
+      602.0,
+      405.0,
+      653.0
+    ]
+  },
+  "assets/images/level2a/art-139-b1b4e110bfa2.webp": {
+    "level": "2a",
+    "pdf_page": 139,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      337.0,
+      677.0,
+      389.0,
+      717.0
+    ]
+  },
+  "assets/images/level2a/art-139-f349340f82aa.webp": {
+    "level": "2a",
+    "pdf_page": 139,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      334.0,
+      731.0,
+      397.0,
+      774.0
+    ]
+  },
+  "assets/images/level2a/art-142-7f2f4cd94aba.webp": {
+    "level": "2a",
+    "pdf_page": 142,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      400.0,
+      565.0,
+      449.0,
+      616.0
+    ]
+  },
+  "assets/images/level2a/art-142-a80aaa0ca95c.webp": {
+    "level": "2a",
+    "pdf_page": 142,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      405.0,
+      633.0,
+      443.0,
+      674.0
+    ]
+  },
+  "assets/images/level2a/art-142-7698c8fdd3f9.webp": {
+    "level": "2a",
+    "pdf_page": 142,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      398.0,
+      689.0,
+      475.0,
+      738.0
+    ]
+  },
+  "assets/images/level2a/art-142-903803aa5aba.webp": {
+    "level": "2a",
+    "pdf_page": 142,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      443.0,
+      798.0,
+      501.0,
+      855.0
+    ]
+  },
+  "assets/images/level2a/art-142-14c5f8578d81.webp": {
+    "level": "2a",
+    "pdf_page": 142,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      427.0,
+      881.0,
+      494.0,
+      924.0
+    ]
+  },
+  "assets/images/level2a/art-143-dbb3ec986303.webp": {
+    "level": "2a",
+    "pdf_page": 143,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      392.0,
+      326.0,
+      444.0,
+      376.0
+    ]
+  },
+  "assets/images/level2a/art-143-e5bd356fecd7.webp": {
+    "level": "2a",
+    "pdf_page": 143,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      379.0,
+      389.0,
+      454.0,
+      441.0
+    ]
+  },
+  "assets/images/level2a/art-143-5d6359363102.webp": {
+    "level": "2a",
+    "pdf_page": 143,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      374.0,
+      478.0,
+      470.0,
+      525.0
+    ]
+  },
+  "assets/images/level2a/art-143-9b6ce23a9b2e.webp": {
+    "level": "2a",
+    "pdf_page": 143,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      373.0,
+      550.0,
+      457.0,
+      609.0
+    ]
+  },
+  "assets/images/level2a/art-143-0eb8f62120f5.webp": {
+    "level": "2a",
+    "pdf_page": 143,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      390.0,
+      619.0,
+      461.0,
+      677.0
+    ]
+  },
+  "assets/images/level2a/art-145-74f24c3e0fb6.webp": {
+    "level": "2a",
+    "pdf_page": 145,
+    "xref": 2689,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-145-91c5f2b67e3f.webp": {
+    "level": "2a",
+    "pdf_page": 145,
+    "xref": 2728,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-145-e883ba7441ef.webp": {
+    "level": "2a",
+    "pdf_page": 145,
+    "xref": 2729,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-145-acdab4481711.webp": {
+    "level": "2a",
+    "pdf_page": 145,
+    "xref": 2730,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-145-a4a209af034c.webp": {
+    "level": "2a",
+    "pdf_page": 145,
+    "xref": 2731,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-145-83163897d716.webp": {
+    "level": "2a",
+    "pdf_page": 145,
+    "xref": 2690,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-33ccb7f9b21d.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 2735,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-558dc7842037.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 2736,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-f75bad0362d4.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 2737,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-49e77ffd6ece.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 2741,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-5dd6ddd5ea0c.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 864,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-7e6bc990455e.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 2738,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-bafe0cfa9bd2.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 2739,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-ce9d63ed79a0.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 2743,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-146-e4606413d56f.webp": {
+    "level": "2a",
+    "pdf_page": 146,
+    "xref": 2740,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-147-600987ad626f.webp": {
+    "level": "2a",
+    "pdf_page": 147,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      167.0,
+      651.0,
+      298.0,
+      707.0
+    ]
+  },
+  "assets/images/level2a/art-147-d1a8fb9e5b20.webp": {
+    "level": "2a",
+    "pdf_page": 147,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      332.0,
+      640.0,
+      417.0,
+      718.0
+    ]
+  },
+  "assets/images/level2a/art-147-e96359a412b8.webp": {
+    "level": "2a",
+    "pdf_page": 147,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      470.0,
+      640.0,
+      564.0,
+      712.0
+    ]
+  },
+  "assets/images/level2a/art-147-7ea188809e93.webp": {
+    "level": "2a",
+    "pdf_page": 147,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      173.0,
+      723.0,
+      280.0,
+      808.0
+    ]
+  },
+  "assets/images/level2a/art-147-28754fd6ae2e.webp": {
+    "level": "2a",
+    "pdf_page": 147,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      324.0,
+      725.0,
+      398.0,
+      806.0
+    ]
+  },
+  "assets/images/level2a/art-147-f8d5b8c8f80a.webp": {
+    "level": "2a",
+    "pdf_page": 147,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      471.0,
+      723.0,
+      573.0,
+      808.0
+    ]
+  },
+  "assets/images/level2a/art-148-89c4be1acf0e.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 2770,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-148-8c0a58fffb82.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 2771,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-148-96c4d94ee179.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 2772,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-148-69f8ba7aaf40.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 2773,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-148-b02c12d9c488.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 2774,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-148-b331cc0244c4.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 2775,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-148-3acfb02beab3.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 2751,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-148-bdbaf51fde23.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 2776,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-148-38c7eb462abc.webp": {
+    "level": "2a",
+    "pdf_page": 148,
+    "xref": 233,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-5e9964c6c799.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2781,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-7f8f1a787b49.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2782,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-bdce6d823283.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2783,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-281fd029a679.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2784,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-6c2c331ce3d0.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2785,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-1086bf32d2dd.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2786,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-7d87c60fb5c6.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2787,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-1384622860f6.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2789,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-45b43015c3bb.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2790,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-149-75fae02e5a7d.webp": {
+    "level": "2a",
+    "pdf_page": 149,
+    "xref": 2791,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-150-5508fb5461af.webp": {
+    "level": "2a",
+    "pdf_page": 150,
+    "xref": 2802,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-150-114a3596001a.webp": {
+    "level": "2a",
+    "pdf_page": 150,
+    "xref": 2797,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-150-aad965bdc803.webp": {
+    "level": "2a",
+    "pdf_page": 150,
+    "xref": 2799,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-150-ac7dca943534.webp": {
+    "level": "2a",
+    "pdf_page": 150,
+    "xref": 2798,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-150-1d2e87470851.webp": {
+    "level": "2a",
+    "pdf_page": 150,
+    "xref": 2800,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-151-ee6882c5c91a.webp": {
+    "level": "2a",
+    "pdf_page": 151,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      130.0,
+      158.0,
+      181.0,
+      207.0
+    ]
+  },
+  "assets/images/level2a/art-151-30a3c7317d28.webp": {
+    "level": "2a",
+    "pdf_page": 151,
+    "xref": 898,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-151-8bfa9881cc91.webp": {
+    "level": "2a",
+    "pdf_page": 151,
+    "xref": 147,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-151-b619c13ab28e.webp": {
+    "level": "2a",
+    "pdf_page": 151,
+    "xref": 2809,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-151-faff3877400a.webp": {
+    "level": "2a",
+    "pdf_page": 151,
+    "xref": 2870,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-151-2bc36de89b43.webp": {
+    "level": "2a",
+    "pdf_page": 151,
+    "xref": 2808,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-151-493c15d8f95b.webp": {
+    "level": "2a",
+    "pdf_page": 151,
+    "xref": 2806,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-151-5f23bb352f77.webp": {
+    "level": "2a",
+    "pdf_page": 151,
+    "xref": 2807,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-152-f3d1df499635.webp": {
+    "level": "2a",
+    "pdf_page": 152,
+    "xref": 2902,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-152-795be04442da.webp": {
+    "level": "2a",
+    "pdf_page": 152,
+    "xref": 2873,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-155-b72ffdc9df71.webp": {
+    "level": "2a",
+    "pdf_page": 155,
+    "xref": 3028,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-155-09d072390703.webp": {
+    "level": "2a",
+    "pdf_page": 155,
+    "xref": 3026,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-155-a2146c677fc4.webp": {
+    "level": "2a",
+    "pdf_page": 155,
+    "xref": 2983,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-155-34c580e614f9.webp": {
+    "level": "2a",
+    "pdf_page": 155,
+    "xref": 3036,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2a/art-155-9b63d3e2d6cd.webp": {
+    "level": "2a",
+    "pdf_page": 155,
+    "xref": 3039,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-f647cdbb2f46.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 77,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-c076bfc1ae6c.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 74,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-84f8742d6d54.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 83,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-51e01e4751b7.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 86,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-f9363b063019.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 87,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-39e3a7b7974d.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 82,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-08a0e9ddfa32.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 90,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-bf7cf8a7ed98.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 80,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-49cac65d839e.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 84,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-fa10a827d141.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 85,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-136c2f1eb368.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 81,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-9ea5782ab6a5.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 91,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-13041ee1c8f8.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 88,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-012-8e78ffba44a9.webp": {
+    "level": "2b",
+    "pdf_page": 12,
+    "xref": 89,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-013-47f902451143.webp": {
+    "level": "2b",
+    "pdf_page": 13,
+    "xref": 99,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-013-f305518a03c3.webp": {
+    "level": "2b",
+    "pdf_page": 13,
+    "xref": 100,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-013-dc3e98ce1cbd.webp": {
+    "level": "2b",
+    "pdf_page": 13,
+    "xref": 96,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-013-7ee243d1375a.webp": {
+    "level": "2b",
+    "pdf_page": 13,
+    "xref": 97,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-013-5d003df22cd7.webp": {
+    "level": "2b",
+    "pdf_page": 13,
+    "xref": 101,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-013-012cdd5a6891.webp": {
+    "level": "2b",
+    "pdf_page": 13,
+    "xref": 102,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-0029177c26ed.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 105,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-d5dd7620fc26.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 106,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-d4d28edede6f.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 107,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-6953d34e2111.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 108,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-a8356ebe0e3c.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 109,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-1d41a5385596.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 110,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-bcd9ab2fd5ca.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 111,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-a8af67e47421.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 113,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-d06d87c10298.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 116,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-ac2ceac7ab63.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 117,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-7eb583868751.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 118,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-236bd2ec15a4.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 119,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-d0719a19607f.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 120,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-74a17b25ceaa.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 121,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-489ea6242737.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 122,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-4dfa4568df63.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 124,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-e57e3806c6b4.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 125,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-014-b4dd42761d69.webp": {
+    "level": "2b",
+    "pdf_page": 14,
+    "xref": 126,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-24d70b7da163.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 165,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-383f00ad01b1.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 131,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-a002aa8f1d34.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 138,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-23be461bdf4d.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 139,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-562346200843.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 149,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-d2a107904d2f.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 145,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-e1bce0c066f5.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 150,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-2f23e89226ea.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 151,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-ac7224e359b6.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 153,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-db5993b13a40.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 133,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-775b2535bafb.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 162,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-93f231cf4277.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 164,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-016-ea6e762d3f12.webp": {
+    "level": "2b",
+    "pdf_page": 16,
+    "xref": 169,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-016-9e5a2f55e1dc.webp": {
+    "level": "2b",
+    "pdf_page": 16,
+    "xref": 171,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-016-62a78b9ffaeb.webp": {
+    "level": "2b",
+    "pdf_page": 16,
+    "xref": 173,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-016-254a9aa5e43b.webp": {
+    "level": "2b",
+    "pdf_page": 16,
+    "xref": 168,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-016-8246958b1412.webp": {
+    "level": "2b",
+    "pdf_page": 16,
+    "xref": 174,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-74b362eb63ae.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 191,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-bb5a2e2e066c.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 193,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-c584d187dd7f.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 194,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-b5c9f51d747d.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 196,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-59bab67564dc.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 198,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-9bf622d30d17.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 200,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-543a56c0ce7b.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 202,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-7ad64fc9c784.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 186,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-4401a177e26d.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 204,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-3f41c80f9564.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 205,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-21d244fc9016.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 207,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-6b825e4c2432.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 208,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-0062b3a45c19.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 209,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-090923a1d71f.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 210,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-ba5794165b7c.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 212,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-5e0fccac205e.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 213,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-59afe4a9d3ad.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 215,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-66f34c0a766f.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "xref": 216,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-031-6e626d5ddb21.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      66.0,
+      351.0,
+      190.0,
+      403.0
+    ]
+  },
+  "assets/images/level2b/art-031-3942b38cec62.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      102.0,
+      409.0,
+      158.0,
+      459.0
+    ]
+  },
+  "assets/images/level2b/art-031-53b176797c68.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      70.0,
+      467.0,
+      191.0,
+      518.0
+    ]
+  },
+  "assets/images/level2b/art-031-344b469993e8.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      59.0,
+      521.0,
+      192.0,
+      566.0
+    ]
+  },
+  "assets/images/level2b/art-031-8658b58384f3.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      58.0,
+      573.0,
+      186.0,
+      626.0
+    ]
+  },
+  "assets/images/level2b/art-031-575502d2ce13.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      87.0,
+      629.0,
+      168.0,
+      679.0
+    ]
+  },
+  "assets/images/level2b/art-031-560245c24aaa.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      58.0,
+      680.0,
+      195.0,
+      736.0
+    ]
+  },
+  "assets/images/level2b/art-031-d6916ece60d3.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      62.0,
+      740.0,
+      184.0,
+      788.0
+    ]
+  },
+  "assets/images/level2b/art-031-236c8c5556a8.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      76.0,
+      793.0,
+      192.0,
+      839.0
+    ]
+  },
+  "assets/images/level2b/art-031-f8bd7b5bf2a8.webp": {
+    "level": "2b",
+    "pdf_page": 31,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      75.0,
+      844.0,
+      188.0,
+      897.0
+    ]
+  },
+  "assets/images/level2b/art-032-bcc1bda6b2fc.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      62.0,
+      280.0,
+      179.0,
+      364.0
+    ]
+  },
+  "assets/images/level2b/art-032-3479698b9d13.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      64.0,
+      378.0,
+      176.0,
+      453.0
+    ]
+  },
+  "assets/images/level2b/art-032-2a21a0be0573.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      61.0,
+      455.0,
+      173.0,
+      532.0
+    ]
+  },
+  "assets/images/level2b/art-032-94a3fa5d5692.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      99.0,
+      538.0,
+      150.0,
+      629.0
+    ]
+  },
+  "assets/images/level2b/art-032-db5afa03d6a9.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      76.0,
+      646.0,
+      182.0,
+      707.0
+    ]
+  },
+  "assets/images/level2b/art-032-03093d034d6c.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      375.0,
+      283.0,
+      567.0,
+      368.0
+    ]
+  },
+  "assets/images/level2b/art-032-ab635acd5385.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      356.0,
+      377.0,
+      505.0,
+      438.0
+    ]
+  },
+  "assets/images/level2b/art-032-dd1187890ef9.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      376.0,
+      457.0,
+      500.0,
+      538.0
+    ]
+  },
+  "assets/images/level2b/art-032-996b63438889.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      388.0,
+      544.0,
+      470.0,
+      625.0
+    ]
+  },
+  "assets/images/level2b/art-032-0bc0810f9332.webp": {
+    "level": "2b",
+    "pdf_page": 32,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      374.0,
+      633.0,
+      472.0,
+      710.0
+    ]
+  },
+  "assets/images/level2b/art-033-65e7d53c714b.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      93.0,
+      261.0,
+      166.0,
+      387.0
+    ]
+  },
+  "assets/images/level2b/art-033-dc2e8d6c3090.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      83.0,
+      394.0,
+      177.0,
+      475.0
+    ]
+  },
+  "assets/images/level2b/art-033-3f570f0515be.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      81.0,
+      546.0,
+      181.0,
+      656.0
+    ]
+  },
+  "assets/images/level2b/art-033-b57c59a5424d.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      66.0,
+      688.0,
+      156.0,
+      761.0
+    ]
+  },
+  "assets/images/level2b/art-033-f745da0e5ddf.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      65.0,
+      821.0,
+      153.0,
+      881.0
+    ]
+  },
+  "assets/images/level2b/art-033-fd927b4a7402.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      386.0,
+      278.0,
+      425.0,
+      355.0
+    ]
+  },
+  "assets/images/level2b/art-033-b0778896192f.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      364.0,
+      416.0,
+      462.0,
+      477.0
+    ]
+  },
+  "assets/images/level2b/art-033-7168e39c6f36.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      359.0,
+      552.0,
+      439.0,
+      635.0
+    ]
+  },
+  "assets/images/level2b/art-033-f72368de07b0.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      375.0,
+      667.0,
+      455.0,
+      754.0
+    ]
+  },
+  "assets/images/level2b/art-033-9f255805a785.webp": {
+    "level": "2b",
+    "pdf_page": 33,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      381.0,
+      796.0,
+      455.0,
+      881.0
+    ]
+  },
+  "assets/images/level2b/art-034-221f12b5d7fe.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      92.0,
+      254.0,
+      189.0,
+      352.0
+    ]
+  },
+  "assets/images/level2b/art-034-39370cce1960.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      91.0,
+      401.0,
+      181.0,
+      456.0
+    ]
+  },
+  "assets/images/level2b/art-034-1d8f8f9ab5b1.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      91.0,
+      525.0,
+      185.0,
+      597.0
+    ]
+  },
+  "assets/images/level2b/art-034-a7a83c0d2115.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      102.0,
+      671.0,
+      183.0,
+      754.0
+    ]
+  },
+  "assets/images/level2b/art-034-8227be8cf43b.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      95.0,
+      801.0,
+      183.0,
+      892.0
+    ]
+  },
+  "assets/images/level2b/art-034-b3aa814b5e61.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      385.0,
+      257.0,
+      478.0,
+      322.0
+    ]
+  },
+  "assets/images/level2b/art-034-0d073fb04168.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      380.0,
+      387.0,
+      469.0,
+      469.0
+    ]
+  },
+  "assets/images/level2b/art-034-aa80db22c11b.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      380.0,
+      526.0,
+      476.0,
+      597.0
+    ]
+  },
+  "assets/images/level2b/art-034-7b9766e8eab9.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      380.0,
+      669.0,
+      470.0,
+      757.0
+    ]
+  },
+  "assets/images/level2b/art-034-e6347c524065.webp": {
+    "level": "2b",
+    "pdf_page": 34,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      397.0,
+      786.0,
+      476.0,
+      856.0
+    ]
+  },
+  "assets/images/level2b/art-035-4ca0a72733cb.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 345,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-f428b56c4fba.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 326,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-2f748a30d103.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 322,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-0280f51f0b64.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 321,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-65e0f9cedb13.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 347,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-254a9aa5e43b.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 168,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-2f23e89226ea.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 151,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-0e7b6efd8ffd.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 304,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-cffb59fdd3fb.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 308,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-035-62a78b9ffaeb.webp": {
+    "level": "2b",
+    "pdf_page": 35,
+    "xref": 173,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-996c61f38c69.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 357,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-254a9aa5e43b.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 168,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-ec1d06a4c3b6.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 160,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-0c953d5278f6.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 359,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-e9153c356494.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 360,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-896f27197458.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 362,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-8e109f9d28f6.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 363,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-65e0f9cedb13.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 347,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-2f23e89226ea.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 151,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-037-62a78b9ffaeb.webp": {
+    "level": "2b",
+    "pdf_page": 37,
+    "xref": 173,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-cbe945922f3c.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 373,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-84aee26e7a9e.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 377,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-724cf5da1d3a.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 381,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-1b5c7fb6e140.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 385,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-a4991c4c4025.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 389,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-5e4624cfe105.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 393,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-594ae1a197aa.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 396,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-f32fde1a6b63.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 400,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-47eaaf2b8c56.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 404,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-038-49c3603eba8e.webp": {
+    "level": "2b",
+    "pdf_page": 38,
+    "xref": 408,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-45cc56b7ea50.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 418,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-b6eb63b8c031.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 422,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-f2ca0c1b04d4.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 426,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-26b893057fbf.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 430,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-f296a565d3c8.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 434,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-eafc432ddcdc.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 438,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-5a89edd4b2a4.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 446,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-9eb39bc06d0e.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 442,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-ddda8652bef3.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 450,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-039-361665442516.webp": {
+    "level": "2b",
+    "pdf_page": 39,
+    "xref": 454,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-2e6e047e6c09.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 466,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-629b83e666ba.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 467,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-dff2e1d188bb.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 469,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-a2610c3cb3c6.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 473,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-7ca2edbb2bbc.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 474,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-287daa75f84f.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 476,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-6c54202a9874.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 482,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-bc5d6ad713e6.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 478,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-041-861a48fba6c9.webp": {
+    "level": "2b",
+    "pdf_page": 41,
+    "xref": 471,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-cba511d37f0b.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 502,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-439ad1e5dd4a.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 498,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-fbf0b9285f9b.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 501,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-cf228af28cf4.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 494,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-fb0c2f5f4dd8.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 496,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-f08bfef4775f.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 488,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-4c280d0bc872.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 490,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-dbe7df61951c.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 492,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-66441a627f97.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 504,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-940c5b439258.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 507,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-042-489d646e1800.webp": {
+    "level": "2b",
+    "pdf_page": 42,
+    "xref": 487,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-70aad1e0d31e.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 514,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-b0f150a801f5.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 515,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-729f55947a8c.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 516,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-a919267eb345.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 517,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-8765f943f344.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 524,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-8c9450647e46.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 522,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-60872b2db770.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 520,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-6dbc85e7aa0d.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 521,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-72d12d34a2bf.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 526,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-043-5c9d48381625.webp": {
+    "level": "2b",
+    "pdf_page": 43,
+    "xref": 518,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-7b17a38ca20e.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 548,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-8d9ffa68ec2a.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 545,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-1aad0e792458.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 543,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-d90635c2d9ed.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 554,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-77c79a61ec64.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 538,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-0415e200fc6d.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 547,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-cccaafce9c0d.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 536,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-4c62f7fae9bf.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 534,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-8b9ef9a106ef.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 539,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-044-9b550482248b.webp": {
+    "level": "2b",
+    "pdf_page": 44,
+    "xref": 541,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-6d8700dcf417.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 557,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-5fcc1f1d08ea.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 559,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-67278b2ed935.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 560,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-a74dbb4e928f.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 561,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-0a6dbedeba45.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 558,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-9b288696b8d9.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 567,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-8a303085b096.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 563,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-4f2d2d4dac44.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 564,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-ab1c07bce885.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 565,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-045-7998004a043d.webp": {
+    "level": "2b",
+    "pdf_page": 45,
+    "xref": 566,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-2b2f9d41bf36.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 622,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-4586a8004ef6.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 626,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-6a541d966fa8.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 629,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-3ab3edb509bd.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 632,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-347f61f25e7a.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 635,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-482877f7d75f.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 618,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-6e6b1fbb9277.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 638,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-53cf52583a8d.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 641,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-b6bb00a6d3c3.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 645,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-051-9cabeaa4f081.webp": {
+    "level": "2b",
+    "pdf_page": 51,
+    "xref": 648,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-43873021ae0a.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 678,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-3d22823391c7.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 667,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-cc1e6fb480d4.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 674,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-cd44a60b7206.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 672,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-6c07f2804428.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 680,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-fa173dc65960.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 671,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-9ff4dd4b5077.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 676,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-cdb96ec82a59.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 668,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-7a68eabe0b51.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 697,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-65e0f9cedb13.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 347,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-349e73577e74.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 692,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-ec1d06a4c3b6.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 160,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-e437728bf463.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 691,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-caf8155648ba.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 687,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-103bff2153cf.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 695,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-260355149f5a.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 688,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-b44c67395b15.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 690,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-c6a96f0748bd.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "xref": 686,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-c0816e65fe44.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 703,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-6ffa523d6d5d.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 714,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-0e758eb4c832.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 717,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-d271d0df37ce.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 720,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-627fdb6bc57f.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 731,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-82dafaf15ccd.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 706,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-69143408da23.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 710,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-faa655d60fe1.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 723,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-6ceec376bf83.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 727,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-1c0e9488b22e.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 738,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-1747672e77ee.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 734,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-efb65efca7b4.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 741,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-f3f9b41c49ff.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 745,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-6b101b9bb497.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 769,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-6a2c317b901b.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 773,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-ed88045cd405.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 749,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-529d2666fa62.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 753,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-056-8aca33b24570.webp": {
+    "level": "2b",
+    "pdf_page": 56,
+    "xref": 757,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-2875c1d1a707.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 779,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-72772d2e7205.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 783,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-7ce19915e62d.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 785,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-2cc90682513e.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 790,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-e9d5b3d8af70.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 791,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-be4abf0c9ae4.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 794,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-c6b8944c1ce2.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 787,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-aa56cdcc8ead.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 788,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-9222d33d3a0d.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 792,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-057-29d69cda6e8f.webp": {
+    "level": "2b",
+    "pdf_page": 57,
+    "xref": 795,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-e15b75597adc.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 805,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-20169030542d.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 806,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-3068ba9e7b97.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 809,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-ef3145b5eba3.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 811,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-cef4ab1610db.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 813,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-0419297fdeec.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 804,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-df01c74d38e8.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 803,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-7f6eabc6ac9d.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 807,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-88317a620c6a.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 816,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-058-ef19604c8d3c.webp": {
+    "level": "2b",
+    "pdf_page": 58,
+    "xref": 812,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-059-5ea62a8ee963.webp": {
+    "level": "2b",
+    "pdf_page": 59,
+    "xref": 819,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-059-5b179cedbdc6.webp": {
+    "level": "2b",
+    "pdf_page": 59,
+    "xref": 821,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-5b3e685af321.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      391.0,
+      73.0,
+      476.0,
+      125.0
+    ]
+  },
+  "assets/images/level2b/art-015-eba98a35f247.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      119.0,
+      466.0,
+      228.0,
+      524.0
+    ]
+  },
+  "assets/images/level2b/art-015-52e1ebb2c1cc.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 143,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-015-ec1d06a4c3b6.webp": {
+    "level": "2b",
+    "pdf_page": 15,
+    "xref": 160,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-054-b44793f1502f.webp": {
+    "level": "2b",
+    "pdf_page": 54,
+    "xref": 682,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-055-00d36afcb3e0.webp": {
+    "level": "2b",
+    "pdf_page": 55,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      273.0,
+      190.0,
+      405.0,
+      233.0
+    ]
+  },
+  "assets/images/level2a/art-008-59fc98fea582.webp": {
+    "level": "2a",
+    "pdf_page": 8,
+    "kind": "illustration-crop",
+    "preview_rect": [
+      120.0,
+      465.0,
+      225.0,
+      519.0
+    ]
+  },
+  "assets/images/level2a/art-077-29127d654614.webp": {
+    "level": "2a",
+    "pdf_page": 77,
+    "kind": "illustration-crop",
+    "xref": 1219,
+    "preview_rect": [
+      81,
+      782,
+      222,
+      859
+    ]
+  }
+}
