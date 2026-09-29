@@ -1,7 +1,11 @@
 /* BULIG theme — fresh green, clean white and warm ivory.
    Loaded after style.css and design.css. Colour, depth and polish only:
    the logo, layout structure and lesson content are unchanged. */
+/* Fonts are self-hosted (SIL Open Font License, see assets/fonts/) so no external requests are made. */
+@font-face{font-family:'Fredoka';font-style:normal;font-display:swap;font-weight:300 700;src:url(fonts/fredoka-latin-wght-normal.woff2) format('woff2-variations'),url(fonts/fredoka-latin-wght-normal.woff2) format('woff2')}
+@font-face{font-family:'Nunito';font-style:normal;font-display:swap;font-weight:200 1000;src:url(fonts/nunito-latin-wght-normal.woff2) format('woff2-variations'),url(fonts/nunito-latin-wght-normal.woff2) format('woff2')}
 :root{
+ --font-body:'Nunito','Segoe UI Rounded','Segoe UI',system-ui,sans-serif;--font-fun:'Fredoka','Nunito','Segoe UI Rounded',system-ui,sans-serif;font-family:var(--font-body);
  --g900:#0e3b28;--g800:#13503a;--g700:#176444;--g600:#1c7a50;--g500:#2a9461;--g400:#5db585;--g300:#9ed2b3;--g200:#cfe9d9;--g100:#e6f4ec;--g50:#f3faf6;
  --ivory:#fbf8ef;--ivory-2:#f6f1e2;--ivory-3:#efe8d3;--ivory-line:#e9e2cc;--white:#ffffff;
  --green:var(--g600);--deep:var(--g800);--mint:var(--g100);--cream:var(--ivory);--ink:#15372a;--muted:#5d7166;--line:#e6e6d8;
@@ -11,7 +15,11 @@
  --hero:linear-gradient(135deg,#0f4630 0%,#176444 48%,#23855a 100%);
  background:var(--ivory);color:var(--ink);
 }
-body{background:var(--ivory);color:var(--ink)}
+body{background:var(--ivory);color:var(--ink);font-family:var(--font-body)}
+h1,h2,h3,.btn,.navitem,.eyebrow,.level-number,.pupil-stat strong,.medal,.xpchip,.role-tabs a,.activity-title,.path-node,.stat-label{font-family:var(--font-fun)}
+h1,h2,h3{font-weight:600;letter-spacing:-.2px}
+.btn{font-weight:600}
+input,select,textarea{font-family:var(--font-body)}
 ::selection{background:var(--g200);color:var(--g900)}
 a{color:var(--g600)}
 h1,h2,h3{color:var(--g900)}
