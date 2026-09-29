@@ -352,3 +352,44 @@ body.activity-page{background:transparent}
  .demo-prompt{padding:16px 18px;border-left-width:6px}
 }
 .lesson-outline summary+div{border-top:0}
+
+/* ===== Administrator access: confirmation step + admin mode ===== */
+.icon.flip{transform:scaleX(-1)}
+.admin-entry .icon{width:16px;height:16px;margin-right:6px;vertical-align:-3px;color:var(--y600)}
+.login-page.admin-mode{background:radial-gradient(ellipse at 8% 8%,rgba(255,198,41,.16),transparent 55%),radial-gradient(ellipse at 95% 95%,var(--ivory-2),transparent 55%),#f4f1e6}
+.login-page.admin-mode .login-story{background:
+ repeating-linear-gradient(-45deg,rgba(255,198,41,.9) 0 14px,#0b2419 14px 28px) left bottom/100% 10px no-repeat,
+ radial-gradient(circle at 85% 15%,rgba(255,198,41,.14),transparent 45%),
+ linear-gradient(160deg,#0b2419 0%,#10352a 55%,#14432f 100%)}
+.login-page.admin-mode .login-story::after{border-color:rgba(255,198,41,.08)}
+.login-page.admin-mode .story-content .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--y300)}
+.login-page.admin-mode .story-content .eyebrow .icon{width:18px;height:18px}
+.login-page.admin-mode .story-photo{display:none}
+.login-page.admin-mode .login-panel{box-shadow:var(--shadow-lg),inset 0 5px 0 var(--y400)}
+.admin-warning{text-align:left}
+.admin-warning-icon{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:20px;background:var(--sun);color:var(--g900);box-shadow:0 12px 24px -12px rgba(184,137,0,.9);margin-bottom:18px;animation:admin-pop .5s ease-out}
+.admin-warning-icon .icon{width:32px;height:32px}
+.admin-warning .eyebrow{color:var(--y700)}
+.admin-warning h2{margin:6px 0 12px}
+.admin-warning>p{color:var(--muted);margin-bottom:18px}
+.admin-checklist{list-style:none;margin:0 0 24px;padding:16px 18px;background:var(--y50);border:1.5px dashed var(--y300);border-radius:18px;display:flex;flex-direction:column;gap:10px}
+.admin-checklist li{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;color:var(--ink)}
+.admin-checklist .icon{width:19px;height:19px;flex:0 0 19px;margin-top:2px;color:var(--g500)}
+.admin-checklist li:last-child{color:var(--y700);font-weight:600}
+.admin-checklist li:last-child .icon{color:var(--y600)}
+.admin-actions{display:flex;flex-direction:column;gap:12px}
+.admin-actions .icon{width:20px;height:20px}
+.admin-badge{display:inline-flex;align-items:center;gap:8px;background:#10352a;color:var(--y300);border-radius:999px;padding:6px 14px 6px 10px;font-size:.78rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;box-shadow:0 0 0 3px var(--y200)}
+.admin-badge .icon{width:17px;height:17px}
+.login-page.admin-mode .login-card h2{margin-top:16px}
+.login-page.admin-mode .btn.primary{background:linear-gradient(180deg,#14432f,#0b2419);border-color:#0b2419}
+.login-page.admin-mode .btn.primary:hover{background:linear-gradient(180deg,#176444,#10352a)}
+.login-page.admin-mode .btn.primary .icon{color:var(--y300)}
+.login-page.admin-mode .login-help{background:var(--y50);border-color:var(--y200)}
+@keyframes admin-pop{0%{transform:scale(.6) rotate(-12deg);opacity:0}70%{transform:scale(1.08) rotate(3deg)}100%{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.admin-warning-icon{animation:none}}
+@media(max-width:740px){
+ .login-page.admin-mode .login-story{background:repeating-linear-gradient(-45deg,rgba(255,198,41,.9) 0 12px,#0b2419 12px 24px) left bottom/100% 8px no-repeat,linear-gradient(160deg,#0b2419,#14432f)}
+ .admin-warning{text-align:center}
+ .admin-checklist{text-align:left}
+}
