@@ -1,0 +1,210 @@
+/* BULIG theme — fresh green, clean white and warm ivory.
+   Loaded after style.css and design.css. Colour, depth and polish only:
+   the logo, layout structure and lesson content are unchanged. */
+:root{
+ --g900:#0e3b28;--g800:#13503a;--g700:#176444;--g600:#1c7a50;--g500:#2a9461;--g400:#5db585;--g300:#9ed2b3;--g200:#cfe9d9;--g100:#e6f4ec;--g50:#f3faf6;
+ --ivory:#fbf8ef;--ivory-2:#f6f1e2;--ivory-3:#efe8d3;--ivory-line:#e9e2cc;--white:#ffffff;
+ --green:var(--g600);--deep:var(--g800);--mint:var(--g100);--cream:var(--ivory);--ink:#15372a;--muted:#5d7166;--line:#e6e6d8;
+ --shadow-sm:0 1px 2px rgba(14,59,40,.06),0 2px 6px rgba(14,59,40,.05);
+ --shadow-md:0 2px 4px rgba(14,59,40,.05),0 10px 24px -8px rgba(14,59,40,.14);
+ --shadow-lg:0 4px 10px rgba(14,59,40,.06),0 22px 44px -18px rgba(14,59,40,.28);
+ --hero:linear-gradient(135deg,#0f4630 0%,#176444 48%,#23855a 100%);
+ background:var(--ivory);color:var(--ink);
+}
+body{background:var(--ivory);color:var(--ink)}
+::selection{background:var(--g200);color:var(--g900)}
+a{color:var(--g600)}
+h1,h2,h3{color:var(--g900)}
+.muted,small{color:var(--muted)}
+.eyebrow{color:var(--g500)}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--g400);outline-offset:3px}
+
+/* Buttons */
+.btn{transition:background .18s,transform .18s,box-shadow .18s,border-color .18s}
+.btn.primary,.primary{background:linear-gradient(180deg,var(--g500),var(--g600));color:#fff;border:1px solid var(--g700);border-bottom:1px solid var(--g800);box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 6px 14px -6px rgba(23,100,68,.55)}
+.btn.primary:hover,.primary:hover{background:linear-gradient(180deg,var(--g600),var(--g700));box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 10px 20px -8px rgba(23,100,68,.6)}
+.btn.secondary,.secondary{background:var(--white);color:var(--g700);border:1.5px solid var(--g200);border-bottom-width:1.5px;box-shadow:var(--shadow-sm)}
+.btn.secondary:hover,.secondary:hover{border-color:var(--g400);background:var(--g50)}
+.btn.quiet,.quiet,.iconbutton.light{background:var(--g100);color:var(--g700);border:1px solid var(--g200)}
+.btn.quiet:hover,.quiet:hover{background:var(--g200)}
+.btn:active{transform:translateY(1px);box-shadow:none}
+
+/* Forms */
+input,select,textarea{border-color:var(--line)}
+.card input,.card select,.card textarea,input[type=text],input[type=password],input[type=number],input[type=email],select,textarea{background:var(--white)}
+input:focus,select:focus,textarea:focus{border-color:var(--g400)!important;box-shadow:0 0 0 4px var(--g100)}
+
+/* Surfaces */
+.card{background:var(--white);border:1px solid var(--line);box-shadow:var(--shadow-md)}
+.notice{background:var(--g100);border:1px solid var(--g200);color:var(--g800)}
+.status{background:var(--g100);color:var(--g700)}
+.tablewrap{border-radius:16px}
+.tablewrap th{background:var(--ivory-2);color:var(--g700);border-color:var(--ivory-line)}
+.tablewrap td{border-color:#eeeee4}
+.tablewrap tr:hover td{background:var(--g50)}
+.sitefooter{color:#8b9486}
+
+/* Shell: white sidebar, ivory canvas */
+.sidebar{background:var(--white);border-right:1px solid var(--line);box-shadow:4px 0 24px -18px rgba(14,59,40,.35)}
+.brand span{color:var(--muted)}
+.sidebar .navlabel{color:#94a197}
+.sidebar .navitem{color:#4f6358;font-weight:600}
+.sidebar .navitem .icon{color:var(--g500)}
+.sidebar .navitem:hover{background:var(--g50);border-color:var(--g100)}
+.sidebar .navitem.selected{background:var(--hero);border-color:transparent;color:#fff;box-shadow:0 8px 18px -8px rgba(23,100,68,.6)}
+.sidebar .navitem.selected .icon{color:#fff}
+.sidebar .person{border-top:1px solid var(--line)}
+.signout{color:var(--muted)}
+.mainwrap>.topbar{color:#8a9589}
+.topbar .rolepill{background:var(--white);border:1px solid var(--g200);color:var(--g700);box-shadow:var(--shadow-sm);border-radius:999px;padding-left:14px;padding-right:14px}
+.avatar{background:var(--g100);color:var(--g700)}
+
+/* Welcome banner: deep green hero with ivory text */
+.identity-banner{background:var(--hero);border:0;color:#fff;box-shadow:var(--shadow-lg)}
+.identity-banner::before{border-color:rgba(255,255,255,.07)}
+.identity-banner::after{content:'';position:absolute;z-index:-1;left:-80px;bottom:-140px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%)}
+.identity-banner .eyebrow{color:var(--g300)}
+.identity-copy h1,.identity-copy h2{color:#fff}
+.identity-section{color:#e8f5ec}
+.identity-message{color:#cfe6d7}
+.identity-photo>.avatar{border-color:var(--ivory);box-shadow:0 8px 20px -6px rgba(0,0,0,.35)}
+.identity-art{filter:drop-shadow(0 12px 18px rgba(0,0,0,.18))}
+.identity-compact{background:var(--hero)}
+
+/* Pupil stats */
+.pupil-stat,.stat{background:var(--white);border:1px solid var(--line);box-shadow:var(--shadow-md)}
+.level-stat{background:var(--g50);border-color:var(--g200)}
+.xp-stat{background:var(--white)}
+.pupil-stat strong,.stat strong{color:var(--g800)}
+.stat-label{color:#4f6358}
+.stat-label .icon{color:var(--g500)}
+.stat-foot{color:var(--muted)}
+.pupil-stat progress{accent-color:var(--g500)}
+.pupil-stat progress::-webkit-progress-bar{background:var(--g100)}
+.pupil-stat progress::-webkit-progress-value{background:linear-gradient(90deg,var(--g400),var(--g600))}
+
+/* "Your learning adventure" feature */
+.next-adventure{background:radial-gradient(circle at 85% 20%,var(--g100) 0,transparent 45%),linear-gradient(120deg,var(--white) 0%,var(--ivory) 100%);border:1px solid var(--ivory-line);box-shadow:var(--shadow-md)}
+.adventure-tag{color:var(--g600)}
+.adventure-copy h2{color:var(--g900)}
+.adventure-copy p{color:var(--muted)}
+.adventure-link{color:var(--g600)}
+.adventure-note{background:var(--white);border:1px solid var(--g200);color:var(--g700);box-shadow:var(--shadow-sm)}
+
+/* Level catalogue */
+.level-card{background:var(--white);border:1px solid var(--line);box-shadow:var(--shadow-md);transition:transform .2s,box-shadow .2s}
+.level-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.level-card.available,.role-pupil .level-card.available:hover{background:var(--white);border:2px solid var(--g400);box-shadow:var(--shadow-lg)}
+.level-cover,.level-tone-3 .level-cover,.level-tone-4 .level-cover,.level-tone-5 .level-cover,.level-tone-6 .level-cover,.level-tone-7 .level-cover,.level-tone-8 .level-cover{background:linear-gradient(135deg,var(--ivory) 0%,var(--ivory-2) 100%);color:var(--g700);border-bottom:1px solid var(--ivory-line)}
+.level-tone-4 .level-cover,.level-tone-6 .level-cover,.level-tone-8 .level-cover{background:linear-gradient(135deg,var(--g50) 0%,var(--g100) 100%);border-bottom-color:var(--g200)}
+.level-cover::before{border-color:rgba(28,122,80,.07)}
+.level-cover::after{background:rgba(255,255,255,.5)}
+.available .level-cover,.level-card.available .level-cover{background:var(--hero);color:#fff;border-bottom:0}
+.available .level-cover::before{border-color:rgba(255,255,255,.1)}
+.available .level-cover::after{background:rgba(255,255,255,.07)}
+.level-cover .cover-symbol,.level-cover .level-card-icon{background:rgba(255,255,255,.7);border:1px solid var(--ivory-line);color:var(--g600)}
+.available .level-cover .cover-symbol,.available .level-cover .level-card-icon{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.22);color:#fff}
+.level-cover .eyebrow,.cover-caption{color:var(--g500)}
+.available .level-cover .eyebrow,.available .cover-caption{color:var(--g200)}
+.level-card-heading h3,.level-card-content h2{color:var(--g900)}
+.level-card-heading .status{background:var(--g100);color:var(--g700);border:1px solid var(--g200)}
+.level-card-content>p{color:var(--g700)}
+.level-card-content>small{color:var(--muted)}
+.level-lock{background:var(--ivory);border:1px dashed var(--ivory-3);color:#7b806e}
+.level-banner{background:var(--hero)}
+.level-banner .eyebrow{color:var(--g300)}
+.level-banner p{color:#dcefe3}
+.level-banner h2{color:#fff}
+
+/* Learning path */
+.path-node{background:var(--ivory);border-color:var(--ivory-line);color:#a7ad9b}
+.path-row:not(:last-child):before{background:linear-gradient(var(--g200),var(--ivory-line))}
+.path-row.current{background:var(--g50);box-shadow:inset 0 0 0 1px var(--g200)}
+.path-row.current .path-node{background:var(--hero);border-color:var(--g800);color:#fff;box-shadow:0 0 0 7px var(--g100)}
+.path-row.done .path-node{background:var(--g100);border-color:var(--g300);color:var(--g600)}
+.path-row.locked h3{color:#8f978a}
+.path-row.locked .eyebrow{color:#a3a996}
+.continue-card .continue-image{background:var(--ivory)}
+
+/* Achievements */
+.badgecard{background:var(--white)}
+.badgecard.earned{background:linear-gradient(160deg,var(--white),var(--g50));border-color:var(--g200)}
+
+/* Teacher */
+.demo-entry{border-left:6px solid var(--g500);background:linear-gradient(100deg,var(--white) 60%,var(--g50))}
+.pageheading h1{color:var(--g900)}
+
+/* Lesson view */
+.activity-page{background:var(--ivory)}
+.activity-header{background:var(--hero);border-bottom:4px solid var(--g300);box-shadow:0 8px 24px -14px rgba(14,59,40,.6)}
+.activity-header>div>span{color:#cfe8d9}
+.activity-header .iconbutton{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff}
+.activity-main{background:var(--white);border:1px solid var(--line);box-shadow:var(--shadow-lg)}
+.xpchip{background:var(--g100);color:var(--g700);border-color:var(--g200)}
+.answer-card,.sentence-card{background:var(--ivory);border-color:var(--ivory-line)}
+.lesson-outline{background:var(--ivory);border-color:var(--ivory-line)}
+.narration .btn,.narration button{background:var(--g50);border-color:var(--g200);color:var(--g700)}
+
+/* Class demo */
+.demo-page,.demo-page #class-demo{background:var(--ivory);color:var(--ink)}
+.demo-header{background:var(--white);border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.demo-header strong{color:var(--g900)}
+.demo-slide-meta{color:var(--g600)}
+.demo-stage h1{color:var(--g900)}
+.demo-prompt{color:var(--g800)}
+.demo-choices li{background:var(--white);border-color:var(--g200);box-shadow:var(--shadow-sm)}
+.demo-footer{background:var(--white);border-top:1px solid var(--line);box-shadow:0 -6px 20px -16px rgba(14,59,40,.4)}
+
+/* Login: green story panel, white form, ivory canvas */
+.login-page{background:radial-gradient(circle at 10% 0%,var(--g100) 0,transparent 40%),var(--ivory)}
+.login-story{background:var(--hero);border:0;color:#fff}
+.login-story::after{border-color:rgba(255,255,255,.07)}
+.login-brand{display:block;width:fit-content;align-self:flex-start;background:var(--white);padding:14px 20px;border-radius:20px;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}
+.login-story h1,.login-story h2{color:#fff}
+.login-story .eyebrow{color:var(--g300)}
+.login-story p{color:#dcefe3}
+.login-story>small{color:#bfdccb}
+.story-photo{box-shadow:0 20px 40px -18px rgba(0,0,0,.5)}
+.login-panel{background:var(--white);border:1px solid var(--line);border-left:0;box-shadow:var(--shadow-lg)}
+.login-card h2{color:var(--g900)}
+.login-card .muted{color:var(--muted)}
+.role-tabs{background:var(--ivory);border:1px solid var(--ivory-line)}
+.role-tabs .active{background:var(--white);color:var(--g700);box-shadow:var(--shadow-sm)}
+.login-card input{background:var(--white)!important;border-color:var(--line)!important}
+.login-help{background:var(--ivory);border:1px solid var(--ivory-line)}
+
+/* Error page */
+.error-page main.card{border-top:5px solid var(--g500)}
+
+/* Specificity-matched overrides for earlier page-scoped rules */
+.role-pupil .identity-home{background:var(--hero)}
+.role-pupil .pupil-stat{border-top:4px solid var(--g400)}
+.role-pupil .xp-stat{border-top-color:var(--g500)}
+.role-pupil .streak-stat{border-top-color:var(--g300)}
+.role-pupil .badge-stat{border-top-color:var(--g600)}
+.role-pupil .level-card.unavailable{background:var(--white)}
+.role-pupil .level-card{transition:transform .2s,box-shadow .2s}
+.class-picker{background:var(--white);border:1px solid var(--line);box-shadow:var(--shadow-md)}
+.class-picker select{background:var(--white);border:1px solid var(--line)}
+.login-page{background:radial-gradient(ellipse at 8% 8%,var(--g100),transparent 55%),radial-gradient(ellipse at 95% 95%,var(--ivory-2),transparent 55%),var(--ivory)}
+.login-page .login-story{background:var(--hero);border:0;box-shadow:var(--shadow-lg)}
+.login-page .story-content>p{color:#d9ede1}
+.login-page .story-content h1{color:#fff}
+.login-page .story-photo{background:var(--ivory);border:1px solid rgba(255,255,255,.4);box-shadow:0 22px 40px -18px rgba(0,0,0,.55)}
+.login-page .story-photo span{color:var(--g700)}
+.login-page .login-panel{background:var(--white);border:1px solid var(--line);border-left:0;box-shadow:var(--shadow-lg)}
+.login-page .role-tabs{background:var(--ivory);border:1px solid var(--ivory-line)}
+.login-page .role-tabs a.active{background:var(--white);color:var(--g700);box-shadow:var(--shadow-sm)}
+.login-page .login-card input{background:var(--white);border:1px solid var(--line)}
+.login-page .login-help{background:var(--ivory);border:1px solid var(--ivory-line);color:var(--muted)}
+.btn:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--g400)}
+@media(max-width:740px){
+ .identity-banner{background:var(--hero)}
+ .login-page .login-story{border-radius:26px 26px 0 0}
+ .login-page .login-panel{border:1px solid var(--line);border-top:0}
+ .login-brand{align-self:center;margin:0 auto}
+}
+.stat>.icon{color:var(--g600);background:var(--g100)}
+.stat:nth-child(2)>.icon{color:var(--g700);background:var(--ivory-2)}
+.stat:nth-child(3)>.icon{color:var(--g500);background:var(--g50)}
+.stat span{color:var(--muted)}
