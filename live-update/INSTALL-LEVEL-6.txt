@@ -1,0 +1,41 @@
+BULIG — INSTALL LEVEL 6 (GRADED READING COMPREHENSION, GRADES 1–6)
+==================================================================
+
+Install Level 5 first (INSTALL-LEVEL-5.txt), including its newest Part 1.
+
+Site folder (holds app, config, database, public, storage):
+  /home/u179645850/domains/lemonchiffon-goose-405007.hostingersite.com/public_html
+
+STEP 1 — Back up (hPanel → Files → Backups, or phpMyAdmin → Export).
+
+STEP 2 — Extract the 4 ZIPs, one at a time
+  hPanel → File Manager → open public_html → Upload the ZIP → right-click → Extract
+  → into THIS SAME folder (public_html) → allow overwrite → delete the ZIP.
+     BULIG-Level6-Part1-code-and-pictures.zip
+     BULIG-Level6-Part2-teacher-pages-g1-3.zip
+     BULIG-Level6-Part3-teacher-pages-g4-5.zip
+     BULIG-Level6-Part4-teacher-pages-g6.zip
+
+STEP 3 — Upload the 6 module PDFs (they are too big to zip)
+  File Manager → open public_html/storage/level6 → Upload these files (keep the names):
+     grade-1.pdf  grade-2.pdf  grade-3.pdf  grade-4.pdf  grade-5.pdf  grade-6.pdf
+
+STEP 4 — Update the database
+  phpMyAdmin → click your BULIG database FIRST → Import → 012_level6_content.sql → Go.
+  It only ADDS Level 6 and is safe to import again.
+
+STEP 5 — Check
+  hPanel → Cache Manager → Purge all, then Ctrl+F5.
+  Open https://lemonchiffon-goose-405007.hostingersite.com/bulig-check.php
+  The five "Level 6" rows must say OK. Delete public/bulig-check.php when done.
+
+HOW LEVEL 6 WORKS
+  • Each grade has its own Level 6 module; pupils see only their grade.
+  • Each story is one activity: first the story card (text, its own picture, key words),
+    then one card per question — in the module’s order.
+  • Choices, Reality/Fantasy, ordering events (1–5), cause-and-effect matching with lines
+    (Grade 1) and “check the conclusion” items follow the module.
+  • Speed-reading stories (Grades 4–6) have a Start/Done timer that saves the reading
+    time and words per minute.
+  • Answer keys and the Grade 2 lesson guides are teacher-only (in each lesson’s Teaching guide).
+  • Class Demo → Level 6 → choose a grade to show the cards on the TV.
