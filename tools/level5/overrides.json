@@ -1,0 +1,530 @@
+{
+ "2:37": {
+  "instruction": "Part 1: Vocabulary Matching. Directions: Match the animal with the correct picture or word.",
+  "cards": [
+   {
+    "title": "1",
+    "text": "monkey",
+    "images": [],
+    "choices": [
+     "monkey",
+     "deer",
+     "kangaroo"
+    ]
+   },
+   {
+    "title": "2",
+    "text": "deer",
+    "images": [],
+    "choices": [
+     "deer",
+     "wild boar",
+     "snake"
+    ]
+   },
+   {
+    "title": "3",
+    "text": "kangaroo",
+    "images": [],
+    "choices": [
+     "kangaroo",
+     "bat",
+     "lion"
+    ]
+   },
+   {
+    "title": "4",
+    "text": "snake",
+    "images": [],
+    "choices": [
+     "snake",
+     "fox",
+     "eagle"
+    ]
+   },
+   {
+    "title": "5",
+    "text": "bat",
+    "images": [],
+    "choices": [
+     "bat",
+     "lion",
+     "fox"
+    ]
+   },
+   {
+    "title": "6",
+    "text": "eagle",
+    "images": [],
+    "choices": [
+     "eagle",
+     "wild boar",
+     "monkey"
+    ]
+   },
+   {
+    "title": "7",
+    "text": "lion",
+    "images": [],
+    "choices": [
+     "lion",
+     "fox",
+     "snake"
+    ]
+   },
+   {
+    "title": "8",
+    "text": "fox",
+    "images": [],
+    "choices": [
+     "fox",
+     "eagle",
+     "bat"
+    ]
+   },
+   {
+    "title": "Read",
+    "text": "Part 2: Listening Comprehension Questions\nDirections: Listen to the story and answer the questions.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "1",
+    "text": "Who is teasing you and me?",
+    "images": [],
+    "choices": [
+     "a) Monkey",
+     "b) Deer",
+     "c) Kangaroo"
+    ]
+   },
+   {
+    "title": "2",
+    "text": "Which animals are hiding?",
+    "images": [],
+    "choices": [
+     "a) Deer and kangaroo",
+     "b) Monkey and lion",
+     "c) Eagle and fox"
+    ]
+   },
+   {
+    "title": "3",
+    "text": "Which animals did you hear in the story? Circle all that apply.",
+    "images": [],
+    "choices": [
+     "monkey",
+     "deer",
+     "kangaroo",
+     "snake",
+     "bat",
+     "eagle",
+     "lion",
+     "fox",
+     "wild boar"
+    ]
+   },
+   {
+    "title": "Read",
+    "text": "Part 3: Fill in the Blanks\nDirections: Fill in the missing words from the story.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "1",
+    "text": "Look at the ________.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "2",
+    "text": "Teasing ________ and me.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "3",
+    "text": "Look at the ________ and the ________.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "4",
+    "text": "They are hiding on ________.",
+    "images": [],
+    "choices": []
+   }
+  ]
+ },
+ "2:39": {
+  "instruction": "Part 1: Vocabulary Matching. Directions: Match the animal with the correct picture or word.",
+  "cards": [
+   {
+    "title": "1",
+    "text": "dolphin",
+    "images": [],
+    "choices": [
+     "dolphin",
+     "whale",
+     "shark"
+    ]
+   },
+   {
+    "title": "2",
+    "text": "whale",
+    "images": [],
+    "choices": [
+     "whale",
+     "fish",
+     "crab"
+    ]
+   },
+   {
+    "title": "3",
+    "text": "shark",
+    "images": [],
+    "choices": [
+     "shark",
+     "dolphin",
+     "lobster"
+    ]
+   },
+   {
+    "title": "4",
+    "text": "lobster",
+    "images": [],
+    "choices": [
+     "lobster",
+     "crab",
+     "squid"
+    ]
+   },
+   {
+    "title": "5",
+    "text": "squid",
+    "images": [],
+    "choices": [
+     "squid",
+     "lobster",
+     "crab"
+    ]
+   },
+   {
+    "title": "6",
+    "text": "crab",
+    "images": [],
+    "choices": [
+     "crab",
+     "squid",
+     "fish"
+    ]
+   },
+   {
+    "title": "7",
+    "text": "starfish",
+    "images": [],
+    "choices": [
+     "starfish",
+     "shells",
+     "shrimps"
+    ]
+   },
+   {
+    "title": "8",
+    "text": "shrimps",
+    "images": [],
+    "choices": [
+     "shrimps",
+     "starfish",
+     "shells"
+    ]
+   },
+   {
+    "title": "9",
+    "text": "shells",
+    "images": [],
+    "choices": [
+     "shells",
+     "shrimps",
+     "starfish"
+    ]
+   },
+   {
+    "title": "Read",
+    "text": "Part 2: Listening Comprehension Questions\nDirections: Listen to the story and answer the questions.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "1",
+    "text": "Which animals are friends of the speaker?",
+    "images": [],
+    "choices": [
+     "a) Shark and whale",
+     "b) Dolphins and whale",
+     "c) Fish and crab"
+    ]
+   },
+   {
+    "title": "2",
+    "text": "Where do the animals in the story live?",
+    "images": [],
+    "choices": [
+     "a) In the sky",
+     "b) On the land",
+     "c) Under the deep blue sea"
+    ]
+   },
+   {
+    "title": "3",
+    "text": "Which animals did you hear in the story? Circle all that apply.",
+    "images": [],
+    "choices": [
+     "fish",
+     "dolphin",
+     "whale",
+     "shark",
+     "lobster",
+     "squid",
+     "crab",
+     "starfish",
+     "shrimps",
+     "shells"
+    ]
+   },
+   {
+    "title": "Read",
+    "text": "Part 3: Fill in the Blanks\nDirections: Fill in the missing words from the story.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "1",
+    "text": "The ________ on the sea.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "2",
+    "text": "Go ________ and swim.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "3",
+    "text": "Under the deep ________ sea.",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "4",
+    "text": "________ and ________ are friends of me.",
+    "images": [],
+    "choices": []
+   }
+  ]
+ },
+ "1:24": {
+  "instruction": "Assessment: A. Vocabulary. Instructions: Write the correct letter to match the picture to its meaning.",
+  "cards": [
+   {
+    "title": "Matching",
+    "text": "Column A\n1.\n2.\n3.\n4.\n5.",
+    "images": [
+     {
+      "src": "assets/images/level5/g1/p024-1.webp",
+      "alt": "1.",
+      "label": "1."
+     },
+     {
+      "src": "assets/images/level5/g1/p024-2.webp",
+      "alt": "2.",
+      "label": "2."
+     },
+     {
+      "src": "assets/images/level5/g1/p024-3.webp",
+      "alt": "3.",
+      "label": "3."
+     },
+     {
+      "src": "assets/images/level5/g1/p024-4.webp",
+      "alt": "4.",
+      "label": "4."
+     },
+     {
+      "src": "assets/images/level5/g1/p024-5.webp",
+      "alt": "5.",
+      "label": "5."
+     }
+    ],
+    "choices": [
+     "a. A small animal that likes to eat carrots",
+     "b. An animal that barks",
+     "c. A pet that swims",
+     "d. A pet that chirps and can fly",
+     "e. An animal with soft fur that says “meow”"
+    ]
+   }
+  ]
+ },
+ "6:32": {
+  "instruction": "Post Test (continued)",
+  "cards": [
+   {
+    "title": "Read",
+    "text": "Part G — Body Parts (15–16)",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "15",
+    "text": "You hear with your ______.",
+    "images": [],
+    "choices": [
+     "a) tail",
+     "b) nose",
+     "c) wing"
+    ]
+   },
+   {
+    "title": "16",
+    "text": "An animal has a ______ to move (example: horse).",
+    "images": [],
+    "choices": [
+     "a) tail",
+     "b) nose",
+     "c) wing"
+    ]
+   },
+   {
+    "title": "Read",
+    "text": "Part H — Mini Crossword (17–18)",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "17",
+    "text": "Across (3 letters): A pet that barks: ______",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "18",
+    "text": "Down (5 letters): Color of grass: ______",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "Read",
+    "text": "Part I — Word Hunt (19)",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "19",
+    "text": "Find two animals with wings in this string:\nCATDOGHORSEBIRDSUN",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "Read",
+    "text": "Part J — Matching (20)",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "Matching",
+    "lead": "20. Match the word with its meaning.",
+    "text": "Column A\n1. a color\n2. to move fast",
+    "images": [],
+    "choices": [
+     "c) red",
+     "d) run"
+    ]
+   }
+  ]
+ },
+ "4:27": {
+  "instruction": "Crosswords · Activity 8. Directions: 1. Find the words inside the crossword puzzle. 2. Use color pen or crayons to answer. Word clues are provided inside the box below.",
+  "cards": [
+   {
+    "title": "Read",
+    "text": "Word clues\n1. listen – use ears to hear the words or sound\n2. nap – sleep\n3. shut – close\n4. slip – slide\n5. slow – not fast\n6. mark – write\n7. learn – understand\n8. quite – no sound\n9. kiss – a smack on the cheek\n10. knock – someone at the door\n11. send – something to give in distance\n12. shake – handshake\n\nWords in the box: listen, nap, shut, slip, shine, slow, mark, learn, quite, kiss, knock, send, shake, flew, hid, bit, dead, shook, seen, sent, fought, grew, kept, hung, felt",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "1",
+    "text": "listen – use ears to hear the words or sound",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "2",
+    "text": "nap – sleep",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "3",
+    "text": "shut – close",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "4",
+    "text": "slip – slide",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "5",
+    "text": "slow – not fast",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "6",
+    "text": "mark – write",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "7",
+    "text": "learn – understand",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "8",
+    "text": "quite – no sound",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "9",
+    "text": "kiss – a smack on the cheek",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "10",
+    "text": "knock – someone at the door",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "11",
+    "text": "send – something to give in distance",
+    "images": [],
+    "choices": []
+   },
+   {
+    "title": "12",
+    "text": "shake – handshake",
+    "images": [],
+    "choices": []
+   }
+  ]
+ }
+}
