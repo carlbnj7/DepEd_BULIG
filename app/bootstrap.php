@@ -102,7 +102,7 @@ function progress_stats(int $pid):array{
  return $s+['xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'completed'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'approved'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'pending'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status='submitted'",[$pid])];
 }
 function checked_image(string $path):string{
- if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
+ if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
 }
 function save_uploaded_image(string $field):string{
  if(empty($_FILES[$field])||$_FILES[$field]['error']!==UPLOAD_ERR_OK)fail('Choose an image smaller than 4 MB.');$f=$_FILES[$field];if($f['size']>4*1024*1024)fail('Image must be smaller than 4 MB.');
@@ -126,7 +126,7 @@ function visual_manifest():array{
  static $m=null;if($m===null){$f=__DIR__.'/../database/visual-manifest.json';$m=is_file($f)?json_decode(file_get_contents($f),true):[];}return $m?:[];
 }
 function local_image_file(string $path):?string{
- if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
+ if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
  $root=realpath(__DIR__.'/../public');$f=realpath($root.'/'.$path);
  return $f&&str_starts_with($f,$root.DIRECTORY_SEPARATOR)&&is_file($f)&&is_readable($f)?$f:null;
 }
@@ -182,7 +182,8 @@ function level4_manifest():array{static $m;if($m===null){$f=__DIR__.'/../databas
 function level5_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level5-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
 /** Levels whose content is a separate module for each grade (Level 4 = id 5, Level 5 = id 6). */
 function level6_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level6-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
-function per_grade_level(int $level):bool{return in_array($level,[5,6,7],true);}
+function level7_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level7-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
+function per_grade_level(int $level):bool{return in_array($level,[5,6,7,8],true);}
 function lesson_level(int $lid):int{return (int)val('SELECT m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);}
 function level2_manifest():array{static $m;return $m??=json_decode(file_get_contents(__DIR__.'/../database/level2-manifest.json'),true);}
 function level3_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level3-cards.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['cards'=>[],'lessons'=>[],'pupil_pages'=>[],'page_count'=>0];}return $m;}
@@ -191,6 +192,7 @@ function module_source_meta(int $level,?int $grade=null):?array{
  if($level===5)return $grade?(level4_manifest()['grades'][(string)$grade]??null):null;
  if($level===6)return $grade?(level5_manifest()['grades'][(string)$grade]??null):null;
  if($level===7)return $grade?(level6_manifest()['grades'][(string)$grade]??null):null;
+ if($level===8)return $grade?(level7_manifest()['grades'][(string)$grade]??null):null;
  if(in_array($level,[2,3],true))return level2_manifest()['levels'][(string)$level]+['folder'=>$level===2?'2a':'2b'];
  if($level===4)return level3_manifest()+['folder'=>'3'];
  return null;

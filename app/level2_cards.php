@@ -7,7 +7,7 @@ function level2_card_manifest():array{
 }
 function level2_activity_context(array $a):?array{
  static $lessons=null;
- if($lessons===null){$lessons=[];foreach(rows('SELECT l.id,l.position,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (2,3,4,6,7)') as $l)$lessons[(int)$l['id']]=$l;}
+ if($lessons===null){$lessons=[];foreach(rows('SELECT l.id,l.position,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (2,3,4,6,7,8)') as $l)$lessons[(int)$l['id']]=$l;}
  return $lessons[(int)($a['lesson_id']??0)]??null;
 }
 function level2_card_set(array $a):?array{
@@ -16,6 +16,7 @@ function level2_card_set(array $a):?array{
  if(($a['response_mode']??'none')==='none'&&(int)$l['level_id']!==6)return null;
  if((int)$l['level_id']===4)return level3_manifest()['cards'][(int)$l['position'].':'.$a['phase'].':'.(int)$a['position']]??null;
  if((int)$l['level_id']===7){$d=level6_cards()[lesson_grade((int)$a['lesson_id']).':'.(int)$l['position'].':'.(int)$a['position']]??null;return $d?['title'=>$a['title'],'instruction'=>$d['instruction']?:$a['instructions']]+$d:null;}
+ if((int)$l['level_id']===8){$d=level7_cards()[lesson_grade((int)$a['lesson_id']).':'.(int)$l['position'].':'.(int)$a['position']]??null;return $d?['title'=>$a['title'],'instruction'=>$d['instruction']?:$a['instructions']]+$d:null;}
  if((int)$l['level_id']===6){$d=level5_cards()[lesson_grade((int)$a['lesson_id']).':'.(int)$a['source_page']]??null;return $d?['title'=>$a['title'],'instruction'=>$d['instruction']?:$a['instructions']]+$d:null;}
  $key=($l['level_id']==2?'2a':'2b').':'.(int)$a['source_page'];
  if($l['level_id']==3&&(int)$l['position']===12&&(int)$a['source_page']===42)$key.=':continuation';
@@ -24,7 +25,7 @@ function level2_card_set(array $a):?array{
 function level2_native_images(array $a):?array{
  $l=level2_activity_context($a);if(!$l)return null;
  $set=level2_card_set($a);
- if(in_array((int)$l['level_id'],[4,6,7],true)){if(!$set)return null;$imgs=[];foreach($set['cards'] as $c)foreach($c['images'] as $im)$imgs[]=$im['src'];return array_values(array_unique($imgs));}
+ if(in_array((int)$l['level_id'],[4,6,7,8],true)){if(!$set)return null;$imgs=[];foreach($set['cards'] as $c)foreach($c['images'] as $im)$imgs[]=$im['src'];return array_values(array_unique($imgs));}
  if(!$set){
   $key=$l['level_id']==2?'2a':'2b';$meta=level2_manifest()['levels'][(string)$l['level_id']];
   foreach($meta['lessons'] as $lesson)if((int)$lesson['position']===(int)$l['position']){
@@ -106,6 +107,8 @@ function render_level2_pupil(array $set,string $response,bool $readonly,string $
  echo '<nav class="native-card-nav" aria-label="Activity cards"><button type="button" class="btn secondary" data-native-prev disabled>Previous picture / question</button><button type="button" class="btn primary" data-native-next>Next picture / question '.icon('arrow').'</button></nav><p class="native-save-hint">'.($readonly?'Your saved answers are shown with each card.':'Move between cards at your own pace. Submit the activity when you have finished.').'</p></section>';
  if($mode!=='none')echo '<details class="native-all-answers" '.($legacy!==''?'open':'').'><summary>'.($legacy!==''?'Previously saved answer':'All answers').'</summary><label for="response">Your complete response<textarea id="response" name="response" rows="4" maxlength="12000" '.($readonly?'readonly':'').'>'.e($response).'</textarea></label><small>Answers entered on the cards are collected here.</small></details>';
 }
+/** Level 7: one card per reading, task or question (tools/level7/build.py). */
+function level7_cards():array{static $m;if($m===null){$f=__DIR__.'/../database/level7-cards.json';$m=is_file($f)?(json_decode(file_get_contents($f),true)['cards']??[]):[];}return $m;}
 /** Level 6: a story card, then one card per question (tools/level6/build.py). */
 function level6_cards():array{static $m;if($m===null){$f=__DIR__.'/../database/level6-cards.json';$m=is_file($f)?(json_decode(file_get_contents($f),true)['cards']??[]):[];}return $m;}
 /** Level 5: one card per numbered item of each module page (tools/level5/build_cards.py). */

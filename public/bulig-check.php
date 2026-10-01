@@ -62,6 +62,17 @@ try{
  $l6=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=7 AND m.grade_level IS NOT NULL');
  row('Level 6 in database (6 grade modules)',$l6>=133,'lessons='.$l6,'Import 012_level6_content.sql in phpMyAdmin (select the BULIG database first).');
 }catch(Throwable $e){}
+$l7c=@json_decode((string)@file_get_contents(__DIR__.'/../database/level7-cards.json'),true);
+row('Level 7 cards (readings, tasks and questions)',count($l7c['cards']??[])>=154,count($l7c['cards']??[]).' of 154 activities','Extract the Level 7 ZIP into '.$root.'.');
+$l7pics=count(glob(__DIR__.'/assets/images/level7/g*/*.webp')?:[]);
+row('Level 7 pictures',$l7pics>=35,$l7pics.' pictures','Extract the Level 7 ZIP into '.$root.'.');
+$l7pdf=count(glob(__DIR__.'/../storage/level7/grade-*.pdf')?:[]);$l7pages=count(glob(__DIR__.'/../storage/level7/g*/page-*.webp')?:[]);
+row('Level 7 original PDFs (Grades 1–6)',$l7pdf===6,$l7pdf.' of 6','Extract the Level 7 ZIP into '.$root.'.');
+row('Level 7 page images',$l7pages>=213,$l7pages.' of 213','Extract the Level 7 ZIP into '.$root.'.');
+try{
+ $l7=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=8 AND m.grade_level IS NOT NULL');
+ row('Level 7 in database (6 grade modules)',$l7>=154,'lessons='.$l7,'Import 013_level7_content.sql in phpMyAdmin (select the BULIG database first).');
+}catch(Throwable $e){}
 try{
  $l4=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=5 AND m.grade_level IS NOT NULL');
  row('Level 4 in database (6 grade modules)',$l4>=69,'lessons='.$l4,'Import database/migrations/010_level4_content.sql in phpMyAdmin (select the BULIG database first).');

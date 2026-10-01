@@ -1,0 +1,37 @@
+BULIG — INSTALL LEVEL 7 (GENUINE LOVE FOR READING, GRADES 1–6)
+==============================================================
+
+Install Level 6 first (INSTALL-LEVEL-6.txt).
+
+Site folder (holds app, config, database, public, storage):
+  /home/u179645850/domains/lemonchiffon-goose-405007.hostingersite.com/public_html
+
+STEP 1 — Back up (hPanel → Files → Backups, or phpMyAdmin → Export).
+
+STEP 2 — Extract the 3 ZIPs, one at a time
+  hPanel → File Manager → open public_html → Upload the ZIP → right-click → Extract
+  → into THIS SAME folder (public_html) → allow overwrite → delete the ZIP.
+     BULIG-Level7-Part1-code-pictures-pdfs.zip   (code, pictures and the 6 module PDFs)
+     BULIG-Level7-Part2-pages-g1-3.zip
+     BULIG-Level7-Part3-pages-g4-6.zip
+
+STEP 3 — Update the database
+  phpMyAdmin → click your BULIG database FIRST → Import → 013_level7_content.sql → Go.
+  It only ADDS Level 7 (one module per grade) and is safe to import again.
+
+STEP 4 — Check
+  hPanel → Cache Manager → Purge all, then Ctrl+F5.
+  Open https://lemonchiffon-goose-405007.hostingersite.com/bulig-check.php
+  The five "Level 7" rows must say OK. Delete public/bulig-check.php when done.
+
+HOW LEVEL 7 WORKS
+  • Each grade has its own Level 7 module; pupils see only their grade.
+    Grade 1: 46 activities · Grade 2: 43 · Grade 3: 15 · Grade 4: 15 · Grade 5: 15 · Grade 6: 20.
+  • Grades 1–2: a story card, then one card per question, in the module’s order.
+  • Grades 3–6 (campus journalism): reading cards for the background lessons and articles,
+    then the tasks — choices, matching with lines, word-search puzzles, letter boxes,
+    sports pictures to name, and writing cards for news, features, editorials and columns.
+  • The module text is kept as printed. The copyreading articles keep their errors on
+    purpose — finding them is the task.
+  • The module has no pre/post tests or answer keys; teachers review the written answers.
+  • Class Demo → Level 7 → choose a grade to show the cards on the TV.
