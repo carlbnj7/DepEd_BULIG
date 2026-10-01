@@ -1,0 +1,966 @@
+# Level 7 Grade 2 cards (Genuine Love for Reading). Checked by hand against the module pages; format in tools/level6/build.py.
+
+=== 1.1 | Fowls | Activity 1 | pages 6
+pics: 
+read: Fowls
+¶ Fowls are animals. They are animals with two feet and two wings. Their
+bodies are covered with feathers. They give us eggs. Their meat is good to eat.
+Chickens, ducks, turkeys, and geese are fowls. They eat grains such as palay
+and corn. Chickens like worms. They scratch on the ground to look for worms.
+Ducks and geese like to swim. They like to stay in the water. They are water
+birds so they have webbed feet. Turkeys have beautiful feathers. The male
+turkey spreads its tail like a fan. Geese are good watchers. They make loud
+noises when people come near. Fowls are good to raise. Many people get
+rich because of poultry raising.
+q 1: What are fowls?
+| a. Plant | b. Trees | c. Animals
+q 2: How many feet do fowls have?
+| a. Two | b. Four | c. Many
+q 3: What covers their bodies?
+| a. Hair | b. Hide | c. Feathers
+q 4: What makes them fly?
+| a. Feet | b. Wings | c. Feathers
+q 5: Which is not a grain?
+| a. Corn | b. Meat | c. Palay
+q 6: Which does not have webbed feet?
+| a. Duck | b. Chicken | c. Goose
+q 7: Which one do fowls do not give us?
+| a. Milk | b. Eggs | c. Meat
+q 8: Where do ducks and geese like to stay?
+| a. In the sand | b. In the water | c. On the branches of trees
+q 9: Why do chickens scratch on the ground?
+| a. To look for fish | b. To look for water | c. To look for worms
+q 10: Which are good watchers?
+| a. Ducks | b. Geese | c. Turkeys
+
+=== 2.1 | The First Monkey | Activity 2 | pages 7
+pics: 
+read: The First Monkey
+¶ A long time ago, there was a farmer who had a wide corn field. He
+grew big and sweet corn. One day, he saw some of his corn was gone. Many
+corn plants had no more ears. He wanted to catch whoever was stealing his
+corn.
+¶ The next day, he hid behind a big mango tree. He carried a stick. He
+watched carefully until he saw a man coming. The man passed through a
+broken part of the fence and began to pick some corn. The farmer came out
+from behind the mango tree and walked toward the man. When the man
+saw the farmer, he started to run. The farmer ran after him but he could not
+catch him. Then he threw the stick at the man’s back, and it became a tail.
+The man went up the tree. He became smaller and smaller until he became a
+monkey.
+q 1: When did the story happen?
+| a. Last year | b. A few years ago | c. a long time ago
+q 2: What did the farmer have?
+| a. A rice field | b. A camote field | c. a corn field
+q 3: What words will tell about his corn?
+| a. big and sweet | b. small and sweet | c. sweet and yellow
+q 4: What happened to his corn?
+| a. were stolen | b. destroyed by insects | c. destroyed by the wind
+q 5: Where did the farmer hide one day?
+| a. up the mango tree | b. behind the guava tree | c. behind the mango tree
+q 6: What did he carry?
+| a. a stick | b. some fruits | c. some stones
+q 7: Who did he see come into the corn field?
+| a. a dog | b. a man | c. a Monkey
+q 8: What did the farmer do to the man?
+| a. caught him | b. threw the stick at him | c. beat him with the stick
+q 9: What happened to the stick?
+| a. was lost | b. was broken | c. became a tail
+q 10: What happened to the man?
+| a. became sick | b. became a monkey | c. became a corn plant
+
+=== 3.1 | No Carnival for Ben | Activity 3 | pages 8
+pics: 
+read: No Carnival for Ben
+¶ It was Saturday. Andres, Anita, and Ben were at home. ‘’Father and I are
+going to the city,’’ Mother said. “We shall come home this afternoon. What
+will you do in the house?’’ ‘’I shall clean the living room,’’ said Anita. ‘’ I shall
+clean the yard,’’ said Andres. Ben was quiet. He wanted to swim in the river.
+‘’Ben will clean the garden,’’ Father said. ‘’I will take you all to the carnival
+tonight.” But you must help in the house today.’’ Andres and Anita finished
+their work. Ben swam in the river. He forgot his work in the garden. In the
+evening, Father took Andres and Anita to the carnival. “Ben will not go to the
+carnival. He was not helpful today.’’ said Father.
+q 1: Why were the children at home?
+| a. It was holiday | b. It was Sunday | c. It was Saturday
+q 2: Where were father and mother going?
+| a. To the city | b. To the farm | c. To the show
+q 3: When were they coming back?
+| a. In the morning | b. In the evening | c. In the afternoon
+q 4: What did Anita do?
+| a. cleaned the kitchen | b. cleaned the living room | c. cleaned the bedroom
+q 5: What did Andres clean?
+| a. Yard | b. Garden | c. Pig pen
+q 6: what did Ben do?
+| a. swam in the river | b. played in the yard | c. played with friends
+q 7: what did father tell to Ben to clean?
+| a. Yard | b. Garden | c. Pig pen
+q 8: Who finished their work?
+| a. Anita and Ben | b. Anita and Andres | c. Ben and Andres
+q 9: Who was not helpful?
+| a. Ben | b. Andres | c. Anita
+q 10: Who went with father to the carnival?
+| a. Anita and Ben | b. Andres and Ben | c. Andres and Anita
+
+=== 4.1 | The Butterfly | Activity 4 | pages 9
+pics: 
+read: The Butterfly
+¶ One afternoon, Luisa took her little sister, Ann, to the garden. They saw
+a butterfly. The butterfly was resting on a flower. Ann ran to the butterfly. She
+wanted to catch it. The butterfly flew away. It rested again on another flower.
+¶ “Do not disturb the pretty butterfly,” said Luisa. “It is sucking the nectar
+of the flower. Look at its pretty wings. It folds its wings when it rests. It opens its
+wings when it flies.”
+¶ “Does the butterfly fly at night?” asked Ann.
+“No, the butterfly sleeps at night. It flies from flower to flower during the day. It
+likes the flowers. It likes the nectar of the flowers. Nectar is sweet,” said Luisa.
+Then Luisa picked a flower. She showed Ann the nectar of the flower.
+q 1: What time did the story happen?
+| a. morning | b. afternoon | c. night
+q 2: Where did Luisa and Ann go?
+| a. to school | b. to the garden | c. to the playground
+q 3: What did they see in the garden?
+| a. bird | b. nest | c. butterfly
+q 4: Where was the butterfly resting?
+| a. on a leaf | b. on a fruit | c. on a flower
+q 5: Who wanted to catch the butterfly?
+| a. Ann | b. Luisa | c. Mother
+q 6: What does the butterfly suck from the flowers?
+| a. milk | b. water | c. nectar
+q 7: How does the nectar taste?
+| a. sour | b. bitter | c. sweet
+q 8: What does the butterfly do at night?
+| a. flies | b. eats | c. sleeps
+q 9: What does the butterfly do with its wings when it rests?
+| a. It folds them. | b. It opens them. | c. It moves them.
+q 10: Where can we find the nectar?
+| a. in the fruit | b. in the trunk | c. in the flower
+
+=== 5.1 | The Moth | Activity 5 | pages 10
+pics: 
+read: The Moth
+¶ It was getting dark. Isabel lit a lamp. She put the lamp on the table.
+Soon a moth flew into the room. It flew through the window, then it flew
+around the lamp.
+¶ “Look at the little butterfly. It goes around and around the lamp,” said
+Isabel.
+¶ “No, it is not a butterfly. It is a moth,” Mother said.
+¶ “But it looks like a butterfly,” Isabel said.
+¶ “Yes, it looks like a butterfly, but it is not a butterfly. Look at its body and
+wings. They are covered with dust. It does not fold its wings when it rests. The
+moth sleeps at daytime. It flies toward the light at night. The moth likes the
+light,” Mother said.
+¶ “Does the flame not burn the moth?” asked Isabel.
+¶ “It does. It burns the moth when it gets too near it.” said Mother.
+q 1: What did Isabel light?
+| a. lamp | b. candle | c. flashlight
+q 2: Where did she put the lamp?
+| a. on the floor | b. on the wall | c. on the table
+q 3: What flew into the room?
+| a. a bird | b. a moth | c. a butterfly
+q 4: Where did the moth pass through?
+| a. door | b. stairs | c. window
+q 5: What covers the body and wings of the moth?
+| a. hair | b. dust | c. feathers
+q 6: Does the moth fold its wings when it rests?
+| a. yes | b. no | c. Not stated in the story
+q 7: What does the moth like?
+| a. light | b. dark | c. flowers
+q 8: When does the moth sleep?
+| a. never | b. at night | c. at daytime
+q 9: Where did the moth fly?
+| a. around Isabel | b. around the lamp | c. around the moon
+q 10: What time did our story happen?
+| a. noon | b. morning | c. evening
+
+=== 6.1 | Keeping Healthy | Activity 6 | pages 11
+pics: 
+read: Keeping Healthy
+¶ Nestor was not a healthy boy. He was pale and thin. His parents were
+worried about him. One day, Mother took him to the doctor. The doctor
+examined him.
+¶ He said, “You are not sick, Nestor. But you are not strong and healthy.
+You will be strong and healthy if you follow the health rules. Do you know the
+health rules?”
+¶ “Yes, Doctor,” said Nestor. “I learned them in school. But I do not follow
+them.”
+¶ “It is easy to follow them,” said the doctor.
+¶ At home Mother said, “What will you do to become healthy? Let’s see if
+you know.”
+¶ Nestor said, “I will drink milk. I will sleep ten hours every night. I will eat
+fruits and vegetables. I will play under the sun. Then I will be healthy.”
+q 1: Which describes Nestor?
+| a. a weak boy | b. a strong boy | c. a healthy boy
+q 2: Who were worried about him?
+| a. his sister | b. his parents | c. his friends
+q 3: Who took him to a doctor?
+| a. father | b. mother | c. teacher
+q 4: Who examined Nestor?
+| a. Mother | b. the doctor | c. the teacher
+q 5: Was Nestor sick?
+| a. yes | b. no | c. Not stated in the story
+q 6: Where did Nestor learn the health rules?
+| a. at home | b. in school | c. in the clinic
+q 7: Who knew that Nestor did not follow the health rules?
+| a. Father | b. Mother | c. the doctor
+q 8: What will he drink?
+| a. milk | b. coffee | c. soft drink
+q 9: How many hours will he sleep?
+| a. six | b. eight | c. ten
+q 10: Where will he play?
+| a. in the house | b. in the school | c. under the sun
+
+=== 7.1 | The Truthful Boy | Activity 7 | pages 12
+pics: 
+read: The Truthful Boy
+¶ Juan was alone at home. His mother and sister went to the dentist. His
+Father was still in his office. So, Juan played with his dog. He ran after his dog,
+and his dog ran after him. Juan ran so fast that he ran into the table in the
+middle of the living room. The table was knocked down. The flower vase on
+the table was broken. How frightened Juan was! He picked up the broken
+pieces and put them on the table.
+¶ Soon Mother and Pacita arrived. Pacita saw the broken vase first.
+“Mother, look! The vase is broken,” said Pacita.
+“Who broke it?” asked Mother.
+“Perhaps the cat,” said Pacita.
+Juan heard what Pacita said. He went to Mother and said, “It is not fair to
+blame the cat. I broke the vase, Mother, I am sorry.” “It is good you told me
+the truth. Next time, be careful,” said Mother.
+q 1: Who was alone in the house?
+| a. Juan | b. Pacita | c. Mother
+q 2: Where did Mother go?
+| a. to the market | b. to the river | c. to the dentist
+q 3: Where was father?
+| a. in school | b. on the farm | c. in his office
+q 4: Who went with Mother?
+| a. Juan | b. Father | c. Pacita
+q 5: With whom did Juan play?
+| a. cat | b. dog | c. sister
+q 6: What was knocked down?
+| a. the bed | b. the chair | c. the table
+q 7: What happened to the vase?
+| a. fell down | b. was broken | c. was thrown away
+q 8: Who saw the broken vase first?
+| a. Father | b. Pacita | c. Mother
+q 9: Did Juan tell the truth?
+| a. yes | b. no | c. not stated in the story
+q 10: What kind of boy was Juan?
+| a. a kind boy | b. a polite boy | c. a truthful boy
+
+=== 8.1 | The Lantern Show | Activity 8 | pages 13,14
+pics: 
+read: The Lantern Show
+¶ Christmas was soon coming. The school was going to have a lantern show
+on Christmas Eve.
+¶ One day, Miss Villa brought to class a beautiful lantern. “This is a Christmas
+lantern,” said Miss Villa. “It is like a star. It is made of paper and bamboo. It
+can hold a candle. I made this lantern.”
+¶ “Let us make lanterns like that for the lantern show,” said Pedro.
+¶ “Let us make them of different colors,” Paz said.
+¶ “My lantern will be red,” said Pedro.
+¶ “Mine will be green,” said Paz.
+¶ “Mine will be orange,” said Rene.
+¶ Everyone wanted a different color. The children worked and worked. Then
+the lanterns were finished. How happy the children were to see their lanterns
+in the lantern show.
+q 1: What was the school going to have?
+| a. a lantern show | b. a Christmas show | c. a Christmas program
+q 2: What did Miss Villa bring to class?
+| a. a lantern | b. a book | c. a bag
+q 3: What does the lantern look like?
+| a. a star | b. a moon | c. a fruit
+q 4: What was the lantern made of?
+| a. wood and paper | b. bamboo and cloth | c. paper and bamboo
+q 5: What can the lantern hold?
+| a. a bulb | b. a lamp | c. a candle
+q 6: Who made the lantern?
+| a. a boy | b. a girl | c. Miss villa
+q 7: When will the lantern show be?
+| a. on Christmas day | b. on Christmas Eve | c. on the last day of school
+q 8: Who will make a red lantern?
+| a. Paz | b. Pedro | c. Rene
+q 9: Whose lantern will be green?
+| a. Paz’s | b. Rene’s | c. Pedro’s
+q 10: Whose lantern will be orange?
+| a. Paz’s | b. Rene’s | c. Pedro’s
+
+=== 9.1 | The Chinese Boy | Activity 9 | pages 14,15
+pics: 
+read: The Chinese Boy
+¶ Mother told Nilo to buy some bananas. So, Nilo went to the market. On his
+way he saw many children playing. Then he saw his friends, Celso and Ben.
+They were looking inside a room in Sana’s store. Sana was Chinese. He had a
+son named Sen Lu.
+“What are you looking at?” Nilo asked Celso and Ben.
+“We are watching Sen Lu,” answered Ben.
+“Why are you watching him?” asked Nilo.
+“He is eating rice. He is eating with chopsticks,” said Celso.
+“That is the way Chinese eat. It is clean to eat with chopsticks,” said Nilo.
+“Why do you say it’s clean?” asked Ben.
+“Chopsticks can be washed with boiling water. It is like eating with spoons,”
+said Nilo. Then Nilo went on to buy bananas.
+q 1: Where did Nilo go?
+| a. to the river | b. to the school | c. to the market
+q 2: What was he going to buy?
+| a. rice | b. fish | c. bananas
+q 3: Who told him to buy bananas?
+| a. Father | b. Mother | c. Sister
+q 4: Who were Nilo’s friends?
+| a. Ben and Pablo | b. Pablo and Celso | c. Ben and Celso
+q 5: Who was Sana?
+| a. an African | b. a Chinese | c. an American
+q 6: Who was Sen Lu?
+| a. Sana’s son | b. Ben’s friend | c. Sana’s brother
+q 7: What were Ben and Celso doing?
+| a. watching Sana | b. watching Sen Lu | c. looking at the things for sale
+q 8: What was Sen Lu doing?
+| a. eating rice | b. eating cakes | c. eating candies
+q 9: Why is it clean to eat with the chopsticks?
+| a. They can be kept | b. They can be thrown away | c. They can be washed with boiling water
+q 10: What is eating with chopsticks like?
+| a. eating with forks | b. eating with hands | c. eating with spoons
+
+=== 10.1 | The Monkey and the Crocodiles | Activity 10 | pages 15,16
+pics: 
+read: The Monkey and the Crocodiles
+¶ A Monkey wanted to cross a river. But there was no bridge and he
+could not swim. Then a crocodile swam to the river bank. The monkey asked
+the crocodile if it could take him to the other side of the river. He wanted to
+visit
+¶ his
+friends.
+¶ The crocodile told the monkey to jump on its back. When they
+were in the middle of the river, the crocodile stopped swimming. “You, foolish
+monkey,” said the crocodile. “Do you not know that I am very hungry? I’m
+going to eat you.
+¶ “Wait, I have a friend at the river bank, let us get him and you will have two
+for lunch,” said the monkey.
+¶ “Very well,” said the crocodile. “Let us get him.”
+So, the crocodile swam fast. When they reached the bank, the monkey
+jumped away and said, “Goodbye, crocodile. Next time use your head.”
+q 1: Who wanted to cross the river?
+| a. Crocodile | b. a friend | c. a monkey
+q 2: Why could he not walk across?
+| a. He had sore feet | b. He didn’t like to walk | c. There was no bridge
+q 3: Why could he not cross the river?
+| a. He could not swim | b. The water was cold | c. The water was deep
+q 4: Why did he want to cross the river?
+| a. He wanted to go home | b. He wanted to look for good | c. He wanted to visit his friends
+q 5: Who took him to the other side?
+| a. A banana | b. a crocodile | c. Another monkey
+q 6: Where did the crocodile stop?
+| a. At the bank | b. On the other side | c. In the middle of the river
+q 7: Why did crocodile stop?
+| a. He was tired | b. He wanted to rest | c. He wanted to eat the monkey
+q 8: Who was hungry?
+| a. The friend | b. The monkey | c. The crocodile
+q 9: Did the crocodile eat the monkey?
+| a. yes | b. no | c. The story does not tell
+q 10: Who used his head in the story?
+| a. The friend | b. The monkey | c. The crocodile
+
+=== 11.1 | Activity 11 | Activity 11 | pages 16
+pics: 
+read: Activity 11
+¶ Julio dressed early. He did not want to be late to the program. He was
+going to recite a poem. He borrowed his big brother’s new pair of shoes and
+blue shirt. He was wearing black short pants. He combed his hair very neatly.
+“Are you ready for your part, Julio?” Miss Garcia asked.
+¶ “Yes, Ma’am, I am,” Julio replied.
+¶ Mario and Lito were ready, too. They were dressed neatly. They looked at
+Julio. They smiled and began to whisper to each other. They looked at Julio
+from head to foot. Then they laughed.
+q 1: Why did Julio borrow his brother’s new pair of shoes?
+| a. to win in the contest | b. to be able to recite well | c. to look nice in the program
+q 2: What did Mario and Lito do which is a bad manner?
+| a. They looked at Julio. | b. They laughed at Julio. | c. They whispered to each other.
+q 3: What would be a good title for the story?
+| a. Mario Laughed | b. A School Program | c. Julio’s Borrowed Clothes
+
+=== 12.1 | Activity 12 | Activity 12 | pages 16,17
+pics: 
+read: Activity 12
+¶ “Always keep right,” Mother told Marina. “Look to your left and to your
+right before crossing the street.”
+¶ Off went Marina with a basket in her hand. She was thinking of the things
+she would buy at the market.
+¶ “I will buy a kilo of meat, a dozen eggs, fish, and vegetables. On my way
+home, I will buy a bar of soap at Aling Tinay’s store.
+Suddenly, a jeep stopped in front of her.
+¶ “Get in. Ride with us. We are going to the same place anyway,” Chita, her
+friend, said.
+q 1: Where was Marina going?
+| a. to the store | b. to the market | c. to the church
+q 2: What kind of a friend was Chita?
+| a. selfish | b. generous | c. obedient
+q 3: What did Mother remind Marina before she left the house?
+| a. what to buy | b. to ride in a jeep | c. some safety rules
+
+=== 13.1 | Activity 13 | Activity 13 | pages 17
+pics: 
+read: Activity 13
+¶ “A picnic! A picnic!” shouted Amelia and Romy. “We will all go to a picnic
+tomorrow. We will ride on the school bus.”
+¶ “May we go, Mother, please?” Amelia asked.
+¶ “If the weather is fine, you will go. The newspaper says that there will be a storm
+tomorrow,” Mother said.
+¶ That night Romy prayed. “Dear God, please do not make it rain
+tomorrow. Make the day fair and let the sun shine.”
+¶ “Did you enjoy the picnic, children?” Mother asked Amelia and Romy the next
+day. “We sure did,” they replied happily.
+q 1: Did the storm come?
+| a. No | b. Yes | c. It rained hard
+q 2: How did Romy show his trust in God?
+| a. He did not pray. | b. He prayed to God. | c. He asked Mother to pray.
+q 3: What is a good title for the story?
+| a. The Storm | b. A Rainy Day | c. An Answered Prayer
+
+=== 14.1 | Activity 14 | Activity 14 | pages 18
+pics: 
+read: Activity 14
+¶ Aling Rosa lives in a small nipa hut with her three children. Her husband
+died a year ago. She earns money by washing clothes. Tony, her eldest child,
+helps by selling newspaper and magazines. Her two other children are too
+young yet to earn.
+¶ One day, Tony came home with one hundred and fifty pesos. He gave it
+all to his mother and said, “When I grow bigger, Mother, I will not let you work
+anymore. I will buy you beautiful clothes like those of Mrs. Arce’s, our rich
+neighbor.
+That night, Aling Rosa thanked God for her good son, Tony.
+q 1: What is the story about?
+| a. earning money | b. Aling Rosa’s family | c. Aling Rosa’s good son
+q 2: Which word best describes Tony?
+| a. loving | b. polite | c. responsible
+q 3: Which sentence is true about Tony?
+| a. Tony helps Mother earn money. | b. Tony shines shoes to earn money. | c. Tony brought Mother beautiful dresses.
+
+=== 15.1 | Activity 15 | Activity 15 | pages 18,19
+pics: 
+read: Activity 15
+¶ Millions of years ago, whales used to walk on land. But as time passed, they have
+changed a lot. They became big and their hind legs disappeared. Their fronts legs
+have turned into flippers. They can’t live on land anymore but they are still mammals.
+This means that they breathe air and feed their babies with milk.
+¶ To fill its lungs with fresh air, a whale surfaces on the water. When it
+exhales, warm air escapes from its blowhole which looks like a spout. It is
+called a blow.
+q 1: This story tells that whales live ____.
+| a. On land | b. In the air | c. In the water
+q 2: Whales are mammals because_____.
+| a. They live in the water | b. They breathe through their lungs | c. They can swim with their flippers
+q 3: Why can’t whales live on land anymore?
+| a. They eat only fishes. | b. They don’t have legs anymore. | c. They get air they need from the water.
+
+=== 16.1 | Activity 16 | Activity 16 | pages 19
+pics: 
+read: Activity 16
+¶ Maria’s mother was very ill last week. She had a very high fever. She kept
+tossing in bed. Once in her sleep she said, “I want to see Victor, I want to see
+Victor!” Maria heard what her mother said. She was by her bedside at that
+time.
+¶ Victor is Maria’s brother in America. He went there ten years ago and has
+never come home for a visit ever since.
+¶ Now Maria’s mother is very well and happy. Her wish in her sleep came
+true. Victor came home when he received Maria’s letter.
+q 1: What did maria do when she heard her mother’s wish?
+| a. Went to America | b. Did not care at all | c. Sent victor a letter
+q 2: What was maria’s mother’s wish that was granted?
+| a. To get well | b. To see victor | c. to go to America
+q 3: What would be a good title for the story?
+| a. A letter | b. Maria’s mother | c. A dream come true
+
+=== 17.1 | Activity 17 | Activity 17 | pages 19,20
+pics: 
+read: Activity 17
+¶ Ten-year-old Jose and his one-year-old brother were playing. How happy
+they were. “Boo,” Jose said as he nodded his head. “Boo, “his little brother
+repeated as he nodded his head. Jose clapped his hands. His little brother
+clapped, too. Jose laughed and so did his brother. “Mother, look at him. He
+does everything I do. He says everything I say,” Jose said. “Will he always be
+like that? “Yes, little brothers and sisters follow their older brothers or sisters. So
+always be a good example,” Mother said.
+q 1: Why was Jose happy?
+| a. He was working alone. | b. He was a good brother. | c. He was playing with his brother.
+q 2: What did Jose’s little brother do?
+| a. Laugh and cried. | b. Clapped his hands and cried | c. Followed what Jose said and did.
+q 3: What lesson does the story teach?
+| a. To be kind | b. To be playful | c. To be a good example
+
+=== 18.1 | Activity 18 | Activity 18 | pages 20
+pics: 
+read: Activity 18
+¶ That night Dindo could not sleep. He was thinking of Pastor. He boxed him
+hard on his left eye when they had a fight. Pastor had a black eye. Dindo was
+very sorry for what he did.
+¶ The following morning Dindo saw pastor standing alone by the school
+gate. He went near him and said, “I am sorry, Pastor, for what I did, I hope
+you will forgive me.” “Forget it, Dindo. I am sorry as you are, Pastor said.
+Then, the school bell rang. Both boys went to their classroom together.
+q 1: Which sentence is correct?
+| a. Dindo had a black eye. | b. Dindo could sleep well after the fight. | c. Dindo and Pastor became friends again.
+q 2: Which sentence tells about the boys?
+| a. They had a fight. | b. They rang the school bell. | c. They went to sleep together.
+q 3: What is a good name for the story?
+| a. Pastor’s friend | b. Two sorry boys | c. going to school
+
+=== 19.1 | Activity 19 | Activity 19 | pages 20,21
+pics: 
+read: Activity 19
+¶ Vicente wanted to buy a new basketball. He had only ten pesos. He
+needed seventy-five pesos more for a new one. The whole night he had been
+thinking of what to do to raise the money he needed.
+¶ “May I help you, Mother?” Vicente said the next morning while his mother
+was cleaning the house. “You better go to the garden and help your father,”
+Mother replied. The whole day Vicente and his father worked in the garden.
+They planted seven plots of Okra, Eggplant and Amargoso. When the family
+was resting that night, father said,” I know you want to buy a new basketball.
+Take this money and buy one.”
+Vicente was very happy. He will have a new basketball and save also his ten
+pesos.
+q 1: What is the story about?
+| a. How to plant | b. How to help mother? | c. How Vicente got a new basketball?
+q 2: What word best describes about Vicente?
+| a. Great | b. Honest | c. Helpful
+q 3: Why did Vicente need money?
+| a. To buy seeds | b. To buy a shirt | c. To buy a basketball
+
+=== 20.1 | Activity 20 | Activity 20 | pages 21
+pics: 
+read: Activity 20
+¶ The clock struck eleven. “It is eleven o’clock sharp and mother have
+not come home from the market. Aunt Martha and Uncle Leon are coming
+for lunch,” Mila said to herself.
+¶ Mila went to the kitchen. She washed a kettle. Then she placed three
+cups of rice in it. She was washing the rice when she heard a tricycle stop in
+front of their house. She looked out of the window. Her face turned pale.
+¶ “Oh, my God, they are here. No food is ready yet,” Mila exclaimed as
+she ran to meet the visitors. Just then another calesa arrived. Mila’s face
+turned bright and happy. “What took you so long, Mother?” Mila asked.
+q 1: Which sentence is correct?
+| a. Aunt Martha did not come | b. Mila did not help cook rice | c. Mother stayed long in the market
+q 2: Who arrived first?
+| a. Mother | b. Aunt Martha with Uncle Leon | c. Aunt Martha
+q 3: Which word best describes Mila?
+| a. Helpful | b. Brave | c. Kind
+
+=== 21.1 | Activity 21 | Activity 21 | pages 21,22
+pics: 
+read: Activity 21
+¶ School children work and play with many people. Communicable
+diseases spread easily in a school if health rules are not followed. How do
+schools try to prevent the spread of diseases?
+¶ Schools see to it that children are examine regularly by the school doctor
+and school dentist. Lessons on how to take care of one’s health are taught.
+Children are served good food during recess time. They get fresh air and
+exercise during their physical education classes. They are given immunization
+against cholera, typhoid and dysentery.
+q 1: What will happen if school children will obey all health rules?
+| a. They will be tall | b. They will become rich | c. They will be healthy and strong
+q 2: Why do schools teach children how to take care of their health?
+| a. To make them honest | b. To make them happy | c. To prevent the spread of diseases
+q 3: What is the story about?
+| a. How schools help prevent the spread of flies? | b. How schools help prevent the spread of diseases | c. How schools help prevent the spread of mosquitoes
+
+=== 22.1 | Forgetful Lucia | Activity 22 | pages 22
+pics: 
+read: Forgetful Lucia
+¶ Lucia put all her things in her bag. She looked under the table. She
+looked inside her box. “Mother, I cannot find it. I need it for cutting pictures for
+my album,” Lucia said.
+¶ “You look around some more,” Mother said. Then suddenly Mother
+laughed. She was looking at Lucia’s hands. “Look at what you have in your
+hands,” Mother said.
+¶ Lucia laughed loudly. “How forgetful I am!” she said. “Is it not funny looking
+for something that I am holding?”
+q 1: What was Lucia looking for?
+| a. Needle | b. Pair of scissors | c. Pictures
+q 2: What made Mother laugh?
+| a. Lucia was about to cry. | b. Lucia found what she was looking for | c. Lucia was holding what she was looking for.
+q 3: How did the story end?
+| a. Lucia cried. | b. Lucia went to sleep. | c. Lucia cut pictures for her album.
+
+=== 23.1 | Just Pray | Activity 23 | pages 22,23
+pics: 
+read: Just Pray
+¶ Mrs. Soriano’s house was very quiet. The people inside seemed to be
+talking in whispers. But everyone seemed to be actively moving around.
+Suddenly an ambulance stopped in front of the house. With it came a doctor
+and a nurse. Soon the eldest girl in the family came out holding two pillows.
+She was followed by her brother who was holding a bag and a blanket. Then
+a patient in a stretcher was placed in the ambulance. “Do not cry,” the girl
+said to her little sister. “Just pray that Mother will get well soon.”
+q 1: What was the ambulance for?
+| a. to get a sick person | b. to give free injections | c. to distribute medicines
+q 2: Who was the sick person?
+| a. Mother | b. the boy | c. the eldest girl
+q 3: How did the story end?
+| a. The eldest girl died. | b. Mother was brought to the hospital. | c. The ambulance stayed in front of the house.
+
+=== 24.1 | An Early Morning Fight | Activity 24 | pages 23
+pics: 
+read: An Early Morning Fight
+¶ One early morning, Roel peeped through a partly opened window. He
+saw two men fighting. One of them was holding a stick while the other was
+holding a stick while other was waving a bolo. A woman was trying hard to
+hold back one man from getting near the other.
+¶ “Please, Roman,” the woman said, “do not go near. You might get killed.
+Think of our children.”
+¶ More people were gathering around. Then a mobile patrol car came
+screeching in. The noisy crowd became very quiet.
+q 1: Who came out of the mobile patrol?
+| a. farmers | b. policeman | c. teachers
+q 2: What was the police mobile patrol for?
+| a. to give Roel money | b. to arrest the persons who were fighting | c. to stop the people from gathering around
+q 3: What was likely to happen?
+| a. The people fought against one another. | b. Ramon and Roel quarreled. | c. The men stopped fighting.
+
+=== 25.1 | The King’s Little Girl | Activity 25 | pages 23,24
+pics: 
+read: The King’s Little Girl
+¶ It was a wonderful day and everyone was happily waiting to see the king.
+He had come home from war. His people were lined along the street to honor
+and welcome him for he had won the battle.
+¶ Suddenly, a little girl broke through the crowd and ran towards the
+marching soldiers. An angry guard grabbed her arm before she could go
+near the king and said, “Look here, child, do you not know that he is our
+king?”
+¶ “I am sorry, Sir,” the little girl said politely. “He may be the king to you, but
+he is my father.”
+q 1: What happened to the girl?
+| a. The guard put her in prison. | b. The guard let her go to the king. | c. The guard kept her away from the king.
+q 2: How did the king feel?
+| a. Glad | b. Sorry | c. Hungry
+q 3: How did the story end?
+| a. The girl went home alone. | b. The king went home alone. | c. The king went home to the girl.
+
+=== 26.1 | Three Friends | Activity 26 | pages 24
+pics: 
+read: Three Friends
+¶ Ana, Cynthia and Angelina were talking as they were walking; each girl
+was holding something. Ana was holding a bunch of flowers; Cynthia, a box
+of chocolates; and Angelina, some oranges.
+¶ “Do you think Editha will ever get well?” Ana asked.
+¶ “I hope she will get well,” Cynthia replied.
+¶ “She is really very ill. Her doctor is doing all he can to make her well,”
+Angelina said.
+¶ “Well, let us better hurry up,” Ana said. “I guess it is going to rain. We
+cannot stay long with Editha.”
+q 1: Where do you think the girls are going?
+| a. to visit a sick friend | b. to a birthday party | c. to visit a new friend
+q 2: For whom were the things they were holding?
+| a. for their sick friend | b. for their new friend | c. for their friend who is having a birthday
+q 3: How will their friend feel?
+| a. sad | b. happy | c. angry
+
+=== 27.1 | Tired Boy Scouts | Activity 27 | pages 24,25
+pics: 
+read: Tired Boy Scouts
+¶ T-r-r-rum! T-r-r-rum! T-r-r-rum! went the beating of the drum. Boys in Boy
+Scout uniform were marching on the street. There were many of them. They
+came from different schools. They belonged to different troops, too.
+¶ Every boy had a knapsack on his back. The smaller boy seemed very
+tired. All of the boys were wet with perspiration. They could hardly carry their
+feet any farther. “Keep on marching, boys,” the scout Master said. “We will
+reach the camp soon.”
+q 1: Why were the boys tired?
+| a. They had been sitting | b. They had just begun. | c. They had been walking for a long time.
+q 2: What would the boys do in a camp?
+| a. sell newspaper | b. make kites and boats | c. sing songs and play games
+q 3: What do you think did the boys do as soon as they reached the camp?
+| a. rested | b. played hard | c. walked around
+
+=== 28.1 | The Program | Activity 28 | pages 25
+pics: 
+read: The Program
+¶ There were many people waiting for the program to begin. They started
+to arrive as early as two thirty. It was already ten minutes past three but the
+program had not started. It was supposed to start at three o’clock. At first,
+the sun shone brightly. Soon it was covered by dark clouds. The day became
+dark. “I better hurry home. The clothes on the line might get wet,” Aling Rosa
+said.
+“I have to go home, too. I did not close our windows,” Mrs. Rosal said as she
+walked away. Soon most of the people started to go home.
+q 1: What is going to happen?
+| a. It was going to rain | b. It was going to be a fine day | c. It was going to be a sunny day
+q 2: What was likely to happen next?
+| a. The program will go on | b. The program will not be held that day | c. Many people will stay for the program
+q 3: What else would likely happen?
+| a. The program will be cancelled | b. The program will go on rain or shine | c. The program will be held the next day
+
+=== 29.1 | Berto Jokes No More | Activity 29 | pages 25,26
+pics: 
+read: Berto Jokes No More
+¶ Have you ever played a joke on someone? Berto was fond of playing
+jokes on others. But he does not play jokes anymore. This story will tell you why.
+One morning, in their science class, Berto sat behind Carlos, his best friend.
+The teacher asked Carlos to answer a question. When Carlos stood up to
+answer, Berto pulled Carlos’s chair backward. Suddenly there was a loud thud!
+The class saw Carlos down on the floor. He tried to stand up but he could not.
+q 1: Why did Carlos fall on the floor?
+| a. He stumbled | b. He had no chair to sit on | c. He stepped on a banana peeling
+q 2: Why do you think was Carlos unable to stand?
+| a. He was lazy to stand up | b. He have hurt a bone badly | c. He wanted someone to pull him up
+q 3: What happen next?
+| a. Carlos just laughed | b. Carlos and Berto went out to play | c. Carlos was taken to the school doctor
+
+=== 30.1 | The Green Revolution | Activity 30 | pages 26
+pics: 
+read: The “green Revolution”
+¶ Miss Lozano was telling her pupils the meaning of “Green Revolution.”
+“Let us plant vegetables in every open space or vacant lot near our homes”,
+Miss Lozano said. “If we have no vacant space we can plant in cans, pots
+and wooden boxes. We can plant tomatoes, pechay, and mustard.” “I can
+plant in the empty milk cans of my baby sister. We have many at home,”
+Elena said.
+“We have many empty cans, too,” Ruela said.
+On her way home, Helena was thinking of the space where she plays with her
+sister.
+q 1: What will Helena do?
+| a. Tell her sister not to plant. | b. Play all day with her sister | c. Make a garden out of the space
+q 2: What will happen if all will help in the “Green Revolution”?
+| a. We will have more food | b. We will have more houses | c. We will have more schools
+q 3: What will happen next?
+| a. People will be poorer | b. People will be healthier | c. People will fight one another
+
+=== 31.1 | A Dog’s Bite | Activity 31 | pages 26,27
+pics: 
+read: A Dog’s Bite
+¶ “How many of you have dogs at home?” Miss Angeles asked. Several
+hands were raised. About one-fourth of the class did not.
+“You should have your dogs injected against rabies. Rabies is a disease
+coming from dogs. The bite of a dog which is not injected against rabies will
+kill a man if he is not treated by a doctor,” Miss Angeles said. “Our little dog
+gave me a playful bite before I came to school,” Avelina said. But it is only a
+scratch.”
+q 1: What should Miss Angeles tell Avelina?
+| a. Go to sleep | b. See a doctor | c. Take a bath
+q 2: What should Avelina do?
+| a. Obey Miss Angeles | b. Just go home and rest | c. Forget what Miss Angeles said
+q 3: What will children likely do?
+| a. Sell their dogs | b. Eat their dogs | c. Have their dogs injected against rabies
+
+=== 32.1 | A Bus Ride | Activity 32 | pages 27,28
+pics: 
+read: A Bus Ride
+¶ A tired woman carrying a big bundle got in the bus and hurriedly look
+for a seat. Finding no vacant seat, she stood on the aisle, one hand holding
+tightly on one of the seats and the other clutching her bundle.
+Six-year-old Mario and his mother were on the same bus. Before mother
+could ask Mario to ask the woman, he has already offered his seat to her.
+“You looked so tired and seem to be in a hurry.” Mario said politely. “I can
+stand for the rest of the way while you take my seat.” How glad the woman
+was! All she could say was,” Thank you very much.”
+q 1: How do you think did Mario feel after offering his seat?
+| a. Sorry | b. Happy | c. Very tired
+q 2: How would you think did Mother feel about Mario?
+| a. Proud of him | b. Angry with him | c. Ashamed of him
+q 3: How will you end the story?
+| a. Mario got back his seat | b. The woman reached her home happily | c. Mario and his mother did not talk to the woman
+
+=== 33.1 | Sets | Activity 33 | pages 28
+pics: 
+read: Sets
+¶ A Grade Two class was studying about sets. They learned that a set is a
+group of things. They knew that an empty set has nothing in it. They also
+learned that equivalent sets have equal members in them. They were taught
+how to add and subtract sets.
+¶ The children liked their lessons on sets very much. In three months’, time
+they learned many things about sets and set operations.
+Get your pencil and paper, do what these sentences tell.
+q 1: Write the title of the story.
+q 2: Draw a set of three apples.
+q 3: Draw a set of 2 tables and 1 chair.
+q 4: Draw two equivalent sets, each having 4 members.
+q 5: Write the sum of the equivalent sets you made.
+
+=== 34.1 | Opposites | Activity 34 | pages 28,29
+pics: 
+read: Opposites
+¶ One day, Miss Carlos said, “Let us play a game. Let us have two rows A
+and B, facing each other.
+¶ “What game is this?”. A child in one row will say a word and a child in the
+opposite row will give the opposite word,” said Miss Carlos.
+¶ They started the game.
+¶ “Day,” said the boy in A row.
+¶ “Night,” answered a girl in a row B.
+¶ “Correct,” said Miss Carlos. “Night is the opposite of day.”
+¶ The children had much fun playing the game. They learned many words.
+Play the game with your pencil and paper.
+q 1: Write the opposite of the boy.
+q 2: Write the opposite of clean.
+q 3: Write the opposite of small.
+q 4: What is the opposite of good?
+Write and encircle it.
+q 5: What is the opposite of new?
+
+=== 35.1 | Our National Symbols | Activity 35 | pages 29
+pics: 
+read: Our National Symbols
+Our country is the Philippines. We love our country. Every Filipino must
+know his country very well.
+“Do you know the national symbols?” Miss Luna asked the children in
+Grade Three.
+“Yes, Miss Luna,” said Fe, “We learned them in Grade II.”
+“Can you name some?” said Miss Luna.
+“Our national flower is sampaguita,” said Lucy.
+“Our national fruit is mango,” said Vic.
+“Our national tree is Narra,” “We have many national symbols. You must
+learn them all. We named only a few.
+q 1: Write the name of our country.
+q 2: Write the name of our national flower.
+q 3: What is the national tree?
+Write it.
+q 4: What is our national fruit?
+q 5: Are there other national symbols?
+Write Yes or No.
+
+=== 36.1 | How Nestor Earns Money | Activity 36 | pages 29,30
+pics: 
+read: How Nestor Earns Money
+¶ Nestor goes to Mrs. Magno’s house every Saturday afternoon. He helps
+Mrs. Magno clean her garden and water her plants. He also carries water for
+her. Mrs. Magno pays Nestor for his services.
+¶ Nestor earns money by working for other people. He goes from one
+house to another. although he has very few clothes, he is always neat and
+clean. Many people like him to work for them.
+¶ One day Mrs. Magno placed all her son’s old clothes in a box. “I know
+of a boy who would like these clothes. They are still good to wear, “she
+thought.
+q 1: What will Mrs. Magno do with the box of clothes?
+| a. Sell it | b. Give it away | c. Throw it away
+q 2: Who does Mrs. Magno have in mind?
+| a. Nestor | b. her son | c. her nephew
+q 3: What do you think will the boy do?
+| a. Sell the box | b. Throw the box away | c. Thank Mrs. Magno and get the box.
+
+=== 37.1 | Fiesta Time | Activity 37 | pages 30
+pics: 
+read: Fiesta Time
+¶ All the streets were decorated with little flags of different colors.
+There was a band going around. Many people lined up the street. They
+were waiting for something.
+“My sister’s dress is yellow. Her crown is very lovely. “Marina said
+“If you will see my sister’s dress you will be surprised. It is
+pure white. Her crown is as white as her dress,” Yolanda said. “Well, let us
+find out who has the prettier dress.” Minda said. “Let us wait and see.”
+“They are coming! They are almost here now! “Shouted
+the people with delight.
+q 1: Who do you think were coming?
+| a. The governor and his wife. | b. The president and his wife. | c. The fiesta queen with her princess.
+q 2: What was the town celebrating?
+| a. Independence Day | b. The town fiesta | c. Bataan Day
+q 3: Why were the people lined up on the street?
+| a. They were watching a funeral. | b. They were watching a parade. | c. They were watching a procession.
+
+=== 38.1 | First Elevator Ride | Activity 38 | pages 31
+pics: 
+read: First Elevator Ride
+¶ It was Marcelo’s first trip to Manila. It was his first time to see a train, an
+electric light, a telephone, a television set and big buildings. It was his first
+time to ride in a car, in an elevator and on an escalator.
+¶ Marcelo rode in an elevator on his third day in the city. His mother took
+him to his elder brother’s office. His brother’s office was in the seventh floor
+so they took an elevator. Inside the elevator, Marcelo cried and said, “Let
+me out! Let me out this room!”
+q 1: What do you think did the people in the elevator do?
+| a. They laughed at him | b. They sent Marcelo out. | c. They told him not to be afraid.
+q 2: Why did Marcelo want to go out?
+| a. He was afraid. | b. He wanted to play. | c. He could not breathe inside.
+q 3: How did Marcelo’s mother feel?
+| a. Proud of Marcelo | b. Ashamed of Marcelo | c. Happy about Marcelo
+
+=== 39.1 | Share a Toy | Activity 39 | pages 31
+pics: 
+read: Share a Toy
+¶ It was the first week of December. “Christmas is coming soon,” said Miss Villa.
+“Would you like to make a poor child happy during Christmas?” “Yes, Miss Villa,”
+answered the children. “Some of you have many toys. You can give away one of
+them. We will give your toys to the very poor children who cannot buy a toy this
+Christmas. Will you share a toy with a poor child?” asked Miss Villa.
+¶ “I will tell my mother about it,” said Samuel. “Of course. Tell your mother about
+our ‘Share a Toy’ campaign. Do not bring anything if your mother does not know
+about it,” said Miss Villa.
+q 1: Write down the name of the month.
+q 2: Write the word that tells what was coming.
+q 3: Who was the teacher? Write the name.
+q 4: Whom must they tell about the campaign?
+Write it.
+q 5: Copy the words that tell with whom they will share a toy.
+| a. A rich child | b. A good friend | c. A poor child
+
+=== 40.1 | The Toys | Activity 40 | pages 32
+pics: 
+read: The Toys
+A big SHARE A TOY poster was posted on the wall. Miss Villa told the children
+to read it. “Are you ready with your toys?” Miss Villa asked. “Some of us are
+ready,” said Samuel. “Let us put our toys in the big box. The box is on the
+corner,” said Miss Villa.
+¶ Some children took out their toys. Samuel stood up and put his toy truck
+in the box. Mila came next and put a doll. Other children also put their toys in
+the box. Soon the box was half full of toys.
+Miss Villa counted the toys. She was very happy. The children were very
+happy, too. It was the first day of the campaign and they had fifteen toys.
+q 1: Write what they read on the poster.
+q 2: Write what Samuel gave.
+q 3: Write what Mila gave.
+q 4: Copy the box below. Put a circle around the word that tells where they put the toys.
+| Basket | Box | Table
+q 5: Write the number that tells how many toys they had.
+
+=== 41.1 | Growing Roses | Activity 41 | pages 32
+pics: 
+read: Growing Roses
+¶ Aling Doray grows roses in her garden. She takes good care of her roses.
+Every morning and afternoon we see Aling Doray in her rose garden.
+¶ The rose plants are very healthy. They have big, beautiful flowers. They are
+of different colors. There are red, white, pink and yellow roses.
+¶ Early in the morning, Aling Doray cut some flowers. She takes them to the
+flower shop. She sells the roses to the shop owner. Aling Doray is happy. She
+earns much money selling her roses.
+q 1: Who grows roses? Write the name.
+q 2: Write the word that tells about the rose plants.
+q 3: List the different colors of the flowers.
+q 4: Write two words that tell about the flowers.
+q 5: When does Aling Doray cut flowers?
+
+=== 42.1 | The Fishermen | Activity 42 | pages 33
+pics: 
+read: The Fishermen
+¶ One Saturday morning, Father and Lito went to the river. They went to
+catch fish. They brought their fishing lines. The fishing lines were made of
+bamboo. They had long strings. The used small worms as baits.
+¶ Lito sat on a big rock on the river bank. Father stayed a few meters
+away. After a while, Lito pulled his line hard. A big fish was at the end of the
+line. “Father, I caught a big fish,” Lito said.
+¶ Soon Father pulled his line, too. “See what I caught,” Father said.
+It was a very small fish. How Father and Lito laughed.
+q 1: Write the day when Father and Lito went fishing.
+q 2: Write the word that tells where they went.
+q 3: Write the word that tells where Lito was.
+q 4: Who caught a big fish?
+q 5: Who caught a small fish?
+Write the name.
+
+=== 43.1 | Days of the Week | Activity 43 | pages 33
+pics: 
+read: Days of the Week
+¶ One day Ben and Ric had a contest. “Let us see who can write the
+names of the days of the week correctly,” said Ben. “Let us write them in
+order,” said Ric.
+¶ Ben wrote only five days. Ric wrote all the days correctly. He wrote
+these on his paper:
+¶ Sunday
+¶ Monday
+¶ Tuesday
+¶ Wednesday
+¶ Thursday
+¶ Friday
+¶ Saturday
+q 1: Copy the names of the days of the week.
+q 2: Number them from 1 to 7.
+q 3: Put a cross after the days that you do not
+come to school.
+q 4: Draw a line under the first school day of the
+week.
+q 5: Draw a circle around the last school day of
+the week.

@@ -2,6 +2,7 @@
 /** Display-only labels and reviewed picture mappings; no database writes. */
 function lesson_display_label(int $level,int $position):string{
  if($level===5)return $position===1?'Pre-test':($position>=100?'Post-test':'Passage '.($position-1));
+ if($level===8)return 'Activity '.($position%100);
  if($level===7){$kind=intdiv($position,100)%10;$n=$position%100;return [1=>'Pre-test',3=>'Post-test',5=>'Formative assessment'][$kind]??'Activity '.$n;}
  if($level===6){$kind=intdiv($position,100)%10;$n=$position%100;return [1=>'Pre-test',3=>'Post-test',4=>'Activity '.$n.' · second set'][$kind]??'Activity '.$n;}
  if(in_array($level,[2,3,4],true)){
@@ -19,6 +20,7 @@ function lesson_count_label(int $level,int $total):string{
  if($level===5&&$total>2)return ($total-2).' passages + pre/post tests';
  if($level===6)return $total.' activities and tests';
  if($level===7)return $total.' stories and tests';
+ if($level===8)return $total.' activities';
  return in_array($level,[2,3,4],true)&&$total>2?($total-2).' lessons + pre/post assessments':$total.' lessons';
 }
 function level1_visual_manifest():array{
