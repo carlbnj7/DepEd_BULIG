@@ -175,3 +175,22 @@ document.addEventListener('click',function(e){
  var msg='Reading time '+fmt(secs)+' · '+words+' words · '+wpm+' words per minute';res.textContent=msg;stop.hidden=true;var again=box.querySelector('[data-speed-start]');again.hidden=false;again.textContent='Read again';
  var card=box.closest('.native-card'),ans=card&&card.querySelector('.native-answer');if(ans){ans.value=msg;ans.dispatchEvent(new Event('input',{bubbles:true}));}
 });
+/* Admin PIN number pad (v19) */
+(function(){const f=document.querySelector('[data-pin-form]');if(!f)return;const fields=[...f.querySelectorAll('[data-pin-field]')].map(w=>({input:w.querySelector('[data-pin-input]'),boxes:[...w.querySelectorAll('[data-pin-boxes] b')],wrap:w}));
+ let active=fields[0];
+ const draw=()=>{fields.forEach(x=>{const v=x.input.value.replace(/\D/g,'').slice(0,4);x.input.value=v;x.boxes.forEach((b,i)=>{b.textContent=i<v.length?'\u2022':'';b.classList.toggle('f',i<v.length);b.classList.toggle('cur',x===active&&i===v.length);});});};
+ fields.forEach(x=>{x.input.addEventListener('input',()=>{active=x;draw();});x.input.addEventListener('focus',()=>{active=x;draw();});x.wrap.querySelector('[data-pin-boxes]').addEventListener('click',()=>{active=x;x.input.focus();draw();});});
+ f.querySelectorAll('[data-pin-pad] button').forEach(b=>b.addEventListener('click',()=>{const d=b.dataset.digit,x=active;
+  if(d==='back'){if(!x.input.value&&fields.indexOf(x)>0){active=fields[fields.indexOf(x)-1];}active.input.value=active.input.value.slice(0,-1);}
+  else if(d==='clear'){fields.forEach(y=>y.input.value='');active=fields[0];}
+  else if(x.input.value.length<4){x.input.value+=d;if(x.input.value.length===4&&fields.indexOf(x)<fields.length-1)active=fields[fields.indexOf(x)+1];}
+  draw();if(fields.every(y=>y.input.value.length===4))f.requestSubmit();}));
+ document.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(fields.some(y=>y.input===e.target))return;const k=e.key;const btn=/^[0-9]$/.test(k)?f.querySelector('[data-digit="'+k+'"]'):k==='Backspace'?f.querySelector('[data-digit="back"]'):k==='Escape'?f.querySelector('[data-digit="clear"]'):null;if(btn){e.preventDefault();btn.click();}else if(k==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();f.requestSubmit();}});
+ fields.forEach(x=>x.input.addEventListener('input',()=>{if(x.input.value.length===4){const i=fields.indexOf(x);if(i<fields.length-1){active=fields[i+1];active.input.focus();draw();}else if(fields.every(y=>y.input.value.length===4))f.requestSubmit();}}));
+ draw();})();
+/* Admin pages: confirm prompts, print button, filters that submit on change (v21) */
+document.addEventListener('click',e=>{const c=e.target.closest('[data-confirm]');if(c&&!confirm(c.dataset.confirm)){e.preventDefault();e.stopImmediatePropagation();}
+ if(e.target.closest('[data-print]'))window.print();},true);
+document.addEventListener('change',e=>{const s=e.target.closest('[data-autosubmit]');if(s&&s.form){if(s.name==='grade'){const id=s.form.querySelector('[name=id]');if(id)id.disabled=true;}s.form.requestSubmit();}});
+/* Admin tables: label each cell so phones can show rows as cards (v21) */
+document.querySelectorAll('.ws-table').forEach(t=>{const h=[...t.querySelectorAll('thead th')].map(x=>x.textContent.trim());t.querySelectorAll('tbody tr').forEach(r=>[...r.children].forEach((c,i)=>{if(h[i]&&!c.hasAttribute('colspan'))c.dataset.label=h[i];}));});

@@ -1,0 +1,30 @@
+BULIG — NEW ADMIN AREA + 4-DIGIT ADMIN PIN + LOGIN LOGO + BULK PUPIL IMPORT
+=========================================================================
+
+Site folder: /home/u179645850/domains/lemonchiffon-goose-405007.hostingersite.com/public_html
+
+1. Back up (hPanel → Files → Backups, or phpMyAdmin → Export).
+2. File Manager → public_html → Upload BULIG-Admin-Update.zip → Extract here → allow overwrite → delete the ZIP.
+3. phpMyAdmin → click the BULIG database FIRST → Import → 014_admin_pin.sql → Go
+                                                   → Import → 015_admin_tools.sql → Go
+   (Both are safe to import again.)
+4. The admin PIN is now 4 digits. Importing 015_admin_tools.sql clears the old 6-digit PIN automatically,
+   so your next admin sign-in asks you to create a new 4-digit PIN.
+   Forgot a PIN later? Import RESET-ADMIN-PIN.sql in phpMyAdmin.
+5. Cache Manager → Purge all, then Ctrl+F5. Sign in as administrator → System health → all checks should be OK.
+   (System health replaces bulig-check.php — you can delete public/bulig-check.php.)
+
+NEW ADMIN MENU
+ Overview       School-wide numbers, pupils at each level, what needs attention, most active sections, announcement.
+ Teachers       Add, rename, reset password (a new one is shown once), turn on/off, move pupils to another teacher.
+ Reports        By period, grade and section; Download Excel (CSV) or Print / Save as PDF (uses School info as header).
+ Lesson studio  Level → grade → lesson; Fix text, Show/Hide an activity (only before pupils have done that lesson).
+ Activity log   Sign-ins, wrong passwords and admin PINs, account and content changes; search, filters, CSV.
+ System health  Install checks, Backup (Excel ZIP or full SQL), Picture check, Level 1 pictures and content notes.
+ Settings       Security (admin PIN, sign-in rules), School info, Announcements (shown on teachers' Overview),
+                Badges & rewards, School year (end-of-year: backup → move pupils up a grade → archive sections).
+
+ALSO IN THIS UPDATE
+ • Admin PIN: 4 digits, compact screen, type on the keyboard or tap the number pad.
+ • Login logo: no box, just a drop shadow.
+ • Bulk pupil import for teachers (My pupils → Import a class list; Excel/CSV/SF1).

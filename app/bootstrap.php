@@ -61,8 +61,10 @@ function allowed_activity(int $pid,int $aid):array{
  if($before)fail('Please finish the earlier activity first.',403);return $a;
 }
 function next_activity(int $pid,int $lid):?array{foreach(activities($lid,$pid) as $a)if(!completion_ok($a))return $a;return null;}
-function owned_section(int $sid,int $teacher):array{$s=one('SELECT * FROM sections WHERE id=? AND teacher_id=?',[$sid,$teacher]);if(!$s)fail('Choose a section that belongs to you.',403);return $s;}
-function teacher_sections(int $teacher):array{return rows('SELECT * FROM sections WHERE teacher_id=? ORDER BY grade_level,name',[$teacher]);}
+/** Sections can be archived at the end of a school year (015_admin_tools.sql); older databases have no such column. */
+function sections_archive_supported():bool{static $s;if($s===null){try{$s=(bool)one("SHOW COLUMNS FROM sections LIKE 'archived_at'");}catch(Throwable $e){$s=false;}}return $s;}
+function owned_section(int $sid,int $teacher):array{$s=one('SELECT * FROM sections WHERE id=? AND teacher_id=?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$sid,$teacher]);if(!$s)fail('Choose a section that belongs to you.',403);return $s;}
+function teacher_sections(int $teacher):array{return rows('SELECT * FROM sections WHERE teacher_id=?'.(sections_archive_supported()?' AND archived_at IS NULL':'').' ORDER BY grade_level,name',[$teacher]);}
 function finish_lesson(int $pid,int $lid):void{
  if(!lesson_available($pid,$lid))fail('Lesson not available.',403);
  if(next_activity($pid,$lid))fail('Complete every activity before finishing this lesson.');
@@ -205,3 +207,6 @@ function next_learning_lesson(int $pid):?array{
 require_once __DIR__.'/level2_cards.php';
 
 require_once __DIR__.'/presentation.php';
+require_once __DIR__.'/pupil_import.php';
+require_once __DIR__.'/admin_pin.php';
+require_once __DIR__.'/admin.php';
