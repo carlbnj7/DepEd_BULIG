@@ -1,0 +1,3695 @@
+{
+ "grades": {
+  "1": {
+   "page_count": 37,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+   ],
+   "teacher_pages": [
+    36,
+    37
+   ],
+   "lessons": [
+    {
+     "position": 1100,
+     "kind": "pre",
+     "label": "Pre-test",
+     "title": "Pre-test",
+     "skill": "Noting Details",
+     "pages": [
+      6,
+      7,
+      8
+     ],
+     "activities": [
+      {
+       "title": "Pre-test · Reading",
+       "pages": [
+        6,
+        7
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "Pre-test · Reality or Fantasy",
+       "pages": [
+        7
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Pre-test · Sequencing",
+       "pages": [
+        7
+       ],
+       "cards": 1,
+       "speed": null
+      },
+      {
+       "title": "Pre-test · Cause and Effect",
+       "pages": [
+        8
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "My Friend",
+     "skill": "Noting Details",
+     "pages": [
+      10
+     ],
+     "activities": [
+      {
+       "title": "My Friend",
+       "pages": [
+        10
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "The Farmer",
+     "skill": "Noting Details",
+     "pages": [
+      11
+     ],
+     "activities": [
+      {
+       "title": "The Farmer",
+       "pages": [
+        11
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "My Dolly",
+     "skill": "Noting Details",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "My Dolly",
+       "pages": [
+        12
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "Joy’s Aya",
+     "skill": "Noting Details",
+     "pages": [
+      13
+     ],
+     "activities": [
+      {
+       "title": "Joy’s Aya",
+       "pages": [
+        13
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Lita the Cow",
+     "skill": "Fantasy or Reality",
+     "pages": [
+      14
+     ],
+     "activities": [
+      {
+       "title": "Lita the Cow",
+       "pages": [
+        14
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "Rosa’s Goat",
+     "skill": "Fantasy or Reality",
+     "pages": [
+      15
+     ],
+     "activities": [
+      {
+       "title": "Rosa’s Goat",
+       "pages": [
+        15
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Benny’s Happy Day",
+     "skill": "Fantasy or Reality",
+     "pages": [
+      16
+     ],
+     "activities": [
+      {
+       "title": "Benny’s Happy Day",
+       "pages": [
+        16
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Lily’s Magical Pet",
+     "skill": "Fantasy or Reality",
+     "pages": [
+      17
+     ],
+     "activities": [
+      {
+       "title": "Lily’s Magical Pet",
+       "pages": [
+        17
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "A Cold Bear",
+     "skill": "Sequencing Events",
+     "pages": [
+      18
+     ],
+     "activities": [
+      {
+       "title": "A Cold Bear",
+       "pages": [
+        18
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "Dessert Time!",
+     "skill": "Sequencing Events",
+     "pages": [
+      19
+     ],
+     "activities": [
+      {
+       "title": "Dessert Time!",
+       "pages": [
+        19
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "Harry and the Crayon",
+     "skill": "Sequencing Events",
+     "pages": [
+      20
+     ],
+     "activities": [
+      {
+       "title": "Harry and the Crayon",
+       "pages": [
+        20
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "My Pet",
+     "skill": "Sequencing Events",
+     "pages": [
+      21
+     ],
+     "activities": [
+      {
+       "title": "My Pet",
+       "pages": [
+        21
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Happenings",
+     "skill": "Cause and Effect",
+     "pages": [
+      22
+     ],
+     "activities": [
+      {
+       "title": "Happenings",
+       "pages": [
+        22
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Activities",
+     "skill": "Cause and Effect",
+     "pages": [
+      23
+     ],
+     "activities": [
+      {
+       "title": "Activities",
+       "pages": [
+        23
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Good Ways",
+     "skill": "Cause and Effect",
+     "pages": [
+      24
+     ],
+     "activities": [
+      {
+       "title": "Good Ways",
+       "pages": [
+        24
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "Snowball Fight",
+     "skill": "Cause and Effect",
+     "pages": [
+      25
+     ],
+     "activities": [
+      {
+       "title": "Snowball Fight",
+       "pages": [
+        25
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "Alex and His Mother",
+     "skill": "Making Predictions/Conclusions",
+     "pages": [
+      26,
+      27
+     ],
+     "activities": [
+      {
+       "title": "Alex and His Mother",
+       "pages": [
+        26,
+        27
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 19218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "Karen’s Puzzle",
+     "skill": "Making Predictions/Conclusions",
+     "pages": [
+      28,
+      29
+     ],
+     "activities": [
+      {
+       "title": "Karen’s Puzzle",
+       "pages": [
+        28,
+        29
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 20219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "Watching a Circus Show",
+     "skill": "Making Predictions/Conclusions",
+     "pages": [
+      30,
+      31
+     ],
+     "activities": [
+      {
+       "title": "Watching a Circus Show",
+       "pages": [
+        30,
+        31
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 21220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "Fishing",
+     "skill": "Making Predictions/Conclusions",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "Fishing",
+       "pages": [
+        32
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 22300,
+     "kind": "post",
+     "label": "Post-test",
+     "title": "Post-test",
+     "skill": "Noting Details",
+     "pages": [
+      33,
+      34
+     ],
+     "activities": [
+      {
+       "title": "Post-test · Reading",
+       "pages": [
+        33
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Post-test · Reality or Fantasy",
+       "pages": [
+        33
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Post-test · Sequencing",
+       "pages": [
+        34
+       ],
+       "cards": 1,
+       "speed": null
+      },
+      {
+       "title": "Post-test · Cause and Effect",
+       "pages": [
+        34
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level6/g1",
+   "pdf": "level6/grade-1.pdf"
+  },
+  "2": {
+   "page_count": 51,
+   "pupil_pages": [
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32,
+    34,
+    36,
+    38,
+    40,
+    42,
+    44,
+    45,
+    46,
+    47
+   ],
+   "teacher_pages": [
+    5,
+    7,
+    9,
+    11,
+    13,
+    15,
+    17,
+    19,
+    21,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    49,
+    50
+   ],
+   "lessons": [
+    {
+     "position": 1100,
+     "kind": "pre",
+     "label": "Pretest",
+     "title": "Pretest",
+     "skill": "Noting Details",
+     "pages": [
+      45,
+      46,
+      47
+     ],
+     "activities": [
+      {
+       "title": "Pretest · Reading",
+       "pages": [
+        45
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Pretest · Reality or Fantasy",
+       "pages": [
+        45
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Pretest · Sequencing",
+       "pages": [
+        45
+       ],
+       "cards": 1,
+       "speed": null
+      },
+      {
+       "title": "Pretest · Cause and Effect",
+       "pages": [
+        46
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Pretest · In the Barn",
+       "pages": [
+        46,
+        47
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "A Friend",
+     "skill": "Noting Details",
+     "pages": [
+      6
+     ],
+     "activities": [
+      {
+       "title": "A Friend",
+       "pages": [
+        6
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "My Pet Dog",
+     "skill": "Noting Details",
+     "pages": [
+      8
+     ],
+     "activities": [
+      {
+       "title": "My Pet Dog",
+       "pages": [
+        8
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "At the Farm",
+     "skill": "Noting Details",
+     "pages": [
+      10
+     ],
+     "activities": [
+      {
+       "title": "At the Farm",
+       "pages": [
+        10
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "The King",
+     "skill": "Noting Details",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "The King",
+       "pages": [
+        12
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "At the Park",
+     "skill": "Fantasy and Reality",
+     "pages": [
+      14
+     ],
+     "activities": [
+      {
+       "title": "At the Park",
+       "pages": [
+        14
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "Molly Reads Stories",
+     "skill": "Fantasy and Reality",
+     "pages": [
+      16
+     ],
+     "activities": [
+      {
+       "title": "Molly Reads Stories",
+       "pages": [
+        16
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Rex’s New Dog",
+     "skill": "Fantasy and Reality",
+     "pages": [
+      18
+     ],
+     "activities": [
+      {
+       "title": "Rex’s New Dog",
+       "pages": [
+        18
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "My New Pet",
+     "skill": "Fantasy and Reality",
+     "pages": [
+      20
+     ],
+     "activities": [
+      {
+       "title": "My New Pet",
+       "pages": [
+        20
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "Pushing and Pulling",
+     "skill": "Sequencing Events",
+     "pages": [
+      22
+     ],
+     "activities": [
+      {
+       "title": "Pushing and Pulling",
+       "pages": [
+        22
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "Ann",
+     "skill": "Sequencing Events",
+     "pages": [
+      24
+     ],
+     "activities": [
+      {
+       "title": "Ann",
+       "pages": [
+        24
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "My Mom",
+     "skill": "Sequencing Events",
+     "pages": [
+      26
+     ],
+     "activities": [
+      {
+       "title": "My Mom",
+       "pages": [
+        26
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "Pearl",
+     "skill": "Sequencing Events",
+     "pages": [
+      28
+     ],
+     "activities": [
+      {
+       "title": "Pearl",
+       "pages": [
+        28
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Cause and Effect 1",
+     "skill": "Cause and Effect",
+     "pages": [
+      30
+     ],
+     "activities": [
+      {
+       "title": "Cause and Effect 1",
+       "pages": [
+        30
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Cause and Effect 2",
+     "skill": "Cause and Effect",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "Cause and Effect 2",
+       "pages": [
+        32
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Cause and Effect 3",
+     "skill": "Cause and Effect",
+     "pages": [
+      34
+     ],
+     "activities": [
+      {
+       "title": "Cause and Effect 3",
+       "pages": [
+        34
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "Cause and Effect 4",
+     "skill": "Cause and Effect",
+     "pages": [
+      36
+     ],
+     "activities": [
+      {
+       "title": "Cause and Effect 4",
+       "pages": [
+        36
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "Going to the Movies",
+     "skill": "Making Predictions/Conclusions",
+     "pages": [
+      38
+     ],
+     "activities": [
+      {
+       "title": "Going to the Movies",
+       "pages": [
+        38
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 19218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "Reward",
+     "skill": "Making Predictions/Conclusions",
+     "pages": [
+      40
+     ],
+     "activities": [
+      {
+       "title": "Reward",
+       "pages": [
+        40
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 20219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "In the Barn",
+     "skill": "Making Predictions/Conclusions",
+     "pages": [
+      42
+     ],
+     "activities": [
+      {
+       "title": "In the Barn",
+       "pages": [
+        42
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 21220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "Rod and Wena",
+     "skill": "Making Predictions/Conclusions",
+     "pages": [
+      44
+     ],
+     "activities": [
+      {
+       "title": "Rod and Wena",
+       "pages": [
+        44
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 22300,
+     "kind": "post",
+     "label": "Post Test",
+     "title": "Post Test",
+     "skill": "Noting Details",
+     "pages": [
+      45,
+      46,
+      47
+     ],
+     "activities": [
+      {
+       "title": "Post Test · Reading",
+       "pages": [
+        45
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Post Test · Reality or Fantasy",
+       "pages": [
+        45
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Post Test · Sequencing",
+       "pages": [
+        45
+       ],
+       "cards": 1,
+       "speed": null
+      },
+      {
+       "title": "Post Test · Cause and Effect",
+       "pages": [
+        46
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Post Test · In the Barn",
+       "pages": [
+        46,
+        47
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level6/g2",
+   "pdf": "level6/grade-2.pdf"
+  },
+  "3": {
+   "page_count": 66,
+   "pupil_pages": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+   ],
+   "teacher_pages": [
+    64,
+    65,
+    66
+   ],
+   "lessons": [
+    {
+     "position": 1100,
+     "kind": "pre",
+     "label": "Pre-test",
+     "title": "Pre-test",
+     "skill": "Noting Details",
+     "pages": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+     ],
+     "activities": [
+      {
+       "title": "Growing Vegetables",
+       "pages": [
+        7,
+        8
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "Fowls",
+       "pages": [
+        9
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "The First Monkey",
+       "pages": [
+        10,
+        11
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "The Bees",
+       "pages": [
+        12,
+        13
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "A Rainy Day",
+     "skill": "Noting Details",
+     "pages": [
+      15,
+      16
+     ],
+     "activities": [
+      {
+       "title": "A Rainy Day",
+       "pages": [
+        15,
+        16
+       ],
+       "cards": 9,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "A Gift from Uncle",
+     "skill": "Noting Details",
+     "pages": [
+      17,
+      18
+     ],
+     "activities": [
+      {
+       "title": "A Gift from Uncle",
+       "pages": [
+        17,
+        18
+       ],
+       "cards": 9,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "Taking Care of Animals",
+     "skill": "Noting Details",
+     "pages": [
+      19,
+      20
+     ],
+     "activities": [
+      {
+       "title": "Taking Care of Animals",
+       "pages": [
+        19,
+        20
+       ],
+       "cards": 9,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "Lost and Found",
+     "skill": "Noting Details",
+     "pages": [
+      21,
+      22
+     ],
+     "activities": [
+      {
+       "title": "Lost and Found",
+       "pages": [
+        21,
+        22
+       ],
+       "cards": 9,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "The Banana Peelings",
+     "skill": "Noting Details",
+     "pages": [
+      23,
+      24
+     ],
+     "activities": [
+      {
+       "title": "The Banana Peelings",
+       "pages": [
+        23,
+        24
+       ],
+       "cards": 9,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "Getting the General Significance",
+     "skill": "Getting the General Significance",
+     "pages": [
+      25,
+      26
+     ],
+     "activities": [
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        25
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        26
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Getting the General Significance",
+     "skill": "Getting the General Significance",
+     "pages": [
+      27,
+      28
+     ],
+     "activities": [
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        27
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        28
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Getting the General Significance",
+     "skill": "Getting the General Significance",
+     "pages": [
+      29,
+      30
+     ],
+     "activities": [
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        29
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        30
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "Getting the General Significance",
+     "skill": "Getting the General Significance",
+     "pages": [
+      31,
+      32
+     ],
+     "activities": [
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        31
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        32
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "Getting the General Significance",
+     "skill": "Getting the General Significance",
+     "pages": [
+      33,
+      34
+     ],
+     "activities": [
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        33
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Getting the General Significance",
+       "pages": [
+        34
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "Hearing Mass · The Big, Pink Bundle of Joy",
+     "skill": "Drawing Conclusions",
+     "pages": [
+      35,
+      36
+     ],
+     "activities": [
+      {
+       "title": "Hearing Mass",
+       "pages": [
+        35
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "The Big, Pink Bundle of Joy",
+       "pages": [
+        36
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "A Bookworm · The Ferris Wheel Ride",
+     "skill": "Drawing Conclusions",
+     "pages": [
+      37,
+      38
+     ],
+     "activities": [
+      {
+       "title": "A Bookworm",
+       "pages": [
+        37
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "The Ferris Wheel Ride",
+       "pages": [
+        38
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Anti-Decay Vaccine · Scared Stiff",
+     "skill": "Drawing Conclusions",
+     "pages": [
+      39,
+      40
+     ],
+     "activities": [
+      {
+       "title": "Anti-Decay Vaccine",
+       "pages": [
+        39
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Scared Stiff",
+       "pages": [
+        40
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Caught in the Rain · A Visit to the City",
+     "skill": "Drawing Conclusions",
+     "pages": [
+      41,
+      42
+     ],
+     "activities": [
+      {
+       "title": "Caught in the Rain",
+       "pages": [
+        41
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "A Visit to the City",
+       "pages": [
+        42
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "First Elevator Ride · Falling in Line",
+     "skill": "Drawing Conclusions",
+     "pages": [
+      43,
+      44
+     ],
+     "activities": [
+      {
+       "title": "First Elevator Ride",
+       "pages": [
+        43
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Falling in Line",
+       "pages": [
+        44
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "An Accident · A Surprise Gift",
+     "skill": "Predicting Outcomes",
+     "pages": [
+      45,
+      46
+     ],
+     "activities": [
+      {
+       "title": "An Accident",
+       "pages": [
+        45
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "A Surprise Gift",
+       "pages": [
+        46
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "Rico · Why Lina Cried",
+     "skill": "Predicting Outcomes",
+     "pages": [
+      47,
+      48
+     ],
+     "activities": [
+      {
+       "title": "Rico",
+       "pages": [
+        47
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Why Lina Cried",
+       "pages": [
+        48
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 19218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "A Letter from Father · A Boy’s Wish",
+     "skill": "Predicting Outcomes",
+     "pages": [
+      49,
+      50
+     ],
+     "activities": [
+      {
+       "title": "A Letter from Father",
+       "pages": [
+        49
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "A Boy’s Wish",
+       "pages": [
+        50
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 20219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "Mina’s Father · Getting Ready",
+     "skill": "Predicting Outcomes",
+     "pages": [
+      51,
+      52
+     ],
+     "activities": [
+      {
+       "title": "Mina’s Father",
+       "pages": [
+        51
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Getting Ready",
+       "pages": [
+        52
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 21220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "One Sunday Morning · Just Pray",
+     "skill": "Predicting Outcomes",
+     "pages": [
+      53,
+      54
+     ],
+     "activities": [
+      {
+       "title": "One Sunday Morning",
+       "pages": [
+        53
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Just Pray",
+       "pages": [
+        54
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 22300,
+     "kind": "post",
+     "label": "Post-test",
+     "title": "Post-test",
+     "skill": "Noting Details",
+     "pages": [
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+     ],
+     "activities": [
+      {
+       "title": "Growing Vegetables",
+       "pages": [
+        56,
+        57
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "Fowls",
+       "pages": [
+        58,
+        59
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "The First Monkey",
+       "pages": [
+        60,
+        61
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "The Bees",
+       "pages": [
+        62,
+        63
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level6/g3",
+   "pdf": "level6/grade-3.pdf"
+  },
+  "4": {
+   "page_count": 53,
+   "pupil_pages": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+   ],
+   "teacher_pages": [
+    51,
+    52,
+    53
+   ],
+   "lessons": [
+    {
+     "position": 1100,
+     "kind": "pre",
+     "label": "Pre-Assessment",
+     "title": "Pre-Assessment",
+     "skill": "Noting Details",
+     "pages": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+     ],
+     "activities": [
+      {
+       "title": "Ana’s Pet",
+       "pages": [
+        7,
+        8
+       ],
+       "cards": 11,
+       "speed": null
+      },
+      {
+       "title": "Exercise",
+       "pages": [
+        9,
+        10
+       ],
+       "cards": 8,
+       "speed": null
+      },
+      {
+       "title": "Guava Jam",
+       "pages": [
+        11,
+        12
+       ],
+       "cards": 8,
+       "speed": null
+      },
+      {
+       "title": "Playing with Circles",
+       "pages": [
+        13
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "The Horse and the Snail",
+       "pages": [
+        14
+       ],
+       "cards": 1,
+       "speed": 115
+      }
+     ]
+    },
+    {
+     "position": 2201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "Pepe and the Guavas",
+     "skill": "Noting Details",
+     "pages": [
+      16,
+      17
+     ],
+     "activities": [
+      {
+       "title": "Pepe and the Guavas",
+       "pages": [
+        16,
+        17
+       ],
+       "cards": 8,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "At the Public Playground",
+     "skill": "Noting Details",
+     "pages": [
+      18,
+      19
+     ],
+     "activities": [
+      {
+       "title": "At the Public Playground",
+       "pages": [
+        18,
+        19
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "A Family of Music Lovers",
+     "skill": "Noting Details",
+     "pages": [
+      20,
+      21
+     ],
+     "activities": [
+      {
+       "title": "A Family of Music Lovers",
+       "pages": [
+        20,
+        21
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "The Artesian Well",
+     "skill": "Noting Details",
+     "pages": [
+      22,
+      23
+     ],
+     "activities": [
+      {
+       "title": "The Artesian Well",
+       "pages": [
+        22,
+        23
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Raindrops",
+     "skill": "Getting the General Significance",
+     "pages": [
+      24
+     ],
+     "activities": [
+      {
+       "title": "Raindrops",
+       "pages": [
+        24
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "Carlos",
+     "skill": "Getting the General Significance",
+     "pages": [
+      25,
+      26
+     ],
+     "activities": [
+      {
+       "title": "Carlos",
+       "pages": [
+        25,
+        26
+       ],
+       "cards": 8,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Pal Is Sick",
+     "skill": "Getting the General Significance",
+     "pages": [
+      27,
+      28
+     ],
+     "activities": [
+      {
+       "title": "Pal Is Sick",
+       "pages": [
+        27,
+        28
+       ],
+       "cards": 8,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Flag",
+     "skill": "Getting the General Significance",
+     "pages": [
+      29
+     ],
+     "activities": [
+      {
+       "title": "Flag",
+       "pages": [
+        29
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "A Joke",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      30
+     ],
+     "activities": [
+      {
+       "title": "A Joke",
+       "pages": [
+        30
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "The Birdlings",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      31
+     ],
+     "activities": [
+      {
+       "title": "The Birdlings",
+       "pages": [
+        31
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "The Pet Bird",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "The Pet Bird",
+       "pages": [
+        32
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "Banana Peelings",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      33
+     ],
+     "activities": [
+      {
+       "title": "Banana Peelings",
+       "pages": [
+        33
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Months of the Year",
+     "skill": "Following Precise Directions",
+     "pages": [
+      34
+     ],
+     "activities": [
+      {
+       "title": "Months of the Year",
+       "pages": [
+        34
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "The English Alphabet",
+     "skill": "Following Precise Directions",
+     "pages": [
+      35
+     ],
+     "activities": [
+      {
+       "title": "The English Alphabet",
+       "pages": [
+        35
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Our Nipa Hut",
+     "skill": "Following Precise Directions",
+     "pages": [
+      36
+     ],
+     "activities": [
+      {
+       "title": "Our Nipa Hut",
+       "pages": [
+        36
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "Understanding Directions",
+     "skill": "Following Precise Directions",
+     "pages": [
+      37
+     ],
+     "activities": [
+      {
+       "title": "Understanding Directions",
+       "pages": [
+        37
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "The Kingfisher and the Cat",
+     "skill": "Reading Exercises for Speed",
+     "pages": [
+      38
+     ],
+     "activities": [
+      {
+       "title": "The Kingfisher and the Cat",
+       "pages": [
+        38
+       ],
+       "cards": 1,
+       "speed": 113
+      }
+     ]
+    },
+    {
+     "position": 19218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "A Dream That Became a Reality",
+     "skill": "Reading Exercises for Speed",
+     "pages": [
+      39
+     ],
+     "activities": [
+      {
+       "title": "A Dream That Became a Reality",
+       "pages": [
+        39
+       ],
+       "cards": 1,
+       "speed": 113
+      }
+     ]
+    },
+    {
+     "position": 20219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "The Ant and the Grasshopper",
+     "skill": "Reading Exercises for Speed",
+     "pages": [
+      40
+     ],
+     "activities": [
+      {
+       "title": "The Ant and the Grasshopper",
+       "pages": [
+        40
+       ],
+       "cards": 1,
+       "speed": 114
+      }
+     ]
+    },
+    {
+     "position": 21220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "A Medal on the Barong Filipino",
+     "skill": "Reading Exercises for Speed",
+     "pages": [
+      41
+     ],
+     "activities": [
+      {
+       "title": "A Medal on the Barong Filipino",
+       "pages": [
+        41
+       ],
+       "cards": 1,
+       "speed": 117
+      }
+     ]
+    },
+    {
+     "position": 22300,
+     "kind": "post",
+     "label": "Post-Assessment",
+     "title": "Post-Assessment",
+     "skill": "Noting Details",
+     "pages": [
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+     ],
+     "activities": [
+      {
+       "title": "Ana’s Pet",
+       "pages": [
+        43,
+        44
+       ],
+       "cards": 11,
+       "speed": null
+      },
+      {
+       "title": "Exercise",
+       "pages": [
+        45,
+        46
+       ],
+       "cards": 8,
+       "speed": null
+      },
+      {
+       "title": "Guava Jam",
+       "pages": [
+        47,
+        48
+       ],
+       "cards": 8,
+       "speed": null
+      },
+      {
+       "title": "Playing with Circles",
+       "pages": [
+        49
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "The Horse and the Snail",
+       "pages": [
+        50
+       ],
+       "cards": 1,
+       "speed": 115
+      }
+     ]
+    }
+   ],
+   "folder": "level6/g4",
+   "pdf": "level6/grade-4.pdf"
+  },
+  "5": {
+   "page_count": 62,
+   "pupil_pages": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+   ],
+   "teacher_pages": [
+    58,
+    59,
+    60,
+    61,
+    62
+   ],
+   "lessons": [
+    {
+     "position": 1100,
+     "kind": "pre",
+     "label": "Pre-Assessment",
+     "title": "Pre-Assessment",
+     "skill": "Noting Details",
+     "pages": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+     ],
+     "activities": [
+      {
+       "title": "Magnets",
+       "pages": [
+        8
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Exercise 1",
+       "pages": [
+        9
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Exercise 2",
+       "pages": [
+        10
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Anti-Decay Vaccine",
+       "pages": [
+        11
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "When Rizal Was a Boy",
+       "pages": [
+        12
+       ],
+       "cards": 5,
+       "speed": null
+      },
+      {
+       "title": "Insects",
+       "pages": [
+        13,
+        14
+       ],
+       "cards": 4,
+       "speed": 144
+      }
+     ]
+    },
+    {
+     "position": 2201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "The Eyebrows",
+     "skill": "Noting Details",
+     "pages": [
+      16,
+      17
+     ],
+     "activities": [
+      {
+       "title": "The Eyebrows",
+       "pages": [
+        16,
+        17
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "Calla Lilies",
+     "skill": "Noting Details",
+     "pages": [
+      18,
+      19
+     ],
+     "activities": [
+      {
+       "title": "Calla Lilies",
+       "pages": [
+        18,
+        19
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "Counting the Rain",
+     "skill": "Noting Details",
+     "pages": [
+      20,
+      21
+     ],
+     "activities": [
+      {
+       "title": "Counting the Rain",
+       "pages": [
+        20,
+        21
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "The Enchanted Deer",
+     "skill": "Noting Details",
+     "pages": [
+      22,
+      23
+     ],
+     "activities": [
+      {
+       "title": "The Enchanted Deer",
+       "pages": [
+        22,
+        23
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Green Plant",
+     "skill": "Getting the General Significance",
+     "pages": [
+      24
+     ],
+     "activities": [
+      {
+       "title": "Green Plant",
+       "pages": [
+        24
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "The Lost Sheep",
+     "skill": "Getting the General Significance",
+     "pages": [
+      25
+     ],
+     "activities": [
+      {
+       "title": "The Lost Sheep",
+       "pages": [
+        25
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Insects (Locusts)",
+     "skill": "Getting the General Significance",
+     "pages": [
+      26
+     ],
+     "activities": [
+      {
+       "title": "Insects (Locusts)",
+       "pages": [
+        26
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Linda Saves",
+     "skill": "Getting the General Significance",
+     "pages": [
+      27
+     ],
+     "activities": [
+      {
+       "title": "Linda Saves",
+       "pages": [
+        27
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "Hearing Mass",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      28
+     ],
+     "activities": [
+      {
+       "title": "Hearing Mass",
+       "pages": [
+        28
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "The Big, Pink Bundle of Joy",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      29
+     ],
+     "activities": [
+      {
+       "title": "The Big, Pink Bundle of Joy",
+       "pages": [
+        29
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12500,
+     "kind": "check",
+     "label": "Formative Assessment after Activity 10",
+     "title": "Formative Assessment after Activity 10",
+     "skill": "Noting Details",
+     "pages": [
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+     ],
+     "activities": [
+      {
+       "title": "Why We Cook the Food We Eat",
+       "pages": [
+        45,
+        46
+       ],
+       "cards": 11,
+       "speed": null
+      },
+      {
+       "title": "Exercise 7",
+       "pages": [
+        47
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Why Horses Need Iron Shoes",
+       "pages": [
+        48
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Father Was Late",
+       "pages": [
+        49
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "Ice Cream",
+       "pages": [
+        50,
+        51
+       ],
+       "cards": 11,
+       "speed": 153
+      }
+     ]
+    },
+    {
+     "position": 13211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "A Bookworm",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      30
+     ],
+     "activities": [
+      {
+       "title": "A Bookworm",
+       "pages": [
+        30
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "The Ferris Wheel Ride",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      31
+     ],
+     "activities": [
+      {
+       "title": "The Ferris Wheel Ride",
+       "pages": [
+        31
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "A Drawing Game",
+     "skill": "Reading to Follow Precise Directions",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "A Drawing Game",
+       "pages": [
+        32
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "One Market Day",
+     "skill": "Reading to Follow Precise Directions",
+     "pages": [
+      33
+     ],
+     "activities": [
+      {
+       "title": "One Market Day",
+       "pages": [
+        33
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Drawing Shapes",
+     "skill": "Reading to Follow Precise Directions",
+     "pages": [
+      34
+     ],
+     "activities": [
+      {
+       "title": "Drawing Shapes",
+       "pages": [
+        34
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "Golden Shower",
+     "skill": "Reading to Follow Precise Directions",
+     "pages": [
+      35
+     ],
+     "activities": [
+      {
+       "title": "Golden Shower",
+       "pages": [
+        35
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 19217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "Our Forefathers",
+     "skill": "Reading Exercises for Speed and Comprehension",
+     "pages": [
+      36,
+      37
+     ],
+     "activities": [
+      {
+       "title": "Our Forefathers",
+       "pages": [
+        36,
+        37
+       ],
+       "cards": 11,
+       "speed": 138
+      }
+     ]
+    },
+    {
+     "position": 20218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "Early Manhood of Father Gomez",
+     "skill": "Reading Exercises for Speed and Comprehension",
+     "pages": [
+      38,
+      39
+     ],
+     "activities": [
+      {
+       "title": "Early Manhood of Father Gomez",
+       "pages": [
+        38,
+        39
+       ],
+       "cards": 11,
+       "speed": 137
+      }
+     ]
+    },
+    {
+     "position": 21219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "Insects",
+     "skill": "Reading Exercises for Speed and Comprehension",
+     "pages": [
+      40,
+      41
+     ],
+     "activities": [
+      {
+       "title": "Insects",
+       "pages": [
+        40,
+        41
+       ],
+       "cards": 11,
+       "speed": 143
+      }
+     ]
+    },
+    {
+     "position": 22220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "Man’s First Clothes",
+     "skill": "Reading Exercises for Speed and Comprehension",
+     "pages": [
+      42,
+      43
+     ],
+     "activities": [
+      {
+       "title": "Man’s First Clothes",
+       "pages": [
+        42,
+        43
+       ],
+       "cards": 11,
+       "speed": 147
+      }
+     ]
+    },
+    {
+     "position": 23300,
+     "kind": "post",
+     "label": "Formative Assessment after Activity 20",
+     "title": "Formative Assessment after Activity 20",
+     "skill": "Noting Details",
+     "pages": [
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+     ],
+     "activities": [
+      {
+       "title": "The Legend of the Poinsettia",
+       "pages": [
+        52,
+        53
+       ],
+       "cards": 11,
+       "speed": null
+      },
+      {
+       "title": "Exercise 8",
+       "pages": [
+        54
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "A Mother’s Expectation",
+       "pages": [
+        55
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "A Surprise for Rolando",
+       "pages": [
+        56
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "The Octopus",
+       "pages": [
+        57
+       ],
+       "cards": 6,
+       "speed": 162
+      }
+     ]
+    }
+   ],
+   "folder": "level6/g5",
+   "pdf": "level6/grade-5.pdf"
+  },
+  "6": {
+   "page_count": 61,
+   "pupil_pages": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+   ],
+   "teacher_pages": [
+    58,
+    59,
+    60
+   ],
+   "lessons": [
+    {
+     "position": 1100,
+     "kind": "pre",
+     "label": "Pre-Assessment",
+     "title": "Pre-Assessment",
+     "skill": "Noting Details",
+     "pages": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+     ],
+     "activities": [
+      {
+       "title": "The Face in the Pool",
+       "pages": [
+        9,
+        10
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "Jay’s Curiosity",
+       "pages": [
+        11
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Rice",
+       "pages": [
+        12
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Wally’s Kite",
+       "pages": [
+        13
+       ],
+       "cards": 8,
+       "speed": null
+      },
+      {
+       "title": "A Fairy Tale from Japan",
+       "pages": [
+        14,
+        15,
+        16
+       ],
+       "cards": 11,
+       "speed": 529
+      }
+     ]
+    },
+    {
+     "position": 2201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "Rules to Follow",
+     "skill": "Noting Details",
+     "pages": [
+      18,
+      19
+     ],
+     "activities": [
+      {
+       "title": "Rules to Follow",
+       "pages": [
+        18,
+        19
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "Daphne",
+     "skill": "Noting Details",
+     "pages": [
+      20,
+      21
+     ],
+     "activities": [
+      {
+       "title": "Daphne",
+       "pages": [
+        20,
+        21
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "How the Romans Cooked Their Food",
+     "skill": "Noting Details",
+     "pages": [
+      22,
+      23
+     ],
+     "activities": [
+      {
+       "title": "How the Romans Cooked Their Food",
+       "pages": [
+        22,
+        23
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "First Night in the City",
+     "skill": "Noting Details",
+     "pages": [
+      24,
+      25
+     ],
+     "activities": [
+      {
+       "title": "First Night in the City",
+       "pages": [
+        24,
+        25
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Ed’s Day",
+     "skill": "Getting the General Significance",
+     "pages": [
+      26,
+      27
+     ],
+     "activities": [
+      {
+       "title": "Ed’s Day",
+       "pages": [
+        26,
+        27
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "The Crayfish",
+     "skill": "Getting the General Significance",
+     "pages": [
+      28
+     ],
+     "activities": [
+      {
+       "title": "The Crayfish",
+       "pages": [
+        28
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Great Mind",
+     "skill": "Getting the General Significance",
+     "pages": [
+      29
+     ],
+     "activities": [
+      {
+       "title": "Great Mind",
+       "pages": [
+        29
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "The Bible",
+     "skill": "Getting the General Significance",
+     "pages": [
+      30
+     ],
+     "activities": [
+      {
+       "title": "The Bible",
+       "pages": [
+        30
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "The Fox and the Stork",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      31
+     ],
+     "activities": [
+      {
+       "title": "The Fox and the Stork",
+       "pages": [
+        31
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "Pete’s Catch",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "Pete’s Catch",
+       "pages": [
+        32
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "The Red Sweater",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      33
+     ],
+     "activities": [
+      {
+       "title": "The Red Sweater",
+       "pages": [
+        33
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "The Graduation Gift",
+     "skill": "Predicting Outcomes and Making Inferences",
+     "pages": [
+      34,
+      35
+     ],
+     "activities": [
+      {
+       "title": "The Graduation Gift",
+       "pages": [
+        34,
+        35
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "The Earthworm",
+     "skill": "Reading to Follow Precise Directions",
+     "pages": [
+      36
+     ],
+     "activities": [
+      {
+       "title": "The Earthworm",
+       "pages": [
+        36
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Rizal and the Filipino Youth",
+     "skill": "Reading to Follow Precise Directions",
+     "pages": [
+      37
+     ],
+     "activities": [
+      {
+       "title": "Rizal and the Filipino Youth",
+       "pages": [
+        37
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Christmas Eve",
+     "skill": "Reading to Follow Precise Directions",
+     "pages": [
+      38
+     ],
+     "activities": [
+      {
+       "title": "Christmas Eve",
+       "pages": [
+        38
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "Hints for Keeping Friends",
+     "skill": "Reading to Follow Precise Directions",
+     "pages": [
+      39,
+      40
+     ],
+     "activities": [
+      {
+       "title": "Hints for Keeping Friends",
+       "pages": [
+        39,
+        40
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "Bethlehem",
+     "skill": "Reading Exercises for Speed",
+     "pages": [
+      41,
+      42
+     ],
+     "activities": [
+      {
+       "title": "Bethlehem",
+       "pages": [
+        41,
+        42
+       ],
+       "cards": 11,
+       "speed": 143
+      }
+     ]
+    },
+    {
+     "position": 19218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "Birds of Paradise",
+     "skill": "Reading Exercises for Speed",
+     "pages": [
+      43,
+      44
+     ],
+     "activities": [
+      {
+       "title": "Birds of Paradise",
+       "pages": [
+        43,
+        44
+       ],
+       "cards": 11,
+       "speed": 150
+      }
+     ]
+    },
+    {
+     "position": 20219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "Birthstones",
+     "skill": "Reading Exercises for Speed",
+     "pages": [
+      45,
+      46
+     ],
+     "activities": [
+      {
+       "title": "Birthstones",
+       "pages": [
+        45,
+        46
+       ],
+       "cards": 11,
+       "speed": 151
+      }
+     ]
+    },
+    {
+     "position": 21220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "Apples",
+     "skill": "Reading Exercises for Speed",
+     "pages": [
+      47,
+      48
+     ],
+     "activities": [
+      {
+       "title": "Apples",
+       "pages": [
+        47,
+        48
+       ],
+       "cards": 11,
+       "speed": 154
+      }
+     ]
+    },
+    {
+     "position": 22300,
+     "kind": "post",
+     "label": "Post-Assessment",
+     "title": "Post-Assessment",
+     "skill": "Noting Details",
+     "pages": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+     ],
+     "activities": [
+      {
+       "title": "The Face in the Pool",
+       "pages": [
+        50,
+        51
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "Jay’s Curiosity",
+       "pages": [
+        52
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Rice",
+       "pages": [
+        53
+       ],
+       "cards": 4,
+       "speed": null
+      },
+      {
+       "title": "Wally’s Kite",
+       "pages": [
+        54
+       ],
+       "cards": 6,
+       "speed": null
+      },
+      {
+       "title": "A Fairy Tale from Japan",
+       "pages": [
+        55,
+        56,
+        57
+       ],
+       "cards": 11,
+       "speed": 529
+      }
+     ]
+    }
+   ],
+   "folder": "level6/g6",
+   "pdf": "level6/grade-6.pdf"
+  }
+ }
+}

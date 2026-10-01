@@ -1,0 +1,522 @@
+# Level 6 Grade 1 cards — checked by hand against the module pages (see build.py for the format).
+
+######## LESSON 1 · pre · Pre-test
+
+=== 1.1 | Pre-test · Reading | Noting Details | pages 6,7
+pics: p006-1
+ins: Read the stories. Then read the questions carefully and encircle the correct answer.
+read*: Pre-test
+I am Miko. I have a friend. His name is Tito.
+Tito is a smart cat. I feed him rice and fish.
+Tito and I play together.
+¶
+Dana’s father is a farmer. He goes to farm every day.
+He works on the farm. He plants rice and corn on the farm.
+¶
+Dolly is a doll. She has long and curly hair.
+Isn’t she pretty? She has a nice dress.
+I bring her to school. I love Dolly so much!
+q 1: Tito is a smart ______.
+| a. cat | b. dog | c. pig
+q 2: Tito eats ______.
+| a. rice and fish | b. rice and meat | c. rice and fruits
+q 3: Dana’s father is a ______?
+| a. farmer | b. driver | c. teacher
+q 4: What did he plant on the farm?
+| a. Ubi and gabi | b. Rice and corn | c. Sugar cane
+q 5: Who is Dolly?
+| a. a cat | b. a doll | c. a rat
+
+=== 1.2 | Pre-test · Reality or Fantasy | Fantasy or Reality | pages 7
+pics:
+ins: Direction: Write R for Reality and F for Fantasy on the space provided.
+rf 6: A cow can give milk.
+rf 7: The baby goats drink milk from their mother goat.
+rf 8: The grass eats the mother goat.
+rf 9: Horse Lino, goat Lucy and cow Lita are animals.
+rf 10: Cows and goats can give milk and meat too.
+
+=== 1.3 | Pre-test · Sequencing | Sequencing Events | pages 7
+pics:
+ins: Direction: Put the sentences in order by arranging the events listed below. Write numbers 1, 2, 3, 4, and 5 on the blank provided.
+seq: Items 11–15. Write 1, 2, 3, 4, 5 before each event to show the order.
+- 11. Bear finds a den.
+- 12. Bear eats a lot.
+- 13. Bear eats even more!
+- 14. Bear fills the den with leaves, so he will stay warm.
+- 15. Bear needs to get ready for winter.
+
+=== 1.4 | Pre-test · Cause and Effect | Cause and Effect | pages 8
+pics:
+ins: Direction: Draw a line to match each cause on the left with its effect on the right.
+match: Cause | Effect
+A: 16. Matt did not study
+A: 17. To ease the pain
+A: 18. Jean went inside her house
+A: 19. Jean was unhappy
+A: 20. Emmy got a wound
+B: A. because she fell off her bike.
+B: B. because the wind blows her balloon.
+B: C. Emmy eats an ice cream.
+B: D. so he failed the Math test.
+B: E. because she was tired.
+
+######## LESSON 2 · lesson · My Friend
+
+=== 2.1 | My Friend | Noting Details | pages 10
+pics: p010-1
+ins: Read the story. Then choose the correct answer.
+read*: My Friend
+I am Miko.
+I have a friend.
+His name is Tito.
+Tito is a smart cat.
+I feed him rice and fish.
+Tito and I play together.
+q 1: Who has a friend?
+| A. Bobby | B. Miko | C. Peter
+q 2: What is the name of his friend?
+| A. Dodo | B. Sano | C. Tito
+q 3: Tito is a smart ______.
+| a. cat | b. dog | c. pig
+q 4: Tito eats ______.
+| a. rice and fish | b. rice and meat | c. rice and fruits
+q 5: Who plays together?
+| a. Tita and all | b. Tito and you | c. Tito and I
+
+######## LESSON 3 · lesson · The Farmer
+
+=== 3.1 | The Farmer | Noting Details | pages 11
+pics: p011-1
+ins: Read the story. Then choose the correct answer.
+read*: The Farmer
+Dana’s father is a farmer.
+He goes to the farm every day.
+He works on the farm.
+He plants rice and corn on the farm.
+q 1: What is the work of Dana’s father?
+| A. driver | B. farmer | C. teacher
+q 2: Where does her father work?
+| A. hospital | B. office | C. farm
+q 3: When does my father go to the farm?
+| A. everyday | B. yesterday | C. today
+q 4: What does he plant on the farm?
+| A. ubi and gabi | B. rice and corn | C. sugar cane
+q 5: What animals were fed by father?
+| A. chicken and goat | B. cows and pigs | C. dogs and cats
+
+######## LESSON 4 · lesson · My Dolly
+
+=== 4.1 | My Dolly | Noting Details | pages 12
+pics: p012-1
+ins: Read the story. Then choose the correct answer.
+read*: My Dolly
+This is Dolly.
+Dolly is a doll.
+She has long and curly hair.
+Isn’t she pretty?
+She has a nice dress.
+I bring her to school.
+I love Dolly so much!
+q 1: Who is Dolly?
+| A. a cat | B. a doll | C. a rat
+q 2: How will you describe Dolly’s hair?
+| A. curly | B. red | C. short
+q 3: What does Dolly look like?
+| A. lazy | B. pretty | C. ugly
+q 4: Which nice thing does Dolly have?
+| A. cap | B. dress | C. shoes
+q 5: Where does she bring Dolly?
+| A. to market | B. to school | C. to plaza
+
+######## LESSON 5 · lesson · Joy’s Aya
+
+=== 5.1 | Joy’s Aya | Noting Details | pages 13
+pics: p013-1
+ins: Read the story. Then choose the correct answer.
+read*: Joy’s Aya
+Joy has a pet. Her pet is a goat.
+She calls her Aya. Aya’s color is brown.
+She is 2 years old. Aya is so cute.
+Joy plays with Aya every day.
+She eats healthy grasses.
+Aya is very healthy. Joy likes Aya.
+q 1: What was Joy’s pet?
+| A. a cat | B. a dog | C. a goat
+q 2: What is the name of her pet?
+| A. Aya | B. Dina | C. Mary
+q 3: What was Aya’s color?
+| A. brown | B. red | C. red
+q 4: What does Aya like to eat?
+| A. fruits | B. healthy grasses | C. vegetables
+q 5: How old is Aya?
+| A. 1 | B. 2 | C. 3
+
+######## LESSON 6 · lesson · Lita the Cow
+
+=== 6.1 | Lita the Cow | Fantasy or Reality | pages 14
+pics: p014-1
+ins: Direction: Read the story. Write R for Reality and F for Fantasy on the space provided.
+read*: Lita the Cow
+Lita is a cow.
+She lived with her family on the farm.
+She’s a mother to a cute calf.
+Her partner is a strong and big bull.
+Lita eats grass.
+She gives milk.
+She spends time playing with her friends.
+Horse Lino and goat Lucy were her friends.
+rf 1: A cow can give milk.
+rf 2: Cow Lita is a goat.
+rf 3: Cow Lita is a strong horse.
+rf 4: Horse Lino, goat Lucy and cow Lita are animals.
+rf 5: Cow Lita eats grass.
+
+######## LESSON 7 · lesson · Rosa’s Goat
+
+=== 7.1 | Rosa’s Goat | Fantasy or Reality | pages 15
+pics: p015-1
+ins: Direction: Read the selection. Write R for Reality and F for Fantasy on the space provided.
+read*: Rosa’s Goat
+Rosa has a goat. It is a mother goat.
+It has two baby goats.
+Mother goat eats grass.
+The mother goat is black.
+The babies are black and white.
+The baby goats drink milk from their mother goat.
+Rosa has three goats.
+rf 1: Rosa is a goat.
+rf 2: The mother goat has five baby goats.
+rf 3: The baby goats drink milk from their mother goat.
+rf 4: The grass eats the mother goat.
+rf 5: Mother goat has milk.
+
+######## LESSON 8 · lesson · Benny’s Happy Day
+
+=== 8.1 | Benny’s Happy Day | Fantasy or Reality | pages 16
+pics: p016-1
+ins: Direction: Read the selection. Write R for Reality and F for Fantasy on the space provided.
+read*: Benny’s Happy Day
+Benny the bear loved to play.
+He played in his backyard.
+He saw a bright sun shining in the sky.
+Benny picked a colorful flower for his mom.
+He felt happy and danced with his friends.
+Benny said, “Today is the best day ever”.
+rf 1: Benny was playing in his backyard.
+rf 2: He picked a golden crown for his mom.
+rf 3: He was playing with animals and fairies.
+rf 4: Picking flowers for Benny’s mother made him happy.
+rf 5: Finally, Benny said, “Today is the best day ever”.
+
+######## LESSON 9 · lesson · Lily’s Magical Pet
+
+=== 9.1 | Lily’s Magical Pet | Fantasy or Reality | pages 17
+pics: p017-1
+ins: Direction: Read the selection. Write R for Reality and F for Fantasy on the space provided.
+read*: Lily’s Magical Pet
+Lily had a stuffed rabbit named Fluffy.
+One day, she wished Fluffy could talk and play with her.
+Suddenly, in her dream, Fluffy spoke and said, “Let’s play hide-and-seek!”
+They played together in a magical garden.
+But when Lily woke up, Fluffy was just a stuffed animal again.
+rf 1: Lily had a stuffed rabbit.
+rf 2: She wished Fluffy to talk and play with her.
+rf 3: Lily and Fluffy played in a magical garden.
+rf 4: Lily dreamed of playing Fluffy in a magical garden.
+rf 5: Fluffy was talking in real life.
+
+######## LESSON 10 · lesson · A Cold Bear
+
+=== 10.1 | A Cold Bear | Sequencing Events | pages 18
+pics: p018-1
+ins: Direction: Write the numbers 1, 2, 3, 4, 5 before each event as they happen in the story.
+read*: A Cold Bear
+Brrrr! It is getting cold.
+Bear needs to get ready for winter.
+First, he eats a lot.
+Next, he finds a den.
+Then, he fills the den with leaves, so he will stay warm.
+Last, he eats even more.
+Is Bear ready for winter?
+Yes, he is. Winter is here!
+seq: Write 1, 2, 3, 4, 5 before each event as they happen in the story.
+- Bear finds a den.
+- Bear eats a lot.
+- Bear eats even more!
+- Bear fills the den with leaves, so he will stay warm.
+- Bear needs to get ready for winter.
+
+######## LESSON 11 · lesson · Dessert Time!
+
+=== 11.1 | Dessert Time! | Sequencing Events | pages 19
+pics: p019-1
+ins: Direction: Write the numbers 1, 2, 3, 4, 5 before each event as they happen in the story.
+read*: Dessert Time!
+Yum! It is time for dessert.
+First, Tim gets a cookie.
+Next, Jan gets some cake.
+Then, Ben gets a donut.
+Last, Deb gets some pie.
+Oh no! There is nothing left for Sam.
+What will he do?
+seq: Write 1, 2, 3, 4, 5 before each event as they happen in the story.
+- Jan gets some cake.
+- Tim gets a cookie.
+- Ben gets a donut.
+- It is time for dessert.
+- Deb gets some pie.
+
+######## LESSON 12 · lesson · Harry and the Crayon
+
+=== 12.1 | Harry and the Crayon | Sequencing Events | pages 20
+pics: p020-1
+ins: Direction: Read the story and write the numbers 1, 2, 3, 4, 5 before each event as they happen in the story.
+read*: Harry and the Crayon
+Harry was dreaming.
+One day, he went for a walk.
+He took his bag with crayons.
+He sat under the trees.
+He laid his bag and drew.
+He uses his crayons to draw.
+seq: Write 1, 2, 3, 4, 5 before each event as they happen in the story.
+- He took his bag with crayons.
+- He sits under the trees.
+- Harry was dreaming.
+- He lays his bag and draws.
+- He uses his crayons to draw.
+
+######## LESSON 13 · lesson · My Pet
+
+=== 13.1 | My Pet | Sequencing Events | pages 21
+pics: p021-1
+ins: Direction: Read the story and write the numbers 1, 2, 3, 4, 5 before each event as they happen in the story.
+read*: My Pet
+I have a pet.
+My pet is a dog.
+His name is Whitey.
+My pet’s color is white.
+It eats fish and bones.
+He likes to play hide and seek.
+I love my pet dog.
+seq: Write 1, 2, 3, 4, 5 before each event as they happen in the story.
+- I love my pet dog.
+- It eats fish and bones.
+- I have a pet.
+- His name is Whitey.
+- He likes to play hide and seek.
+
+######## LESSON 14 · lesson · Happenings
+
+=== 14.1 | Happenings | Cause and Effect | pages 22
+pics: p022-1
+ins: Direction: Read the story. Draw a line to match each cause on the left with its effect on the right.
+read*: Happenings
+Emmy got a wound because she fell off her bike.
+To ease the pain, she eats ice cream.
+Her brother Matt did not study so he failed the Math test.
+Jean, her younger sister was unhappy because the wind blew her balloons away.
+She also went inside the house because she was tired.
+match: Cause | Effect
+A: 1. Matt did not study.
+A: 2. To ease the pain.
+A: 3. Jean went inside her house.
+A: 4. Jean was unhappy.
+A: 5. She fell off her bike.
+B: A. so Emmy got a wound.
+B: B. because the wind blows her balloon.
+B: C. Emmy eats ice cream.
+B: D. there he failed the Math test.
+B: E. because she is tired.
+
+######## LESSON 15 · lesson · Activities
+
+=== 15.1 | Activities | Cause and Effect | pages 23
+pics: p023-1
+ins: Direction: Read the story. Draw a line to match each cause on the left with its effect on the right.
+read*: Activities
+It rained all night, so the classes were cancelled.
+The children are played all day long.
+Luis went biking with his friends and fell off his bike, so his knee got wounded.
+Mary ran fast to Luis, so she slipped.
+Hector got scared so he went home.
+But Letty studied for the next test, so she got an A grade.
+match: Cause | Effect
+A: 1. Hector got scared
+A: 2. Letty studied for the next test.
+A: 3. Luis fell off his bike
+A: 4. It rained all night
+A: 5. Mary ran fast to Luis
+B: A. so she slipped.
+B: B. so his knee got wounded.
+B: C. so the classes are cancelled.
+B: D. so she got an A grade.
+B: E. so he went home.
+
+######## LESSON 16 · lesson · Good Ways
+
+=== 16.1 | Good Ways | Cause and Effect | pages 24
+pics: p024-1
+ins: Direction: Read the story. Draw a line to match each cause on the left with its effect on the right.
+read*: Good Ways
+One Sunday, Lino went to the garden to check the vegetables he planted.
+While walking fast, a branch hit his forehead.
+He picked malunggay leaves, crushed them, and rubbed them on his forehead.
+He continued gathering vegetables to bring them home.
+He cooked them to have a delicious viand.
+match: Cause | Effect
+A: 1. Lino went to the garden.
+A: 2. He picked malunggay leaves
+A: 3. Lino cooked the vegetables
+A: 4. He was walking fast
+A: 5. To be able to bring home some vegetables
+B: A. so they had a delicious viand.
+B: B. when a branch hit his head.
+B: C. and rubbed it on his forehead
+B: D. he gathered it.
+B: E. to check the vegetables.
+
+######## LESSON 17 · lesson · Snowball Fight
+
+=== 17.1 | Snowball Fight | Cause and Effect | pages 25
+pics: p025-1
+ins: Direction: Read the story. Draw a line to match each cause on the left with its effect on the right.
+read*: Snowball Fight
+It was winter. The snow fell and it was very cold.
+Tim and Mark put on their mittens and boots then went outside to make snowballs.
+Jan throw a snowball, but he was not fast enough. Mark saw him and threw one first.
+It hit Jan and knock him down.
+match: Cause | Effect
+A: 1. Jan was hit by a snowball
+A: 2. Mark throws a snowball
+A: 3. They went outside
+A: 4. The snow fell
+A: 5. They saw a bear
+B: A. the snowball knocks Jan down.
+B: B. they ran fast.
+B: C. because he was not fast enough.
+B: D. it was very cold.
+B: E. to make snowballs.
+
+######## LESSON 18 · lesson · Alex and His Mother
+
+=== 18.1 | Alex and His Mother | Making Predictions/Conclusions | pages 26,27
+pics: p026-1
+ins: Read the sentence in each number and put a check (✓) in the box for the conclusion that makes the most sense.
+read: Alex and His Mother
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 1: Alex’s mother checked her list while she carried a basket. They went up from one lane to another. This perhaps means that:
+| ☐ Alex and his mother went to a picnic. | ☐ Alex and his mother went to a store.
+q 2: The basket was getting full. They now had vegetables, fruits, and bananas in the basket. They still needed to get milk, bread, eggs, and rice. This perhaps means that:
+| ☐ Alex and his mother were buying. | ☐ Alex and his mother were eating.
+q 3: Many people are waiting in a lane, with baskets full of groceries. Then they stood in line and waited from one customer to another. This probably means that:
+| ☐ Alex and his mother were paying for their groceries. | ☐ Alex and his mother were choosing from the shelves.
+q 4: Alex hoped they would get home in time as they waited for a ride for him to go outside and play for a while. This probably means that:
+| ☐ Alex and his mother are at the park. | ☐ Alex and his mother are at the bus terminal.
+q 5: His mother put their groceries on top of the table. He went to his room and immediately changed his clothes. This probably means that:
+| ☐ Alex and his mother are now inside their house. | ☐ Alex and his mother are now inside the bus.
+
+######## LESSON 19 · lesson · Karen’s Puzzle
+
+=== 19.1 | Karen’s Puzzle | Making Predictions/Conclusions | pages 28,29
+pics: p028-1
+ins: Read the sentence in each number and put a check (✓) in the box for the conclusion that makes the most sense.
+read: Karen’s Puzzle
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 1: Karen opened a puzzle box and put all the pieces out on the table. This perhaps means that:
+| ☐ the box was full of fruits. | ☐ the box was full of pictures.
+q 2: All the pieces would go together to take a picture of a beautiful butterfly. There were 15 different pieces to put together. This perhaps means that:
+| ☐ Karen is getting annoyed with the puzzle. | ☐ Karen is starting to put together the puzzle.
+q 3: Karen looked for pieces that looked like the butterfly’s wings. Soon she had four pieces put together. This probably means that:
+| ☐ Karen is starting to put together a puzzle. | ☐ Karen is coloring a picture with crayons.
+q 4: She was very happy with the result. She was proud of herself and she couldn’t wait to show her mom. This probably means that:
+| ☐ Karen has completed the puzzle. | ☐ Karen did not finish the puzzle.
+q 5: Karen asked her mother for another puzzle. This time she wants to have a flower. This probably means that:
+| ☐ Karen liked playing the puzzle. | ☐ Karen does not want to play puzzle again.
+
+######## LESSON 20 · lesson · Watching a Circus Show
+
+=== 20.1 | Watching a Circus Show | Making Predictions/Conclusions | pages 30,31
+pics: p030-1
+ins: Read the sentence in each number and put a check (✓) in the box for the conclusion that makes the most sense.
+read: Watching a Circus Show
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 1: Frankie’s dad bought snacks for everyone before they went in to watch the show. This probably means that:
+| ☐ They will watch a movie. | ☐ They will watch a circus.
+q 2: First, clowns were running around doing tricks and beeping little horns. This probably means that:
+| ☐ Frankie’s family is at the birthday party. | ☐ Frankie’s family is at the circus show.
+q 3: Then there was a parade of elephants, horseback riders, and of course, the clowns. Frankie could not stop clapping his hands. This probably means that:
+| ☐ Frankie is enjoying the show. | ☐ Frankie is scared.
+q 4: Then there were men and women walking on high wires far up above the ground. Then came the event that Frankie had been waiting for — the lion tamers! This probably means that:
+| ☐ Frankie’s family is at the circus park. | ☐ Frankie’s family is at the concert hall.
+q 5: Frankie told his classmates about his Circus experience. His classmates wanted to watch too. This probably means that:
+| ☐ Frankie is in school. | ☐ Frankie is in his house.
+
+######## LESSON 21 · lesson · Fishing
+
+=== 21.1 | Fishing | Making Predictions/Conclusions | pages 32
+pics: p032-1
+ins: Read the sentence in each number and put a check (✓) in the box for the conclusion that makes the most sense.
+read: Fishing
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 1: Dad and Eric prepare a hook. This probably means that:
+| ☐ Father and Eric will go farming. | ☐ Father and Eric will go fishing.
+q 2: Eric’s dad helped him put bait on his hook. This probably means that:
+| ☐ His dad does not want Eric to get hurt. | ☐ His dad does not care about Eric.
+q 3: He doesn’t want Eric to be hurt. He showed Eric how to toss his hook out into the water. Then they waited. This probably means that:
+| ☐ They started fishing. | ☐ They started swimming.
+q 4: The hook started to move. When his father took it, it caught a big fish. This probably means that:
+| ☐ Eric is happy. | ☐ Eric is sad.
+q 5: When they had caught enough fish, Eric’s father started to light a fire. This probably means that:
+| ☐ Eric’s father will swim. | ☐ Eric’s father will cook the fish they catch.
+
+######## LESSON 22 · post · Post-test
+
+=== 22.1 | Post-test · Reading | Noting Details | pages 33
+pics:
+ins: Direction: Read the questions/sentence carefully and encircle the correct answer.
+lead: Think of the stories “My Friend”, “The Farmer” and “My Dolly”.
+q 1: Tito is a smart ______.
+| a. cat | b. dog | c. pig
+q 2: Tito eats ______.
+| a. rice and fish | b. rice and meat | c. rice and fruits
+q 3: Dana’s father is a ______?
+| a. farmer | b. driver | c. teacher
+q 4: What did he plant on the farm?
+| a. Ubi and gabi | b. Rice and corn | c. Sugar cane
+q 5: Who is Dolly?
+| a. a cat | b. a doll | c. a rat
+
+=== 22.2 | Post-test · Reality or Fantasy | Fantasy or Reality | pages 33
+pics:
+ins: Direction: Write R for Reality and F for Fantasy on the space provided.
+rf 6: A cow can give milk.
+rf 7: The baby goats drink milk from their mother goat.
+rf 8: The grass eats the mother goat.
+rf 9: Horse Lino, goat Lucy and cow Lita are animals.
+rf 10: Cows and goats can give milk and meat too.
+
+=== 22.3 | Post-test · Sequencing | Sequencing Events | pages 34
+pics:
+ins: Direction: Put the sentences in order by arranging the events listed below. Write numbers 1, 2, 3, 4, and 5 in the blank provided.
+seq: Items 11–15. Write 1, 2, 3, 4, 5 before each event to show the order.
+- 11. Bear finds a den.
+- 12. Bear eats a lot.
+- 13. Bear eats even more!
+- 14. Bear fills the den with leaves, so he will stay warm.
+- 15. Bear needs to get ready for winter.
+
+=== 22.4 | Post-test · Cause and Effect | Cause and Effect | pages 34
+pics:
+ins: Direction: Draw a line to match each cause on the left with its effect on the right.
+match: Cause | Effect
+A: 16. Matt did not study
+A: 17. To ease the pain
+A: 18. Jean went inside her house
+A: 19. Jean was unhappy
+A: 20. Emmy got a wound
+B: A. because she fell off her bike.
+B: B. because the wind blows her balloon.
+B: C. Emmy eats an ice cream.
+B: D. so he failed the Math test.
+B: E. because she was tired.

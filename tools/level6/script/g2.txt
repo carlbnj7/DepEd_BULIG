@@ -1,0 +1,490 @@
+# Level 6 Grade 2 cards — checked by hand against the module pages (see build.py for the format).
+
+######## LESSON 1 · pre · Pretest
+
+=== 1.1 | Pretest · Reading | Noting Details | pages 45
+pics:
+ins: Direction: Read carefully and choose the letter of the correct answer.
+lead: Think of the stories “A Friend”, “At the Farm” and “The King”.
+q 1: I have ______.
+| a. a car | b. a friend | c. a pen
+q 2: His name is ______.
+| a. Ben | b. Tim | c. Tom
+q 3: I went to the ______.
+| a. farm | b. park | c. zoo
+q 4: Who lived in the palace?
+| a. King | b. Princess | c. Queen
+q 5: Where does the king sit to watch people?
+| a. balcony | b. inside the palace | c. office
+
+=== 1.2 | Pretest · Reality or Fantasy | Fantasy and Reality | pages 45
+pics:
+ins: Direction: On the space provided, write R if it is Reality, F if it is Fantasy.
+rf 6: Birds can be seen in the park.
+rf 7: The birds hop in the trees.
+rf 8: Birds read books in the library.
+rf 9: The birds drive cars to school.
+rf 10: Birds fluff their feathers.
+
+=== 1.3 | Pretest · Sequencing | Sequencing Events | pages 45
+pics:
+ins: Direction: Arrange the events below in the correct order. Write numbers 1, 2, 3, 4, and 5 in the blank before each event.
+lead: Think of the story “Pearl”.
+seq: Items 11–15. Write 1, 2, 3, 4, 5 before each event to show the order.
+- 11. They are stories about brave kids.
+- 12. She loved to read about Sherlock Holmes, who was a brave detective.
+- 13. She loves to read.
+- 14. She is a quiet girl.
+- 15. She loved adventure stories.
+
+=== 1.4 | Pretest · Cause and Effect | Cause and Effect | pages 46
+pics:
+ins: Direction: After reading through each cause, put a check (✓) on the effect that appears most likely to happen.
+q 16: Cause: A boy fell off his bike so…
+| ☐ he rode his bike again. | ☐ he got wounds on his knee.
+q 17: Cause: It snowed at night so…
+| ☐ the classes were cancelled. | ☐ they had a picnic.
+q 18: Cause: Jan studied hard so…
+| ☐ she passed the test. | ☐ she failed the test.
+q 19: Cause: She fell off her bike so…
+| ☐ she bruised her arm. | ☐ she ate ice cream.
+q 20: Cause: Amora did not study so…
+| ☐ she failed the exam. | ☐ she got the highest score.
+
+=== 1.5 | Pretest · In the Barn | Making Predictions/Conclusions | pages 46,47
+pics:
+ins: Direction: Read the selection and put a check (✓) in the box for the conclusion that makes the most sense.
+read: In the Barn
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 21: The animals came to the barn. They told each other about their moms. “My mom lay me in the nest,” the chick said. This perhaps means that…
+| ☐ The chick came out of an egg. | ☐ The chick came out of a shell.
+q 22: “My mom is a big animal,” the calf said. “She eats plenty of grass to produce milk for me.” This perhaps means that…
+| ☐ The calf’s mom gives him milk. | ☐ The calf’s mom gives him an egg.
+q 23: “My mother stays in the pen. She says oink, oink, oink,” said the piglet. This perhaps means that…
+| ☐ The sound the piglet makes is also oink, oink, oink. | ☐ The sound the piglet makes is also meow, meow, meow.
+q 24: “My mom loves to eat bones. She guards the master’s house.” This perhaps means that…
+| ☐ Her mom is a dog who barks at strangers. | ☐ Her mom is a cat who calls at strangers.
+q 25: “My mother pulls carriages and can be used for transportation,” said the baby horse. This perhaps means that…
+| ☐ His mother is hardworking. | ☐ His mother just sleeps all day.
+
+######## LESSON 2 · lesson · A Friend
+
+=== 2.1 | A Friend | Noting Details | pages 6
+pics: p006-1 p006-2
+ins: Activity 1.1 · Noting details is answering questions from the story read. Direction: Read the story and figure it out for yourself. Choose the correct answer of the questions.
+read*: A Friend
+I have a friend.
+His name is Tim.
+Tim is nice and cool.
+Tim has a remote-control car.
+It is big and blue.
+We play with the car.
+q 1: I have ______.
+| a. a car | b. a friend | c. a pen
+q 2: His name is ______.
+| a. Tim | b. Tom | c. Ben
+q 3: Tim is nice and ______.
+| a. bad | b. cool | c. friendly
+q 4: Tim has ______.
+| a. a car | b. a friend | c. a pen
+q 5: The remote-control car is ______.
+| a. big and blue | b. big and green | c. big and red
+
+######## LESSON 3 · lesson · My Pet Dog
+
+=== 3.1 | My Pet Dog | Noting Details | pages 8
+pics: p008-1
+ins: Activity 1.2 · Noting details is answering questions from the story read. Direction: Read the selection and choose the letter of the correct answer.
+read*: My Pet Dog
+I have a pet dog.
+His name is Sam.
+He was given to me by my cousin.
+Sam likes to run and catch a ball.
+I take Sam to the park every day.
+q 1: I have a pet ______.
+| A. cat | B. pig | C. dog
+q 2: My pet’s name is ______.
+| A. Cam | B. Dan | C. Sam
+q 3: Sam was given by my ______.
+| A. Aunt | B. cousin | C. lola
+q 4: Sam likes to ______.
+| A. catch a ball | B. walk in the park | C. swim in the pond
+q 5: I take Sam to the ______.
+| A. farm | B. market | C. park
+
+######## LESSON 4 · lesson · At the Farm
+
+=== 4.1 | At the Farm | Noting Details | pages 10
+pics: p010-1
+ins: Activity 1.3 · Noting details is answering questions from the story read. Direction: Read the selection and choose the letter of the correct answer.
+read*: At the Farm
+I went to the farm with my family.
+I saw a big horse at the farm.
+The horse was brown.
+The horse was eating grass.
+The horse can run fast.
+q 1: I went to the ______.
+| A. farm | B. park | C. zoo
+q 2: I was with my ______.
+| A. classmates | B. family | C. friends
+q 3: I saw a ______ horse.
+| A. big | B. cute | C. small
+q 4: The horse was eating ______.
+| A. fruits | B. grass | C. vegetables
+q 5: The horse can ______.
+| A. jump | B. run fast | C. sing
+
+######## LESSON 5 · lesson · The King
+
+=== 5.1 | The King | Noting Details | pages 12
+pics: p012-1
+ins: Activity 1.4 · Noting details is answering questions from the story read. Direction: Read the selection and choose the letter of the correct answer.
+read*: The King
+In a small Kingdom, a good King lives.
+His palace is very big.
+It is on top of the hill.
+Every morning, he would sit on his balcony and look down at his kingdom.
+His people make him happy.
+q 1: What is the story all about?
+| a. The King | b. The man | c. The Queen
+q 2: The King lives in a very big ______.
+| a. cave | b. house | c. palace
+q 3: The palace is on top of the ______.
+| a. hill | b. mountain | c. volcano
+q 4: Where does the king sit to watch people?
+| a. balcony | b. inside the palace | c. office
+q 5: What makes the King happy?
+| a. foods | b. money | c. people
+
+######## LESSON 6 · lesson · At the Park
+
+=== 6.1 | At the Park | Fantasy and Reality | pages 14
+pics: p014-1
+ins: Activity 2.1 · Fantasy or Reality tells if the events in the story are real or not. Reality is something that is real and can happen in everyday life; fantasy is imaginary and not real. Direction: Write R for reality and F for fantasy on the space provided.
+read: At the Park
+¶ I love to go bird watching at the park. I see a lot of birds there and they are all so colorful! Their little feet are so funny, too. They hop along and then they stretch out their wings and fluff up their feathers.
+rf 1: Birds can be seen in the park.
+rf 2: The birds hop in the trees.
+rf 3: Birds read books in the library.
+rf 4: I watch birds at the farm.
+rf 5: Birds fluff their feathers.
+
+######## LESSON 7 · lesson · Molly Reads Stories
+
+=== 7.1 | Molly Reads Stories | Fantasy and Reality | pages 16
+pics: p016-1
+ins: Activity 2.2 · Fantasy or Reality tells if the events in the story are real or not. Direction: Write R for reality and F for fantasy on the space provided.
+read: Molly Reads Stories
+¶ When Molly is reading a story, she is looking for clues in the text to help her visualize what is happening. She looks at the pictures and uses them to create a mental image of the story.
+¶ She also reads quickly, which helps her to understand what is happening in the story. When she has finished reading, she is able to give a detailed description of the story. This shows that Molly is a good reader.
+rf 1: Molly is reading a story.
+rf 2: She looks at the picture to create an image of the story.
+rf 3: The pictures in the book laughed at Molly.
+rf 4: After reading, the books quickly jumped with Molly.
+rf 5: Molly reads quickly.
+
+######## LESSON 8 · lesson · Rex’s New Dog
+
+=== 8.1 | Rex’s New Dog | Fantasy and Reality | pages 18
+pics: p018-1
+ins: Activity 2.3 · Fantasy or Reality tells if the events in the story are real or not. Direction: Write R for reality and F for fantasy on the space provided.
+read*: Rex’s New Dog
+Rex got a new dog.
+He loves to play with his dog.
+Sometimes Rex takes his dog to the park.
+They run and jump and chase each other.
+Rex throws a ball for his dog.
+Rex has fun with his new dog.
+rf 1: Rex got a new dog.
+rf 2: His dog could fly over the clouds.
+rf 3: Rex takes his dog to the park.
+rf 4: Rex and his dog barked each other.
+rf 5: The dog went shopping at the mall.
+
+######## LESSON 9 · lesson · My New Pet
+
+=== 9.1 | My New Pet | Fantasy and Reality | pages 20
+pics: p020-1
+ins: Activity 2.4 · Fantasy or Reality tells if the events in the story are real or not. Direction: In the space provided, put a (✓) in the box if it is reality and (X) for fantasy.
+read*: My New Pet
+My dad bought me a new pet.
+She is a cute little kitten.
+She is always sleepy.
+My dad and mom help me keep the kitten clean.
+We have a box house where she stays.
+I always play with her in the evening when I come home from school.
+She is growing quickly. I love my new pet.
+q 1: Her dad bought her a new pet cat.
+| ✓ Reality | X Fantasy
+q 2: Her pet clean the house with her parents.
+| ✓ Reality | X Fantasy
+q 3: The cat keeps on barking loudly.
+| ✓ Reality | X Fantasy
+q 4: She loves her cat’s long horn.
+| ✓ Reality | X Fantasy
+q 5: She plays with her cat in the evening.
+| ✓ Reality | X Fantasy
+
+######## LESSON 10 · lesson · Pushing and Pulling
+
+=== 10.1 | Pushing and Pulling | Sequencing Events | pages 22
+pics: p022-1
+ins: Activity 3.1 · Sequencing/Arranging Events. Direction: Put the sentences in order by arranging the events listed below. Before each event, write the numbers 1, 2, 3, 4, and 5 in the blank.
+read: Pushing and Pulling
+¶ We move things by pushing them or by pulling them. Heavy things are hard to move. We want to move things; we push them and move them away from us. Wheels make it easier to push heavy things. Engines help to push big and heavy things. When we want to move things, we pull them, we move them towards us. Wheels made it easier to pull heavy things. A cart has wheels to make it easier to pull the cart. Trucks have engines and wheels.
+seq: Write 1, 2, 3, 4, 5 before each event as they happen in the story.
+- Engines help to push big and heavy things.
+- Heavy things are hard to move.
+- Wheels make it easier to push heavy things.
+- Trucks have engines and wheels.
+- We move things by pushing them or by pulling them.
+
+######## LESSON 11 · lesson · Ann
+
+=== 11.1 | Ann | Sequencing Events | pages 24
+pics: p024-1
+ins: Activity 3.2 · Sequencing/Arranging Events. Direction: Put the sentences in order by arranging the events listed below. Before each event, write the number 1, 2, 3, 4, and 5 in the blank.
+read: Ann
+¶ Ann rides her bicycle. Ann rides her little bicycle to work. Ann rides her little red bicycle to work every day. Nina rides the bus. Nina rides the big bus to work. Nina rides the big slow bus to work every day.
+¶ Luis rides the train. Luis rides the big train to work. Luis rides the big fast train to work every day.
+seq: Write 1, 2, 3, 4, 5 before each event as they happen in the story.
+- Luis rides the big fast train to work every day.
+- Nina rides the big bus to work.
+- Ann rides her bicycle.
+- Luis rides the train.
+- Nina rides the big slow bus to work every day.
+
+######## LESSON 12 · lesson · My Mom
+
+=== 12.1 | My Mom | Sequencing Events | pages 26
+pics: p026-1
+ins: Activity 3.3 · Sequencing/Arranging Events. Direction: Put the sentences in order by arranging the events listed below. Before each event, write the numbers 1, 2, 3, 4, and 5 in the blank.
+read: My Mom
+¶ I am George and she is my mother Franklin. My mother is a doctor. She plays with me and tells me bedtime stories. She takes good care of everyone in the family. She is the best mother in the world.
+seq: Write 1, 2, 3, 4, 5 before each event as they happen in the story.
+- She takes good care of everyone in the family.
+- Her name is George, and she is her mother, Franklin.
+- She is the best mother in the world.
+- My mother is a doctor.
+- She plays with George and tells her bedtime stories.
+
+######## LESSON 13 · lesson · Pearl
+
+=== 13.1 | Pearl | Sequencing Events | pages 28
+pics: p028-1
+ins: Activity 3.4 · Sequencing/Arranging Events. Direction: Read the story. Then write 1, 2, 3, 4, 5 before each event as they happen in the story.
+read*: Pearl
+This is Pearl. She is a quiet girl.
+She loves to read.
+She loves adventure stories.
+They are stories about brave kids.
+She loves to read about Sherlock Holmes, who is a brave detective.
+seq: Write 1, 2, 3, 4, 5 before each event as they happen in the story.
+- It is stories about brave kids.
+- She loved to read about Sherlock Holmes, who was a brave detective.
+- She loves to read.
+- She is a quiet girl.
+- She loved adventures stories.
+
+######## LESSON 14 · lesson · Cause and Effect 1
+
+=== 14.1 | Cause and Effect 1 | Cause and Effect | pages 30
+pics:
+ins: Activity 4.1 · Cause and Effect. A cause is WHY something happens. The effect is WHAT happens as a result. Read and check the most likely effect of each cause.
+q 1: Cause: The dog saw a squirrel…
+| ☐ it barked and chased it. | ☐ it fell asleep.
+q 2: Cause: It’s Gab’s birthday so…
+| ☐ her mom baked a cake. | ☐ Her mom scolded him.
+q 3: Cause: The kids are on a field trip at the zoo so…
+| ☐ they took a Math test. | ☐ they saw a crocodile.
+q 4: Cause: When Ana was little, she was afraid of the chickens on her grandpa’s farm. Because Ana was afraid of the chickens,…
+| ☐ Her grandpa no longer brings her to the farm. | ☐ Her grandpa showed him how to shoo the chickens away.
+q 5: Cause: Ana learned to shoo the chickens away by waving her hand, saying “Shoo chicks, shoo chicks!” Because Ana learned to shoo the chickens away,…
+| ☐ She’s no longer afraid of the chickens anymore. | ☐ she played with his grandpa’s dog.
+
+######## LESSON 15 · lesson · Cause and Effect 2
+
+=== 15.1 | Cause and Effect 2 | Cause and Effect | pages 32
+pics:
+ins: Activity 4.2 · Cause and Effect. After reading through each cause, put a check (✓) on the effect that appears most likely to happen.
+q 1: Cause: A boy fell off his bike so…
+| ☐ he rode his bike again. | ☐ he got wounds on his knee.
+q 2: Cause: It snowed last night thus…
+| ☐ the classes are cancelled. | ☐ they had a picnic.
+q 3: Cause: Jane studied hard therefore…
+| ☐ she passed the test. | ☐ she failed the test.
+q 4: Cause: Mary bruised her arm because…
+| ☐ she fell off her bike. | ☐ she ate a lot of ice cream.
+q 5: Cause: Amara did not study so…
+| ☐ she failed the Exam. | ☐ she got the highest score.
+
+######## LESSON 16 · lesson · Cause and Effect 3
+
+=== 16.1 | Cause and Effect 3 | Cause and Effect | pages 34
+pics:
+ins: Activity 4.3 · Cause and Effect. After reading through each cause, put a check (✓) on the effect that appears most likely to happen.
+q 1: Cause: Because the wind blew away her balloon,…
+| ☐ little Cherry was unhappy. | ☐ little Cherry was tired.
+q 2: Cause: Bell’s shirt was dirty because…
+| ☐ she played outside. | ☐ she watched too much TV.
+q 3: Cause: Arman’s car is in the shop because…
+| ☐ It needs a new tire. | ☐ It needs to eat.
+q 4: Cause: The bottle is empty so…
+| ☐ I will throw it in the garbage. | ☐ I will put it inside the cabinet.
+q 5: Cause: Because Luis practiced playing basketball every day,…
+| ☐ he made the winning shot during the game. | ☐ he lost the game.
+
+######## LESSON 17 · lesson · Cause and Effect 4
+
+=== 17.1 | Cause and Effect 4 | Cause and Effect | pages 36
+pics:
+ins: Activity 4.4 · Cause and Effect. After reading through each cause, put a check (✓) on the effect that appears most likely to happen.
+q 1: Cause: Joy got tired after joining the race so…
+| ☐ she continued running. | ☐ she rested under the tree.
+q 2: Cause: Zen helped her grandpa clean the house so…
+| ☐ her grandpa bought her a toy. | ☐ Her grandpa scolded her.
+q 3: Cause: Because someone threw a stone at his window,…
+| ☐ he went to the window and looked. | ☐ he did not mind and continued sleeping.
+q 4: Cause: Since Grandma is not feeling well,…
+| ☐ she went to the zoo. | ☐ she went to the hospital.
+q 5: Cause: The teacher started to talk which is why…
+| ☐ the learners run away. | ☐ The learners listened.
+
+######## LESSON 18 · lesson · Going to the Movies
+
+=== 18.1 | Going to the Movies | Making Predictions/Conclusions | pages 38
+pics: p038-1
+ins: Activity 5.1 · Drawing conclusions means figuring something out for yourself. To draw conclusions, you need to think about what makes the most sense. Direction: Read the selection and put a check (✓) in the box for the conclusion that makes the most sense.
+read: Going to the Movies
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 1: My class is going to the movies on the field trip next week. We have to get permission slips signed before we go. This perhaps means that…
+| ☐ They must get permission from their parents. | ☐ They must ride a bus to go to movies.
+q 2: We also need to ask our parents to drive us to the movie theater. This perhaps means that…
+| ☐ Their parents should not mind them. | ☐ Their parents should accompany them.
+q 3: We love it when movies are made from books. It is fun to compare the movie to the book. This perhaps means that…
+| ☐ They usually like to watch movies based on books. | ☐ They usually liked to read books based on movies.
+q 4: We get the movie early so we can buy popcorn. Some of us buy candy too. This perhaps means that…
+| ☐ They want to eat while watching movie. | ☐ They want to play.
+q 5: The movie ended and everyone in the audience clapped. This perhaps means that…
+| ☐ They wanted to see another movie. | ☐ They all liked the movie.
+
+######## LESSON 19 · lesson · Reward
+
+=== 19.1 | Reward | Making Predictions/Conclusions | pages 40
+pics: p040-1
+ins: Activity 5.2 · Drawing conclusions means figuring something out for yourself. Direction: Read the selection and put a check (✓) in the box for the conclusion that makes the most sense.
+read: Reward
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 1: Ida was a kind-hearted girl. One day when she’s crossing a bridge, she saw two boys on the stream, trying to drown a little dog. This perhaps means that…
+| ☐ She wanted to join the boys in drowning the dog. | ☐ She ran to the bank to help the dog.
+q 2: Ida was crying loudly, “Oh! How can you be so cruel to that poor little dog?” This perhaps means that…
+| ☐ She feels sorry for the dog. | ☐ She wants to hit the boys.
+q 3: One of the boys said, “Father told us to drown it.” This perhaps means that…
+| ☐ The boys only followed their father. | ☐ The boys willingly wants to drown the dog.
+q 4: The dog reached the bank and crept toward Ida. “Poor little fellow,” she said, patting him. This perhaps means that…
+| ☐ She wants to throw the dog away. | ☐ She wants to adopt the dog.
+q 5: “Yes,” said the boys, “You may have him.” Ida thanked the boys and ran home. This perhaps means that…
+| ☐ Ida is going home happy. | ☐ Ida is going home sad.
+
+######## LESSON 20 · lesson · In the Barn
+
+=== 20.1 | In the Barn | Making Predictions/Conclusions | pages 42
+pics: p042-1
+ins: Activity 5.3 · Drawing conclusions means figuring something out for yourself. Direction: Read the selection and put a check (✓) in the box for the conclusion that makes the most sense.
+read: In the Barn
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 1: The animals came to the barn. They told each other about their moms. “My mom laid me in the nest,” the chick said. This perhaps means that…
+| ☐ The chick came out of an egg. | ☐ The chick came out of a shell.
+q 2: “My mom is a big animal,” the calf said. “She eats plenty of grass to produce milk for me.” This perhaps means that…
+| ☐ The calf’s mom gives him milk. | ☐ The calf’s mom gives him an egg.
+q 3: “My mother stays in the pen. She says oink, oink, oink,” said the piglet. This perhaps means that…
+| ☐ The sound the piglet makes is also oink, oink, oink. | ☐ The sound the piglet makes is meow, meow, meow.
+q 4: “My mom loves to eat bones. She guards the master’s house.” This perhaps means that…
+| ☐ Her mom is a dog who barks at strangers. | ☐ Her mom is a cat who calls at strangers.
+q 5: “My mother pulls carriages and can be used for transportation,” said the baby horse. This perhaps means that…
+| ☐ His mom is hardworking. | ☐ His mother just sleeps all day.
+
+######## LESSON 21 · lesson · Rod and Wena
+
+=== 21.1 | Rod and Wena | Making Predictions/Conclusions | pages 44
+pics: p044-1
+ins: Activity 5.4 · Drawing conclusions means figuring something out for yourself. Direction: Read the selection and put a check (✓) in the box for the conclusion that makes the most sense.
+read: Rod and Wena
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 1: Rod is a farmer. This perhaps means that…
+| ☐ He lives on the farm. | ☐ He lives in the sea.
+q 2: He has a pet cow. His pet’s name begins with W. This perhaps means that…
+| ☐ His pet cow is Wena. | ☐ His pet cow is Mimo.
+q 3: Wena gives him milk. She also pulls his cart. This perhaps means that…
+| ☐ Wena is giver and helpful. | ☐ Wena is bad and ugly.
+q 4: Wena helps him till his land. She is an industrious cow. This perhaps means that…
+| ☐ Rod is cruel to his pet cow Wena. | ☐ Rod loves his pet cow Wena.
+q 5: Rod feeds Wena. And she loves to eat grass, hay, and pellets. This perhaps means that…
+| ☐ Rod takes good care of Wena. | ☐ Rod does not care about Wena.
+
+######## LESSON 22 · post · Post Test
+
+=== 22.1 | Post Test · Reading | Noting Details | pages 45
+pics:
+ins: Direction: Read carefully and choose the letter of the correct answer.
+lead: Think of the stories “A Friend”, “At the Farm” and “The King”.
+q 1: I have ______.
+| a. a car | b. a friend | c. a pen
+q 2: His name is ______.
+| a. Ben | b. Tim | c. Tom
+q 3: I went to the ______.
+| a. farm | b. park | c. zoo
+q 4: Who lived in the palace?
+| a. King | b. Princess | c. Queen
+q 5: Where does the king sit to watch people?
+| a. balcony | b. inside the palace | c. office
+
+=== 22.2 | Post Test · Reality or Fantasy | Fantasy and Reality | pages 45
+pics:
+ins: Direction: On the space provided, write R if it is Reality, F if it is Fantasy.
+rf 6: Birds can be seen in the park.
+rf 7: The birds hop in the trees.
+rf 8: Birds read books in the library.
+rf 9: The birds drive cars to school.
+rf 10: Birds fluff their feathers.
+
+=== 22.3 | Post Test · Sequencing | Sequencing Events | pages 45
+pics:
+ins: Direction: Arrange the events below in the correct order. Write numbers 1, 2, 3, 4, and 5 in the blank before each event.
+lead: Think of the story “Pearl”.
+seq: Items 11–15. Write 1, 2, 3, 4, 5 before each event to show the order.
+- 11. They are stories about brave kids.
+- 12. She loved to read about Sherlock Holmes, who was a brave detective.
+- 13. She loves to read.
+- 14. She is a quiet girl.
+- 15. She loved adventure stories.
+
+=== 22.4 | Post Test · Cause and Effect | Cause and Effect | pages 46
+pics:
+ins: Direction: After reading through each cause, put a check (✓) on the effect that appears most likely to happen.
+q 16: Cause: A boy fell off his bike so…
+| ☐ he rode his bike again. | ☐ he got wounds on his knee.
+q 17: Cause: It snowed at night so…
+| ☐ the classes were cancelled. | ☐ they had a picnic.
+q 18: Cause: Jan studied hard so…
+| ☐ she passed the test. | ☐ she failed the test.
+q 19: Cause: She fell off her bike so…
+| ☐ she bruised her arm. | ☐ she ate ice cream.
+q 20: Cause: Amora did not study so…
+| ☐ she failed the exam. | ☐ she got the highest score.
+
+=== 22.5 | Post Test · In the Barn | Making Predictions/Conclusions | pages 46,47
+pics:
+ins: Direction: Read the selection and put a check (✓) in the box for the conclusion that makes the most sense.
+read: In the Barn
+¶ Read each part of the story on the next cards. Then check (✓) the conclusion that makes the most sense.
+q 21: The animals came to the barn. They told each other about their moms. “My mom lay me in the nest,” the chick said. This perhaps means that…
+| ☐ The chick came out of an egg. | ☐ The chick came out of a shell.
+q 22: “My mom is a big animal,” the calf said. “She eats plenty of grass to produce milk for me.” This perhaps means that…
+| ☐ The calf’s mom gives him milk. | ☐ The calf’s mom gives him an egg.
+q 23: “My mother stays in the pen. She says oink, oink, oink,” said the piglet. This perhaps means that…
+| ☐ The sound the piglet makes is also oink, oink, oink. | ☐ The sound the piglet makes is also meow, meow, meow.
+q 24: “My mom loves to eat bones. She guards the master’s house.” This perhaps means that…
+| ☐ Her mom is a dog who barks at strangers. | ☐ Her mom is a cat who calls at strangers.
+q 25: “My mother pulls carriages and can be used for transportation,” said the baby horse. This perhaps means that…
+| ☐ His mother is hardworking. | ☐ His mother just sleeps all day.
