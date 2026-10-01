@@ -1,0 +1,41 @@
+BULIG update: Level 3 (Word Recognition) + new design + admin sign-in confirmation
+===================================================================================
+
+The update comes in TWO ZIPs (Part 1 and Part 2). Upload and extract BOTH.
+It also contains the earlier "Fixing visuals Level 1 & 2" update, which your
+live site does not have yet. Level 3 needs it.
+
+BEFORE YOU START
+- Back up your website files and export your database in phpMyAdmin.
+- Your config/database.php is NOT in this ZIP, so your database password stays as it is.
+
+STEP 1 - Upload the files
+1. Open Hostinger File Manager and go into public_html
+   (the folder that contains app, config, database, public and storage).
+2. Upload BULIG-Level3-Part1.zip and BULIG-Level3-Part2.zip into public_html and extract
+   BOTH there, allowing them to replace files. The order does not matter.
+3. Check it did not create a new folder. These must exist after extracting:
+     public_html/app/presentation.php
+     public_html/public/assets/theme.css
+     public_html/public/assets/images/level3/l01-build-01.webp
+     public_html/storage/level3-original.pdf
+     public_html/database/migrations/009_level3_content.sql
+   If you see a new folder named after the ZIP instead, move everything inside it
+   up into public_html.
+
+STEP 2 - Import TWO SQL files (in this order)
+1. Open phpMyAdmin and select your BULIG database.
+2. Import  database/migrations/008_level2_availability.sql
+3. Import  database/migrations/009_level3_content.sql   (Level 3: 27 steps, 172 activities)
+Both are safe: they do not delete accounts, answers, XP or progress, and importing
+them twice does not create duplicates.
+
+STEP 3 - Check
+- Reload BULIG with Ctrl+F5.
+- Teacher: My pupils > open a pupil > Starting level shows "Level 3 - Word Recognition".
+- Teacher: Class Demo shows Level 3.
+- Pupils open Level 3 after finishing Level 2B, or straight away if Level 3 is
+  their starting level.
+- Delete both uploaded ZIPs from the website afterwards.
+
+If an error screen appears, send the full "BULIG diagnostic:" line.

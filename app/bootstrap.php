@@ -40,7 +40,8 @@ function word_match(string $expected,string $heard):array{
 }
 function activities(int $lid,int $pid=0):array{return rows("SELECT a.*,c.status,c.response,c.feedback,c.drawing,c.id completion_id FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.published=1 ORDER BY FIELD(a.phase,'pre','learn','post'),a.position",[$pid,$lid]);}
 function lesson_available(int $pid,int $lid):bool{
- $l=one('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=? AND l.published=1',[$lid]);if(!$l)return false;
+ $l=one('SELECT l.*,m.level_id,m.grade_level module_grade FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=? AND l.published=1',[$lid]);if(!$l)return false;
+ if($l['module_grade']!==null&&(int)$l['module_grade']!==pupil_grade($pid))return false;
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$l['level_id']]))return false;
  if(!level_available($pid,(int)$l['level_id']))return false;
  if((int)$l['level_id']<(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]))return true;
@@ -101,7 +102,7 @@ function progress_stats(int $pid):array{
  return $s+['xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'completed'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'approved'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'pending'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status='submitted'",[$pid])];
 }
 function checked_image(string $path):string{
- if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
+ if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
 }
 function save_uploaded_image(string $field):string{
  if(empty($_FILES[$field])||$_FILES[$field]['error']!==UPLOAD_ERR_OK)fail('Choose an image smaller than 4 MB.');$f=$_FILES[$field];if($f['size']>4*1024*1024)fail('Image must be smaller than 4 MB.');
@@ -125,7 +126,7 @@ function visual_manifest():array{
  static $m=null;if($m===null){$f=__DIR__.'/../database/visual-manifest.json';$m=is_file($f)?json_decode(file_get_contents($f),true):[];}return $m?:[];
 }
 function local_image_file(string $path):?string{
- if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
+ if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
  $root=realpath(__DIR__.'/../public');$f=realpath($root.'/'.$path);
  return $f&&str_starts_with($f,$root.DIRECTORY_SEPARATOR)&&is_file($f)&&is_readable($f)?$f:null;
 }
@@ -165,18 +166,37 @@ function level_available(int $pid,int $level):bool{
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))return false;
  $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);
  if(!$start)return false;
- if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1',[$level]))return false;
+ if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$level,pupil_grade($pid)]))return false;
  foreach(rows('SELECT id,published FROM bulig_levels WHERE id>=? AND id<? ORDER BY id',[$start,$level]) as $prior){
   if(!$prior['published'])return false;
-  $counts=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1',[$pid,$prior['id']]);
+  $counts=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$prior['id'],pupil_grade($pid)]);
   if(!$counts['total']||$counts['total']!=$counts['done'])return false;
  }
  return true;
 }
+/** Level 4 onward has a separate module for each grade; earlier levels share one module (grade_level NULL). */
+const GRADE_SQL=' AND (m.grade_level IS NULL OR m.grade_level=?)';
+function pupil_grade(int $pid):int{static $c=[];return $c[$pid]??=(int)val('SELECT grade_level FROM pupils WHERE user_id=?',[$pid]);}
+function lesson_grade(int $lid):?int{$g=val('SELECT m.grade_level FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);return $g===null||$g===false?null:(int)$g;}
+function level4_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level4-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
+function level5_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level5-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
+/** Levels whose content is a separate module for each grade (Level 4 = id 5, Level 5 = id 6). */
+function level6_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level6-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
+function per_grade_level(int $level):bool{return in_array($level,[5,6,7],true);}
 function lesson_level(int $lid):int{return (int)val('SELECT m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);}
 function level2_manifest():array{static $m;return $m??=json_decode(file_get_contents(__DIR__.'/../database/level2-manifest.json'),true);}
+function level3_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level3-cards.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['cards'=>[],'lessons'=>[],'pupil_pages'=>[],'page_count'=>0];}return $m;}
+/** Source-module metadata for Levels 2A, 2B, 3 and (per grade) 4; null for Level 1. */
+function module_source_meta(int $level,?int $grade=null):?array{
+ if($level===5)return $grade?(level4_manifest()['grades'][(string)$grade]??null):null;
+ if($level===6)return $grade?(level5_manifest()['grades'][(string)$grade]??null):null;
+ if($level===7)return $grade?(level6_manifest()['grades'][(string)$grade]??null):null;
+ if(in_array($level,[2,3],true))return level2_manifest()['levels'][(string)$level]+['folder'=>$level===2?'2a':'2b'];
+ if($level===4)return level3_manifest()+['folder'=>'3'];
+ return null;
+}
 function next_learning_lesson(int $pid):?array{
- foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id JOIN pupil_level_assignments assigned ON assigned.pupil_id=? LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=assigned.pupil_id WHERE m.level_id>=assigned.level_id AND l.published=1 AND p.completed_at IS NULL ORDER BY m.level_id,l.position',[$pid]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
+ foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id JOIN pupil_level_assignments assigned ON assigned.pupil_id=? LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=assigned.pupil_id WHERE m.level_id>=assigned.level_id AND l.published=1 AND p.completed_at IS NULL'.GRADE_SQL.' ORDER BY m.level_id,l.position',[$pid,pupil_grade($pid)]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
  return null;
 }
 
