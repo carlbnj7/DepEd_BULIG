@@ -105,8 +105,73 @@ const nativeDeck=document.querySelector('[data-native-deck]');
 if(nativeDeck){
  const cards=[...nativeDeck.querySelectorAll('.native-card')],prev=nativeDeck.querySelector('[data-native-prev]'),next=nativeDeck.querySelector('[data-native-next]'),all=document.querySelector('#response');let at=0;
  const original=nativeDeck.dataset.earlierAnswer||'';
- function collect(){if(nativeDeck.dataset.readonly==='yes')return;const lines=[...nativeDeck.querySelectorAll('.native-answer')].map(el=>'Card '+el.dataset.number+': '+el.value.trim());const hasAnswer=[...nativeDeck.querySelectorAll('.native-answer')].some(el=>el.value.trim());all.value=hasAnswer?'BULIG card answers\n'+lines.join('\n')+(original?'\nEarlier answer: '+original:''):original;all.dispatchEvent(new Event('input',{bubbles:true}));}
+ function collect(){if(nativeDeck.dataset.readonly==='yes'||!all)return;const lines=[...nativeDeck.querySelectorAll('.native-answer')].map(el=>'Card '+el.dataset.number+': '+el.value.trim());const hasAnswer=[...nativeDeck.querySelectorAll('.native-answer')].some(el=>el.value.trim());all.value=hasAnswer?'BULIG card answers\n'+lines.join('\n')+(original?'\nEarlier answer: '+original:''):original;all.dispatchEvent(new Event('input',{bubbles:true}));}
  for(const input of nativeDeck.querySelectorAll('.native-answer'))input.addEventListener('input',collect);
  function show(n){at=Math.max(0,Math.min(cards.length-1,n));cards.forEach((c,i)=>{c.hidden=i!==at;});prev.disabled=at===0;next.disabled=at===cards.length-1;next.textContent=at===cards.length-1?'Last card':'Next picture / question →';nativeDeck.querySelector('.native-counter').textContent='Card '+(at+1)+' of '+cards.length;if(narration)narration.dataset.text=cards[at].dataset.narration;window.speechSynthesis?.cancel();}
  prev.addEventListener('click',()=>show(at-1));next.addEventListener('click',()=>show(at+1));show(0);
 }
+
+// Level 4 fluency: time the read-aloud, listen continuously, and record words per minute with the answer.
+const fluency=$('#fluency-timer');
+if(fluency){const start=$('#fluency-start'),stop=$('#fluency-stop'),clock=$('#fluency-clock'),status=$('#fluency-status'),box=$('#response'),words=+fluency.dataset.words||0;const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;let began=0,tick=null,rec=null,heard=[],listening=false;
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+const listen=()=>{if(!Recognition)return;rec=new Recognition();rec.lang='en-US';rec.continuous=true;rec.interimResults=false;rec.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)heard.push(e.results[i][0].transcript.trim());};rec.onerror=e=>{if(e.error==='not-allowed')status.textContent='Microphone permission was not granted. Keep reading — your time is still recorded.';};rec.onend=()=>{if(listening)try{rec.start();}catch{}};listening=true;try{rec.start();}catch{listening=false;}};
+start.addEventListener('click',()=>{window.speechSynthesis?.cancel();heard=[];began=Date.now();clock.value=clock.textContent='0:00';tick=setInterval(()=>{clock.textContent=fmt((Date.now()-began)/1000);},250);start.hidden=true;stop.hidden=false;stop.focus();status.textContent=Recognition?'Listening… read the whole passage aloud.':'Timing… read the whole passage aloud.';listen();});
+stop.addEventListener('click',()=>{const secs=Math.max(1,Math.round((Date.now()-began)/1000));clearInterval(tick);listening=false;rec?.stop();start.hidden=false;stop.hidden=true;start.lastChild.textContent='Read again';clock.textContent=fmt(secs);const wpm=words?Math.round(words/secs*60):0;const line='Reading time: '+fmt(secs)+' ('+secs+' seconds)'+(wpm?' · '+wpm+' words per minute':'');status.textContent=line+'.';
+ setTimeout(()=>{const text=heard.join(' ');box.value=(text?text+'\n\n':'')+line;box.dispatchEvent(new Event('input',{bubbles:true}));$('#transcript').value=text;if(text)showWords($('#expected-text').value,text);draft();},400);});
+window.addEventListener('pagehide',()=>{listening=false;rec?.abort();});}
+
+// Class Demo scoring helper for fluency passages (Phil-IRI). Display only; nothing is saved.
+document.addEventListener('input',event=>{const box=event.target.closest('.fluency-score');if(!box)return;const words=+box.dataset.words||0,get=k=>box.querySelector('[data-score="'+k+'"]');const m=get('miscues').value,s=+get('seconds').value;
+ if(m!==''&&words){const p=Math.max(0,(words-+m)/words*100);get('percent').textContent=p.toFixed(1)+'%';get('level').textContent=p>=97?'Independent':p>=90?'Instructional':'Frustration';}else{get('percent').textContent=get('level').textContent='—';}
+ get('wpm').textContent=s>0&&words?Math.round(words/s*60)+' words per minute':'—';});
+
+// Matching cards: the letter chosen for each Column A item fills that card's answer ("1-b, 2-a").
+document.addEventListener('change',event=>{const sel=event.target.closest('select[data-match]');if(!sel)return;const card=sel.closest('.native-card');const box=card&&card.querySelector('.native-answer');if(!box)return;box.value=[...card.querySelectorAll('select[data-match]')].filter(s=>s.value).map(s=>s.dataset.match+'-'+s.value).join(', ');box.dispatchEvent(new Event('input',{bubbles:true}));});
+
+// Matching boards: tap (or drag) from a Column A item to a Column B choice to draw a connecting line.
+(()=>{const NS='http://www.w3.org/2000/svg',COLORS=['#1b7a3a','#d80006','#001db5','#c77700','#7b2cbf','#0b8a8a','#b5179e','#5a5a00','#e85d04','#3a5a40','#9d0208','#023e8a','#6a4c93','#2b9348','#bc6c25'];
+function setup(board){if(board.dataset.ready)return;board.dataset.ready='1';const svg=board.querySelector('.match-lines'),pairs=new Map();let pick=null,drag=null;
+ const card=board.closest('.native-card'),box=card&&card.querySelector('.native-answer'),readonly=board.dataset.answer!=='on'&&!!box;
+ const item=n=>board.querySelector('.match-item[data-num="'+n+'"]'),choice=l=>board.querySelector('.match-choice[data-letter="'+l+'"]');
+ function pt(el,side){const b=board.getBoundingClientRect(),r=el.getBoundingClientRect();return side==='r'?[r.right-b.left,r.top+r.height/2-b.top]:[r.left-b.left,r.top+r.height/2-b.top];}
+ function draw(){const b=board.getBoundingClientRect();svg.setAttribute('width',b.width);svg.setAttribute('height',b.height);svg.replaceChildren();let i=0;
+  for(const [n,l] of pairs){const a=item(n),c=choice(l);if(!a||!c)continue;const [x1,y1]=pt(a,'r'),[x2,y2]=pt(c,'l'),col=COLORS[i++%COLORS.length];
+   const line=document.createElementNS(NS,'path');line.setAttribute('d',`M${x1} ${y1} C ${(x1+x2)/2} ${y1}, ${(x1+x2)/2} ${y2}, ${x2} ${y2}`);line.setAttribute('stroke',col);line.setAttribute('class','match-line');svg.append(line);
+   for(const [x,y] of [[x1,y1],[x2,y2]]){const d=document.createElementNS(NS,'circle');d.setAttribute('cx',x);d.setAttribute('cy',y);d.setAttribute('r',7);d.setAttribute('fill',col);svg.append(d);}
+   a.style.setProperty('--pair',col);c.style.setProperty('--pair',col);}
+  board.querySelectorAll('.match-item,.match-choice').forEach(el=>el.classList.toggle('paired',[...pairs.keys()].includes(el.dataset.num)||[...pairs.values()].includes(el.dataset.letter)));
+  if(drag){const l=document.createElementNS(NS,'line');l.setAttribute('x1',drag.x1);l.setAttribute('y1',drag.y1);l.setAttribute('x2',drag.x2);l.setAttribute('y2',drag.y2);l.setAttribute('class','match-line temp');svg.append(l);}}
+ function save(){if(box&&board.dataset.answer==='on'){box.value=[...pairs].sort((a,b)=>a[0]-b[0]).map(([n,l])=>n+'-'+l).join(', ');box.dispatchEvent(new Event('input',{bubbles:true}));board.querySelectorAll('select[data-match]').forEach(s=>{s.value=pairs.get(s.dataset.match)||'';});}}
+ function connect(n,l){for(const [k,v] of pairs)if(v===l)pairs.delete(k);pairs.set(n,l);save();draw();}
+ function clearPick(){pick=null;board.querySelectorAll('.picking').forEach(e=>e.classList.remove('picking'));}
+ function tap(el){if(readonly)return;const isA=el.classList.contains('match-item'),key=isA?el.dataset.num:el.dataset.letter;
+  if(!pick){if(isA&&pairs.has(key)){pairs.delete(key);save();draw();return;}if(!isA){for(const [k,v] of pairs)if(v===key){pairs.delete(k);save();draw();return;}}pick={isA,key};el.classList.add('picking');return;}
+  if(pick.isA===isA){clearPick();pick={isA,key};el.classList.add('picking');return;}
+  const n=isA?key:pick.key,l=isA?pick.key:key;clearPick();connect(n,l);}
+ board.addEventListener('click',e=>{const el=e.target.closest('.match-item,.match-choice');if(el&&!board.dataset.dragged)tap(el);delete board.dataset.dragged;});
+ board.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('.match-item,.match-choice')){e.preventDefault();tap(e.target);}});
+ board.addEventListener('pointerdown',e=>{const el=e.target.closest('.match-item,.match-choice');if(!el||readonly||e.target.closest('select'))return;const [x,y]=pt(el,el.classList.contains('match-item')?'r':'l');drag={from:el,x1:x,y1:y,x2:x,y2:y,moved:false};});
+ window.addEventListener('pointermove',e=>{if(!drag)return;const b=board.getBoundingClientRect();drag.x2=e.clientX-b.left;drag.y2=e.clientY-b.top;if(Math.hypot(drag.x2-drag.x1,drag.y2-drag.y1)>25){drag.moved=true;e.preventDefault();draw();}});
+ const end=e=>{if(!drag)return;const d=drag;drag=null;if(d.moved){board.dataset.dragged='1';const t=document.elementFromPoint(e.clientX,e.clientY),to=t&&t.closest('.match-item,.match-choice');
+  if(to&&to.parentElement!==d.from.parentElement&&board.contains(to)){const a=d.from.classList.contains('match-item')?d.from:to,c=a===d.from?to:d.from;clearPick();connect(a.dataset.num,c.dataset.letter);}}draw();};
+ window.addEventListener('pointerup',end);window.addEventListener('pointercancel',()=>{if(drag){drag=null;draw();}});
+ if(box&&box.value)for(const m of box.value.matchAll(/(\d+)\s*-\s*([a-z])/gi))pairs.set(m[1],m[2].toLowerCase());
+ board.addEventListener('redraw',draw);board.addEventListener('dragstart',e=>e.preventDefault());board.querySelectorAll('img').forEach(i=>i.draggable=false);new ResizeObserver(draw).observe(board);board.querySelectorAll('img').forEach(i=>i.addEventListener('load',draw));draw();}
+function scan(root){(root||document).querySelectorAll('[data-match-board]').forEach(setup);}
+scan();new MutationObserver(()=>scan()).observe(document.body,{childList:true,subtree:true});
+document.addEventListener('click',e=>{if(e.target.closest('[data-native-next],[data-native-prev],#demo-next,#demo-prev'))setTimeout(()=>document.querySelectorAll('[data-match-board]').forEach(b=>b.dispatchEvent(new Event('redraw'))),50);});})();
+
+/* Level 5 letter puzzles: tap letters to mark the words you find */
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.letter-grid .grid-cell');if(!b)return;b.classList.toggle('found');b.setAttribute('aria-pressed',b.classList.contains('found')?'true':'false');});
+
+/* Level 6 reading for speed: time the reading, show words per minute, save it as the card's answer */
+document.addEventListener('click',function(e){
+ var start=e.target.closest&&e.target.closest('[data-speed-start]'),stop=e.target.closest&&e.target.closest('[data-speed-stop]');
+ if(!start&&!stop)return;var box=(start||stop).closest('[data-speed-timer]'),clock=box.querySelector('.speed-clock'),res=box.querySelector('.speed-result'),words=+box.dataset.words||0;
+ function fmt(s){return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');}
+ if(start){box.dataset.began=Date.now();res.textContent='Reading…';start.hidden=true;box.querySelector('[data-speed-stop]').hidden=false;clearInterval(box._t);box._t=setInterval(function(){clock.textContent=fmt((Date.now()-box.dataset.began)/1000);},250);return;}
+ clearInterval(box._t);var secs=Math.max(1,(Date.now()-box.dataset.began)/1000),wpm=Math.round(words/(secs/60));clock.textContent=fmt(secs);
+ var msg='Reading time '+fmt(secs)+' · '+words+' words · '+wpm+' words per minute';res.textContent=msg;stop.hidden=true;var again=box.querySelector('[data-speed-start]');again.hidden=false;again.textContent='Read again';
+ var card=box.closest('.native-card'),ans=card&&card.querySelector('.native-answer');if(ans){ans.value=msg;ans.dispatchEvent(new Event('input',{bubbles:true}));}
+});
