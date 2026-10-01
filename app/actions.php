@@ -3,10 +3,10 @@ function action():void{
  check_csrf();$action=(string)($_POST['action']??'');
  if($action==='login'){
   $id=trim((string)($_POST['public_id']??''));$role=(string)($_POST['role']??'pupil');$key=hash('sha256',strtolower($id));
-  if(val('SELECT COUNT(*) FROM login_attempts WHERE identifier_hash=? AND attempted_at>DATE_SUB(NOW(),INTERVAL 15 MINUTE)',[$key])>=8)fail('Too many attempts. Please wait 15 minutes.',429);
+  if(val('SELECT COUNT(*) FROM login_attempts WHERE identifier_hash=? AND attempted_at>DATE_SUB(NOW(),INTERVAL 15 MINUTE)',[$key])>=8){audit('login_locked',mb_substr($role.' · '.$id,0,60));fail('Too many attempts. Please wait 15 minutes.',429);}
   $u=one('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
-  if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);fail('The ID or password is incorrect.');}
-  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));audit('login',$role);go('?page=dashboard');
+  if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));fail('The ID or password is incorrect.');}
+  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));audit('login',$role);go('?page=dashboard');
  }
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
  if($action==='save_section'){
@@ -19,6 +19,9 @@ function action():void{
    else{q('INSERT INTO sections(teacher_id,grade_level,name) VALUES(?,?,?)',[$u['id'],$grade,$name]);$sid=(int)db()->lastInsertId();}audit('save_section',(string)$sid);db()->commit();flash('Section saved.');
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=sections');
  }
+ if(str_starts_with($action,'import_')){import_actions($action);return;}
+ if(in_array($action,ADMIN_ACTIONS,true)){admin_actions($action);return;}
+ if(in_array($action,['admin_pin','admin_pin_create','admin_pin_cancel','change_admin_pin'],true)){admin_pin_actions($action);return;}
  if($action==='create_account'){
   $u=require_role('admin','teacher');$role=$u['role']==='admin'?'teacher':'pupil';$name=trim((string)($_POST['name']??''));$password=$role==='pupil'?'12345678':(string)($_POST['password']??'');
   if(strlen($name)<2||strlen($name)>150||strlen($password)<8||strlen($password)>72)fail('Use a name of 2–150 characters and a password of 8–72 characters.');
@@ -129,10 +132,10 @@ function action():void{
  if($action==='upload_media'){require_role('admin');$path=save_uploaded_image('media');audit('upload_media',$path);flash('Image uploaded: '.$path);go('?page=media');}
  if($action==='acknowledge'){$u=require_role('admin');q('UPDATE content_issues SET resolution=?,acknowledged_by=?,acknowledged_at=NOW() WHERE id=?',[substr((string)$_POST['resolution'],0,3000),$u['id'],(int)$_POST['id']]);flash('Content decision recorded.');go('?page=issues');}
  if($action==='save_reward'){
-  require_role('admin');$id=(int)($_POST['id']??0);$title=trim((string)$_POST['title']);$xp=(int)$_POST['required_xp'];if(!$title||strlen($title)>100||$xp<0)fail('Check reward details.');q('UPDATE rewards SET title=?,required_xp=?,active=? WHERE id=?',[$title,$xp,isset($_POST['active'])?1:0,$id]);flash('Reward updated.');go('?page=settings');
+  require_role('admin');$id=(int)($_POST['id']??0);$title=trim((string)$_POST['title']);$xp=(int)$_POST['required_xp'];if(!$title||strlen($title)>100||$xp<0)fail('Check reward details.');q('UPDATE rewards SET title=?,required_xp=?,active=? WHERE id=?',[$title,$xp,isset($_POST['active'])?1:0,$id]);flash('Reward updated.');go('?page=settings&tab=badges');
  }
  if($action==='save_badge'){
-  require_role('admin');$id=(int)$_POST['id'];$threshold=(int)$_POST['threshold_value'];$title=trim((string)$_POST['title']);if(!$title||strlen($title)>100||$threshold<1)fail('Check badge details.');q('UPDATE badges SET title=?,description=?,threshold_value=?,active=? WHERE id=?',[$title,substr((string)$_POST['description'],0,255),$threshold,isset($_POST['active'])?1:0,$id]);flash('Badge updated.');go('?page=settings');
+  require_role('admin');$id=(int)$_POST['id'];$threshold=(int)$_POST['threshold_value'];$title=trim((string)$_POST['title']);if(!$title||strlen($title)>100||$threshold<1)fail('Check badge details.');q('UPDATE badges SET title=?,description=?,threshold_value=?,active=? WHERE id=?',[$title,substr((string)$_POST['description'],0,255),$threshold,isset($_POST['active'])?1:0,$id]);flash('Badge updated.');go('?page=settings&tab=badges');
  }
  if($action==='save_assessment'){
   require_role('admin');$id=(int)$_POST['id'];$criteria=array_values(array_filter(array_map('trim',explode("\n",(string)$_POST['criteria']))));if(count($criteria)>12)fail('Use up to 12 criteria.');q('UPDATE assessments SET rubric=?,rubric_criteria=? WHERE id=?',[substr((string)$_POST['rubric'],0,30000),json_encode($criteria),$id]);audit('edit_assessment',(string)$id);flash('Assessment rubric updated.');go('?page=content&id='.(int)$_POST['lesson_id']);
