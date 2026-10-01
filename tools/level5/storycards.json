@@ -1,0 +1,2206 @@
+{
+"1:15": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Me and Myself",
+"text": "I am happy\nI am glad\nI truly feel\nThat I am loved",
+"images": [
+{
+"src": "assets/images/level5/g1/s015-1.webp",
+"alt": "Picture: Me and Myself",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:16": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "My Body",
+"text": "This is my body.\nGod give this to me!\nI can name the parts of my body.",
+"images": [
+{
+"src": "assets/images/level5/g1/s016-1.webp",
+"alt": "Picture: My Body",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:19": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "My Toys",
+"text": "These are my toys.\nMy mother and father give it to me!\nI can name my favorite toys.",
+"images": [
+{
+"src": "assets/images/level5/g1/s019-1.webp",
+"alt": "car",
+"label": "car"
+},
+{
+"src": "assets/images/level5/g1/s019-2.webp",
+"alt": "doll",
+"label": "doll"
+},
+{
+"src": "assets/images/level5/g1/s019-3.webp",
+"alt": "kite",
+"label": "kite"
+},
+{
+"src": "assets/images/level5/g1/s019-4.webp",
+"alt": "Teddy Bear",
+"label": "Teddy Bear"
+},
+{
+"src": "assets/images/level5/g1/s019-5.webp",
+"alt": "train",
+"label": "train"
+},
+{
+"src": "assets/images/level5/g1/s019-6.webp",
+"alt": "boat",
+"label": "boat"
+},
+{
+"src": "assets/images/level5/g1/s019-7.webp",
+"alt": "yoyo",
+"label": "yoyo"
+},
+{
+"src": "assets/images/level5/g1/s019-8.webp",
+"alt": "ball",
+"label": "ball"
+}
+],
+"choices": []
+}
+]
+},
+"1:23": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "My Pets",
+"text": "These are my pets.\nI will take care of my pets.\nI will give them food.\nI love my pets.",
+"images": [
+{
+"src": "assets/images/level5/g1/s023-1.webp",
+"alt": "dog",
+"label": "dog"
+},
+{
+"src": "assets/images/level5/g1/s023-2.webp",
+"alt": "cat",
+"label": "cat"
+},
+{
+"src": "assets/images/level5/g1/s023-3.webp",
+"alt": "rabbit",
+"label": "rabbit"
+},
+{
+"src": "assets/images/level5/g1/s023-4.webp",
+"alt": "fish",
+"label": "fish"
+},
+{
+"src": "assets/images/level5/g1/s023-5.webp",
+"alt": "bird",
+"label": "bird"
+},
+{
+"src": "assets/images/level5/g1/s023-6.webp",
+"alt": "turtle",
+"label": "turtle"
+}
+],
+"choices": []
+}
+]
+},
+"1:26": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "My Things",
+"text": "These are my things.\nI will take care of my things.\nI will keep it clean.",
+"images": [
+{
+"src": "assets/images/level5/g1/s026-1.webp",
+"alt": "book",
+"label": "book"
+},
+{
+"src": "assets/images/level5/g1/s026-2.webp",
+"alt": "eraser",
+"label": "eraser"
+},
+{
+"src": "assets/images/level5/g1/s026-3.webp",
+"alt": "sharpener",
+"label": "sharpener"
+},
+{
+"src": "assets/images/level5/g1/s026-4.webp",
+"alt": "pencil",
+"label": "pencil"
+},
+{
+"src": "assets/images/level5/g1/s026-5.webp",
+"alt": "bag",
+"label": "bag"
+},
+{
+"src": "assets/images/level5/g1/s026-6.webp",
+"alt": "ruler",
+"label": "ruler"
+}
+],
+"choices": []
+}
+]
+},
+"1:29": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "My Food",
+"text": "These are the foods I eat.\nMy father buys them for me.\nMy mother cook these for me.",
+"images": [
+{
+"src": "assets/images/level5/g1/s029-1.webp",
+"alt": "rice",
+"label": "rice"
+},
+{
+"src": "assets/images/level5/g1/s029-2.webp",
+"alt": "banana",
+"label": "banana"
+},
+{
+"src": "assets/images/level5/g1/s029-3.webp",
+"alt": "fish",
+"label": "fish"
+},
+{
+"src": "assets/images/level5/g1/s029-4.webp",
+"alt": "soup",
+"label": "soup"
+},
+{
+"src": "assets/images/level5/g1/s029-5.webp",
+"alt": "egg",
+"label": "egg"
+},
+{
+"src": "assets/images/level5/g1/s029-6.webp",
+"alt": "meat",
+"label": "meat"
+},
+{
+"src": "assets/images/level5/g1/s029-7.webp",
+"alt": "chicken",
+"label": "chicken"
+},
+{
+"src": "assets/images/level5/g1/s029-8.webp",
+"alt": "corn",
+"label": "corn"
+},
+{
+"src": "assets/images/level5/g1/s029-9.webp",
+"alt": "mango",
+"label": "mango"
+},
+{
+"src": "assets/images/level5/g1/s029-10.webp",
+"alt": "cake",
+"label": "cake"
+},
+{
+"src": "assets/images/level5/g1/s029-11.webp",
+"alt": "bread",
+"label": "bread"
+},
+{
+"src": "assets/images/level5/g1/s029-12.webp",
+"alt": "vegetables",
+"label": "vegetables"
+}
+],
+"choices": []
+}
+]
+},
+"1:32": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Me and My Family",
+"text": "We are happy\nWe are glad\nWe truly feel good\nWe are loved",
+"images": [
+{
+"src": "assets/images/level5/g1/s032-1.webp",
+"alt": "Picture: Me and My Family",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:33": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "My Family",
+"text": "This is my family.\nMy mother and my father.\nMy brother and my sister.\nAnd our baby boy.",
+"images": [
+{
+"src": "assets/images/level5/g1/s033-1.webp",
+"alt": "Picture: My Family",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:36": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "My Relatives",
+"text": "These are my relatives.\nMy uncle and my aunts.\nMy grandfather and grandmother.\nMy nephew and my niece.",
+"images": [
+{
+"src": "assets/images/level5/g1/s036-1.webp",
+"alt": "Picture: My Relatives",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:39": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "My Home",
+"text": "This is my home.\nWe have tables and chairs in our home.\nWe have rooms and beds in our home.\nWe have the kitchen and the comfort rooms too.",
+"images": [
+{
+"src": "assets/images/level5/g1/s039-1.webp",
+"alt": "comfort room",
+"label": "comfort room"
+},
+{
+"src": "assets/images/level5/g1/s039-2.webp",
+"alt": "kitchen",
+"label": "kitchen"
+},
+{
+"src": "assets/images/level5/g1/s039-3.webp",
+"alt": "bed",
+"label": "bed"
+},
+{
+"src": "assets/images/level5/g1/s039-4.webp",
+"alt": "bedroom",
+"label": "bedroom"
+},
+{
+"src": "assets/images/level5/g1/s039-5.webp",
+"alt": "table",
+"label": "table"
+},
+{
+"src": "assets/images/level5/g1/s039-6.webp",
+"alt": "chair",
+"label": "chair"
+}
+],
+"choices": []
+}
+]
+},
+"1:42": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Our Tools",
+"text": "This is our tools.\nWe have shovel and rake.\nWe have to take care of our tools.\nTools are very important for us.",
+"images": [
+{
+"src": "assets/images/level5/g1/s042-1.webp",
+"alt": "Picture: Our Tools",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:45": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Our Kitchen",
+"text": "This is our kitchen.\nWe cook our food in our kitchen.\nWe have plates, forks and spoons.\nWe have pans, bowls, and cups too.",
+"images": [
+{
+"src": "assets/images/level5/g1/s045-1.webp",
+"alt": "Picture: Our Kitchen",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:49": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Me and My School",
+"text": "In my school.\nI can learn.\nTo read and write.\nI can learn.\nTo dance and sing.",
+"images": [
+{
+"src": "assets/images/level5/g1/s049-1.webp",
+"alt": "Picture: Me and My School",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:53": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "In The Classroom",
+"text": "This is our classroom.\nI can name the things in our classroom.",
+"images": [
+{
+"src": "assets/images/level5/g1/s053-1.webp",
+"alt": "Picture: In The Classroom",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:57": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "In The Garden",
+"text": "This is our school garden.\nWe have vegetables in our garden.\nI plant vegetables in our garden.",
+"images": [
+{
+"src": "assets/images/level5/g1/s057-1.webp",
+"alt": "squash",
+"label": "squash"
+},
+{
+"src": "assets/images/level5/g1/s057-2.webp",
+"alt": "tomato",
+"label": "tomato"
+},
+{
+"src": "assets/images/level5/g1/s057-3.webp",
+"alt": "pechay",
+"label": "pechay"
+},
+{
+"src": "assets/images/level5/g1/s057-4.webp",
+"alt": "eggplant",
+"label": "eggplant"
+},
+{
+"src": "assets/images/level5/g1/s057-5.webp",
+"alt": "carrots",
+"label": "carrots"
+},
+{
+"src": "assets/images/level5/g1/s057-6.webp",
+"alt": "bitter gourd",
+"label": "bitter gourd"
+},
+{
+"src": "assets/images/level5/g1/s057-7.webp",
+"alt": "pepper",
+"label": "pepper"
+},
+{
+"src": "assets/images/level5/g1/s057-8.webp",
+"alt": "cabbage",
+"label": "cabbage"
+}
+],
+"choices": []
+}
+]
+},
+"1:61": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "In The Canteen",
+"text": "This is our school canteen.\nI buy food in our school canteen.",
+"images": [
+{
+"src": "assets/images/level5/g1/s061-1.webp",
+"alt": "sales lady",
+"label": "sales lady"
+},
+{
+"src": "assets/images/level5/g1/s061-2.webp",
+"alt": "ice drop",
+"label": "ice drop"
+},
+{
+"src": "assets/images/level5/g1/s061-3.webp",
+"alt": "banana Cue",
+"label": "banana Cue"
+},
+{
+"src": "assets/images/level5/g1/s061-4.webp",
+"alt": "sandwich",
+"label": "sandwich"
+},
+{
+"src": "assets/images/level5/g1/s061-5.webp",
+"alt": "biscuits",
+"label": "biscuits"
+},
+{
+"src": "assets/images/level5/g1/s061-6.webp",
+"alt": "juice",
+"label": "juice"
+},
+{
+"src": "assets/images/level5/g1/s061-7.webp",
+"alt": "sweet potato",
+"label": "sweet potato"
+}
+],
+"choices": []
+}
+]
+},
+"1:65": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "In The Library",
+"text": "This is our school library.\nI read books in the library.",
+"images": [
+{
+"src": "assets/images/level5/g1/s065-1.webp",
+"alt": "dictionary",
+"label": "dictionary"
+},
+{
+"src": "assets/images/level5/g1/s065-2.webp",
+"alt": "magazine rock",
+"label": "magazine rock"
+},
+{
+"src": "assets/images/level5/g1/s065-3.webp",
+"alt": "books",
+"label": "books"
+},
+{
+"src": "assets/images/level5/g1/s065-4.webp",
+"alt": "librarian",
+"label": "librarian"
+},
+{
+"src": "assets/images/level5/g1/s065-5.webp",
+"alt": "book shelves",
+"label": "book shelves"
+},
+{
+"src": "assets/images/level5/g1/s065-6.webp",
+"alt": "newspaper",
+"label": "newspaper"
+},
+{
+"src": "assets/images/level5/g1/s065-7.webp",
+"alt": "magazine",
+"label": "magazine"
+}
+],
+"choices": []
+}
+]
+},
+"1:69": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Keeping Our School Clean",
+"text": "We take care of our school.\nWe keep our school clean.",
+"images": [
+{
+"src": "assets/images/level5/g1/s069-1.webp",
+"alt": "coconut husk",
+"label": "coconut husk"
+},
+{
+"src": "assets/images/level5/g1/s069-2.webp",
+"alt": "brooms",
+"label": "brooms"
+},
+{
+"src": "assets/images/level5/g1/s069-3.webp",
+"alt": "cleaning mop",
+"label": "cleaning mop"
+},
+{
+"src": "assets/images/level5/g1/s069-4.webp",
+"alt": "trash can",
+"label": "trash can"
+},
+{
+"src": "assets/images/level5/g1/s069-5.webp",
+"alt": "janitor",
+"label": "janitor"
+},
+{
+"src": "assets/images/level5/g1/s069-6.webp",
+"alt": "rug",
+"label": "rug"
+},
+{
+"src": "assets/images/level5/g1/s069-7.webp",
+"alt": "brush",
+"label": "brush"
+}
+],
+"choices": []
+}
+]
+},
+"1:73": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Me and My Community",
+"text": "I stay in a place.\nSafe and with peace.\nSurrounded with love.\nA gift from above.",
+"images": [
+{
+"src": "assets/images/level5/g1/s073-1.webp",
+"alt": "Picture: Me and My Community",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"1:74": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "The Community Helpers",
+"text": "In our community there are many helpers.\nWe love our community helpers.",
+"images": [
+{
+"src": "assets/images/level5/g1/s074-1.webp",
+"alt": "teacher",
+"label": "teacher"
+},
+{
+"src": "assets/images/level5/g1/s074-2.webp",
+"alt": "policeman",
+"label": "policeman"
+},
+{
+"src": "assets/images/level5/g1/s074-3.webp",
+"alt": "security guard",
+"label": "security guard"
+},
+{
+"src": "assets/images/level5/g1/s074-4.webp",
+"alt": "carpenter",
+"label": "carpenter"
+},
+{
+"src": "assets/images/level5/g1/s074-5.webp",
+"alt": "storekeeper",
+"label": "storekeeper"
+},
+{
+"src": "assets/images/level5/g1/s074-6.webp",
+"alt": "farmer",
+"label": "farmer"
+},
+{
+"src": "assets/images/level5/g1/s074-7.webp",
+"alt": "fisherman",
+"label": "fisherman"
+},
+{
+"src": "assets/images/level5/g1/s074-8.webp",
+"alt": "doctor",
+"label": "doctor"
+},
+{
+"src": "assets/images/level5/g1/s074-9.webp",
+"alt": "laborer",
+"label": "laborer"
+},
+{
+"src": "assets/images/level5/g1/s074-10.webp",
+"alt": "driver",
+"label": "driver"
+},
+{
+"src": "assets/images/level5/g1/s074-11.webp",
+"alt": "fireman",
+"label": "fireman"
+},
+{
+"src": "assets/images/level5/g1/s074-12.webp",
+"alt": "nurse",
+"label": "nurse"
+}
+],
+"choices": []
+}
+]
+},
+"1:78": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "In The Plaza",
+"text": "This is our plaza.\nWe play in our plaza.\nOur plaza is very clean and beautiful.",
+"images": [
+{
+"src": "assets/images/level5/g1/s078-1.webp",
+"alt": "seesaw",
+"label": "seesaw"
+},
+{
+"src": "assets/images/level5/g1/s078-2.webp",
+"alt": "monkey bar",
+"label": "monkey bar"
+},
+{
+"src": "assets/images/level5/g1/s078-3.webp",
+"alt": "swing",
+"label": "swing"
+},
+{
+"src": "assets/images/level5/g1/s078-4.webp",
+"alt": "slide",
+"label": "slide"
+},
+{
+"src": "assets/images/level5/g1/s078-5.webp",
+"alt": "statue",
+"label": "statue"
+},
+{
+"src": "assets/images/level5/g1/s078-6.webp",
+"alt": "flowers",
+"label": "flowers"
+},
+{
+"src": "assets/images/level5/g1/s078-7.webp",
+"alt": "tree",
+"label": "tree"
+}
+],
+"choices": []
+}
+]
+},
+"1:82": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "In The Market",
+"text": "This is our market.\nWe can buy our food in the market.",
+"images": [
+{
+"src": "assets/images/level5/g1/s082-1.webp",
+"alt": "vegetables",
+"label": "vegetables"
+},
+{
+"src": "assets/images/level5/g1/s082-2.webp",
+"alt": "fishes",
+"label": "fishes"
+},
+{
+"src": "assets/images/level5/g1/s082-3.webp",
+"alt": "fruits",
+"label": "fruits"
+},
+{
+"src": "assets/images/level5/g1/s082-4.webp",
+"alt": "butchers knife",
+"label": "butchers knife"
+},
+{
+"src": "assets/images/level5/g1/s082-5.webp",
+"alt": "weighing scale",
+"label": "weighing scale"
+},
+{
+"src": "assets/images/level5/g1/s082-6.webp",
+"alt": "chopping board",
+"label": "chopping board"
+},
+{
+"src": "assets/images/level5/g1/s082-7.webp",
+"alt": "dried fish",
+"label": "dried fish"
+},
+{
+"src": "assets/images/level5/g1/s082-8.webp",
+"alt": "grains",
+"label": "grains"
+},
+{
+"src": "assets/images/level5/g1/s082-9.webp",
+"alt": "butcher",
+"label": "butcher"
+},
+{
+"src": "assets/images/level5/g1/s082-10.webp",
+"alt": "meat",
+"label": "meat"
+},
+{
+"src": "assets/images/level5/g1/s082-11.webp",
+"alt": "root crops",
+"label": "root crops"
+}
+],
+"choices": []
+}
+]
+},
+"1:86": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "In The Farm",
+"text": "This is our farm.\nWe grow plants on our farm.\nWe have animals on our farm too.",
+"images": [
+{
+"src": "assets/images/level5/g1/s086-1.webp",
+"alt": "carabao",
+"label": "carabao"
+},
+{
+"src": "assets/images/level5/g1/s086-2.webp",
+"alt": "cow",
+"label": "cow"
+},
+{
+"src": "assets/images/level5/g1/s086-3.webp",
+"alt": "horse",
+"label": "horse"
+},
+{
+"src": "assets/images/level5/g1/s086-4.webp",
+"alt": "bird",
+"label": "bird"
+},
+{
+"src": "assets/images/level5/g1/s086-5.webp",
+"alt": "goat",
+"label": "goat"
+},
+{
+"src": "assets/images/level5/g1/s086-6.webp",
+"alt": "pig",
+"label": "pig"
+},
+{
+"src": "assets/images/level5/g1/s086-7.webp",
+"alt": "chicken",
+"label": "chicken"
+},
+{
+"src": "assets/images/level5/g1/s086-8.webp",
+"alt": "duck",
+"label": "duck"
+},
+{
+"src": "assets/images/level5/g1/s086-9.webp",
+"alt": "coconut",
+"label": "coconut"
+},
+{
+"src": "assets/images/level5/g1/s086-10.webp",
+"alt": "banana",
+"label": "banana"
+},
+{
+"src": "assets/images/level5/g1/s086-11.webp",
+"alt": "cassava",
+"label": "cassava"
+},
+{
+"src": "assets/images/level5/g1/s086-12.webp",
+"alt": "guava",
+"label": "guava"
+},
+{
+"src": "assets/images/level5/g1/s086-13.webp",
+"alt": "pineapple",
+"label": "pineapple"
+},
+{
+"src": "assets/images/level5/g1/s086-14.webp",
+"alt": "taro",
+"label": "taro"
+},
+{
+"src": "assets/images/level5/g1/s086-15.webp",
+"alt": "bottle guard",
+"label": "bottle guard"
+},
+{
+"src": "assets/images/level5/g1/s086-16.webp",
+"alt": "cashew",
+"label": "cashew"
+}
+],
+"choices": []
+}
+]
+},
+"1:90": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Buildings Around Me",
+"text": "There are many building in our place.\nEach building is very useful for us.\nWe keep our building safe and clean.",
+"images": [
+{
+"src": "assets/images/level5/g1/s090-1.webp",
+"alt": "house",
+"label": "house"
+},
+{
+"src": "assets/images/level5/g1/s090-2.webp",
+"alt": "church",
+"label": "church"
+},
+{
+"src": "assets/images/level5/g1/s090-3.webp",
+"alt": "market",
+"label": "market"
+},
+{
+"src": "assets/images/level5/g1/s090-4.webp",
+"alt": "barangay hall",
+"label": "barangay hall"
+},
+{
+"src": "assets/images/level5/g1/s090-5.webp",
+"alt": "bakery",
+"label": "bakery"
+},
+{
+"src": "assets/images/level5/g1/s090-6.webp",
+"alt": "restaurant",
+"label": "restaurant"
+},
+{
+"src": "assets/images/level5/g1/s090-7.webp",
+"alt": "hospital",
+"label": "hospital"
+},
+{
+"src": "assets/images/level5/g1/s090-8.webp",
+"alt": "school",
+"label": "school"
+},
+{
+"src": "assets/images/level5/g1/s090-9.webp",
+"alt": "bank",
+"label": "bank"
+},
+{
+"src": "assets/images/level5/g1/s090-10.webp",
+"alt": "pharmacy",
+"label": "pharmacy"
+},
+{
+"src": "assets/images/level5/g1/s090-11.webp",
+"alt": "store",
+"label": "store"
+},
+{
+"src": "assets/images/level5/g1/s090-12.webp",
+"alt": "fire station",
+"label": "fire station"
+}
+],
+"choices": []
+}
+]
+},
+"2:18": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Plants around Me",
+"text": "This is my garden.\nI’ll plant flowers, vegetables, and grains.\nHere are the seeds of trees and herbs.\nThe sun will shine; the rain will fall.\nThe seeds will sprout, up tall.",
+"images": [
+{
+"src": "assets/images/level5/g2/s018-1.webp",
+"alt": "Picture: Plants around Me",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"2:19": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 1- Flowers",
+"text": "Flowers\nFlowers are the beauty of nature.\nThey grow and bloom in different colors.\nThey give us a fragrant odor.\nFlowers are wonderful.",
+"images": [
+{
+"src": "assets/images/level5/g2/s019-1.webp",
+"alt": "Orchids",
+"label": "Orchids"
+},
+{
+"src": "assets/images/level5/g2/s019-2.webp",
+"alt": "Dahlia",
+"label": "Dahlia"
+},
+{
+"src": "assets/images/level5/g2/s019-3.webp",
+"alt": "Rose",
+"label": "Rose"
+},
+{
+"src": "assets/images/level5/g2/s019-4.webp",
+"alt": "Sunflower",
+"label": "Sunflower"
+},
+{
+"src": "assets/images/level5/g2/s019-5.webp",
+"alt": "Sampaguita",
+"label": "Sampaguita"
+},
+{
+"src": "assets/images/level5/g2/s019-6.webp",
+"alt": "Tulips",
+"label": "Tulips"
+},
+{
+"src": "assets/images/level5/g2/s019-7.webp",
+"alt": "Aster",
+"label": "Aster"
+},
+{
+"src": "assets/images/level5/g2/s019-8.webp",
+"alt": "Chrysanthemum",
+"label": "Chrysanthemum"
+},
+{
+"src": "assets/images/level5/g2/s019-9.webp",
+"alt": "Yellow Plumeria",
+"label": "Yellow Plumeria"
+}
+],
+"choices": []
+}
+]
+},
+"2:21": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 2- Vegetables",
+"text": "Vegetables in our garden.\nLegumes, leafy vegetables and grains\nThey give nutrients to our body and brains,\nTo keep us active and healthy mind.\n\ncarrots · radish · cabbage",
+"images": [
+{
+"src": "assets/images/level5/g2/s021-1.webp",
+"alt": "lettuce",
+"label": "lettuce"
+},
+{
+"src": "assets/images/level5/g2/s021-2.webp",
+"alt": "broccoli",
+"label": "broccoli"
+},
+{
+"src": "assets/images/level5/g2/s021-3.webp",
+"alt": "cauliflower",
+"label": "cauliflower"
+},
+{
+"src": "assets/images/level5/g2/s021-4.webp",
+"alt": "potatoes",
+"label": "potatoes"
+},
+{
+"src": "assets/images/level5/g2/s021-5.webp",
+"alt": "tomato",
+"label": "tomato"
+},
+{
+"src": "assets/images/level5/g2/s021-6.webp",
+"alt": "string bean",
+"label": "string bean"
+}
+],
+"choices": []
+}
+]
+},
+"2:23": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 3- Fruits",
+"text": "Fruits\nFruit makes us very strong.\nAnd keep us healthy for long.\nThey taste sour and sweet.\nThat everyone likes to eat.",
+"images": [
+{
+"src": "assets/images/level5/g2/s023-1.webp",
+"alt": "tiesa",
+"label": "tiesa"
+},
+{
+"src": "assets/images/level5/g2/s023-2.webp",
+"alt": "cashew",
+"label": "cashew"
+},
+{
+"src": "assets/images/level5/g2/s023-3.webp",
+"alt": "guyabano",
+"label": "guyabano"
+},
+{
+"src": "assets/images/level5/g2/s023-4.webp",
+"alt": "atis",
+"label": "atis"
+},
+{
+"src": "assets/images/level5/g2/s023-5.webp",
+"alt": "star apple",
+"label": "star apple"
+},
+{
+"src": "assets/images/level5/g2/s023-6.webp",
+"alt": "santol",
+"label": "santol"
+},
+{
+"src": "assets/images/level5/g2/s023-7.webp",
+"alt": "mangosteen",
+"label": "mangosteen"
+},
+{
+"src": "assets/images/level5/g2/s023-8.webp",
+"alt": "macopa",
+"label": "macopa"
+},
+{
+"src": "assets/images/level5/g2/s023-9.webp",
+"alt": "siniguelas",
+"label": "siniguelas"
+}
+],
+"choices": []
+}
+]
+},
+"2:25": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 4- Trees",
+"text": "Trees are everywhere.\nThey give us clean and fresh air.\nLittle birds live up there.\nTrees are their shelter.",
+"images": [
+{
+"src": "assets/images/level5/g2/s025-1.webp",
+"alt": "narra",
+"label": "narra"
+},
+{
+"src": "assets/images/level5/g2/s025-2.webp",
+"alt": "acacia",
+"label": "acacia"
+},
+{
+"src": "assets/images/level5/g2/s025-3.webp",
+"alt": "golden tree",
+"label": "golden tree"
+},
+{
+"src": "assets/images/level5/g2/s025-4.webp",
+"alt": "kamagong",
+"label": "kamagong"
+},
+{
+"src": "assets/images/level5/g2/s025-5.webp",
+"alt": "mabolo",
+"label": "mabolo"
+},
+{
+"src": "assets/images/level5/g2/s025-6.webp",
+"alt": "Pine tree",
+"label": "Pine tree"
+},
+{
+"src": "assets/images/level5/g2/s025-7.webp",
+"alt": "falcata",
+"label": "falcata"
+},
+{
+"src": "assets/images/level5/g2/s025-8.webp",
+"alt": "gemilina",
+"label": "gemilina"
+},
+{
+"src": "assets/images/level5/g2/s025-9.webp",
+"alt": "balete",
+"label": "balete"
+}
+],
+"choices": []
+}
+]
+},
+"2:27": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 5- Herbs",
+"text": "Herbs\nMagical herbs,\nGiven to this world.\nCan cure so much illness,\nYou’d never believe it would.",
+"images": [
+{
+"src": "assets/images/level5/g2/s027-1.webp",
+"alt": "lemongrass",
+"label": "lemongrass"
+},
+{
+"src": "assets/images/level5/g2/s027-2.webp",
+"alt": "dill",
+"label": "dill"
+},
+{
+"src": "assets/images/level5/g2/s027-3.webp",
+"alt": "peppermint",
+"label": "peppermint"
+},
+{
+"src": "assets/images/level5/g2/s027-4.webp",
+"alt": "oregano",
+"label": "oregano"
+},
+{
+"src": "assets/images/level5/g2/s027-5.webp",
+"alt": "eucalyptus",
+"label": "eucalyptus"
+},
+{
+"src": "assets/images/level5/g2/s027-6.webp",
+"alt": "aloe vera",
+"label": "aloe vera"
+},
+{
+"src": "assets/images/level5/g2/s027-7.webp",
+"alt": "Turmeric",
+"label": "Turmeric"
+},
+{
+"src": "assets/images/level5/g2/s027-8.webp",
+"alt": "Red basil",
+"label": "Red basil"
+},
+{
+"src": "assets/images/level5/g2/s027-9.webp",
+"alt": "sage",
+"label": "sage"
+}
+],
+"choices": []
+}
+]
+},
+"2:29": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Animals that I Know",
+"text": "Animals on land.\nHelp farmers in the farm.\nCreations in the sea, woodland and in the meadow\nMade by God for me and you.",
+"images": [
+{
+"src": "assets/images/level5/g2/s029-1.webp",
+"alt": "Picture: Animals that I Know",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"2:30": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 6- Animals in the Land",
+"text": "The horse, cow and carabao.\nGo walk and walk going to the barn.\nThe dog says aww! aww! aww!\nAnd the cat says meow! meow! meow!\nUntil they meet little turkey\nand together, they play.",
+"images": [
+{
+"src": "assets/images/level5/g2/s030-1.webp",
+"alt": "cow",
+"label": "cow"
+},
+{
+"src": "assets/images/level5/g2/s030-2.webp",
+"alt": "dog",
+"label": "dog"
+},
+{
+"src": "assets/images/level5/g2/s030-3.webp",
+"alt": "Cat",
+"label": "Cat"
+},
+{
+"src": "assets/images/level5/g2/s030-4.webp",
+"alt": "carabao",
+"label": "carabao"
+},
+{
+"src": "assets/images/level5/g2/s030-5.webp",
+"alt": "horse",
+"label": "horse"
+},
+{
+"src": "assets/images/level5/g2/s030-6.webp",
+"alt": "goat",
+"label": "goat"
+},
+{
+"src": "assets/images/level5/g2/s030-7.webp",
+"alt": "pig",
+"label": "pig"
+},
+{
+"src": "assets/images/level5/g2/s030-8.webp",
+"alt": "turkey",
+"label": "turkey"
+},
+{
+"src": "assets/images/level5/g2/s030-9.webp",
+"alt": "Chicken",
+"label": "Chicken"
+}
+],
+"choices": []
+}
+]
+},
+"2:32": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 7- Animals in the Woodland",
+"text": "Come little squirrel.\nMeet baby tarsier.\nHide under the tree.\nWoodpecker is coming to prey.",
+"images": [
+{
+"src": "assets/images/level5/g2/s032-1.webp",
+"alt": "tarsier",
+"label": "tarsier"
+},
+{
+"src": "assets/images/level5/g2/s032-2.webp",
+"alt": "owl",
+"label": "owl"
+},
+{
+"src": "assets/images/level5/g2/s032-3.webp",
+"alt": "toad",
+"label": "toad"
+},
+{
+"src": "assets/images/level5/g2/s032-4.webp",
+"alt": "wood mouse",
+"label": "wood mouse"
+},
+{
+"src": "assets/images/level5/g2/s032-5.webp",
+"alt": "squirrel",
+"label": "squirrel"
+},
+{
+"src": "assets/images/level5/g2/s032-6.webp",
+"alt": "moth",
+"label": "moth"
+},
+{
+"src": "assets/images/level5/g2/s032-7.webp",
+"alt": "beetle",
+"label": "beetle"
+},
+{
+"src": "assets/images/level5/g2/s032-8.webp",
+"alt": "woodpecker",
+"label": "woodpecker"
+},
+{
+"src": "assets/images/level5/g2/s032-9.webp",
+"alt": "Stag beetle",
+"label": "Stag beetle"
+}
+],
+"choices": []
+}
+]
+},
+"2:34": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 8- Animals in the Meadow",
+"text": "Animals in the Meadow\nThe birds in the sky go fly and fly.\nHere comes the butterfly, flying in the meadow.\nTo get the attention of me and you.",
+"images": [
+{
+"src": "assets/images/level5/g2/s034-1.webp",
+"alt": "butterfly",
+"label": "butterfly"
+},
+{
+"src": "assets/images/level5/g2/s034-2.webp",
+"alt": "Dragon fly",
+"label": "Dragon fly"
+},
+{
+"src": "assets/images/level5/g2/s034-3.webp",
+"alt": "grasshopper",
+"label": "grasshopper"
+},
+{
+"src": "assets/images/level5/g2/s034-4.webp",
+"alt": "praying mantis",
+"label": "praying mantis"
+},
+{
+"src": "assets/images/level5/g2/s034-5.webp",
+"alt": "ladybug",
+"label": "ladybug"
+},
+{
+"src": "assets/images/level5/g2/s034-6.webp",
+"alt": "housefly",
+"label": "housefly"
+},
+{
+"src": "assets/images/level5/g2/s034-7.webp",
+"alt": "gold pinch",
+"label": "gold pinch"
+},
+{
+"src": "assets/images/level5/g2/s034-8.webp",
+"alt": "mosquito",
+"label": "mosquito"
+},
+{
+"src": "assets/images/level5/g2/s034-9.webp",
+"alt": "bee",
+"label": "bee"
+}
+],
+"choices": []
+}
+]
+},
+"2:36": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 9- Animals in the Forest",
+"text": "Animals in the Forest\nLook at the monkey.\nTeasing you and me.\nLook at the deer and the kangaroo.\nThey are hiding on you.",
+"images": [
+{
+"src": "assets/images/level5/g2/s036-1.webp",
+"alt": "deer",
+"label": "deer"
+},
+{
+"src": "assets/images/level5/g2/s036-2.webp",
+"alt": "wild boar",
+"label": "wild boar"
+},
+{
+"src": "assets/images/level5/g2/s036-3.webp",
+"alt": "monkey",
+"label": "monkey"
+},
+{
+"src": "assets/images/level5/g2/s036-4.webp",
+"alt": "snake",
+"label": "snake"
+},
+{
+"src": "assets/images/level5/g2/s036-5.webp",
+"alt": "kangaroo",
+"label": "kangaroo"
+},
+{
+"src": "assets/images/level5/g2/s036-6.webp",
+"alt": "bat",
+"label": "bat"
+},
+{
+"src": "assets/images/level5/g2/s036-7.webp",
+"alt": "eagle",
+"label": "eagle"
+},
+{
+"src": "assets/images/level5/g2/s036-8.webp",
+"alt": "lion",
+"label": "lion"
+},
+{
+"src": "assets/images/level5/g2/s036-9.webp",
+"alt": "fox",
+"label": "fox"
+}
+],
+"choices": []
+}
+]
+},
+"2:38": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 10- Animals in the Sea",
+"text": "Animals in the Sea\nThe fish in the sea.\nGo swimming and swimming.\nUnder the deep blue sea.\nDolphins and whales are friends of me.",
+"images": [
+{
+"src": "assets/images/level5/g2/s038-1.webp",
+"alt": "shark",
+"label": "shark"
+},
+{
+"src": "assets/images/level5/g2/s038-2.webp",
+"alt": "dolphin",
+"label": "dolphin"
+},
+{
+"src": "assets/images/level5/g2/s038-3.webp",
+"alt": "whale",
+"label": "whale"
+},
+{
+"src": "assets/images/level5/g2/s038-4.webp",
+"alt": "lobster",
+"label": "lobster"
+},
+{
+"src": "assets/images/level5/g2/s038-5.webp",
+"alt": "squid",
+"label": "squid"
+},
+{
+"src": "assets/images/level5/g2/s038-6.webp",
+"alt": "crab",
+"label": "crab"
+},
+{
+"src": "assets/images/level5/g2/s038-7.webp",
+"alt": "starfish",
+"label": "starfish"
+},
+{
+"src": "assets/images/level5/g2/s038-8.webp",
+"alt": "shrimps",
+"label": "shrimps"
+},
+{
+"src": "assets/images/level5/g2/s038-9.webp",
+"alt": "shells",
+"label": "shells"
+}
+],
+"choices": []
+}
+]
+},
+"2:40": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Me and Our House",
+"text": "Come and go with me to our house and see.\nHere is our kitchen where mama cooks for me.\nHere is our living room where I watch television.\nHere is our bathroom inside my room.\nHere is the garage where my daddy fixes the car for our family.",
+"images": [
+{
+"src": "assets/images/level5/g2/s040-1.webp",
+"alt": "Picture: Me and Our House",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"2:41": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 11- Things Found in the Kitchen",
+"text": "Things Found in the Kitchen\nKeep our kitchen clean.\nWipe the spill water and drain.\nPut fruit on your blender.\nPrepare juice and share.",
+"images": [
+{
+"src": "assets/images/level5/g2/s041-1.webp",
+"alt": "wash basin",
+"label": "wash basin"
+},
+{
+"src": "assets/images/level5/g2/s041-2.webp",
+"alt": "refrigerator",
+"label": "refrigerator"
+},
+{
+"src": "assets/images/level5/g2/s041-3.webp",
+"alt": "kettle",
+"label": "kettle"
+},
+{
+"src": "assets/images/level5/g2/s041-4.webp",
+"alt": "gas stove",
+"label": "gas stove"
+},
+{
+"src": "assets/images/level5/g2/s041-5.webp",
+"alt": "rice cooker",
+"label": "rice cooker"
+},
+{
+"src": "assets/images/level5/g2/s041-6.webp",
+"alt": "blender",
+"label": "blender"
+},
+{
+"src": "assets/images/level5/g2/s041-7.webp",
+"alt": "plate",
+"label": "plate"
+},
+{
+"src": "assets/images/level5/g2/s041-8.webp",
+"alt": "fork",
+"label": "fork"
+},
+{
+"src": "assets/images/level5/g2/s041-9.webp",
+"alt": "Spoon",
+"label": "Spoon"
+}
+],
+"choices": []
+}
+]
+},
+"2:43": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 12- Things Found in the Living Room",
+"text": "Things Found in the Living Room\nSet beside me.\nLet’s watch TV.\nSip the morning coffee.\nServed to you for free.",
+"images": [
+{
+"src": "assets/images/level5/g2/s043-1.webp",
+"alt": "flower vase",
+"label": "flower vase"
+},
+{
+"src": "assets/images/level5/g2/s043-2.webp",
+"alt": "frames",
+"label": "frames"
+},
+{
+"src": "assets/images/level5/g2/s043-3.webp",
+"alt": "bookshelf",
+"label": "bookshelf"
+},
+{
+"src": "assets/images/level5/g2/s043-4.webp",
+"alt": "sofa",
+"label": "sofa"
+},
+{
+"src": "assets/images/level5/g2/s043-5.webp",
+"alt": "television",
+"label": "television"
+},
+{
+"src": "assets/images/level5/g2/s043-6.webp",
+"alt": "curtains",
+"label": "curtains"
+},
+{
+"src": "assets/images/level5/g2/s043-7.webp",
+"alt": "carpet",
+"label": "carpet"
+},
+{
+"src": "assets/images/level5/g2/s043-8.webp",
+"alt": "electric fan",
+"label": "electric fan"
+},
+{
+"src": "assets/images/level5/g2/s043-9.webp",
+"alt": "Clock",
+"label": "Clock"
+}
+],
+"choices": []
+}
+]
+},
+"2:45": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Activity 13- Things Found in the Bedroom",
+"text": "Things Found in the Bedroom\nCome inside my room.\nKeep the light turning on.\nMama is coming home.\nI will never be alone.",
+"images": [
+{
+"src": "assets/images/level5/g2/s045-1.webp",
+"alt": "bed",
+"label": "bed"
+},
+{
+"src": "assets/images/level5/g2/s045-2.webp",
+"alt": "bed sheet",
+"label": "bed sheet"
+},
+{
+"src": "assets/images/level5/g2/s045-3.webp",
+"alt": "blanket",
+"label": "blanket"
+},
+{
+"src": "assets/images/level5/g2/s045-4.webp",
+"alt": "pillow",
+"label": "pillow"
+},
+{
+"src": "assets/images/level5/g2/s045-5.webp",
+"alt": "mosquito net",
+"label": "mosquito net"
+},
+{
+"src": "assets/images/level5/g2/s045-6.webp",
+"alt": "wardrobe",
+"label": "wardrobe"
+},
+{
+"src": "assets/images/level5/g2/s045-7.webp",
+"alt": "lampshade",
+"label": "lampshade"
+},
+{
+"src": "assets/images/level5/g2/s045-8.webp",
+"alt": "mirror",
+"label": "mirror"
+},
+{
+"src": "assets/images/level5/g2/s045-9.webp",
+"alt": "alarm clock",
+"label": "alarm clock"
+}
+],
+"choices": []
+}
+]
+},
+"2:47": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Lesson 14: Things Found in the Bath Room",
+"text": "If you want to shower\nDon’t forget to bring towel.\nUse soap and shampoo\nBrush and comb are set for you.",
+"images": [
+{
+"src": "assets/images/level5/g2/s047-1.webp",
+"alt": "bath mat",
+"label": "bath mat"
+},
+{
+"src": "assets/images/level5/g2/s047-2.webp",
+"alt": "toilet paper",
+"label": "toilet paper"
+},
+{
+"src": "assets/images/level5/g2/s047-3.webp",
+"alt": "shampoo",
+"label": "shampoo"
+},
+{
+"src": "assets/images/level5/g2/s047-4.webp",
+"alt": "soap dish",
+"label": "soap dish"
+},
+{
+"src": "assets/images/level5/g2/s047-5.webp",
+"alt": "soap",
+"label": "soap"
+},
+{
+"src": "assets/images/level5/g2/s047-6.webp",
+"alt": "bucket",
+"label": "bucket"
+},
+{
+"src": "assets/images/level5/g2/s047-7.webp",
+"alt": "comb",
+"label": "comb"
+},
+{
+"src": "assets/images/level5/g2/s047-8.webp",
+"alt": "bath cup",
+"label": "bath cup"
+},
+{
+"src": "assets/images/level5/g2/s047-9.webp",
+"alt": "brush",
+"label": "brush"
+}
+],
+"choices": []
+}
+]
+},
+"2:49": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Lesson 15- Things Found in the Garage",
+"text": "Things Found in the Garage\nDo you really want to shop?\nOn the garage you can stop.\nPark there safely.\nTo keep you and your car safety.",
+"images": [
+{
+"src": "assets/images/level5/g2/s049-1.webp",
+"alt": "car",
+"label": "car"
+},
+{
+"src": "assets/images/level5/g2/s049-2.webp",
+"alt": "engine oil",
+"label": "engine oil"
+},
+{
+"src": "assets/images/level5/g2/s049-3.webp",
+"alt": "wheel",
+"label": "wheel"
+},
+{
+"src": "assets/images/level5/g2/s049-4.webp",
+"alt": "petrol can",
+"label": "petrol can"
+},
+{
+"src": "assets/images/level5/g2/s049-5.webp",
+"alt": "pliers",
+"label": "pliers"
+},
+{
+"src": "assets/images/level5/g2/s049-6.webp",
+"alt": "screw driver",
+"label": "screw driver"
+},
+{
+"src": "assets/images/level5/g2/s049-7.webp",
+"alt": "trolley jack",
+"label": "trolley jack"
+},
+{
+"src": "assets/images/level5/g2/s049-8.webp",
+"alt": "funnel",
+"label": "funnel"
+},
+{
+"src": "assets/images/level5/g2/s049-9.webp",
+"alt": "hammer",
+"label": "hammer"
+}
+],
+"choices": []
+}
+]
+},
+"2:51": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Me and My Surroundings",
+"text": "God created heaven and Earth.\nBeautiful surrounding with fresh air to breath.\nKeep our environment clean and green.\nMake our place safe to live in.",
+"images": [
+{
+"src": "assets/images/level5/g2/s051-1.webp",
+"alt": "Picture: Me and My Surroundings",
+"label": ""
+}
+],
+"choices": []
+}
+]
+},
+"2:52": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Lesson 16- Landforms",
+"text": "Landforms\nBeyond your imagination.\nLand has different forms.\nGo outside and explore.\nExperience the beauty of nature.",
+"images": [
+{
+"src": "assets/images/level5/g2/s052-1.webp",
+"alt": "mountain",
+"label": "mountain"
+},
+{
+"src": "assets/images/level5/g2/s052-2.webp",
+"alt": "valley",
+"label": "valley"
+},
+{
+"src": "assets/images/level5/g2/s052-3.webp",
+"alt": "plateau",
+"label": "plateau"
+},
+{
+"src": "assets/images/level5/g2/s052-4.webp",
+"alt": "glacier",
+"label": "glacier"
+},
+{
+"src": "assets/images/level5/g2/s052-5.webp",
+"alt": "hill",
+"label": "hill"
+},
+{
+"src": "assets/images/level5/g2/s052-6.webp",
+"alt": "desert",
+"label": "desert"
+},
+{
+"src": "assets/images/level5/g2/s052-7.webp",
+"alt": "basin",
+"label": "basin"
+},
+{
+"src": "assets/images/level5/g2/s052-8.webp",
+"alt": "shoreline",
+"label": "shoreline"
+},
+{
+"src": "assets/images/level5/g2/s052-9.webp",
+"alt": "plain",
+"label": "plain"
+}
+],
+"choices": []
+}
+]
+},
+"2:54": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Lesson 17- Body of Water",
+"text": "Body of Water\nThe spring, falls, pond, lake and river.\nEnhancing the beauty on Earth forever.\nOcean and sea are nice to see.\nKeep them clean and garbage free.",
+"images": [
+{
+"src": "assets/images/level5/g2/s054-1.webp",
+"alt": "ocean",
+"label": "ocean"
+},
+{
+"src": "assets/images/level5/g2/s054-2.webp",
+"alt": "sea",
+"label": "sea"
+},
+{
+"src": "assets/images/level5/g2/s054-3.webp",
+"alt": "river",
+"label": "river"
+},
+{
+"src": "assets/images/level5/g2/s054-4.webp",
+"alt": "stream",
+"label": "stream"
+},
+{
+"src": "assets/images/level5/g2/s054-5.webp",
+"alt": "spring",
+"label": "spring"
+},
+{
+"src": "assets/images/level5/g2/s054-6.webp",
+"alt": "falls",
+"label": "falls"
+},
+{
+"src": "assets/images/level5/g2/s054-7.webp",
+"alt": "lake",
+"label": "lake"
+},
+{
+"src": "assets/images/level5/g2/s054-8.webp",
+"alt": "pond",
+"label": "pond"
+},
+{
+"src": "assets/images/level5/g2/s054-9.webp",
+"alt": "ditch",
+"label": "ditch"
+}
+],
+"choices": []
+}
+]
+},
+"2:56": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Lesson 18- Mineral Resources",
+"text": "Mineral Resources\nEarth is rich in treasure.\nMore than we could ever measure.\nCoal, copper, gold and silver.\nElements on Earth layer upon layer.",
+"images": [
+{
+"src": "assets/images/level5/g2/s056-1.webp",
+"alt": "gold",
+"label": "gold"
+},
+{
+"src": "assets/images/level5/g2/s056-2.webp",
+"alt": "silver",
+"label": "silver"
+},
+{
+"src": "assets/images/level5/g2/s056-3.webp",
+"alt": "copper",
+"label": "copper"
+},
+{
+"src": "assets/images/level5/g2/s056-4.webp",
+"alt": "coal",
+"label": "coal"
+},
+{
+"src": "assets/images/level5/g2/s056-5.webp",
+"alt": "salt",
+"label": "salt"
+},
+{
+"src": "assets/images/level5/g2/s056-6.webp",
+"alt": "limestone",
+"label": "limestone"
+},
+{
+"src": "assets/images/level5/g2/s056-7.webp",
+"alt": "phosphate",
+"label": "phosphate"
+},
+{
+"src": "assets/images/level5/g2/s056-8.webp",
+"alt": "aluminum",
+"label": "aluminum"
+},
+{
+"src": "assets/images/level5/g2/s056-9.webp",
+"alt": "sand and gravel",
+"label": "sand and gravel"
+}
+],
+"choices": []
+}
+]
+},
+"2:58": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Lesson 19- Transportation",
+"text": "In the street you can see.\nBuses, cars and taxi.\nIn the air there is a plane.\nOn the rails there is a train.",
+"images": [
+{
+"src": "assets/images/level5/g2/s058-1.webp",
+"alt": "truck",
+"label": "truck"
+},
+{
+"src": "assets/images/level5/g2/s058-2.webp",
+"alt": "van",
+"label": "van"
+},
+{
+"src": "assets/images/level5/g2/s058-3.webp",
+"alt": "ambulance",
+"label": "ambulance"
+},
+{
+"src": "assets/images/level5/g2/s058-4.webp",
+"alt": "bicycle",
+"label": "bicycle"
+},
+{
+"src": "assets/images/level5/g2/s058-5.webp",
+"alt": "train",
+"label": "train"
+},
+{
+"src": "assets/images/level5/g2/s058-6.webp",
+"alt": "taxi",
+"label": "taxi"
+},
+{
+"src": "assets/images/level5/g2/s058-7.webp",
+"alt": "boat",
+"label": "boat"
+},
+{
+"src": "assets/images/level5/g2/s058-8.webp",
+"alt": "ship",
+"label": "ship"
+},
+{
+"src": "assets/images/level5/g2/s058-9.webp",
+"alt": "airplane",
+"label": "airplane"
+}
+],
+"choices": []
+}
+]
+},
+"2:60": {
+"instruction": "Listen as the story is read aloud. Look at the pictures and say the words.",
+"cards": [
+{
+"title": "Read",
+"heading": "Lesson 20- Famous Location",
+"text": "Famous Location\nWhere there is water, life is better.\nWhere there is greenness, air is fresh.\nRelax and refresh, Keep away from stress.",
+"images": [
+{
+"src": "assets/images/level5/g2/s060-1.webp",
+"alt": "Banaue Rice Terraces",
+"label": "Banaue Rice Terraces"
+},
+{
+"src": "assets/images/level5/g2/s060-2.webp",
+"alt": "Bulkang Mayon",
+"label": "Bulkang Mayon"
+},
+{
+"src": "assets/images/level5/g2/s060-3.webp",
+"alt": "Boracay Island",
+"label": "Boracay Island"
+},
+{
+"src": "assets/images/level5/g2/s060-4.webp",
+"alt": "Coron Reef",
+"label": "Coron Reef"
+},
+{
+"src": "assets/images/level5/g2/s060-5.webp",
+"alt": "Maria Cristina Falls",
+"label": "Maria Cristina Falls"
+},
+{
+"src": "assets/images/level5/g2/s060-6.webp",
+"alt": "Dakak Beach",
+"label": "Dakak Beach"
+},
+{
+"src": "assets/images/level5/g2/s060-7.webp",
+"alt": "Pagsangjan Falls",
+"label": "Pagsangjan Falls"
+},
+{
+"src": "assets/images/level5/g2/s060-8.webp",
+"alt": "Sohoton Cave",
+"label": "Sohoton Cave"
+},
+{
+"src": "assets/images/level5/g2/s060-9.webp",
+"alt": "Hundred Islands",
+"label": "Hundred Islands"
+}
+],
+"choices": []
+}
+]
+}
+}

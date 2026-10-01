@@ -1,0 +1,51 @@
+BULIG — INSTALL LEVEL 4 (FLUENCY, GRADES 1–6)
+===============================================
+
+You need these 4 files:
+  • BULIG-Level4-Part1-code-and-pictures.zip   (about 3 MB)
+  • BULIG-Level4-Part2-grades1-3.zip           (about 11 MB)
+  • BULIG-Level4-Part3-grades4-6.zip           (about 11 MB)
+  • 010_level4_content.sql                     (the database update)
+
+Your site folder (the one that holds app, config, database, public and storage):
+  /home/u179645850/domains/lemonchiffon-goose-405007.hostingersite.com/public_html
+
+STEP 1 — Back up
+  hPanel → Files → Backups (or phpMyAdmin → Export) so you can undo if needed.
+
+STEP 2 — Upload and extract the 3 ZIPs (one at a time)
+  1. hPanel → File Manager → open the site folder above (public_html).
+  2. Upload BULIG-Level4-Part1-code-and-pictures.zip.
+  3. Right-click it → Extract → extract into THIS SAME folder (public_html).
+     Choose "overwrite" / "replace" when asked.
+  4. Delete the ZIP after it is extracted.
+  5. Repeat for Part2, then Part3.
+
+  After this you should see, inside public_html:
+     storage/level4/grade-1.pdf … grade-6.pdf
+     storage/level4/g1 … g6          (page pictures)
+     public/assets/images/level4     (80 pictures)
+     database/level4-meta.json
+
+STEP 3 — Update the database
+  1. hPanel → Databases → phpMyAdmin → open.
+  2. Click your BULIG database on the left FIRST.
+  3. Import tab → choose 010_level4_content.sql → Go.
+  It only ADDS Level 4. No accounts, progress or existing lessons are changed.
+  It is safe to import again if it stops partway.
+
+STEP 4 — Check
+  1. Open https://lemonchiffon-goose-405007.hostingersite.com/bulig-check.php
+     All rows should say OK (including the five "Level 4" rows).
+  2. If the design looks old: hPanel → Cache Manager → Purge all, then Ctrl+F5.
+  3. Delete public/bulig-check.php when you are done.
+
+HOW LEVEL 4 WORKS
+  • Each grade has its own Level 4 module. A Grade 3 pupil sees only the Grade 3
+    passages. The pupil's grade comes from their section.
+  • Pupils reach Level 4 after finishing Level 3, or when the teacher sets their
+    starting level to Level 4.
+  • Class Demo → Level 4 → choose a grade. Each passage slide has a scoring helper
+    (miscues + seconds → Oral Reading Score, reading level, words per minute).
+  • Teaching guide → pick "Level 4 · Grade N · …" to see the Phil-IRI scoring steps
+    and the passage; "Download original" gives that grade's PDF.

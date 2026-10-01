@@ -1,0 +1,764 @@
+{
+ "grades": {
+  "1": {
+   "page_count": 22,
+   "pupil_pages": [
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    22
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "The Cat",
+     "pages": [
+      9
+     ],
+     "words": 27
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "My Dog",
+     "pages": [
+      11
+     ],
+     "words": 25
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "The Sun",
+     "pages": [
+      12
+     ],
+     "words": 24
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "My Hat",
+     "pages": [
+      13
+     ],
+     "words": 26
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "The Bird",
+     "pages": [
+      14
+     ],
+     "words": 25
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "Rainy Day",
+     "pages": [
+      15
+     ],
+     "words": 24
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "The Market",
+     "pages": [
+      16
+     ],
+     "words": 30
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "Tim\u2019s Ball",
+     "pages": [
+      17
+     ],
+     "words": 25
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "The Dog and Cat",
+     "pages": [
+      18
+     ],
+     "words": 26
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "My Family",
+     "pages": [
+      19
+     ],
+     "words": 23
+    },
+    {
+     "position": 11,
+     "phase": "learn",
+     "title": "My School",
+     "pages": [
+      20
+     ],
+     "words": 29
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "The Cat",
+     "pages": [
+      22
+     ],
+     "words": 27
+    }
+   ],
+   "folder": "level4/g1",
+   "pdf": "level4/grade-1.pdf"
+  },
+  "2": {
+   "page_count": 29,
+   "pupil_pages": [
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    29
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "The Picnic",
+     "pages": [
+      9
+     ],
+     "words": 47
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "The Farm",
+     "pages": [
+      11,
+      12,
+      13
+     ],
+     "words": 45
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "The Birthday Party",
+     "pages": [
+      14
+     ],
+     "words": 41
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "My School Bag",
+     "pages": [
+      15
+     ],
+     "words": 41
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "The Zoo",
+     "pages": [
+      16,
+      17
+     ],
+     "words": 41
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "The Beach",
+     "pages": [
+      18
+     ],
+     "words": 43
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "My Bike",
+     "pages": [
+      19
+     ],
+     "words": 41
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "The Train",
+     "pages": [
+      20
+     ],
+     "words": 42
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "The Library",
+     "pages": [
+      21
+     ],
+     "words": 45
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "The Raincoat",
+     "pages": [
+      22,
+      23,
+      24
+     ],
+     "words": 40
+    },
+    {
+     "position": 11,
+     "phase": "learn",
+     "title": "The Bakery",
+     "pages": [
+      25,
+      26,
+      27
+     ],
+     "words": 42
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "The Picnic",
+     "pages": [
+      29
+     ],
+     "words": 47
+    }
+   ],
+   "folder": "level4/g2",
+   "pdf": "level4/grade-2.pdf"
+  },
+  "3": {
+   "page_count": 23,
+   "pupil_pages": [
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "The Ant and The Fly",
+     "pages": [
+      9
+     ],
+     "words": 199
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "Max\u2019s Good Habit",
+     "pages": [
+      11
+     ],
+     "words": 209
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "Max\u2019s Good Habit II",
+     "pages": [
+      12
+     ],
+     "words": 189
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "Amusement Park Problem",
+     "pages": [
+      13
+     ],
+     "words": 177
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "Amusement Park Problem II",
+     "pages": [
+      14
+     ],
+     "words": 234
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "The generosity of Rantideva",
+     "pages": [
+      15
+     ],
+     "words": 174
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "I Am",
+     "pages": [
+      16
+     ],
+     "words": 144
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "Verb To Be",
+     "pages": [
+      17
+     ],
+     "words": 98
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "Verb To Be II",
+     "pages": [
+      18
+     ],
+     "words": 123
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "Daisies",
+     "pages": [
+      19
+     ],
+     "words": 80
+    },
+    {
+     "position": 11,
+     "phase": "learn",
+     "title": "A Robot Dog",
+     "pages": [
+      20,
+      21
+     ],
+     "words": 403
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "The Ant and The Fly",
+     "pages": [
+      23
+     ],
+     "words": 199
+    }
+   ],
+   "folder": "level4/g3",
+   "pdf": "level4/grade-3.pdf"
+  },
+  "4": {
+   "page_count": 23,
+   "pupil_pages": [
+    9,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "My First Baseball Game",
+     "pages": [
+      9
+     ],
+     "words": 255
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "The Singing Plant",
+     "pages": [
+      12
+     ],
+     "words": 209
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "The Singing Plant II",
+     "pages": [
+      13
+     ],
+     "words": 195
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "A Glass of Cold Water",
+     "pages": [
+      14
+     ],
+     "words": 258
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "The Elephant and the Crocodile",
+     "pages": [
+      15
+     ],
+     "words": 379
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "Songs of the Witches",
+     "pages": [
+      16
+     ],
+     "words": 202
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "My First Baseball Game II",
+     "pages": [
+      17
+     ],
+     "words": 237
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "The Boy Who Cried Wolf",
+     "pages": [
+      18
+     ],
+     "words": 162
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "The Boy Who Cried Wolf II",
+     "pages": [
+      19
+     ],
+     "words": 148
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "A Day at the Beach",
+     "pages": [
+      20
+     ],
+     "words": 58
+    },
+    {
+     "position": 11,
+     "phase": "learn",
+     "title": "I Wanna Do Right",
+     "pages": [
+      21
+     ],
+     "words": 100
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "My First Baseball Game",
+     "pages": [
+      23
+     ],
+     "words": 255
+    }
+   ],
+   "folder": "level4/g4",
+   "pdf": "level4/grade-4.pdf"
+  },
+  "5": {
+   "page_count": 20,
+   "pupil_pages": [
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    20
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "The Crocodile and the Monkey",
+     "pages": [
+      9
+     ],
+     "words": 491
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "Fight Song",
+     "pages": [
+      11
+     ],
+     "words": 332
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "You Can",
+     "pages": [
+      12
+     ],
+     "words": 112
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "Print Your Own Medicine",
+     "pages": [
+      13
+     ],
+     "words": 472
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "When You Are Old",
+     "pages": [
+      14
+     ],
+     "words": 104
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "Jimmy Jet and His TV Set",
+     "pages": [
+      15
+     ],
+     "words": 150
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "Pygmalion: Henry and Eliza",
+     "pages": [
+      16
+     ],
+     "words": 523
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "Old McDonald had a Farm",
+     "pages": [
+      17
+     ],
+     "words": 315
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "The Crocodile and the Monkey",
+     "pages": [
+      18
+     ],
+     "words": 495
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "The Crocodile and the Monkey",
+     "pages": [
+      20
+     ],
+     "words": 491
+    }
+   ],
+   "folder": "level4/g5",
+   "pdf": "level4/grade-5.pdf"
+  },
+  "6": {
+   "page_count": 21,
+   "pupil_pages": [
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    21
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "\"Bad Girl\"",
+     "pages": [
+      9
+     ],
+     "words": 269
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "It is Raining",
+     "pages": [
+      11
+     ],
+     "words": 241
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "You Learn",
+     "pages": [
+      12
+     ],
+     "words": 220
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "The House on the Hill",
+     "pages": [
+      13
+     ],
+     "words": 107
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "The Golden Egg",
+     "pages": [
+      14
+     ],
+     "words": 218
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "To the River",
+     "pages": [
+      15
+     ],
+     "words": 78
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "Be Glad Your Nose is on Your Face",
+     "pages": [
+      16
+     ],
+     "words": 140
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "The Crocodile and the Monkey",
+     "pages": [
+      17
+     ],
+     "words": 435
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "Pygmalion: Henry and Eliza",
+     "pages": [
+      18
+     ],
+     "words": 522
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "My First Baseball Game",
+     "pages": [
+      19
+     ],
+     "words": 257
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "\"Bad Girl\"",
+     "pages": [
+      21
+     ],
+     "words": 269
+    }
+   ],
+   "folder": "level4/g6",
+   "pdf": "level4/grade-6.pdf"
+  }
+ }
+}

@@ -1,0 +1,1265 @@
+# Level 6 Grade 5 cards. Edited by hand against the module pages; see README in build.py.
+
+######## LESSON 1 · pre · Pre-Assessment
+
+=== 1.1 | Magnets | Noting Details | pages 8
+pics: p008-1 p008-2
+# SKILL A- NOTING DETAILS
+¶ Magnets
+¶ Magnets have the power of attracting objects made of steel, iron, and
+other metals.
+¶ The discovery of the magnet and the many things that have been made
+out of it have brought about many discoveries and useful things. The magnet
+makes possible the compass that was used and still being used by travelers -
+pilots, sailors, boy scouts, soldiers, engineers, and others. The magnet which
+makes use of electricity has made all types of electric and industrial motors.
+ins: Choose the letter of the correct answer.
+q 1: Magnets can attract objects made of ___________.
+| A. plastic | B. metals | C. wood | D. rubber
+q 2: The discovery of magnets led to many ______________.
+| A. inventions | B. revolutions | C. problems | D. effects
+q 3: Magnets made possible the inventions of the ____________.
+| A. compass | B. computer | C. camera | D. cellphone
+q 4: Pilots, sailors, boy scouts, soldiers and engineers depend much on
+- .
+| A. compass | B. electricity | C. motors | D. laptop
+
+=== 1.2 | Exercise 1 | Getting the General Significance | pages 9
+pics: 
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Exercise 1
+¶ Our body remains at a certain temperature all the time. When we
+get very warm, little beads of water called sweat form on our skin. Sweat is
+mostly water mixed with salt from the body. This is also called perspiration.
+Perspiring is a quick method of cooling off the body. As a little bead of sweat
+evaporates, it carries away a little heat from the body, and we feel a little
+cooler.
+q 1: What happens to our body when we feel hot?
+| A. Our body perspires
+| B. Our body evaporates
+| C. Our body burns
+| D. Our body dies
+q 2: What is the paragraph about?
+| A. It is about maintaining the body temperature.
+| B. It is about keeping the body warm.
+| C. It is about keeping the body cool.
+| D. It is about living a meaningful life.
+q 3: What does the selection explain?
+| A. perspiring is not good for the body.
+| B. perspiring is good for the body.
+| C. perspiring is a sign of illness.
+| D. Perspiring can make us tired.
+
+=== 1.3 | Exercise 2 | Getting the General Significance | pages 10
+pics: 
+# Skill B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Exercise 2
+¶ The body should be kept clean at all times. Plenty of soap and warm
+water help remove excess oil, dirt, and germs from the skin. Rubbing the body
+with a towel after bathing stimulates the flow of the oil from oil glands and keep
+the skin smooth and soft.
+¶ Dirty hands may not actually look dirty, but it is always safe to wash them
+before handling food, before and after eating.
+¶ The ears, the eyes, the nose, the mouth and teeth need special cleaning
+Attention so, with the hair.
+¶ The feet should be washed and dried before putting on one’s shoes or
+slippers.
+¶ A clean body keeps sickness away!
+q 1: What is a good title for the selection?
+| A. Keeping the body clean
+| B. Dirty hands and feet
+| C. How to clean One’s Feet
+| D. How to be dirty
+q 2: When should the body be kept clean?
+| A. before sleeping
+| B. at all times
+| C. before and after eating
+| D. when we wake up
+q 3: Which sentence is true according to the selection?
+| A. A clean body keeps sickness away.
+| B. Keeping the body clean takes little effort.
+| C. Cleaning the body takes a lot of time and effort.
+| D. A clean foot can attract other people.
+
+=== 1.4 | Anti-Decay Vaccine | Predicting Outcomes | pages 11
+pics: 
+# Skill C- PREDICTING THE OUTCOME OF THE GIVEN EVENT AND MAKING
+# INFERENCES
+¶ Anti-Decay Vaccine
+¶ Most people have had dental problems which start with a simple
+toothache. No matter how well one brushes his teeth, sooner or later cavities
+are formed which later cause tooth decay.
+¶ Today, scientists are busy experimenting to discover a vaccine that
+would make people immune to tooth decay.
+q 1: Why do scientists want to discover a vaccine for tooth decay?
+| A. To help people avoid tooth decay.
+| B. To help babies grow stronger.
+| C. To improve people's eyesight.
+| D. To help medicine companies earn money.
+q 2: What is the vaccine for?
+| A. To prevent bad breath
+| B. To prevent deformed teeth
+| C. To prevent tooth decay
+| D. To prevent skin diseases
+q 3: What will be the effect of the vaccine?
+| A. Many people will be saved from the pain of having tooth decay.
+| B. People will not brush their teeth anymore.
+| C. There will be no more need for dentists.
+| D. Many people will have skin allergies.
+
+=== 1.5 | When Rizal Was a Boy | Reading to Follow Precise Directions | pages 12
+pics: 
+# Skill D- READING TO FOLLOW PRECISE DIRECTIONS
+¶ When Rizal Was a Boy
+¶ One Monday morning, Jose woke up early to get ready for school. His
+mother told him to wear his new “camisa” made of abaca. Jose looked quiet
+and sad. He didn’t like to wear camisa.
+¶ “But I want you to wear it,” his mother insisted.
+¶ Jose looked at his mother and politely answered, “Yes Mother”.
+q 1: Box the word that described Jose.
+| A. Intelligent
+| B. Obedient
+| C. Helpful
+q 2: Box the phrase that tells when the story happened.
+| A. when Rizal was a boy
+| B. when Rizal was a grown-up man
+| C. when Rizal was dead
+| D. when he was a teenager
+q 3: What word that starts with letter P that tells how Jose answered his mother?
+ins: Write the word and encircle it.
+q 4: Copy the name of the plant mentioned in the selection and draw a box
+around it.
+
+=== 1.6 | Insects | Reading Exercises for Speed | pages 13,14
+pics: p013-1
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Exercise 3 PRETEST/POST TEST
+read: INSECTS
+¶ There are more than half a million kinds of insects. The kinds of insects
+outnumber the kinds of all animals put together.
+¶ Insects live in almost any kind of habitat. There are many in the sea, but
+they are found almost everywhere in freshwater and on land.
+¶ All insects have six legs and one pair of feelers. All insects are covered
+with a waterproof substance called chitin. Most insects have wings. Their
+bodies are divided into three parts: the head, the thorax, and the abdomen.
+¶ Most insects crawl, hop, swim, jump or walk. But flying is their usual way
+of getting about. Some can fly very fast. Dragonflies one are among the fastest
+fliers.
+¶ Some insects have two pairs of wings. Some have one pair. Some have
+none
+at all. It is safe, therefore, to think that insects differ in shape, size and color.
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# INSECTS
+# TEST QUESTIONS. Copy the letter of the correct answer.
+q 1: There are more than ____________ kinds of insects.
+| A. thousand
+| B. half a million | C. hundred
+| D. millions
+q 2: In what ways do insects differ?
+| A. In form | B. in height | C. in shape, size and color D.in movement
+q 3: Why can insects fly?
+| A. they have legs
+| B. they have antenna
+| C. they have wings
+| D. they have feelers
+
+######## LESSON 2 · lesson · The Eyebrows
+
+=== 2.1 | The Eyebrows | Noting Details | pages 16,17
+pics: p016-1
+# SKILL A- NOTING DETAILS
+# Activity 1 Exercise 1
+vocab: beauty, protection, sweat, rid
+¶ The Eyebrows
+¶ Eyebrows are part of the face which serve two purposes--for beauty
+and protection.
+¶ Eyebrows make the face look more beautiful by calling attention to the
+eyes. They make the eyes look healthier and brighter.
+¶ Eyebrows not only beautify the face but also protect the eyes from
+sweat. Without the eyebrows, drops of sweat may run into the eyes and blur
+the sight. Sweat itself is a waste product and should be gotten rid of.
+ins: Choose the letter of the correct answer:
+q 1: The part of the body mentioned in the selection is the ______________.
+| A. eyelashes
+| B. eyelids | C. eyebrows | D. eyeliner
+q 2: This part makes the face look ____________.
+| A. beautiful
+| B. sad
+| C. sleepy
+| D. happy
+q 3: Aside from beauty, they also serve the purpose of _______.
+| A. communication | B. conservation | C. protection | D. transportation
+q 4: The eyebrows call attention to the ___________.
+| A. nose
+| B. eye s | C. cheeks
+| D. lips
+q 5: The eyebrows make the face look _________.
+| A. uglier
+| B. healthier | C. funnier
+| D. younger
+q 6: How do eyebrows serve its purpose for the eyes?
+| A. The eyebrows protect the eyes from sweat.
+| B. The eyebrows protect the eyes from glare.
+| C. The eyebrows protect the eyes from diseases.
+| D. The eyebrows protect the eyes from enemies.
+q 7: Sweat is ________.
+| A. sweet | B. useful | C. poisonous | D. useless
+q 8: Sweat can blur the sense of __________.
+| A. sight | B. smell | C. taste
+| D. touch
+q 9: Sweat should be__________.
+| A. conserved | B. gotten rid of | C. licked
+| D. saved
+q 10: Why do we have eyebrows?
+| A. They make the face beautiful.
+| B. They protect the eyes from sweat.
+| C. They make the eyes look brighter.
+| D. They help the face look healthier.
+
+######## LESSON 3 · lesson · Calla Lilies
+
+=== 3.1 | Calla Lilies | Noting Details | pages 18,19
+pics: p018-1
+# SKILL A- NOTING DETAILS
+# Activity 2 Exercise 2
+vocab: stately, abundantly, slender
+read: Calla Lilies
+¶ The stately flowers that are commonly used for decorating the
+church during weddings are the Calla lilies. Calla lilies are also called
+Baguio lilies because they grow abundantly there.
+¶ Calla lilies grow singly on long slender stalks. They may either be
+yellow or white. They are made into bridal bouquets or even wreaths.
+ins: Choose the letter of the correct answer.
+q 1: Calla lilies are commonly used for ____________.
+| A. corsages | B. garlands | C. church decoration | D. birthdays
+q 2: Calla lilies are also called ___________________.
+| A. Water lily
+| B. Rose lily | C. Baguio lilies D.Lily rose
+q 3: Why are calla lilies also called Baguio lilies?
+| A. It is because these lilies grow abundantly there.
+| B. It is because these lilies grow scarcely there.
+| C. It is because these lilies grow singly there.
+| D. It is because these lilies grow nicely there.
+q 4: Calla lilies grow ______________.
+| A. in clusters
+| B. singly | C. in pairs
+| D.in group
+q 5: The selection is about ___________.
+| A. gumamela | B. calla lilies | C. sampaguita | D. roses
+q 6: How will you describe the stalks of calla lilies?
+| A. The stalks of calla lilies are slender.
+| B. The stalks of calla lilies are stout.
+| C. The stalks of calla lilies are wide.
+| D. The stalks of calla lilies are short.
+q 7: Calla lilies may either be _______________.
+| A. white or red | B. red or yellow | C. yellow or white | D. red or white
+q 8: Brides used Calla lilies in their ___________.
+| A. wreaths | B. corsage | C. bouquets | D. headdress
+q 9: Calla lilies are also used for____________________.
+| A. corsage for the head
+| B. corsage for the dress
+| C. wreath for the dead
+| D. corsage for the dead
+q 10: Calla lilies are ___________.
+| A. stately | B. fancy | C. unattractive | D. cheap
+
+######## LESSON 4 · lesson · Counting the Rain
+
+=== 4.1 | Counting the Rain | Noting Details | pages 20,21
+pics: p020-1
+# SKILL A- NOTING DETAILS
+# Activity 3 Exercise 3
+vocab: patter, countless, pestle, nestle
+¶ Counting the Rain
+¶ I love counting the rain, Mother.
+¶ As they patter and as I see
+¶ Do not all the great men like Rizal
+¶ Count rain, too, when still young like me?
+¶ See the numerous dropping rains
+¶ How hard it is for little brains.
+¶ And I recall the children’s riddle
+¶ About the old man’s countless canes.
+¶ How I love the fast falling rain
+¶ Like a thousand pounding pestles
+¶ And the little rushing water
+¶ Down the stream to see it nestles.
+ins: Choose the letter of the correct answer:
+q 1: The child is talking to his __________.
+| A. father | B. mother | C. sister | D. grandmother
+q 2: The child loves to ___________ the rain.
+| A. count | B. drink | C. catch | D. splash
+q 3: The child wants to know if counting the rain has also been an activity of
+- .
+| A. great men | B. old men | C. sickly men | D. women
+q 4: The rain nestles in the ____________.
+| A. dream
+| B. stream | C. street
+| D. River
+q 5: The old man countless canes is a ___________.
+| A. riddle
+| B. fiddle | C. peddler
+| D. needle
+q 6: The water rushes to the ___________.
+| A. brook
+| B. stream | C. street
+| D. Ocean
+q 7: In the riddle, the countless canes refer to the __________.
+| A. little brain
+| B. dropping rains | C. stream | D. little hands
+q 8: How does the rain move?
+| A. withers
+| B. patters | C. gathers
+| D. fades
+q 9: The child loves the ________ rain.
+| A. fast
+| B. slow | C. tumbling
+| D. cold
+q 10: Why does the child like the fast-falling rain?
+| A. Because, it is like a rushing water.
+| B. Because it is like a big waves.
+| C. Because it is like a pounding pestle.
+| D. Because it is like a silent water.
+
+######## LESSON 5 · lesson · The Enchanted Deer
+
+=== 5.1 | The Enchanted Deer | Noting Details | pages 22,23
+pics: p022-1
+# SKILL A- NOTING DETAILS
+# Activity 4 Exercise 4
+vocab: tribes, trick, defied, enchanted
+¶ The Enchanted Deer
+¶ Once there were two warring tribes whose kingdoms were
+divided only by a wide river. The king on the land north of the river had
+a beautiful daughter named Mayumi; while the King on the land south
+of the river had a brave handsome son named Bayani.
+¶ Both kings hated each other so much that they even wanted their
+children to hate each other, too.
+¶ But fate played a trick on them. Mayumi and Bayani fell so madly
+in love with each other that they defied their parents’ wish. They often
+met secretly in the nearby forest.
+¶ One early morning, Mayumi went to meet Bayani in the forest.
+She had some enchanted power so she changed herself into a deer.
+She did not want anybody to see her.
+¶ Bayani waited for her. When he saw the deer, he was attracted
+to it. He quickly shot an arrow not knowing it was Mayumi.
+¶ The deer fell bleeding. Bayani ran to see his prize, but he saw
+Mayumi instead. He wept and, in his grief, he stabbed himself to death.
+ins: Choose the letter of the correct answer:
+q 1: The two kingdoms were divided by ____________.
+| A. mountains
+| B. seas | C. a river | D. clouds
+q 2: Mayumi was a daughter of the king of the ___________.
+| A. South
+| B. North | C. East | D. West
+q 3: Bayani was the son of the king of the _________.
+| A. South
+| B. North | C. East
+| D. West
+q 4: How will you describe the kings’ relationship?
+| A. good friends | B. enemies | C. very old | D. happy
+q 5: Mayumi and Bayani _________________________.
+| A. hated each other | B. loved each other
+| C. envied each other | D. do not know each other
+q 6: Mayumi and Bayani met in the forest ______________.
+| A. openly | B. secretly | C. very often
+| D. sadly
+q 7: How will you describe Mayumi?
+| A. Mayumi possessed some enchanted power .
+| B. Mayumi was a witch.
+| C. Mayumi was a magician.
+| D. Mayumi was a warrior.
+q 8: Mayumi could change herself into a ___________.
+| A. dog
+| B. horse | C. deer D.cat
+q 9: What did Bayani do to the deer?
+| A. Bayani shot the deer.
+| B. Bayani just looked at the deer.
+| C. Bayani ignored the deer.
+| D. Bayani played with the deer.
+q 10: How did the story end?
+| A. happily | B. sadly | C. foolishly | D. fearfully
+
+######## LESSON 6 · lesson · Green Plant
+
+=== 6.1 | Green Plant | Getting the General Significance | pages 24
+pics: p024-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Activity 5
+vocab: blend, carbon dioxide, starch
+¶ Green Plant
+¶ A green plant is the only living thing that can make its own food.
+The green leaves make food for the plant.
+¶ To make food, the leaves combine water and carbon dioxide
+together. With the help of the sunlight, water and carbon dioxide are
+made into sugar or starch. Sugar and starch are the food of the plants.
+ins: Choose the letter of the correct answer:
+q 1: What is the selection mainly about?
+| A. what plants give us
+| B. kinds of food
+| C. how the green plant make its food | D. The importance of plants
+q 2: What is true according to the selection?
+| A. All plants can make their own food.
+| B. Only green plants can make their own food.
+| C. Animals cook food for the plants.
+| D. All green plants can be eaten.
+q 3: What is needed by plants in making their food?
+| A. water and sunlight
+| B. oxygen
+| C. water, carbon dioxide, and sunlight
+| D. air and fertilizer
+
+######## LESSON 7 · lesson · The Lost Sheep
+
+=== 7.1 | The Lost Sheep | Getting the General Significance | pages 25
+pics: p025-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Activity 6
+vocab: tending, flock, worried
+read: The Lost Sheep
+¶ One day, a Shepherd was tending his flock of one hundred sheep. As
+night drew near, he counted his flock. He found out that one sheep was
+missing. He was very much worried, so he immediately left the ninety-nine
+sheep to look for the missing one. He did not stop until he found the lost one.
+When he found it, he was very happy.
+ins: Choose the letter of the correct answer:
+q 1: What is a good title for this selection?
+| A. The Good Shepherd
+| B. The Lost Sheep
+| C. The Foolish Shepherd
+| D. The Lazy Sheep
+q 2: Which sentence is true?
+| A. The Shepherd did not mind the lost sheep.
+| B. The Shepherd left the other sheep to look for the lost one.
+| C. It is foolish to look for one lost sheep.
+| D. The shepherd was not worried about the missing sheep.
+q 3: Which of the following words best describe the shepherd?
+| A. responsible | B. irresponsible | C. obedient
+| D. generous
+
+######## LESSON 8 · lesson · Insects (Locusts)
+
+=== 8.1 | Insects (Locusts) | Getting the General Significance | pages 26
+pics: p026-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Activity 7
+vocab: destructive, beneficial, descending, considered, shortage
+read: Insects
+¶ Some insects are very destructive to plants. The locust is a
+destructive insect. It is an enemy of the farmer. A swarm of locusts
+descending on a rice field is considered bad luck. It is because these
+insects can clear a rice field in one hour and eat all the grains of palay
+which are ready for harvest. When this happens, there will be a failure
+of rice crop, and shortage of food or hunger for the people.
+ins: Choose the letter of the correct answer:
+q 1: What is a good title for the selection?
+| A. Destructive Insect
+| B. Shortage of Food
+| C. The Farmer’s Enemy
+| D. The Lovely Insects
+q 2: Why are locusts destructive?
+| A. They can clear a rice field in an hour.
+| B. They attack the poor farmers.
+| C. They eat other insects and small animals.
+| D. They kill people
+q 3: The above paragraph is mainly about ___________.
+| A.How to eradicate locusts
+| B. How locusts multiply
+| C. How locusts cause food shortage | D. How to kill plants
+
+######## LESSON 9 · lesson · Linda Saves
+
+=== 9.1 | Linda Saves | Getting the General Significance | pages 27
+pics: p027-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Activity 8
+vocab: tempted, aside, orphanage
+¶ Linda Saves
+¶ Linda did not have enough money most of the time. But she knew that
+others had much less . So every time she had money and was tempted to buy
+an extra candy or another cold drink, she would stop herself and put the
+money inside a box which was marked , “ For the Poor.”
+¶ At the end of the year, she was surprised to see that her box was filled
+and was very heavy. She sent the box filled with money to an orphanage.
+ins: Choose the letter of the correct answer:
+q 1: What kind of girl is Linda?
+| A. hospitable | B. charitable | C. cooperative | D. industrious
+q 2: Did she pity herself for being poor?
+| A. No.
+| B. Yes. | C. The story does not tell
+| D. maybe
+q 3: For what was the money given by Linda to the orphanage?
+| A. To buy decoration for the orphanage
+| B. To buy medicine for the orphans
+| C. To buy Christmas gifts for the orphan
+| D. To buy appliances
+
+######## LESSON 10 · lesson · Hearing Mass
+
+=== 10.1 | Hearing Mass | Predicting Outcomes and Making Inferences | pages 28
+pics: p028-1
+# SKILL C-PREDICTING THE OUTCOME OF A GIVEN EVENT AND MAKING
+# INFERENCES
+# Activity 9 Exercise 1
+vocab: any longer, consecration, turned
+read: Hearing Mass
+¶ One Sunday morning, Father, Mother, Teresita and Marivic went to
+mass. Marivic could not wait any longer for the mass to end. During
+consecration, she began to cry loudly. Everybody turned to look at her.
+ins: Choose the letter of the correct answer:
+q 1: How did Mother feel when Marivic started to cry in the church?
+| A. excited | B. angry | C. embarrassed | D. Sad
+q 2: If you were Mother and Father, what would you do?
+| A. Spank Marivic.
+| B. Take Marivic out of the church.
+| C. Scold Marivic and finish the mass.
+| D. Never mind Marivic.
+q 3: What should Father and Mother do with Marivic next time they go to mass?
+| A. Leave her in the house with somebody.
+| B. Let her play in the church patio.
+| C. Bring her along and not mind if she annoys the other people
+¶ in the church.
+| D. Leave Marivic at home alone.
+
+######## LESSON 11 · lesson · The Big, Pink Bundle of Joy
+
+=== 11.1 | The Big, Pink Bundle of Joy | Predicting Outcomes and Making Inferences | pages 29
+pics: p029-1
+# SKILL C-PREDICTING THE OUTCOME OF A GIVEN EVENT AND MAKING
+# INFERENCES
+# Activity 10 Exercise 2
+vocab: bundle, bosom, lovingly
+read: THE BIG, PINK BUNDLE OF JOY
+¶ Mother has been in the hospital for five days. She could hardly wait to
+bring the big, pink bundle of joy to the children. Mother held the pink bundle
+lovingly to her bosom while Father called for a taxi.
+ins: Choose the letter of the correct answer:
+q 1: Where were father and mother?
+| A. in the hospital | B. in the supermarket | C. in the store D.at home
+q 2: Why were they there?
+| A. Mother was sick
+| B. Mother delivered a baby
+| C. Mother met an accident
+| D. Mother had a check-up
+q 3: What bundle of joy were they bringing home?
+| A. pig
+| B. baby | C. bag | D. gift
+
+######## LESSON 12 · check · Formative Assessment after Activity 10
+
+=== 12.1 | Why We Cook the Food We Eat | Noting Details | pages 45,46
+pics: 
+# FORMATIVE ASSESSMENT AFTER ACTIVITY 10
+# SKILL A- NOTING DETAILS
+read: WHY WE COOK THE FOOD WE EAT
+¶ We cook our food for three reasons- to make food palatable and
+appetizing, to soften hard and tough foods, and to kill any microbe that may
+happen to be in the food.
+¶ There are many ways in preparing food. Food can be fried, boiled,
+broiled, roasted, baked, steamed, stewed, or sauteed. They can be well
+cooked or half cooked.
+¶ It is easier to digest food that is well cooked. But there are foods that
+are easier to digest when half cooked than when well cooked. Meat and
+liver for example, are easier to digest when half cooked. But certainly, they
+taste better when well cooked.
+¶ Many vegetables are also easier to digest when well-cooked but some
+are eaten raw.
+ins: Write the letter of the correct answer in the blank.
+q 1: We cook our food _______________.
+| A. For no reason at all
+| B. For one main reason
+| C. For three good reasons
+q 2: Hard food becomes ____________ when cooked.
+| A. Harder | B. soft
+| C. Indigestible
+q 3: By cooking, the microbes in the food _____________.
+| A. Multiply | B. Are killed | C. Disappear
+q 4: Cooked food looks _____________.
+| A. Appetizing | B. Frozen | C. Rotten
+q 5: Generally, cooked foods are more ____________.
+| A. Digestible
+| B. Indigestible | C. Nutritious
+q 6: Meat and liver are easier to digest when ___________.
+| A. Not cooked | B. Half cooked | C. Thoroughly cooked
+q 7: Meat and pork certainly taste better when ___________.
+| A. Raw
+| B. Well-cooked | C. Overdone
+q 8: Vegetables are usually easier to digest when ____________.
+| A. Raw
+| B. half cooked | C. Well cooked
+q 9: Frying, boiling, broiling, roasting, baking, steaming, sautering, and
+¶ stewing are ways of ________________.
+| A. Preparing food
+| B. Buying food | C. Eating food
+q 10: Lettuce is a vegetable that is eaten ____________.
+| A. Raw
+| B. Well-cooked | C. Ripe
+
+=== 12.2 | Exercise 7 | Getting the General Significance | pages 47
+pics: 
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# # EXERCISE 7
+¶ Nestor and Serafin were both thrown together inside a prison cell which
+had only one small window. One night, they both looked out of their barred
+window.
+¶ “What do you see, Nestor?” asked Serafin to his companion.
+¶ “Oh, nothing except the mud right under this window,” answered
+Nestor.
+¶ “Ah, but I see a star!” exclaimed Serafin looking at the same muddy
+water reflecting a twinkling light.
+q 1: What does Serafin feel in his heart?
+| A. hope | B. fear | C. disgust
+q 2: What is a good title for the selection?
+| A. What Men Do in Prison
+| B. One Lonely Night
+| C. Beauty is in the Eyes That See
+q 3: Who has a better outlook in life?
+| A. Nestor
+| B. Serafin
+| C. none
+
+=== 12.3 | Why Horses Need Iron Shoes | Predicting Outcomes | pages 48
+pics: 
+# SKILL C PREDICTING THE OUTCOME OF THE GIVEN EVENT AND MAKING
+# INFERENCES
+read: WHY HORSES NEED IRON SHOES
+¶ Wild horses do not need iron shoes to be able to run fast. But for work
+horses, shoes are necessary because the hard roads along which they are
+driven wear away the horn of the hoofs. The hoofs become dry and unhealthy
+through lack of moisture.
+¶ On their native pastures, the wild horses bathe their feet every morning
+with dew on the grass and the moisture soaks in the horn of the hoofs, and
+keeps them healthy and tough. Dew is a good ointment for horses’ hoofs and
+it has been found that horses which are kept at night in dewy fields have such
+healthy hoofs that they can do a great deal of work without shoes. But as long
+as horses continue to be driven or ridden along hard roads and stony streets,
+they will need iron shoes.
+q 1: What will happen if work horses do not wear iron shoes?
+| A. They will run faster.
+| B. They will work better.
+| C. Their hoofs will be worn out.
+q 2: What should be done to horses at night?
+| A. Let them work overtime.
+| B. Let them roam on the grass.
+| C. Let them stay in their stables.
+q 3: If horses are well taken care of, what will become of them?
+| A. They will work better.
+| B. They will become wild.
+| C. They will grow longer manes.
+
+=== 12.4 | Father Was Late | Reading to Follow Precise Directions | pages 49
+pics: 
+# SKILL D- READING TO FOLLOW PRECISE DIRECTIONS
+read: FATHER WAS LATE
+¶ Mother and the children had been expecting Father for supper. They
+watched TV while waiting for him. When the program was over, it was already
+nine o’clock. Mother and the children looked at each other. Father had never
+been late for supper before.
+q 1: How do you think they feel?
+| A. Sad
+| B. worried | C. excited
+q 2: Who was late? Write his name in a square.
+q 3: Who waited for him? Underline your answer.
+¶ Mother the children
+¶ mother and the children
+q 4: Draw a clock and copy the time the story happened?
+q 5: Write the word which tells how many times Father had been late before.
+
+=== 12.5 | Ice Cream | Reading Exercises for Speed | pages 50,51
+pics: 
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+read: ICE CREAM
+¶ No one knows when or where ice cream was first made. Today, ice
+cream is one of the best liked foods in the Philippines.
+¶ Ice cream is one of the nourishing foods we eat. It also tastes good. It is
+more than three-fourths milk and cream. It may have fruits like mango, atis,
+langka, and coconut or pineapple. It may have nuts, too. Egg and gelatin
+make ice cream smooth. Some ice cream flavors are vanilla, chocolate and
+strawberry. Ice cream makers advertise and make different flavors of ice
+cream every month. Nuts, fruits and flavorings are bought from all over the
+world.
+¶ Much ice cream is eaten as plain dessert at meals. A great deal of ice
+cream goes into ice cones, milk shakes, ice cream sodas, ice cream bars and
+ice cream cups. Ice cream is also sold by gallons and half gallons. It is served
+in almost all parties.
+ins: Copy the letter of the correct answer.
+q 1: What is ice cream mostly made of?
+| A. fruits and eggs | B. milk and cream
+| C. nuts and gelatin
+q 2: What is usually used to make the ice cream creamy and smooth?
+| A. water
+| B. sugar | C. gelatin
+q 3: Ice cream was first made in the Philippines
+| A. True
+| B. False | C. Does not tell
+q 4: What can you say about the ice cream?
+| A. one of the nourishing foods we eat
+| B. eaten as one of Filipino dishes
+| C. best-liked food only in the Philippines
+q 5: Which of the following is not listed as a flavoring for ice cream?
+| A. chocolate
+| B. strawberry | C. tea
+q 6: what is the proportion of milk and cream in an ice cream?
+| A. one-fourth | B. three-fourths | C. one-half
+q 7: Why do you think do ice cream makers put fruits and flavoring to ice
+¶ cream?
+| A. to make it more expensive
+| B. to make it thick
+| C. to make it more palatable
+q 8: How is ice cream eaten most of the time?
+| A. as plain dessert after meals
+| B. as melted drink on glass or cups
+| C. as part of breakfast
+q 9: In what form is ice cream bought?
+| A. ice cream bars and scoops
+| B. melted on glass or cups
+| C. mixed in fruit salad
+q 10: What is the selection all about?
+| A. dessert | B. ice cream | C. best Filipino food
+
+######## LESSON 13 · lesson · A Bookworm
+
+=== 13.1 | A Bookworm | Predicting Outcomes and Making Inferences | pages 30
+pics: p030-1
+# SKILL C-PREDICTING THE OUTCOME OF A GIVEN EVENT AND MAKING
+# INFERENCES
+# Activity 11 Exercise 3
+vocab: bookworm, biographies, dim
+¶ A BOOKWORM
+¶ Vicente is a bookworm.
+¶ He likes to read about almost
+¶ everything. He likes to read
+¶ adventure stories, nature stories,
+¶ fairy tales, and biographies.
+¶ Whenever he gets hold of a
+¶ book, nothing could stop him from finishing it. However, he overworks his eyes
+by reading. He reads even when the light is dim.
+ins: Choose the letter of the correct answer:
+q 1: What do you think will happen to Vicente if he continues reading in dim
+light?
+| A. He will get tired of reading
+| B. He will lost interest in books
+| C. His eyesight will become poor, so he will soon need eyeglasses
+| D. He will have a very clear eyesight.
+q 2: What should Vicente do to save his eyes?
+| A. He should not read at all
+| B. He should read with a good light on
+| C. He should read only books with big letters.
+| D. He should always read in the dark
+q 3: Will he have a good eyesight if he continue to overwork his eyes and read
+in the dark?
+| A. Yes
+| B .no
+| C. maybe | D. not sure
+
+######## LESSON 14 · lesson · The Ferris Wheel Ride
+
+=== 14.1 | The Ferris Wheel Ride | Predicting Outcomes and Making Inferences | pages 31
+pics: p031-1
+# SKILL C-PREDICTING THE OUTCOME OF A GIVEN EVENT AND MAKING
+# INFERENCES
+# Activity 12 Exercise 4
+vocab: scared, dizzy
+¶ THE FERRIS WHEEL RIDE
+¶ Myrna was scared to ride on the ferris wheel. One fiesta day, her cousin
+asked her to ride on the ferris wheel. When the ferris wheel turned around,
+Myrna felt dizzy. She couldn’t look down. She felt as if she was falling.
+ins: Choose the letter of the correct answer:
+q 1: What do you think Myrna wished for?
+| A. She wished the ferris wheel would soon stop turning.
+| B. She wished that the ferris wheel would never stop turning.
+| C. She wished that she had not ridden on a ferris wheel.
+| D. She wished that the people will also shout.
+q 2: Did Myrna enjoy the ride on the Ferris wheel?
+| A. Yes
+| B. No
+| C. maybe | D. not sure
+q 3: What would Myrna most likely do next time?
+| A. She would ride on a ferris wheel again.
+| B. She would never ride on a ferris wheel again.
+| C. She would not go on a carnival again.
+| D. She will be excited to ride on a ferris wheel again.
+
+######## LESSON 15 · lesson · A Drawing Game
+
+=== 15.1 | A Drawing Game | Reading to Follow Precise Directions | pages 32
+pics: 
+# SKILL D READING TO FOLLOW PRECISE DIRECTIONS
+# Activity 13 Exercise 1
+vocab: circle, square, rectangle
+¶ A DRAWING GAME
+q 1: Draw a big circle between two small circles.
+Draw your face in the big circle.
+q 2: Draw you mother and mother’s faces in the two small circles.
+q 3: Draw a square around the three circles.
+q 4: Draw a rectangle under the square.
+Write your name, grade and section inside the rectangle.
+q 5: Below the rectangle, print in capital letters the name of your
+school and draw a rectangle around it.
+
+######## LESSON 16 · lesson · One Market Day
+
+=== 16.1 | One Market Day | Reading to Follow Precise Directions | pages 33
+pics: p033-1
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+# Activity 14 Exercise 2
+vocab: brought, beef, vegetables
+¶ ONE MARKET DAY
+¶ One Saturday morning, Mother went to market. She brought two
+large baskets with her. She bought 2-1/2 kilos of beef, 1 kilo of pork and 2 kilos
+of fresh fish. She also bought vegetables like cabbage, beans, tomatoes,
+onions, and carrots. She bought bananas, pineapple, and papaya, too.
+Answer the following questions:
+q 1: Box the word that tells when the story happened.
+| A. Saturday | B. Sunday | C. Monday | D. Tuesday
+q 2: Underline the word which tells where Mother went.
+| A. church | B. school | C. market | D. office
+q 3: Write the number of things she bought.
+q 4: Encircle the number of baskets she brought to market.
+| A. 10
+| B. 11
+| C. 2
+| D.5
+q 5: Draw the vegetables she bought
+
+######## LESSON 17 · lesson · Drawing Shapes
+
+=== 17.1 | Drawing Shapes | Reading to Follow Precise Directions | pages 34
+pics: 
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+# Activity 15 Exercise 3
+vocab: triangle, vertical, horizontal
+¶ DRAWING SHAPES
+q 1: Draw a big rectangle. Draw a triangle over the big rectangle.
+q 2: In the middle of the rectangle, draw two vertical lines.
+q 3: In the middle of two vertical lines, draw a small circle inside a bigger
+¶ circle.
+q 4: Draw a square on each side of the vertical lines. Draw four
+¶ horizontal lines inside each square.
+q 5: What have you drawn? Label the picture.
+
+######## LESSON 18 · lesson · Golden Shower
+
+=== 18.1 | Golden Shower | Reading to Follow Precise Directions | pages 35
+pics: p035-1
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+# Activity 16 Exercise 4
+vocab: bloom, cluster, tanning, tubelike
+¶ GOLDEN SHOWER
+¶ One of the most beautiful flowering trees is the golden shower. It is found
+in parks and in the gardens. It got its name from its golden-yellow flowers that
+bloom in clusters. This tree is useful as well as beautiful. Its bark is used for
+tanning leather and for medicine. It also bears a tubelike fruit. The pulp of the
+tubelike pod is also used for medicine.
+q 1: Copy the name of the tree.
+q 2: Write the color of its flowers and draw a square around it.
+q 3: What word best describes how it blooms?
+Underline the correct answer.
+¶ Singly
+¶ pairs
+¶ clusters
+q 4: Name the parts that are used for medicine.
+q 5: The golden shower is beautiful, but not useful. Answer with True or False.
+
+######## LESSON 19 · lesson · Our Forefathers
+
+=== 19.1 | Our Forefathers | Reading Exercises for Speed and Comprehension | pages 36,37
+pics: p036-1
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 17 Exercise 1
+read: OUR FOREFATHERS
+¶ In the olden days there were no churches in the Philippines. Although
+there were no churches, our forefathers knew how to pray. They prayed in
+many places. Most often they prayed in their homes. They believed in a great
+good called Bathala, they believed that Bathala was the creator of all things.
+They worshipped him. They prayed to him.
+¶ Our forefathers held religious feasts in the house of their headman or
+chief. Usually, a feast lasted for several days. All the people of the barangay
+attended. They would hang a large lamp at the center of the house and many
+small ones on the posts. Drums and gongs provided music. As part of the
+celebration, the people danced. They would beat drums for as long as the
+feast lasted. The people, young or old, enjoyed the religious festivities.
+# 138 words
+speed: 138
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 17 Exercise 1
+# OUR FOREFATHERS
+# # TEST QUESTIONS
+ins: Copy the letter of the correct answer.
+q 1: When were there no churches in the Philippines according to the selection?
+| A. for many years | B. in the olden days | C . for years
+q 2: What is the selection about?
+| A. religion of our forefathers
+| B. the musical instruments of our forefathers
+| C. the enjoyment of our forefathers
+q 3: Where were the feasts held?
+| A. in the forest B.in the chief’s house | C. in the plaza
+q 4: Who attended the feasts?
+| A. all the children | B. all the soldiers
+| C. all the people
+q 5: How long did their feasts last?
+| A. a day
+| B. a night
+| C. several days
+q 6: What instruments were used to provide music?
+| A. flutes
+| B. gongs and drums | C. guitars
+q 7: What were hung on the posts?
+| A. pretty pictures | B. small flowers
+| C. small lamps
+q 8: What can you say about our forefathers?
+| A. lazy
+| B. religious
+| C. godless
+q 9: Copy the letter of the word that tells to whom our forefathers prayed.
+| A. anitos
+| B. Bathala
+| C. spirits of dead ancestors
+q 10: Where did our forefathers often pray?
+| A. in the church | B. in their homes
+| C. on the streets
+
+######## LESSON 20 · lesson · Early Manhood of Father Gomez
+
+=== 20.1 | Early Manhood of Father Gomez | Reading Exercises for Speed and Comprehension | pages 38,39
+pics: p038-1
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 18 Exercise 2
+read: EARLY MANHOOD OF FATHER GOMEZ
+¶ It had been raining very hard for three days and the streets were
+flooded. Mariano, as Father Gomez was then called, had to stay home. His
+father looked at the water and said, “The roads are not safe to travel on. The
+children must stay home today.
+¶ The rain continued up to Sunday. The people could not go out to the
+streets. It was very hard to go to the church. They could not even go to the
+market to buy the things they needed.
+¶ “Where is Mariano?” Mother asked. Mariano’s parents looked for him in
+the house. Finally, his father exclaimed, “There he is!”
+¶ Mother looked out of the window. She saw Mariano on a wooden raft.
+¶ “Your young man is going to the church.” Father said. “Rain will not stop
+him from doing his duty.”
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 18 Exercise 2
+# EARLY MANHOOD OF FATHER GOMEZ
+# # TEST QUESTIONS
+ins: Copy the letter of the correct answer.
+q 1: When did the story happen?
+| A. A day during the Christmas season
+| B. A day during the rainy season
+| C. A day during the summer month
+q 2: Which were not safe?
+| A. the buses
+| B. the jeeps
+| C. the roads
+q 3: How long did the heavy rain last?
+| A. one day
+| B. two days
+| C. three days
+q 4: Who could not be found in the house?
+| A. Mariano
+| B. Father
+| C. Mother
+q 5: Where did they find Mariano?
+| A. on a bicycle | B. on a raft
+| C. in the kitchen
+q 6: Where was Mariano going?
+| A. to market
+| B. to church
+| C. to school
+q 7: Why must the children stay home?
+| A. The streets were flooded.
+| B. The rain was strong.
+| C. They were sick.
+q 8: Who looked for Mariano?
+| A. his mother | B. his father
+| C. his parents
+q 9: What kind of a young man was Mariano according to the story?
+| A. sickly
+| B. strong
+| C. religious
+q 10: What did Mariano become later?
+| A. doctor
+| B. lawyer
+| C. priest
+
+######## LESSON 21 · lesson · Insects
+
+=== 21.1 | Insects | Reading Exercises for Speed and Comprehension | pages 40,41
+pics: p040-1
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 19 Exercise 3
+read: INSECTS
+¶ There are more than half a million
+¶ kinds of insects. The kinds of insects
+outnumber the kinds of all animals
+¶ put together.
+¶ Insects live in almost any kind
+¶ of habitat. There are many in the
+¶ sea, but they are found almost
+¶ everywhere in freshwater and on land.
+¶ All insects have six legs and one pair of feelers. All insects are covered
+with a waterproof substance called chitin. Most insects have wings. Their
+bodies are divided into three parts: the head, the thorax, and the abdomen.
+¶ Most insects crawl, hop, swim, jump or walk. But flying is their usual way
+of getting about. Some can fly very fast. The dragonflies one of the fast fliers.
+¶ Some insects have pair of wings. Some have one pair. Some have
+none
+at all. It is safe, therefore, to think that insects differ in shape, size and color.
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 19 Exercise 3
+# INSECTS
+# # TEST QUESTIONS
+ins: Copy the letter of the correct answer.
+q 1: There are more than ____________ kinds of insects.
+| A. thousand
+| B. half a million | C. hundred | D. millions
+q 2: The selection is mainly about ____________
+| A. Uses of Insects
+| B. Dangers of Insects
+| C. Nature of Insects | D. Insects food
+q 3: Insects live ___________________.
+| A. in dark places | B. in almost every place | C. in trees D.in soil
+q 4: Insects usually move about by ____________.
+| A. crawling
+| B. hopping
+| C. flying | D. walking
+q 5: No insects move about by ___________
+| A. jumping
+| B. slithering
+| C. swimming | D. Flying
+q 6: The bodies of insects are divided into _________ parts.
+| A. four
+| B. two
+| C. three | D. six
+q 7: The dragonfly _______very fast.
+| A. jumps
+| B. flies
+| C. runs | D. swims
+q 8: All insects have _____________ of feelers.
+| A. one pair
+| B. two pairs
+| C. three pairs | D. four pairs
+q 9: ____________ insects have two pairs of wings.
+| A. All
+| B. Some
+| C. Young
+| D. Old
+q 10: Which of these is not true about insects? Copy the letter of your answer
+¶ and encircle it.
+| A. All insects have wings
+| B. The body of insects have 3 parts.
+| C. Insects have six wings.
+| D. All insects can swim.
+
+######## LESSON 22 · lesson · Man’s First Clothes
+
+=== 22.1 | Man’s First Clothes | Reading Exercises for Speed and Comprehension | pages 42,43
+pics: p042-1
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 20 Exercise 4
+read: MAN’S FIRST CLOTHES
+¶ The earliest true clothing of man was made of animal skin, grass or bark
+of trees.
+¶ About 100,000 years ago man used the skin of bears, goats or buffaloes
+for his clothing. He scraped the inside of the skin and hung it dry. When the skin
+was dry, he made it soft by rubbing it with fat and by beating it with his hand.
+Then he cut the soft skin to pieces with sharp stone knife. He used rough
+needles made of bones and thread made of strong plant fiber to sew the
+pieces together.
+¶ The prehistoric man in warm countries, where plants and trees grew in
+abundance, fashioned his clothing out of grass and bark of trees. Clothes
+made of animal skin lasted longer than those made of grass and bark of trees.
+But the clothes made of grass were cooler, more comfortable and lighter.
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 20 Exercise 4
+# MAN’S FIRST CLOTHES
+# # TEST QUESTIONS
+ins: Copy the letter of the correct answer.
+q 1: The story is mainly about ______________________.
+| A. animal skin | B. man’s first clothes | C. bark of trees | D. food
+q 2: The uncivilized prehistoric man wore clothing maybe mainly for _______.
+| A. attraction | B. modesty
+| C. protection | D. fashion
+q 3: The animal skin was hung to _________________.
+| A. dry
+| B. soften
+| C. harden
+| D. melt
+q 4: The skin was made soft by __________________.
+| A. drying
+| B. beating
+| C. cooking
+| D. soaking
+q 5: the needles were made of ______________.
+| A. stone
+| B. bone
+| C. glass
+| D. wood
+q 6: Threads used were made of _________________.
+| A. plant fiber | B. plant roots | C. plant seeds | D. plant leaves
+q 7: Where do you think clothes made of animal skin mostly worn?
+| A. in cold countries
+| B. in warm countries
+| C. in all countries
+| D. in all countries
+q 8: Clothes made of animal skin ____________.
+| A. was weak | B. was durable | C. was cool
+| D. was warm
+q 9: Animal was cut to pieces by a ___________________.
+| A. sharp bolo | B. sharp razor | C. sharp stone knife | D. scissors
+q 10: About how many years ago was this period? Write your answer in words.
+
+######## LESSON 23 · post · Formative Assessment after Activity 20
+
+=== 23.1 | The Legend of the Poinsettia | Noting Details | pages 52,53
+pics: 
+# FORMATIVE ASSESSMENT AFTER ACTIVITY 20
+# SKILL A- NOTING DETAILS
+read: THE LEGEND OF THE POINSETTIA
+¶ When the poinsettia begins to bloom, we are reminded that Christmas is
+near. As such it has become a Christmas symbol. Poinsettias begin to bloom in
+November until March.
+¶ The poinsettia is an odorless flower with brilliant red color. Its flowers are
+¶ actually leaves. How the poinsettia came about is an interesting legend.
+¶ It happened during the time of the Holy Wars or Crusades when the
+Christian knights were fighting the Mohammedans to regain the Holy Land.
+¶ In one of the holy wars, a brave knight climbed the walls surrounding the
+Holy City to open the gates so that the other Christian soldiers could enter. A
+Moorish soldier saw him and shot him with an arrow. As he fell over the wall, his
+blood dropped on a shrub which later bore red flowers.
+ins: Write the letter of the correct answer in the blank.
+q 1: Poinsettias bloom during the __________.
+| A. Christmas season | B. dry season | C. summer months
+q 2: Poinsettias have become a _________.
+| A. Christmas symbol | B. bridal shower | C. national flower
+q 3: The poinsettia is _________.
+| A. odorous
+| B. odorless
+| C. fragrant
+q 4: It begins to bloom in __________.
+| A. December
+| B. March
+| C. November
+q 5: The brilliant red petals are actually __________.
+| A. leaves
+| B. seeds
+| C. stems
+q 6: The poinsettia came to have red color during ___________.
+| A. World War I | B. the Holy War | C. the Japanese-Filipino War
+q 7: Another name for those wars was the ___________.
+| A. Civil War
+| B. World War
+| C. Crusades
+q 8: The Christians were fighting against the ___________.
+| A. pagans
+| B. Mohammedans
+| C. Protestants
+q 9: A Moorish soldier shot the knight with a/an ___________.
+| A. dart
+| B. arrow
+| C. gun
+q 10: The poinsettia is a _________.
+| A. vine
+| B. shrub
+| C. tree
+
+=== 23.2 | Exercise 8 | Getting the General Significance | pages 54
+pics: 
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Exercise 8
+¶ The food of fishes is as varied as the food of land animals. Many fishes
+eat other fish. Some eat only crustaceans such as crabs, shrimps, and sea
+mantis.
+¶ Many other fishes have great strong teeth for crushing the shells of
+oysters, clams, and barnacles which they feed on. Some kinds of fish eat water
+plants called “lumot” and “digman”.
+¶ Young fishes and some species of large fishes feed on plankton.
+Plankton is the name given to microscopic plants and animals that live in rivers,
+lakes, and seas. Plankton is also called “pasture of the sea”.
+q 1: What is the selection about?
+| A. kinds of fish | B. food of fishes | C. food value of fish
+q 2: Which sentence is true?
+| A. Fishes have different kinds of food.
+| B. Fishes do not eat other fishes.
+| C. Fishes eat only small plants and animals.
+q 3: Why is plankton called “pasture of the sea”?
+| A. They look like grazing meadows on the land.
+| B. They serve as food for people.
+| C. They serve as food for many kinds of fish
+
+=== 23.3 | A Mother’s Expectation | Predicting Outcomes | pages 55
+pics: 
+# SKILL C- PREDICTING THE OUTCOME OF THE GIVEN EVENT AND MAKING
+# INFERENCES
+read: A MOTHER’S EXPECTATION
+¶ Mrs. Cruz was very proud of her son, Juanito. Since Juanito was in Grade
+One, he had always topped his class. He had been a gold medalist for four
+years. Now, Mother was expecting another gold medal for Juanito.
+¶ A few weeks before the closing of school, Juanito got sick. He missed
+¶ most of his lessons. Luckily though, he passed all his tests.
+¶ On Awards Day, Mother was waiting to be invited. But she was not.
+q 1: How did Mother feel?
+| A. embarrassed
+| B. surprised
+| C. disappointed
+q 2: Why was Mother not invited?
+| A. Juanito would not receive any medal.
+| B. Father would pin the medal on Juanito
+| C. Juanito would pin the medal on himself.
+q 3: Did Juanito pass the tests?
+| A. Yes
+| B. No
+| C. Maybe
+
+=== 23.4 | A Surprise for Rolando | Reading to Follow Precise Directions | pages 56
+pics: 
+# SKILL D- READING TO FOLLOW PRECISE DIRECTIONS
+read: A SURPRISE FOR ROLANDO
+¶ It was Wednesday morning, Mother prepared some nice dishes while
+Ariel cleaned the house. Armin arranged the furniture and Cecille arranged
+the curtains. They helped each other cheerfully. They wanted to surprise their
+youngest brother, Rolando, who’s celebrating his eleventh birthday.
+¶ In the afternoon, they all waited at the porch. Soon Rolando’s friends
+started to arrive.
+q 1: Write the name and age of the boy who was celebrating his birthday.
+q 2: Box the name of the person who prepared the dishes.
+q 3: Write the number of children in the family and their names.
+q 4: Is Rolando the eldest child? If not, write the opposite word of eldest.
+q 5: Write the part of the house where they waited.
+
+=== 23.5 | The Octopus | Reading Exercises for Speed | pages 57
+pics: 
+# SKILL E-READING EXERCISES FOR SPEED AND COMPREHENSION
+read: THE OCTOPUS
+¶ The octopus is one of the strangest-looking animals that ever lived. It has
+two large eyes and snake-like arms that made it frightful to look at. Its name,
+octopus, means “eight” arms. These eight powerful arms, called tentacles are
+joined around its mouth.
+¶ This sea animal is also called “devil fish”. However, it is not a fish. The sea
+animal belongs to a class called mollusks. It feeds on other sea animals like
+crabs, oysters and shrimps. On the under sides of its tentacles are suckers. Using
+these suckers, the octopus grasps other sea animals and takes them to the
+mouth.
+¶ Octopuses are different from each other in size. Some are just as
+¶ small as a one-peso coin. Others are as large as a beach umbrella.
+¶ Beneath the head of the octopus is a funnel. This funnel is very useful to
+the octopus. When attacked by other animals, this funnel gives off a black
+liquid which hides the octopus.
+ins: Copy the letter of the correct answer.
+q 1: The octopus is an animal that lives _________________
+| A. in the air
+| B. on land
+| C. in the water
+q 2: The octopus is ______________________________.
+| A. funny
+| B. nice-looking | C. strange-looking
+q 3: The arms of the octopus are like _________________________.
+| A. snakes
+| B. stairs
+| C. stems
+q 4: The word octopus means ________________________.
+| A. five arms
+| B. eight arms | C. ten arms
+q 5: Another name for it is ___________________________________.
+| A. angel fish
+| B. devilfish
+| C. snake fish
