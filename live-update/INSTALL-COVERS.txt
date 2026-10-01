@@ -1,0 +1,13 @@
+BULIG — LEVEL COVERS + NEW SIGN-IN PICTURE
+==========================================
+
+1. hPanel → File Manager → open public_html (the folder with app, public, storage).
+2. Upload BULIG-Covers-Update.zip → right-click → Extract → into public_html
+   → allow overwrite → delete the ZIP.
+3. hPanel → Cache Manager → Purge all, then press Ctrl+F5 on the site.
+
+What changes:
+  • Every level card (pupil dashboard and Class Demo) shows its cover picture,
+    two cards per row, big level number and book badge on the picture.
+  • The sign-in page shows the new picture of pupils reading.
+No database changes are needed.

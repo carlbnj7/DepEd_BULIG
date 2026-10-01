@@ -1,0 +1,46 @@
+BULIG — INSTALL LEVEL 5 (LISTENING COMPREHENSION & VOCABULARY, GRADES 1–6)
+==========================================================================
+
+Site folder (holds app, config, database, public, storage):
+  /home/u179645850/domains/lemonchiffon-goose-405007.hostingersite.com/public_html
+
+A. ALREADY INSTALLED LEVEL 5?  (the 1 October fix — do only these 4 steps)
+  1. hPanel → File Manager → open public_html → Upload
+       BULIG-Level5-Part1-code-and-pictures.zip  (the NEWEST one, 8.4 MB)
+     → right-click → Extract → into THIS SAME folder (public_html) → allow overwrite
+     → delete the ZIP.
+  2. phpMyAdmin → click your BULIG database FIRST → Import → 011c_level5_fixes.sql → Go.
+     (It hides the Grade 3 answer-key pages p13, p53 and p58 from pupils.)
+  3. hPanel → Cache Manager → Purge all, then press Ctrl+F5 on the site.
+  4. Open https://lemonchiffon-goose-405007.hostingersite.com/bulig-check.php
+     These rows must say OK:
+       • Level 5 cards (newest: story pictures cut one by one, puzzles, matching pictures)
+       • Level 5 story pictures and Column B pictures
+       • Level 5 card styles (reading-size stories, letter grids)
+       • Level 5 Grade 3 answer keys hidden from pupils
+     If a row says PROBLEM, the newest Part1 was not extracted into public_html —
+     extract it again (allow overwrite) and purge the cache.
+
+B. NEW INSTALL (Level 5 not installed yet)
+  Install Level 4 first if you have not yet (INSTALL-LEVEL-4.txt). Then:
+  1. Back up (hPanel → Files → Backups, or phpMyAdmin → Export).
+  2. Extract these ZIPs, one at a time, into public_html (allow overwrite, then delete each ZIP):
+       BULIG-Level5-Part1-code-and-pictures.zip
+       BULIG-Level5-Part2-teacher-pages-g1-2.zip
+       BULIG-Level5-Part3-teacher-pages-g3-5.zip
+       BULIG-Level5-Part4-teacher-pages-g6-and-pdfs.zip
+       BULIG-Level5-Part5-pdfs-g5-6.zip
+  3. Upload level5-grade-2.pdf into public_html/storage/level5 and RENAME it to grade-2.pdf
+     (so the folder has grade-1.pdf … grade-6.pdf).
+  4. phpMyAdmin → click your BULIG database FIRST → Import 011_level5_content.sql → Go,
+     then Import 011c_level5_fixes.sql → Go.
+  5. Purge the cache and open bulig-check.php (all rows OK). Delete public/bulig-check.php when done.
+
+HOW LEVEL 5 WORKS
+  • Each grade has its own Level 5 module; pupils see only their grade.
+  • Every page is split into cards in the module's order: the story first, then one question per card.
+  • Story pages: the poem is text and each picture is cut out on its own with its word under it.
+  • Matching: two columns — tap (or drag) a Column A item, then its Column B match, to draw a line.
+  • Word searches and crosswords: tap letters to mark the words found; word banks are shown as word chips.
+  • Answer keys are never shown to pupils — teachers find them in each lesson's Teaching guide.
+  • Class Demo → Level 5 → choose a grade to show the cards on the TV.
