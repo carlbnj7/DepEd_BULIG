@@ -80,6 +80,8 @@ try{
  $n=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=4');
  row('Level 3 in database',$l&&$l['published']&&$n>=27,$l?('"'.$l['title'].'", published='.$l['published'].', lessons='.$n):'no level row','Import database/migrations/009_level3_content.sql in phpMyAdmin (select the BULIG database first).');
  $mig=array_column(rows('SELECT version FROM schema_migrations'),'version');
+ row('Admin PIN update',in_array('014_admin_pin',$mig,true),in_array('014_admin_pin',$mig,true)?'applied':'not yet','Import 014_admin_pin.sql in phpMyAdmin (select the BULIG database first).');
+ row('Admin tools update',in_array('015_admin_tools',$mig,true),in_array('015_admin_tools',$mig,true)?'applied':'not yet','Import 015_admin_tools.sql in phpMyAdmin (select the BULIG database first).');
  row('Database updates applied',in_array('009_level3_content',$mig,true),implode(', ',array_slice($mig,-4)),'Import 008 then 009 SQL files.');
 }catch(Throwable $e){row('Database',false,'Could not read the database: '.get_class($e),'Check config/database.php.');}
 $bad=count(array_filter($rows,fn($r)=>!$r[1]));
