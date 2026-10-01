@@ -1,0 +1,3443 @@
+{
+ "grades": {
+  "1": {
+   "page_count": 52,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+   ],
+   "teacher_pages": [],
+   "lessons": [
+    {
+     "position": 1201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "Independence Day",
+     "skill": "Activity 1",
+     "pages": [
+      6
+     ],
+     "activities": [
+      {
+       "title": "Independence Day",
+       "pages": [
+        6
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "Money from America",
+     "skill": "Activity 2",
+     "pages": [
+      7
+     ],
+     "activities": [
+      {
+       "title": "Money from America",
+       "pages": [
+        7
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "School Needs",
+     "skill": "Activity 3",
+     "pages": [
+      8
+     ],
+     "activities": [
+      {
+       "title": "School Needs",
+       "pages": [
+        8
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "Playmates",
+     "skill": "Activity 4",
+     "pages": [
+      9
+     ],
+     "activities": [
+      {
+       "title": "Playmates",
+       "pages": [
+        9
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Going to the Doctor",
+     "skill": "Activity 5",
+     "pages": [
+      10
+     ],
+     "activities": [
+      {
+       "title": "Going to the Doctor",
+       "pages": [
+        10
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "School Materials",
+     "skill": "Activity 6",
+     "pages": [
+      11
+     ],
+     "activities": [
+      {
+       "title": "School Materials",
+       "pages": [
+        11
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Meat and Milk",
+     "skill": "Activity 7",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "Meat and Milk",
+       "pages": [
+        12
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Party Dresses",
+     "skill": "Activity 8",
+     "pages": [
+      13
+     ],
+     "activities": [
+      {
+       "title": "Party Dresses",
+       "pages": [
+        13
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "Andres Bonifacio",
+     "skill": "Activity 9",
+     "pages": [
+      14
+     ],
+     "activities": [
+      {
+       "title": "Andres Bonifacio",
+       "pages": [
+        14
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "At the Zoo",
+     "skill": "Activity 10",
+     "pages": [
+      15
+     ],
+     "activities": [
+      {
+       "title": "At the Zoo",
+       "pages": [
+        15
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "Care of Books",
+     "skill": "Activity 11",
+     "pages": [
+      16
+     ],
+     "activities": [
+      {
+       "title": "Care of Books",
+       "pages": [
+        16
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "An Honest Boy",
+     "skill": "Activity 12",
+     "pages": [
+      17
+     ],
+     "activities": [
+      {
+       "title": "An Honest Boy",
+       "pages": [
+        17
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Selling Rice Cakes",
+     "skill": "Activity 13",
+     "pages": [
+      18
+     ],
+     "activities": [
+      {
+       "title": "Selling Rice Cakes",
+       "pages": [
+        18
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Going to a Picnic",
+     "skill": "Activity 14",
+     "pages": [
+      19
+     ],
+     "activities": [
+      {
+       "title": "Going to a Picnic",
+       "pages": [
+        19
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Norma",
+     "skill": "Activity 15",
+     "pages": [
+      20
+     ],
+     "activities": [
+      {
+       "title": "Norma",
+       "pages": [
+        20
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "Razon’s Children",
+     "skill": "Activity 16",
+     "pages": [
+      21
+     ],
+     "activities": [
+      {
+       "title": "Razon’s Children",
+       "pages": [
+        21
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "The Vendor",
+     "skill": "Activity 17",
+     "pages": [
+      22
+     ],
+     "activities": [
+      {
+       "title": "The Vendor",
+       "pages": [
+        22
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "Lazy Carlito",
+     "skill": "Activity 18",
+     "pages": [
+      23
+     ],
+     "activities": [
+      {
+       "title": "Lazy Carlito",
+       "pages": [
+        23
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 19219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "The Storm",
+     "skill": "Activity 19",
+     "pages": [
+      24
+     ],
+     "activities": [
+      {
+       "title": "The Storm",
+       "pages": [
+        24
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 20220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "Lolita Had a Fever",
+     "skill": "Activity 20",
+     "pages": [
+      25
+     ],
+     "activities": [
+      {
+       "title": "Lolita Had a Fever",
+       "pages": [
+        25
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 21221,
+     "kind": "lesson",
+     "label": "Activity 21",
+     "title": "Lola’s White Hair",
+     "skill": "Activity 21",
+     "pages": [
+      26
+     ],
+     "activities": [
+      {
+       "title": "Lola’s White Hair",
+       "pages": [
+        26
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 22222,
+     "kind": "lesson",
+     "label": "Activity 22",
+     "title": "The Wedding Day",
+     "skill": "Activity 22",
+     "pages": [
+      27
+     ],
+     "activities": [
+      {
+       "title": "The Wedding Day",
+       "pages": [
+        27
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 23223,
+     "kind": "lesson",
+     "label": "Activity 23",
+     "title": "Honesty",
+     "skill": "Activity 23",
+     "pages": [
+      28
+     ],
+     "activities": [
+      {
+       "title": "Honesty",
+       "pages": [
+        28
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 24224,
+     "kind": "lesson",
+     "label": "Activity 24",
+     "title": "In School",
+     "skill": "Activity 24",
+     "pages": [
+      29
+     ],
+     "activities": [
+      {
+       "title": "In School",
+       "pages": [
+        29
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 25225,
+     "kind": "lesson",
+     "label": "Activity 25",
+     "title": "Everybody Was Busy",
+     "skill": "Activity 25",
+     "pages": [
+      30
+     ],
+     "activities": [
+      {
+       "title": "Everybody Was Busy",
+       "pages": [
+        30
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 26226,
+     "kind": "lesson",
+     "label": "Activity 26",
+     "title": "Playing in the Rain",
+     "skill": "Activity 26",
+     "pages": [
+      31
+     ],
+     "activities": [
+      {
+       "title": "Playing in the Rain",
+       "pages": [
+        31
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 27227,
+     "kind": "lesson",
+     "label": "Activity 27",
+     "title": "Watching Birds",
+     "skill": "Activity 27",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "Watching Birds",
+       "pages": [
+        32
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 28228,
+     "kind": "lesson",
+     "label": "Activity 28",
+     "title": "The Raincoat",
+     "skill": "Activity 28",
+     "pages": [
+      33
+     ],
+     "activities": [
+      {
+       "title": "The Raincoat",
+       "pages": [
+        33
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 29229,
+     "kind": "lesson",
+     "label": "Activity 29",
+     "title": "Late in Church",
+     "skill": "Activity 29",
+     "pages": [
+      34
+     ],
+     "activities": [
+      {
+       "title": "Late in Church",
+       "pages": [
+        34
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 30230,
+     "kind": "lesson",
+     "label": "Activity 30",
+     "title": "Danilo’s School Things",
+     "skill": "Activity 30",
+     "pages": [
+      35
+     ],
+     "activities": [
+      {
+       "title": "Danilo’s School Things",
+       "pages": [
+        35
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 31231,
+     "kind": "lesson",
+     "label": "Activity 31",
+     "title": "A Tree",
+     "skill": "Activity 31",
+     "pages": [
+      36
+     ],
+     "activities": [
+      {
+       "title": "A Tree",
+       "pages": [
+        36
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 32232,
+     "kind": "lesson",
+     "label": "Activity 32",
+     "title": "Playing at Night",
+     "skill": "Activity 32",
+     "pages": [
+      37
+     ],
+     "activities": [
+      {
+       "title": "Playing at Night",
+       "pages": [
+        37
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 33233,
+     "kind": "lesson",
+     "label": "Activity 33",
+     "title": "Flowers",
+     "skill": "Activity 33",
+     "pages": [
+      38
+     ],
+     "activities": [
+      {
+       "title": "Flowers",
+       "pages": [
+        38
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 34234,
+     "kind": "lesson",
+     "label": "Activity 34",
+     "title": "A Christmas Gift",
+     "skill": "Activity 34",
+     "pages": [
+      39
+     ],
+     "activities": [
+      {
+       "title": "A Christmas Gift",
+       "pages": [
+        39
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 35235,
+     "kind": "lesson",
+     "label": "Activity 35",
+     "title": "Playing Soldiers",
+     "skill": "Activity 35",
+     "pages": [
+      40
+     ],
+     "activities": [
+      {
+       "title": "Playing Soldiers",
+       "pages": [
+        40
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 36236,
+     "kind": "lesson",
+     "label": "Activity 36",
+     "title": "Paper Boats",
+     "skill": "Activity 36",
+     "pages": [
+      41
+     ],
+     "activities": [
+      {
+       "title": "Paper Boats",
+       "pages": [
+        41
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 37237,
+     "kind": "lesson",
+     "label": "Activity 37",
+     "title": "At the School Canteen",
+     "skill": "Activity 37",
+     "pages": [
+      42
+     ],
+     "activities": [
+      {
+       "title": "At the School Canteen",
+       "pages": [
+        42
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 38238,
+     "kind": "lesson",
+     "label": "Activity 38",
+     "title": "Antonyms",
+     "skill": "Activity 38",
+     "pages": [
+      43
+     ],
+     "activities": [
+      {
+       "title": "Antonyms",
+       "pages": [
+        43
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 39239,
+     "kind": "lesson",
+     "label": "Activity 39",
+     "title": "A Happy Family",
+     "skill": "Activity 39",
+     "pages": [
+      44
+     ],
+     "activities": [
+      {
+       "title": "A Happy Family",
+       "pages": [
+        44
+       ],
+       "cards": 7,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 40240,
+     "kind": "lesson",
+     "label": "Activity 40",
+     "title": "Trees",
+     "skill": "Activity 40",
+     "pages": [
+      45
+     ],
+     "activities": [
+      {
+       "title": "Trees",
+       "pages": [
+        45
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 41241,
+     "kind": "lesson",
+     "label": "Activity 41",
+     "title": "Water",
+     "skill": "Activity 41",
+     "pages": [
+      46
+     ],
+     "activities": [
+      {
+       "title": "Water",
+       "pages": [
+        46
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 42242,
+     "kind": "lesson",
+     "label": "Activity 42",
+     "title": "A-1 Child",
+     "skill": "Activity 42",
+     "pages": [
+      47
+     ],
+     "activities": [
+      {
+       "title": "A-1 Child",
+       "pages": [
+        47
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 43243,
+     "kind": "lesson",
+     "label": "Activity 43",
+     "title": "Telling Time",
+     "skill": "Activity 43",
+     "pages": [
+      48
+     ],
+     "activities": [
+      {
+       "title": "Telling Time",
+       "pages": [
+        48
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 44244,
+     "kind": "lesson",
+     "label": "Activity 44",
+     "title": "Thank You",
+     "skill": "Activity 44",
+     "pages": [
+      49
+     ],
+     "activities": [
+      {
+       "title": "Thank You",
+       "pages": [
+        49
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 45245,
+     "kind": "lesson",
+     "label": "Activity 45",
+     "title": "Schoolbags",
+     "skill": "Activity 45",
+     "pages": [
+      50
+     ],
+     "activities": [
+      {
+       "title": "Schoolbags",
+       "pages": [
+        50
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 46246,
+     "kind": "lesson",
+     "label": "Activity 46",
+     "title": "Jeepneys",
+     "skill": "Activity 46",
+     "pages": [
+      51
+     ],
+     "activities": [
+      {
+       "title": "Jeepneys",
+       "pages": [
+        51
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level7/g1",
+   "pdf": "level7/grade-1.pdf"
+  },
+  "2": {
+   "page_count": 34,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33
+   ],
+   "teacher_pages": [],
+   "lessons": [
+    {
+     "position": 1201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "Fowls",
+     "skill": "Activity 1",
+     "pages": [
+      6
+     ],
+     "activities": [
+      {
+       "title": "Fowls",
+       "pages": [
+        6
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "The First Monkey",
+     "skill": "Activity 2",
+     "pages": [
+      7
+     ],
+     "activities": [
+      {
+       "title": "The First Monkey",
+       "pages": [
+        7
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "No Carnival for Ben",
+     "skill": "Activity 3",
+     "pages": [
+      8
+     ],
+     "activities": [
+      {
+       "title": "No Carnival for Ben",
+       "pages": [
+        8
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "The Butterfly",
+     "skill": "Activity 4",
+     "pages": [
+      9
+     ],
+     "activities": [
+      {
+       "title": "The Butterfly",
+       "pages": [
+        9
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "The Moth",
+     "skill": "Activity 5",
+     "pages": [
+      10
+     ],
+     "activities": [
+      {
+       "title": "The Moth",
+       "pages": [
+        10
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "Keeping Healthy",
+     "skill": "Activity 6",
+     "pages": [
+      11
+     ],
+     "activities": [
+      {
+       "title": "Keeping Healthy",
+       "pages": [
+        11
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "The Truthful Boy",
+     "skill": "Activity 7",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "The Truthful Boy",
+       "pages": [
+        12
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "The Lantern Show",
+     "skill": "Activity 8",
+     "pages": [
+      13,
+      14
+     ],
+     "activities": [
+      {
+       "title": "The Lantern Show",
+       "pages": [
+        13,
+        14
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "The Chinese Boy",
+     "skill": "Activity 9",
+     "pages": [
+      14,
+      15
+     ],
+     "activities": [
+      {
+       "title": "The Chinese Boy",
+       "pages": [
+        14,
+        15
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "The Monkey and the Crocodiles",
+     "skill": "Activity 10",
+     "pages": [
+      15,
+      16
+     ],
+     "activities": [
+      {
+       "title": "The Monkey and the Crocodiles",
+       "pages": [
+        15,
+        16
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "Activity 11",
+     "skill": "Activity 11",
+     "pages": [
+      16
+     ],
+     "activities": [
+      {
+       "title": "Activity 11",
+       "pages": [
+        16
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "Activity 12",
+     "skill": "Activity 12",
+     "pages": [
+      16,
+      17
+     ],
+     "activities": [
+      {
+       "title": "Activity 12",
+       "pages": [
+        16,
+        17
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Activity 13",
+     "skill": "Activity 13",
+     "pages": [
+      17
+     ],
+     "activities": [
+      {
+       "title": "Activity 13",
+       "pages": [
+        17
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Activity 14",
+     "skill": "Activity 14",
+     "pages": [
+      18
+     ],
+     "activities": [
+      {
+       "title": "Activity 14",
+       "pages": [
+        18
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Activity 15",
+     "skill": "Activity 15",
+     "pages": [
+      18,
+      19
+     ],
+     "activities": [
+      {
+       "title": "Activity 15",
+       "pages": [
+        18,
+        19
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "Activity 16",
+     "skill": "Activity 16",
+     "pages": [
+      19
+     ],
+     "activities": [
+      {
+       "title": "Activity 16",
+       "pages": [
+        19
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "Activity 17",
+     "skill": "Activity 17",
+     "pages": [
+      19,
+      20
+     ],
+     "activities": [
+      {
+       "title": "Activity 17",
+       "pages": [
+        19,
+        20
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "Activity 18",
+     "skill": "Activity 18",
+     "pages": [
+      20
+     ],
+     "activities": [
+      {
+       "title": "Activity 18",
+       "pages": [
+        20
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 19219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "Activity 19",
+     "skill": "Activity 19",
+     "pages": [
+      20,
+      21
+     ],
+     "activities": [
+      {
+       "title": "Activity 19",
+       "pages": [
+        20,
+        21
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 20220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "Activity 20",
+     "skill": "Activity 20",
+     "pages": [
+      21
+     ],
+     "activities": [
+      {
+       "title": "Activity 20",
+       "pages": [
+        21
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 21221,
+     "kind": "lesson",
+     "label": "Activity 21",
+     "title": "Activity 21",
+     "skill": "Activity 21",
+     "pages": [
+      21,
+      22
+     ],
+     "activities": [
+      {
+       "title": "Activity 21",
+       "pages": [
+        21,
+        22
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 22222,
+     "kind": "lesson",
+     "label": "Activity 22",
+     "title": "Forgetful Lucia",
+     "skill": "Activity 22",
+     "pages": [
+      22
+     ],
+     "activities": [
+      {
+       "title": "Forgetful Lucia",
+       "pages": [
+        22
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 23223,
+     "kind": "lesson",
+     "label": "Activity 23",
+     "title": "Just Pray",
+     "skill": "Activity 23",
+     "pages": [
+      22,
+      23
+     ],
+     "activities": [
+      {
+       "title": "Just Pray",
+       "pages": [
+        22,
+        23
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 24224,
+     "kind": "lesson",
+     "label": "Activity 24",
+     "title": "An Early Morning Fight",
+     "skill": "Activity 24",
+     "pages": [
+      23
+     ],
+     "activities": [
+      {
+       "title": "An Early Morning Fight",
+       "pages": [
+        23
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 25225,
+     "kind": "lesson",
+     "label": "Activity 25",
+     "title": "The King’s Little Girl",
+     "skill": "Activity 25",
+     "pages": [
+      23,
+      24
+     ],
+     "activities": [
+      {
+       "title": "The King’s Little Girl",
+       "pages": [
+        23,
+        24
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 26226,
+     "kind": "lesson",
+     "label": "Activity 26",
+     "title": "Three Friends",
+     "skill": "Activity 26",
+     "pages": [
+      24
+     ],
+     "activities": [
+      {
+       "title": "Three Friends",
+       "pages": [
+        24
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 27227,
+     "kind": "lesson",
+     "label": "Activity 27",
+     "title": "Tired Boy Scouts",
+     "skill": "Activity 27",
+     "pages": [
+      24,
+      25
+     ],
+     "activities": [
+      {
+       "title": "Tired Boy Scouts",
+       "pages": [
+        24,
+        25
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 28228,
+     "kind": "lesson",
+     "label": "Activity 28",
+     "title": "The Program",
+     "skill": "Activity 28",
+     "pages": [
+      25
+     ],
+     "activities": [
+      {
+       "title": "The Program",
+       "pages": [
+        25
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 29229,
+     "kind": "lesson",
+     "label": "Activity 29",
+     "title": "Berto Jokes No More",
+     "skill": "Activity 29",
+     "pages": [
+      25,
+      26
+     ],
+     "activities": [
+      {
+       "title": "Berto Jokes No More",
+       "pages": [
+        25,
+        26
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 30230,
+     "kind": "lesson",
+     "label": "Activity 30",
+     "title": "The Green Revolution",
+     "skill": "Activity 30",
+     "pages": [
+      26
+     ],
+     "activities": [
+      {
+       "title": "The Green Revolution",
+       "pages": [
+        26
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 31231,
+     "kind": "lesson",
+     "label": "Activity 31",
+     "title": "A Dog’s Bite",
+     "skill": "Activity 31",
+     "pages": [
+      26,
+      27
+     ],
+     "activities": [
+      {
+       "title": "A Dog’s Bite",
+       "pages": [
+        26,
+        27
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 32232,
+     "kind": "lesson",
+     "label": "Activity 32",
+     "title": "A Bus Ride",
+     "skill": "Activity 32",
+     "pages": [
+      27,
+      28
+     ],
+     "activities": [
+      {
+       "title": "A Bus Ride",
+       "pages": [
+        27,
+        28
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 33233,
+     "kind": "lesson",
+     "label": "Activity 33",
+     "title": "Sets",
+     "skill": "Activity 33",
+     "pages": [
+      28
+     ],
+     "activities": [
+      {
+       "title": "Sets",
+       "pages": [
+        28
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 34234,
+     "kind": "lesson",
+     "label": "Activity 34",
+     "title": "Opposites",
+     "skill": "Activity 34",
+     "pages": [
+      28,
+      29
+     ],
+     "activities": [
+      {
+       "title": "Opposites",
+       "pages": [
+        28,
+        29
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 35235,
+     "kind": "lesson",
+     "label": "Activity 35",
+     "title": "Our National Symbols",
+     "skill": "Activity 35",
+     "pages": [
+      29
+     ],
+     "activities": [
+      {
+       "title": "Our National Symbols",
+       "pages": [
+        29
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 36236,
+     "kind": "lesson",
+     "label": "Activity 36",
+     "title": "How Nestor Earns Money",
+     "skill": "Activity 36",
+     "pages": [
+      29,
+      30
+     ],
+     "activities": [
+      {
+       "title": "How Nestor Earns Money",
+       "pages": [
+        29,
+        30
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 37237,
+     "kind": "lesson",
+     "label": "Activity 37",
+     "title": "Fiesta Time",
+     "skill": "Activity 37",
+     "pages": [
+      30
+     ],
+     "activities": [
+      {
+       "title": "Fiesta Time",
+       "pages": [
+        30
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 38238,
+     "kind": "lesson",
+     "label": "Activity 38",
+     "title": "First Elevator Ride",
+     "skill": "Activity 38",
+     "pages": [
+      31
+     ],
+     "activities": [
+      {
+       "title": "First Elevator Ride",
+       "pages": [
+        31
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 39239,
+     "kind": "lesson",
+     "label": "Activity 39",
+     "title": "Share a Toy",
+     "skill": "Activity 39",
+     "pages": [
+      31
+     ],
+     "activities": [
+      {
+       "title": "Share a Toy",
+       "pages": [
+        31
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 40240,
+     "kind": "lesson",
+     "label": "Activity 40",
+     "title": "The Toys",
+     "skill": "Activity 40",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "The Toys",
+       "pages": [
+        32
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 41241,
+     "kind": "lesson",
+     "label": "Activity 41",
+     "title": "Growing Roses",
+     "skill": "Activity 41",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "Growing Roses",
+       "pages": [
+        32
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 42242,
+     "kind": "lesson",
+     "label": "Activity 42",
+     "title": "The Fishermen",
+     "skill": "Activity 42",
+     "pages": [
+      33
+     ],
+     "activities": [
+      {
+       "title": "The Fishermen",
+       "pages": [
+        33
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 43243,
+     "kind": "lesson",
+     "label": "Activity 43",
+     "title": "Days of the Week",
+     "skill": "Activity 43",
+     "pages": [
+      33
+     ],
+     "activities": [
+      {
+       "title": "Days of the Week",
+       "pages": [
+        33
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level7/g2",
+   "pdf": "level7/grade-2.pdf"
+  },
+  "3": {
+   "page_count": 25,
+   "pupil_pages": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+   ],
+   "teacher_pages": [],
+   "lessons": [
+    {
+     "position": 1201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "Jumbled Letters",
+     "skill": "Activity 1",
+     "pages": [
+      5
+     ],
+     "activities": [
+      {
+       "title": "Jumbled Letters",
+       "pages": [
+        5
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "True or False",
+     "skill": "Activity 2",
+     "pages": [
+      6
+     ],
+     "activities": [
+      {
+       "title": "True or False",
+       "pages": [
+        6
+       ],
+       "cards": 10,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "Star or Circle",
+     "skill": "Activity 3",
+     "pages": [
+      7
+     ],
+     "activities": [
+      {
+       "title": "Star or Circle",
+       "pages": [
+        7
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "Writing Campus Newsletter",
+     "skill": "Activity 4",
+     "pages": [
+      8,
+      9
+     ],
+     "activities": [
+      {
+       "title": "Writing Campus Newsletter",
+       "pages": [
+        8,
+        9
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Writing Simple News",
+     "skill": "Activity 5",
+     "pages": [
+      10
+     ],
+     "activities": [
+      {
+       "title": "Writing Simple News",
+       "pages": [
+        10
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "Find It!",
+     "skill": "Activity 6",
+     "pages": [
+      11
+     ],
+     "activities": [
+      {
+       "title": "Find It!",
+       "pages": [
+        11
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Fact or Bluff",
+     "skill": "Activity 7",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "Fact or Bluff",
+       "pages": [
+        12
+       ],
+       "cards": 10,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Match Me!",
+     "skill": "Activity 8",
+     "pages": [
+      13
+     ],
+     "activities": [
+      {
+       "title": "Match Me!",
+       "pages": [
+        13
+       ],
+       "cards": 8,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "Search, Write and Identify",
+     "skill": "Activity 9",
+     "pages": [
+      14
+     ],
+     "activities": [
+      {
+       "title": "Search, Write and Identify",
+       "pages": [
+        14
+       ],
+       "cards": 3,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "Scope or Origin",
+     "skill": "Activity 10",
+     "pages": [
+      15
+     ],
+     "activities": [
+      {
+       "title": "Scope or Origin",
+       "pages": [
+        15
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "Think for Me",
+     "skill": "Activity 11",
+     "pages": [
+      16,
+      17
+     ],
+     "activities": [
+      {
+       "title": "Think for Me",
+       "pages": [
+        16,
+        17
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "Discern the Content",
+     "skill": "Activity 12",
+     "pages": [
+      18,
+      19
+     ],
+     "activities": [
+      {
+       "title": "Discern the Content",
+       "pages": [
+        18,
+        19
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Guess the Treat",
+     "skill": "Activity 13",
+     "pages": [
+      20,
+      21,
+      22
+     ],
+     "activities": [
+      {
+       "title": "Guess the Treat",
+       "pages": [
+        20,
+        21,
+        22
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Connect Me!",
+     "skill": "Activity 14",
+     "pages": [
+      23
+     ],
+     "activities": [
+      {
+       "title": "Connect Me!",
+       "pages": [
+        23
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Fill Me!",
+     "skill": "Activity 15",
+     "pages": [
+      24
+     ],
+     "activities": [
+      {
+       "title": "Fill Me!",
+       "pages": [
+        24
+       ],
+       "cards": 7,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level7/g3",
+   "pdf": "level7/grade-3.pdf"
+  },
+  "4": {
+   "page_count": 29,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+   ],
+   "teacher_pages": [],
+   "lessons": [
+    {
+     "position": 1201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "Opinion or Understanding",
+     "skill": "Activity 1",
+     "pages": [
+      6,
+      7
+     ],
+     "activities": [
+      {
+       "title": "Opinion or Understanding",
+       "pages": [
+        6,
+        7
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "Writing Paragraph",
+     "skill": "Activity 2",
+     "pages": [
+      8
+     ],
+     "activities": [
+      {
+       "title": "Writing Paragraph",
+       "pages": [
+        8
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "Learners News Report",
+     "skill": "Activity 3",
+     "pages": [
+      9,
+      10,
+      11
+     ],
+     "activities": [
+      {
+       "title": "Learners News Report",
+       "pages": [
+        9,
+        10,
+        11
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "Arranging Facts",
+     "skill": "Activity 4",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "Arranging Facts",
+       "pages": [
+        12
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Writing News Report",
+     "skill": "Activity 5",
+     "pages": [
+      13
+     ],
+     "activities": [
+      {
+       "title": "Writing News Report",
+       "pages": [
+        13
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "Feature Writing Exercises",
+     "skill": "Activity 6",
+     "pages": [
+      14,
+      15
+     ],
+     "activities": [
+      {
+       "title": "Feature Writing Exercises",
+       "pages": [
+        14,
+        15
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Copyreading and Headline Writing",
+     "skill": "Activity 7",
+     "pages": [
+      16,
+      17,
+      18,
+      19
+     ],
+     "activities": [
+      {
+       "title": "Copyreading and Headline Writing",
+       "pages": [
+        16,
+        17,
+        18,
+        19
+       ],
+       "cards": 15,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Sports Vocabulary Matching",
+     "skill": "Activity 8",
+     "pages": [
+      20,
+      21
+     ],
+     "activities": [
+      {
+       "title": "Sports Vocabulary Matching",
+       "pages": [
+        20,
+        21
+       ],
+       "cards": 19,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "Sports Writing",
+     "skill": "Activity 9",
+     "pages": [
+      22
+     ],
+     "activities": [
+      {
+       "title": "Sports Writing",
+       "pages": [
+        22
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "Find It!",
+     "skill": "Activity 10",
+     "pages": [
+      23
+     ],
+     "activities": [
+      {
+       "title": "Find It!",
+       "pages": [
+        23
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "Arranging the Story",
+     "skill": "Activity 11",
+     "pages": [
+      24
+     ],
+     "activities": [
+      {
+       "title": "Arranging the Story",
+       "pages": [
+        24
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "Sports Writing",
+     "skill": "Activity 12",
+     "pages": [
+      25
+     ],
+     "activities": [
+      {
+       "title": "Sports Writing",
+       "pages": [
+        25
+       ],
+       "cards": 9,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Sports Writing",
+     "skill": "Activity 13",
+     "pages": [
+      26,
+      27
+     ],
+     "activities": [
+      {
+       "title": "Sports Writing",
+       "pages": [
+        26,
+        27
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Mystery Matching Type",
+     "skill": "Activity 14",
+     "pages": [
+      28
+     ],
+     "activities": [
+      {
+       "title": "Mystery Matching Type",
+       "pages": [
+        28
+       ],
+       "cards": 3,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Editorial Cartooning",
+     "skill": "Activity 15",
+     "pages": [
+      29
+     ],
+     "activities": [
+      {
+       "title": "Editorial Cartooning",
+       "pages": [
+        29
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level7/g4",
+   "pdf": "level7/grade-4.pdf"
+  },
+  "5": {
+   "page_count": 35,
+   "pupil_pages": [
+    5,
+    6,
+    7,
+    8,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    31,
+    32,
+    33,
+    34
+   ],
+   "teacher_pages": [],
+   "lessons": [
+    {
+     "position": 1201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "Writing a News Article",
+     "skill": "Activity 1",
+     "pages": [
+      5,
+      6,
+      7,
+      8
+     ],
+     "activities": [
+      {
+       "title": "Writing a News Article",
+       "pages": [
+        5,
+        6,
+        7,
+        8
+       ],
+       "cards": 13,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "Journalistic Writing",
+     "skill": "Activity 2",
+     "pages": [
+      10,
+      11
+     ],
+     "activities": [
+      {
+       "title": "Journalistic Writing",
+       "pages": [
+        10,
+        11
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "Matching Type",
+     "skill": "Activity 3",
+     "pages": [
+      11
+     ],
+     "activities": [
+      {
+       "title": "Matching Type",
+       "pages": [
+        11
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "Writing Activity",
+     "skill": "Activity 4",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "Writing Activity",
+       "pages": [
+        12
+       ],
+       "cards": 1,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Mix Exercises",
+     "skill": "Activity 5",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "Mix Exercises",
+       "pages": [
+        12
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "Writing a News Story",
+     "skill": "Activity 6",
+     "pages": [
+      13
+     ],
+     "activities": [
+      {
+       "title": "Writing a News Story",
+       "pages": [
+        13
+       ],
+       "cards": 7,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Do What Is Asked",
+     "skill": "Activity 7",
+     "pages": [
+      14,
+      15
+     ],
+     "activities": [
+      {
+       "title": "Do What Is Asked",
+       "pages": [
+        14,
+        15
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Editorial Log",
+     "skill": "Activity 8",
+     "pages": [
+      16,
+      17,
+      18,
+      19,
+      24,
+      25
+     ],
+     "activities": [
+      {
+       "title": "Editorial Log",
+       "pages": [
+        16,
+        17,
+        18,
+        19,
+        24,
+        25
+       ],
+       "cards": 13,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "Writing Articles",
+     "skill": "Activity 9",
+     "pages": [
+      20
+     ],
+     "activities": [
+      {
+       "title": "Writing Articles",
+       "pages": [
+        20
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "Writing Articles",
+     "skill": "Activity 10",
+     "pages": [
+      20
+     ],
+     "activities": [
+      {
+       "title": "Writing Articles",
+       "pages": [
+        20
+       ],
+       "cards": 10,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "Writing a Paragraph",
+     "skill": "Activity 11",
+     "pages": [
+      21
+     ],
+     "activities": [
+      {
+       "title": "Writing a Paragraph",
+       "pages": [
+        21
+       ],
+       "cards": 3,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "Editorial Writing",
+     "skill": "Activity 12",
+     "pages": [
+      22,
+      23,
+      24
+     ],
+     "activities": [
+      {
+       "title": "Editorial Writing",
+       "pages": [
+        22,
+        23,
+        24
+       ],
+       "cards": 9,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Copyreading and Headline Writing",
+     "skill": "Activity 13",
+     "pages": [
+      26,
+      27,
+      28,
+      29
+     ],
+     "activities": [
+      {
+       "title": "Copyreading and Headline Writing",
+       "pages": [
+        26,
+        27,
+        28,
+        29
+       ],
+       "cards": 11,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "News Writing",
+     "skill": "Activity 14",
+     "pages": [
+      31,
+      32
+     ],
+     "activities": [
+      {
+       "title": "News Writing",
+       "pages": [
+        31,
+        32
+       ],
+       "cards": 7,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Feature Writing",
+     "skill": "Activity 15",
+     "pages": [
+      33,
+      34
+     ],
+     "activities": [
+      {
+       "title": "Feature Writing",
+       "pages": [
+        33,
+        34
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level7/g5",
+   "pdf": "level7/grade-5.pdf"
+  },
+  "6": {
+   "page_count": 38,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38
+   ],
+   "teacher_pages": [],
+   "lessons": [
+    {
+     "position": 1201,
+     "kind": "lesson",
+     "label": "Activity 1",
+     "title": "Story Sequencing",
+     "skill": "Activity 1",
+     "pages": [
+      6
+     ],
+     "activities": [
+      {
+       "title": "Story Sequencing",
+       "pages": [
+        6
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 2202,
+     "kind": "lesson",
+     "label": "Activity 2",
+     "title": "Scrambled Information",
+     "skill": "Activity 2",
+     "pages": [
+      7
+     ],
+     "activities": [
+      {
+       "title": "Scrambled Information",
+       "pages": [
+        7
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 3203,
+     "kind": "lesson",
+     "label": "Activity 3",
+     "title": "Scrambled Information",
+     "skill": "Activity 3",
+     "pages": [
+      8
+     ],
+     "activities": [
+      {
+       "title": "Scrambled Information",
+       "pages": [
+        8
+       ],
+       "cards": 3,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 4204,
+     "kind": "lesson",
+     "label": "Activity 4",
+     "title": "A Dirty Cafeteria",
+     "skill": "Activity 4",
+     "pages": [
+      9
+     ],
+     "activities": [
+      {
+       "title": "A Dirty Cafeteria",
+       "pages": [
+        9
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 5205,
+     "kind": "lesson",
+     "label": "Activity 5",
+     "title": "Solution: Return to the Basics",
+     "skill": "Activity 5",
+     "pages": [
+      10
+     ],
+     "activities": [
+      {
+       "title": "Solution: Return to the Basics",
+       "pages": [
+        10
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 6206,
+     "kind": "lesson",
+     "label": "Activity 6",
+     "title": "The Way of Most Desks",
+     "skill": "Activity 6",
+     "pages": [
+      11
+     ],
+     "activities": [
+      {
+       "title": "The Way of Most Desks",
+       "pages": [
+        11
+       ],
+       "cards": 6,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 7207,
+     "kind": "lesson",
+     "label": "Activity 7",
+     "title": "Writing a Sports Coverage",
+     "skill": "Activity 7",
+     "pages": [
+      12
+     ],
+     "activities": [
+      {
+       "title": "Writing a Sports Coverage",
+       "pages": [
+        12
+       ],
+       "cards": 9,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 8208,
+     "kind": "lesson",
+     "label": "Activity 8",
+     "title": "Writing a Sports Game Story",
+     "skill": "Activity 8",
+     "pages": [
+      13,
+      14
+     ],
+     "activities": [
+      {
+       "title": "Writing a Sports Game Story",
+       "pages": [
+        13,
+        14
+       ],
+       "cards": 5,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 9209,
+     "kind": "lesson",
+     "label": "Activity 9",
+     "title": "Summarizing a Story",
+     "skill": "Activity 9",
+     "pages": [
+      15,
+      16
+     ],
+     "activities": [
+      {
+       "title": "Summarizing a Story",
+       "pages": [
+        15,
+        16
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 10210,
+     "kind": "lesson",
+     "label": "Activity 10",
+     "title": "Copyreading",
+     "skill": "Activity 10",
+     "pages": [
+      17
+     ],
+     "activities": [
+      {
+       "title": "Copyreading",
+       "pages": [
+        17
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 11211,
+     "kind": "lesson",
+     "label": "Activity 11",
+     "title": "Copyreading",
+     "skill": "Activity 11",
+     "pages": [
+      18
+     ],
+     "activities": [
+      {
+       "title": "Copyreading",
+       "pages": [
+        18
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 12212,
+     "kind": "lesson",
+     "label": "Activity 12",
+     "title": "Copyreading",
+     "skill": "Activity 12",
+     "pages": [
+      19
+     ],
+     "activities": [
+      {
+       "title": "Copyreading",
+       "pages": [
+        19
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 13213,
+     "kind": "lesson",
+     "label": "Activity 13",
+     "title": "Feature Writing",
+     "skill": "Activity 13",
+     "pages": [
+      20
+     ],
+     "activities": [
+      {
+       "title": "Feature Writing",
+       "pages": [
+        20
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 14214,
+     "kind": "lesson",
+     "label": "Activity 14",
+     "title": "Feature Writing",
+     "skill": "Activity 14",
+     "pages": [
+      21,
+      22,
+      23,
+      24
+     ],
+     "activities": [
+      {
+       "title": "Feature Writing",
+       "pages": [
+        21,
+        22,
+        23,
+        24
+       ],
+       "cards": 4,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 15215,
+     "kind": "lesson",
+     "label": "Activity 15",
+     "title": "Feature Writing",
+     "skill": "Activity 15",
+     "pages": [
+      25,
+      26,
+      27,
+      28
+     ],
+     "activities": [
+      {
+       "title": "Feature Writing",
+       "pages": [
+        25,
+        26,
+        27,
+        28
+       ],
+       "cards": 8,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 16216,
+     "kind": "lesson",
+     "label": "Activity 16",
+     "title": "Write a Column",
+     "skill": "Activity 16",
+     "pages": [
+      29
+     ],
+     "activities": [
+      {
+       "title": "Write a Column",
+       "pages": [
+        29
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 17217,
+     "kind": "lesson",
+     "label": "Activity 17",
+     "title": "Draw an Editorial",
+     "skill": "Activity 17",
+     "pages": [
+      30,
+      31
+     ],
+     "activities": [
+      {
+       "title": "Draw an Editorial",
+       "pages": [
+        30,
+        31
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 18218,
+     "kind": "lesson",
+     "label": "Activity 18",
+     "title": "Editorial Discussion",
+     "skill": "Activity 18",
+     "pages": [
+      32
+     ],
+     "activities": [
+      {
+       "title": "Editorial Discussion",
+       "pages": [
+        32
+       ],
+       "cards": 2,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 19219,
+     "kind": "lesson",
+     "label": "Activity 19",
+     "title": "Draw",
+     "skill": "Activity 19",
+     "pages": [
+      33,
+      34
+     ],
+     "activities": [
+      {
+       "title": "Draw",
+       "pages": [
+        33,
+        34
+       ],
+       "cards": 3,
+       "speed": null
+      }
+     ]
+    },
+    {
+     "position": 20220,
+     "kind": "lesson",
+     "label": "Activity 20",
+     "title": "Mystery Matching Type",
+     "skill": "Activity 20",
+     "pages": [
+      35,
+      36,
+      37,
+      38
+     ],
+     "activities": [
+      {
+       "title": "Mystery Matching Type",
+       "pages": [
+        35,
+        36,
+        37,
+        38
+       ],
+       "cards": 22,
+       "speed": null
+      }
+     ]
+    }
+   ],
+   "folder": "level7/g6",
+   "pdf": "level7/grade-6.pdf"
+  }
+ }
+}

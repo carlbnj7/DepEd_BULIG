@@ -9,7 +9,7 @@ try{
  elseif($page==='login'){go('?page=dashboard');}
  elseif($page==='source'){
   $level=(int)($_GET['level']??1);
-  if(in_array($level,[2,3,4,5,6,7],true)){
+  if(in_array($level,[2,3,4,5,6,7,8],true)){
    $grade=per_grade_level($level)?(int)($_GET['grade']??0):null;
    $n=(int)($_GET['n']??1);$meta=module_source_meta($level,$grade);if(!$meta)fail('Module not found.',404);$key=$meta['folder'];
    if($n<1||$n>$meta['page_count'])fail('Page not found.',404);
