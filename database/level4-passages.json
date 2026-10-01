@@ -1,0 +1,4041 @@
+{
+ "1": [
+  {
+   "title": "The Cat",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "The cat is small and white.",
+    "It likes to sleep on the mat.",
+    "The cat plays with a ball.",
+    "It runs fast in the yard."
+   ],
+   "lines": [
+    "The cat is small and white.",
+    "It likes to sleep on the mat.",
+    "The cat plays with a ball.",
+    "It runs fast in the yard."
+   ],
+   "words": 25,
+   "stated": 27,
+   "pages": [
+    9
+   ],
+   "pictures": [
+    {
+     "page": 9,
+     "bbox": [
+      108.8,
+      92.9,
+      498.5,
+      482.7
+     ],
+     "xref": 94
+    }
+   ]
+  },
+  {
+   "title": "My Dog",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I have a brown dog.",
+    "It likes to run and jump.",
+    "The dog wags its tail.",
+    "I play with my dog every day."
+   ],
+   "lines": [
+    "I have a brown dog.",
+    "It likes to run and jump.",
+    "The dog wags its tail.",
+    "I play with my dog every day."
+   ],
+   "words": 23,
+   "stated": 25,
+   "pages": [
+    11
+   ],
+   "pictures": [
+    {
+     "page": 11,
+     "bbox": [
+      168.1,
+      106.5,
+      429.1,
+      451.8
+     ],
+     "xref": 105
+    },
+    {
+     "page": 11,
+     "bbox": [
+      152.8,
+      74.9,
+      460.0,
+      482.9
+     ],
+     "xref": 106
+    }
+   ]
+  },
+  {
+   "title": "The Sun",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "The sun is bright.",
+    "It shines in the sky.",
+    "The sun makes the flowers grow.",
+    "I like to play under the sun."
+   ],
+   "lines": [
+    "The sun is bright.",
+    "It shines in the sky.",
+    "The sun makes the flowers grow.",
+    "I like to play under the sun."
+   ],
+   "words": 22,
+   "stated": 24,
+   "pages": [
+    12
+   ],
+   "pictures": [
+    {
+     "page": 12,
+     "bbox": [
+      87.4,
+      132.3,
+      504.3,
+      426.9
+     ],
+     "xref": 112
+    }
+   ]
+  },
+  {
+   "title": "My Hat",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I have a red hat.",
+    "I wear it when I go outside.",
+    "The hat is soft and warm.",
+    "My sister likes my hat too."
+   ],
+   "lines": [
+    "I have a red hat.",
+    "I wear it when I go outside.",
+    "The hat is soft and warm.",
+    "My sister likes my hat too."
+   ],
+   "words": 24,
+   "stated": 26,
+   "pages": [
+    13
+   ],
+   "pictures": [
+    {
+     "page": 13,
+     "bbox": [
+      137.3,
+      117.3,
+      473.1,
+      453.2
+     ],
+     "xref": 121
+    }
+   ]
+  },
+  {
+   "title": "The Bird",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "A small bird sits on a tree.",
+    "It sings a happy song.",
+    "The bird flies in the sky.",
+    "I watch it every morning."
+   ],
+   "lines": [
+    "A small bird sits on a tree.",
+    "It sings a happy song.",
+    "The bird flies in the sky.",
+    "I watch it every morning."
+   ],
+   "words": 23,
+   "stated": 25,
+   "pages": [
+    14
+   ],
+   "pictures": [
+    {
+     "page": 14,
+     "bbox": [
+      93.7,
+      115.7,
+      489.5,
+      449.5
+     ],
+     "xref": 128
+    }
+   ]
+  },
+  {
+   "title": "Rainy Day",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "It is raining today.",
+    "I wear my yellow raincoat.",
+    "I jump in the puddles.",
+    "The rain is fun",
+    "and makes me happy."
+   ],
+   "lines": [
+    "It is raining today.",
+    "I wear my yellow raincoat.",
+    "I jump in the puddles.",
+    "The rain is fun",
+    "and makes me happy."
+   ],
+   "words": 22,
+   "stated": 24,
+   "pages": [
+    15
+   ],
+   "pictures": [
+    {
+     "page": 15,
+     "bbox": [
+      125.6,
+      119.0,
+      416.2,
+      457.3
+     ],
+     "xref": 137
+    }
+   ]
+  },
+  {
+   "title": "The Market",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I go to the market with my mom.",
+    "We buy apples and bread.",
+    "I see a small cat near the stand.",
+    "I enjoy visiting",
+    "the market every week."
+   ],
+   "lines": [
+    "I go to the market with my mom.",
+    "We buy apples and bread.",
+    "I see a small cat near the stand.",
+    "I enjoy visiting",
+    "the market every week."
+   ],
+   "words": 28,
+   "stated": 30,
+   "pages": [
+    16
+   ],
+   "pictures": [
+    {
+     "page": 16,
+     "bbox": [
+      138.8,
+      104.7,
+      472.9,
+      438.8
+     ],
+     "xref": 146
+    }
+   ]
+  },
+  {
+   "title": "Tim’s Ball",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "Tim has a red ball.",
+    "He throws it to his friend.",
+    "The ball rolls on the grass.",
+    "They laugh and run after it."
+   ],
+   "lines": [
+    "Tim has a red ball.",
+    "He throws it to his friend.",
+    "The ball rolls on the grass.",
+    "They laugh and run after it."
+   ],
+   "words": 23,
+   "stated": 25,
+   "pages": [
+    17
+   ],
+   "pictures": [
+    {
+     "page": 17,
+     "bbox": [
+      81.3,
+      152.9,
+      314.0,
+      460.0
+     ],
+     "xref": 151
+    },
+    {
+     "page": 17,
+     "bbox": [
+      296.0,
+      154.2,
+      528.7,
+      461.3
+     ],
+     "xref": 154
+    }
+   ]
+  },
+  {
+   "title": "The Dog and Cat",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "The dog sees a cat.",
+    "The cat runs under the tree.",
+    "The dog stops and watches.",
+    "They sit in the sun together."
+   ],
+   "lines": [
+    "The dog sees a cat.",
+    "The cat runs under the tree.",
+    "The dog stops and watches.",
+    "They sit in the sun together."
+   ],
+   "words": 22,
+   "stated": 26,
+   "pages": [
+    18
+   ],
+   "pictures": [
+    {
+     "page": 18,
+     "bbox": [
+      171.7,
+      118.0,
+      430.3,
+      460.7
+     ],
+     "xref": 159
+    },
+    {
+     "page": 18,
+     "bbox": [
+      156.4,
+      75.5,
+      461.3,
+      491.8
+     ],
+     "xref": 160
+    }
+   ]
+  },
+  {
+   "title": "My Family",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I have a mom and dad.",
+    "I have a little sister too.",
+    "We eat lunch together.",
+    "We play games and laugh."
+   ],
+   "lines": [
+    "I have a mom and dad.",
+    "I have a little sister too.",
+    "We eat lunch together.",
+    "We play games and laugh."
+   ],
+   "words": 21,
+   "stated": 23,
+   "pages": [
+    19
+   ],
+   "pictures": [
+    {
+     "page": 19,
+     "bbox": [
+      87.2,
+      127.9,
+      509.3,
+      424.9
+     ],
+     "xref": 166
+    }
+   ]
+  },
+  {
+   "title": "My School",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I go to school every day.",
+    "I see my friends in class.",
+    "We read books",
+    "and write in our notebook.",
+    "School is fun and I like it."
+   ],
+   "lines": [
+    "I go to school every day.",
+    "I see my friends in class.",
+    "We read books",
+    "and write in our notebook.",
+    "School is fun and I like it."
+   ],
+   "words": 27,
+   "stated": 29,
+   "pages": [
+    20
+   ],
+   "pictures": [
+    {
+     "page": 20,
+     "bbox": [
+      107.7,
+      129.5,
+      487.4,
+      405.6
+     ],
+     "xref": 171
+    }
+   ]
+  },
+  {
+   "title": "The Cat",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "The cat is small and white.",
+    "It likes to sleep on the mat.",
+    "The cat plays with a ball.",
+    "It runs fast in the yard."
+   ],
+   "lines": [
+    "The cat is small and white.",
+    "It likes to sleep on the mat.",
+    "The cat plays with a ball.",
+    "It runs fast in the yard."
+   ],
+   "words": 25,
+   "stated": 27,
+   "pages": [
+    22
+   ],
+   "pictures": [
+    {
+     "page": 22,
+     "bbox": [
+      108.8,
+      93.5,
+      498.5,
+      483.2
+     ],
+     "xref": 94
+    }
+   ]
+  }
+ ],
+ "2": [
+  {
+   "title": "The Picnic",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "Our class goes for a picnic in the park.",
+    "We bring sandwiches, fruits,",
+    "and juice to eat.",
+    "We sit on a blanket under a big tree.",
+    "We play games and",
+    "listen to birds singing.",
+    "The picnic is fun and",
+    "exciting for everyone in the class."
+   ],
+   "lines": [
+    "Our class goes for a picnic in the park.",
+    "We bring sandwiches, fruits,",
+    "and juice to eat.",
+    "We sit on a blanket under a big tree.",
+    "We play games and",
+    "listen to birds singing.",
+    "The picnic is fun and",
+    "exciting for everyone in the class."
+   ],
+   "words": 45,
+   "stated": 47,
+   "pages": [
+    9
+   ],
+   "pictures": [
+    {
+     "page": 9,
+     "bbox": [
+      126.4,
+      119.7,
+      480.5,
+      350.5
+     ],
+     "xref": 89
+    }
+   ]
+  },
+  {
+   "title": "The Farm",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "The farm has cows, pigs, and chickens.",
+    "The farmer feeds the animals every morning.",
+    "The cows drink water, and the chickens peck",
+    "at the grains.",
+    "The pigs roll in the mud happily.",
+    "The farm is busy and",
+    "full of life all day long."
+   ],
+   "lines": [
+    "The farm has cows, pigs, and chickens.",
+    "The farmer feeds the animals every morning.",
+    "The cows drink water, and the chickens peck",
+    "at the grains.",
+    "The pigs roll in the mud happily.",
+    "The farm is busy and",
+    "full of life all day long."
+   ],
+   "words": 43,
+   "stated": 45,
+   "pages": [
+    11,
+    12,
+    13
+   ],
+   "pictures": [
+    {
+     "page": 12,
+     "bbox": [
+      108.3,
+      95.2,
+      489.7,
+      373.9
+     ],
+     "xref": 103
+    }
+   ]
+  },
+  {
+   "title": "The Birthday Party",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "It is my birthday today.",
+    "I have balloons, a cake, and gifts.",
+    "My friends come to celebrate with me.",
+    "We play games, sing songs, and eat cake together.",
+    "It is the best birthday party",
+    "I have ever had."
+   ],
+   "lines": [
+    "It is my birthday today.",
+    "I have balloons, a cake, and gifts.",
+    "My friends come to celebrate with me.",
+    "We play games, sing songs, and eat cake together.",
+    "It is the best birthday party",
+    "I have ever had."
+   ],
+   "words": 38,
+   "stated": 41,
+   "pages": [
+    14
+   ],
+   "pictures": [
+    {
+     "page": 14,
+     "bbox": [
+      146.4,
+      96.6,
+      425.1,
+      439.0
+     ],
+     "xref": 114
+    }
+   ]
+  },
+  {
+   "title": "My School Bag",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I have a purple school bag.",
+    "It has books, pencils,",
+    "and my lunchbox inside.",
+    "I carry it to school every morning.",
+    "I keep it neat and clean.",
+    "My school bag helps me",
+    "bring all my school things easily."
+   ],
+   "lines": [
+    "I have a purple school bag.",
+    "It has books, pencils,",
+    "and my lunchbox inside.",
+    "I carry it to school every morning.",
+    "I keep it neat and clean.",
+    "My school bag helps me",
+    "bring all my school things easily."
+   ],
+   "words": 38,
+   "stated": 41,
+   "pages": [
+    15
+   ],
+   "pictures": [
+    {
+     "page": 15,
+     "bbox": [
+      154.3,
+      92.5,
+      442.8,
+      383.1
+     ],
+     "xref": 124
+    }
+   ]
+  },
+  {
+   "title": "The Zoo",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I go to the zoo with my family.",
+    "We see lions, elephants, and monkeys.",
+    "The monkeys swing from the trees.",
+    "The elephants splash water",
+    "with their trunks.",
+    "The zoo is fun, and I learn",
+    "many new things about animals."
+   ],
+   "lines": [
+    "I go to the zoo with my family.",
+    "We see lions, elephants, and monkeys.",
+    "The monkeys swing from the trees.",
+    "The elephants splash water",
+    "with their trunks.",
+    "The zoo is fun, and I learn",
+    "many new things about animals."
+   ],
+   "words": 39,
+   "stated": 41,
+   "pages": [
+    16,
+    17
+   ],
+   "pictures": [
+    {
+     "page": 16,
+     "bbox": [
+      133.9,
+      96.3,
+      470.0,
+      379.3
+     ],
+     "xref": 133
+    }
+   ]
+  },
+  {
+   "title": "The Beach",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "We go to the beach on a sunny day.",
+    "The sand is soft,",
+    "and the waves are small.",
+    "I build a sandcastle with my friends.",
+    "We collect shells and play near the water.",
+    "The beach is fun",
+    "and exciting every summer."
+   ],
+   "lines": [
+    "We go to the beach on a sunny day.",
+    "The sand is soft,",
+    "and the waves are small.",
+    "I build a sandcastle with my friends.",
+    "We collect shells and play near the water.",
+    "The beach is fun",
+    "and exciting every summer."
+   ],
+   "words": 41,
+   "stated": 43,
+   "pages": [
+    18
+   ],
+   "pictures": [
+    {
+     "page": 18,
+     "bbox": [
+      119.7,
+      109.6,
+      499.8,
+      368.0
+     ],
+     "xref": 140
+    }
+   ]
+  },
+  {
+   "title": "My Bike",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I have a small red bike.",
+    "I ride it around the yard every day.",
+    "I pedal fast and sometimes ring the bell.",
+    "My friends ride with me too.",
+    "Riding my bike is fun and makes me happy",
+    "and strong."
+   ],
+   "lines": [
+    "I have a small red bike.",
+    "I ride it around the yard every day.",
+    "I pedal fast and sometimes ring the bell.",
+    "My friends ride with me too.",
+    "Riding my bike is fun and makes me happy",
+    "and strong."
+   ],
+   "words": 39,
+   "stated": 41,
+   "pages": [
+    19
+   ],
+   "pictures": [
+    {
+     "page": 19,
+     "bbox": [
+      128.7,
+      92.3,
+      461.8,
+      420.4
+     ],
+     "xref": 149
+    }
+   ]
+  },
+  {
+   "title": "The Train",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "The train is long and blue.",
+    "It moves fast on the tracks.",
+    "The passengers sit",
+    "and look out of the windows.",
+    "The train goes to many cities and towns.",
+    "Riding the train is fun",
+    "and exciting for children and adults."
+   ],
+   "lines": [
+    "The train is long and blue.",
+    "It moves fast on the tracks.",
+    "The passengers sit",
+    "and look out of the windows.",
+    "The train goes to many cities and towns.",
+    "Riding the train is fun",
+    "and exciting for children and adults."
+   ],
+   "words": 40,
+   "stated": 42,
+   "pages": [
+    20
+   ],
+   "pictures": [
+    {
+     "page": 20,
+     "bbox": [
+      123.7,
+      98.9,
+      488.8,
+      367.9
+     ],
+     "xref": 154
+    },
+    {
+     "page": 20,
+     "bbox": [
+      108.4,
+      55.7,
+      519.8,
+      398.9
+     ],
+     "xref": 155
+    }
+   ]
+  },
+  {
+   "title": "The Library",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I go to the library to read books.",
+    "There are many storybooks",
+    "and picture books.",
+    "I sit quietly and enjoy reading every day.",
+    "The librarian helps me find the books I like.",
+    "The library is a nice place to learn",
+    "and have fun."
+   ],
+   "lines": [
+    "I go to the library to read books.",
+    "There are many storybooks",
+    "and picture books.",
+    "I sit quietly and enjoy reading every day.",
+    "The librarian helps me find the books I like.",
+    "The library is a nice place to learn",
+    "and have fun."
+   ],
+   "words": 43,
+   "stated": 45,
+   "pages": [
+    21
+   ],
+   "pictures": [
+    {
+     "page": 21,
+     "bbox": [
+      93.7,
+      98.7,
+      489.5,
+      367.8
+     ],
+     "xref": 161
+    },
+    {
+     "page": 21,
+     "bbox": [
+      78.2,
+      55.7,
+      520.6,
+      398.8
+     ],
+     "xref": 162
+    }
+   ]
+  },
+  {
+   "title": "The Raincoat",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "It is raining optsid",
+    "I wear my yellow raincoat and boots.",
+    "I jump in the puddles and splash the water.",
+    "The rain falls softly on the roof.",
+    "Wearing my raincoat makes me happy and",
+    "dry in the rain."
+   ],
+   "lines": [
+    "It is raining optsid",
+    "I wear my yellow raincoat and boots.",
+    "I jump in the puddles and splash the water.",
+    "The rain falls softly on the roof.",
+    "Wearing my raincoat makes me happy and",
+    "dry in the rain."
+   ],
+   "words": 38,
+   "stated": 40,
+   "pages": [
+    22,
+    23,
+    24
+   ],
+   "pictures": [
+    {
+     "page": 23,
+     "bbox": [
+      200.9,
+      93.7,
+      411.0,
+      411.8
+     ],
+     "xref": 175
+    }
+   ]
+  },
+  {
+   "title": "The Bakery",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I visit the bakery with my mom.",
+    "There are cakes, bread,",
+    "and cookies on the shelves.",
+    "The smell is sweet and nice.",
+    "I buy a small cake for my snack.",
+    "The bakery is full of yummy food that I enjoy."
+   ],
+   "lines": [
+    "I visit the bakery with my mom.",
+    "There are cakes, bread,",
+    "and cookies on the shelves.",
+    "The smell is sweet and nice.",
+    "I buy a small cake for my snack.",
+    "The bakery is full of yummy food that I enjoy."
+   ],
+   "words": 40,
+   "stated": 42,
+   "pages": [
+    25,
+    26,
+    27
+   ],
+   "pictures": [
+    {
+     "page": 26,
+     "bbox": [
+      141.9,
+      85.2,
+      467.0,
+      372.5
+     ],
+     "xref": 188
+    }
+   ]
+  },
+  {
+   "title": "The Picnic",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "Our class goes for a picnic in the park.",
+    "We bring sandwiches, fruits,",
+    "and juice to eat.",
+    "We sit on a blanket under a big tree.",
+    "We play games and",
+    "listen to birds singing.",
+    "The picnic is fun and",
+    "exciting for everyone in the class."
+   ],
+   "lines": [
+    "Our class goes for a picnic in the park.",
+    "We bring sandwiches, fruits,",
+    "and juice to eat.",
+    "We sit on a blanket under a big tree.",
+    "We play games and",
+    "listen to birds singing.",
+    "The picnic is fun and",
+    "exciting for everyone in the class."
+   ],
+   "words": 45,
+   "stated": 47,
+   "pages": [
+    29
+   ],
+   "pictures": [
+    {
+     "page": 29,
+     "bbox": [
+      131.8,
+      105.4,
+      485.9,
+      336.2
+     ],
+     "xref": 89
+    }
+   ]
+  }
+ ],
+ "3": [
+  {
+   "title": "The Ant and The Fly",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "Aesop Fable",
+   "format": "prose",
+   "paragraphs": [
+    "Once, an Ant and a Fly were fighting over who was more important. The Fly said, “Ant! What do you think you are? How can you even think about comparing yourself to me? Look at me! You have to work hard but I pass my time with the rich and the learned. I fly into the temples and taste the offerings. I can sit on the King’s crown and kiss the Queen’s forehead. I do not work, yet have the best life!” The Ant replied, “Don’t be so proud! You are always hated when you enter the temples. You are driven away as soon as you sit on the King’s crown or the Queen’s forehead. You do not have anything left for the difficult times as you are lazy. In winters, you feed yourself on a pile of cow dung. Look at me! I work hard and gather a store of grain for the winter. Later on, when you shiver in the cold, I am safe and at peace in my cozy home. I am prepared to live in any season of the year.”",
+    "Look at your own faults, before finding faults in others."
+   ],
+   "lines": [
+    "Once, an Ant and a Fly were fighting over who was more important. The Fly said, “Ant! What do you think you are? How can you even think about comparing yourself to me? Look at me! You have to work hard but I pass my time with the rich and the learned. I fly into the temples and taste the offerings. I can sit on the King’s crown and kiss the Queen’s forehead. I do not work, yet have the best life!” The Ant replied, “Don’t be so proud! You are always hated when you enter the temples. You are driven away as soon as you sit on the King’s crown or the Queen’s forehead. You do not have anything left for the difficult times as you are lazy. In winters, you feed yourself on a pile of cow dung. Look at me! I work hard and gather a store of grain for the winter. Later on, when you shiver in the cold, I am safe and at peace in my cozy home. I am prepared to live in any season of the year.”",
+    "Look at your own faults, before finding faults in others."
+   ],
+   "words": 194,
+   "stated": 199,
+   "pages": [
+    9
+   ],
+   "pictures": []
+  },
+  {
+   "title": "Max’s Good Habit",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "Henry Joyce",
+   "format": "prose",
+   "paragraphs": [
+    "Max reads more than anyone he knows. He loves to read during all of his free time. His friends tease him because he would rather read than play video games, but his parents and his teachers are proud of him. They say reading is important, and it will help him learn about the world around him. They al-so tell him it is a good habit to read on a regular basis. One day Max was reading a magazine article about volcanoes. He told his friends all about volcanoes and what causes them to erupt. The very next week, his his class was assigned a science project about volcanoes. Guess who everyone wanted in their project group? Max’s friends weren’t teasing him anymore. Max ended up being in a group with Liz, Anna and Josh. The assignment was to create a poster board with information about volcanoes and to build a volcano model. Max made copies of the magazine article about volcanoes so his project partners could read about them too. They also went to the library to look for more information about volcanoes. The group met at Anna’s house that night to organize the information and decide what they wanted to put on the poster board."
+   ],
+   "lines": [
+    "Max reads more than anyone",
+    "he knows. He loves to read",
+    "during all of his free time. His",
+    "friends tease him because he",
+    "would rather read than play",
+    "video games, but his parents",
+    "and his teachers are proud of",
+    "him. They say reading is",
+    "important, and it will help him",
+    "learn about the world around",
+    "him. They al-so tell him it is a",
+    "good habit to read on a regular",
+    "basis. One day Max was",
+    "reading a magazine article",
+    "about volcanoes. He told his",
+    "friends all about volcanoes",
+    "and what causes them to",
+    "erupt. The very next week, his",
+    "his class was assigned a science project about volcanoes. Guess who",
+    "everyone wanted in their project group? Max’s friends weren’t teasing",
+    "him anymore. Max ended up being in a group with Liz, Anna and",
+    "Josh. The assignment was to create a poster board with information",
+    "about volcanoes and to build a",
+    "volcano model. Max made copies of",
+    "the magazine article about",
+    "volcanoes so his project partners",
+    "could read about them too. They",
+    "also went to the library to look for",
+    "more information about volcanoes.",
+    "The group met at Anna’s house",
+    "that night to organize the",
+    "information and decide what they",
+    "wanted to put on the poster board."
+   ],
+   "words": 206,
+   "stated": 209,
+   "pages": [
+    11
+   ],
+   "pictures": [
+    {
+     "page": 11,
+     "bbox": [
+      322.2,
+      149.3,
+      501.1,
+      348.5
+     ],
+     "xref": 101
+    },
+    {
+     "page": 11,
+     "bbox": [
+      83.2,
+      466.5,
+      294.7,
+      631.8
+     ],
+     "xref": 105
+    },
+    {
+     "page": 11,
+     "bbox": [
+      83.3,
+      466.6,
+      294.7,
+      647.2
+     ],
+     "xref": 106
+    }
+   ]
+  },
+  {
+   "title": "Max’s Good Habit II",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "They all asked Max what he thought was most important. Then they decided on the following together. Max reads more than anyone he knows. What causes volcanoes to erupt? The release of pressure when magma rises up through cracks in the Earth’s crust causes volcanoes to erupt. How do volcanoes form? Lava from eruptions cools and forms new crust. The crust builds up after several eruptions to form a volcano. How hot is lava? Lava can get as hot as 1,165 Fahrenheit. The next night they met at Josh’s house to build their volcano.",
+    "They used cardboard and modeling clay. First, they made a volcano shape with the cardboard, and then they covered the shape in brown and red clay. The red was lava flowing down the volcano. They also at tached red clay to the top of the volcano to make it look like it was erupting. The volcano looked great. Max, Liz, Anna and Josh were very proud of their hard work. When they turned in their project, their teacher was proud too. Thanks to Max’s good habit, they earned an A+ on both parts of the project."
+   ],
+   "lines": [
+    "They all asked Max what he thought",
+    "was most important. Then they",
+    "decided on the following together.",
+    "Max reads more than anyone he",
+    "knows. What causes volcanoes to",
+    "erupt? The release of pressure when",
+    "magma rises up through cracks in",
+    "the Earth’s crust causes volcanoes",
+    "to erupt. How do volcanoes form?",
+    "Lava from eruptions cools and",
+    "forms new crust. The crust builds",
+    "up after several eruptions to form a",
+    "volcano. How hot is lava? Lava can",
+    "get as hot as 1,165 Fahrenheit. The",
+    "next night they met at Josh’s",
+    "house to build their volcano.",
+    "They used cardboard and modeling clay. First, they made",
+    "a volcano shape with the cardboard, and then they covered the",
+    "shape in brown and red clay. The red was lava flowing down",
+    "the volcano. They also at",
+    "tached red clay to the top of",
+    "the volcano to make it look",
+    "like it was erupting. The",
+    "volcano looked great. Max,",
+    "Liz, Anna and Josh were very",
+    "proud of their hard work.",
+    "When they turned in their",
+    "project, their teacher was",
+    "proud too. Thanks to Max’s",
+    "good habit, they earned an A+",
+    "on both parts of the project."
+   ],
+   "words": 191,
+   "stated": 189,
+   "pages": [
+    12
+   ],
+   "pictures": [
+    {
+     "page": 12,
+     "bbox": [
+      300.1,
+      391.1,
+      518.3,
+      584.3
+     ],
+     "xref": 110
+    }
+   ]
+  },
+  {
+   "title": "Amusement Park Problem",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "The smell of popcorn was in the air. I could hear kids laughing and screaming. People were everywhere! The breeze felt warm on my skin. It was a perfect day at the amusement park. My family and I wandered around the park, getting snacks and going on rides. I loved almost all types of rides! I loved to go fast and to spin around, to go down hills and to get splashed. The only rides I didn’t like were rides that turn you upsidedown. My little brother, Ben, didn’t like those either, but my older sister, Laura, loved them. When we finally were near a ride that went upside-down, she started asking me to go with her. I told her I don’t like those rides, but she kept asking.",
+    "Then she started whining because — she didn’t want to go alone. I was feeling sympathy for her, so I started thinking that maybe I should go with her, even though I really don’t like to go upside-down. I looked to my parents for help."
+   ],
+   "lines": [
+    "The smell of popcorn was in the air. |",
+    "could hear kids laughing and screaming. People",
+    "were everywhere! The breeze felt warm on my",
+    "skin. It was a perfect day at the amusement",
+    "park. My family and I wandered around the",
+    "park, getting snacks and going on rides. I loved",
+    "almost all types of rides! I loved to go fast and",
+    "to spin around, to go down hills and to get",
+    "splashed. The only rides I didn’t like were rides",
+    "that turn you upside-",
+    "down. My little brother, Ben, didn’t like",
+    "those either, but my older sister, Laura,",
+    "loved them. When we finally were near",
+    "a ride that went upside-down, she",
+    "started asking me to go with her. I told",
+    "her I don’t like those rides, but she kept",
+    "asking.",
+    "Then she started whining because —",
+    "she didn’t want to go alone. I was",
+    "feeling sympathy for her, so I started",
+    "thinking that maybe I",
+    "should go with her, even",
+    "though I really don’t like to",
+    "go upside-down. I looked to",
+    "my parents for help."
+   ],
+   "words": 173,
+   "stated": 177,
+   "pages": [
+    13
+   ],
+   "pictures": [
+    {
+     "page": 13,
+     "bbox": [
+      363.2,
+      302.4,
+      514.3,
+      455.9
+     ],
+     "xref": 120
+    },
+    {
+     "page": 13,
+     "bbox": [
+      72.0,
+      479.5,
+      317.2,
+      642.2
+     ],
+     "xref": 125
+    }
+   ]
+  },
+  {
+   "title": "Amusement Park Problem II",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "“Matt, you are allowed to stand up for yourself. If something makes you feel rally uncomfortable, you can tell people ‘no.’ It’s OK to tell Laura that you love her, but that you can’t go with her because going upside-down makes you uncomfortable. Be strong but kind when you tell her, so that she knows you’re serious,” Mom said.",
+    "“I don’t want to make Laura mad or sad, though,” I replied to Mom, “and I don’t want her to think I’m being mean.” “There’s a difference between being aggressive and being assertive. You’re not saying ‘no’ to be mean to Laura or to hurt her feelings, you’re just listening to your own feelings to make sure you stay safe. It’s fine to tell her no for this,” Mom answered. “The same goes for Laura. If you ask her to arm wrestle and she doesn’t feel comfortable, she’s allowed to say ‘no,’ too. We are all allowed to stand up for ourselves to make sure we stay safe. Does that make sense?” “Yes, thanks Mom,” I said. I told Laura that I love her and like to do things with her, but that I wasn’t comfort-able going on upside-down rides today because they scare me. She was sad, but went on the ride by herself and was really happy when it was over. We had a great rest of the day at the amusement park!"
+   ],
+   "lines": [
+    "“Matt, you are allowed to stand up for",
+    "yourself. If something makes you feel",
+    "rally uncomfortable, you can tell",
+    "people ‘no.’ It’s OK to tell Laura that",
+    "you love her, but that you can’t go",
+    "with her because going upside-down",
+    "makes you uncomfortable. Be strong",
+    "but kind when you tell her, so that",
+    "she knows you’re serious,” Mom said.",
+    "“I don’t want to make Laura mad or",
+    "sad, though,” I replied to Mom, “and I",
+    "don’t want her to think I’m being",
+    "mean.” “There’s a difference between",
+    "being aggressive",
+    "and being assertive. You’re not saying ‘no’",
+    "to be mean to Laura or to hurt her feelings,",
+    "you’re just listening to your own feelings to",
+    "make sure you stay safe. It’s fine to tell her",
+    "no for this,” Mom answered. “The same",
+    "goes for Laura. If you ask her to arm",
+    "wrestle and she doesn’t feel comfortable,",
+    "she’s allowed to say ‘no,’ too. We are all",
+    "allowed to stand up for ourselves to make",
+    "sure we stay safe. Does that make sense?”",
+    "“Yes, thanks Mom,” I said. I told Laura",
+    "that I love her and like to do things with",
+    "her, but that I wasn’t comfort-able going on",
+    "upside-down rides today because they",
+    "scare me. She was sad, but went on the",
+    "ride by herself and was really happy when",
+    "it was over. We had a great rest of the day",
+    "at the amusement park!"
+   ],
+   "words": 236,
+   "stated": 234,
+   "pages": [
+    14
+   ],
+   "pictures": [
+    {
+     "page": 14,
+     "bbox": [
+      85.8,
+      502.5,
+      214.8,
+      661.0
+     ],
+     "xref": 130
+    },
+    {
+     "page": 14,
+     "bbox": [
+      82.1,
+      92.0,
+      228.2,
+      278.7
+     ],
+     "xref": 141
+    },
+    {
+     "page": 14,
+     "bbox": [
+      82.1,
+      91.9,
+      231.8,
+      278.8
+     ],
+     "xref": 142
+    },
+    {
+     "page": 14,
+     "bbox": [
+      385.2,
+      294.2,
+      522.7,
+      470.3
+     ],
+     "xref": 144
+    }
+   ]
+  },
+  {
+   "title": "The generosity of Rantideva",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "Rantideva was born in a rich family. Even as a child, he would share his riches with the needy. He got married and had sons. With no thought for the future, Rantideva and his wife continued to be generous. No one went away from their home empty-handed. Ultimately, Rantideva ran out of money. His family had to go without food for months.",
+    "One day, Rantideva managed to get some rice, ghee, wheat and sugar. Just then a holy man knocked at their door. Rantideva received the guest by bowing to him and served food to him. The holy man went away satisfied. Half of the food was still left for Rantideva and his family. As they sat down to eat, a hungry farmer came looking for food. Rantideva offered him a seat, made him comfortable, and served him food. The farmer enjoyed his meal. There was still some food left. Rantideva’s family decided to share whatever had remained. As they sat down to eat, a traveler appeared at the door."
+   ],
+   "lines": [
+    "Rantideva was born in a rich family. Even as a child, he would",
+    "share his riches with the needy. He got married and had sons. With",
+    "no thought for the future, Rantideva and his wife continued to be",
+    "generous. No one went away from their home empty-handed.",
+    "Ultimately, Rantideva ran out of money. His family had to go without",
+    "food for months.",
+    "One day, Rantideva managed to get some rice, ghee, wheat and",
+    "sugar. Just then a holy man knocked at their door. Rantideva",
+    "received the guest by bowing to him and served food to him. The holy",
+    "man went away satisfied. Half of the food was still left for Rantideva",
+    "and his family. As they sat down to eat, a hungry farmer came",
+    "looking for food. Rantideva offered him a seat, made him comfortable,",
+    "and served him food. The farmer enjoyed his meal. There was still",
+    "some food left. Rantideva’s family decided to share whatever had",
+    "remained. As they sat down to eat, a traveler appeared at the door."
+   ],
+   "words": 170,
+   "stated": 174,
+   "pages": [
+    15
+   ],
+   "pictures": [
+    {
+     "page": 15,
+     "bbox": [
+      110.8,
+      125.8,
+      457.5,
+      367.1
+     ],
+     "xref": 152
+    }
+   ]
+  },
+  {
+   "title": "I Am",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "John Clare - 1793-1864",
+   "format": "lines",
+   "paragraphs": [
+    "I am! yet",
+    "what I am none cares or knows;",
+    "My friends forsake me like a",
+    "memory lost;",
+    "I am the self-consumer of my",
+    "woes,",
+    "They rise and vanish in oblivious",
+    "host,",
+    "Like shades in love and death's",
+    "oblivion lost;",
+    "And yet I am! and live with",
+    "shadows toast",
+    "Into the nothingness of scorn and",
+    "noise,",
+    "Into the living sea of waking",
+    "dreams,",
+    "Where there is neither sense of",
+    "life nor joys,",
+    "But the vast shipwreck of my",
+    "life's esteems;",
+    "And e'en the dearest—that I",
+    "loved the best—",
+    "Are strange—nay, rather",
+    "stranger than the rest.",
+    "I long for scenes where man has",
+    "never trod;",
+    "A place where woman never",
+    "smil'd or wept;",
+    "There to abide with my creator,",
+    "God,",
+    "And sleep as I in childhood",
+    "sweetly slept:",
+    "Untroubling and untroubled",
+    "where I lie;",
+    "The grass below—above the",
+    "vaulted sky."
+   ],
+   "lines": [
+    "I am! yet",
+    "what I am none cares or knows;",
+    "My friends forsake me like a",
+    "memory lost;",
+    "I am the self-consumer of my",
+    "woes,",
+    "They rise and vanish in oblivious",
+    "host,",
+    "Like shades in love and death's",
+    "oblivion lost;",
+    "And yet I am! and live with",
+    "shadows toast",
+    "Into the nothingness of scorn and",
+    "noise,",
+    "Into the living sea of waking",
+    "dreams,",
+    "Where there is neither sense of",
+    "life nor joys,",
+    "But the vast shipwreck of my",
+    "life's esteems;",
+    "And e'en the dearest—that I",
+    "loved the best—",
+    "Are strange—nay, rather",
+    "stranger than the rest.",
+    "I long for scenes where man has",
+    "never trod;",
+    "A place where woman never",
+    "smil'd or wept;",
+    "There to abide with my creator,",
+    "God,",
+    "And sleep as I in childhood",
+    "sweetly slept:",
+    "Untroubling and untroubled",
+    "where I lie;",
+    "The grass below—above the",
+    "vaulted sky."
+   ],
+   "words": 142,
+   "stated": 144,
+   "pages": [
+    16
+   ],
+   "pictures": [
+    {
+     "page": 16,
+     "bbox": [
+      311.5,
+      433.6,
+      517.2,
+      617.2
+     ],
+     "xref": 160
+    }
+   ]
+  },
+  {
+   "title": "Verb To Be",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "James Hampshire",
+   "format": "lines",
+   "paragraphs": [
+    "am",
+    "You are",
+    "He is third person",
+    "She is",
+    "It is",
+    "We are awesome",
+    "You are",
+    "They are",
+    "subject pronouns",
+    "With the verb to be",
+    "I am a teacher",
+    "And",
+    "You are the student",
+    "He is a Doctor",
+    "And",
+    "She is intelligent",
+    "This is the future",
+    "That we're building",
+    "Here today",
+    "Whole world",
+    "They will be amazed",
+    "Yeah",
+    "I am",
+    "You are",
+    "He is third Person",
+    "She is",
+    "It is",
+    "We are awesome",
+    "You are",
+    "They are",
+    "subject pronouns",
+    "With the verb to be",
+    "Well this is the",
+    "Verb to be",
+    "And my friend",
+    "You're on your way"
+   ],
+   "lines": [
+    "am",
+    "You are",
+    "He is third person",
+    "She is",
+    "It is",
+    "We are awesome",
+    "You are",
+    "They are",
+    "subject pronouns",
+    "With the verb to be",
+    "I am a teacher",
+    "And",
+    "You are the student",
+    "He is a Doctor",
+    "And",
+    "She is intelligent",
+    "This is the future",
+    "That we're building",
+    "Here today",
+    "Whole world",
+    "They will be amazed",
+    "Yeah",
+    "I am",
+    "You are",
+    "He is third Person",
+    "She is",
+    "It is",
+    "We are awesome",
+    "You are",
+    "They are",
+    "subject pronouns",
+    "With the verb to be",
+    "Well this is the",
+    "Verb to be",
+    "And my friend",
+    "You're on your way"
+   ],
+   "words": 98,
+   "stated": 98,
+   "pages": [
+    17
+   ],
+   "pictures": [
+    {
+     "page": 17,
+     "bbox": [
+      90.6,
+      94.5,
+      486.6,
+      308.0
+     ],
+     "xref": 175
+    }
+   ]
+  },
+  {
+   "title": "Verb To Be II",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "It's easy as",
+    "One two three",
+    "Just practice",
+    "Everyday",
+    "This is the future",
+    "That we're building",
+    "Here today",
+    "You'll show the",
+    "Whole world",
+    "They will be amazed",
+    "Yeah",
+    "I am",
+    "You are",
+    "He is third person",
+    "She is",
+    "It is",
+    "We are awesome",
+    "You are",
+    "They are",
+    "subject pronouns",
+    "With the verb to be",
+    "When I say subject",
+    "You say pronoun",
+    "Subject (pronoun)",
+    "Subject (pronoun)",
+    "When I say verb to",
+    "You say be",
+    "Verb to (Be)",
+    "Verb to (Be)",
+    "This is the future",
+    "That we're building",
+    "Here today",
+    "You'll show the",
+    "Whole world",
+    "They will be amazed",
+    "I am",
+    "You are",
+    "He is third person",
+    "She is",
+    "It is",
+    "We are awesome",
+    "You are",
+    "They are",
+    "subject pronouns",
+    "With the verb to be"
+   ],
+   "lines": [
+    "It's easy as",
+    "One two three",
+    "Just practice",
+    "Everyday",
+    "This is the future",
+    "That we're building",
+    "Here today",
+    "You'll show the",
+    "Whole world",
+    "They will be amazed",
+    "Yeah",
+    "I am",
+    "You are",
+    "He is third person",
+    "She is",
+    "It is",
+    "We are awesome",
+    "You are",
+    "They are",
+    "subject pronouns",
+    "With the verb to be",
+    "When I say subject",
+    "You say pronoun",
+    "Subject (pronoun)",
+    "Subject (pronoun)",
+    "When I say verb to",
+    "You say be",
+    "Verb to (Be)",
+    "Verb to (Be)",
+    "This is the future",
+    "That we're building",
+    "Here today",
+    "You'll show the",
+    "Whole world",
+    "They will be amazed",
+    "I am",
+    "You are",
+    "He is third person",
+    "She is",
+    "It is",
+    "We are awesome",
+    "You are",
+    "They are",
+    "subject pronouns",
+    "With the verb to be"
+   ],
+   "words": 123,
+   "stated": 123,
+   "pages": [
+    18
+   ],
+   "pictures": [
+    {
+     "page": 18,
+     "bbox": [
+      132.4,
+      61.0,
+      477.5,
+      234.2
+     ],
+     "xref": 181
+    }
+   ]
+  },
+  {
+   "title": "Daisies",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "Frank Dempster Sherman",
+   "format": "lines",
+   "paragraphs": [
+    "At evening when I go to bed",
+    "I see the stars shine overhead;",
+    "They are the little daisies white",
+    "That dot the meadow of the Night.",
+    "And often while I'm dreaming so,",
+    "Across the sky the Moon will go;",
+    "It is a lady, sweet and fair,",
+    "Who comes to gather daisies there.",
+    "For, when at morning I arise,",
+    "There's not a star left in the skies;",
+    "She picked them all and dropped them down",
+    "Into the meadows of the town."
+   ],
+   "lines": [
+    "At evening when I go to bed",
+    "I see the stars shine overhead;",
+    "They are the little daisies white",
+    "That dot the meadow of the Night.",
+    "And often while I'm dreaming so,",
+    "Across the sky the Moon will go;",
+    "It is a lady, sweet and fair,",
+    "Who comes to gather daisies there.",
+    "For, when at morning I arise,",
+    "There's not a star left in the skies;",
+    "She picked them all and dropped them down",
+    "Into the meadows of the town."
+   ],
+   "words": 80,
+   "stated": 80,
+   "pages": [
+    19
+   ],
+   "pictures": [
+    {
+     "page": 19,
+     "bbox": [
+      131.0,
+      139.8,
+      463.7,
+      317.9
+     ],
+     "xref": 186
+    }
+   ]
+  },
+  {
+   "title": "A Robot Dog",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "walked and walked. After a little bit, they walked past a big tree. Poof! Rocky was a robot dog. “Woof, woof,” barked Rocky the robot dog. “What is going on?” asked Andrew. “Who turned my dog into a robot dog?” Andrew looked all around him. He looked up the street. He looked down the street. He looked behind the tree. He looked up into the tree. No one was there. He stopped and stood still. “Hee, hee, hee,” he heard. It came from the tree. “Woof, woof,” barked Rocky the robot dog at the tree. Andrew looked at the tree. He could not see anything different about this tree. He could not think of what to do. “Tree, are you a real tree?” asked Andrew. The tree did not say anything. Rocky the robot dog came over and smelled the tree. “Woof, woof,” he barked at it again. Andrew was mad. He did not like it that Rocky was a robot dog. Andrew walked over to the tree and tickled it. “Stop that,” said the tree. “Why did you tickle me?” “I think you turned my dog into a robot dog,” said Andrew. “Maybe I did, and maybe I didn’t,” said the tree who was holding his branches in front of himself so Andrew could not tickle him again. “It is kind of funny to see a dog become a robot.” Andrew got real mad this time and went up to the tree. He pushed away the tree’s branches and tickled him some more. “Oh, stop, stop,” said the tree. “I don’t want to be tickled anymore.” “I still think you turned Rocky into a robot dog,” said Andrew who was about to tickle the tree again. “Okay, okay,” said the tree. “I turned your dog into a robot dog. Just don’t tickle me anymore.” “Well, I don’t think it is funny,” said Andrew. “Now turn Rocky the robot dog back into Rocky the real dog.” “Okay,” said the tree. Poof! Rocky was Rocky the real dog again. “Now don’t do that anymore,” said Andrew. “Someone might get mad and tickle you again. You would not like that.” “Okay, I won’t turn dogs into robot dogs anymore,” said the tree. Andrew and Rocky walked home. The tree never turned any more dogs into robots, but every now and then, Andrew would see a robot butterfly go flying past his home."
+   ],
+   "lines": [
+    "walked and walked. After a little bit, they walked past a big tree.",
+    "Poof! Rocky was a robot dog. “Woof, woof,” barked Rocky the ro-",
+    "bot dog. “What is going on?” asked Andrew. “Who turned my dog",
+    "into a robot dog?” Andrew looked all around him. He looked up",
+    "the street. He looked down the street. He looked behind the tree.",
+    "He looked up into the tree. No one was there. He stopped and",
+    "stood still. “Hee, hee, hee,” he heard. It came from the tree.",
+    "“Woof, woof,” barked Rocky the robot dog at the tree. Andrew",
+    "looked at the tree. He could not see anything different about this",
+    "tree. He could not think of what to do.",
+    "“Tree, are you a real tree?” asked Andrew. The tree did not",
+    "say anything. Rocky the robot dog came over and smelled the tree.",
+    "“Woof, woof,” he barked at it again. Andrew was mad. He did not",
+    "like it that Rocky was a robot dog.",
+    "Andrew walked over to the tree and tickled it. “Stop",
+    "that,” said the tree. “Why did you tickle me?” “I think you",
+    "turned my dog into a robot dog,” said Andrew.",
+    "“Maybe I did, and maybe I didn’t,” said the tree who",
+    "was holding his branches in front of himself so Andrew",
+    "could not tickle him again. “It is kind of funny to see a dog",
+    "become a robot.” Andrew got real mad this time and went",
+    "up to the tree. He pushed away the tree’s branches and tick-",
+    "led him some more. “Oh, stop, stop,” said the tree. “I don’t",
+    "want to be tickled anymore.” “I still think you turned Rocky",
+    "into a robot dog,” said Andrew who was about to tickle the",
+    "tree again. “Okay, okay,” said the tree.",
+    "“I turned your dog into a robot dog. Just don’t tickle",
+    "me anymore.” “Well, I don’t think it is funny,” said Andrew.",
+    "“Now turn Rocky the robot dog back into Rocky the real",
+    "dog.” “Okay,” said the tree. Poof! Rocky was Rocky the real",
+    "dog again.",
+    "“Now don’t do that anymore,”",
+    "said Andrew. “Someone",
+    "might get mad and tickle you",
+    "again. You would not like",
+    "that.” “Okay, I won’t turn",
+    "dogs into robot dogs any-",
+    "more,” said the tree. Andrew",
+    "and Rocky walked home. The",
+    "tree never turned any more",
+    "dogs into robots, but every",
+    "now and then, Andrew would",
+    "see a robot butterfly go flying",
+    "past his home."
+   ],
+   "words": 403,
+   "stated": 403,
+   "pages": [
+    20,
+    21
+   ],
+   "pictures": [
+    {
+     "page": 20,
+     "bbox": [
+      142.5,
+      128.5,
+      445.4,
+      362.4
+     ],
+     "xref": 201
+    },
+    {
+     "page": 21,
+     "bbox": [
+      296.5,
+      370.0,
+      519.8,
+      652.0
+     ],
+     "xref": 210
+    },
+    {
+     "page": 21,
+     "bbox": [
+      296.4,
+      370.0,
+      519.8,
+      652.0
+     ],
+     "xref": 211
+    }
+   ]
+  },
+  {
+   "title": "The Ant and The Fly",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "Aesop Fable",
+   "format": "prose",
+   "paragraphs": [
+    "Once, an Ant and a Fly were fighting over who was more important. The Fly said, “Ant! What do you think you are? How can you even think about comparing yourself to me? Look at me! You have to work hard but I pass my time with the rich and the learned. I fly into the temples and taste the offerings. I can sit on the King’s crown and kiss the Queen’s forehead. I do not work, yet have the best life!” The Ant replied, “Don’t be so proud! You are always hated when you enter the temples. You are driven away as soon as you sit on the King’s crown or the Queen’s forehead. You do not have anything left for the difficult times as you are lazy. In winters, you feed yourself on a pile of cow dung. Look at me! I work hard and gather a store of grain for the winter. Later on, when you shiver in the cold, I am safe and at peace in my cozy home. I am prepared to live in any season of the year.”",
+    "Look at your own faults, before finding faults in others."
+   ],
+   "lines": [
+    "Once, an Ant and a Fly were fighting over who was more important. The Fly said, “Ant! What do you think you are? How can you even think about comparing yourself to me? Look at me! You have to work hard but I pass my time with the rich and the learned. I fly into the temples and taste the offerings. I can sit on the King’s crown and kiss the Queen’s forehead. I do not work, yet have the best life!” The Ant replied, “Don’t be so proud! You are always hated when you enter the temples. You are driven away as soon as you sit on the King’s crown or the Queen’s forehead. You do not have anything left for the difficult times as you are lazy. In winters, you feed yourself on a pile of cow dung. Look at me! I work hard and gather a store of grain for the winter. Later on, when you shiver in the cold, I am safe and at peace in my cozy home. I am prepared to live in any season of the year.”",
+    "Look at your own faults, before finding faults in others."
+   ],
+   "words": 194,
+   "stated": 199,
+   "pages": [
+    23
+   ],
+   "pictures": []
+  }
+ ],
+ "4": [
+  {
+   "title": "My First Baseball Game",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "Randy Ryan",
+   "format": "prose",
+   "paragraphs": [
+    "I remember my first Cubs game. My uncle came to take my sister and me to it. It was a sunny Saturday. He drove all the way from Indiana to get us. Then we took the train to the ballpark. He said it would be hard to find a parking space there, so he didn’t drive there. He was right. When we got there it was so crowded. We had tickets that were for seats far back. It seemed like I climbed about 300 steps to get to them. But when we got there and I turned around I could see everything. I saw the whole field. It was much better than watching it on TV. Then the game started. Everyone cheered. The man next to me said, “This is going to be the year. They are playing really well.” My uncle said to him, “Let’s hope this is the one.” But then he whispered to us, “Jerome and Felicia, we’ll have to wait and see. Remember last year? They started out well and then they lost at the end.” “Hey, Hey, Hey!” The Cub batter hit a ball far to the wall.",
+    "Just then I heard “Hot dogs!” “Peanuts!” I looked and saw a man with a big tray hanging from his shoulders. It was full of hotdogs in plastic wrap and bags of peanuts. “Three hot dogs,” my uncle shouted. Then he gave the man next to us $6. He passed it to the man with the hot dogs."
+   ],
+   "lines": [
+    "I remember my first Cubs game. My uncle came to take my sister and me to it. It was a sunny Saturday. He drove all the way from Indiana to get us. Then we took the train to the ballpark. He said it would be hard to find a parking space there, so he didn’t drive there. He was right. When we got there it was so crowded. We had tickets that were for seats far back. It seemed like I climbed about 300 steps to get to them. But when we got there and I turned around I could see everything. I saw the whole field. It was much better than watching it on TV. Then the game started. Everyone cheered. The man next to me said, “This is going to be the year. They are playing really well.” My uncle said to him, “Let’s hope this is the one.” But then he whispered to us, “Jerome and Felicia, we’ll have to wait and see. Remember last year? They started out well and then they lost at the end.” “Hey, Hey, Hey!” The Cub batter hit a ball far to the wall.",
+    "Just then I heard “Hot dogs!” “Peanuts!” I looked and saw a man with a big tray hanging from his shoulders. It was full of hotdogs in plastic wrap and bags of peanuts. “Three hot dogs,” my uncle shouted. Then he gave the man next to us $6. He passed it to the man with the hot dogs."
+   ],
+   "words": 251,
+   "stated": 255,
+   "pages": [
+    9
+   ],
+   "pictures": [
+    {
+     "page": 9,
+     "bbox": [
+      302.5,
+      229.6,
+      515.1,
+      524.0
+     ],
+     "xref": 83
+    }
+   ]
+  },
+  {
+   "title": "The Singing Plant",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "Todd awoke to singing. The singing was light and airy. It reminded him of a sunrise. Well that’s appropriate, thought Todd, it’s so early the sun is probably just rising. As his mind grew more awake, Todd realized that he didn’t know where the music was coming from. He checked his radio, as well as his phone. Nothing. He stretched and looked around his room. Nothing in here would be singing, he thought. Todd got out of bed and walked toward his window, thinking that maybe one of his neighbors was playing music. The music didn’t get louder as he walked toward the window, and when he opened the window he could tel l that the music did not come from outside. Todd walked toward his bedroom door, but was hesitant to go out into the hallway. It was still pretty dark, and the rest of his family was still asleep. That always made him nervous to leave his room. It’s only singing, though, there’s nothing scary about that, Todd thought. He opened the door, and could hear the music coming from downstairs. He walked downstairs and followed the music into the kitchen. There, he found the source of the music, but he couldn’t believe his eyes!"
+   ],
+   "lines": [
+    "Todd awoke to singing. The singing was light and airy. It",
+    "reminded him of a sunrise. Well that’s appropriate, thought",
+    "Todd, it’s so early the sun is probably just rising. As his mind",
+    "grew more awake, Todd realized that he didn’t know where the",
+    "music was coming from. He checked his radio, as well as his",
+    "phone. Nothing. He stretched and looked around his room.",
+    "Nothing in here would be singing, he thought. Todd got out of",
+    "bed and walked toward his window, thinking that maybe one of",
+    "his neighbors was playing music.",
+    "The music didn’t get louder as he walked toward the window,",
+    "and when he opened",
+    "the window he could",
+    "tel l that the music",
+    "did not come from",
+    "outside. Todd walked",
+    "toward his bedroom",
+    "door, but was hesi-",
+    "tant to go out into the",
+    "hallway. It was still",
+    "pretty dark, and the",
+    "rest of his family was",
+    "still asleep. That al-",
+    "ways made him nerv-",
+    "ous to leave his room.",
+    "It’s only singing,",
+    "though, there’s noth-",
+    "ing scary about that,",
+    "Todd thought. He",
+    "opened the door, and",
+    "could hear the music coming from downstairs. He walked",
+    "downstairs and followed the music into the kitchen. There, he",
+    "found the source of the music, but he couldn’t believe his eyes!"
+   ],
+   "words": 211,
+   "stated": 209,
+   "pages": [
+    12
+   ],
+   "pictures": [
+    {
+     "page": 12,
+     "bbox": [
+      240.5,
+      305.7,
+      509.9,
+      587.0
+     ],
+     "xref": 94
+    }
+   ]
+  },
+  {
+   "title": "The Singing Plant II",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "The plants on the windowsill above the sink were singing! Singing plants! How is this possible? There were 3 of them, all gently swaying and singing together. Todd sat and watched them for a while, trying to understand how and why the plants had all of a sudden become musical plants. Their song faded away after a few minutes, and the plants became still. Todd stayed to watch, just in case they started singing again. His Dad found him sitting in the kitchen watching the plants. “What’s going on, Todd?” his dad asked. “What kind of plant are these?” Todd asked in return. “They’re just little houseplants, they won’t grow too much bigger than they are now. Why?” “They were singing. I didn’t know plants could sing!” exclaimed Todd. “Todd, plants don’t sing. Were you dreaming?” Dad asked, concerned. “No, really, they were! That’s what woke me up this morning!” “Hmmm…” Dad sighed. He walked over to the sink, grabbed a cup, and began to water the plants. He jumped back in surprise when the flowers started singing a happy little tune! “Holy cow! They must have been thirsty! I’ve never seen anything like this!”"
+   ],
+   "lines": [
+    "The plants on the windowsill above the sink were singing!",
+    "Singing plants! How is this possible? There were 3 of them, all",
+    "gently swaying and singing together. Todd sat and watched",
+    "them for a while, trying to understand how and why the plants",
+    "had all of a sudden become musical plants. Their song faded",
+    "away after a few minutes, and the plants became still. Todd",
+    "stayed to watch, just in case they started singing again. His",
+    "Dad found him sitting",
+    "in the kitchen watch-",
+    "ing the plants. “What’s",
+    "going on, Todd?” his",
+    "dad asked. “What kind",
+    "of plant are these?”",
+    "Todd asked in return.",
+    "“They’re just little",
+    "houseplants, they",
+    "won’t grow too much",
+    "bigger than they are",
+    "now. Why?” “They",
+    "were singing.",
+    "I didn’t know",
+    "plants could sing!” ex-",
+    "claimed Todd. “Todd,",
+    "plants don’t sing.",
+    "Were you dreaming?”",
+    "Dad asked, con-",
+    "cerned. “No, really,",
+    "they were! That’s what",
+    "woke   me   up   this",
+    "morning!” “Hmmm…” Dad sighed. He walked over to the sink,",
+    "grabbed a cup, and began to water the plants. He jumped back",
+    "in surprise when the flowers started singing a happy little tune!",
+    "“Holy cow! They must have been thirsty! I’ve never seen any-",
+    "thing like this!”"
+   ],
+   "words": 199,
+   "stated": 195,
+   "pages": [
+    13
+   ],
+   "pictures": [
+    {
+     "page": 13,
+     "bbox": [
+      242.6,
+      204.4,
+      514.2,
+      546.1
+     ],
+     "xref": 98
+    }
+   ]
+  },
+  {
+   "title": "A Glass of Cold Water",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "Everybody calls me young, beautiful, wonderful. Am I? Look at my hair, my lips, my red rosy cheeks and a pair of blinkering eyes. I remember, somebody says that I look like my mother that I look like my mother. But that when she was young. Now, I am much lovelier than she is. I’m a mortal Venus. Oops! What time is it? I must get ready for the party! Beep-beep…!A-huh! Here they are! Yes, I’m coming! “Child, are you still there?”“Hmp! That’s my mama” “Child, are you still there? Will you please get me a glass of cold water?” “Mama, I’m in a hurry!” “Please child, try to get me a glass of cold water.” “Mama, please, try to get it on your own.” “Please child, try to get me a glass of cold water!”At the party, I danced and danced the whole night. You see, I can’t leave the party at once. I have to dance with everybody who proposed to me. At last, the party is over. I’m very tired. Very, very tired. So, I went home to tell mama what happened. “Mama, I’m home! It’s very quiet. “Mama, I’m home!” Nobody answers. Where is she? I look for her in the sala, but she’s not there. Where is she? A-huh! In the kitchen! I saw my mama, lying down on the floor, dead. With a glass on her hand. I remember, she tried to get it. Oh, God, just for the glass of cold water! Mama! Ma-"
+   ],
+   "lines": [
+    "Everybody calls me young, beautiful, wonderful. Am I? Look at",
+    "my hair, my lips, my red rosy cheeks and a pair of blinkering eyes.",
+    "I remember, somebody says that I look like my mother that I",
+    "look like my mother. But that when she was young. Now, I am much",
+    "lovelier than she is. I’m a mortal Venus. Oops! What time is it? I",
+    "must get ready for the party! Beep-beep…!A-huh! Here they are!",
+    "Yes, I’m coming! “Child, are you",
+    "still there?”“Hmp! That’s my mama”",
+    "“Child, are you still there? Will you",
+    "please get me a glass of cold wa-",
+    "ter?”",
+    "“Mama, I’m in a hurry!”",
+    "“Please child, try to get me a glass",
+    "of cold water.” “Mama, please, try to",
+    "get it on your own.” “Please child,",
+    "try to get me a glass of cold wa-",
+    "ter!”At the party, I danced and",
+    "danced the whole night. You see, I",
+    "can’t leave the party at once. I have",
+    "to dance with everybody who pro-",
+    "posed to me.",
+    "At last, the party is over. I’m",
+    "very tired. Very, very tired. So, I",
+    "went home to tell mama what hap-",
+    "pened. “Mama, I’m home! It’s very quiet. “Mama, I’m home!” Nobody",
+    "answers. Where is she? I look for her in the sala, but she’s not",
+    "there. Where is she? A-huh! In the kitchen! I saw my mama, lying",
+    "down on the floor, dead. With a glass on her hand. I remember, she",
+    "tried to get it. Oh, God, just for the glass of cold water! Mama! Ma-"
+   ],
+   "words": 258,
+   "stated": 258,
+   "pages": [
+    14
+   ],
+   "pictures": [
+    {
+     "page": 14,
+     "bbox": [
+      316.1,
+      239.3,
+      507.7,
+      542.5
+     ],
+     "xref": 102
+    }
+   ]
+  },
+  {
+   "title": "The Elephant and the Crocodile",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "An Elephant and a Crocodile were once standing beside a river. They were disputing as to which was the better animal. “Look at my strength,” said the Elephant. “I can tear up a tree, roots and all, with my trunk.” “Ah! but quantity is not quality, and your skin is not nearly so tough as mine,” replied the Crocodile, “for neither spear, arrow, nor sword can pierce it.” Just as they were coming to blows, a Lion happened to pass. “Heyday, sirs!” said His Majesty, going up to them, “let me know the cause of your quarrel.” “Will you kindly tell us which is the better animal?” cried both at once. “Certainly,” said the Lion. “Do you see that soldier’s steel helmet on yonder wall?” pointing at the same time across the river. “Yes!” replied the beasts. “Well, then,” continued the Lion, “go and fetch it, and bring it to me, and I shall be able then to decide between you.” Upon hearing this, off they started. The Crocodile, being used to the water, reached the opposite bank of the river first, and was not long in standing beside the wall. Here he waited till the Elephant came up. The latter, seeing at a glance how matters stood, extended his long trunk, and reached the helmet quite easily. They then made their way together back again across the river. The Elephant, anxious to keep up with the Crocodile in the water, forgot that he was carrying the helmet on his back, and a sudden lurch caused the prize to slip off and sink to the bottom. The Crocodile noticed the accident, so down he dived, and brought it up in his capacious mouth. They then returned, and the Crocodile laid the helmet at the Lion’s feet. His Majesty took up the helmet, and addressing the Elephant, said: “You, on account of your size and trunk, were able to reach the prize on the wall but, having lost it, you were unable to recover it. And you,” said the Lion, turning to the Crocodile, “although unable to reach the helmet, were able to dive for it and save it. You are both wise and clever in your respective ways. Neither is better than the other.”"
+   ],
+   "lines": [
+    "An Elephant and a Crocodile were once standing beside a river. They were",
+    "disputing as to which was the better animal. “Look at my strength,” said the Ele-",
+    "phant. “I can tear up a tree, roots and all, with my trunk.” “Ah! but quantity is",
+    "not quality, and your skin is not nearly so tough as mine,” replied the Crocodile,",
+    "“for neither spear, arrow, nor sword can pierce it.” Just as they were coming to",
+    "blows, a Lion happened to pass. “Heyday, sirs!” said His Majesty, going up to",
+    "them, “let me know the cause of your quarrel.” “Will you kindly tell us which is",
+    "the better animal?” cried both at once. “Certainly,” said the Lion. “Do you see",
+    "that soldier’s steel helmet on yonder wall?” pointing at the same time across the",
+    "river. “Yes!” replied the beasts. “Well, then,” continued the Lion, “go and fetch it,",
+    "and bring it to me, and I shall be able then to decide between you.” Upon hear-",
+    "ing this, off they started.",
+    "The Crocodile, being used to the water, reached the opposite bank of the",
+    "river first, and was not long in standing beside the wall. Here he waited till the",
+    "Elephant came up. The latter, seeing at a glance how matters stood, extended",
+    "his long trunk, and reached the helmet quite easily. They then made their way",
+    "together back again across the river. The Elephant, anxious to keep up with the",
+    "Crocodile in the water, forgot that he was carrying the helmet on his back, and a",
+    "sudden lurch caused the prize to slip off and sink to the bottom. The Crocodile",
+    "noticed the accident, so down he dived, and brought it up in his capacious",
+    "mouth. They then returned, and the Crocodile laid the helmet at the Lion’s feet.",
+    "His Majesty took up the helmet, and addressing the Elephant, said: “You, on ac-",
+    "count of your size and trunk, were able to reach the prize on the wall but, having",
+    "lost it, you were unable to recover it. And you,” said the Lion, turning to the",
+    "Crocodile, “although unable to reach the helmet, were able to dive for it and save",
+    "it.",
+    "You are both wise and clever in your respective ways. Neither is better",
+    "than the other.”"
+   ],
+   "words": 377,
+   "stated": 379,
+   "pages": [
+    15
+   ],
+   "pictures": [
+    {
+     "page": 15,
+     "bbox": [
+      115.4,
+      108.7,
+      499.9,
+      280.3
+     ],
+     "xref": 105
+    }
+   ]
+  },
+  {
+   "title": "Songs of the Witches",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "Round about the cauldron go:",
+    "In the poisoned entrails throw.",
+    "Toad, that under cold stone",
+    "Days and nights has thirty-one",
+    "Sweated venom sleeping got,",
+    "Boil thou first i’ the charmed pot",
+    "Double, double toil and trouble;",
+    "Fire burn and cauldron bubble.",
+    "Fillet of a fenny snake,",
+    "In the cauldron boil and bake;",
+    "Eye of newt and toe of frog,",
+    "Wool of bat and tongue of dog,",
+    "Adder's fork and blind-worm's sting,",
+    "Lizard's leg and owlet's wing.",
+    "For a charm of powerful trouble,",
+    "Like a hell-broth boil and bubble.",
+    "Double, double toil and trouble;",
+    "Fire burn and cauldron bubble.",
+    "Scale of dragon, tooth of wolf,",
+    "Witch's mummy, maw and gulf",
+    "Of the ravin'd salt-sea shark,",
+    "Root of hemlock digg'd i’ the dark,",
+    "Liver of blaspheming Jew;",
+    "Gall of goat; and slips of yew",
+    "Sliver'd in the moon's eclipse;",
+    "Nose of Turk, and Tartar's lips;",
+    "Finger of birth-strangled babe",
+    "Ditch-deliver'd by a drab,",
+    "Make the gruel thick and slab:",
+    "Add thereto a tiger's chaudron,",
+    "For the ingredients of our cauldron.",
+    "Double, double toil and trouble,",
+    "Fire burn and cauldron bubble.",
+    "Cool it with a baboon's blood,",
+    "Then the charm is firm and good."
+   ],
+   "lines": [
+    "Round about the cauldron go:",
+    "In the poisoned entrails throw.",
+    "Toad, that under cold stone",
+    "Days and nights has thirty-one",
+    "Sweated venom sleeping got,",
+    "Boil thou first i’ the charmed pot",
+    "Double, double toil and trouble;",
+    "Fire burn and cauldron bubble.",
+    "Fillet of a fenny snake,",
+    "In the cauldron boil and bake;",
+    "Eye of newt and toe of frog,",
+    "Wool of bat and tongue of dog,",
+    "Adder's fork and blind-worm's sting,",
+    "Lizard's leg and owlet's wing.",
+    "For a charm of powerful trouble,",
+    "Like a hell-broth boil and bubble.",
+    "Double, double toil and trouble;",
+    "Fire burn and cauldron bubble.",
+    "Scale of dragon, tooth of wolf,",
+    "Witch's mummy, maw and gulf",
+    "Of the ravin'd salt-sea shark,",
+    "Root of hemlock digg'd i’ the dark,",
+    "Liver of blaspheming Jew;",
+    "Gall of goat; and slips of yew",
+    "Sliver'd in the moon's eclipse;",
+    "Nose of Turk, and Tartar's lips;",
+    "Finger of birth-strangled babe",
+    "Ditch-deliver'd by a drab,",
+    "Make the gruel thick and slab:",
+    "Add thereto a tiger's chaudron,",
+    "For the ingredients of our cauldron.",
+    "Double, double toil and trouble,",
+    "Fire burn and cauldron bubble.",
+    "Cool it with a baboon's blood,",
+    "Then the charm is firm and good."
+   ],
+   "words": 191,
+   "stated": 202,
+   "pages": [
+    16
+   ],
+   "pictures": [
+    {
+     "page": 16,
+     "bbox": [
+      106.4,
+      106.3,
+      512.9,
+      359.6
+     ],
+     "xref": 108
+    }
+   ]
+  },
+  {
+   "title": "Songs of the Witches II",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "He sent back three hot dogs. “This is great,” I said to my uncle. “Not so great,” he said. “We just struck out.” While I had been watching the hotdogs, the team had struck out. It went on that way for the rest of the game. We got peanuts. We even got another hot dog. And the Cubs kept losing. We’d all hope every time a batter came to bat.",
+    "One by one they struck out. Still, everyone was staying happy. Even at the end. The score was 7 to 0. The Cubs never got a run. “Tomorrow, they’ll win,” one person said. “Right. This was just a bad day for them,” another said. “The pitcher tomorrow is really good.” When we were on the way home, I asked my uncle, “Why was everyone so sure they will win next time?” “That’s what it means to be a Cubs fan.",
+    "We believe in tomorrow. When they win, it’s the best. Every year, we hope. Every game we hope. That’s loyalty. It’s about supporting your team no matter what. Cubs fans are loyal. And it’s about having fun as a family. Did you have fun?” As our uncle was about to drive home to Indiana, Felicia said, “It was great. I see what you meant. Even when they lose, they are like a family, they stick together. Thanks for taking us. And thanks for being loyal to us.”"
+   ],
+   "lines": [
+    "He sent back three hot dogs. “This is great,” I said to my uncle. “Not so great,” he said. “We just struck out.” While I had been watching the hotdogs, the team had struck out. It went on that way for the rest of the game. We got peanuts. We even got another hot dog. And the Cubs kept losing. We’d all hope every time a batter came to bat.",
+    "One by one they struck out. Still, everyone was staying happy. Even at the end. The score was 7 to 0. The Cubs never got a run. “Tomorrow, they’ll win,” one person said. “Right. This was just a bad day for them,” another said. “The pitcher tomorrow is really good.” When we were on the way home, I asked my uncle, “Why was everyone so sure they will win next time?” “That’s what it means to be a Cubs fan.",
+    "We believe in tomorrow. When they win, it’s the best. Every year, we hope. Every game we hope. That’s loyalty. It’s about supporting your team no matter what. Cubs fans are loyal. And it’s about having fun as a family. Did you have fun?” As our uncle was about to drive home to Indiana, Felicia said, “It was great. I see what you meant. Even when they lose, they are like a family, they stick together. Thanks for taking us. And thanks for being loyal to us.”"
+   ],
+   "words": 237,
+   "stated": 237,
+   "pages": [
+    17
+   ],
+   "pictures": [
+    {
+     "page": 17,
+     "bbox": [
+      273.4,
+      88.9,
+      518.0,
+      331.4
+     ],
+     "xref": 88
+    }
+   ]
+  },
+  {
+   "title": "The Boy Who Cried Wolf",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "Aesop Fable",
+   "format": "prose",
+   "paragraphs": [
+    "There once was a shepherd boy who was bored as he sat on the hillside watching the village sheep. To amuse himself he took a great breath and sang out, \"Wolf! Wolf! The Wolf is chasing the sheep!\"",
+    "The villagers came running up the hill to help the boy drive the wolf away.",
+    "But when they arrived at the top of the hill, they found no wolf.",
+    "The boy laughed at the sight of their angry faces.",
+    "\"Don't cry 'wolf', shepherd boy,\" said the villagers, \"when there's no wolf!\" They went grumbling back down the hill.",
+    "Later, the boy sang out again, \"Wolf! Wolf! The wolf is chasing the sheep!\" To his naughty delight, he watched the villagers run up the hill to help him drive the wolf away. When the villagers saw no wolf they sternly said, \"Save your frightened song for when there is really something wrong! Don't cry 'wolf' when there is NO wolf!\""
+   ],
+   "lines": [
+    "There once was a shepherd boy who was bored as he sat on the",
+    "hillside watching the village sheep. To amuse himself he took a great",
+    "breath and sang out, \"Wolf! Wolf! The Wolf is chasing the sheep!\"",
+    "The villagers came running up the hill to help the boy drive the",
+    "wolf away.",
+    "But when they arrived at the top of the hill, they found no wolf.",
+    "The boy laughed at the sight of their angry faces.",
+    "\"Don't cry 'wolf', shepherd boy,\" said the villagers, \"when there's",
+    "no wolf!\" They went grumbling back down the hill.",
+    "Later, the boy sang out again, \"Wolf! Wolf! The wolf is chasing",
+    "the sheep!\" To his naughty delight, he watched the villagers run up",
+    "the hill to help him drive the wolf away.",
+    "When the villagers saw no wolf they sternly said,",
+    "\"Save your frightened song for when there is really something",
+    "wrong! Don't cry 'wolf' when there is NO wolf!\""
+   ],
+   "words": 157,
+   "stated": 162,
+   "pages": [
+    18
+   ],
+   "pictures": [
+    {
+     "page": 18,
+     "bbox": [
+      120.2,
+      146.2,
+      490.9,
+      393.7
+     ],
+     "xref": 113
+    },
+    {
+     "page": 18,
+     "bbox": [
+      120.1,
+      146.3,
+      515.3,
+      393.7
+     ],
+     "xref": 114
+    }
+   ]
+  },
+  {
+   "title": "The Boy Who Cried Wolf II",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "But the boy just grinned and watched them go grumbling down the hill once more. Later, he saw a REAL wolf prowling about his flock. Alarmed, he leaped to his feet and sang out as loudly as he could, \"Wolf! Wolf!\" But the villagers thought he was trying to fool them again, and so they didn't come. At sunset, everyone wondered why the shepherd boy hadn't returned to the village with their sheep. They went up the hill to find the boy. They found him weeping. \"There really was a wolf here! The flock has scattered! I cried out, \"Wolf!\" Why didn't you come?\" An old man tried to comfort the boy as they walked back to the village. \"We'll help you look for the lost sheep in the morning,\" he said, putting his arm around the youth, \"Nobody believes a liar...even when he is telling the truth!\""
+   ],
+   "lines": [
+    "But the boy just grinned and watched them go grumbling",
+    "down the hill once more.",
+    "Later, he saw a REAL wolf prowling about his flock.",
+    "Alarmed, he leaped to his feet and sang out as loudly as he",
+    "could, \"Wolf! Wolf!\"",
+    "But the villagers thought he was trying to fool them again,",
+    "and so they didn't come.",
+    "At sunset, everyone wondered why the shepherd boy hadn't",
+    "returned to the village with their sheep. They went up the hill to",
+    "find the boy. They found him weeping.",
+    "\"There really was a wolf here! The flock has scattered! I",
+    "cried out, \"Wolf!\" Why didn't you come?\"",
+    "An old man tried to comfort the boy as they walked back to",
+    "the village.",
+    "\"We'll help you look for the lost sheep in the morning,\" he",
+    "said, putting his arm around the youth, \"Nobody believes a li-",
+    "ar...even when he is telling",
+    "the truth!\""
+   ],
+   "words": 150,
+   "stated": 148,
+   "pages": [
+    19
+   ],
+   "pictures": [
+    {
+     "page": 19,
+     "bbox": [
+      87.4,
+      374.5,
+      314.1,
+      623.9
+     ],
+     "xref": 118
+    },
+    {
+     "page": 19,
+     "bbox": [
+      314.2,
+      406.5,
+      507.5,
+      608.8
+     ],
+     "xref": 119
+    }
+   ]
+  },
+  {
+   "title": "A Day at the Beach",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "Author unknown",
+   "format": "lines",
+   "paragraphs": [
+    "The sun on my face,",
+    "the sand in my toes,",
+    "makes any day a delight.",
+    "Hunting for seashells,",
+    "and surfing the waves,",
+    "makes everything seem alright.",
+    "Building a castle,",
+    "fit for a king,",
+    "makes all my dreams within reach.",
+    "Wearing my shades",
+    "and getting a tan,",
+    "makes a great day at the Beach."
+   ],
+   "lines": [
+    "The sun on my face,",
+    "the sand in my toes,",
+    "makes any day a delight.",
+    "Hunting for seashells,",
+    "and surfing the waves,",
+    "makes everything seem alright.",
+    "Building a castle,",
+    "fit for a king,",
+    "makes all my dreams within reach.",
+    "Wearing my shades",
+    "and getting a tan,",
+    "makes a great day at the Beach."
+   ],
+   "words": 53,
+   "stated": 58,
+   "pages": [
+    20
+   ],
+   "pictures": [
+    {
+     "page": 20,
+     "bbox": [
+      118.9,
+      160.0,
+      478.1,
+      384.3
+     ],
+     "xref": 124
+    }
+   ]
+  },
+  {
+   "title": "I Wanna Do Right",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "I wanna do right, wanna do what's right",
+    "I'm gonna give You all of my life",
+    "I put my trust in You, Jesus",
+    "And You'll show me, show me how to do right",
+    "Hey, hey, every word I say",
+    "Ooh, ooh, I wanna be like You",
+    "Oh, my, my, every day goes by",
+    "I wanna be more like You",
+    "I wanna be more like You",
+    "Bridge:",
+    "I was made to give You praise",
+    "Make me more like You",
+    "I was made to give You praise",
+    "Make me more like You",
+    "In all I do",
+    "(Repeat Chorus)"
+   ],
+   "lines": [
+    "I wanna do right, wanna do what's right",
+    "I'm gonna give You all of my life",
+    "I put my trust in You, Jesus",
+    "And You'll show me, show me how to do right",
+    "Hey, hey, every word I say",
+    "Ooh, ooh, I wanna be like You",
+    "Oh, my, my, every day goes by",
+    "I wanna be more like You",
+    "I wanna be more like You",
+    "Bridge:",
+    "I was made to give You praise",
+    "Make me more like You",
+    "I was made to give You praise",
+    "Make me more like You",
+    "In all I do",
+    "(Repeat Chorus)"
+   ],
+   "words": 96,
+   "stated": 100,
+   "pages": [
+    21
+   ],
+   "pictures": [
+    {
+     "page": 21,
+     "bbox": [
+      84.9,
+      171.9,
+      526.1,
+      348.0
+     ],
+     "xref": 127
+    }
+   ]
+  },
+  {
+   "title": "My First Baseball Game",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "Randy Ryan",
+   "format": "prose",
+   "paragraphs": [
+    "I remember my first Cubs game. My uncle came to take my sister and me to it. It was a sunny Saturday. He drove all the way from Indiana to get us. Then we took the train to the ballpark. He said it would be hard to find a parking space there, so he didn’t drive there. He was right. When we got there it was so crowded. We had tickets that were for seats far back. It seemed like I climbed about 300 steps to get to them. But when we got there and I turned around I could see everything. I saw the whole field. It was much better than watching it on TV. Then the game started. Everyone cheered. The man next to me said, “This is going to be the year. They are playing really well.” My uncle said to him, “Let’s hope this is the one.” But then he whispered to us, “Jerome and Felicia, we’ll have to wait and see. Remember last year? They started out well and then they lost at the end.” “Hey, Hey, Hey!” The Cub batter hit a ball far to the wall.",
+    "Just then I heard “Hot dogs!” “Peanuts!” I looked and saw a man with a big tray hanging from his shoulders. It was full of hotdogs in plastic wrap and bags of peanuts. “Three hot dogs,” my uncle shouted. Then he gave the man next to us $6. He passed it to the man with the hot dogs."
+   ],
+   "lines": [
+    "I remember my first Cubs game. My uncle came to take my sister and me to it. It was a sunny Saturday. He drove all the way from Indiana to get us. Then we took the train to the ballpark. He said it would be hard to find a parking space there, so he didn’t drive there. He was right. When we got there it was so crowded. We had tickets that were for seats far back. It seemed like I climbed about 300 steps to get to them. But when we got there and I turned around I could see everything. I saw the whole field. It was much better than watching it on TV. Then the game started. Everyone cheered. The man next to me said, “This is going to be the year. They are playing really well.” My uncle said to him, “Let’s hope this is the one.” But then he whispered to us, “Jerome and Felicia, we’ll have to wait and see. Remember last year? They started out well and then they lost at the end.” “Hey, Hey, Hey!” The Cub batter hit a ball far to the wall.",
+    "Just then I heard “Hot dogs!” “Peanuts!” I looked and saw a man with a big tray hanging from his shoulders. It was full of hotdogs in plastic wrap and bags of peanuts. “Three hot dogs,” my uncle shouted. Then he gave the man next to us $6. He passed it to the man with the hot dogs."
+   ],
+   "words": 251,
+   "stated": 255,
+   "pages": [
+    23
+   ],
+   "pictures": [
+    {
+     "page": 23,
+     "bbox": [
+      302.5,
+      229.5,
+      515.1,
+      523.9
+     ],
+     "xref": 83
+    }
+   ]
+  }
+ ],
+ "5": [
+  {
+   "title": "The Crocodile and the Monkey",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "Once upon a time, there lived a monkey on a mango tree on the banks of a river. The mangoes of that tree were the sweetest of all. The tree bore fruits year-round. The monkey used to live very happily on the tree eating the tasty fruits and playing on the tree.",
+    "On a particular day, a crocodile came near that mango tree. He seemed very exhausted. The monkey offered him some delicious mangoes from the tree. The crocodile loved those mangoes and thanked the monkey for the same. From then on, the crocodile used to visit the monkey every day and they became good friends.",
+    "One day the crocodile thought to take some mangoes for his wife. When his wife ate the mangoes, she demanded something very absurd from the crocodile. She said that these fruits are so tasty, then how delicious will be the heart of that monkey who regularly eats these mangoes!",
+    "She ordered the crocodile to bring the monkey’s heart for her. The crocodile was shocked at her demand. The monkey was his friend. How could he betray him? He declined to kill the monkey and bring his heart to her.",
+    "The crocodile’s wife was adamant about getting the monkey’s heart. She told the crocodile that she is not keeping well and the doctor has recommended her to eat a monkey’s heart to recover. She even threatened him that if the crocodile didn’t get the monkey’s heart for her, she would surely die. The crocodile had to give in to her order.",
+    "With a heavy heart, the crocodile left to get the monkey. He went to the monkey and said, “Friend, my wife loved the mangoes sent by you. She has invited you to our house to thank you.” The monkey agreed and sat on the crocodile’s back so that the crocodile could take him to his house.",
+    "In the middle of the river, the crocodile began sinking in. The monkey got frightened and he asked the crocodile as to why he was sinking. The crocodile, knowing that now there was no escape for the monkey, replied, “Forgive me, my friend. My wife needs to eat your heart to save her life. That’s why I am taking you with me.”",
+    "The monkey was outraged. The monkey was smart. He kept calm and told the crocodile that he would be more than happy to save his wife’s life but he left his heart at the mango tree. The monkey told him that they can quickly go and get his heart from the tree.",
+    "The crocodile accepted it at once and turned back. As soon as they reached the tree, the monkey jumped onto the tree and said, “O foolish crocodile, how can someone take out his heart and keep it somewhere else? You have deceived me as a friend. Now go and never come back. The ashamed crocodile went back to his home."
+   ],
+   "lines": [
+    "Once upon a time, there lived a monkey on a mango tree on the banks of a river.",
+    "The mangoes of that tree were the sweetest of all. The tree bore fruits year-round. The",
+    "monkey used to live very happily on the tree eating the tasty fruits and playing on the",
+    "tree.",
+    "On a particular day, a crocodile came near that mango tree. He seemed very",
+    "exhausted. The monkey offered him some delicious mangoes from the tree. The",
+    "crocodile loved those mangoes and thanked the monkey for the same. From then on, the",
+    "crocodile used to visit the monkey every day and they became good friends.",
+    "One day the crocodile thought to take some mangoes for his wife. When his wife",
+    "ate the mangoes, she demanded something very absurd from the crocodile. She said",
+    "that these fruits are so tasty, then how delicious will be the heart of that monkey who",
+    "regularly eats these mangoes!",
+    "She ordered the crocodile to bring the monkey’s heart for her. The crocodile was",
+    "shocked at her demand. The monkey was his friend. How could he betray him? He declined",
+    "to kill the monkey and bring his heart to her.",
+    "The crocodile’s wife was adamant about getting the monkey’s heart. She told the",
+    "crocodile that she is not keeping well and the doctor has recommended her to eat a",
+    "monkey’s heart to recover. She even threatened him that if the crocodile didn’t get the",
+    "monkey’s heart for her, she would surely die. The crocodile had to give in to her order.",
+    "With a heavy heart, the crocodile left to get the monkey. He went to the monkey",
+    "and said, “Friend, my wife loved the mangoes sent by you. She has invited you to our",
+    "house to thank you.” The monkey agreed and sat on the crocodile’s back so that the",
+    "crocodile could take him to his house.",
+    "In the middle of the river, the crocodile began sinking in. The monkey got",
+    "frightened and he asked the crocodile as to why he was sinking. The crocodile, knowing",
+    "that now there was no escape for the monkey, replied, “Forgive me, my friend. My wife",
+    "needs to eat your heart to save her life. That’s why I am taking you with me.”",
+    "The monkey was outraged. The monkey was smart. He kept calm and told the",
+    "crocodile that he would be more than happy to save his wife’s life but he left his heart",
+    "at the mango tree. The monkey told him that they can quickly go and get his heart from",
+    "the tree.",
+    "The crocodile accepted it at once and turned back. As soon as they reached the",
+    "tree, the monkey jumped onto the tree and said, “O foolish crocodile, how can someone",
+    "take out his heart and keep it somewhere else? You have deceived me as a friend. Now",
+    "go and never come back. The ashamed crocodile went back to his home."
+   ],
+   "words": 486,
+   "stated": 491,
+   "pages": [
+    9
+   ],
+   "pictures": [
+    {
+     "page": 9,
+     "bbox": [
+      92.8,
+      61.5,
+      502.0,
+      202.8
+     ],
+     "xref": 83
+    }
+   ]
+  },
+  {
+   "title": "Fight Song",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "Rachel Platten",
+   "format": "lines",
+   "paragraphs": [
+    "Like a small boat, On the ocean, Sending big waves, Into motion",
+    "Like how a single word , Can make a heart open",
+    "I might only have one match, But I can make an explosion",
+    "And all those things I didn't say, Wrecking balls inside my brain",
+    "I will scream them loud tonight, Can you hear my voice this time?",
+    "This is my fight song, Take back my life song",
+    "Prove I'm alright song, My power's turned on",
+    "Starting right now I'll be strong, I'll play my fight song",
+    "And I don't really care if nobody else believes",
+    "'Cause I've still got a lot of fight left in me",
+    "Losing friends and I'm chasing sleep",
+    "Everybody's worried about me In too deep",
+    "Say I'm in too deep (in too deep)",
+    "And it's been two years I miss my home",
+    "But there's a fire burning in my bones",
+    "Still believe. Yeah, I still believe",
+    "And all those things I didn't say",
+    "Wrecking balls inside my brain",
+    "I will scream them loud tonight",
+    "Can you hear my voice this time?",
+    "This is my fight song, Take back my life song",
+    "Prove I'm alright song, My power's turned on",
+    "Starting right now I'll be strong, I'll play my fight song",
+    "And I don't really care if nobody else believes",
+    "'Cause I've still got a lot of fight left in me",
+    "A lot of fight left in me, Like a small boat",
+    "On the ocean, Sending big waves Into motion",
+    "Like how a single word, Can make a heart open",
+    "I might only have one match",
+    "But I can make an explosion",
+    "This is my fight song, Take back my life song",
+    "Prove I'm alright song, My power's turned on",
+    "Starting right now I'll be strong (I'll be strong)",
+    "I'll play my fight song",
+    "And I don't really care if nobody else believes",
+    "'Cause I've still got a lot of fight left in me",
+    "Know I've still got a lot of fight left in me"
+   ],
+   "lines": [
+    "Like a small boat, On the ocean, Sending big waves, Into motion",
+    "Like how a single word , Can make a heart open",
+    "I might only have one match, But I can make an explosion",
+    "And all those things I didn't say, Wrecking balls inside my brain",
+    "I will scream them loud tonight, Can you hear my voice this time?",
+    "This is my fight song, Take back my life song",
+    "Prove I'm alright song, My power's turned on",
+    "Starting right now I'll be strong, I'll play my fight song",
+    "And I don't really care if nobody else believes",
+    "'Cause I've still got a lot of fight left in me",
+    "Losing friends and I'm chasing sleep",
+    "Everybody's worried about me In too deep",
+    "Say I'm in too deep (in too deep)",
+    "And it's been two years I miss my home",
+    "But there's a fire burning in my bones",
+    "Still believe. Yeah, I still believe",
+    "And all those things I didn't say",
+    "Wrecking balls inside my brain",
+    "I will scream them loud tonight",
+    "Can you hear my voice this time?",
+    "This is my fight song, Take back my life song",
+    "Prove I'm alright song, My power's turned on",
+    "Starting right now I'll be strong, I'll play my fight song",
+    "And I don't really care if nobody else believes",
+    "'Cause I've still got a lot of fight left in me",
+    "A lot of fight left in me, Like a small boat",
+    "On the ocean, Sending big waves Into motion",
+    "Like how a single word, Can make a heart open",
+    "I might only have one match",
+    "But I can make an explosion",
+    "This is my fight song, Take back my life song",
+    "Prove I'm alright song, My power's turned on",
+    "Starting right now I'll be strong (I'll be strong)",
+    "I'll play my fight song",
+    "And I don't really care if nobody else believes",
+    "'Cause I've still got a lot of fight left in me",
+    "Know I've still got a lot of fight left in me"
+   ],
+   "words": 330,
+   "stated": 332,
+   "pages": [
+    11
+   ],
+   "pictures": []
+  },
+  {
+   "title": "You Can",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "If you think you’re beaten, you are…",
+    "If you think you dare not, you don’t…",
+    "If you like to win…but think you can’t…",
+    "It’s almost a cinch, YOU WON’T!!",
+    "If you think you’ll lose, you’re lost….",
+    "For out in the world, you’ll find…",
+    "Success begins with a fellow’s will….",
+    "It’s all in a state of mind.",
+    "If you think you’re outclassed, you are….",
+    "You’ve got to think high to rise…",
+    "You’ve got to be sure of yourself before….",
+    "You can ever win the prize.",
+    "Life’s battles don’t always go…",
+    "To the stronger or faster man…",
+    "But sooner or later the one who wins…",
+    "IS THE ONE WHO THINKS HE CAN"
+   ],
+   "lines": [
+    "If you think you’re beaten, you are…",
+    "If you think you dare not, you don’t…",
+    "If you like to win…but think you can’t…",
+    "It’s almost a cinch, YOU WON’T!!",
+    "If you think you’ll lose, you’re lost….",
+    "For out in the world, you’ll find…",
+    "Success begins with a fellow’s will….",
+    "It’s all in a state of mind.",
+    "If you think you’re outclassed, you are….",
+    "You’ve got to think high to rise…",
+    "You’ve got to be sure of yourself before….",
+    "You can ever win the prize.",
+    "Life’s battles don’t always go…",
+    "To the stronger or faster man…",
+    "But sooner or later the one who wins…",
+    "IS THE ONE WHO THINKS HE CAN"
+   ],
+   "words": 111,
+   "stated": 112,
+   "pages": [
+    12
+   ],
+   "pictures": []
+  },
+  {
+   "title": "Print Your Own Medicine",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "Lee Cronin",
+   "format": "prose",
+   "paragraphs": [
+    "Organic chemists make molecules, very complicated molecules, by chopping up a big molecule into small molecules and reverse engineering. And as a chemist, one of the things I wanted to ask my research group a couple of years ago is, could we make a really cool universal chemistry set? In essence, could we \"app\" chemistry? Now what would this mean, and how would we do it? Well to start to do this, we took a 3D printer and we started to print our beakers and our test tubes on one side and then print the molecule at the same time on the other side and combine them together in what we call reactionware. And so, by printing the vessel and doing the chemistry at the same time, we may start to access this universal toolkit of chemistry. Now what could this mean? Well, if we can embed biological and chemical networks like a search engine, so if you have a cell that's ill that you need to cure or bacteria that you want to kill, if you have this embedded in your device at the same time, and you do the chemistry, you may be able to make drugs in a new way. So how are we doing this in the lab? Well, it requires software, it requires hardware and it requires chemical inks. And so the really cool bit is, the idea is that we want to have a universal set of inks that we put out with the printer, and you download the blueprint, the organic chemistry for that molecule and you make it in the device. And so, you can make your molecule in the printer using this software. So, what could this mean? Well, ultimately, it could mean that you could print your own medicine. And this is what we're doing in the lab at the moment. But to take baby steps to get there, first of all we want to look at drug design and production, or drug discovery and manufacturing. Because if we can manufacture it after we've discovered it, we could deploy it anywhere. You don't need to go to the chemist anymore. We can print drugs at point of need. We can download new diagnostics. Say a new super bug has emerged. You put it in your search engine, and you create the drug to treat the threat. So, this allows you on-the-fly molecular assembly. But perhaps for me the core bit going into the future is this idea of taking your own stem cells, with your genes and your environment, and you print your own personal medicine. And if that doesn't seem fanciful enough, where do you think we're going to go? Well, you're going to have your own personal matter fabricator. Beam me up, Scotty. (Applause)"
+   ],
+   "lines": [
+    "Organic chemists make molecules, very complicated",
+    "molecules, by chopping up a big molecule into small",
+    "molecules and reverse engineering. And as a chemist, one of",
+    "the things I wanted to ask my research group a couple of",
+    "years ago is, could we make a really cool universal chemistry",
+    "set? In essence, could we \"app\" chemistry? Now what would",
+    "this mean, and how would we do it? Well to start to do this,",
+    "we took a 3D printer and we started to print our beakers and",
+    "our test tubes on one side and then print the molecule at the",
+    "same time on the other side and combine them together in",
+    "what we call reactionware. And so, by printing the vessel and",
+    "doing the chemistry at the same time, we may start to access",
+    "this universal toolkit of chemistry. Now what could this",
+    "mean? Well, if we can embed biological and chemical net-",
+    "works like a search engine, so if you have a cell that's ill that you need to",
+    "cure or bacteria that you want to kill, if you have this embedded in your de-",
+    "vice at the same time, and you do the chemistry, you may be able to make",
+    "drugs in a new way.",
+    "So how are we doing this in the lab? Well, it requires software, it",
+    "requires hardware and it requires chemical inks. And so the really cool bit",
+    "is, the idea is that we want to have a universal set of inks that we put out",
+    "with the printer, and you download the blueprint, the organic chemistry for",
+    "that molecule and you make it in the device. And so, you can make your",
+    "molecule in the printer using this software. So, what could this mean? Well,",
+    "ultimately, it could mean that you could print your own medicine. And this",
+    "is what we're doing in the lab at the moment. But to take baby steps to get",
+    "there, first of all we want to look at drug design and production, or drug",
+    "discovery and manufacturing. Because if we can manufacture it after we've",
+    "discovered it, we could deploy it anywhere. You don't need to go to the",
+    "chemist anymore. We can print drugs at point of need. We can download",
+    "new diagnostics. Say a new super bug has emerged. You put it in your",
+    "search engine, and you create the drug to treat the threat. So, this allows",
+    "you on-the-fly molecular assembly.",
+    "But perhaps for me the core bit going into the future is this idea of",
+    "taking your own stem cells, with your genes and your environment, and",
+    "you print your own personal medicine. And if that doesn't seem fanciful",
+    "enough, where do you think we're going to go? Well, you're going to have",
+    "your own personal matter fabricator. Beam me up, Scotty. (Applause)"
+   ],
+   "words": 468,
+   "stated": 472,
+   "pages": [
+    13
+   ],
+   "pictures": []
+  },
+  {
+   "title": "When You Are Old",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "William Butler Yeats",
+   "format": "lines",
+   "paragraphs": [
+    "When you are old and grey and full of sleep,",
+    "And nodding by the fire, take down this book,",
+    "And slowly read, and dream of the soft look",
+    "Your eyes had once, and of their shadows",
+    "deep;",
+    "How many loved your moments of glad grace,",
+    "And loved your beauty with love false or true,",
+    "But one man loved the pilgrim soul in you,",
+    "And loved the sorrows of your changing face;",
+    "And bending down beside the glowing bars,",
+    "Murmur, a little sadly, how Love fled",
+    "And paced upon the mountains overhead",
+    "And hid his face amid a crowd of stars."
+   ],
+   "lines": [
+    "When you are old and grey and full of sleep,",
+    "And nodding by the fire, take down this book,",
+    "And slowly read, and dream of the soft look",
+    "Your eyes had once, and of their shadows",
+    "deep;",
+    "How many loved your moments of glad grace,",
+    "And loved your beauty with love false or true,",
+    "But one man loved the pilgrim soul in you,",
+    "And loved the sorrows of your changing face;",
+    "And bending down beside the glowing bars,",
+    "Murmur, a little sadly, how Love fled",
+    "And paced upon the mountains overhead",
+    "And hid his face amid a crowd of stars."
+   ],
+   "words": 100,
+   "stated": 104,
+   "pages": [
+    14
+   ],
+   "pictures": []
+  },
+  {
+   "title": "Jimmy Jet and His TV Set",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "Shel Silverstein",
+   "format": "lines",
+   "paragraphs": [
+    "I'll tell you the story of Jimmy Jet--",
+    "And you know what I tell you is true.",
+    "He loved to watch his TV set",
+    "Almost as much as you.",
+    "He watched all day, he watched all night",
+    "Till he grew pale and lean,",
+    "From \"The Early Show\" to \"The Late Show\"",
+    "And all the shows in between.",
+    "He watched till his eyes were frozen wide,",
+    "And his bottom grew into his chair.",
+    "And his chin turned into a tuning dial,",
+    "And antennae grew out of his hair.",
+    "And his brains turned into TV tubes,",
+    "And his face to a TV screen.",
+    "And two knobs saying \"vert.\" and \"horiz.\"",
+    "Grew where his ears had been.",
+    "And he grew a plug that looked like a tail",
+    "So we plugged in little Jim.",
+    "And now instead of him watching TV",
+    "We all sit around and watch him."
+   ],
+   "lines": [
+    "I'll tell you the story of Jimmy Jet--",
+    "And you know what I tell you is true.",
+    "He loved to watch his TV set",
+    "Almost as much as you.",
+    "He watched all day, he watched all night",
+    "Till he grew pale and lean,",
+    "From \"The Early Show\" to \"The Late Show\"",
+    "And all the shows in between.",
+    "He watched till his eyes were frozen wide,",
+    "And his bottom grew into his chair.",
+    "And his chin turned into a tuning dial,",
+    "And antennae grew out of his hair.",
+    "And his brains turned into TV tubes,",
+    "And his face to a TV screen.",
+    "And two knobs saying \"vert.\" and \"horiz.\"",
+    "Grew where his ears had been.",
+    "And he grew a plug that looked like a tail",
+    "So we plugged in little Jim.",
+    "And now instead of him watching TV",
+    "We all sit around and watch him."
+   ],
+   "words": 144,
+   "stated": 150,
+   "pages": [
+    15
+   ],
+   "pictures": [
+    {
+     "page": 15,
+     "bbox": [
+      129.4,
+      88.0,
+      465.8,
+      325.6
+     ],
+     "xref": 108
+    }
+   ]
+  },
+  {
+   "title": "Pygmalion: Henry and Eliza",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "George Bernard Shaw’s play Pygmalion was the basis for the famous musical My Fair Lady. First performed in 1913, Pygmalion is the story of Eliza Doolittle, a poor and unsophisticated flower seller on the streets of London, who wants to learn to speak “like a lady.” In this passage from Act I, she has met by chance Professor Henry Higgins, a grumpy professor of phonetics, near a church during a rainstorm. They are amongst a group of people who have gathered under the church’s portico to stay dry. Henry has been listening to the other people as part of his research. Eliza was afraid for a time that he was a policeman trying to arrest her and is just beginning to recover from her fear. Henry is “The Note Taker” below. Eliza is “The Flower Girl,” and “The Gentleman” is Colonel Pickering, who was part of the group. The rain has stopped.",
+    "The Flower Girl: Poor girl! Hard enough for her to live without being worried and chivied.",
+    "The Gentleman: [returning to his former place on the note taker’s left] How do you do it, if I may ask? The Note Taker: Simply phonetics. The science of speech. That’s my profession; also my hobby. Happy is the man who can make a living by his hobby! You can spot an Irishman or a Yorkshireman by his brogue. I can place any man within six miles. I can place him within two miles in London. Sometimes within two streets.",
+    "The Flower Girl: Ought to be ashamed of himself, unmanly coward!",
+    "The Gentleman: But is there a living in that?",
+    "The Note Taker: Oh yes. Quite a fat one. This is an age of upstarts. Men begin in Kentish Town with 80 pounds a year, and end in Park Lane with a hundred thousand. They want to drop Kentish Town; but they give themselves away every time they open their mouths. Now! can teach them— The Flower Girl: Let him mind his own business and leave a poor girl— The Note Taker: [explosively] Woman: cease this detestable boohooing instantly; or else seek the shelter of some other lace of worship.",
+    "The Flower Girl: [with feeble defiance] I’ve a right to be here if I like, same as you.",
+    "The Note Taker: A woman who utters such depressing and disgusting sounds has no right to be anywhere—no right to live. Remember that you are a human being with a soul and the divine gift of articulate speech: that your native language is the language of Shakespeare and Milton and The Bible; and don’t sit there crooning like a bilious pigeon.",
+    "The Flower Girl: [quite overwhelmed, and looking up at him in mingled wonder and deprecation without daring to raise her head] Ah—ah—ah—ow—ow—oo!",
+    "The Note Taker: [whipping out his book] Heavens! what a sound! [He writes; then holds out the book and reads, reproducing her vowels exactly] Ah—ah—ah—ow—ow— ow— oo!",
+    "The Flower Girl: [tickled by the performance, and laughing in spite of herself] Garn!"
+   ],
+   "lines": [
+    "George Bernard Shaw’s play Pygmalion was the basis for the",
+    "famous musical My Fair Lady. First performed in 1913, Pygmalion",
+    "is the story of Eliza Doolittle, a poor and unsophisticated flower sell-",
+    "er on the streets of London, who wants to learn to speak “like a la-",
+    "dy.” In this passage from Act I, she has met by chance Professor",
+    "Henry Higgins, a grumpy professor of phonetics, near a church dur-",
+    "ing a rainstorm. They are amongst a group of people who have gath-",
+    "ered under the church’s portico to stay dry. Henry has been listen-",
+    "ing to the other people as part of his research. Eliza was afraid for a",
+    "time that he was a policeman trying to arrest her and is just begin-",
+    "ning to recover from her fear. Henry is “The Note Taker” below. Eliza",
+    "is “The Flower Girl,” and “The Gentleman” is Colonel Pickering, who",
+    "was part of the group. The rain has stopped.",
+    "The Flower Girl: Poor girl! Hard enough for her to live without being worried and",
+    "chivied.",
+    "The Gentleman: [returning to his former place on the note taker’s left] How do you",
+    "do it, if I may ask? The Note Taker: Simply phonetics. The science of speech. That’s my",
+    "profession; also my hobby. Happy is the man who can make a living by his hobby! You",
+    "can spot an Irishman or a Yorkshireman by his brogue. I can place any man within six",
+    "miles. I can place him within two miles in London. Sometimes within two streets.",
+    "The Flower Girl: Ought to be ashamed of himself, unmanly coward!",
+    "The Gentleman: But is there a living in that?",
+    "The Note Taker: Oh yes. Quite a fat one. This is an age of upstarts. Men begin in",
+    "Kentish Town with 80 pounds a year, and end in Park Lane with a hundred thousand.",
+    "They want to drop Kentish Town; but they give themselves away every time they open",
+    "their mouths. Now! can teach them—",
+    "The Flower Girl: Let him mind his own business and leave a poor girl—",
+    "The Note Taker: [explosively] Woman: cease this detestable boohooing instantly;",
+    "or else seek the shelter of some other lace of worship.",
+    "The Flower Girl: [with feeble defiance] I’ve a right to be here if I like, same as you.",
+    "The Note Taker: A woman who utters such depressing and disgusting sounds has",
+    "no right to be anywhere—no right to live. Remember that you are a human being with a",
+    "soul and the divine gift of articulate speech: that your native language is the language",
+    "of Shakespeare and Milton and The Bible; and don’t sit there crooning like a bilious pi-",
+    "geon.",
+    "The Flower Girl: [quite overwhelmed, and looking up at him in mingled wonder",
+    "and deprecation without daring to raise her head] Ah—ah—ah—ow—ow—oo!",
+    "The Note Taker: [whipping out his book] Heavens! what a sound! [He writes; then",
+    "holds out the book and reads, reproducing her vowels exactly] Ah—ah—ah—ow—ow—",
+    "ow— oo!",
+    "The Flower Girl: [tickled by the performance, and laughing in spite of herself]",
+    "Garn!"
+   ],
+   "words": 517,
+   "stated": 523,
+   "pages": [
+    16
+   ],
+   "pictures": [
+    {
+     "page": 16,
+     "bbox": [
+      446.1,
+      75.2,
+      559.2,
+      241.0
+     ],
+     "xref": 111
+    }
+   ]
+  },
+  {
+   "title": "Old McDonald had a Farm",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some cows",
+    "E-i-e-i-o",
+    "With a moo-moo here",
+    "And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some chickens",
+    "E-i-e-i-o",
+    "With a cluck-cluck here",
+    "And a cluck-cluck there",
+    "Here a cluck, there a cluck",
+    "Everywhere a cluck-cluck",
+    "Moo-moo here",
+    "And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some sheeps",
+    "E-i-e-i-o",
+    "With a baa-baa here And a baa-baa there",
+    "Here a baa, there a baa",
+    "Everywhere a baa-baa",
+    "A cluck-cluck here",
+    "And a cluck-cluck there",
+    "Here a cluck, there a cluck",
+    "Everywhere a cluck-cluck",
+    "Moo-moo here And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some pigs E-i-e-i-",
+    "With a oink-oink here And a oink-oink there",
+    "Everywhere a oink-oink Baa-baa here",
+    "And a baa-baa there",
+    "Here a baa, there a baa",
+    "Everywhere a baa-baa",
+    "A cluck-cluck here",
+    "And a cluck-cluck there",
+    "Here a cluck, there a cluck",
+    "Everywhere a cluck-cluck Moo-moo here",
+    "And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some ducks",
+    "E-i-e-i-o",
+    "With a quack-quack here",
+    "And a quack-quack there",
+    "Here a quack, there a quack",
+    "Everywhere a quack-quack",
+    "A oink-oink here And a oink-oink there",
+    "Here a oink, there a oink",
+    "Everywhere a oink-oink",
+    "Baa-baa here And a baa-baa there",
+    "Here a baa, there a baa",
+    "Everywhere a baa-baa A cluck-cluck here",
+    "And a cluck-cluck there",
+    "Here a cluck, there a cluck",
+    "Everywhere a cluck-cluck",
+    "Moo-moo here And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm",
+    "E-i-e-i-o"
+   ],
+   "lines": [
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some cows",
+    "E-i-e-i-o",
+    "With a moo-moo here",
+    "And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some chickens",
+    "E-i-e-i-o",
+    "With a cluck-cluck here",
+    "And a cluck-cluck there",
+    "Here a cluck, there a cluck",
+    "Everywhere a cluck-cluck",
+    "Moo-moo here",
+    "And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some sheeps",
+    "E-i-e-i-o",
+    "With a baa-baa here And a baa-baa there",
+    "Here a baa, there a baa",
+    "Everywhere a baa-baa",
+    "A cluck-cluck here",
+    "And a cluck-cluck there",
+    "Here a cluck, there a cluck",
+    "Everywhere a cluck-cluck",
+    "Moo-moo here And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some pigs E-i-e-i-",
+    "With a oink-oink here And a oink-oink there",
+    "Everywhere a oink-oink Baa-baa here",
+    "And a baa-baa there",
+    "Here a baa, there a baa",
+    "Everywhere a baa-baa",
+    "A cluck-cluck here",
+    "And a cluck-cluck there",
+    "Here a cluck, there a cluck",
+    "Everywhere a cluck-cluck Moo-moo here",
+    "And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm E-i-e-i-o",
+    "And on that farm he had some ducks",
+    "E-i-e-i-o",
+    "With a quack-quack here",
+    "And a quack-quack there",
+    "Here a quack, there a quack",
+    "Everywhere a quack-quack",
+    "A oink-oink here And a oink-oink there",
+    "Here a oink, there a oink",
+    "Everywhere a oink-oink",
+    "Baa-baa here And a baa-baa there",
+    "Here a baa, there a baa",
+    "Everywhere a baa-baa A cluck-cluck here",
+    "And a cluck-cluck there",
+    "Here a cluck, there a cluck",
+    "Everywhere a cluck-cluck",
+    "Moo-moo here And a moo-moo there",
+    "Here a moo, there a moo",
+    "Everywhere a moo-moo",
+    "Old MacDonald had a farm",
+    "E-i-e-i-o"
+   ],
+   "words": 314,
+   "stated": 315,
+   "pages": [
+    17
+   ],
+   "pictures": [
+    {
+     "page": 17,
+     "bbox": [
+      312.8,
+      563.3,
+      527.4,
+      657.6
+     ],
+     "xref": 114
+    }
+   ]
+  },
+  {
+   "title": "The Crocodile and the Monkey",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "Once upon a time, there lived a monkey on a mango tree on the banks of a river. The mangoes of that tree were the sweetest of all. The tree bore fruits year-round. The monkey used to live very happily on the tree eating the tasty fruits and playing on the tree.",
+    "On a particular day, a crocodile came near that mango tree. He seemed very exhausted. The monkey offered him some delicious mangoes from the tree. The crocodile loved those mangoes and thanked the monkey for the same. From then on, the crocodile used to visit the monkey every day and they became good friends.",
+    "One day the crocodile thought to take some mangoes for his wife. When his wife ate the mangoes, she demanded something very absurd from the crocodile. She said that these fruits are so tasty, then how delicious will be the heart of that monkey who regularly eats these mangoes!",
+    "She ordered the crocodile to bring the monkey’s heart for her. The crocodile was shocked at her demand. The monkey was his friend. How could he betray him? He declined to kill the monkey and bring his heart to her.",
+    "The crocodile’s wife was adamant about getting the monkey’s heart. She told the crocodile that she is not keeping well and the doctor has recommended her to eat a monkey’s heart to recover. She even threatened him that if the crocodile didn’t get the monkey’s heart for her, she would surely die. The crocodile had to give in to her order.",
+    "With a heavy heart, the crocodile left to get the monkey. He went to the monkey and said, “Friend, my wife loved the mangoes sent by you. She has invited you to our house to thank you.” The monkey agreed and sat on the crocodile’s back so that the crocodile could take him to his house.",
+    "In the middle of the river, the crocodile began sinking in. The monkey got frightened and he asked the crocodile as to why he was sinking. The crocodile, knowing that now there was no escape for the monkey, replied, “Forgive me, my friend. My wife needs to eat your heart to save her life. That’s why I am taking you with me.”",
+    "The monkey was outraged. The monkey was smart. He kept calm and told the crocodile that he would be more than happy to save his wife’s life but he left his heart at the mango tree. The monkey told him that they can quickly go and get his heart from the tree.",
+    "The crocodile accepted it at once and turned back. As soon as they reached the tree, the monkey jumped onto the tree and said, “O foolish crocodile, how can someone take out his heart and keep it somewhere else? You have deceived me as a friend. Now go and never come back. The ashamed crocodile went back to his home."
+   ],
+   "lines": [
+    "Once upon a time, there lived a monkey on a mango tree on the banks of a river.",
+    "The mangoes of that tree were the sweetest of all. The tree bore fruits year-round. The",
+    "monkey used to live very happily on the tree eating the tasty fruits and playing on the",
+    "tree.",
+    "On a particular day, a crocodile came near that mango tree. He seemed very ex-",
+    "hausted. The monkey offered him some delicious mangoes from the tree. The crocodile",
+    "loved those mangoes and thanked the monkey for the same. From then on, the croco-",
+    "dile used to visit the monkey every day and they became good friends.",
+    "One day the crocodile thought to take some mangoes for his wife. When his wife",
+    "ate the mangoes, she demanded something very absurd from the crocodile. She said",
+    "that these fruits are so tasty, then how delicious will be the heart of that monkey who",
+    "regularly eats these mangoes!",
+    "She ordered the crocodile to bring the monkey’s heart for her. The crocodile was",
+    "shocked at her demand. The monkey was his friend. How could he betray him? He de-",
+    "clined to kill the monkey and bring his heart to her.",
+    "The crocodile’s wife was adamant about getting the monkey’s heart. She told the",
+    "crocodile that she is not keeping well and the doctor has recommended her to eat a",
+    "monkey’s heart to recover. She even threatened him that if the crocodile didn’t get the",
+    "monkey’s heart for her, she would surely die. The crocodile had to give in to her order.",
+    "With a heavy heart, the crocodile left to get the monkey. He went to the monkey",
+    "and said, “Friend, my wife loved the mangoes sent by you. She has invited you to our",
+    "house to thank you.” The monkey agreed and sat on the crocodile’s back so that the",
+    "crocodile could take him to his house.",
+    "In the middle of the river, the crocodile began sinking in. The monkey got fright-",
+    "ened and he asked the crocodile as to why he was sinking. The crocodile, knowing that",
+    "now there was no escape for the monkey, replied, “Forgive me, my friend. My wife needs",
+    "to eat your heart to save her life. That’s why I am taking you with me.”",
+    "The monkey was outraged. The monkey was smart. He kept calm and told the",
+    "crocodile that he would be more than happy to save his wife’s life but he left his heart",
+    "at the mango tree. The monkey told him that they can quickly go and get his heart from",
+    "the tree.",
+    "The crocodile accepted it at once and turned back. As soon as they reached the",
+    "tree, the monkey jumped onto the tree and said, “O foolish crocodile, how can someone",
+    "take out his heart and keep it somewhere else? You have deceived me as a friend. Now",
+    "go and never come back. The ashamed crocodile went back to his home."
+   ],
+   "words": 490,
+   "stated": 495,
+   "pages": [
+    18
+   ],
+   "pictures": [
+    {
+     "page": 18,
+     "bbox": [
+      92.8,
+      61.5,
+      502.0,
+      202.8
+     ],
+     "xref": 83
+    },
+    {
+     "page": 18,
+     "bbox": [
+      92.8,
+      32.0,
+      502.1,
+      202.8
+     ],
+     "xref": 117
+    }
+   ]
+  },
+  {
+   "title": "The Crocodile and the Monkey",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "Once upon a time, there lived a monkey on a mango tree on the banks of a river. The mangoes of that tree were the sweetest of all. The tree bore fruits year-round. The monkey used to live very happily on the tree eating the tasty fruits and playing on the tree.",
+    "On a particular day, a crocodile came near that mango tree. He seemed very exhausted. The monkey offered him some delicious mangoes from the tree. The crocodile loved those mangoes and thanked the monkey for the same. From then on, the crocodile used to visit the monkey every day and they became good friends.",
+    "One day the crocodile thought to take some mangoes for his wife. When his wife ate the mangoes, she demanded something very absurd from the crocodile. She said that these fruits are so tasty, then how delicious will be the heart of that monkey who regularly eats these mangoes!",
+    "She ordered the crocodile to bring the monkey’s heart for her. The crocodile was shocked at her demand. The monkey was his friend. How could he betray him? He declined to kill the monkey and bring his heart to her.",
+    "The crocodile’s wife was adamant about getting the monkey’s heart. She told the crocodile that she is not keeping well and the doctor has recommended her to eat a monkey’s heart to recover. She even threatened him that if the crocodile didn’t get the monkey’s heart for her, she would surely die. The crocodile had to give in to her order.",
+    "With a heavy heart, the crocodile left to get the monkey. He went to the monkey and said, “Friend, my wife loved the mangoes sent by you. She has invited you to our house to thank you.” The monkey agreed and sat on the crocodile’s back so that the crocodile could take him to his house.",
+    "In the middle of the river, the crocodile began sinking in. The monkey got frightened and he asked the crocodile as to why he was sinking. The crocodile, knowing that now there was no escape for the monkey, replied, “Forgive me, my friend. My wife needs to eat your heart to save her life. That’s why I am taking you with me.”",
+    "The monkey was outraged. The monkey was smart. He kept calm and told the crocodile that he would be more than happy to save his wife’s life but he left his heart at the mango tree. The monkey told him that they can quickly go and get his heart from the tree.",
+    "The crocodile accepted it at once and turned back. As soon as they reached the tree, the monkey jumped onto the tree and said, “O foolish crocodile, how can someone take out his heart and keep it somewhere else? You have deceived me as a friend. Now go and never come back. The ashamed crocodile went back to his home."
+   ],
+   "lines": [
+    "Once upon a time, there lived a monkey on a mango tree on the banks of a river.",
+    "The mangoes of that tree were the sweetest of all. The tree bore fruits year-round. The",
+    "monkey used to live very happily on the tree eating the tasty fruits and playing on the",
+    "tree.",
+    "On a particular day, a crocodile came near that mango tree. He seemed very",
+    "exhausted. The monkey offered him some delicious mangoes from the tree. The",
+    "crocodile loved those mangoes and thanked the monkey for the same. From then on, the",
+    "crocodile used to visit the monkey every day and they became good friends.",
+    "One day the crocodile thought to take some mangoes for his wife. When his wife",
+    "ate the mangoes, she demanded something very absurd from the crocodile. She said",
+    "that these fruits are so tasty, then how delicious will be the heart of that monkey who",
+    "regularly eats these mangoes!",
+    "She ordered the crocodile to bring the monkey’s heart for her. The crocodile was",
+    "shocked at her demand. The monkey was his friend. How could he betray him? He declined",
+    "to kill the monkey and bring his heart to her.",
+    "The crocodile’s wife was adamant about getting the monkey’s heart. She told the",
+    "crocodile that she is not keeping well and the doctor has recommended her to eat a",
+    "monkey’s heart to recover. She even threatened him that if the crocodile didn’t get the",
+    "monkey’s heart for her, she would surely die. The crocodile had to give in to her order.",
+    "With a heavy heart, the crocodile left to get the monkey. He went to the monkey",
+    "and said, “Friend, my wife loved the mangoes sent by you. She has invited you to our",
+    "house to thank you.” The monkey agreed and sat on the crocodile’s back so that the",
+    "crocodile could take him to his house.",
+    "In the middle of the river, the crocodile began sinking in. The monkey got",
+    "frightened and he asked the crocodile as to why he was sinking. The crocodile, knowing",
+    "that now there was no escape for the monkey, replied, “Forgive me, my friend. My wife",
+    "needs to eat your heart to save her life. That’s why I am taking you with me.”",
+    "The monkey was outraged. The monkey was smart. He kept calm and told the",
+    "crocodile that he would be more than happy to save his wife’s life but he left his heart",
+    "at the mango tree. The monkey told him that they can quickly go and get his heart from",
+    "the tree.",
+    "The crocodile accepted it at once and turned back. As soon as they reached the",
+    "tree, the monkey jumped onto the tree and said, “O foolish crocodile, how can someone",
+    "take out his heart and keep it somewhere else? You have deceived me as a friend. Now",
+    "go and never come back. The ashamed crocodile went back to his home."
+   ],
+   "words": 486,
+   "stated": 491,
+   "pages": [
+    20
+   ],
+   "pictures": [
+    {
+     "page": 20,
+     "bbox": [
+      92.8,
+      61.5,
+      502.0,
+      202.8
+     ],
+     "xref": 83
+    },
+    {
+     "page": 20,
+     "bbox": [
+      92.8,
+      39.6,
+      502.1,
+      202.8
+     ],
+     "xref": 124
+    }
+   ]
+  }
+ ],
+ "6": [
+  {
+   "title": "\"Bad Girl\"",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "Hey! Everybody seems to be staring at me..",
+    "You! You! All of you!",
+    "How dare you to stare at me?",
+    "Why? Is it because I'm a bad girl?",
+    "A bad girl I am, A good for nothing teenager, a",
+    "problem child?",
+    "That's what you call me!",
+    "I smoke. I drink. I gamble at my young tender",
+    "age.",
+    "I lie. I cheat, and I could even kill, If I have too.",
+    "Yes, I'm a bad girl, but where are my parents?",
+    "You! You! You are my good parents?",
+    "My good elder brother and sister in this society",
+    "where I live?",
+    "Look…look at me…What have you done to me?",
+    "You have pampered and spoiled me, neglected me when I needed you",
+    "most!",
+    "Entrusted me to a yaya, whose intelligence was much lower than mine!",
+    "While you go about your parties, your meetings and gambling session…",
+    "Thus… I drifted away from you!",
+    "Longing for a father's love, yearning for a mother's care!",
+    "As I grew up, everything changed!",
+    "You too have changed!",
+    "You spent more time in your poker, mahjong tables, bars and night",
+    "clubs. You even landed on the headlines of the newspaper as crooks,",
+    "peddlers and you racketeers.",
+    "Now, you call me names, accuse me of everything I do to myself?",
+    "Tell me! How good are you?",
+    "If you really wish to ensure my future…",
+    "Then hurry….hurry back home! Where I await you, because I need you…",
+    "Protect me from all evil influences that will threaten at my very own",
+    "understanding…",
+    "But if I am bad, really bad…then, you've got to help me!",
+    "Help me! Oh please…Help me."
+   ],
+   "lines": [
+    "Hey! Everybody seems to be staring at me..",
+    "You! You! All of you!",
+    "How dare you to stare at me?",
+    "Why? Is it because I'm a bad girl?",
+    "A bad girl I am, A good for nothing teenager, a",
+    "problem child?",
+    "That's what you call me!",
+    "I smoke. I drink. I gamble at my young tender",
+    "age.",
+    "I lie. I cheat, and I could even kill, If I have too.",
+    "Yes, I'm a bad girl, but where are my parents?",
+    "You! You! You are my good parents?",
+    "My good elder brother and sister in this society",
+    "where I live?",
+    "Look…look at me…What have you done to me?",
+    "You have pampered and spoiled me, neglected me when I needed you",
+    "most!",
+    "Entrusted me to a yaya, whose intelligence was much lower than mine!",
+    "While you go about your parties, your meetings and gambling session…",
+    "Thus… I drifted away from you!",
+    "Longing for a father's love, yearning for a mother's care!",
+    "As I grew up, everything changed!",
+    "You too have changed!",
+    "You spent more time in your poker, mahjong tables, bars and night",
+    "clubs. You even landed on the headlines of the newspaper as crooks,",
+    "peddlers and you racketeers.",
+    "Now, you call me names, accuse me of everything I do to myself?",
+    "Tell me! How good are you?",
+    "If you really wish to ensure my future…",
+    "Then hurry….hurry back home! Where I await you, because I need you…",
+    "Protect me from all evil influences that will threaten at my very own",
+    "understanding…",
+    "But if I am bad, really bad…then, you've got to help me!",
+    "Help me! Oh please…Help me."
+   ],
+   "words": 272,
+   "stated": 269,
+   "pages": [
+    9
+   ],
+   "pictures": []
+  },
+  {
+   "title": "It is Raining",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "Where would you like to be in the rain?",
+    "Where would you like to be?",
+    "I'd like to be on a city street",
+    "Where the rain comes driving down",
+    "Trying to make things neat",
+    "As it washes the houses, roof and wall",
+    "The taxis, buses, cars, and all.",
+    "That’s where I’d like to be in the rain",
+    "That’s where I’d like to be.",
+    "It is raining.",
+    "Where would you like to be in the rain?",
+    "Where would you like to be?",
+    "I'd like to be in a tall tree top",
+    "Where the rain comes dripping drop, drop, drop, drop,",
+    "Around on every side -",
+    "where it wets the farmers, the barns, the pig.",
+    "the cows, the chickens, both little and big.",
+    "Where it batters and beats on a field of grain.",
+    "And makes the little birds hide from the rain.",
+    "That’s where I'd like to be in the rain.",
+    "That’s where I'd like to be.",
+    "It is raining.",
+    "Where would you like to be in the rain?",
+    "Where would you like to be?",
+    "I'd like to be on ship at sea",
+    "Where everything’s wet as can be",
+    "And the waves are rolling high",
+    "Where sailors are pulling the ropes and singing",
+    "And winds in the rigging and salt’s sprays",
+    "stinging And round us sea gulls cry",
+    "On a dipping, skimming ship at sea.",
+    "That’s where I'd like to be in the rain.",
+    "That’s where I'd like to be."
+   ],
+   "lines": [
+    "Where would you like to be in the rain?",
+    "Where would you like to be?",
+    "I'd like to be on a city street",
+    "Where the rain comes driving down",
+    "Trying to make things neat",
+    "As it washes the houses, roof and wall",
+    "The taxis, buses, cars, and all.",
+    "That’s where I’d like to be in the rain",
+    "That’s where I’d like to be.",
+    "It is raining.",
+    "Where would you like to be in the rain?",
+    "Where would you like to be?",
+    "I'd like to be in a tall tree top",
+    "Where the rain comes dripping drop, drop, drop, drop,",
+    "Around on every side -",
+    "where it wets the farmers, the barns, the pig.",
+    "the cows, the chickens, both little and big.",
+    "Where it batters and beats on a field of grain.",
+    "And makes the little birds hide from the rain.",
+    "That’s where I'd like to be in the rain.",
+    "That’s where I'd like to be.",
+    "It is raining.",
+    "Where would you like to be in the rain?",
+    "Where would you like to be?",
+    "I'd like to be on ship at sea",
+    "Where everything’s wet as can be",
+    "And the waves are rolling high",
+    "Where sailors are pulling the ropes and singing",
+    "And winds in the rigging and salt’s sprays",
+    "stinging And round us sea gulls cry",
+    "On a dipping, skimming ship at sea.",
+    "That’s where I'd like to be in the rain.",
+    "That’s where I'd like to be."
+   ],
+   "words": 238,
+   "stated": 241,
+   "pages": [
+    11
+   ],
+   "pictures": [
+    {
+     "page": 11,
+     "bbox": [
+      29.4,
+      347.3,
+      181.7,
+      592.1
+     ],
+     "xref": 90
+    }
+   ]
+  },
+  {
+   "title": "You Learn",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "Alanis Morissette",
+   "format": "lines",
+   "paragraphs": [
+    "I recommend getting your heart trampled on to anyone",
+    "I recommend walking around naked in your living room Swallow it down",
+    "(what a jagged little pill)",
+    "It feels so good (swimming in your stomach) Wait until the dust settles",
+    "You live you learn, You love you learn",
+    "You cry you learn, You lose you learn",
+    "You bleed you learn, You scream you learn",
+    "I recommend biting off more than you can chew to anyone certainly do",
+    "I recommend sticking your foot in your mouth at anytime",
+    "Feel free",
+    "Throw it down (the caution blocks you from the wind)",
+    "Hold it up (to the rays)",
+    "You wait and see when the smoke clears",
+    "You live you learn, You love you learn",
+    "You cry you learn, You lose you learn",
+    "You bleed you learn, You scream you learn",
+    "Wear it out (like a three-year-old would do)",
+    "Melt it down (you're gonna have to eventually anyway)",
+    "The fire trucks are coming up around the bend",
+    "You live you learn, You love you learn",
+    "You cry you learn, You lose you learn",
+    "You bleed you learn, You scream you learn",
+    "You grieve you learn, You choke you learn",
+    "You laugh you learn, You choose you learn",
+    "You pray you learn, You ask you learn",
+    "You live you learn"
+   ],
+   "lines": [
+    "I recommend getting your heart trampled on to anyone",
+    "I recommend walking around naked in your living room Swallow it down",
+    "(what a jagged little pill)",
+    "It feels so good (swimming in your stomach) Wait until the dust settles",
+    "You live you learn, You love you learn",
+    "You cry you learn, You lose you learn",
+    "You bleed you learn, You scream you learn",
+    "I recommend biting off more than you can chew to anyone certainly do",
+    "I recommend sticking your foot in your mouth at anytime",
+    "Feel free",
+    "Throw it down (the caution blocks you from the wind)",
+    "Hold it up (to the rays)",
+    "You wait and see when the smoke clears",
+    "You live you learn, You love you learn",
+    "You cry you learn, You lose you learn",
+    "You bleed you learn, You scream you learn",
+    "Wear it out (like a three-year-old would do)",
+    "Melt it down (you're gonna have to eventually anyway)",
+    "The fire trucks are coming up around the bend",
+    "You live you learn, You love you learn",
+    "You cry you learn, You lose you learn",
+    "You bleed you learn, You scream you learn",
+    "You grieve you learn, You choke you learn",
+    "You laugh you learn, You choose you learn",
+    "You pray you learn, You ask you learn",
+    "You live you learn"
+   ],
+   "words": 214,
+   "stated": 220,
+   "pages": [
+    12
+   ],
+   "pictures": [
+    {
+     "page": 12,
+     "bbox": [
+      444.8,
+      426.4,
+      572.1,
+      619.8
+     ],
+     "xref": 96
+    }
+   ]
+  },
+  {
+   "title": "The House on the Hill",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "Edwin Arlington Robinson",
+   "format": "lines",
+   "paragraphs": [
+    "They are all gone away,",
+    "The House is shut and still,",
+    "There is nothing more to say.",
+    "Through broken walls and gray",
+    "The winds blow bleak and shrill:",
+    "They are all gone away.",
+    "Nor is there one to-day, To speak them good or ill:",
+    "There is nothing more to say.",
+    "Why is it then we stray, Around the sunken sill?",
+    "They are all gone away,",
+    "And our poor fancy-play, For them is wasted skill:",
+    "There is nothing more to say.",
+    "There is ruin and decay, In the House on the Hill:",
+    "They are all gone away, There is nothing more to say."
+   ],
+   "lines": [
+    "They are all gone away,",
+    "The House is shut and still,",
+    "There is nothing more to say.",
+    "Through broken walls and gray",
+    "The winds blow bleak and shrill:",
+    "They are all gone away.",
+    "Nor is there one to-day, To speak them good or ill:",
+    "There is nothing more to say.",
+    "Why is it then we stray, Around the sunken sill?",
+    "They are all gone away,",
+    "And our poor fancy-play, For them is wasted skill:",
+    "There is nothing more to say.",
+    "There is ruin and decay, In the House on the Hill:",
+    "They are all gone away, There is nothing more to say."
+   ],
+   "words": 102,
+   "stated": 107,
+   "pages": [
+    13
+   ],
+   "pictures": [
+    {
+     "page": 13,
+     "bbox": [
+      71.7,
+      65.9,
+      519.8,
+      263.5
+     ],
+     "xref": 101
+    },
+    {
+     "page": 13,
+     "bbox": [
+      71.8,
+      66.0,
+      519.7,
+      263.5
+     ],
+     "xref": 103
+    }
+   ]
+  },
+  {
+   "title": "The Golden Egg",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "Once upon a time, there lived a cloth merchant in a village with his wife and two children. They were indeed quite well-off. They had a beautiful hen which laid an egg every day. It was not an ordinary egg, rather, a golden egg. But the man was not satisfied with what he used to get daily. He was a get rich-trice kind of a person.",
+    "The man wanted to get all the golden eggs from his hen at one single go. So, one day he thought hard and at last clicked upon a plan. He decided to kill the hen and get all the eggs together.",
+    "So, the next day when the hen laid a golden egg, the man caught hold of it, took a sharp knife, chopped off its neck and cut its body open. There was nothing but blood all around & no trace of any egg at all. He was highly grieved because now he would not get even one single egg.",
+    "His life was going on smoothly with one egg a day but now, he himself made his life miserable. The outcome of his greed was that he started becoming poorer & poorer day by day and ultimately became a pauper. How jinxed and how much foolish he was."
+   ],
+   "lines": [
+    "Once upon a time, there lived a cloth merchant in a village with",
+    "his wife and two children. They were indeed quite well-off. They had",
+    "a beautiful hen which laid an egg every day. It was not an ordinary",
+    "egg, rather, a golden egg. But the man was not satisfied with what",
+    "he used to get daily. He was a get rich-trice kind of a person.",
+    "The man wanted to get all the golden eggs from his hen at one",
+    "single go. So, one day he thought hard and at last clicked upon a",
+    "plan. He decided to kill the hen and get all the eggs together.",
+    "So, the next day when the hen laid a golden egg, the man",
+    "caught hold of it, took a sharp knife, chopped off its neck and cut its",
+    "body open. There was nothing but blood all around & no trace of",
+    "any egg at all. He was highly grieved because now he would not get",
+    "even one single egg.",
+    "His life was going on smoothly with one egg a day but now, he",
+    "himself made his life miserable. The outcome of his greed was that",
+    "he started becoming poorer & poorer day by day and ultimately be-",
+    "came a pauper. How jinxed and how much foolish he was."
+   ],
+   "words": 213,
+   "stated": 218,
+   "pages": [
+    14
+   ],
+   "pictures": [
+    {
+     "page": 14,
+     "bbox": [
+      87.8,
+      104.3,
+      491.8,
+      357.4
+     ],
+     "xref": 107
+    }
+   ]
+  },
+  {
+   "title": "To the River",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "Edgar Allan Poe - 1809-1849",
+   "format": "lines",
+   "paragraphs": [
+    "Fair river! in thy bright, clear flow",
+    "Of crystal, wandering water,",
+    "Thou art an emblem of the glow",
+    "Of beauty—the unhidden heart—",
+    "The playful maziness of art",
+    "In old Alberto’s daughter;",
+    "But when within thy wave she looks—",
+    "Which glistens then, and trembles—",
+    "Why, then, the prettiest of brooks",
+    "Her worshipper resembles;",
+    "For in my heart, as in thy stream,",
+    "Her image deeply lies—",
+    "His heart which trembles at the beam",
+    "Of her soul-searching eyes."
+   ],
+   "lines": [
+    "Fair river! in thy bright, clear flow",
+    "Of crystal, wandering water,",
+    "Thou art an emblem of the glow",
+    "Of beauty—the unhidden heart—",
+    "The playful maziness of art",
+    "In old Alberto’s daughter;",
+    "But when within thy wave she looks—",
+    "Which glistens then, and trembles—",
+    "Why, then, the prettiest of brooks",
+    "Her worshipper resembles;",
+    "For in my heart, as in thy stream,",
+    "Her image deeply lies—",
+    "His heart which trembles at the beam",
+    "Of her soul-searching eyes."
+   ],
+   "words": 76,
+   "stated": 78,
+   "pages": [
+    15
+   ],
+   "pictures": [
+    {
+     "page": 15,
+     "bbox": [
+      86.2,
+      85.5,
+      513.5,
+      375.9
+     ],
+     "xref": 110
+    }
+   ]
+  },
+  {
+   "title": "Be Glad Your Nose is on Your Face",
+   "source": "OCR",
+   "title_found": false,
+   "byline": "Jack Prelutsky",
+   "format": "lines",
+   "paragraphs": [
+    "Be glad your nose is on your face, not pasted on some other place,",
+    "for if it were where it is not, you might dislike your nose a lot.",
+    "Imagine if your precious nose, were sandwiched in between your toes,",
+    "that clearly would not be a treat, for you'd be forced to smell your feet.",
+    "Your nose would be a source of dread were it attached atop your head,",
+    "it soon would drive you to despair, forever tickled by your hair.",
+    "Within your ear, your nose would be",
+    "an absolute catastrophe,",
+    "for when you were obliged to sneeze,",
+    "your brain would rattle from the breeze.",
+    "Your nose, instead, through thick and thin,",
+    "remains between your eyes and chin,",
+    "not pasted on some other place--",
+    "be glad your nose is on your face."
+   ],
+   "lines": [
+    "Be glad your nose is on your face, not pasted on some other place,",
+    "for if it were where it is not, you might dislike your nose a lot.",
+    "Imagine if your precious nose, were sandwiched in between your toes,",
+    "that clearly would not be a treat, for you'd be forced to smell your feet.",
+    "Your nose would be a source of dread were it attached atop your head,",
+    "it soon would drive you to despair, forever tickled by your hair.",
+    "Within your ear, your nose would be",
+    "an absolute catastrophe,",
+    "for when you were obliged to sneeze,",
+    "your brain would rattle from the breeze.",
+    "Your nose, instead, through thick and thin,",
+    "remains between your eyes and chin,",
+    "not pasted on some other place--",
+    "be glad your nose is on your face."
+   ],
+   "words": 132,
+   "stated": 140,
+   "pages": [
+    16
+   ],
+   "pictures": [
+    {
+     "page": 16,
+     "bbox": [
+      165.0,
+      107.0,
+      433.6,
+      336.3
+     ],
+     "xref": 114
+    }
+   ]
+  },
+  {
+   "title": "The Crocodile and the Monkey",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "Once upon a time, there lived a monkey on a mango tree on the banks of a river. The mangoes of that tree were the sweetest of all. The tree bore fruits year-round. The monkey used to live very happily on the tree eating the tasty fruits and playing on the tree. On a particular day, a crocodile came near that mango tree. He seemed very exhausted. The monkey offered him some delicious mangoes from the tree. The crocodile loved those mangoes and thanked the monkey for the same. From then on, the crocodile used to visit the monkey every day and they became good friends. One day the crocodile thought to take some mangoes for his wife. When his wife ate the mangoes, she demanded something very absurd from the crocodile. She said that these fruits are so tasty, then how delicious will be the heart of that monkey who regularly eats these mangoes! She ordered the crocodile to bring the monkey’s heart for her. The crocodile was shocked at her demand. The monkey was his friend. How could he betray him? He declined to kill the monkey and bring his heart to her. The crocodile’s wife was adamant about getting the monkey’s heart. She told the crocodile that she is not keeping well and the doctor has recommended her to eat a monkey’s heart to recover. She even threatened him that if the crocodile didn’t get the monkey’s heart for her, she would surely die. The crocodile had to give in to her order. With a heavy heart, the crocodile left to get the monkey. He went to the monkey and said, “Friend, my wife loved the mangoes sent by you. She has invited you to our house to thank you.” The monkey agreed and sat on the crocodile’s back so that the crocodile could take him to his house. In the middle of the river, the crocodile began sinking in. The monkey got frightened and he asked the crocodile as to why he was sinking. The crocodile, knowing that now there was no escape for the monkey, replied, “Forgive me, my friend. My wife needs to eat your heart to save her life. That’s why I am taking you with me.” The monkey was outraged. The monkey was smart. He kept calm and told the crocodile that he would be more than happy to save his wife’s life but he left his heart at the mango tree. The monkey told him that they can quickly go and get his heart from the tree. The crocodile accepted it at once and turned back. As soon as they reached the tree, the monkey jumped onto the tree and said, “O foolish crocodile, how can someone take out his heart and keep it somewhere else? You have deceived me as a friend. Now go and never come back. The ashamed crocodile went back to his home."
+   ],
+   "lines": [
+    "Once upon a time, there lived a monkey on a mango tree on the banks of a river.",
+    "The mangoes of that tree were the sweetest of all. The tree bore fruits year-round. The",
+    "monkey used to live very happily on the tree eating the tasty fruits and playing on the",
+    "tree.",
+    "On a particular day, a crocodile came near that mango tree. He seemed very ex-",
+    "hausted. The monkey offered him some delicious mangoes from the tree. The crocodile",
+    "loved those mangoes and thanked the monkey for the same. From then on, the croco-",
+    "dile used to visit the monkey every day and they became good friends.",
+    "One day the crocodile thought to take some mangoes for his wife. When his wife",
+    "ate the mangoes, she demanded something very absurd from the crocodile. She said",
+    "that these fruits are so tasty, then how delicious will be the heart of that monkey who",
+    "regularly eats these mangoes!",
+    "She ordered the crocodile to bring the monkey’s heart for her. The crocodile was",
+    "shocked at her demand. The monkey was his friend. How could he betray him? He de-",
+    "clined to kill the monkey and bring his heart to her.",
+    "The crocodile’s wife was adamant about getting the monkey’s heart. She told the",
+    "crocodile that she is not keeping well and the doctor has recommended her to eat a",
+    "monkey’s heart to recover. She even threatened him that if the crocodile didn’t get the",
+    "monkey’s heart for her, she would surely die. The crocodile had to give in to her order.",
+    "With a heavy heart, the crocodile left to get the monkey. He went to the monkey",
+    "and said, “Friend, my wife loved the mangoes sent by you. She has invited you to our",
+    "house to thank you.” The monkey agreed and sat on the crocodile’s back so that the",
+    "crocodile could take him to his house.",
+    "In the middle of the river, the crocodile began sinking in. The monkey got fright-",
+    "ened and he asked the crocodile as to why he was sinking. The crocodile, knowing that",
+    "now there was no escape for the monkey, replied, “Forgive me, my friend. My wife needs",
+    "to eat your heart to save her life. That’s why I am taking you with me.”",
+    "The monkey was outraged. The monkey was smart. He kept calm and told the",
+    "crocodile that he would be more than happy to save his wife’s life but he left his heart",
+    "at the mango tree. The monkey told him that they can quickly go and get his heart from",
+    "the tree.",
+    "The crocodile accepted it at once and turned back. As soon as they reached the",
+    "tree, the monkey jumped onto the tree and said, “O foolish crocodile, how can someone",
+    "take out his heart and keep it somewhere else? You have deceived me as a friend. Now",
+    "go and never come back. The ashamed crocodile went back to his home."
+   ],
+   "words": 490,
+   "stated": 435,
+   "pages": [
+    17
+   ],
+   "pictures": [
+    {
+     "page": 17,
+     "bbox": [
+      92.9,
+      61.2,
+      502.1,
+      202.5
+     ],
+     "xref": 118
+    },
+    {
+     "page": 17,
+     "bbox": [
+      96.2,
+      24.4,
+      505.6,
+      195.0
+     ],
+     "xref": 119
+    }
+   ]
+  },
+  {
+   "title": "Pygmalion: Henry and Eliza",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "",
+   "format": "prose",
+   "paragraphs": [
+    "George Bernard Shaw’s play Pygmalion was the basis for the famous musical My Fair Lady. First performed in 1913, Pygmalion is the story of Eliza Doolittle, a poor and unsophisticated flower seller on the streets of London, who wants to learn to speak “like a lady.” In this passage from Act I, she has met by chance Professor Henry Higgins, a grumpy professor of phonetics, near a church during a rainstorm. They are amongst a group of people who have gathered under the church’s portico to stay dry. Henry has been listening to the other people as part of his research. Eliza was afraid for a time that he was a policeman trying to arrest her and is just beginning to recover from her fear. Henry is “The Note Taker” below. Eliza is “The Flower Girl,” and “The Gentleman” is Colonel Pickering, who was part of the group. The rain has stopped.",
+    "The Flower Girl: Poor girl! Hard enough for her to live without being worried and chivied.",
+    "The Gentleman: [returning to his former place on the note taker’s left] How do you do it, if I may ask? The Note Taker: Simply phonetics. The science of speech. That’s my profession; also my hobby. Happy is the man who can make a living by his hobby! You can spot an Irishman or a Yorkshireman by his brogue. I can place any man within six miles. I can place him within two miles in London. Sometimes within two streets.",
+    "The Flower Girl: Ought to be ashamed of himself, unmanly coward!",
+    "The Gentleman: But is there a living in that?",
+    "The Note Taker: Oh yes. Quite a fat one. This is an age of upstarts. Men begin in Kentish Town with 80 pounds a year, and end in Park Lane with a hundred thousand. They want to drop Kentish Town; but they give themselves away every time they open their mouths. Now! can teach them— The Flower Girl: Let him mind his own business and leave a poor girl— The Note Taker: [explosively] Woman: cease this detestable boohooing instantly; or else seek the shelter of some other place of worship.",
+    "The Flower Girl: [with feeble defiance] I’ve a right to be here if I like, same as you.",
+    "The Note Taker: A woman who utters such depressing and disgusting sounds has no right to be anywhere—no right to live. Remember that you are a human being with a soul and the divine gift of articulate speech: that your native language is the language of Shakespeare and Milton and The Bible; and don’t sit there crooning like a bilious pigeon.",
+    "The Flower Girl: [quite overwhelmed, and looking up at him in mingled wonder and deprecation without daring to raise her head] Ah—ah—ah—ow—ow—oo!",
+    "The Note Taker: [whipping out his book] Heavens! what a sound! [He writes; then holds out the book and reads, reproducing her vowels exactly] Ah—ah—ah—ow—ow— ow— oo!",
+    "The Flower Girl: [tickled by the performance, and laughing in spite of herself] Garn!"
+   ],
+   "lines": [
+    "George Bernard Shaw’s play Pygmalion was the basis for the",
+    "famous musical My Fair Lady. First performed in 1913, Pygmalion is",
+    "the story of Eliza Doolittle, a poor and unsophisticated flower sell- er",
+    "on the streets of London, who wants to learn to speak “like a la- dy.”",
+    "In this passage from Act I, she has met by chance Professor Henry",
+    "Higgins, a grumpy professor of phonetics, near a church dur- ing a",
+    "rainstorm. They are amongst a group of people who have gath- ered",
+    "under the church’s portico to stay dry. Henry has been listen- ing to",
+    "the other people as part of his research. Eliza was afraid for a time",
+    "that he was a policeman trying to arrest her and is just begin- ning to",
+    "recover from her fear. Henry is “The Note Taker” below. Eliza is “The",
+    "Flower Girl,” and “The Gentleman” is Colonel Pickering, who was",
+    "part of the group. The rain has stopped.",
+    "The Flower Girl: Poor girl! Hard enough for her to live without being worried and",
+    "chivied.",
+    "The Gentleman: [returning to his former place on the note taker’s left] How do you",
+    "do it, if I may ask? The Note Taker: Simply phonetics. The science of speech. That’s my",
+    "profession; also my hobby. Happy is the man who can make a living by his hobby! You",
+    "can spot an Irishman or a Yorkshireman by his brogue. I can place any man within six",
+    "miles. I can place him within two miles in London. Sometimes within two streets.",
+    "The Flower Girl: Ought to be ashamed of himself, unmanly coward!",
+    "The Gentleman: But is there a living in that?",
+    "The Note Taker: Oh yes. Quite a fat one. This is an age of upstarts. Men begin in",
+    "Kentish Town with 80 pounds a year, and end in Park Lane with a hundred thousand.",
+    "They want to drop Kentish Town; but they give themselves away every time they open",
+    "their mouths. Now! can teach them—",
+    "The Flower Girl: Let him mind his own business and leave a poor girl—",
+    "The Note Taker: [explosively] Woman: cease this detestable boohooing instantly;",
+    "or else seek the shelter of some other place of worship.",
+    "The Flower Girl: [with feeble defiance] I’ve a right to be here if I like, same as you.",
+    "The Note Taker: A woman who utters such depressing and disgusting sounds has",
+    "no right to be anywhere—no right to live. Remember that you are a human being with a",
+    "soul and the divine gift of articulate speech: that your native language is the language",
+    "of Shakespeare and Milton and The Bible; and don’t sit there crooning like a bilious pi-",
+    "geon.",
+    "The Flower Girl: [quite overwhelmed, and looking up at him in mingled wonder",
+    "and deprecation without daring to raise her head] Ah—ah—ah—ow—ow—oo!",
+    "The Note Taker: [whipping out his book] Heavens! what a sound! [He writes; then",
+    "holds out the book and reads, reproducing her vowels exactly] Ah—ah—ah—ow—ow—",
+    "ow— oo!",
+    "The Flower Girl: [tickled by the performance, and laughing in spite of herself]",
+    "Garn!"
+   ],
+   "words": 517,
+   "stated": 522,
+   "pages": [
+    18
+   ],
+   "pictures": [
+    {
+     "page": 18,
+     "bbox": [
+      446.1,
+      75.0,
+      559.2,
+      240.8
+     ],
+     "xref": 123
+    }
+   ]
+  },
+  {
+   "title": "My First Baseball Game",
+   "source": "OCR",
+   "title_found": true,
+   "byline": "Randy Ryan",
+   "format": "prose",
+   "paragraphs": [
+    "I remember my first Cubs game. My uncle came to take my sister and me to it. It was a sunny Saturday. He drove all the way from Indiana to get us. Then we took the train to the ballpark. He said it would be hard to find a parking space there, so he didn’t drive there. He was right. When we got there it was so crowded. We had tickets that were for seats far back. It seemed like I climbed about 300 steps to get to them. But when we got there and I turned around I could see everything. I saw the whole field. It was much better than watching it on TV. Then the game started. Everyone cheered. The man next to me said, “This is going to be the year. They are playing really well.” My uncle said to him, “Let’s hope this is the one.” But then he whispered to us, “Jerome and Felicia, we’ll have to wait and see. Remember last year? They started out well and then they lost at the end.” “Hey, Hey, Hey!” The Cub batter hit a ball far to the wall.",
+    "Just then I heard “Hot dogs!” “Peanuts!” I looked and saw a man with a big tray hanging from his shoulders. It was full of hotdogs in plastic wrap and bags of peanuts. “Three hot dogs,” my uncle shouted. Then he gave the man next to us $6. He passed it to the man with the hot dogs."
+   ],
+   "lines": [
+    "I remember my first Cubs game. My uncle came to take my sister and me to it. It was a sunny Saturday. He drove all the way from Indiana to get us. Then we took the train to the ballpark. He said it would be hard to find a parking space there, so he didn’t drive there. He was right. When we got there it was so crowded. We had tickets that were for seats far back. It seemed like I climbed about 300 steps to get to them. But when we got there and I turned around I could see everything. I saw the whole field. It was much better than watching it on TV. Then the game started. Everyone cheered. The man next to me said, “This is going to be the year. They are playing really well.” My uncle said to him, “Let’s hope this is the one.” But then he whispered to us, “Jerome and Felicia, we’ll have to wait and see. Remember last year? They started out well and then they lost at the end.” “Hey, Hey, Hey!” The Cub batter hit a ball far to the wall.",
+    "Just then I heard “Hot dogs!” “Peanuts!” I looked and saw a man with a big tray hanging from his shoulders. It was full of hotdogs in plastic wrap and bags of peanuts. “Three hot dogs,” my uncle shouted. Then he gave the man next to us $6. He passed it to the man with the hot dogs."
+   ],
+   "words": 251,
+   "stated": 257,
+   "pages": [
+    19
+   ],
+   "pictures": [
+    {
+     "page": 19,
+     "bbox": [
+      302.5,
+      229.5,
+      515.1,
+      524.0
+     ],
+     "xref": 128
+    }
+   ]
+  },
+  {
+   "title": "\"Bad Girl\"",
+   "source": "text layer",
+   "title_found": false,
+   "byline": "",
+   "format": "lines",
+   "paragraphs": [
+    "Hey! Everybody seems to be staring at me..",
+    "You! You! All of you!",
+    "How dare you to stare at me?",
+    "Why? Is it because I'm a bad girl?",
+    "A bad girl I am, A good for nothing teenager, a",
+    "problem child?",
+    "That's what you call me!",
+    "I smoke. I drink. I gamble at my young tender",
+    "age.",
+    "I lie. I cheat, and I could even kill, If I have too.",
+    "Yes, I'm a bad girl, but where are my parents?",
+    "You! You! You are my good parents?",
+    "My good elder brother and sister in this society",
+    "where I live?",
+    "Look…look at me…What have you done to me?",
+    "You have pampered and spoiled me,neglected me when I needed you",
+    "most!",
+    "Entrusted me to a yaya, whose intelligence was much lower than mine!",
+    "While you go about your parties, your meetings and gambling session…",
+    "Thus… I drifted away from you!",
+    "Longing for a father's love, yearning for a mother's care!",
+    "As I grew up, everything changed!",
+    "You too have changed!",
+    "You spent more time in your poker, mahjong tables, bars and night",
+    "clubs. You even landed on the headlines of the newspaper as crooks,",
+    "peddlers and you racketeers.",
+    "Now, you call me names, accuse me of everything I do to myself?",
+    "Tell me! How good are you?",
+    "If you really wish to ensure my future…",
+    "Then hurry….hurry back home! Where I await you, because I need you…",
+    "Protect me from all evil influences that will threaten at my very own",
+    "understanding…",
+    "But if I am bad, really bad…then, you've got to help me!",
+    "Help me! Oh please…Help me"
+   ],
+   "lines": [
+    "Hey! Everybody seems to be staring at me..",
+    "You! You! All of you!",
+    "How dare you to stare at me?",
+    "Why? Is it because I'm a bad girl?",
+    "A bad girl I am, A good for nothing teenager, a",
+    "problem child?",
+    "That's what you call me!",
+    "I smoke. I drink. I gamble at my young tender",
+    "age.",
+    "I lie. I cheat, and I could even kill, If I have too.",
+    "Yes, I'm a bad girl, but where are my parents?",
+    "You! You! You are my good parents?",
+    "My good elder brother and sister in this society",
+    "where I live?",
+    "Look…look at me…What have you done to me?",
+    "You have pampered and spoiled me,neglected me when I needed you",
+    "most!",
+    "Entrusted me to a yaya, whose intelligence was much lower than mine!",
+    "While you go about your parties, your meetings and gambling session…",
+    "Thus… I drifted away from you!",
+    "Longing for a father's love, yearning for a mother's care!",
+    "As I grew up, everything changed!",
+    "You too have changed!",
+    "You spent more time in your poker, mahjong tables, bars and night",
+    "clubs. You even landed on the headlines of the newspaper as crooks,",
+    "peddlers and you racketeers.",
+    "Now, you call me names, accuse me of everything I do to myself?",
+    "Tell me! How good are you?",
+    "If you really wish to ensure my future…",
+    "Then hurry….hurry back home! Where I await you, because I need you…",
+    "Protect me from all evil influences that will threaten at my very own",
+    "understanding…",
+    "But if I am bad, really bad…then, you've got to help me!",
+    "Help me! Oh please…Help me"
+   ],
+   "words": 272,
+   "stated": 269,
+   "pages": [
+    21
+   ],
+   "pictures": []
+  }
+ ]
+}
