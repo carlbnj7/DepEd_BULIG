@@ -1,0 +1,535 @@
+
+##### 6:1201:1 | Instructions: Arrange the story in a correct sequence. Label each part: Headline, Byline, Lead, Body, Conclusion.
+[A] <Article 1: Community Clean-Up Drive>
+   Residents of Barangay Maligaya gathered early Sunday morning for a clean-up drive after heavy rains caused flooding and scattered debris across several streets.
+     - Headline
+     - Byline
+     - Lead
+     - Body
+     - Conclusion
+[B]
+   By Jericho Dela Cruz, Campus Journalist
+     - Headline
+     - Byline
+     - Lead
+     - Body
+     - Conclusion
+[C]
+   The barangay plans to hold monthly clean-ups and educational talks on proper waste disposal in local schools.
+     - Headline
+     - Byline
+     - Lead
+     - Body
+     - Conclusion
+[D]
+   Volunteers, including students and parents, helped clear garbage from sidewalks and drains. Barangay officials said this is part of a larger campaign to prevent future floods. “We need to keep our surroundings clean to protect our health and homes,” said Barangay Captain Liza Ramos.
+     - Headline
+     - Byline
+     - Lead
+     - Body
+     - Conclusion
+[E]
+   Barangay Holds Clean-Up Drive After Flood
+     - Headline
+     - Byline
+     - Lead
+     - Body
+     - Conclusion
+
+##### 6:2202:1 | Instructions: Read the scrambled information, identify the WHO, WHAT, WHY, WHEN, WHERE. Write your answers on the space provided.
+[Read] «Exercise No. 1 Scrambled Information»
+   in preparation for the barangay and Sangguniang Kabataan (SK) elections next year. will resume in the voter’s registration
+   at the City Hall Commission of Election on Monday
+[Write]
+   Who
+[Write]
+   What
+[Write]
+   Why
+[Write]
+   When
+[Write]
+   Where
+
+##### 6:3203:1 | Instructions: Read the scrambled information. Identify first the Ws. Next, WRITE the WHO, WHAT, WHEN, and WHERE in a basic News Lead. The WHY will be written in the next paragraph. Write your answers on the space provided.
+[Read] «Exercise No. 1 Scrambled Information»
+   in preparation for the barangay and Sangguniang Kabataan (SK) elections next year.
+   will resume in the voter’s registration
+   at the City Hall on Monday
+   Commission of Election
+[Write] <Use the WHO-WHAT-WHEN-WHERE format (Write the WHY in the Second Paragraph)>
+   News Lead: ______ (WHO) + ______ (WHAT) + ______ (WHEN) + ______ (WHERE).
+[Write]
+   Second Paragraph (the WHY)
+
+##### 6:4204:1 | Write an editorial using the following data:
+[Read] «A Dirty Cafeteria»
+   Last week the Parents Teachers Association (PTA) decided to close the school cafeteria because the place remained dirty despite repeated calls for cleaning up. Trash left from lunches, used bottles and plastic cans were found on tables, chairs, floors. Even left-over food were piled to rot in a corner. PTA members had complained about these in the past to no avail.
+   
+   The PTA decision was correct and necessary. Not only does the dirty cafeteria causes health problems to students, it gives a bad reflection of the school as well.
+   
+   The problem surfaced several months ago when the PTA inspected the school laboratories and facilities. The PTA members found the cafeteria messy and unclean that time.
+   
+   After the inspection, Mr. Rene Ramirez, the PTA president, held a dialog with the cafeteria manager and appealed for the maintenance of canteen cleanliness.
+   
+   The canteen became clean for about a month. After that, the place went back to its old dirty state.
+   
+   We support the closing of the canteen in the hope that when it opens again, a cleaner, safer cafeteria will serve the school. More than our support however, we believe that maintaining the cafeteria clean and safe is everybody’s duty. It is not the duty of the management alone, not the duty of the PTA alone, but the duty of all of us.
+[Read] «Write an editorial using the following data:»
+   • New policies of the administration
+   • New grading system
+   • K-12 Curriculum
+[Read] «Note»
+   -describes the event, action, or proposal, then explains the causes and reasons involved. This is followed by an assessment of importance, a look at possible effects, then a statement of support or a call for further study.
+[Write]
+   Write your editorial.
+
+##### 6:5205:1 | Write an editorial using the following data:
+[Read] «Solution: Return to the Basics»
+   Lengthening the elementary school up to Grade VII is not the solution to the poor quality of instruction in the public school system.
+   
+   Congress has deplored the proliferation of half-baked products of the present school system. Sen. Edgardo Angara has proposed to add one curriculum year each to both elementary and high schools.
+   
+   We believe that this is not the solution to the deteriorating educational system. The best we should do is return to the basics-the mastery of the three Rs- Reading, Writing and Arithmetic.
+   
+   Only competent and committed teachers should be employed. They should be given higher pay and more incentives and benefits.
+   
+   No amount of frequent seminars, workshops and conferences will help. Let us do away with unnecessary innovations learned by educators abroad which are not applicable to Philippine setting. There are so many “approaches” but as one President of the Philippine Normal University said, “We never reach.”
+   
+   Also, the added years to the elementary and high school would mean more expenses on the part of the parents
+[Read] «Write an editorial using the following data:»
+   • Policies which the staff considers unfair to the student
+   • Management of a school facility that needs to be improved such as library, canteen
+[Read] «Note»
+   -begins with a brief explanation of a problem and states the need for change. A discussion of weaknesses, errors, or causes follows. Then a solution, suggestion, or alternative is offered, along with supportive reasons for the proposed action.
+[Write]
+   Write your editorial.
+
+##### 6:6206:1 | Topic: RH Bill · Stand: Favor
+[Read] «The Way of Most Desks»
+   Student-judges who inspected every room in connection with “Operation Cleanliness” found out that most of the desks had scratches and/or ink spots. One can hardly write on them without a thick sheet of paper for a pad.
+   
+   Outside the classrooms, some desks are placed for the students to sit on. Students really take advantage of them. They sit on top of the desks and place their muddy shoes on the seats instead.
+   
+   When the 220 new desks for Pasig Line will be made available for the students’ use, will they end up the way most desks go?
+[Read] «Topic: RH Bill Stand: Favor»
+   1. Cite first some major arguments against the issue. Cite sources/authorities/church leaders
+   2. Then, build your case (points) from strong to strongest
+   3. Title,
+   4. Intro (thesis)/ main point /stand (1-2 par)
+   5. Body (3-5 par.)
+   6. Conclusion (1 par)
+[Write]
+   Title
+[Write]
+   Intro (thesis)/ main point /stand (1-2 par)
+[Write]
+   Body (3-5 par.)
+[Write]
+   Conclusion (1 par)
+
+##### 6:7207:1 | Instructions : Write a sports coverage using the following facts.
+[Read] «The Facts»
+   What: Municipal Meet volleyball eliminations
+   Where: Arayata Sports Complex, Tanza, Cavite
+   When : September 9 at 2 p.m.
+   Between : Saint John School (SJS) and Saint Mark Academy (SMA)
+   Scores: 25-19, 23-25, 25-20, 25-20
+[Read] «Significance of the game:»
+   SJS on 2-0 lead; routed Saint Joseph Institute (SJI) in previous outing
+[Read] «Heroes of the game:»
+   Jerome Arbis and Noli Cruz combined for 17 points in last set
+[Read] «Quotes from SJS coach Rody Santos:»
+   “My boys are pumped up from their victory over the Saint Joseph Institute Tossers.”
+   “This is a good start as we are gunning for the championship like our basketball varsity posting a 6-0 winning streak.”
+[Read] «Weather condition:»
+   Heavy rains and thunderstorms brought by Typhoon Maring but the Arayata gym was filled to the rafter.
+[Read] «Spectators’ attitude:»
+   SJS crowd favorite, predominately SJS crowd chanting cheers; SJS red and white clad mascot dancing in front of SJS contingent
+[Read] «Reported injury:»
+   SMA’s Jin Rivas sprained ankle after a bad fall in the second set; carried out of playing court and brought to Family General Hospital
+[Read] «Highlights of the game:»
+   SMA came on strong in second set with Joseph Rom’s mounting strong wallops
+   Rom’s heroics aided by Dan Sibal’s stopping ball on a service by SJS Richard Montes, also in second set.
+[Write]
+   Write your sports coverage using the facts.
+
+##### 6:8208:1 | Instructions: Based on the information presented below, write a sports game story of at least 350 words. Statements as presented on this fact sheet may be treated as direct quotations or paraphrases. You are writing for the Sept. 17 issue of the Hays High Guidon.
+[Read] «Background»
+   The Varsity Girls’ Volleyball team began season-Sept. 15- v. Salina South. Hays lost 15-7, 13- 15, 11-15.
+   The next game: Sept. 19, at Junction City.
+[Read] «The Team»
+   The team includes six returners,
+   Three returners made all-district last year
+   Two returners advanced to the all-region roster, Amie Roberts and Leah Claycamp, both juniors.
+   Rhonda Ames, a senior, is predicted to be one of the district’s star players.
+[Read] «Significant Plays»
+   First game
+   Amie Roberts scored the first point of the game, an off-speed spike, after only 10 seconds of play. She scored five points in the first game.
+   Kenda Von Feldt scored six points. Leah Claycamp scored four points
+   The Salina South team scored seven points.
+   Second game
+   Roberts scored six points and blocked 10 spikes.
+   Claycamp scored five points. Her most significant play was a dive that set up a point. She also made two fouls.
+   Von Feldt scored two points-one after she made a dig to another player who returned it to her for the score.
+   Hays hit the ball out of bounds four times. The officials called three thrown ball penalties on Hays.
+   Salina South won this game.
+   Third game
+   Rhonda Ames scored the first five points of this game. She was injured while making a double block and did not play the rest of the game.
+   Claycamp scored four points, one after a spin serve that Salina could not even return.
+   Von Feldt scored two points.
+   The score was tied almost the entire way through the game. The winning four points all came within one minute of play when the Hays team looked exhausted.
+[Read] «Quotations»
+   Larry Schmidt, varsity coach - “The first game of the season didn’t go as well as I hoped. We didn’t accomplish the team goals that we set. We didn’t serve and pass as well as I hoped to.We need to work on our movement and getting into the right position when it comes to playing defense.”
+   Jessica Bird, sophomore - “I think we were playing very well. We need to work on our fundamentals. Overall, I think that we are playing great and the season should be successful.”
+   Rhonda Ames, senior - “I think if we work hard and use our potential, we’ll do all right in state. Salina just beat us by playing good clean volleyball.”
+   Lori Billinger, senior - “I need to work on my passing, but otherwise, everything is going great for me so far this year. I think that out team should talk more to each other when we are on the courts.”
+[Write]
+   Write your sports game story (at least 350 words).
+
+##### 6:9209:1 | Instructions: From the following reporter’s notes, prepare a summary story of at least 350 words for the February 18 issue of the Central High School News.
+[Read] «Reporter’s Notes»
+   February 5: Basketball game between Central High Bears and East High Wildcats in East High gymnasium, won by Central 44-36. John Gunnison of Central was high point man with 15 points. East was always within 5 points of Central until the last few minutes of the game. Game was marred by many fouls on both sides.
+   
+   Gunnison: “They played us tough and stayed with us throughout, but we were able to get by them. They are a scrappy team. . .I don’t remember having this much trouble with them before. Still, we were able to pull it out.”
+   
+   Coach Turner: “Gunnison did the job tonight. When he is on his game, he can do some really good things. Tonight was his night.”
+   
+   February 12: Central High v. Midvale Astronauts, at Central. Won by Midvale 54-52. High scoring game, with Central ahead at half time, 32-22, and keeping lead until last 10 minutes. Joe Small was hero of game for Midvale, making many scores in last part of game and encouraging his teammates. Guninson and Jimmy Smith of Central were outstanding, but team just wasn’t good enough, according to Coach Ed Turner.
+   
+   Turner: “A game like this one breaks your heart. We seemed to be on as far as our scoring was concerned. We scored more points than in any other game this year. Still, we have to play defense. Without defense, we are sitting ducks.”
+   
+   February 19: Central High v. West High Gophers at West. West hasn’t won a game this year but has put up a good fight every time and almost defeated Midvale. Gunnison twisted his leg in practice early this week but should be able to play.
+   
+   February 26: Central High v. River City Scorpions at Central. River City hasn’t been defeated yet but meets Midvale Feb. 19 in a game that may decide league championship. river City has excellent defensive team and a high-scoring center, Jack Sorrenson.
+   
+   Turner: “These two games are both going to be a challenge. People think that West is going to be an easy win, but they play tough despite their record. River City has been great all year. They just seem to be in a groove.
+   
+   Maybe we can trip them up, but we’ll see. A lot of it depends on how strong Gunnison is this week. He is taking it one day at a time, so hopefully things will pan out.”
+[Write]
+   Write your summary story (at least 350 words).
+
+##### 6:10210:1 | Instructions: 1.Copyread the article using the copyreading symbols. 2.Write a headline. 3. Indicate the slugline and printer spec.
+[Read] «The Article»
+   “Another isue which Japan & the Philippines agre ed on today is Japan’s (welcoming) house hold workers to Japanise economic zones, Yasuhisa Kawamura, jjapan’s press sec. and Abe’s spokersperson told raporters.
+   
+   In a billateral meeting on the sidelines of the Asia-Pacific Economy Cooperation (Apec) summit in manila on hursday, japanese Prime minister Shinzo Abe and President Aquino agreed on the highring of filipino domesticated workers in the very specialty economic seen zones in Japan’s kanagawa and osaka Prefectures.
+   
+   The awesome agreement, however, was still vague on tha number of worker from the Philippines Japan will need.
+   
+   It deppends on how many people is wanted on the Japanese’s side. Based on the needs, we will had the apropriate worker of number, Kawamura said.
+   
+   “With PM Abe’s approval, the system to refuse Finoy workers is almost [a done deal],” said Kawamura said.
+   
+   The spokespersons said Japan to be wanted to begin hiring generously by the end of the year at the earliest and soonest. wo “Abe requested from the side of the Ph that that the neccessary preperations must be made so the agreement could be implemented moothly implemented,” Waka-waka said.
+[Write]
+   1. Copyread the article using the copyreading symbols.
+[Write]
+   2. Write a headline.
+[Write]
+   3. Indicate the slugline and printer spec.
+
+##### 6:11211:1 | Instructions: 1.Copyread the article using the copyreading symbols. 2.Write a headline. 3. Indicate the slugline and printer spec.
+[Read] «The Article»
+   “The die is cast. I have already crossed the Rubicon.”
+   
+   Davao city mayor Rodrigo Duterte make the statesment on Monday as he confirmed reports over the week end that he have changed his mined and would runs for President in next year’s elections.
+   
+   Yes, I am running, he told reporters in San Juan City (metro manila). ““But the formal declaration will be made by the PDP.”
+   
+   The tuogh-talking mayor was referreng to Partido Demokratiko Pilipino-Lakas ng Bayan or PDP-Laban, the over thirty-year-old political party that has been pushing him to gun for the presidency.
+   
+   PDP-Laban traces its roots to davao city and cagayan de oro city and was organized in the early 1980s primarily to gulvanized anti-Marcos forces in the region. Duterte is a member of the party.
+   
+   Sen. Aquilino “Koko” Pimentel 3rd, president of the PDP-Laban, said he spoken with Duterte last Saturday and the mayor told him she is now decinclined to run in 2016.
+   
+   “This is the ac cumulation of his [Duterte] frustrations or concerns due to complaints given to him like tanim-bala [bullet-planting], citizenship and others. Maybe he’s had enough,” Pimentel added.
+[Write]
+   1. Copyread the article using the copyreading symbols.
+[Write]
+   2. Write a headline.
+[Write]
+   3. Indicate the slugline and printer spec.
+
+##### 6:12212:1 | Instructions: 4.Copyread the article using the copyreading symbols. 5.Write a headline. 6. Indicate the slugline and printer spec.
+[Read] «The Article»
+   The Philippine Information Agency will recognize this year’s best performing school paper advisers in Western Visayas.
+   
+   Four school paper advisers from Capiz will be cited as among the region’s “best” during the gathering of about 400 student writers for the College Press Conference and Awards on November 26, Included in the awardees are Mrs. Mary Gretchel Montorio of Jagnaya National High School in Jagnaya, Jamindan town, Mr. Joey Balatayo of Capiz State University-Roxas City main campus, Mr. Leonardo Bayadog of “Ang Kasanag” and Ms. Shanika Mae Isagan of “The Script,” both of Capiz National High School.
+   
+   Montorio and Balatayo will also be recipients of the Hall of Fame award for having consistently won the award for three consecutive years, that is, from 2013 to 2015.
+   
+   The “Ang Kasanag” will also be cited as Best High school Newsletter for 2015 and First Place and Second Place
+[Write]
+   4. Copyread the article using the copyreading symbols.
+[Write]
+   5. Write a headline.
+[Write]
+   6. Indicate the slugline and printer spec.
+
+##### 6:13213:1 | Instructions: Compose a feature story using the information from this article.
+[Read] «Widespread Tree Planting as a Solution to Flooding – DA»
+   Agriculture Secretary William Dar believes that widespread tree planting in watersheds is the solution to prevent massive flooding in many cities and towns across the country.
+   
+   According to Dar, planting trees is a timely and long-term solution against flooding, aside from other government plans.
+   
+   “We need engineering interventions here. At the same time, we need to reforest in a big way our watersheds. Otherwise, we will have this problem year in, year out,” Dar explained.
+   
+   “I am hoping that as the engineering interventions would start now, like dredging, we should also start reforesting in a big way all our watersheds,” the secretary added.
+   
+   Based on data, 18 watersheds in Luzon with healthy tree cover are needed to provide strong protection against floodwaters.
+   
+   It is noticeable that when successive typhoons struck the country, particularly Luzon, many areas could no longer escape the torrents of rain and mud coming from the mountains.
+   
+   According to affected residents, there are almost no trees left in the forests because of unchecked illegal logging.
+   
+   In Cagayan, for example, many trees that could have absorbed floodwaters during storms have disappeared, causing numerous towns in the province to be submerged when Typhoon Ulysses struck.
+   
+   Only a few trees remain in San Mateo and Montalban in Rizal, which is why powerful floods mixed with mud regularly flow down toward Marikina City.
+   
+   Residents also reported that quarrying is rampant in San Mateo and Montalban, but it seems the mayors of these towns have neglected the issue.
+[Write]
+   Write your feature story.
+
+##### 6:14214:1 | Instructions: Compose a feature story using the information from this article
+[Read] «Deforestation in the Philippines: Challenges and Solutions»
+   The Philippines, home to two-thirds of the planet’s biodiversity and up to four-fifths of its flora and fauna, continues to face severe deforestation. The nation loses an estimated 47,000 hectares of rainforest annually and has already lost around 60% of its forest cover in the last 80 years. As of 2020, only 24.1% of its 30 million-hectare land area remained forested. With the country experiencing an average of 20 major storms each year due to its location in the typhoon belt, deforestation has worsened soil erosion, landslides, flash floods, food and water insecurity, and the displacement of indigenous tribes.
+   
+   In 2019, the Department of Environment and Natural Resources (DENR) classified 55 mammals, 184 birds, 53 reptiles, 30 amphibians, and 784 invertebrates as threatened species. Anna Varona of the Haribon Foundation warned that clearing forests destroys habitats, food sources, and breeding environments, increasing the risk of extinction. Much of the forest loss stemmed from indiscriminate logging between 1935 and 1991, while agricultural expansion, mining, urbanization, and infrastructure projects further contributed. Climate-induced disasters, such as Typhoon Haiyan in 2013, which killed more than 6,000 people and decimated 86% of mangrove forests in eastern Philippines, have also accelerated forest degradation.
+   
+   The country’s population of over 110 million has intensified demand for forest resources. According to the Philippine Master Plan for Climate Resilient Forestry Development, pressure continues to rise for wood, fuelwood, and other forest products. The plan, first formulated in 1990 after a government ban on log and lumber exports, was updated in 2003 and again in 2013 to address climate change impacts. In 2011, two major policies were introduced: a moratorium on tree cutting in natural forests with the creation of an Anti-Illegal Logging Task Force, and the National Greening Program (NGP), which aimed to plant 1.5 billion trees on 1.5 million hectares between 2011 and 2016. Extended to 2028, the NGP now covers 7.1 million hectares, with 1.83 billion seedlings planted on 2.18 million hectares as of 2022.
+   
+   These interventions have yielded modest gains. Data from the Food and Agriculture Organization (FAO) show a 0.5% increase in forest cover between 2010 and 2020, averaging 34,900 hectares added annually. However, Varona cautioned that planting exotic trees does not promote Philippine biodiversity. She stressed the importance of prioritizing native species to restore ecosystems and preserve biodiversity. This focus has inspired other initiatives such as BINHI, the greening project of the Energy Development Corporation (EDC), the world’s largest vertically integrated geothermal power producer. Established in 2008, BINHI seeks to rescue, preserve, and propagate native species, with 47% of the country’s indigenous trees already threatened with extinction.
+   
+   BINHI has conducted tree population surveys and partnered with stakeholders to protect forests. To date, it has assessed 1,470 tree species through Botanic Garden Conservation International’s Global Tree Assessment, identifying 145 priority species. Discoveries include red lauan (Shorea negrosensis), once thought confined to Negros, and Mapilig (Xanthostemon bracteatus), previously found only in Camarines Norte. The program also identified dwindling species such as kaladis narig (Vatica elliptica), where only two trees were found in 2016. Through partnerships, 11 trees were later discovered, bearing fruit during the COVID-19 pandemic.
+   
+   BINHI also plants trees outside their natural habitats to nurture “mother trees” that will produce viable seeds. Plans for in-situ conservation are underway, planting species back into their native environments. While undoing decades of forest damage will take years, reforestation efforts are making progress. As a result of BINHI’s initiatives, 10 of the 145 priority species have been removed from the list, while 21 were downgraded from “critically endangered.” These efforts highlight the importance of combining science, policy, and community action to protect the Philippines’ forests and biodiversity.
+[Read] «Tomorrow»
+   By Pamela Joy Go
+   Heal the world,
+   Make if a better place
+   For you and for me
+   And the entire human race
+   There are people dying,
+   If you care enough for the living
+   Make a better place
+   For you and for me
+[Read] «Tomorrow (continued)»
+   I could only stare at the third-grade pupils as they interpret this Michael Jackson classic for their presentation during the flag ceremony. They seem to be so full of life, so vibrant. Nothing in this world could seem to break the unbeatable character they have glowing brightly inside them.
+   
+   I sigh as my thoughts fall on the degrading society that we are having now. How long will these naïve tots have the overwhelming spirit in them? How will they manage to smile?
+   
+   Look around you, human. What do you see? The pressing issues concerning the destruction of Mother Earth is too real…too hard to ignore. The huge forest fires that terrorize countless of species both here and abroad. The perennial garbage problem that embraces the government like a cold pack of harsh ice. The dwindling population of all sorts of mammals and reptiles…the endangered species. The red list is getting longer and longer. Soon, I doubt if we’ll ever be able to keep track of all the creatures that have disappeared from the face of the earth forever.
+   
+   Yes, we want to escape from these enigmas. We really want to. But listen. It’s also we who are keeping ourselves chained to the enslaving powers of material riches. We are blinded by the glitter of gold every time we cut down trees.
+   
+   However, there are better realities in this issue our ancient mentality should just think about. The contemporary ambience of people all over the world getting more humane, more environment-friendly, more real is embracing us. Any maybe, just maybe, we could start from here.
+   
+   A year ago, I came across this Reader’s Digest article that suggested a different view of this dilemma. While countless others would rather stick to the old, hopeless sense of presenting these inevitable facts, the article examined the optimism that, surprisingly, never left us.We still have a chance. At least, that’s what the article said. People are becoming civilized.
+   
+   We are no longer a heartless breed of warm bodies out for nothing but earthly wealth. Through time, we have evolved to be persons with some sense. And Mother Earth is pretty much depending on it. Her whole life, her whole existence is actually relying on this so-called sensitivity that we are starting to acquire.
+   
+   These are not made-up facts, ladies and gentlemen. No, this isn’t escapism. We are not merely creating this news for the sake of lessening the parables that grasp us by the throat. This is reality.
+   
+   And this is where we could start. Instead of being a wet blanket, why not take a positive paradigm shift? This maybe is the breakthrough we have been waiting for. And this could take us somewhere in renovating our home, to say the least.
+   
+   Yes, the predicaments around us are more than enough to last us a lifetime. There’s no way they’ll be solved the moment we put our acts together. They may not even be solved in the entire life of this generation. They may not even be solved at all. But let us begin. Let us start now.
+   
+   In John F. Kennedy’s words, “United there’s little we cannot do. Divided, there’s little we can do.” If we hold hands now, if we open our hearts to one another and disregard those barriers that keep us from being who we truly are, then maybe we could still hang on to life.
+   
+   As I watch the children hold hands and dance about the stage, I recognize in their eyes what we almost lost—hope. The smiles pasted on their innocent faces spell a promise that there will be a tomorrow. And that tomorrow will surely be better.
+   
+   Tomorrow, the world will be healed. Tomorrow, the world will be a better place. For you and for me and the entire human race.
+[Write]
+   Write your feature story.
+
+##### 6:15215:1 | Instructions: Compose a feature story using the information below.
+[1]
+   Describe vividly your seatmate in a two-sentence paragraph.
+[2]
+   You are the feature editor of your school paper. This morning while you were on your way to school, you saw a Grade 4 pupil helping an old woman cross the street. Fourth year boys, who were playing nearby saw the old woman but did not care to help her.
+[3]
+   You interviewed the young boy. Now write a feature story on the boy or on the incident. Supply the facts you gathered from the interview. Remember, you are not writing an editorial. Note also that like an editorial, a feature article is hung on a natural or artificial newspeg. Give an interesting and entertaining title.
+[Read] «NEXT TO BORACAY · Why Libuacan Cold Spring also needs a shutdown?»
+   Earlier this year, President Rodrigo Duterte ordered the temporary closure of the Boracay Island, a renowned tourist destination in the country, following reports of poor waste disposal mechanisms and environmental abuse. In the local context, I believe the most famous tourist spot in Tagbina – Libuacan Cold Spring – also needs a break from the daily tourism grind.
+[Read]
+   -Subjective description on how Libuacan changed over the years, statement from a local supporting my description
+   -Interview with barangay council on the ESWM implementation in Libuacan
+   -Interview with the Municipal Tourism focal person regarding waste disposal issues
+   -Transition from waste disposal issue to lack of regular employee to maintain cleanliness of the spring
+   -Interview with Mayor on plans for rehabilitation, ownership issues
+   -Transition to the temporary closure of the Enchanted River, interview with the management on the changes in the operation, effects of the closure
+   -Go back to the expected results of Boracay closure
+   - Conclusion reinforcing the idea presented in the title and lead
+   First Place, In-depth Analysis, 2018 Regional TOT on Campus Journalism
+[Read] «Cyber pornography»
+   As the pandemic takes its toll, more women have lost their jobs and are lured into cyber pornography. Even more alarming is the case of women in the flesh trade who expose themselves not only to sexually transmitted diseases and COVID-19, but also to sexual abuse, particularly rape, to earn money and make ends meet.
+   
+   World Wide Web Foundation co-founder Tim Berners-Lee warned in the early 2020 that the web is too often not safe for women. In its survey, 52% of young women and girls said they had experienced online abuse, including threatening messages, sexual harassment, and the sharing of private images without consent. Also, 87% said they think the problem is getting worse.
+   
+   Through people's high dependence on digital interactions, the pandemic also seems to have increased the risk of cyber violence. Non-consensual sharing of images designed to threaten, shame, and control women facilitates cyber violence. Distribution or threats of sharing non-consensual intimate images also happens largely within contexts of intimate partner violence.
+[Read] «Mental health»
+   Stress, breakups, and job loss can all aggravate pre-existing abusive behavior and coercive control, says Clare McGlynn, Professor of Law at Durham University, in a BBC news report. She attributes the rise in cases of intimate image abuse to "the increased use of the internet and social media, as well as heightened emotions" during the lockdown.
+   
+   The fight for gender equality and freedom from gender-based violence will continue until all young boys and girls are empowered with the knowledge, skills, and attitudes to be caring and respectful souls. We need to intensify our effort to create safer spaces, whether offline or online, for women. We don't only need policies to serve as beacons. We must understand that laws are only as good as the people who implement and abide by them.
+   
+   The world is haunted by trauma and fear, thanks to the constant abuse of human rights. Fighting violence against women remains unfinished business. If humanity collaborates and perseveres hard enough, gender and development will not only survive but prosper. Maybe, just Like Celie, we will learn that unbelievable gender-related hardships and struggles come with reconciliation and forgiveness. – Rappler.com Aries N. Oliveros used to teach campus journalism. He loves science and feature writing. He is currently the executive secretary of the executive director of the Philippine Science High School System.
+[Write]
+   Write your feature story.
+
+##### 6:16216:1 | WRITE A COLUMN ON THE FOLLOWING DATA
+[Read] «November 12, 2024 · DepEd: No plan to move students’ summer break to April-May»
+   -The Department of Education (DepEd) has no plans to move the school “summer “break back to April and May amid the hot weather.
+   
+   -“At the moment, there are no plans to revert,” DepEd spokesman Michael Poa said in Viber message to reporters on Wednesday, when asked about the calls to move the school break back to April and May.
+   
+   -He said school heads have the discretion to suspend in-person classes and use alternative delivery modes or blended learning “if the environment is not conducive to learning.”
+   
+   -It was Senate basic education committee chairman Sherwin Gatchalian who said it is “time” to bring back the April-May summer break, following reports that students were hospitalized during a surprise fire drill in a school in Laguna.
+[Write]
+   Write your column.
+
+##### 6:17217:1 | Instructions: Draw an editorial based on the given editorial below.
+[Read] «Get Ready for Yolanda»
+   If typhoon Yolanda/Haiyan stays on track and does not weaken, it will arrive in the Visayas on Friday with winds stronger than those of super typhoon Ruping.
+   
+   Those of us who lived or worked in Cebu on Nov. 10-14, 1990 remember Ruping’s tracks well. Its center winds, which spun at 145 to 200 kilometers per hour, left more than 200 dead in Central Visayas alone. The typhoon unmoored a foreign vessel, which then hit the only bridge between Cebu and Mactan. Ruping also cut off power and water service to Cebu from one week to a month.
+   
+   We remember, too, the resilience shown by the region’s residents, the concerted effort to regain our bearings and fix or replace up to P10.8 billion worth of damaged infrastructure. “The storm scarred Cebu,” a Sun.Star editorial observed then, “but also revealed its strengths.”
+   
+   Yolanda is scheduled to enter the Philippine area of responsibility on Thursday morning, forcing communities in Bohol and Cebu from the disaster recovery stage back to disaster preparedness.
+   
+   But unlike the earthquake that struck our communities three weeks ago, we have received and continue to receive warnings about Yolanda, including this: The US Navy’s Joint Typhoon Warning Center expects the typhoon will bring 222-kph winds.
+   
+   There will be time later to check on the progress we’ve made or failed to make, in enforcing the National Disaster Risk Reduction and Management Plan for 2011-2028.
+   
+   We’ll have many opportunities to reexamine and address “the underlying causes” that leave people vulnerable to disaster. And there will be time (and resources, for we are a resilient and resourceful lot) to “build back better.”
+   
+   For now, however, let us all focus on preparing ourselves for the typhoon that approaches. Start at home. Prepare a basic family kit.
+   
+   The US Federal Emergency Management Administration recommends preparing enough ready-to-eat food for three days; a gallon of clean water per person per day; a first aid kit (and maintenance medications, we may add); a transistor radio and flashlight with spare batteries; a whistle to signal for help, if needed; dust masks or a cotton shirt in case there’s a need to filter the air; and important family documents packed in a waterproof, portable container.
+   
+   “Hazards become disasters only if vulnerable people and resources are exposed to them,” the plan goes. Yes, we are resilient, Cebu. This time let’s also be prepared.
+[Write]
+   Draw your editorial cartoon on paper, then describe it here.
+
+##### 6:18218:1 | Instructions: Given the editorial cartoon below. Discuss the different characters and how does it symbolize.
+[Read] {img 1}
+[Write]
+   Discuss the different characters and how does it symbolize.
+
+##### 6:19219:1 | Instructions: With the given editorial cartoon below and the news given. Draw an improvement on the editorial cartoon.
+[Read] {img 1}
+[Read] «The News»
+   Manila, Philippines --- The 2013 elections should be the last time Filipinos will use Smartmatic's precinct count optical scan (PCOS) machines in an election.
+   
+   This was the call of seven party-list congressmen as they revealed that a congressional probe on controversies raised about the credibility of the results of the 2013 midterm elections will be the first order of the day when the 16th Congress commences next month.
+   
+   The seven congressmen belonging to the Makabayan Coalition bewailed the failure of the Commission on Elections (Comelec) to deliver on its promise for worry-free and credible elections, saying that its insistence on using the expensive Smartmatic automated election machines was among the principal reasons for this.
+   
+   Led by Bayan Muna Rep. Neri Javier Colmenares, the incumbent and incoming Makabayan congressmen said a thorough congressional probe is needed to determine the truth about Comelec's supposed removal of key safeguards against election cheating and technical problems.
+   
+   These include the belated release of the source codes, the massive glitches and transmission failures of PCOS machines, and the reported 60-30-10 vote pattern.
+   
+   Colmenares, vice chairman of the House Committee on Suffrage and Electoral Reform, said the legislative inquiry will also look into the discrepancies found on random manual audits (RMA) and other violations of the automated elections law. For starters, the Makabayan lawmaker wants the PCSO machines junked and not tapped for the presidential elections in 2016.
+   
+   Aside from Colmenares the other members of Makabayan's 16th Congress nominees are lawyer Isagani Zarate of Bayan Muna; Fernando Hicap of Anakpawis; lawyer Terry Ridon of Kabataan; and incumbent Reps. Luz Ilagan and Emmi de Jesus of Gabriela, and Antonio Tinio of ACT Teachers Partylist.
+   
+   All efforts must be exhausted to find out if the automated election system was used for electoral fraud. What we are sure about is that the faulty PCOS machines must be scrapped and never be again used for the elections, said Colmenares.
+   
+   He added, "Smartmatic and the Commission on Elections should be held accountable for non-compliance to and violations of automated election laws and the unconscionable expenses for a defective and non-transparent foreign-controlled voting technology."
+   
+   The senior Makabayan solon insisted that the Comelec and Smartmatic have joined forces to deceive the public when they claimed that the PCOS source code has been turned over to the Philippines before the 2010 elections when it was not.
+   
+   According to him, the data was only delivered too late in May 2013 to frustrate efforts to review the said human readable instructions for possible glitches and fraud.
+   
+   "The numerous glitches and massive failure of PCOS machines to transmit results are more than enough reasons for the government to scrap the PCOS system and sue Smartmatic. It is believed that aside from 18,400 machines which failed to transmit votes there are thousands more of machines that failed to read, count, and transmit votes but used other machines," added Colmenares.
+   
+   Colmenares said that "instead of credible elections, the Smartmatic automated elections only caused serious doubts in the mind of election watchdogs and the public because of the Comelec's denial of the source code review, the absence of key safeguards, and the massive glitches and failures of PCOS machines.
+[Write]
+   Draw your improved editorial cartoon on paper, then describe it here.
+
+##### 6:20220:1 | Learning Competency with Code: Explain the importance of the principles of radio broadcasting. (SPJ9PTJ-Ia-2)
+[Read] «Background Information for Learners:»
+   Radio broadcasting is a hot media. Hot in the sense that it brings news immediately, right as it is happening, also because it is a man or woman talking to other men other women, be they young, adult or old. It is a voice. But one must tread carefully when it comes to fastness. One should never spread neither rumor nor hearsay. History has shown us just how far disrespecting exactness and objectivity can lead.
+[Read] «The principles of Radio Broadcasting are:»
+   1. On-air Delivery – the right tone
+   2. Respecting Others
+   3. Accuracy
+   4. Balance
+   5. Clarity
+   6. No Commenting
+   7. Protect Your Sources
+   8. Keep in Touch with the Newsroom
+[Matching] <Exercise 1: Mystery Matching Type · Direction: Match the items on Column B to the items in Column A to answer the mystery question. Write your answers on the space provided for.>
+   Column A
+   1. Be precise, choose every word carefully.
+   2. A journalist must safeguard his sources.
+   3. We speak more slowly on air than in real life, but we need to describe, to tell stories, to create pictures.
+   4. Stick to the facts.
+   5. The anchor and the editor need to know how you are doing so as to properly work on the broadcast.
+   6. Use simple language so the audience can get the focus.
+   7. Everybody is owed privacy and respect.
+   8. Try to show all sides of the argument.
+     - A. On-air Delivery – the right tone
+     - R. Respecting Others
+     - D. Accuracy
+     - S. Balance
+     - W. Clarity
+     - H. No Commenting
+     - L. Protect Your Sources
+     - P. Keep in Touch with Newsroom
+[Read] «Mystery Question:»
+   Who is the American newspaper publisher, known for introducing sensationalism, who cabled this to Frederic Remington in 1898?
+[Write] {img 1}
+   Write the answer to the mystery question.
+[1] <Exercise 2: Binary Choice · Instructions: Write ALWAYS if the statement adheres to the Principles of Radio Broadcasting and NEVER if otherwise. Write your answers on the blanks.>
+   Having your own style and on air presence requires perpetual work.
+     - ALWAYS
+     - NEVER
+[2]
+   The audience’s job is to give other people a voice, to let them be heard.
+     - ALWAYS
+     - NEVER
+[3]
+   In radio broadcasting, one must fact-check everything.
+     - ALWAYS
+     - NEVER
+[4]
+   In dealing with a controversy, a radio broadcaster must provide one side of the arguments.
+     - ALWAYS
+     - NEVER
+[5]
+   If your audience cannot get what you are saying, all the investigating you have done will have been done in vain.
+     - ALWAYS
+     - NEVER
+[6]
+   Commenting carelessly is judging, expressing an opinion only.
+     - ALWAYS
+     - NEVER
+[7]
+   Informing the general public is looking for the truth, even just the half-truth.
+     - ALWAYS
+     - NEVER
+[8]
+   Keeping in touch with the newsroom is true only in peace time and not in conflict areas.
+     - ALWAYS
+     - NEVER
+[Write] <Exercise 3: Leave it to Me! · Instructions: In your own words explain each principle of radio broadcasting focusing on their individual importance.>
+   1. On-air Delivery – the right tone
+[Write]
+   2. Respecting Others
+[Write]
+   3. Accuracy
+[Write]
+   4. Balance
+[Write]
+   5. Clarity
+[Write]
+   6. No Commenting
+[Write]
+   7. Protect Your Sources
+[Write]
+   8. Keep in Touch with the Newsroom
+[Write]
+   Reflection: The most important learning I gained …
