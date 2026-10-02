@@ -195,7 +195,7 @@ function admin_studio_view():void{
 
 /* ---------------------------------------------------------------- Activity log */
 function admin_log_labels():array{
- return ['login'=>['ok','Signed in'],'login_failed'=>['bad','Wrong password'],'login_locked'=>['bad','Sign-in locked'],'admin_pin_failed'=>['bad','Wrong admin PIN'],'admin_pin_created'=>['warn','Created admin PIN'],'admin_pin_changed'=>['warn','Changed admin PIN'],
+ return ['login'=>['ok','Signed in'],'saved_login'=>['ok','Saved sign-in on a device'],'login_failed'=>['bad','Wrong password'],'login_locked'=>['bad','Sign-in locked'],'admin_pin_failed'=>['bad','Wrong admin PIN'],'admin_pin_created'=>['warn','Created admin PIN'],'admin_pin_changed'=>['warn','Changed admin PIN'],
   'create_pupil'=>['ok','Added pupil'],'create_teacher'=>['ok','Added teacher'],'update_account'=>['warn','Changed account'],'import_pupils'=>['ok','Imported pupils'],'admin_reset_password'=>['warn','Reset password'],'admin_toggle_teacher'=>['warn','Turned account on/off'],'admin_rename_teacher'=>['warn','Renamed teacher'],'admin_move_pupils'=>['warn','Moved pupils'],
   'save_section'=>['ok','Saved section'],'edit_activity'=>['warn','Edited activity'],'admin_toggle_activity'=>['warn','Showed/hid activity'],'upload_media'=>['ok','Uploaded picture'],'backup'=>['ok','Downloaded backup'],'school_info'=>['ok','Saved school info'],'announcement'=>['ok','Announcement'],'school_year_rollover'=>['warn','New school year'],'password_change'=>['warn','Changed own password']];
 }
@@ -242,7 +242,7 @@ function admin_log_csv():never{
 }
 
 /* ---------------------------------------------------------------- System health + backup */
-const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools'];
+const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools','016_saved_logins'];
 function admin_backup_note():string{$b=admin_setting('last_backup_at','');if(!$b)return 'No backup downloaded yet';$d=admin_days_since($b);return 'Last backup '.($d===0?'today':($d===1?'yesterday':$d.' days ago'));}
 function admin_count_files(string $dir,string $pattern):int{
  if(!is_dir($dir))return 0;$n=0;$it=new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir,FilesystemIterator::SKIP_DOTS));foreach($it as $f)if(preg_match($pattern,$f->getFilename()))$n++;return $n;
@@ -327,7 +327,7 @@ function admin_next_year():string{$cur=admin_school_year();if(preg_match('/(\d{4
 /* ---------------------------------------------------------------- actions */
 function admin_actions(string $action):void{
  $u=require_role('admin');
- if($action==='admin_reset_password'){$t=admin_teacher((int)($_POST['id']??0));$p=admin_new_password();q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($p,PASSWORD_DEFAULT),$t['id']]);try{q("DELETE FROM remember_tokens WHERE user_id=?",[$t['id']]);}catch(Throwable $e){}
+ if($action==='admin_reset_password'){$t=admin_teacher((int)($_POST['id']??0));$p=admin_new_password();q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($p,PASSWORD_DEFAULT),$t['id']]);saved_login_clear((int)$t['id']);try{q("DELETE FROM remember_tokens WHERE user_id=?",[$t['id']]);}catch(Throwable $e){}
   audit('admin_reset_password',(string)$t['id']);flash('New password for '.$t['name'].' ('.$t['public_id'].'): '.$p.' — give it to the teacher privately. They can change it in My profile.');go('?page=accounts');}
  if($action==='admin_toggle_teacher'){$t=admin_teacher((int)($_POST['id']??0));q('UPDATE users SET active=1-active WHERE id=?',[$t['id']]);audit('admin_toggle_teacher',(string)$t['id']);flash($t['name'].' is now '.($t['active']?'turned off. They cannot sign in.':'turned on.'));go('?page=accounts');}
  if($action==='admin_rename_teacher'){$t=admin_teacher((int)($_POST['id']??0));$name=trim((string)($_POST['name']??''));if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Enter a name of 2–150 characters.');q('UPDATE users SET name=? WHERE id=?',[$name,$t['id']]);tf_set_sex((int)$t['id'],(string)($_POST['teacher_sex']??''));audit('admin_rename_teacher',(string)$t['id']);flash('Teacher details saved.');go('?page=accounts');}

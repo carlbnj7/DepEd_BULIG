@@ -90,6 +90,7 @@
  /* ---------- answering offline (called from the activity form) ---------- */
  function nextHref(lid,aid){const info=lessonInfo(lid);if(!info)return '?page=lesson&id='+lid;const s=doneSet(info);s.add(aid);const n=info.lesson.acts.find(a=>!s.has(a.id));return n?'?page=lesson&id='+lid+'&activity='+n.id:'?page=lesson&id='+lid;}
  window.buligOffline={
+  pending(){return waiting().then(a=>a.filter(i=>i.kind==='answer').length);},
   async queue(form){const fields=[...new FormData(form)].filter(([k,v])=>k!=='csrf'&&typeof v==='string');const aid=+(form.querySelector('[name=activity_id]')||{}).value||0;
    const lid=+new URLSearchParams(location.search).get('id')||0;
    await put({key:uid+'-a-'+aid,uid,kind:'answer',aid,lid,at:new Date().toISOString(),fields:fields.filter(([k])=>k!=='action').concat([['action','submit']])});

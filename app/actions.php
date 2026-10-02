@@ -6,8 +6,22 @@ function action():void{
   if(val('SELECT COUNT(*) FROM login_attempts WHERE identifier_hash=? AND attempted_at>DATE_SUB(NOW(),INTERVAL 15 MINUTE)',[$key])>=8){audit('login_locked',mb_substr($role.' · '.$id,0,60));fail('Too many attempts. Please wait 15 minutes.',429);}
   $u=one('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
   if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));fail('The ID or password is incorrect.');}
-  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher')$_SESSION['teacher_welcome']=1;audit('login',$role);go('?page=dashboard');
+  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin')$_SESSION['offer_save']=1;audit('login',$role);go('?page=dashboard');
  }
+ if($action==='quick_login'){
+  if(!saved_login_ready())saved_login_json(['ok'=>false,'error'=>'Saved sign-in is not ready yet. Please sign in with your ID.']);
+  $u=saved_login_use((string)($_POST['token']??''));
+  if(!$u){audit('login_failed','saved sign-in');saved_login_json(['ok'=>false,'error'=>'This saved sign-in has expired. Please sign in with your ID and password.']);}
+  session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($u['role']==='pupil')$_SESSION['pupil_welcome']=1;else $_SESSION['teacher_welcome']=1;
+  audit('login',$u['role']);saved_login_json(['ok'=>true,'url'=>'?page=dashboard','profile'=>saved_login_profile($u)]);
+ }
+ if($action==='save_login'){
+  $u=current_user();if(!$u||!in_array($u['role'],['pupil','teacher'],true))saved_login_json(['ok'=>false,'error'=>'Only pupils and teachers can be saved.']);
+  if(!saved_login_ready())saved_login_json(['ok'=>false,'error'=>'Saved sign-in is not ready yet.']);
+  $old=(string)($_POST['replace']??'');if($old!=='')saved_login_forget($old);
+  $t=saved_login_create($u);audit('saved_login','device');saved_login_json(['ok'=>true,'token'=>$t,'profile'=>saved_login_profile($u)]);
+ }
+ if($action==='forget_login'){if(saved_login_ready())saved_login_forget((string)($_POST['token']??''));saved_login_json(['ok'=>true]);}
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
  if($action==='save_section'){
   $u=require_role('teacher');$sid=(int)($_POST['id']??0);$name=trim((string)($_POST['name']??''));$grade=(int)($_POST['grade_level']??0);
@@ -40,7 +54,7 @@ function action():void{
   $name=trim((string)($_POST['name']??''));if(!$name||strlen($name)>150)fail('Enter a valid name.');$password=(string)($_POST['password']??'');
   if($password!==''&&(strlen($password)<8||strlen($password)>72))fail('Use a password of 8–72 characters.');
   db()->beginTransaction();try{
-   q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!=='')q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);
+   q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!==''||!isset($_POST['active']))saved_login_clear($id);if($password!=='')q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);
    if($u['role']==='teacher'){
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);
     save_pupil_details($id,pupil_details_input($id));
@@ -53,7 +67,7 @@ function action():void{
   if(!password_verify($old,$u['password_hash']))fail('Your current password is incorrect.');
   if(strlen($new)<8||strlen($new)>72)fail('Use a new password of 8–72 characters.');
   if($new!==(string)($_POST['confirm_password']??''))fail('The new passwords do not match.');
-  q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go('?page=profile');
+  q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go('?page=profile');
  }
  if($action==='set_start_level'){
   $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=manage(&id=[0-9]+)?$~',$back))$back='?page=manage';

@@ -162,7 +162,7 @@
   bub.style.left=x+'px';bub.style.top=y+'px';});}
 
  /* First visit: the character offers the tour. */
- function offer(){if(document.querySelector('.tour-offer'))return;const big=key==='dashboard';
+ function offer(){if(document.querySelector('.tour-offer'))return;if(document.querySelector('[data-save-offer]')&&!window.buligSaveDone){document.addEventListener('bulig:save-done',()=>setTimeout(offer,500),{once:true});return;}const big=key==='dashboard';
   const o=document.createElement('div');o.className='tour-offer'+(big?' tour-offer-big':'');o.setAttribute('role','dialog');o.setAttribute('aria-label','Guided tour');
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Skip for now</button></div></div>';
   o.querySelector('.tour-offer-card').prepend(charImg());
