@@ -1,0 +1,63 @@
+/* BULIG dark mode. Active when <html> has class "dark" (set by assets/mode.js). Class Demo stays light. */
+html.dark{color-scheme:dark;background:#0f1913}
+html.dark body:not(.demo-page){--bg:#0f1913;--sf:#16231b;--sf2:#1d2d23;--sf3:#243629;--ln:#2e4234;--tx:#e8f0ea;--mu:#a9bcb0;--ac:#56c58a}
+html.dark body:not(.demo-page),html.dark body:not(.demo-page),html.dark body:not(.demo-page) .workspace,html.dark body:not(.demo-page) .login-page,html.dark body:not(.demo-page) .main{background:var(--bg)!important;color:var(--tx)}
+html.dark body:not(.demo-page){--ivory:#0f1913;--ivory-2:#16231b;--ivory-3:#1d2d23;--ivory-line:#2e4234;--white:#16231b;--ink:#e8f0ea;--muted:#a9bcb0;--line:#2e4234;--g50:#1a2a20;--g100:#1f3326;--g200:#28432f;--y50:#2a2616;--y100:#3a3216}
+html.dark body:not(.demo-page) .card,html.dark body:not(.demo-page) .pupil-stat,html.dark body:not(.demo-page) .level-card,html.dark body:not(.demo-page) .level-card-content,html.dark body:not(.demo-page) .next-adventure,html.dark body:not(.demo-page) .tstat,html.dark body:not(.demo-page) .tf-stat,html.dark body:not(.demo-page) .class-tabs,html.dark body:not(.demo-page) .activity-main,html.dark body:not(.demo-page) .native-deck,html.dark body:not(.demo-page) .lesson-outline,html.dark body:not(.demo-page) .login-panel,html.dark body:not(.demo-page) .login-card,html.dark body:not(.demo-page) section.card,html.dark body:not(.demo-page) .tdash-table,html.dark body:not(.demo-page) .cd-level,html.dark body:not(.demo-page) .mp-item,html.dark body:not(.demo-page) .pf-cal-panel,html.dark body:not(.demo-page) .pf-shelf-item,html.dark body:not(.demo-page) .tour-bub,html.dark body:not(.demo-page) .tour-offer-card,html.dark body:not(.demo-page) .completion-card{background:var(--sf)!important;border-color:var(--ln)!important;color:var(--tx)!important;box-shadow:0 8px 24px -14px rgba(0,0,0,.6)!important}
+html.dark body:not(.demo-page) .pupil-stat.level-stat{background:linear-gradient(160deg,#1c3324,#16231b)!important}
+html.dark body:not(.demo-page) .next-adventure{background:radial-gradient(circle at 85% 20%,#2a2a16 0,transparent 45%),linear-gradient(120deg,#17261d,#122019)!important}
+html.dark body:not(.demo-page) h1,html.dark body:not(.demo-page) h2,html.dark body:not(.demo-page) h3,html.dark body:not(.demo-page) h4,html.dark body:not(.demo-page) strong,html.dark body:not(.demo-page) b,html.dark body:not(.demo-page) .stat-label,html.dark body:not(.demo-page) .activity-title,html.dark body:not(.demo-page) .adventure-copy h2,html.dark body:not(.demo-page) .level-card h3,html.dark body:not(.demo-page) .level-card h2,html.dark body:not(.demo-page) .pupil-stat strong,html.dark body:not(.demo-page) .login-card h2,html.dark body:not(.demo-page) label{color:var(--tx)!important}
+html.dark body:not(.demo-page) p,html.dark body:not(.demo-page) small,html.dark body:not(.demo-page) .muted,html.dark body:not(.demo-page) .stat-foot,html.dark body:not(.demo-page) .activity-instruction,html.dark body:not(.demo-page) .native-direction,html.dark body:not(.demo-page) .login-card .muted,html.dark body:not(.demo-page) span.tf-lbl{color:var(--mu)!important}
+html.dark body:not(.demo-page) .eyebrow,html.dark body:not(.demo-page) .adventure-tag,html.dark body:not(.demo-page) .ey{color:#ffd966!important}
+html.dark body:not(.demo-page) input,html.dark body:not(.demo-page) textarea,html.dark body:not(.demo-page) select{background:#122019!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) input::placeholder,html.dark body:not(.demo-page) textarea::placeholder{color:#7f9486!important}
+html.dark body:not(.demo-page) .btn.secondary,html.dark body:not(.demo-page) .btn.quiet,html.dark body:not(.demo-page) .btn.off-save,html.dark body:not(.demo-page) .back-levels,html.dark body:not(.demo-page) a.tab,html.dark body:not(.demo-page) .tab-manage,html.dark body:not(.demo-page) li.tf-fi,html.dark body:not(.demo-page) summary,html.dark body:not(.demo-page) .narration,html.dark body:not(.demo-page) .native-choices li,html.dark body:not(.demo-page) .pf-cal-hint,html.dark body:not(.demo-page) .level-lock,html.dark body:not(.demo-page) span.native-counter,html.dark body:not(.demo-page) .eyebrow.bg,html.dark body:not(.demo-page) .role-tabs{background:var(--sf2)!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .btn.off-save{color:#7fdcaa!important;border-color:#2f6b47!important}
+html.dark body:not(.demo-page) .role-tabs .active,html.dark body:not(.demo-page) a.tab.active{background:var(--sf3)!important;color:#fff!important}
+html.dark body:not(.demo-page) th{background:#1f2a1a!important;color:#ffd966!important}
+html.dark body:not(.demo-page) td{border-color:var(--ln)!important;color:var(--tx)}
+html.dark body:not(.demo-page) .pf-week span i,html.dark body:not(.demo-page) .pf-week span{color:var(--mu)}
+html.dark body:not(.demo-page) .pupil-tabbar{background:#0b2a18!important;box-shadow:0 -6px 20px rgba(0,0,0,.5)!important}
+html.dark body:not(.demo-page) .mobile-top,html.dark body:not(.demo-page) .app-topbar,html.dark body:not(.demo-page) .workspace>header{background:var(--bg)!important}
+html.dark body:not(.demo-page) .login-story{filter:brightness(.92)}
+html.dark body:not(.demo-page) .identity-banner{filter:brightness(.95)}
+html.dark body:not(.demo-page) .level-cover,html.dark body:not(.demo-page) .pf-garden,html.dark body:not(.demo-page) .pf-mapcard{filter:brightness(.82) saturate(.95)}
+html.dark body:not(.demo-page) .xp-stat progress::-webkit-progress-bar{background:#2a2a16}
+html.dark body:not(.demo-page) .tf-alert{background:#2a2614!important;border-color:#5a4b16!important}
+html.dark body:not(.demo-page) .activity-header{background:linear-gradient(90deg,#0b2a18,#0e3a22)!important}
+html.dark body:not(.demo-page) .native-question{color:#bfe8cf!important}
+html.dark body:not(.demo-page) .mobile-brand,html.dark body:not(.demo-page) .mainwrap{background:var(--bg)!important}
+html.dark body:not(.demo-page) .mobile-signout button,html.dark body:not(.demo-page) .mobile-menu-toggle{background:var(--sf2)!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .login-card .show-password{color:#7fdcaa!important}
+html.dark body:not(.demo-page) main a:not(.btn):not(.tab):not(.level-card a):not(.pupil-stat),html.dark body:not(.demo-page) .source-link,html.dark body:not(.demo-page) .linkbutton,html.dark body:not(.demo-page) .rolepill,html.dark body:not(.demo-page) .sitefooter,html.dark body:not(.demo-page) .status,html.dark body:not(.demo-page) .status-ok,html.dark body:not(.demo-page) .tab-count,html.dark body:not(.demo-page) .chip-count,html.dark body:not(.demo-page) .cd-chip.done,html.dark body:not(.demo-page) .adventure-link,html.dark body:not(.demo-page) .section-heading a,html.dark body:not(.demo-page) .section-help a{color:#86e0b0!important}
+html.dark body:not(.demo-page) .rolepill{background:var(--sf2)!important;border-color:#2f6b47!important}
+html.dark body:not(.demo-page) .sitefooter{color:#8fae9a!important}
+html.dark body:not(.demo-page) .status,html.dark body:not(.demo-page) .status-ok,html.dark body:not(.demo-page) .tab-count,html.dark body:not(.demo-page) .chip-count,html.dark body:not(.demo-page) span.status.completed{background:#1f3a2a!important}
+html.dark body:not(.demo-page) .status-warn,html.dark body:not(.demo-page) .xpchip,html.dark body:not(.demo-page) .journey-head span,html.dark body:not(.demo-page) .level-card-heading .status,html.dark body:not(.demo-page) .adventure-note,html.dark body:not(.demo-page) .pf-gnote,html.dark body:not(.demo-page) .cd-chip.cur,html.dark body:not(.demo-page) .chip.y{background:#3a3216!important;color:#ffd966!important;border-color:#6b5a1c!important}
+html.dark body:not(.demo-page) .cd-chip.none{background:var(--sf3)!important;color:#c3cfc7!important}
+html.dark body:not(.demo-page) .cd-chip.class,html.dark body:not(.demo-page) .off-tag{background:#1f2c46!important;color:#a9c4ff!important}
+html.dark body:not(.demo-page) .native-item-label,html.dark body:not(.demo-page) legend,html.dark body:not(.demo-page) .admin-entry,html.dark body:not(.demo-page) .pf-cal-leg span,html.dark body:not(.demo-page) .import-steps li,html.dark body:not(.demo-page) .import-steps{color:#c3d3c8!important}
+html.dark body:not(.demo-page) .pf-cal-sum>div,html.dark body:not(.demo-page) .pf-cd,html.dark body:not(.demo-page) .pf-cal-tip,html.dark body:not(.demo-page) .weekday,html.dark body:not(.demo-page) .default-password,html.dark body:not(.demo-page) pre.source-text,html.dark body:not(.demo-page) blockquote,html.dark body:not(.demo-page) .review-card blockquote{background:var(--sf2)!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .pf-cd.pf-learn{background:#3a2a12!important;color:#ffd08a!important}
+html.dark body:not(.demo-page) .pf-cd.pf-today{box-shadow:0 0 0 2px #ffc629 inset!important}
+html.dark body:not(.demo-page) .pf-cd.pf-future,html.dark body:not(.demo-page) .pf-cd.pf-empty{background:transparent!important;color:#6f8578!important}
+html.dark body:not(.demo-page) .weekday.active{background:#1f3a2a!important;color:#86e0b0!important}
+html.dark body:not(.demo-page) .default-password p,html.dark body:not(.demo-page) .default-password strong{color:var(--tx)!important}
+html.dark body:not(.demo-page) .tf-alert span,html.dark body:not(.demo-page) .tf-alert div span{color:#e9d49a!important}
+html.dark body:not(.demo-page) .narration .btn.quiet{background:linear-gradient(#ffe066,#f2b10c)!important;color:#3d2a00!important;border-color:transparent!important}
+html.dark body:not(.demo-page) .narration .btn.quiet *{color:#3d2a00!important}
+html.dark body:not(.demo-page) .narration .iconbutton,html.dark body:not(.demo-page) .iconbutton.light{background:var(--sf3)!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .narration summary,html.dark body:not(.demo-page) .voice-settings summary{background:transparent!important;color:#86e0b0!important}
+html.dark body:not(.demo-page) .btn.primary,html.dark body:not(.demo-page) .btn.primary *{color:#fff!important}
+html.dark body:not(.demo-page) .level-card .btn.primary{color:#fff!important}
+html.dark body:not(.demo-page) .pf-week span{color:#a9bcb0!important}
+html.dark body:not(.demo-page) .mp-gh,html.dark body:not(.demo-page) .cd-level>summary{background:#1f2a1a!important}
+html.dark body:not(.demo-page) .identity-banner *,html.dark body:not(.demo-page) .level-banner *,html.dark body:not(.demo-page) .activity-header *,html.dark body:not(.demo-page) .pupil-tabbar *,html.dark body:not(.demo-page) .sidebar *,html.dark body:not(.demo-page) .login-story *{color:inherit}
+html.dark body:not(.demo-page) .pf-cal-grid .pf-cd.pf-sign,html.dark body:not(.demo-page) .pf-cal-grid .pf-cd.pf-sign b{background:#1f3a2a!important;color:#86e0b0!important}
+html.dark body:not(.demo-page) .pf-cal-grid .pf-cd b{color:inherit!important}
+html.dark body:not(.demo-page) .sidebar a,html.dark body:not(.demo-page) .sidebar nav a{color:#e8f3ec!important}
+html.dark body:not(.demo-page) .sidebar nav a.active,html.dark body:not(.demo-page) .sidebar nav a[aria-current]{color:#3d2a00!important}
+html.dark body:not(.demo-page) .pupil-tabbar a{color:#cfe9d9!important}
+html.dark body:not(.demo-page) .pupil-tabbar a.on,html.dark body:not(.demo-page) .pupil-tabbar .tab-play{color:#ffd23f!important}
+html.dark body:not(.demo-page) a.pupil-stat{color:var(--tx)!important}
+html.dark:has(body.demo-page){background:#fdf8e6;color-scheme:light}
