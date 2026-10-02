@@ -1,0 +1,13 @@
+BULIG — NEW APP ICONS + TAB ICON
+================================
+1. File Manager → public_html → upload BULIG-App-Icons-Update.zip → Extract → destination: public_html
+   (allow overwrite; there must be NO new folder named BULIG-App-Icons-Update).
+2. Check the upload worked: open this link in your browser —
+     https://lemonchiffon-goose-405007.hostingersite.com/public/assets/brand/bulig-app-medium.png
+   You should see the new icon (sun over the mountains). If you get "404 / not found",
+   the files went to the wrong folder — the icons must be in public_html/public/assets/brand/.
+3. Cache Manager → Purge All, then press Ctrl+F5 on the site.
+4. If BULIG was already installed, uninstall it and install it again to get the new home-screen icon.
+
+The icons now have NEW file names (bulig-app-medium.png etc.), so old saved copies cannot be shown any more.
+The green "B" tab icon is replaced by the BULIG icon.
