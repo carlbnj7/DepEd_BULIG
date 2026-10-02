@@ -194,3 +194,53 @@ document.addEventListener('click',e=>{const c=e.target.closest('[data-confirm]')
 document.addEventListener('change',e=>{const s=e.target.closest('[data-autosubmit]');if(s&&s.form){if(s.name==='grade'){const id=s.form.querySelector('[name=id]');if(id)id.disabled=true;}s.form.requestSubmit();}});
 /* Admin tables: label each cell so phones can show rows as cards (v21) */
 document.querySelectorAll('.ws-table').forEach(t=>{const h=[...t.querySelectorAll('thead th')].map(x=>x.textContent.trim());t.querySelectorAll('tbody tr').forEach(r=>[...r.children].forEach((c,i)=>{if(h[i]&&!c.hasAttribute('colspan'))c.dataset.label=h[i];}));});
+/* Pupil welcome and celebration panels, shown one after another (v24) */
+(function(){const q=[...document.querySelectorAll('.pw-overlay')];if(!q.length)return;let cur=null;
+ const esc=e=>{if(e.key==='Escape'&&cur)close();};
+ function show(){cur=q.shift()||null;if(!cur){document.removeEventListener('keydown',esc);document.dispatchEvent(new Event('pf:overlays-done'));return;}cur.hidden=false;const f=cur.querySelector('.pw-actions .btn');if(f)setTimeout(()=>f.focus(),600);}
+ function close(){const w=cur;cur=null;w.classList.add('pw-out');setTimeout(()=>{w.remove();show();},320);}
+ q.forEach(w=>{w.querySelectorAll('[data-welcome-close]').forEach(b=>b.addEventListener('click',()=>{if(cur===w)close();}));w.addEventListener('click',e=>{if(e.target===w&&cur===w)close();});});
+ document.addEventListener('keydown',esc);window.pfOverlayOpen=()=>!!cur;show();})();
+/* Pupil dashboard animations (v24) */
+(function(){const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const store=(k,v)=>{try{if(v===undefined)return sessionStorage.getItem(k);sessionStorage.setItem(k,v);}catch(e){return null;}};
+ function count(el){const n=+el.dataset.count;if(still||!n){el.textContent=n;return;}const t0=performance.now();el.textContent='0';(function f(t){const k=Math.min(1,(t-t0)/1200);el.textContent=Math.round(n*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);})(t0);}
+ function fill(p){const v=+p.getAttribute('value');if(still||!v)return;const t0=performance.now();p.value=0;(function f(t){const k=Math.min(1,(t-t0)/1400);p.value=v*(1-Math.pow(1-k,3));if(k<1)requestAnimationFrame(f);})(t0);}
+ const cols=['#f6c02c','#2f8a4b','#d6452f','#3b82c4','#ff8fab','#9b7bff'];
+ document.querySelectorAll('.pf-conf').forEach(c=>{c.style.left=Math.random()*100+'%';c.style.background=cols[Math.floor(Math.random()*cols.length)];c.style.setProperty('--d',(Math.random()*.9).toFixed(2)+'s');c.style.setProperty('--x',Math.round(Math.random()*80-40)+'px');});
+ const start=()=>{document.querySelectorAll('[data-count]').forEach(e=>{const late=e.closest('.pf-celebrate');setTimeout(()=>count(e),late?1500:150);});document.querySelectorAll('progress[data-pf-fill]').forEach(fill);
+  document.querySelectorAll('[data-pf-plus]').forEach(p=>{const k='pf-plus-'+p.dataset.pfPlus;if(!store(k)){p.hidden=false;store(k,'1');}});};
+ if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',start,{once:true});else start();
+ document.querySelectorAll('[data-pf-wiggle]').forEach(c=>{const l=c.querySelector('.level-lock .icon');if(!l)return;const go=()=>{l.classList.remove('pf-wig');void l.getBoundingClientRect();l.classList.add('pf-wig');};c.addEventListener('click',e=>{if(!e.target.closest('a'))go();});});
+ const h=document.querySelector('[data-pf-helper]');if(h){const b=h.parentNode.querySelector('.pf-bubble');let lines=[];try{lines=JSON.parse(h.dataset.lines);}catch(e){}let i=Math.floor(Math.random()*lines.length),t;
+  const say=()=>{if(!lines.length)return;b.textContent=lines[i++%lines.length];b.classList.add('on');h.classList.remove('pf-wave-now');void h.getBoundingClientRect();h.classList.add('pf-wave-now');clearTimeout(t);t=setTimeout(()=>b.classList.remove('on'),3200);};
+  h.addEventListener('click',say);const greet=()=>setTimeout(say,1800);if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',greet,{once:true});else greet();}
+})();
+/* Teacher grade and section tabs: a highlight glides to the chosen tab (v25) */
+(function(){const rows=document.querySelectorAll('.class-tabs .tab-row');if(!rows.length)return;const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const store=(k,v)=>{try{if(v===undefined)return sessionStorage.getItem(k);sessionStorage.setItem(k,v);}catch(e){return null;}};
+ rows.forEach((row,n)=>{const act=row.querySelector('.tab.active');if(!act)return;const key='tf-tab-'+n;const ind=document.createElement('span');ind.className='tf-ind';ind.setAttribute('aria-hidden','true');row.prepend(ind);row.classList.add('tf-glide');
+  const place=(l,w)=>{ind.style.left=l+'px';ind.style.width=w+'px';ind.style.top=act.offsetTop+'px';ind.style.height=act.offsetHeight+'px';};
+  let prev=null;try{prev=JSON.parse(store(key)||'null');}catch(e){}
+  if(prev&&!still&&(prev.l!==act.offsetLeft)){ind.classList.add('tf-nomove');place(prev.l,prev.w);void ind.offsetWidth;ind.classList.remove('tf-nomove');requestAnimationFrame(()=>place(act.offsetLeft,act.offsetWidth));}else place(act.offsetLeft,act.offsetWidth);
+  store(key,'');row.querySelectorAll('a.tab').forEach(a=>a.addEventListener('click',()=>store(key,JSON.stringify({l:act.offsetLeft,w:act.offsetWidth}))));
+  window.addEventListener('resize',()=>place(act.offsetLeft,act.offsetWidth));});
+})();
+document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600));
+/* Install BULIG as an app (v26) */
+(function(){
+ if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+ const standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;if(standalone)return;
+ const get=k=>{try{return localStorage.getItem(k);}catch(e){return null;}},set=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
+ if(+get('bulig-install-later')>Date.now())return;
+ const ua=navigator.userAgent||'';const ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+ const icon='<svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 21h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ function bar(text,action){const b=document.createElement('div');b.className='install-bar';b.setAttribute('role','region');b.setAttribute('aria-label','Install BULIG');
+  b.innerHTML='<img src="assets/brand/bulig-app-medium.png" alt="" width="40" height="40"><div><strong>Install BULIG</strong><span></span></div>'+(action?'<button type="button" class="btn primary install-go">'+icon+'Install</button>':'')+'<button type="button" class="install-later" aria-label="Not now">Not now</button>';
+  b.querySelector('span').textContent=text;b.querySelector('.install-later').addEventListener('click',()=>{set('bulig-install-later',String(Date.now()+7*864e5));b.remove();});
+  if(action)b.querySelector('.install-go').addEventListener('click',()=>action(b));document.body.appendChild(b);return b;}
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();const ev=e;if(document.querySelector('.install-bar'))return;
+  bar('Add BULIG to your home screen and open it like an app.',b=>{ev.prompt();ev.userChoice.finally(()=>b.remove());});});
+ window.addEventListener('appinstalled',()=>{const b=document.querySelector('.install-bar');if(b)b.remove();});
+ if(ios&&/safari/i.test(ua)&&!/crios|fxios|edgios/i.test(ua))setTimeout(()=>bar('Tap the Share button, then “Add to Home Screen”.',null),1500);
+})();
