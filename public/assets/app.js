@@ -216,3 +216,14 @@ document.querySelectorAll('.ws-table').forEach(t=>{const h=[...t.querySelectorAl
   const say=()=>{if(!lines.length)return;b.textContent=lines[i++%lines.length];b.classList.add('on');h.classList.remove('pf-wave-now');void h.getBoundingClientRect();h.classList.add('pf-wave-now');clearTimeout(t);t=setTimeout(()=>b.classList.remove('on'),3200);};
   h.addEventListener('click',say);const greet=()=>setTimeout(say,1800);if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',greet,{once:true});else greet();}
 })();
+/* Teacher grade and section tabs: a highlight glides to the chosen tab (v25) */
+(function(){const rows=document.querySelectorAll('.class-tabs .tab-row');if(!rows.length)return;const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const store=(k,v)=>{try{if(v===undefined)return sessionStorage.getItem(k);sessionStorage.setItem(k,v);}catch(e){return null;}};
+ rows.forEach((row,n)=>{const act=row.querySelector('.tab.active');if(!act)return;const key='tf-tab-'+n;const ind=document.createElement('span');ind.className='tf-ind';ind.setAttribute('aria-hidden','true');row.prepend(ind);row.classList.add('tf-glide');
+  const place=(l,w)=>{ind.style.left=l+'px';ind.style.width=w+'px';ind.style.top=act.offsetTop+'px';ind.style.height=act.offsetHeight+'px';};
+  let prev=null;try{prev=JSON.parse(store(key)||'null');}catch(e){}
+  if(prev&&!still&&(prev.l!==act.offsetLeft)){ind.classList.add('tf-nomove');place(prev.l,prev.w);void ind.offsetWidth;ind.classList.remove('tf-nomove');requestAnimationFrame(()=>place(act.offsetLeft,act.offsetWidth));}else place(act.offsetLeft,act.offsetWidth);
+  store(key,'');row.querySelectorAll('a.tab').forEach(a=>a.addEventListener('click',()=>store(key,JSON.stringify({l:act.offsetLeft,w:act.offsetWidth}))));
+  window.addEventListener('resize',()=>place(act.offsetLeft,act.offsetWidth));});
+})();
+document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600));
