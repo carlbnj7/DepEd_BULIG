@@ -29,6 +29,7 @@
    [['.pupil-tabbar .tab-play','.sidebar nav a[href="?page=lessons"]'],'All your lessons','Here you find all your levels and the road map of each level.'],
    [['.pupil-tabbar a[href="?page=calendar"]','.sidebar nav a[href="?page=calendar"]'],'Your calendar','See every day you learned.'],
    [['.pupil-tabbar a[href="?page=profile"]','.sidebar nav a[href="?page=profile"]'],'Your profile','Change your picture, see this week, and find your offline lessons.'],
+   [['.mode-mobile','.mode-top'],'Light or dark','Tap the moon to make BULIG dark, easy on your eyes at night. Tap the sun to make it bright again.'],
    [null,'Need help again?','Tap the yellow ? button on any page and I will show you how it works. Have fun learning!']],
   lessons:[
    ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
@@ -66,10 +67,12 @@
   profile:pupil?[
    ['.avatar-picker','Your picture','Choose a character for your profile picture.'],
    ['.off-profile','Offline lessons','Levels saved on this device are listed here. If answers are waiting to upload, tap "Upload now".'],
-   [['.weekdays'],'This week','The days you learned this week have a check.']]:[
+   [['.weekdays'],'This week','The days you learned this week have a check.'],
+   ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.']]:[
    ['.char-pick','Your teacher character','Choose the character that greets you after you sign in.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
-   [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']]
+   [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
+   ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']]
  };
  const T={
   dashboard:[
@@ -84,6 +87,7 @@
    ['.sidebar nav a[href="?page=sections"]','My sections','Add the sections you handle.'],
    ['.sidebar nav a[href="?page=review"]','Activity history','Read your pupils’ answers and leave short feedback.'],
    ['.sidebar nav a[href="?page=guide"]','Teaching guide','Lesson plans and the original module pages for each lesson.'],
+   [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
    [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
   class_demo:[
    ['.pageheading','Class Demo','Present lessons to the whole class on a TV or projector. Nothing is saved for pupils here.'],
