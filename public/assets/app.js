@@ -194,3 +194,25 @@ document.addEventListener('click',e=>{const c=e.target.closest('[data-confirm]')
 document.addEventListener('change',e=>{const s=e.target.closest('[data-autosubmit]');if(s&&s.form){if(s.name==='grade'){const id=s.form.querySelector('[name=id]');if(id)id.disabled=true;}s.form.requestSubmit();}});
 /* Admin tables: label each cell so phones can show rows as cards (v21) */
 document.querySelectorAll('.ws-table').forEach(t=>{const h=[...t.querySelectorAll('thead th')].map(x=>x.textContent.trim());t.querySelectorAll('tbody tr').forEach(r=>[...r.children].forEach((c,i)=>{if(h[i]&&!c.hasAttribute('colspan'))c.dataset.label=h[i];}));});
+/* Pupil welcome and celebration panels, shown one after another (v24) */
+(function(){const q=[...document.querySelectorAll('.pw-overlay')];if(!q.length)return;let cur=null;
+ const esc=e=>{if(e.key==='Escape'&&cur)close();};
+ function show(){cur=q.shift()||null;if(!cur){document.removeEventListener('keydown',esc);document.dispatchEvent(new Event('pf:overlays-done'));return;}cur.hidden=false;const f=cur.querySelector('.pw-actions .btn');if(f)setTimeout(()=>f.focus(),600);}
+ function close(){const w=cur;cur=null;w.classList.add('pw-out');setTimeout(()=>{w.remove();show();},320);}
+ q.forEach(w=>{w.querySelectorAll('[data-welcome-close]').forEach(b=>b.addEventListener('click',()=>{if(cur===w)close();}));w.addEventListener('click',e=>{if(e.target===w&&cur===w)close();});});
+ document.addEventListener('keydown',esc);window.pfOverlayOpen=()=>!!cur;show();})();
+/* Pupil dashboard animations (v24) */
+(function(){const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const store=(k,v)=>{try{if(v===undefined)return sessionStorage.getItem(k);sessionStorage.setItem(k,v);}catch(e){return null;}};
+ function count(el){const n=+el.dataset.count;if(still||!n){el.textContent=n;return;}const t0=performance.now();el.textContent='0';(function f(t){const k=Math.min(1,(t-t0)/1200);el.textContent=Math.round(n*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);})(t0);}
+ function fill(p){const v=+p.getAttribute('value');if(still||!v)return;const t0=performance.now();p.value=0;(function f(t){const k=Math.min(1,(t-t0)/1400);p.value=v*(1-Math.pow(1-k,3));if(k<1)requestAnimationFrame(f);})(t0);}
+ const cols=['#f6c02c','#2f8a4b','#d6452f','#3b82c4','#ff8fab','#9b7bff'];
+ document.querySelectorAll('.pf-conf').forEach(c=>{c.style.left=Math.random()*100+'%';c.style.background=cols[Math.floor(Math.random()*cols.length)];c.style.setProperty('--d',(Math.random()*.9).toFixed(2)+'s');c.style.setProperty('--x',Math.round(Math.random()*80-40)+'px');});
+ const start=()=>{document.querySelectorAll('[data-count]').forEach(e=>{const late=e.closest('.pf-celebrate');setTimeout(()=>count(e),late?1500:150);});document.querySelectorAll('progress[data-pf-fill]').forEach(fill);
+  document.querySelectorAll('[data-pf-plus]').forEach(p=>{const k='pf-plus-'+p.dataset.pfPlus;if(!store(k)){p.hidden=false;store(k,'1');}});};
+ if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',start,{once:true});else start();
+ document.querySelectorAll('[data-pf-wiggle]').forEach(c=>{const l=c.querySelector('.level-lock .icon');if(!l)return;const go=()=>{l.classList.remove('pf-wig');void l.getBoundingClientRect();l.classList.add('pf-wig');};c.addEventListener('click',e=>{if(!e.target.closest('a'))go();});});
+ const h=document.querySelector('[data-pf-helper]');if(h){const b=h.parentNode.querySelector('.pf-bubble');let lines=[];try{lines=JSON.parse(h.dataset.lines);}catch(e){}let i=Math.floor(Math.random()*lines.length),t;
+  const say=()=>{if(!lines.length)return;b.textContent=lines[i++%lines.length];b.classList.add('on');h.classList.remove('pf-wave-now');void h.getBoundingClientRect();h.classList.add('pf-wave-now');clearTimeout(t);t=setTimeout(()=>b.classList.remove('on'),3200);};
+  h.addEventListener('click',say);const greet=()=>setTimeout(say,1800);if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',greet,{once:true});else greet();}
+})();

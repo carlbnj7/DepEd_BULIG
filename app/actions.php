@@ -6,7 +6,7 @@ function action():void{
   if(val('SELECT COUNT(*) FROM login_attempts WHERE identifier_hash=? AND attempted_at>DATE_SUB(NOW(),INTERVAL 15 MINUTE)',[$key])>=8){audit('login_locked',mb_substr($role.' · '.$id,0,60));fail('Too many attempts. Please wait 15 minutes.',429);}
   $u=one('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
   if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));fail('The ID or password is incorrect.');}
-  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));audit('login',$role);go('?page=dashboard');
+  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;audit('login',$role);go('?page=dashboard');
  }
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
  if($action==='save_section'){
