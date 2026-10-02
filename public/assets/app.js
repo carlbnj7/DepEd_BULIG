@@ -11,15 +11,17 @@ if(narration){
 }
 const form=$('#activity-form');let draftTimer,submitting=false,drawingDirty=false;
 function draft(){if(!form||form.dataset.draft!=='on'||submitting)return;clearTimeout(draftTimer);draftTimer=setTimeout(saveDraft,650);}
-async function saveDraft(){if(submitting||form.dataset.draft!=='on')return;const data=new FormData(form);data.set('action','draft');const status=$('#draft-status');status.textContent='Saving your draft…';try{const res=await fetch('index.php',{method:'POST',body:data,credentials:'same-origin'});const result=await res.json();if(!res.ok||!result.saved)throw new Error(result.error||'Could not save');status.textContent='Draft saved';}catch(error){status.textContent='Draft not saved. Check your connection before leaving.';}}
+async function saveDraft(){if(submitting||form.dataset.draft!=='on')return;const data=new FormData(form);data.set('action','draft');const status=$('#draft-status');status.textContent='Saving your draft…';try{const res=await fetch('index.php',{method:'POST',body:data,credentials:'same-origin'});const result=await res.json();if(!res.ok||!result.saved)throw new Error(result.error||'Could not save');status.textContent='Draft saved';}catch(error){status.textContent=navigator.onLine===false?'Offline · choose Submit to keep your answer on this device':'Draft not saved. Check your connection before leaving.';}}
 if(form){
  form.addEventListener('input',draft);
  form.addEventListener('submit',async event=>{
   event.preventDefault();if(submitting)return;submitting=true;clearTimeout(draftTimer);
   const button=$('#submit-answer'),feedback=$('#answer-feedback'),next=$('#next-activity');const original=button?.innerHTML;
   if(button){button.disabled=true;button.textContent='Saving…';}
+  const keepOffline=async()=>{const href=await window.buligOffline.queue(form);feedback.replaceChildren();feedback.className='answer-feedback success';const t=document.createElement('strong');t.textContent='Saved on this device!';const sp=document.createElement('span');sp.textContent=' It will upload when you are back online.';feedback.append(t,sp);form.dataset.draft='off';if(button)button.hidden=true;$('#draft-status').textContent='Kept on this device';next.href=href;next.hidden=false;next.focus();if(['none','perform'].includes(form.dataset.mode))location.href=href;};
+  if(window.buligOffline&&navigator.onLine===false){try{await keepOffline();}catch(e){feedback.className='answer-feedback tryagain';feedback.textContent='This answer could not be kept on this device.';if(button){button.disabled=false;button.innerHTML=original;}}submitting=false;return;}
   try{
-   const res=await fetch('index.php',{method:'POST',body:new FormData(form),credentials:'same-origin',headers:{Accept:'application/json'}});
+   let res;try{res=await fetch('index.php',{method:'POST',body:new FormData(form),credentials:'same-origin',headers:{Accept:'application/json'}});}catch(netError){if(window.buligOffline){await keepOffline();return;}throw netError;}
    const data=await res.json();if(!res.ok)throw new Error(data.error||'Your work could not be saved.');
    feedback.replaceChildren();feedback.className='answer-feedback '+(data.saved?'success':'tryagain');
    const title=document.createElement('strong');title.textContent=data.message;feedback.append(title);

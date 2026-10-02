@@ -46,6 +46,7 @@ function class_done_undo(int $pid,int $lid):int{
 /** A one-time note for the pupil after their teacher marks work as done in class. */
 function class_done_note_set(int $pid,string $text):void{q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['class_done_note_'.$pid,$text]);}
 function class_done_note(int $pid):string{
+ if(($_GET['off']??'')==='1')return '';
  try{$t=val('SELECT setting_value FROM settings WHERE setting_key=?',['class_done_note_'.$pid]);}catch(Throwable $e){return '';}
  if(!$t)return '';q('DELETE FROM settings WHERE setting_key=?',['class_done_note_'.$pid]);
  return '<div class="class-done-note" role="status"><span class="cdn-icon">'.icon('check').'</span><div><strong>Great job in class!</strong><span>'.e((string)$t).'</span></div></div>';

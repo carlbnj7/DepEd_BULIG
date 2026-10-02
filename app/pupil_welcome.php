@@ -1,7 +1,7 @@
 <?php
 /** Welcome panel shown once, right after a pupil signs in. */
 function pupil_welcome(array $u):void{
- if(empty($_SESSION['pupil_welcome']))return;unset($_SESSION['pupil_welcome']);
+ if(empty($_SESSION['pupil_welcome'])||($_GET['off']??'')==='1')return;unset($_SESSION['pupil_welcome']);
  $pid=(int)$u['id'];$s=progress_stats($pid);$h=(int)date('G');$greet=$h<12?'Good morning':($h<18?'Good afternoon':'Good evening');
  $first=explode(' ',trim($u['name']))[0];$next=next_learning_lesson($pid);$streak=(int)$s['current_streak'];
  $msg=$streak>1?'You are on a '.$streak.'-day reading streak. Keep it going!':($s['completed']?'Welcome back! Let’s read a little more today.':'Your reading adventure starts today!');
