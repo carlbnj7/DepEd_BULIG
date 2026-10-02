@@ -1,0 +1,24 @@
+BULIG — INSTALL AS AN APP (Add to Home Screen)
+==============================================
+
+1. File Manager → public_html → Upload BULIG-App-Install-Update.zip → Extract into public_html
+   (allow overwrite; make sure it does NOT create a new "BULIG-App-Install-Update" folder) → delete the ZIP.
+2. hPanel → Cache Manager → Purge all. Then press Ctrl+F5 on the site.
+3. No SQL import is needed.
+
+NEW FILES
+ public/manifest.webmanifest      App name, icon and colors
+ public/sw.js                     Background script (makes it installable, shows the offline page)
+ public/offline.html              Friendly "You are offline" page
+ public/assets/offline.css        Style for the offline page
+ public/assets/icons/             App icons (192, 512, maskable 512, Apple 180, 32)
+UPDATED
+ app/views.php                    Links the app files in every page
+ public/assets/app.js             Turns on the background script, shows the "Install BULIG" bar
+ public/assets/theme.css          Style for the "Install BULIG" bar
+
+HOW PEOPLE INSTALL IT
+ Android (Chrome)   Tap "Install" on the bar at the bottom, or Chrome menu → Add to Home screen / Install app
+ Computer           Chrome or Edge: Install icon in the address bar, or the "Install" bar
+ iPhone / iPad      Open in Safari → Share → Add to Home Screen (the bar shows this tip)
+ "Not now" hides the bar for 7 days. Once installed, the bar no longer appears.

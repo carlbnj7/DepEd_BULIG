@@ -227,3 +227,20 @@ document.querySelectorAll('.ws-table').forEach(t=>{const h=[...t.querySelectorAl
   window.addEventListener('resize',()=>place(act.offsetLeft,act.offsetWidth));});
 })();
 document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600));
+/* Install BULIG as an app (v26) */
+(function(){
+ if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+ const standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;if(standalone)return;
+ const get=k=>{try{return localStorage.getItem(k);}catch(e){return null;}},set=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
+ if(+get('bulig-install-later')>Date.now())return;
+ const ua=navigator.userAgent||'';const ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+ const icon='<svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 21h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+ function bar(text,action){const b=document.createElement('div');b.className='install-bar';b.setAttribute('role','region');b.setAttribute('aria-label','Install BULIG');
+  b.innerHTML='<img src="assets/icons/icon-192.png" alt="" width="40" height="40"><div><strong>Install BULIG</strong><span></span></div>'+(action?'<button type="button" class="btn primary install-go">'+icon+'Install</button>':'')+'<button type="button" class="install-later" aria-label="Not now">Not now</button>';
+  b.querySelector('span').textContent=text;b.querySelector('.install-later').addEventListener('click',()=>{set('bulig-install-later',String(Date.now()+7*864e5));b.remove();});
+  if(action)b.querySelector('.install-go').addEventListener('click',()=>action(b));document.body.appendChild(b);return b;}
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();const ev=e;if(document.querySelector('.install-bar'))return;
+  bar('Add BULIG to your home screen and open it like an app.',b=>{ev.prompt();ev.userChoice.finally(()=>b.remove());});});
+ window.addEventListener('appinstalled',()=>{const b=document.querySelector('.install-bar');if(b)b.remove();});
+ if(ios&&/safari/i.test(ua)&&!/crios|fxios|edgios/i.test(ua))setTimeout(()=>bar('Tap the Share button, then “Add to Home Screen”.',null),1500);
+})();
