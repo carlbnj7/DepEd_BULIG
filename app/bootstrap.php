@@ -214,3 +214,4 @@ require_once __DIR__.'/pupil_welcome.php';
 require_once __DIR__.'/pupil_fun.php';
 require_once __DIR__.'/teacher_fun.php';
 require_once __DIR__.'/class_done.php';
+require_once __DIR__.'/offline.php';
