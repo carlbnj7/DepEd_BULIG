@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Offline Mode Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g400:#5db585;--g100:#e6f4ec;--g50:#f3faf6;--y400:#ffc629;--y300:#ffd966;--y100:#fff4cf;--y50:#fffbeb;--ivory:#fbf6e6;--line:#e9e2cc;--ink:#17331f;--muted:#5f6f63;--blue:#2b55a8;--blue100:#e8f0ff}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:var(--ink)}
+.wrap{max-width:1200px;margin:auto;padding:26px 16px 60px}
+h1.t{margin:0;color:var(--g700);font-size:1.7rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:820px}
+.step{margin-top:34px}.step>h2{font-size:1.15rem;margin:0 0 4px}.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--g700);color:#fff;font-size:.85rem;margin-right:8px;vertical-align:1px}
+.step>p{margin:0 0 14px;color:var(--muted);font-size:.92rem;max-width:860px}
+.row{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.phone{width:320px;flex:none;background:var(--ivory);border:10px solid #1d2a22;border-radius:38px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.18);position:relative;min-height:600px}
+.cap{font-size:.75rem;font-weight:800;letter-spacing:.1em;color:#9a7400;margin:0 0 8px;width:320px}
+.col{display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:center;height:58px;background:#eef6e8;position:relative}
+.top b{color:var(--g700);font-size:1.15rem;letter-spacing:.04em}
+.so{position:absolute;right:12px;top:12px;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.pad{padding:14px}
+.ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* offline / sync banners */
+.ban{display:flex;gap:10px;align-items:center;border-radius:16px;padding:10px 12px;font-size:.78rem;margin:12px 14px 0}
+.ban b{display:block;font-size:.84rem}
+.ban.off{background:#2f3b46;color:#fff}.ban.off .ic{color:#ffd966}
+.ban.wait{background:var(--y100);color:#6b4d00;border:2px solid var(--y300)}
+.ban.up{background:var(--blue100);color:var(--blue);border:2px solid #c5d6f7}
+.ban.ok{background:var(--g100);color:var(--g700);border:2px solid #b6dfc4}
+.spin{width:18px;height:18px;border-radius:50%;border:3px solid #c5d6f7;border-top-color:var(--blue);flex:none}
+/* level cards */
+.lc{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.07);margin-bottom:14px}
+.lc img{width:100%;height:110px;object-fit:cover;display:block}
+.lc .in{padding:12px 14px}
+.lc h3{margin:0;font-size:1rem}.lc p{margin:2px 0 10px;font-size:.78rem;color:var(--muted)}
+.btn{border:0;border-radius:14px;padding:9px 14px;font:700 .82rem Poppins;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.btn.p{background:linear-gradient(#1c7a50,#0e5a35);color:#fff}.btn.s{background:var(--g100);color:var(--g700)}.btn.l{background:none;color:var(--muted);padding:6px 4px;font-weight:600;text-decoration:underline}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.save{background:#fff;border:2px solid var(--g400);color:var(--g700)}
+.prog{height:8px;background:var(--g100);border-radius:9px;overflow:hidden;margin:6px 0 4px}.prog i{display:block;height:100%;background:linear-gradient(90deg,#5db585,#1c7a50);border-radius:9px}
+.saved{display:inline-flex;align-items:center;gap:6px;background:var(--g100);color:var(--g700);font-weight:800;font-size:.72rem;border-radius:999px;padding:4px 10px}
+.small{font-size:.72rem;color:var(--muted)}
+.dim{opacity:.45;filter:grayscale(.6)}
+.lockchip{display:inline-flex;align-items:center;gap:6px;background:#eceae2;color:#77736a;font-weight:700;font-size:.72rem;border-radius:999px;padding:4px 10px}
+/* activity */
+.acth{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:3px solid var(--y400)}
+.x{width:32px;height:32px;border-radius:50%;background:var(--g50);display:grid;place-items:center;color:var(--g700)}
+.acth b{font-size:.85rem;display:block}.acth small{font-size:.7rem;color:var(--muted)}
+.card{background:#fff;border-radius:18px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.ey{font-size:.62rem;font-weight:800;letter-spacing:.12em;color:var(--g700)}
+.card h4{margin:4px 0 8px;font-size:1.15rem}
+.ans{border:2px solid var(--line);border-radius:12px;padding:10px;font-size:.85rem;min-height:70px;background:#fffdf8}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;font-size:.72rem;font-weight:800;padding:4px 10px}
+.chip.dev{background:var(--y100);color:#8a6200}.chip.blue{background:var(--blue100);color:var(--blue)}.chip.gr{background:var(--g100);color:var(--g700)}
+.toast{background:#fff;border:2px solid var(--y400);border-radius:16px;padding:10px 12px;display:flex;gap:10px;align-items:center;font-size:.8rem;margin-top:12px}
+.toast .dot{width:34px;height:34px;border-radius:50%;background:var(--y100);display:grid;place-items:center;color:#8a6200;flex:none}
+/* profile list */
+.pl{background:#fff;border-radius:18px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.pl h3{margin:0 0 4px;font-size:1rem}
+.pli{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid #f1ecdc;font-size:.82rem}
+.pli img{width:44px;height:34px;border-radius:8px;object-fit:cover}
+.pli div{flex:1}.pli small{display:block;color:var(--muted);font-size:.7rem}
+.meter{height:8px;background:#eee8d6;border-radius:9px;overflow:hidden;margin:8px 0 2px}.meter i{display:block;height:100%;background:var(--y400)}
+/* celebrate */
+.cel{text-align:center;padding:26px 14px}
+.cel img{height:150px}
+.cel h3{margin:6px 0 2px;color:var(--g700)}.cel p{margin:0;color:var(--muted);font-size:.82rem}
+.xp{display:inline-block;margin-top:10px;background:var(--y100);color:#8a6200;font-weight:800;border-radius:999px;padding:6px 14px}
+/* teacher */
+.tbl{background:#fff;border-radius:18px;box-shadow:0 6px 16px rgba(0,0,0,.07);overflow:hidden;flex:1;min-width:300px}
+.tbl table{border-collapse:collapse;width:100%;font-size:.82rem}
+.tbl th{background:var(--y50);text-align:left;padding:10px 12px;font-size:.66rem;letter-spacing:.1em;color:var(--g700)}
+.tbl td{padding:10px 12px;border-top:1px solid #f1ecdc}
+.notes{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 20px;margin-top:30px}
+.notes h3{margin:0 0 8px}.notes ul{margin:0;padding-left:20px;line-height:1.7;font-size:.9rem}
+@media(max-width:700px){.phone,.cap{width:100%}}
+</style></head><body><div class="wrap">
+<h1 class="t">Offline mode preview</h1>
+<p class="lead">Pupils save a level while online, answer while offline, and the answers upload by themselves when the internet comes back. Below is what each step looks like on a phone.</p>
+
+<!-- STEP 1 -->
+<section class="step"><h2><span class="num">1</span>Save a level for offline (while online)</h2>
+<p>Each level card on <b>My lessons</b> gets a <b>Save for offline</b> button. It downloads that level's lessons and pictures to the phone (about 1 to 24 MB per level). Once saved, it shows a green "Saved on this phone" label.</p>
+<div class="row">
+ <div class="col"><div class="cap">BEFORE SAVING</div><div class="phone"><div class="top"><b>BULIG</b><span class="so"></span></div><div class="pad">
+  <div class="lc"><img src="level-2.webp" alt=""><div class="in"><h3>Level 2A · Phonological Awareness</h3><p>22 lessons · 3 done</p>
+   <div class="btns"><button class="btn p">Continue</button><button class="btn save"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>Save for offline</button></div><div class="small" style="margin-top:6px">About 11 MB</div></div></div>
+ </div></div></div>
+ <div class="col"><div class="cap">SAVING</div><div class="phone"><div class="top"><b>BULIG</b><span class="so"></span></div><div class="pad">
+  <div class="lc"><img src="level-2.webp" alt=""><div class="in"><h3>Level 2A · Phonological Awareness</h3><p>22 lessons · 3 done</p>
+   <div class="small"><b style="color:var(--g700)">Saving for offline…</b> 14 of 22 lessons</div><div class="prog"><i style="width:64%"></i></div><button class="btn l">Cancel</button></div></div>
+ </div></div></div>
+ <div class="col"><div class="cap">SAVED</div><div class="phone"><div class="top"><b>BULIG</b><span class="so"></span></div><div class="pad">
+  <div class="lc"><img src="level-2.webp" alt=""><div class="in"><h3>Level 2A · Phonological Awareness</h3><p>22 lessons · 3 done</p>
+   <div class="btns"><button class="btn p">Continue</button><span class="saved"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Saved on this phone</span></div><div class="small" style="margin-top:6px">11 MB · saved Oct 2 · <u>Remove</u></div></div></div>
+ </div></div></div>
+</div></section>
+
+<!-- STEP 2 -->
+<section class="step"><h2><span class="num">2</span>No internet: saved lessons still work</h2>
+<p>A dark banner says the phone is offline. Saved levels open normally. Levels that were not saved are greyed out with a short note.</p>
+<div class="row">
+ <div class="col"><div class="cap">MY LESSONS, OFFLINE</div><div class="phone"><div class="top"><b>BULIG</b><span class="so"></span></div>
+  <div class="ban off"><svg class="ic" viewBox="0 0 24 24"><path d="M2 8.8a15 15 0 0 1 20 0M5.5 12.3a10 10 0 0 1 13 0M9 15.8a5 5 0 0 1 6 0M12 19.5h.01M3 3l18 18"/></svg><div><b>You are offline</b>Your saved lessons still work. Answers will upload later.</div></div>
+  <div class="pad">
+  <div class="lc"><img src="level-2.webp" alt=""><div class="in"><h3>Level 2A · Phonological Awareness</h3><p>22 lessons · 3 done</p><div class="btns"><button class="btn p">Continue</button><span class="saved"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Saved</span></div></div></div>
+  <div class="lc dim"><img src="level-3.webp" alt=""><div class="in"><h3>Level 2B · Phonological Awareness</h3><p>Not saved on this phone</p><span class="lockchip">Needs internet</span></div></div>
+ </div></div></div>
+ <div class="col"><div class="cap">ANSWERING OFFLINE</div><div class="phone"><div class="acth"><span class="x"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></span><div><b>Level 2A · My Toys</b><small>3 / 8 complete</small></div></div>
+  <div class="ban off" style="margin-top:10px"><svg class="ic" viewBox="0 0 24 24"><path d="M2 8.8a15 15 0 0 1 20 0M5.5 12.3a10 10 0 0 1 13 0M9 15.8a5 5 0 0 1 6 0M12 19.5h.01M3 3l18 18"/></svg><div><b>Offline</b>Answers are kept on this phone.</div></div>
+  <div class="pad"><div class="card"><span class="ey">LET'S PRACTICE</span><h4>What toy do you like?</h4><div class="ans">I like my red ball because I can play with my brother.</div>
+  <div class="btns" style="margin-top:10px"><button class="btn p">Submit answer</button></div></div>
+  <div class="toast"><span class="dot"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span><div><b>Saved on this phone!</b><br>It will upload when you are back online.</div></div>
+  <p class="small" style="margin-top:10px">The next activity opens right away, so the pupil can keep going.</p></div></div></div>
+</div></section>
+
+<!-- STEP 3 -->
+<section class="step"><h2><span class="num">3</span>Back online: answers upload by themselves</h2>
+<p>As soon as the internet returns, BULIG sends the saved answers. The pupil sees the count go down, then a small celebration with the XP they earned. Nothing to press.</p>
+<div class="row">
+ <div class="col"><div class="cap">WAITING</div><div class="phone"><div class="top"><b>BULIG</b><span class="so"></span></div>
+  <div class="ban wait"><svg class="ic" viewBox="0 0 24 24"><path d="M12 8v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg><div><b>3 answers waiting to upload</b>They will send when you are online.</div></div>
+  <div class="pad"><div class="card"><span class="ey">YOUR LEARNING ADVENTURE</span><h4>A little practice. A brighter day.</h4><p class="small">Next up: Level 2A · My Toys</p></div></div></div></div>
+ <div class="col"><div class="cap">UPLOADING</div><div class="phone"><div class="top"><b>BULIG</b><span class="so"></span></div>
+  <div class="ban up"><span class="spin"></span><div><b>Uploading your answers…</b>2 of 3 sent</div></div>
+  <div class="pad"><div class="card"><span class="ey">YOUR LEARNING ADVENTURE</span><h4>A little practice. A brighter day.</h4><p class="small">Next up: Level 2A · My Toys</p></div></div></div></div>
+ <div class="col"><div class="cap">DONE</div><div class="phone"><div class="top"><b>BULIG</b><span class="so"></span></div>
+  <div class="ban ok"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><div><b>All 3 answers uploaded!</b>Your teacher can see them now.</div></div>
+  <div class="cel"><img src="girl.webp" alt=""><h3>Great work offline!</h3><p>Your answers are safe with your teacher.</p><span class="xp">+30 XP</span></div></div></div>
+</div></section>
+
+<!-- STEP 4 -->
+<section class="step"><h2><span class="num">4</span>Manage what is saved (My profile)</h2>
+<p>A new <b>Offline lessons</b> card in My profile lists the saved levels, how much space they use, and any answers still waiting. Pupils or teachers can remove a level to free space.</p>
+<div class="row">
+ <div class="col"><div class="cap">MY PROFILE</div><div class="phone"><div class="top"><b>BULIG</b><span class="so"></span></div><div class="pad">
+  <div class="pl"><h3>Offline lessons</h3><p class="small" style="margin:0">Saved on this phone</p><div class="meter"><i style="width:18%"></i></div><p class="small" style="margin:0 0 6px">16 MB used</p>
+   <div class="pli"><img src="level-2.webp" alt=""><div><b>Level 2A</b><small>11 MB · saved Oct 2</small></div><button class="btn l">Remove</button></div>
+   <div class="pli"><img src="level-3.webp" alt=""><div><b>Level 2B</b><small>5 MB · saved Oct 1</small></div><button class="btn l">Remove</button></div>
+   <div class="pli"><span class="chip dev"><svg class="ic" viewBox="0 0 24 24"><path d="M12 8v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>2 answers waiting</span><div></div><button class="btn s">Upload now</button></div>
+  </div></div></div></div>
+ <div class="tbl"><table><thead><tr><th>PUPIL</th><th>LESSON / ACTIVITY</th><th>STATUS</th><th>ANSWERED</th></tr></thead><tbody>
+  <tr><td>Maria Pupil</td><td>My Toys / What toy do you like?</td><td><span class="chip gr">completed</span></td><td>Oct 2, 9:14 AM <span class="chip blue">Offline</span></td></tr>
+  <tr><td>Maria Pupil</td><td>My Toys / Listen and say</td><td><span class="chip gr">completed</span></td><td>Oct 2, 9:10 AM <span class="chip blue">Offline</span></td></tr>
+  <tr><td>Juan Dela Cruz</td><td>Meet &amp; Greet / Tell me your name</td><td><span class="chip gr">completed</span></td><td>Oct 2, 8:55 AM</td></tr>
+ </tbody></table><p class="small" style="padding:0 12px 12px;margin:0">Teacher view (Activity history): answers made offline show a blue "Offline" tag with the time the pupil actually answered.</p></div>
+</div></section>
+
+<div class="notes"><h3>How it stays safe</h3><ul>
+<li>The pupil must sign in online once on that phone. After that, saved levels open even without internet.</li>
+<li>Each answer is uploaded only once, even if the connection drops in the middle. Nothing is counted twice.</li>
+<li>XP, streak days and badges use the time the pupil really answered, so offline days still count for the streak.</li>
+<li>Activities where BULIG listens to the pupil read aloud need internet to hear them. Offline, the pupil types the answer instead, and the teacher can check the reading in class.</li>
+<li>On a shared tablet, each pupil's waiting answers stay separate and upload under the right name.</li>
+<li>Level unlocks, teacher feedback and "Done in class" marks appear after the phone is back online.</li>
+</ul></div>
+</div></body></html>
