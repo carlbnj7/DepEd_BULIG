@@ -1146,3 +1146,25 @@ body{background:transparent}
 body:has(.install-bar) .pf-buddy{display:none}
 .install-bar{flex-wrap:wrap;row-gap:8px}.install-bar div{flex:1 1 220px}
 @media(max-width:520px){.install-bar .install-go{margin-left:52px}}
+/* Login fits one screen on computers, like the administrator page (v52) */
+@media(min-width:961px) and (min-height:560px){
+ .login-page .login-layout{min-height:0;height:100vh;padding:clamp(14px,3vh,38px) 38px}
+ .login-page .login-story,.login-page .login-panel{min-height:0;height:100%;overflow:hidden}
+ .login-page .login-panel{overflow-y:auto}
+ .login-page .login-story{display:flex;flex-direction:column;padding:clamp(18px,4vh,38px) 38px}
+ .login-page .story-content{margin:clamp(10px,3vh,36px) 0 0;flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+ .login-page .story-content h1{font-size:clamp(2.2rem,min(4.2vw,8vh),4rem);margin:.25em 0 .3em}
+ .login-page .story-content>p{margin:0;font-size:clamp(.88rem,2vh,1rem);line-height:1.55}
+ .login-page .story-photo{margin-top:clamp(10px,2.6vh,28px);padding:clamp(8px,1.6vh,18px);flex:0 1 auto;min-height:0}
+ .login-page .story-photo{width:fit-content;max-width:100%}
+ .login-page .story-photo img[src*="covers/login"]{height:clamp(80px,calc(100vh - 575px),250px);width:auto;max-width:100%;aspect-ratio:4/3}
+ .login-page .login-story>small{margin-top:8px}
+ .login-page .login-panel{display:flex;align-items:center;padding:clamp(16px,3.5vh,45px) 45px}
+ .login-page .login-card h2{font-size:clamp(1.9rem,4.8vh,2.5rem);margin:.2em 0 .25em}
+ .login-page .login-card .muted{margin:0 0 clamp(10px,2vh,18px)}
+ .login-page .login-card .role-tabs{margin-bottom:clamp(10px,2vh,18px)}
+ .login-page .login-card .stack{gap:clamp(10px,1.8vh,16px)}
+ .login-page .login-card input{min-height:clamp(42px,6vh,52px)}
+ .login-page .login-help{margin-top:clamp(10px,2vh,18px);padding:clamp(9px,1.6vh,15px)}
+ .login-page .admin-entry{margin-top:clamp(4px,1.4vh,20px);padding:clamp(6px,1.2vh,12px)}
+}
