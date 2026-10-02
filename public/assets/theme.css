@@ -1135,3 +1135,14 @@ body{background:transparent}
 .tf-stat>div>span{display:block}
 @media(max-width:700px){.tstat.tf-stat{flex-direction:column;text-align:center;gap:6px}.tf-stat .tf-spark{display:none}}
 @media(max-width:700px){.tf-alert{flex-wrap:nowrap;align-items:flex-start}.tf-alert .tf-avs{display:none}.tf-legend{position:static;margin-top:6px;grid-template-columns:1fr}}
+/* Install BULIG bar (v51) */
+.install-bar{position:fixed;left:50%;bottom:16px;z-index:70;display:flex;align-items:center;gap:12px;width:min(460px,calc(100% - 32px));transform:translateX(-50%);background:#fff;border:1px solid var(--line);border-top:4px solid #f6c02c;border-radius:20px;padding:10px 12px;box-shadow:0 14px 34px rgba(15,61,36,.22);animation:install-in .5s cubic-bezier(.2,1.3,.4,1) both}
+.install-bar img{width:40px;height:40px;border-radius:10px;flex:none;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.install-bar div{flex:1;min-width:0}.install-bar strong{display:block;font-family:var(--font-fun);color:var(--g900)}.install-bar span{display:block;font-size:.78rem;color:var(--muted);line-height:1.35}
+.install-bar .install-go{flex:none;padding:8px 14px;min-height:0}.install-bar .install-go .icon{width:18px;height:18px}
+.install-later{flex:none;border:0;background:none;color:var(--muted);font:inherit;font-size:.75rem;cursor:pointer;padding:6px}
+@keyframes install-in{from{opacity:0;transform:translate(-50%,30px)}}
+@media(prefers-reduced-motion:reduce){.install-bar{animation:none}}
+body:has(.install-bar) .pf-buddy{display:none}
+.install-bar{flex-wrap:wrap;row-gap:8px}.install-bar div{flex:1 1 220px}
+@media(max-width:520px){.install-bar .install-go{margin-left:52px}}
