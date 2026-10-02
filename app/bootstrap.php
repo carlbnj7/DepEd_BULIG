@@ -212,3 +212,4 @@ require_once __DIR__.'/admin_pin.php';
 require_once __DIR__.'/admin.php';
 require_once __DIR__.'/pupil_welcome.php';
 require_once __DIR__.'/pupil_fun.php';
+require_once __DIR__.'/teacher_fun.php';
