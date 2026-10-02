@@ -236,7 +236,7 @@ document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600
  const ua=navigator.userAgent||'';const ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
  const icon='<svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 21h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
  function bar(text,action){const b=document.createElement('div');b.className='install-bar';b.setAttribute('role','region');b.setAttribute('aria-label','Install BULIG');
-  b.innerHTML='<img src="assets/icons/icon-192.png" alt="" width="40" height="40"><div><strong>Install BULIG</strong><span></span></div>'+(action?'<button type="button" class="btn primary install-go">'+icon+'Install</button>':'')+'<button type="button" class="install-later" aria-label="Not now">Not now</button>';
+  b.innerHTML='<img src="assets/brand/bulig-app-medium.png" alt="" width="40" height="40"><div><strong>Install BULIG</strong><span></span></div>'+(action?'<button type="button" class="btn primary install-go">'+icon+'Install</button>':'')+'<button type="button" class="install-later" aria-label="Not now">Not now</button>';
   b.querySelector('span').textContent=text;b.querySelector('.install-later').addEventListener('click',()=>{set('bulig-install-later',String(Date.now()+7*864e5));b.remove();});
   if(action)b.querySelector('.install-go').addEventListener('click',()=>action(b));document.body.appendChild(b);return b;}
  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();const ev=e;if(document.querySelector('.install-bar'))return;
