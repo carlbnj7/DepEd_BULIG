@@ -1,101 +1,48 @@
 <?php
-/* BULIG installation check. Read-only; shows no passwords. Delete this file after use. */
-require __DIR__.'/../app/bootstrap.php';
-header('Content-Type: text/html; charset=utf-8');
-header('Cache-Control: no-store');
-$nonce=base64_encode(random_bytes(16));
-header("Content-Security-Policy: default-src 'self'; script-src 'nonce-$nonce'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self'; frame-ancestors 'none'");
-$rows=[];
-function row(string $label,bool $ok,string $detail,string $fix=''){global $rows;$rows[]=[$label,$ok,$detail,$fix];}
-$root=realpath(__DIR__.'/..');
-row('Site folder in use',true,$root);
-$views=@file_get_contents(__DIR__.'/../app/views.php')?:'';
-preg_match('/theme\.css\?v=(\d+)/',$views,$m);
-row('New app/views.php',isset($m[1])&&(int)$m[1]>=23,isset($m[1])?'theme version v'.$m[1]:'theme.css not linked (old views.php)','Upload Part 1 again into '.$root.' so app/views.php is replaced.');
-$pres=is_file(__DIR__.'/../app/presentation.php');
-row('app/presentation.php',$pres,$pres?'present':'missing','Part 1 was not extracted into '.$root.'.');
-$css=@file_get_contents(__DIR__.'/assets/theme.css')?:'';
-row('New design file (public/assets/theme.css)',str_contains($css,'poster palette'),$css===''?'missing':(str_contains($css,'poster palette')?'current':'old version'),'Extract BULIG-Fix-A-design-and-level3-pictures.zip into '.$root.'.');
-$font=is_file(__DIR__.'/assets/fonts/poppins-latin-400-normal.woff2');
-row('Poppins font files',$font,$font?'present':'missing','Copy public/assets/fonts from Part 1.');
-$pics=glob(__DIR__.'/assets/images/level3/*.webp')?:[];
-row('Level 3 pictures',count($pics)>=480,count($pics).' of 484','Extract BULIG-Fix-A-design-and-level3-pictures.zip into '.$root.'.');
-$cards=is_file(__DIR__.'/../database/level3-cards.json');
-row('Level 3 card file',$cards,$cards?'present':'missing','Copy database/level3-cards.json from Part 1.');
-$pages=glob(__DIR__.'/../storage/3/page-*.webp')?:[];
-row('Level 3 page images (storage/3)',count($pages)>=144,count($pages).' of 144','Extract BULIG-Fix-B-level3-pages.zip into '.$root.'.');
-$l2=glob(__DIR__.'/assets/images/level2a/art-*.webp')?:[];
-row('Level 2A pictures (visuals update)',count($l2)>=300,count($l2).' picture files','Extract BULIG-Fix-D1 and D2 ZIPs into '.$root.'.');
-$pdf=is_file(__DIR__.'/../storage/level3-original.pdf');
-row('Level 3 original PDF',$pdf,$pdf?'present':'missing','Extract BULIG-Fix-C-level3-pdf.zip into '.$root.'.');
-$l4pics=glob(__DIR__.'/assets/images/level4/*.webp')?:[];
-row('Level 4 pictures',count($l4pics)>=80,count($l4pics).' of 80','Extract the Level 4 Part 1 ZIP into '.$root.'.');
-row('Level 4 grade list (database/level4-meta.json)',is_file(__DIR__.'/../database/level4-meta.json'),is_file(__DIR__.'/../database/level4-meta.json')?'present':'missing','Extract the Level 4 Part 1 ZIP into '.$root.'.');
-$l4pdf=count(glob(__DIR__.'/../storage/level4/grade-*.pdf')?:[]);$l4pages=count(glob(__DIR__.'/../storage/level4/g*/page-*.webp')?:[]);
-row('Level 4 original PDFs (Grades 1–6)',$l4pdf===6,$l4pdf.' of 6','Extract the Level 4 Part 2 and Part 3 ZIPs into '.$root.'.');
-row('Level 4 page images',$l4pages>=138,$l4pages.' page images','Extract the Level 4 Part 2 and Part 3 ZIPs into '.$root.'.');
-$l5pics=count(glob(__DIR__.'/assets/images/level5/g*/*.webp')?:[]);
-row('Level 5 pictures',$l5pics>=413,$l5pics.' of 413 pictures','Extract the Level 5 Part 1 ZIPs into '.$root.'.');
-$l5pdf=count(glob(__DIR__.'/../storage/level5/grade-*.pdf')?:[]);
-row('Level 5 original PDFs (Grades 1–6)',$l5pdf===6,$l5pdf.' of 6','Extract the Level 5 PDF ZIPs into '.$root.'.');
-row('Level 5 grade list (database/level5-meta.json)',is_file(__DIR__.'/../database/level5-meta.json'),is_file(__DIR__.'/../database/level5-meta.json')?'present':'missing','Extract the Level 5 Part 1 ZIP into '.$root.'.');
-$l5c=@json_decode((string)@file_get_contents(__DIR__.'/../database/level5-cards.json'),true);
-row('Level 5 cards (newest: story pictures cut one by one, puzzles, matching pictures)',($l5c['version']??'')>='2026-10-01'&&!empty($l5c['cards']['1:15']['cards'][0]['heading'])&&!empty($l5c['cards']['1:8']['cards'][0]['choice_images']),'version: '.($l5c['version']??'old (no version)'),'Extract the NEWEST Level 5 Part 1 ZIP into '.$root.' (allow overwrite), then purge the cache.');
-$l5s=count(glob(__DIR__.'/assets/images/level5/g*/s*.webp')?:[]);$l5m=count(glob(__DIR__.'/assets/images/level5/g1/m*.webp')?:[]);
-row('Level 5 story pictures and Column B pictures',$l5s>=316&&$l5m>=100,$l5s.' story pictures, '.$l5m.' Grade 1 matching pictures','Extract the NEWEST Level 5 Part 1 ZIP into '.$root.'.');
-$css=(string)@file_get_contents(__DIR__.'/assets/theme.css');
-row('Level 5 card styles (reading-size stories, letter grids)',str_contains($css,'.native-passage')&&str_contains($css,'.letter-grid'),str_contains($css,'.native-passage')?'present':'old theme.css','Extract the NEWEST Level 5 Part 1 ZIP into '.$root.', then purge the cache.');
-try{
- $l5=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=6 AND m.grade_level IS NOT NULL');
- row('Level 5 in database (6 grade modules)',$l5>=157,'lessons='.$l5,'Import database/migrations/011_level5_content.sql in phpMyAdmin (select the BULIG database first).');
- $keys=(int)val('SELECT COUNT(*) FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=6 AND m.grade_level=3 AND a.source_page IN (13,53,58) AND a.published=1');
- row('Level 5 Grade 3 answer keys hidden from pupils',$keys===0,$keys===0?'hidden':$keys.' answer-key page(s) still visible to pupils','Import 011c_level5_fixes.sql in phpMyAdmin (select the BULIG database first).');
-}catch(Throwable $e){}
-$l6c=@json_decode((string)@file_get_contents(__DIR__.'/../database/level6-cards.json'),true);
-row('Level 6 cards (stories and questions)',count($l6c['cards']??[])>=197,count($l6c['cards']??[]).' of 197 activities','Extract the Level 6 Part 1 ZIP into '.$root.'.');
-$l6pics=count(glob(__DIR__.'/assets/images/level6/g*/*.webp')?:[]);
-row('Level 6 pictures',$l6pics>=150,$l6pics.' pictures','Extract the Level 6 Part 1 ZIP into '.$root.'.');
-$l6pdf=count(glob(__DIR__.'/../storage/level6/grade-*.pdf')?:[]);$l6pages=count(glob(__DIR__.'/../storage/level6/g*/page-*.webp')?:[]);
-row('Level 6 original PDFs (Grades 1–6)',$l6pdf===6,$l6pdf.' of 6','Upload grade-1.pdf … grade-6.pdf into '.$root.'/storage/level6.');
-row('Level 6 page images (teachers)',$l6pages>=330,$l6pages.' of 330','Extract the Level 6 Part 2, 3 and 4 ZIPs into '.$root.'.');
-try{
- $l6=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=7 AND m.grade_level IS NOT NULL');
- row('Level 6 in database (6 grade modules)',$l6>=133,'lessons='.$l6,'Import 012_level6_content.sql in phpMyAdmin (select the BULIG database first).');
-}catch(Throwable $e){}
-$l7c=@json_decode((string)@file_get_contents(__DIR__.'/../database/level7-cards.json'),true);
-row('Level 7 cards (readings, tasks and questions)',count($l7c['cards']??[])>=154,count($l7c['cards']??[]).' of 154 activities','Extract the Level 7 ZIP into '.$root.'.');
-$l7pics=count(glob(__DIR__.'/assets/images/level7/g*/*.webp')?:[]);
-row('Level 7 pictures',$l7pics>=35,$l7pics.' pictures','Extract the Level 7 ZIP into '.$root.'.');
-$l7pdf=count(glob(__DIR__.'/../storage/level7/grade-*.pdf')?:[]);$l7pages=count(glob(__DIR__.'/../storage/level7/g*/page-*.webp')?:[]);
-row('Level 7 original PDFs (Grades 1–6)',$l7pdf===6,$l7pdf.' of 6','Extract the Level 7 ZIP into '.$root.'.');
-row('Level 7 page images',$l7pages>=213,$l7pages.' of 213','Extract the Level 7 ZIP into '.$root.'.');
-try{
- $l7=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=8 AND m.grade_level IS NOT NULL');
- row('Level 7 in database (6 grade modules)',$l7>=154,'lessons='.$l7,'Import 013_level7_content.sql in phpMyAdmin (select the BULIG database first).');
-}catch(Throwable $e){}
-try{
- $l4=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=5 AND m.grade_level IS NOT NULL');
- row('Level 4 in database (6 grade modules)',$l4>=69,'lessons='.$l4,'Import database/migrations/010_level4_content.sql in phpMyAdmin (select the BULIG database first).');
- $l=one('SELECT title,published FROM bulig_levels WHERE id=4');
- $n=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=4');
- row('Level 3 in database',$l&&$l['published']&&$n>=27,$l?('"'.$l['title'].'", published='.$l['published'].', lessons='.$n):'no level row','Import database/migrations/009_level3_content.sql in phpMyAdmin (select the BULIG database first).');
- $mig=array_column(rows('SELECT version FROM schema_migrations'),'version');
- row('Admin PIN update',in_array('014_admin_pin',$mig,true),in_array('014_admin_pin',$mig,true)?'applied':'not yet','Import 014_admin_pin.sql in phpMyAdmin (select the BULIG database first).');
- row('Admin tools update',in_array('015_admin_tools',$mig,true),in_array('015_admin_tools',$mig,true)?'applied':'not yet','Import 015_admin_tools.sql in phpMyAdmin (select the BULIG database first).');
- row('Database updates applied',in_array('009_level3_content',$mig,true),implode(', ',array_slice($mig,-4)),'Import 008 then 009 SQL files.');
-}catch(Throwable $e){row('Database',false,'Could not read the database: '.get_class($e),'Check config/database.php.');}
-$bad=count(array_filter($rows,fn($r)=>!$r[1]));
-?><!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BULIG check</title>
-<style>body{font:16px/1.5 system-ui,Arial;margin:0;padding:24px;background:#fdf8e6;color:#10311a}h1{margin:0 0 6px}table{border-collapse:collapse;width:100%;max-width:1000px;background:#fff}td,th{border:1px solid #ecdfae;padding:10px;text-align:left;vertical-align:top}.ok{color:#0a6a20;font-weight:700}.no{color:#d80006;font-weight:700}small{color:#5b6b4f}</style></head><body>
-<h1>BULIG installation check</h1><p><?=$bad?'<span class="no">'.$bad.' problem(s) found.</span> Follow the “How to fix” column.':'<span class="ok">Everything is installed.</span> If you still see the old look, clear the Hostinger cache (hPanel → Website → Cache / LiteSpeed Cache → Purge all) and press Ctrl+F5.'?></p>
-<table><tr><th>Check</th><th>Result</th><th>Details</th><th>How to fix</th></tr>
-<?php foreach($rows as [$a,$ok,$d,$f])echo '<tr><td>'.e($a).'</td><td class="'.($ok?'ok':'no').'">'.($ok?'OK':'PROBLEM').'</td><td><small>'.e($d).'</small></td><td>'.($ok?'':e($f)).'</td></tr>';?>
-</table><h2>What your browser receives</h2><table id="live"><tr><th>Check</th><th>Result</th><th>Details</th><th>How to fix</th></tr></table>
-<script nonce="<?=$nonce?>">
-(async()=>{const t=document.getElementById('live');const add=(a,ok,d,f)=>{const r=t.insertRow();r.innerHTML='<td></td><td class="'+(ok?'ok':'no')+'">'+(ok?'OK':'PROBLEM')+'</td><td><small></small></td><td></td>';r.cells[0].textContent=a;r.cells[2].firstChild.textContent=d;r.cells[3].textContent=ok?'':f;};
-try{const r=await fetch('./?page=login&check='+Date.now(),{cache:'no-store',credentials:'omit'});const h=await r.text();const m=h.match(/theme\.css\?v=(\d+)/);const hdr=['x-litespeed-cache','x-hcdn-cache-status','cf-cache-status','age'].map(k=>r.headers.get(k)?k+': '+r.headers.get(k):'').filter(Boolean).join(', ');
-add('Sign-in page links the new design',!!m&&+m[1]>=23,m?'page asks for theme.css v'+m[1]+(hdr?' | '+hdr:''):'page does not link theme.css'+(hdr?' | '+hdr:''),'The site is serving an old cached page. hPanel → Websites → Dashboard → Cache Manager / LiteSpeed → Purge all, and turn off CDN cache (hPanel → CDN → Purge cache).');}catch(e){add('Sign-in page',false,String(e),'');}
-try{const r=await fetch('assets/theme.css?v=23&check='+Date.now(),{cache:'no-store'});const c=await r.text();add('Design file the browser downloads',r.ok&&c.includes('poster palette'),'HTTP '+r.status+', '+c.length+' bytes','theme.css on the server is old or blocked; re-extract Fix A, then purge the cache.');}catch(e){add('Design file',false,String(e),'');}
-try{const r=await fetch('assets/fonts/poppins-latin-400-normal.woff2',{cache:'no-store'});add('Font file download',r.ok,'HTTP '+r.status,'Fonts folder missing under public/assets/fonts.');}catch(e){add('Font',false,String(e),'');}
+/* BULIG update checker. Open https://your-site/public/bulig-check.php while signed in as a pupil
+   (for the offline checks). Delete this file when you are done. */
+header('Content-Type: text/html; charset=utf-8');header('Cache-Control: no-store, max-age=0');
+$opc=function_exists('opcache_reset')?(@opcache_reset()?'cleared now':'not allowed'):'not used';
+$root=dirname(__DIR__);
+$expected=['app/views.php'=>'f20214b1ee1d63b75095029a6d700d29e6744a43','app/actions.php'=>'42191b0e6853c277698d1f7e75844f6c656b3a10','app/admin.php'=>'f2430876741a95b63bbf983dbbb7d958944402d9','app/pupil_fun.php'=>'95e26019508e553ed06ac49d91a196845f37571f','app/pupil_welcome.php'=>'b4cdee1ce7f35edfcdda0f2bebfd3da9f012bc24','app/teacher_fun.php'=>'01e29365bf0cee67399754047db267a0ed0af95e','public/index.php'=>'3f6c0d84e8ba94680a187483cdf3dcda239970c7','public/assets/app.js'=>'adedcd9c4bfca630164a66f45727009c631353b4','public/assets/theme.css'=>'4fde8a140767548cdc072a63d9815c300b27a81b','public/assets/images/characters/teacher-female.webp'=>'e5c47d1a06040fceb90d636e4db3f709d5fe1853','public/assets/images/characters/boy.webp'=>'beeed8c97b0449b509c1b2fdbac9953c557abc79','public/assets/images/characters/girl.webp'=>'a0df4465a7db129e18b6152111a1da096803ad87','public/assets/images/characters/teacher-male.webp'=>'8d03935a73f19d1df42c307f93f2f20f4657cf77','app/class_done.php'=>'b4e7769493c195102ac90d316c81502052189859','app/bootstrap.php'=>'bca9c822005e472b98d575ccc510ac7ab9c78954','app/teacher_demo.php'=>'2ff4cc946d8cdd3644c32c18c8460ebfeac715fb','app/offline.php'=>'4da33291a3868d836ce25a7352bb4461edceab13','public/sw.js'=>'b1318927d66d9dd53085f044f3ad2083bd71167b','public/assets/offline.js'=>'69053d47f1c994e6a04f754d5faba22d3eff0431'];
+$ver=['app.js'=>'38','theme.css'=>'64','offline.js'=>'2'];
+$rows='';$bad=0;
+foreach($expected as $f=>$h){
+ $p=$root.'/'.$f;
+ if(!is_file($p)){$s='MISSING';$bad++;}
+ else{$got=sha1_file($p);if($got===$h)$s='OK';else{$s='OLD / DIFFERENT';$bad++;}}
+ $rows.='<tr class="'.($s==='OK'?'ok':'bad').'"><td>'.htmlspecialchars($f).'</td><td>'.$s.'</td></tr>';
+}
+$pub=[];foreach($expected as $f=>$h)if(strpos($f,'public/')===0&&!preg_match('~\.php$~',$f)){$u=substr($f,7);if($u==='assets/app.js')$u.='?v='.$ver['app.js'];elseif($u==='assets/theme.css')$u.='?v='.$ver['theme.css'];elseif($u==='assets/offline.js')$u.='?v='.$ver['offline.js'];elseif(strpos($u,'images/characters/')!==false)$u.='?v=1';$pub[$u]=$h;}
+?><!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BULIG update check</title>
+<style>body{font-family:system-ui,Segoe UI,Arial,sans-serif;margin:0;background:#f6f1e2;color:#17331f}main{max-width:900px;margin:auto;padding:20px 16px 60px}h1{color:#176444;margin:0 0 4px}h2{margin:28px 0 8px;font-size:1.15rem}
+.box{background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.06)}table{border-collapse:collapse;width:100%;font-size:.88rem}td{padding:7px 8px;border-top:1px solid #eee;word-break:break-all}
+tr.ok td:last-child{color:#176444;font-weight:700}tr.bad td:last-child{color:#b3261e;font-weight:800}tr.wait td:last-child{color:#8a6200}
+.sum{font-size:1.05rem;font-weight:800;padding:12px 16px;border-radius:14px;margin-top:10px}.sum.ok{background:#e6f4ec;color:#176444}.sum.bad{background:#fde8e6;color:#b3261e}.muted{color:#5f6f63;font-size:.9rem}li{margin:4px 0}</style></head><body><main>
+<h1>BULIG update check</h1><p class="muted">PHP code cache: <?=$opc?> · <?=date('M j, Y g:i A')?></p>
+<h2>1. Files on the server</h2><div class="box"><div class="sum <?=$bad?'bad':'ok'?>"><?=$bad?$bad.' file(s) are missing or old. Upload the ZIP again (the newest one that has the file).':'All '.count($expected).' files on the server are the new versions.'?></div><table><?=$rows?></table></div>
+<h2>2. What your browser really gets (through the CDN)</h2><div class="box"><div class="sum" id="cdn-sum">Checking…</div><table id="cdn"></table></div>
+<h2>3. Offline mode in this browser</h2><div class="box"><div class="sum" id="off-sum">Checking…</div><table id="off"></table></div>
+<h2>If something says OLD or MISSING</h2><div class="box"><ul>
+<li><b>Section 1 OLD/MISSING:</b> the file on the server is old. Extract the ZIP again inside <b>public_html</b> and choose <b>Replace</b> for every file.</li>
+<li><b>Section 1 OK but Section 2 OLD:</b> the CDN still gives the old copy. In Hostinger, go to Websites → your site → Performance → <b>CDN → Flush cache</b>, and <b>Cache Manager → Purge all</b>. Wait 2 minutes, then reload this page.</li>
+<li><b>Service worker OLD:</b> after flushing the CDN, close all BULIG tabs, open BULIG again and reload once (Ctrl+F5). On phones, close the app fully and open it again.</li>
+<li>Delete <b>public/bulig-check.php</b> when you are finished.</li></ul></div>
+</main><script>
+const PUB=<?=json_encode($pub)?>;
+const row=(t,u,s,c)=>{const tr=document.createElement('tr');tr.className=c;tr.innerHTML='<td></td><td></td>';tr.cells[0].textContent=u;tr.cells[1].textContent=s;document.getElementById(t).append(tr);};
+async function sha1(buf){const h=await crypto.subtle.digest('SHA-1',buf);return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('');}
+(async()=>{let bad=0;
+ for(const [u,h] of Object.entries(PUB)){try{const r=await fetch(u,{cache:'no-store'});if(!r.ok){row('cdn',u,'MISSING ('+r.status+')','bad');bad++;continue;}const got=await sha1(await r.arrayBuffer());if(got===h)row('cdn',u,'OK','ok');else{row('cdn',u,'OLD COPY','bad');bad++;}}catch(e){row('cdn',u,'Could not load','bad');bad++;}}
+ const s=document.getElementById('cdn-sum');s.className='sum '+(bad?'bad':'ok');s.textContent=bad?bad+' file(s) come back old or missing. Flush the CDN and Cache Manager, then reload.':'Your browser gets the new version of every file.';
+ let ob=0;const add=(n,ok,txt)=>{row('off',n,txt,ok===null?'wait':ok?'ok':'bad');if(ok===false)ob++;};
+ add('Secure site (https)',location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1',location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'?'OK':'NOT https: offline mode cannot work');
+ add('Browser supports offline','serviceWorker' in navigator&&'caches' in window&&'indexedDB' in window,'serviceWorker' in navigator?'OK':'NO: use Chrome, Edge, Firefox or Safari (not a private window)');
+ try{const t=await (await fetch('sw.js',{cache:'no-store'})).text();add('Service worker file (sw.js)',t.includes('bulig-off-'),t.includes('bulig-off-')?'OK (new)':'OLD: offline pages cannot open');}catch(e){add('Service worker file (sw.js)',false,'Could not load');}
+ if('serviceWorker' in navigator){const reg=await navigator.serviceWorker.getRegistration();if(!reg)add('Service worker running',null,'Not yet. Open BULIG once, then reload this page');else{const sw=reg.active||reg.waiting||reg.installing;let txt='Running';try{const t=await (await fetch(sw.scriptURL,{cache:'no-store'})).text();txt=t.includes('bulig-off-')?'Running (new)':'Running OLD version: close all BULIG tabs and open again';}catch(e){}add('Service worker running',!txt.includes('OLD'),txt);if(reg.waiting)add('Update waiting',null,'A new version is waiting. Close all BULIG tabs, then open again.');}}
+ try{const r=await fetch('index.php?page=offline_sync',{cache:'no-store',credentials:'same-origin'});const t=await r.text();let j=null;try{j=JSON.parse(t);}catch(e){}
+  if(!j)add('Offline upload address',false,'OLD index.php or not reachable');else{add('Offline upload address',true,'OK');add('Signed in as a pupil',j.uid>0?true:null,j.uid>0?'Yes (pupil '+j.uid+')':'No. Sign in as a pupil in this browser to use and test offline mode');}}catch(e){add('Offline upload address',false,'Could not reach');}
+ if('caches' in window){const keys=(await caches.keys()).filter(k=>k.startsWith('bulig-off-'));add('Levels saved in this browser',keys.length?true:null,keys.length?keys.length+' saved':'None yet. Open My lessons and choose "Save for offline"');}
+ const os=document.getElementById('off-sum');os.className='sum '+(ob?'bad':'ok');os.textContent=ob?ob+' problem(s) found. See the list below.':'Offline mode is ready in this browser.';
 })();
-</script><p><small>Delete public/bulig-check.php when you are done.</small></p></body></html>
+</script></body></html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BULIG Effects Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y300:#ffd966;--y100:#fff4cf;--ivory:#fbf8ef;--ink:#17331f;--hero:linear-gradient(160deg,#0f3318 0%,#023f10 55%,#034f15 100%)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ivory);font-family:Poppins,system-ui,sans-serif;color:var(--ink)}
+header.top{padding:28px 16px 8px;max-width:1180px;margin:auto}
+h1{margin:0;font-size:1.7rem;color:var(--g700)}
+.lead{margin:.3rem 0 0;color:#4d5f52}
+h2.sec{max-width:1180px;margin:30px auto 10px;padding:0 16px;font-size:1.15rem;letter-spacing:.12em;color:#9a7400}
+.grid{max-width:1180px;margin:auto;padding:0 16px 10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+.opt{background:#fff;border:1px solid #e9e2cc;border-radius:20px;overflow:hidden;box-shadow:0 8px 22px rgba(20,60,30,.07);display:flex;flex-direction:column}
+.opt .stage{height:240px;position:relative;overflow:hidden}
+.opt .info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.opt .info b{font-size:1rem}
+.tag{display:inline-block;background:var(--g700);color:#fff;border-radius:999px;font-weight:800;font-size:.8rem;padding:2px 10px;margin-right:6px}
+.opt p{margin:0;font-size:.86rem;color:#4d5f52}
+.replay{align-self:flex-start;margin-top:auto;border:0;background:var(--y100);color:#7d5a00;font:700 .8rem Poppins;padding:6px 14px;border-radius:999px;cursor:pointer}
+footer{max-width:1180px;margin:20px auto 50px;padding:0 16px;color:#4d5f52;font-size:.9rem}
+
+/* ---------- shared mini UI ---------- */
+.dash{background:#fdf9ee;height:100%;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
+.mc{background:#fff;border-radius:14px;padding:10px 12px;box-shadow:0 4px 10px rgba(0,0,0,.06);border-top:4px solid var(--y400);font-size:.72rem;font-weight:600}
+.mc big{display:block;font-size:1.5rem;font-weight:800;color:var(--g700)}
+.mc.g{border-top-color:#5db585}
+.wide{grid-column:1/-1}
+.login{background:var(--hero);height:100%;color:#fff;padding:18px;position:relative;overflow:hidden}
+.login img.logo{width:120px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));position:relative;z-index:2}
+.login h3{margin:10px 0 0;font-size:1.35rem;line-height:1.15;position:relative;z-index:2}
+.login small{color:var(--y300);font-weight:800;letter-spacing:.1em;font-size:.62rem;position:relative;z-index:2}
+
+/* P1 cards rise in */
+.rise .mc{opacity:0;animation:rise .6s cubic-bezier(.2,1.3,.4,1) forwards}
+.rise .mc:nth-child(1){animation-delay:.1s}.rise .mc:nth-child(2){animation-delay:.25s}.rise .mc:nth-child(3){animation-delay:.4s}.rise .mc:nth-child(4){animation-delay:.55s}.rise .mc:nth-child(5){animation-delay:.7s}
+.rise .mc:hover{transform:translateY(-5px) rotate(-.6deg);transition:.25s}
+@keyframes rise{from{opacity:0;transform:translateY(26px) scale(.95)}to{opacity:1;transform:none}}
+
+/* P2 XP bar fill + sparkles + floating +XP */
+.xpbar{height:12px;border-radius:9px;background:var(--y100);margin-top:8px;position:relative;overflow:visible}
+.xpbar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,#ffd54a,#ffb300);position:relative;overflow:hidden;animation:fill 1.6s .4s cubic-bezier(.3,.9,.3,1) forwards}
+.xpbar i:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.85) 50%,transparent 70%);animation:shine 2s 2s infinite}
+@keyframes fill{to{width:62%}}@keyframes shine{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.plus{position:absolute;left:58%;top:-6px;font-weight:800;color:#e09a00;font-size:.9rem;opacity:0;animation:plus 1.4s 1.9s ease-out forwards}
+@keyframes plus{0%{opacity:0;transform:translateY(0) scale(.6)}30%{opacity:1;transform:translateY(-14px) scale(1.15)}100%{opacity:0;transform:translateY(-38px)}}
+.spark{position:absolute;width:7px;height:7px;background:#ffc629;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);opacity:0;animation:spk 1s 1.9s ease-out forwards}
+@keyframes spk{0%{opacity:1;transform:translate(0,0) scale(.4)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.3) rotate(120deg)}}
+
+/* P3 floating letters in adventure card */
+.adv{background:linear-gradient(135deg,#fffdf4,#fff4cf);height:100%;padding:22px;position:relative;overflow:hidden}
+.adv h4{font-size:1.5rem;line-height:1.1;margin:8px 0;color:var(--g900);position:relative;z-index:2}
+.adv .ey{font-size:.65rem;letter-spacing:.14em;font-weight:800;color:var(--g700);position:relative;z-index:2}
+.fl{position:absolute;bottom:-40px;font-weight:800;opacity:.0;animation:floatup linear infinite}
+@keyframes floatup{0%{transform:translateY(0) rotate(-10deg);opacity:0}10%{opacity:.55}90%{opacity:.45}100%{transform:translateY(-300px) rotate(14deg);opacity:0}}
+
+/* P4 tap the flame -> sparks + streak number pop */
+.flamebox{background:#fff;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.flame{width:70px;height:90px;cursor:pointer;animation:flick 1.6s ease-in-out infinite;transform-origin:50% 100%;position:relative}
+@keyframes flick{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.06,1.1) rotate(2deg)}}
+.flamebox .n{font-size:1.6rem;font-weight:800;color:#e0611d}
+.flamebox .n.pop{animation:npop .6s}
+@keyframes npop{40%{transform:scale(1.5)}}
+.ember{position:absolute;left:50%;top:40%;width:8px;height:8px;border-radius:50%;background:#ffb300;pointer-events:none;animation:ember .9s ease-out forwards}
+@keyframes ember{to{transform:translate(var(--dx),var(--dy));opacity:0}}
+.hint{font-size:.72rem;color:#9a7400;font-weight:700}
+
+/* P5 Lessons book button flaps */
+.tabbar{position:absolute;left:12px;right:12px;bottom:14px;height:70px;background:#12522f;border-radius:22px;display:flex;justify-content:space-around;align-items:center;color:#cfe9d9;font-size:.66rem;font-weight:700}
+.tabbar span{width:50px;text-align:center}
+.bookbtn{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#ffd966,#f0a400);border:5px solid #fff4cf;margin-top:-50px;display:grid;place-items:center;box-shadow:0 0 0 0 rgba(255,198,41,.6);animation:ring 2.4s infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(255,198,41,.65)}70%{box-shadow:0 0 0 18px rgba(255,198,41,0)}100%{box-shadow:0 0 0 0 rgba(255,198,41,0)}}
+.bookbtn svg .pg{transform-origin:50% 50%;animation:flap 2.4s ease-in-out infinite}
+@keyframes flap{0%,60%,100%{transform:scaleX(1)}75%{transform:scaleX(-1)}}
+
+/* P6 buddy breathing + look-around + hop on tap */
+.buddyst{background:linear-gradient(#e9f6ff,#fff8e6);height:100%;display:flex;align-items:flex-end;justify-content:center;gap:30px;padding-bottom:6px}
+.buddyst img{height:190px;transform-origin:50% 100%;animation:breathe 3.2s ease-in-out infinite;cursor:pointer}
+.buddyst img:nth-child(2){animation-delay:-1.5s}
+@keyframes breathe{0%,100%{transform:scale(1,1) rotate(0)}25%{transform:scale(1.01,1.025) rotate(-1.5deg)}75%{transform:scale(1.01,1.025) rotate(1.5deg)}}
+.buddyst img.hop{animation:hop .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes hop{30%{transform:translateY(-34px) scale(1.04,.96)}60%{transform:translateY(0) scale(1.06,.92)}}
+
+/* L1 floating letters on green panel */
+.login .fl{color:#ffd966}
+
+/* L2 characters peek & wave on login */
+.peek{position:absolute;bottom:-8px;height:150px;z-index:1;animation:peekup 1s .5s cubic-bezier(.2,1.4,.4,1) both}
+.peek.b{right:84px;animation-delay:.8s}.peek.g{right:6px}
+@keyframes peekup{from{transform:translateY(170px)}to{transform:none}}
+.peek.sway{animation:peekup 1s .5s cubic-bezier(.2,1.4,.4,1) both,sw 3s 1.6s ease-in-out infinite}
+.peek.b.sway{animation:peekup 1s .8s cubic-bezier(.2,1.4,.4,1) both,sw 3s 1.9s ease-in-out infinite}
+@keyframes sw{0%,100%{transform:rotate(0)}50%{transform:rotate(-3deg)}}
+.peek{transform-origin:50% 100%}
+
+/* L3 sunrise glow behind logo */
+.sunglow{position:absolute;left:-30px;top:-40px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(255,217,102,.55),rgba(255,198,41,.15) 45%,transparent 70%);animation:glow 4s ease-in-out infinite;z-index:1}
+@keyframes glow{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.12);opacity:1}}
+.hillsv{position:absolute;left:0;right:0;bottom:0;width:100%;height:80px}
+
+/* L4 form slide + gold focus + button shine */
+.formst{background:var(--ivory);height:100%;display:grid;place-items:center}
+.fcard{width:260px;background:#fff;border-radius:18px;padding:16px;box-shadow:0 10px 26px rgba(0,0,0,.08);animation:slidein .8s cubic-bezier(.2,1.2,.4,1) both}
+@keyframes slidein{from{opacity:0;transform:translateY(30px)}}
+.fcard label{font-size:.68rem;font-weight:700;display:block;margin-top:8px}
+.fcard input{width:100%;margin-top:3px;padding:8px 10px;border:2px solid #e9e2cc;border-radius:10px;font:500 .8rem Poppins;transition:.25s}
+.fcard input:focus{outline:0;border-color:var(--y400);box-shadow:0 0 0 4px rgba(255,198,41,.25)}
+.fcard button{margin-top:12px;width:100%;border:0;border-radius:12px;padding:10px;font:700 .85rem Poppins;color:#fff;background:var(--g700);position:relative;overflow:hidden}
+.fcard button:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);animation:shine 2.6s 1s infinite}
+
+/* L5 drifting clouds and birds over the green panel */
+.cloud{position:absolute;fill:rgba(255,255,255,.14);animation:drift linear infinite}
+@keyframes drift{from{transform:translateX(-160px)}to{transform:translateX(420px)}}
+.bird{position:absolute;stroke:#ffd966;fill:none;stroke-width:2;stroke-linecap:round;animation:fly 9s linear infinite}
+@keyframes fly{from{transform:translate(-40px,0)}50%{transform:translate(180px,-18px)}to{transform:translate(420px,4px)}}
+.bird path{animation:flapb .5s ease-in-out infinite alternate;transform-origin:50% 50%}
+@keyframes flapb{to{transform:scaleY(-.6)}}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important}}
+</style></head><body>
+<header class="top"><h1>Animation and effect ideas</h1>
+<p class="lead">Each box below is moving live. Tap <b>Replay</b> to watch one again. Pick any you like, for example: <b>P1, P3, L2</b>.</p></header>
+
+<h2 class="sec">PUPIL DASHBOARD</h2>
+<div class="grid">
+
+<div class="opt"><div class="stage" id="s-p1"><div class="dash rise">
+<div class="mc g">Starting level<big>5</big></div><div class="mc">Your learning XP<big>20</big></div>
+<div class="mc g">Learning streak<big>1 day</big></div><div class="mc">My badges<big>2</big></div>
+<div class="mc wide g">Your learning adventure</div></div></div>
+<div class="info"><b><span class="tag">P1</span>Cards rise in</b><p>When the page opens, the cards pop up one after another. They also lift a little when the pointer goes over them.</p><button class="replay" data-r="s-p1">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-p2"><div class="dash"><div class="mc wide" style="padding:18px">Your learning XP<big>20 XP</big>
+<div class="xpbar"><i></i><span class="plus">+10 XP</span>
+<span class="spark" style="left:60%;top:2px;--dx:-20px;--dy:-22px"></span><span class="spark" style="left:60%;top:2px;--dx:16px;--dy:-26px"></span><span class="spark" style="left:60%;top:2px;--dx:26px;--dy:8px"></span><span class="spark" style="left:60%;top:2px;--dx:-14px;--dy:14px"></span></div>
+<div style="margin-top:12px;font-weight:500">20 / 100 XP · Reading spark</div></div></div></div>
+<div class="info"><b><span class="tag">P2</span>XP bar fills and sparkles</b><p>The XP bar fills up and a soft shine runs across it. When a pupil earns new XP, little stars burst out and "+10 XP" floats up.</p><button class="replay" data-r="s-p2">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-p3"><div class="adv" data-letters="dark"><div class="ey">YOUR LEARNING ADVENTURE</div><h4>A little practice.<br>A brighter day.</h4></div></div>
+<div class="info"><b><span class="tag">P3</span>Floating letters</b><p>Soft letters (A, b, c, ma, sa...) slowly float up behind the "Your learning adventure" card, like bubbles. It's quiet, so it doesn't distract.</p><button class="replay" data-r="s-p3">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-p4"><div class="flamebox"><svg class="flame" viewBox="0 0 60 80" data-flame><defs><linearGradient id="fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e0491d"/><stop offset="1" stop-color="#ffb300"/></linearGradient></defs><path d="M30 2c6 16 26 26 26 48a26 26 0 0 1-52 0c0-12 8-20 12-26 2 8 6 12 10 12C26 26 24 14 30 2z" fill="url(#fl)"/><path d="M30 40c4 8 12 12 12 22a12 12 0 0 1-24 0c0-6 4-10 6-14 2 4 4 5 6 5-2-4-2-8 0-13z" fill="#ffe08a"/></svg>
+<div class="n" data-n>1 day</div><div class="hint">Tap the flame</div></div></div>
+<div class="info"><b><span class="tag">P4</span>Tap the streak flame</b><p>The flame on the streak card flickers. Tap it and sparks fly out while the day count bounces.</p><button class="replay" data-r="s-p4">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-p5" style="background:#fdf9ee"><div class="tabbar"><span>Home</span><span>Calendar</span>
+<div class="bookbtn"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><g class="pg"><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></g></svg></div>
+<span>Badges</span><span>Me</span></div></div>
+<div class="info"><b><span class="tag">P5</span>Lessons button calls you</b><p>The big gold Lessons button in the bottom menu (phone) glows in a soft ring, and its book flips a page every few seconds. It gently invites the pupil to start.</p><button class="replay" data-r="s-p5">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-p6"><div class="buddyst"><img src="boy.webp" alt="Boy buddy" data-hop><img src="girl.webp" alt="Girl buddy" data-hop></div></div>
+<div class="info"><b><span class="tag">P6</span>Living reading buddy</b><p>The corner buddy gently breathes and sways, so it looks alive. Tap it and it does a happy hop while saying its message. Tap the characters to try.</p><button class="replay" data-r="s-p6">Replay</button></div></div>
+</div>
+
+<h2 class="sec">LOGIN PAGE</h2>
+<div class="grid">
+
+<div class="opt"><div class="stage" id="s-l1"><div class="login" data-letters="light"><img class="logo" src="bulig-logo.png" alt="BULIG"><br><small>A LITTLE PRACTICE. A LOT OF POSSIBILITY.</small><h3>Small steps.<br>Bright futures.</h3></div></div>
+<div class="info"><b><span class="tag">L1</span>Floating letters</b><p>Soft gold letters float slowly up the green panel behind the words. It fits a reading app.</p><button class="replay" data-r="s-l1">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-l2"><div class="login"><img class="logo" src="bulig-logo.png" alt="BULIG"><br><small>A LITTLE PRACTICE. A LOT OF POSSIBILITY.</small><h3>Small steps.<br>Bright futures.</h3>
+<img class="peek b sway" src="boy.webp" alt=""><img class="peek g sway" src="girl.webp" alt=""></div></div>
+<div class="info"><b><span class="tag">L2</span>Your characters say hi</b><p>Your boy and girl characters pop up from the bottom of the green panel and sway softly, welcoming the pupil before they sign in.</p><button class="replay" data-r="s-l2">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-l3"><div class="login"><div class="sunglow"></div><img class="logo" src="bulig-logo.png" alt="BULIG"><br><small>A LITTLE PRACTICE. A LOT OF POSSIBILITY.</small><h3>Small steps.<br>Bright futures.</h3>
+<svg class="hillsv" viewBox="0 0 400 80" preserveAspectRatio="none"><path d="M0 50q100-40 200-10t200-10v50H0z" fill="rgba(93,181,133,.35)"/><path d="M0 64q120-24 220-4t180-6v26H0z" fill="rgba(93,181,133,.55)"/></svg></div></div>
+<div class="info"><b><span class="tag">L3</span>Sunrise glow</b><p>A warm golden glow slowly breathes behind the BULIG logo, with soft hills at the bottom, like a sunrise. "Bright futures."</p><button class="replay" data-r="s-l3">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-l4"><div class="formst"><div class="fcard"><b style="font-size:.95rem">Your next adventure starts here.</b><label>Pupil ID<input placeholder="Tap here to try"></label><label>Password<input type="password" placeholder="••••••••"></label><button type="button">Sign in</button></div></div></div>
+<div class="info"><b><span class="tag">L4</span>Friendly sign-in box</b><p>The sign-in box slides in smoothly, boxes glow gold when you tap them, and a shine sweeps across the Sign in button. Tap a box to try.</p><button class="replay" data-r="s-l4">Replay</button></div></div>
+
+<div class="opt"><div class="stage" id="s-l5"><div class="login">
+<svg class="cloud" style="top:30px;animation-duration:26s" width="120" height="50" viewBox="0 0 120 50"><path d="M10 40a14 14 0 0 1 20-16 22 22 0 0 1 40-6 16 16 0 0 1 30 10 12 12 0 0 1 4 22H14a8 8 0 0 1-4-10z"/></svg>
+<svg class="cloud" style="top:140px;animation-duration:38s;animation-delay:-14s" width="90" height="40" viewBox="0 0 120 50"><path d="M10 40a14 14 0 0 1 20-16 22 22 0 0 1 40-6 16 16 0 0 1 30 10 12 12 0 0 1 4 22H14a8 8 0 0 1-4-10z"/></svg>
+<svg class="bird" style="top:70px" width="26" height="14" viewBox="0 0 26 14"><path d="M1 7q6-6 12 0q6-6 12 0"/></svg>
+<svg class="bird" style="top:88px;animation-delay:-1.2s" width="18" height="10" viewBox="0 0 26 14"><path d="M1 7q6-6 12 0q6-6 12 0"/></svg>
+<img class="logo" src="bulig-logo.png" alt="BULIG"><br><small>A LITTLE PRACTICE. A LOT OF POSSIBILITY.</small><h3>Small steps.<br>Bright futures.</h3></div></div>
+<div class="info"><b><span class="tag">L5</span>Clouds and birds</b><p>Faint clouds drift across the green panel and a pair of little gold birds fly by now and then.</p><button class="replay" data-r="s-l5">Replay</button></div></div>
+</div>
+
+<footer>All effects stay gentle, work on phone and PC, and turn off automatically for anyone whose device is set to "reduce motion". Nothing here adds new login features. These are visual only.</footer>
+
+<script>
+const words=['A','b','c','ma','sa','E','i','o','u','ba','la','R','ka','m','s'];
+function letters(box){box.querySelectorAll('.fl').forEach(n=>n.remove());const dark=box.dataset.letters==='dark';
+ for(let i=0;i<14;i++){const s=document.createElement('span');s.className='fl';s.textContent=words[i%words.length];
+  s.style.left=(4+Math.random()*90)+'%';s.style.fontSize=(14+Math.random()*20)+'px';s.style.animationDuration=(7+Math.random()*6)+'s';s.style.animationDelay=(-Math.random()*10)+'s';
+  if(dark)s.style.color=['#5db585','#ffc629','#9ed2b3','#f0a400'][i%4];box.appendChild(s);}}
+document.querySelectorAll('[data-letters]').forEach(letters);
+document.querySelectorAll('[data-flame]').forEach(f=>f.addEventListener('click',()=>{const box=f.parentElement;
+ for(let i=0;i<12;i++){const e=document.createElement('span');e.className='ember';const a=Math.random()*Math.PI*2,r=40+Math.random()*50;e.style.setProperty('--dx',Math.cos(a)*r+'px');e.style.setProperty('--dy',Math.sin(a)*r-30+'px');e.style.background=['#ffb300','#ff7a1a','#ffd966'][i%3];box.style.position='relative';box.appendChild(e);setTimeout(()=>e.remove(),1000);}
+ const n=box.querySelector('[data-n]');n.classList.remove('pop');void n.offsetWidth;n.classList.add('pop');}));
+document.querySelectorAll('[data-hop]').forEach(i=>i.addEventListener('click',()=>{i.classList.remove('hop');void i.offsetWidth;i.classList.add('hop');setTimeout(()=>i.classList.remove('hop'),750);}));
+document.querySelectorAll('.replay').forEach(b=>b.addEventListener('click',()=>{const s=document.getElementById(b.dataset.r);const c=s.innerHTML;s.innerHTML='';void s.offsetWidth;s.innerHTML=c;
+ s.querySelectorAll('[data-letters]').forEach(letters);
+ s.querySelectorAll('[data-flame]').forEach(f=>f.addEventListener('click',()=>{const n=f.parentElement.querySelector('[data-n]');n.classList.remove('pop');void n.offsetWidth;n.classList.add('pop');}));
+ s.querySelectorAll('[data-hop]').forEach(i=>i.addEventListener('click',()=>{i.classList.remove('hop');void i.offsetWidth;i.classList.add('hop');}));}));
+</script>
+</body></html>
