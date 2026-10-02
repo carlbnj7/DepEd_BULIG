@@ -1574,3 +1574,60 @@ body.tour-on .tour-help{display:none}
 @media(max-width:740px){.tour-help-pupil{bottom:100px;left:14px;width:44px;height:44px}.tour-help-activity{bottom:16px}.tour-offer{left:12px;right:12px;bottom:96px;max-width:none}.tour-offer-big{left:0;right:0;bottom:0}.tour-bub-in>img{width:50px;height:68px}}
 @media(prefers-reduced-motion:reduce){.tour-spot,.tour-bub{transition:none}.tour-spot::after,.tour-bub-in>img,.tour-offer-big .tour-offer-card>img{animation:none}}
 .tour-layer{z-index:5000}.tour-offer,.tour-toast{z-index:4900}
+/* ===== v66 · Dark mode button, How BULIG looks, tighter page bottoms ===== */
+.mode-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--ivory-line,#e9e2cc);background:#fff;color:var(--g700,#176444);display:inline-grid;place-items:center;cursor:pointer;flex:none;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:transform .2s,background .2s}
+.mode-btn:hover{transform:rotate(-12deg)}.mode-btn:focus-visible{outline:3px solid var(--y400,#ffc629);outline-offset:2px}
+.mode-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.mode-btn .mode-sun{display:none}
+html.dark .mode-btn{background:#1d2d23;border-color:#2e4234;color:#ffd966}
+html.dark .mode-btn .mode-sun{display:block}html.dark .mode-btn .mode-moon{display:none}
+.topbar{display:flex;align-items:center;gap:12px}.topbar>span:first-child{flex:1}
+.mode-top{width:38px;height:38px}
+.mode-mobile{display:none}
+.mode-login{position:fixed;top:14px;right:14px;z-index:30}
+@media(max-width:740px){.mode-mobile{display:inline-grid;position:absolute;top:14px;right:14px;z-index:20}.mode-mobile.mode-pupil{right:66px}.mainwrap{position:relative}.mode-login{top:10px;right:10px;width:38px;height:38px}}
+.mode-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mode-opt{display:flex;flex-direction:column;align-items:flex-start;gap:2px;border:2px solid var(--ivory-line,#e9e2cc);background:var(--white,#fff);border-radius:16px;padding:12px 14px;cursor:pointer;font:inherit;color:inherit;text-align:left}
+.mode-opt b{font-size:.98rem}.mode-opt small{color:var(--muted);font-size:.78rem}
+.mode-opt.on{border-color:var(--y400,#ffc629);background:var(--y50,#fffbeb);box-shadow:0 0 0 3px rgba(255,198,41,.25)}
+html.dark .mode-opt{background:#1d2d23!important;border-color:#2e4234!important;color:#e8f0ea}html.dark .mode-opt.on{border-color:#ffc629!important;background:#2a2616!important}
+@media(max-width:520px){.mode-opts{grid-template-columns:1fr}}
+/* tighter page bottoms: no big empty space above the footer */
+.main>:last-child,.main>section:last-of-type{margin-bottom:0!important}
+.main{padding-bottom:18px!important}
+.sitefooter{padding:12px 18px!important;margin:0!important;font-size:.8rem}
+@media(max-width:740px){.main{padding-bottom:12px!important}.role-pupil .sitefooter{padding:8px 18px 4px!important}body.role-pupil{padding-bottom:88px!important}.tour-help-pupil{bottom:96px}}
+@media(max-width:740px){body.role-pupil{padding-bottom:106px!important}}
+@media(min-width:741px){.tour-help.tour-help-pupil{left:auto;right:20px}}
+@media(min-width:741px){.tour-help.tour-help-pupil{right:136px}}
+/* ===== v67 · Light/dark switch animation ===== */
+@keyframes mode-spin{0%{transform:rotate(0) scale(1)}40%{transform:rotate(200deg) scale(.6)}100%{transform:rotate(360deg) scale(1)}}
+.mode-btn.mode-spin svg{animation:mode-spin .6s cubic-bezier(.3,1.4,.5,1)}
+.mode-btn.mode-spin{box-shadow:0 0 0 0 rgba(255,198,41,.6);animation:mode-ring .7s ease-out}
+@keyframes mode-ring{to{box-shadow:0 0 0 18px rgba(255,198,41,0)}}
+/* View Transitions: the new look spreads as a circle from the button */
+html.mode-anim::view-transition-old(root),html.mode-anim::view-transition-new(root){animation:none;mix-blend-mode:normal}
+html.mode-anim::view-transition-new(root){animation:mode-reveal .6s cubic-bezier(.4,0,.2,1)}
+@keyframes mode-reveal{from{clip-path:circle(0 at var(--mx,50%) var(--my,0))}to{clip-path:circle(var(--mr,150vmax) at var(--mx,50%) var(--my,0))}}
+/* Fallback for browsers without View Transitions */
+.mode-wave{position:fixed;left:var(--mx,50%);top:var(--my,0);width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;z-index:9999;pointer-events:none;transform:scale(0);transition:transform .45s cubic-bezier(.4,0,.2,1),opacity .4s}
+.mode-wave.to-dark{background:#0f1913}.mode-wave.to-light{background:#fbf8ef}
+.mode-wave.go{transform:scale(var(--ms,200))}.mode-wave.out{opacity:0}
+/* ===== v68 · Slow sunburst / starry-night switch ===== */
+.mode-btn.mode-spin svg{animation:mode-spin 1.1s cubic-bezier(.3,1.3,.5,1)}
+.mode-btn.mode-spin{animation:mode-ring 1.2s ease-out}
+.mode-fx{position:fixed;z-index:9999;pointer-events:none;border-radius:50%;transform:scale(0);opacity:1;transition:transform 1.1s cubic-bezier(.33,.1,.25,1),opacity .9s ease}
+.mode-fx.go{transform:scale(1)}.mode-fx.out{opacity:0}
+.mode-fx i{position:absolute;inset:0;border-radius:50%}
+/* sun */
+.mode-fx-sun .fx-core{background:radial-gradient(circle,#fffdf3 0%,#fff3c4 14%,#ffe27a 24%,rgba(255,214,90,.55) 34%,rgba(251,248,239,.96) 52%,#fbf8ef 70%)}
+.mode-fx-sun .fx-glow{inset:-6%;background:radial-gradient(circle,rgba(255,220,110,.55),rgba(255,200,60,0) 60%);animation:fx-pulse 1.4s ease-in-out infinite alternate}
+.mode-fx-sun .fx-rays{inset:-10%;background:repeating-conic-gradient(from 0deg,rgba(255,206,64,.55) 0deg 6deg,rgba(255,206,64,0) 6deg 18deg);-webkit-mask:radial-gradient(circle,transparent 8%,#000 16%,#000 46%,transparent 62%);mask:radial-gradient(circle,transparent 8%,#000 16%,#000 46%,transparent 62%);animation:fx-turn 6s linear infinite}
+/* night */
+.mode-fx-night .fx-sky{background:radial-gradient(circle,#24412f 0%,#16271d 30%,#0f1913 62%)}
+.mode-fx-night .fx-stars{background:radial-gradient(1.6px 1.6px at 20% 30%,#fff 50%,transparent 51%),radial-gradient(1.2px 1.2px at 70% 22%,#fff 50%,transparent 51%),radial-gradient(1.8px 1.8px at 38% 62%,#ffe9a6 50%,transparent 51%),radial-gradient(1.2px 1.2px at 80% 70%,#fff 50%,transparent 51%),radial-gradient(1.4px 1.4px at 55% 40%,#fff 50%,transparent 51%),radial-gradient(1.2px 1.2px at 30% 82%,#fff 50%,transparent 51%),radial-gradient(1.6px 1.6px at 64% 86%,#ffe9a6 50%,transparent 51%),radial-gradient(1.2px 1.2px at 12% 56%,#fff 50%,transparent 51%);background-size:34% 34%;animation:fx-twinkle 1.2s ease-in-out infinite alternate}
+.mode-fx-night .fx-moon{inset:47.5%;background:radial-gradient(circle at 38% 38%,#fffbe8,#f3e3a6 60%,rgba(243,227,166,0) 72%);box-shadow:0 0 60px 20px rgba(255,236,170,.25)}
+@keyframes fx-turn{to{transform:rotate(360deg)}}
+@keyframes fx-pulse{to{transform:scale(1.06);opacity:.8}}
+@keyframes fx-twinkle{to{opacity:.45}}
+@media(prefers-reduced-motion:reduce){.mode-fx{display:none}}

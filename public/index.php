@@ -5,6 +5,7 @@ ob_start();
 try{
  if($_SERVER['REQUEST_METHOD']==='POST')action();
  $page=(string)($_GET['page']??'dashboard');$u=current_user();
+ if($page==='offline_sync'){offline_sync_info();}
  if(!$u){if($page!=='login')go('?page=login');login_view();}
  elseif($page==='login'){go('?page=dashboard');}
  elseif($page==='source'){
@@ -30,7 +31,6 @@ try{
  elseif($page==='class_demo'){require_role('teacher');class_demo_view($u);}
  elseif($page==='lesson'){require_role('pupil');lesson_view($u);}
  elseif($page==='offline_manifest'){offline_manifest(require_role('pupil'));}
- elseif($page==='offline_sync'){offline_sync_info();}
  else{
   $permissions=['visual_audit'=>['admin'],'sections'=>['teacher'],'accounts'=>['admin','teacher'],'review'=>['teacher'],'pupil'=>['teacher'],'manage'=>['teacher'],'guide'=>['teacher','admin'],'content'=>['admin'],'edit_activity'=>['admin'],'media'=>['admin'],'issues'=>['admin'],'settings'=>['admin'],'reports'=>['admin'],'activity_log'=>['admin'],'health'=>['admin'],'achievements'=>['pupil'],'calendar'=>['pupil'],'lessons'=>['pupil'],'profile'=>['admin','teacher','pupil'],'dashboard'=>['admin','teacher','pupil']];if(!isset($permissions[$page]))fail('Page not found.',404);require_role(...$permissions[$page]);shell($u,$page);
   switch($page){case 'manage':manage_pupils_view($u);break;case 'visual_audit':visual_audit_view();break;case 'dashboard':if($u['role']==='pupil')pupil_dashboard($u);elseif($u['role']==='teacher')teacher_dashboard($u);else admin_overview();break;case 'reports':admin_reports_view();break;case 'activity_log':admin_log_view();break;case 'health':admin_health_view();break;case 'sections':sections_view($u);break;case 'accounts':accounts_view($u);break;case 'review':review_view($u);break;case 'pupil':pupil_detail();break;case 'guide':guide_view();break;case 'content':admin_studio_view();break;case 'edit_activity':edit_activity_view();break;case 'media':media_view();break;case 'issues':issues_view();break;case 'settings':admin_settings_view($u);break;case 'achievements':achievements_view($u);break;case 'calendar':pupil_calendar_view($u);break;case 'lessons':pupil_lessons($u);break;case 'profile':profile_view($u);break;}
