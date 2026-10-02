@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BULIG Guided Tour Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g400:#5db585;--g100:#e6f4ec;--y400:#ffc629;--y300:#ffd966;--y100:#fff4cf;--ivory:#fbf6e6;--muted:#5f6f63;--ink:#17331f}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:var(--ink)}
+.wrap{max-width:1240px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:860px}
+.sec{margin-top:30px}.sec h2{margin:0 0 4px;font-size:1.2rem}.sec>p{margin:0 0 14px;color:var(--muted);font-size:.92rem}
+.row{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.side{flex:1;min-width:260px;font-size:.9rem}.side ol{padding-left:20px;line-height:1.7;margin:6px 0}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cbtn{border:0;border-radius:12px;padding:9px 14px;font:700 .82rem Poppins;cursor:pointer;background:var(--g100);color:var(--g700)}
+.cbtn.p{background:linear-gradient(#1c7a50,#0e5a35);color:#fff}
+/* device frames */
+.phone{border:10px solid #1d2a22;border-radius:38px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.2);flex:none;background:#fff}
+.pc{border:12px solid #1d2a22;border-bottom-width:26px;border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.2);background:#fff;width:100%;max-width:1100px}
+.vp{position:relative;overflow:hidden}
+.screen{position:absolute;left:0;top:0;transform-origin:0 0}
+.screen>img.shot{display:block;width:100%;height:100%;transition:opacity .35s}
+/* tour layer (all in original page pixels; scaled with the screen) */
+.dim{position:absolute;inset:0;pointer-events:none}
+.spot{position:absolute;border-radius:18px;box-shadow:0 0 0 4px var(--y400),0 0 0 9999px rgba(10,30,20,.62);transition:all .45s cubic-bezier(.3,1.2,.4,1);pointer-events:none}
+.spot::after{content:"";position:absolute;inset:-4px;border-radius:20px;border:4px solid var(--y300);animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(1.12)}}
+.bub{position:absolute;width:300px;background:#fff;border-radius:20px;padding:14px 14px 12px 14px;box-shadow:0 16px 36px rgba(0,0,0,.3);transition:all .45s cubic-bezier(.3,1.2,.4,1);display:flex;gap:10px}
+.bub img{width:58px;height:78px;object-fit:contain;object-position:bottom;flex:none;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-4px)}}
+.bub h4{margin:0 0 2px;font-size:1rem;color:var(--g700)}.bub p{margin:0;font-size:.82rem;line-height:1.4}
+.bnav{display:flex;align-items:center;gap:6px;margin-top:10px}
+.bnav .dots{display:flex;gap:4px;flex:1}.bnav .dots i{width:7px;height:7px;border-radius:50%;background:#e2ddcc}.bnav .dots i.on{background:var(--y400);width:16px;border-radius:5px}
+.tb{border:0;border-radius:10px;padding:6px 11px;font:700 .74rem Poppins;cursor:pointer}
+.tb.n{background:linear-gradient(#1c7a50,#0e5a35);color:#fff}.tb.b{background:var(--g100);color:var(--g700)}.tb.s{background:none;color:var(--muted);text-decoration:underline;padding:6px 4px}
+/* intro */
+.intro{position:absolute;inset:0;background:rgba(10,30,20,.62);display:grid;place-items:center;transition:opacity .3s}
+.icard{background:#fff;border-radius:28px;padding:22px 20px 18px;text-align:center;width:320px;box-shadow:0 20px 50px rgba(0,0,0,.35);position:relative;animation:pop .6s cubic-bezier(.2,1.5,.4,1)}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.icard img{height:170px;margin-top:-90px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.25));animation:wave 2.6s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes wave{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+.icard h3{margin:6px 0 4px;font-size:1.25rem;color:var(--g700)}.icard p{margin:0 0 14px;font-size:.88rem;color:var(--muted)}
+.icard .b1{display:block;width:100%;border:0;border-radius:14px;padding:12px;font:800 .95rem Poppins;background:linear-gradient(#1c7a50,#0e5a35);color:#fff;cursor:pointer}
+.icard .b2{display:block;width:100%;border:0;background:none;margin-top:8px;font:700 .85rem Poppins;color:var(--muted);cursor:pointer;text-decoration:underline}
+.icard label{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.75rem;color:var(--muted);margin-top:6px}
+.help{position:absolute;width:52px;height:52px;border-radius:50%;background:linear-gradient(#ffe066,#f2b10c);color:#3d2a00;font:800 1.5rem Poppins;display:grid;place-items:center;box-shadow:0 6px 14px rgba(0,0,0,.25);border:4px solid #fff;cursor:pointer}
+.toast{position:absolute;left:50%;transform:translateX(-50%);background:#fff;border:2px solid var(--y400);border-radius:16px;padding:10px 14px;font-size:.85rem;font-weight:600;box-shadow:0 10px 24px rgba(0,0,0,.2);width:max-content;max-width:90%;animation:pop .5s cubic-bezier(.2,1.5,.4,1)}
+.done{position:absolute;inset:0;display:grid;place-items:center;background:rgba(10,30,20,.45)}
+.notes{background:#fff;border:1px solid #e9e2cc;border-radius:18px;padding:16px 20px;margin-top:30px}.notes h3{margin:0 0 6px}.notes ul{margin:0;padding-left:20px;line-height:1.7;font-size:.9rem}
+</style></head><body><div class="wrap">
+<h1>Guided tour preview</h1>
+<p class="lead">The first time a pupil or teacher opens their dashboard, their character pops up and asks if they want a quick tour. They can say yes or skip. Each step lights up one part of the screen with a short explanation. A <b>?</b> button lets them see the tour again anytime. Try it below. Everything is clickable.</p>
+
+<section class="sec"><h2>Pupil dashboard (phone)</h2><p>Simple words, big buttons, 7 short steps.</p>
+<div class="row"><div class="phone"><div class="vp" id="pv"></div></div>
+<div class="side"><b>Pupil tour steps</b><ol><li>"Want me to show you around?" Yes / Skip</li><li>Your name and grade</li><li>XP: earn it for every activity</li><li>Streak: learn every day, tap to see your calendar</li><li>"Let's keep learning" starts your next lesson</li><li>Lessons button: all your levels</li><li>Calendar, Badges and Me</li><li>Done! The ? button shows this again</li></ol>
+<div class="ctl"><button class="cbtn p" data-restart="pupil">Start the pupil tour again</button></div></div></div></section>
+
+<section class="sec"><h2>Teacher dashboard (computer)</h2><p>A short tour of the main tools in the sidebar.</p>
+<div class="row"><div class="pc"><div class="vp" id="tv"></div></div></div>
+<div class="side" style="margin-top:12px"><b>Teacher tour steps</b><ol><li>"Want a quick tour of BULIG?" Yes / Skip</li><li>Overview: your class at a glance</li><li>Class Demo: teach on the TV, mark as done</li><li>My pupils: add pupils and accounts</li><li>Manage pupils: starting levels and done in class</li><li>Activity history: see answers, give feedback</li><li>Teaching guide and My profile</li><li>Done! The ? button shows this again</li></ol>
+<div class="ctl"><button class="cbtn p" data-restart="teacher">Start the teacher tour again</button></div></div></section>
+
+<div class="notes"><h3>How it would work</h3><ul>
+<li>Shows <b>once</b>, the first time each pupil or teacher signs in (after the welcome animation). It never shows again unless they press <b>?</b>.</li>
+<li><b>Skip</b> closes it right away. A small note says "Tap ? anytime to see the tour."</li>
+<li>Steps move with <b>Next</b> and <b>Back</b>, or arrow keys. On phones, the page scrolls to each part by itself.</li>
+<li>Pupils see their own character (boy or girl). Teachers see their male or female teacher character.</li>
+<li>Only on the <b>pupil and teacher dashboards</b>. Admins and lesson pages do not get it.</li>
+<li>No database change needed: "tour seen" is remembered for each account.</li>
+</ul></div>
+</div>
+<script>
+const BOX={"pupil-top":{"name":{"x":15,"y":109,"width":360,"height":90.9},"xp":{"x":200,"y":217.9,"width":175,"height":133.7},"streak":{"x":15,"y":361.6,"width":175,"height":183.8},"tabLessons":{"x":158.8,"y":774.1,"width":72.4,"height":53.9},"tabs3":{"x":86.4,"y":778,"width":289.6,"height":50}},"pupil-mid":{"go":{"x":41,"y":304.7,"width":308,"height":53}},"teacher":{"overview":{"x":20,"y":210.9,"width":210,"height":54},"demo":{"x":20,"y":272.9,"width":210,"height":54},"pupils":{"x":20,"y":334.9,"width":210,"height":54},"manage":{"x":20,"y":396.9,"width":210,"height":54},"review":{"x":20,"y":520.9,"width":210,"height":54},"guide2":{"x":20,"y":582.9,"width":210,"height":116}}};
+const TOURS={
+ pupil:{w:390,h:844,char:'girl.webp',help:{x:14,y:690},intro:['Hi, Maria!','I am your reading buddy. Do you want me to show you around BULIG?','Yes, show me!','Skip for now'],
+  steps:[['pupil-top','name','This is you!','Your name and your grade are here. Tap your picture to change it.'],
+   ['pupil-top','xp','Your XP','You get XP for every activity you finish. Collect XP to earn rewards!'],
+   ['pupil-top','streak','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
+   ['pupil-mid','go','Start learning','Tap this button to go to your next lesson.'],
+   ['pupil-top','tabLessons','All your lessons','The big yellow button shows all your levels and your road map.'],
+   ['pupil-top','tabs3','More for you','Calendar shows the days you learned. Badges shows what you earned. Me is your profile.']],
+  end:['You are ready!','Have fun learning. Tap the yellow ? button anytime to see this again.']},
+ teacher:{w:1366,h:800,char:'teacher-female.webp',help:{x:1290,y:724},intro:['Welcome to BULIG, Teacher Maria!','Would you like a quick tour of your workspace? It takes about one minute.','Yes, show me','Skip for now'],
+  steps:[['teacher','overview','Overview','Your class at a glance: pupils, recent answers, and who is doing well.'],
+   ['teacher','demo','Class Demo','Show any level on your TV or projector. Use "Mark as done" after you teach a lesson together.'],
+   ['teacher','pupils','My pupils','Add pupils, print their sign-in cards, and edit their details.'],
+   ['teacher','manage','Manage pupils','Change starting levels and mark levels, lessons or activities as done in class.'],
+   ['teacher','review','Activity history','Read your pupils’ answers and leave short feedback. Offline answers are tagged.'],
+   ['teacher','guide2','Teaching guide and profile','Tips for each level, and your own settings and character.']],
+  end:['You are all set!','Press the ? button anytime to see this tour again.']}
+};
+function mount(id,key){
+ const t=TOURS[key],vp=document.getElementById(id);vp.innerHTML='';
+ const fit=()=>{const W=key==='pupil'?Math.min(320,innerWidth-60):Math.min(vp.parentElement.clientWidth-24,1100);const k=W/t.w;vp.style.width=W+'px';vp.style.height=t.h*k+'px';sc.style.transform='scale('+k+')';};
+ const sc=document.createElement('div');sc.className='screen';sc.style.width=t.w+'px';sc.style.height=t.h+'px';vp.append(sc);
+ const img=document.createElement('img');img.className='shot';sc.append(img);
+ const layer=document.createElement('div');layer.style.cssText='position:absolute;inset:0';sc.append(layer);
+ const shot=n=>{const src=n+'.png';if(!img.src.endsWith(src))img.src=src;};
+ shot(t.steps[0][0]);fit();addEventListener('resize',fit);
+ let i=-1;
+ function help(){layer.innerHTML='';const h=document.createElement('div');h.className='help';h.textContent='?';h.style.left=t.help.x+'px';h.style.top=t.help.y+'px';h.title='Show the tour';h.onclick=intro;layer.append(h);}
+ function intro(){i=-1;shot(t.steps[0][0]);layer.innerHTML='<div class="intro"><div class="icard"><img alt=""><h3></h3><p></p><button class="b1"></button><button class="b2"></button></div></div>';
+  const c=layer.querySelector('.icard');c.querySelector('img').src=t.char;c.querySelector('h3').textContent=t.intro[0];c.querySelector('p').textContent=t.intro[1];c.querySelector('.b1').textContent=t.intro[2];c.querySelector('.b2').textContent=t.intro[3];
+  c.querySelector('.b1').onclick=()=>go(0);c.querySelector('.b2').onclick=skip;}
+ function skip(){help();const s=document.createElement('div');s.className='toast';s.style.top=(key==='pupil'?20:30)+'px';s.textContent='Okay! Tap the yellow ? anytime to see the tour.';layer.append(s);setTimeout(()=>s.remove(),3500);}
+ function go(n){i=n;if(n>=t.steps.length)return finish();const [sh,bk,title,text]=t.steps[n];shot(sh);const b=BOX[sh][bk];const pad=6;
+  let spot=layer.querySelector('.spot'),bub=layer.querySelector('.bub');
+  if(!spot){layer.innerHTML='<div class="dim"></div><div class="spot"></div><div class="bub"><img alt=""><div style="flex:1"><h4></h4><p></p><div class="bnav"><span class="dots"></span><button class="tb s">Skip</button><button class="tb b">Back</button><button class="tb n">Next</button></div></div></div>';spot=layer.querySelector('.spot');bub=layer.querySelector('.bub');
+   bub.querySelector('img').src=t.char;bub.querySelector('.s').onclick=()=>{skip();};bub.querySelector('.b').onclick=()=>i>0&&go(i-1);bub.querySelector('.n').onclick=()=>go(i+1);}
+  spot.style.left=b.x-pad+'px';spot.style.top=b.y-pad+'px';spot.style.width=b.width+pad*2+'px';spot.style.height=b.height+pad*2+'px';
+  bub.querySelector('h4').textContent=title;bub.querySelector('p').textContent=text;
+  bub.querySelector('.dots').innerHTML=t.steps.map((_,k)=>'<i class="'+(k===n?'on':'')+'"></i>').join('');
+  bub.querySelector('.b').style.visibility=n?'visible':'hidden';bub.querySelector('.n').textContent=n===t.steps.length-1?'Finish':'Next';
+  const bw=key==='pupil'?Math.min(330,t.w-24):360;bub.style.width=bw+'px';
+  let x,y;
+  if(key==='teacher'){x=b.x+b.width+26;y=Math.max(20,Math.min(t.h-200,b.y-30));}
+  else{x=(t.w-bw)/2;const below=b.y+b.height+18;y=below+170<t.h-90?below:Math.max(14,b.y-190);}
+  bub.style.left=x+'px';bub.style.top=y+'px';}
+ function finish(){layer.innerHTML='<div class="done"><div class="icard"><img alt=""><h3></h3><p></p><button class="b1">Let’s go!</button></div></div>';const c=layer.querySelector('.icard');c.querySelector('img').src=t.char;c.querySelector('h3').textContent=t.end[0];c.querySelector('p').textContent=t.end[1];c.querySelector('.b1').onclick=help;}
+ intro();return {restart:intro};
+}
+const tours={pupil:mount('pv','pupil'),teacher:mount('tv','teacher')};
+document.querySelectorAll('[data-restart]').forEach(b=>b.onclick=()=>tours[b.dataset.restart].restart());
+</script></body></html>
