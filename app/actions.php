@@ -28,7 +28,7 @@ function action():void{
   db()->beginTransaction();try{
    $next=(int)val('SELECT next_value FROM id_sequences WHERE kind=? FOR UPDATE',[$role]);q('UPDATE id_sequences SET next_value=next_value+1 WHERE kind=?',[$role]);$public=($role==='teacher'?'T':'').$next;
    q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
-   if($role==='teacher')q('INSERT INTO teachers VALUES(?)',[$id]);else{
+   if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);}else{
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level();$details=pupil_details_input();
     q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);
    }audit('create_'.$role,$public);db()->commit();flash('Account created. '.$role.' ID: '.$public.($role==='pupil'?'. Default password: 12345678. The pupil may change it in My profile.':'. Share the password you set privately.'));
@@ -54,6 +54,40 @@ function action():void{
   if(strlen($new)<8||strlen($new)>72)fail('Use a new password of 8–72 characters.');
   if($new!==(string)($_POST['confirm_password']??''))fail('The new passwords do not match.');
   q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go('?page=profile');
+ }
+ if($action==='set_start_level'){
+  $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=manage(&id=[0-9]+)?$~',$back))$back='?page=manage';
+  $pupils=isset($_POST['pupil'])?[(int)$_POST['pupil']]:array_map('intval',(array)($_POST['pupils']??[]));$pupils=array_values(array_unique(array_filter($pupils)));
+  if(!$pupils){flash('Tick at least one pupil first.');go($back);}
+  $level=selected_start_level();if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))fail('Choose a level that is available.');
+  foreach($pupils as $pid)if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))fail('This pupil is not assigned to you.',403);
+  foreach($pupils as $pid)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?) ON DUPLICATE KEY UPDATE level_id=VALUES(level_id),assigned_by=VALUES(assigned_by),assigned_at=NOW()',[$pid,$level,$tid]);
+  audit('start_level',level_label($level).' for '.count($pupils).' pupils');flash('Starting level set to '.level_label($level).' for '.count($pupils).' '.(count($pupils)===1?'pupil':'pupils').'.');go($back);
+ }
+ if($action==='class_done'){
+  $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=(class_demo|pupil|manage)(&[a-zA-Z0-9_=]+)*(#learning-path)?$~',$back))$back='?page=dashboard';
+  $level=(int)($_POST['level']??0);$scope=(string)($_POST['scope']??'');$undo=(int)($_POST['undo']??0);
+  $pupils=isset($_POST['pupil'])?[(int)$_POST['pupil']]:array_map('intval',(array)($_POST['pupils']??[]));$pupils=array_values(array_unique(array_filter($pupils)));
+  if(!$pupils){flash('Choose at least one pupil who was in class.');go($back);}
+  foreach($pupils as $pid)if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))fail('This pupil is not assigned to you.',403);
+  db()->beginTransaction();try{
+   if($undo){$n=class_done_undo($pupils[0],$undo);audit('class_done_undo','Pupil '.$pupils[0].', lesson '.$undo.', '.$n.' activities');db()->commit();flash($n?'The "Done in class" mark was removed from that lesson.':'Nothing to undo in that lesson.');go($back);}
+   if(!in_array($scope,['activity','lesson','level','lessons'],true))fail('Choose what you finished.');
+   $marked=0;$what=$scope==='level'?level_label($level):($scope==='activity'?'this activity':($scope==='lesson'?'this lesson':'the chosen work'));
+   $lids=$scope==='lessons'?array_map('intval',(array)($_POST['lessons']??[])):[];$acts=$scope==='lessons'?array_map('intval',(array)($_POST['activities']??[])):[];if($scope==='lessons'&&!$lids&&!$acts){db()->rollBack();flash('Tick at least one lesson or activity first.');go($back);}
+   foreach($pupils as $pid){
+    $aids=[];if($scope==='lessons'){foreach($lids as $lid)$aids=array_merge($aids,class_done_activities($pid,'lesson',$lid));foreach($acts as $aid)$aids=array_merge($aids,class_done_activities($pid,'activity',$aid));}
+    else $aids=class_done_activities($pid,$scope,$scope==='level'?$level:(int)($_POST[$scope==='activity'?'aid':'lid']??0));
+    $n=class_done_apply($tid,$pid,$aids);$marked+=$n;
+    if($n)class_done_note_set($pid,$scope==='level'?'Your teacher marked '.level_label($level).' as done.'.(level_available($pid,$level+1)?' '.level_label($level+1).' is open now.':''):'Your teacher marked '.($scope==='activity'?'an activity':'your lesson').' as done. Your next step is ready.');
+   }
+   audit('class_done',$what.' for '.count($pupils).' pupils, '.$marked.' activities');db()->commit();
+  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  flash('Marked as done in class: '.$what.' for '.count($pupils).' '.(count($pupils)===1?'pupil':'pupils').'.');go($back);
+ }
+ if($action==='teacher_character'){
+  $u=require_role('teacher');$c=(string)($_POST['character']??'');if(!in_array($c,['female','male'],true))fail('Choose a character.');
+  tf_set_sex((int)$u['id'],$c);flash('Your teacher character is saved.');go('?page=profile');
  }
  if($action==='choose_avatar'){
   $u=require_role('pupil');$key=(string)($_POST['avatar_key']??'');

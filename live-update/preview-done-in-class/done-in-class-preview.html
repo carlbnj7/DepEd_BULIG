@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Done in Class Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g400:#5db585;--g100:#e6f4ec;--g50:#f3faf6;--y400:#ffc629;--y300:#ffd966;--y100:#fff4cf;--y50:#fffbeb;--ivory:#fbf6e6;--line:#e9e2cc;--ink:#17331f;--muted:#5f6f63}
+*{box-sizing:border-box}body{margin:0;background:var(--ivory);font-family:Poppins,system-ui,sans-serif;color:var(--ink)}
+.wrap{max-width:1180px;margin:auto;padding:26px 16px 60px}
+h1.t{margin:0;color:var(--g700);font-size:1.7rem}.lead{color:var(--muted);margin:.3rem 0 0}
+.opt{margin-top:34px}.opt>h2{font-size:1.2rem;margin:0 0 4px}.tag{display:inline-block;background:var(--g700);color:#fff;border-radius:999px;font-weight:800;font-size:.8rem;padding:2px 11px;margin-right:8px;vertical-align:2px}
+.opt>p{margin:0 0 14px;color:var(--muted);font-size:.92rem}
+.screen{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 30px rgba(20,60,30,.08);overflow:hidden}
+.cap{font-size:.78rem;font-weight:700;color:#9a7400;letter-spacing:.1em;margin:14px 0 6px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:860px){.row{grid-template-columns:1fr}}
+/* demo bar */
+.demobar{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:4px solid var(--y400)}
+.demobar img{width:86px}.demobar b{font-size:1.1rem}.demobar small{display:block;color:var(--muted);font-size:.75rem}
+.sp{flex:1}.btn{border:0;border-radius:14px;padding:10px 16px;font:700 .85rem Poppins;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn.p{background:linear-gradient(#1c7a50,#0e5a35);color:#fff}.btn.s{background:var(--g100);color:var(--g700)}.btn.o{background:#fff;border:2px solid var(--y300);color:var(--g700)}
+.btn.gold{background:linear-gradient(#ffe066,#f2b10c);color:#3d2a00;box-shadow:0 6px 14px rgba(242,177,12,.35)}
+.ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.demobody{background:var(--ivory);padding:22px;min-height:120px;text-align:center;color:var(--muted);font-weight:600;position:relative}
+.dim{opacity:.35}
+/* modal */
+.modal{background:#fff;border-radius:22px;box-shadow:0 30px 60px rgba(0,0,0,.25);width:min(560px,100%);margin:-60px auto 22px;position:relative;padding:22px}
+.modal h3{margin:0;font-size:1.3rem}.modal .sub{margin:2px 0 14px;color:var(--muted);font-size:.86rem}
+.lbl{font-size:.75rem;font-weight:800;letter-spacing:.06em;color:var(--g700);margin:14px 0 6px}
+.choices{display:grid;gap:8px}
+.choice{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer}
+.choice.on{border-color:var(--y400);background:var(--y50)}
+.choice i{width:18px;height:18px;border-radius:50%;border:2px solid #b9b39f;flex:none;margin-top:2px}.choice.on i{border:6px solid var(--g600)}
+.choice b{display:block;font-size:.9rem}.choice span{font-size:.78rem;color:var(--muted)}
+.pupils{border:1px solid var(--line);border-radius:14px;max-height:none}
+.ph{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--y50);border-bottom:1px solid var(--line);font-size:.8rem;font-weight:700;border-radius:14px 14px 0 0}
+.ph a{color:var(--g700)}
+.pu{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #f1ecdc;font-size:.86rem}
+.pu:last-child{border:0}
+.cb{width:20px;height:20px;border-radius:6px;background:var(--g600);display:grid;place-items:center;flex:none}
+.cb svg{width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none}
+.cb.off{background:#fff;border:2px solid #c9c2ad}.cb.off svg{display:none}
+.av{width:28px;height:28px;border-radius:50%;background:var(--g100);display:grid;place-items:center;color:var(--g700);font-weight:800;font-size:.75rem}
+.pu small{margin-left:auto;color:var(--muted);font-size:.72rem}
+.pu.absent{color:#9b9686}.pu.absent small{color:#c0582d;font-weight:700}
+.foot{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.note{background:var(--g50);border:1px solid var(--g100);border-radius:12px;padding:9px 12px;font-size:.78rem;color:var(--g700);margin-top:12px}
+/* pupil detail */
+.pd{padding:20px}
+.pd h3{margin:0 0 4px;font-size:1.25rem}.pd .sub{margin:0 0 14px;color:var(--muted);font-size:.85rem}
+.lvl{border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.lvh{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--y50)}
+.lvh .n{width:42px;height:42px;border-radius:12px;background:var(--g700);color:#fff;display:grid;place-items:center;font-weight:800}
+.lvh b{display:block}.lvh small{color:var(--muted);font-size:.76rem}
+.bar{height:8px;background:var(--y100);border-radius:9px;margin-top:5px;width:180px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffd54a,#f0a400)}
+.ls{display:flex;align-items:center;gap:10px;padding:9px 14px;border-top:1px solid #f1ecdc;font-size:.86rem}
+.chip{font-size:.7rem;font-weight:800;border-radius:999px;padding:3px 9px;margin-left:auto;white-space:nowrap}
+.chip.done{background:var(--g100);color:var(--g700)}.chip.class{background:#e8f0ff;color:#2b55a8}.chip.cur{background:var(--y100);color:#8a6200}.chip.lock{background:#f1efe8;color:#8b877a}
+.sel{background:var(--y50)}
+.stick{display:flex;align-items:center;gap:10px;background:var(--g900);color:#fff;border-radius:16px;padding:10px 14px;margin-top:6px;flex-wrap:wrap}
+.stick span{font-size:.85rem;flex:1}
+.mini{font-size:.75rem;color:var(--g700);font-weight:700;text-decoration:underline;margin-left:8px;cursor:pointer}
+/* pupil map */
+.mapcard{padding:18px;background:linear-gradient(#e9f6ff,#f6fbe9)}
+.mapcard h4{margin:0 0 10px}
+.road{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.stop{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;background:#c9c2ad;position:relative;box-shadow:0 5px 0 rgba(0,0,0,.12)}
+.stop.d{background:var(--g600)}.stop.c{background:var(--y400);color:#3d2a00;outline:4px solid #fff3c0}
+.stop .bdg{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);background:#2b55a8;color:#fff;font-size:.56rem;padding:2px 6px;border-radius:9px;white-space:nowrap}
+.levels{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.lc{flex:1;min-width:120px;border-radius:14px;padding:10px;background:#fff;border:2px solid var(--line);font-size:.8rem;font-weight:700}
+.lc.ok{border-color:var(--g400)}.lc.lockd{color:#a29d8c}
+.lc small{display:block;font-weight:600;font-size:.7rem}
+.toast{background:#fff;border:2px solid var(--y400);border-radius:16px;padding:10px 14px;font-size:.84rem;margin-top:12px;display:flex;gap:10px;align-items:center}
+.q{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:14px}
+.q h3{margin:0 0 8px;font-size:1rem}.q ol{margin:0;padding-left:20px;font-size:.9rem;line-height:1.7}
+</style></head><body><div class="wrap">
+<h1 class="t">"Done in class": teacher marks progress</h1>
+<p class="lead">When you teach a level with Class Demo, you can mark it as done for the pupils who were there. Their next lesson or level opens right away.</p>
+
+<!-- ================= OPTION A ================= -->
+<section class="opt"><h2><span class="tag">A</span>From Class Demo: mark the whole class at once</h2>
+<p>A new gold <b>Mark as done</b> button sits in the Class Demo top bar. When you finish teaching, tap it, choose how much you covered, and untick any pupil who was absent.</p>
+<div class="screen">
+ <div class="demobar"><img src="bulig-logo.png" alt=""><div><b>Level 2A · Class Demo</b><small>Listen, discuss, and learn together</small></div><div class="sp"></div>
+ <button class="btn gold"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Mark as done</button><button class="btn s">Exit demo</button><button class="btn o">Full screen</button></div>
+ <div class="demobody"><div class="dim">Slide 58 of 460 · Lesson 3 · Animal sounds</div></div>
+ <div style="background:rgba(14,59,40,.35);padding:20px 16px 4px">
+ <div class="modal">
+  <h3>Mark as done in class</h3><p class="sub">Level 2A · Grade 1 · Rizal</p>
+  <div class="lbl">WHAT DID YOU FINISH?</div>
+  <div class="choices">
+   <label class="choice"><i></i><div><b>Only this activity</b><span>Lesson 3 · Animal sounds · "Listen and say"</span></div></label>
+   <label class="choice"><i></i><div><b>This whole lesson</b><span>Lesson 3 · Animal sounds (6 activities)</span></div></label>
+   <label class="choice on"><i></i><div><b>The whole level</b><span>Level 2A: all 12 lessons. Level 2B opens for these pupils.</span></div></label>
+  </div>
+  <div class="lbl">WHO WAS IN CLASS?</div>
+  <div class="pupils"><div class="ph"><span>Grade 1 · Rizal · 4 of 5 chosen</span><a href="#">Select all</a></div>
+   <div class="pu"><span class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="av">MP</span>Maria Pupil<small>Level 2A · Lesson 3</small></div>
+   <div class="pu"><span class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="av">JD</span>Juan Dela Cruz<small>Level 2A · Lesson 1</small></div>
+   <div class="pu"><span class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="av">AR</span>Ana Reyes<small>Level 2A · Lesson 5</small></div>
+   <div class="pu absent"><span class="cb off"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="av">PL</span>Pedro Lim<small>Absent · not marked</small></div>
+   <div class="pu"><span class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="av">LG</span>Liza Garcia<small>Level 2A · Lesson 2</small></div>
+  </div>
+  <div class="note">Work a pupil already answered on their own is kept. Only unfinished parts are marked "Done in class".</div>
+  <div class="foot"><button class="btn s">Cancel</button><button class="btn p"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Mark done for 4 pupils</button></div>
+ </div></div>
+</div></section>
+
+<!-- ================= OPTION B ================= -->
+<section class="opt"><h2><span class="tag">B</span>From a pupil's progress page: one pupil at a time</h2>
+<p>On <b>My pupils → (pupil name)</b>, a new <b>Learning path</b> card lists every level and lesson. Tick the lessons that were done in class, or mark a whole level in one tap. Good for a pupil who joined late, or for catching up one child.</p>
+<div class="screen pd">
+ <h3>Learning path</h3><p class="sub">Maria Pupil · Grade 1 · Rizal · Starting level 2A</p>
+ <div class="lvl"><div class="lvh"><span class="n">2A</span><div><b>Level 2A · Phonological Awareness</b><small>3 of 12 lessons done</small><div class="bar"><i style="width:25%"></i></div></div><div class="sp"></div><button class="btn s">Mark whole level as done</button></div>
+  <div class="ls"><span class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Lesson 1 · My Toys<span class="chip done">Done by pupil</span></div>
+  <div class="ls"><span class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Lesson 2 · My Family<span class="chip class">Done in class · Oct 1</span><span class="mini">Undo</span></div>
+  <div class="ls sel"><span class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Lesson 3 · Animal Sounds<span class="chip cur">Working on it · 2 of 6</span></div>
+  <div class="ls sel"><span class="cb"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Lesson 4 · Sounds Around Us<span class="chip lock">Not started</span></div>
+  <div class="ls"><span class="cb off"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Lesson 5 · Rhyming Words<span class="chip lock">Not started</span></div>
+  <div class="ls" style="color:var(--muted);font-size:.78rem;justify-content:center">+ 7 more lessons</div>
+ </div>
+ <div class="lvl"><div class="lvh"><span class="n" style="background:#b9b39f">2B</span><div><b>Level 2B · Phonics</b><small>Opens when Level 2A is done</small></div></div></div>
+ <div class="stick"><span><b>2 lessons chosen</b> · Lesson 3 and Lesson 4</span><button class="btn gold"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Mark as done in class</button></div>
+</div></section>
+
+<!-- ================= PUPIL SIDE ================= -->
+<section class="opt"><h2><span class="tag" style="background:#9a7400">Pupil</span>What the pupil sees afterwards</h2>
+<p>With either option, the pupil's map shows a check on the finished stops, with a small blue "In class" label. The next level opens, and a friendly note greets them.</p>
+<div class="row">
+ <div><div class="cap">BEFORE</div><div class="screen mapcard"><h4>Level 2A map</h4>
+  <div class="road"><span class="stop d"><svg class="ico" viewBox="0 0 24 24" style="width:26px;height:26px;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg></span><span class="stop d"><svg class="ico" viewBox="0 0 24 24" style="width:26px;height:26px;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg></span><span class="stop c">3</span><span class="stop">4</span><span class="stop">5</span></div>
+  <div class="levels"><div class="lc ok">Level 2A<small>Current level</small></div><div class="lc lockd">Level 2B<small>Locked</small></div><div class="lc lockd">Level 3<small>Locked</small></div></div></div></div>
+ <div><div class="cap">AFTER THE TEACHER MARKS LEVEL 2A</div><div class="screen mapcard"><h4>Level 2A map</h4>
+  <div class="road"><span class="stop d"><svg class="ico" viewBox="0 0 24 24" style="width:26px;height:26px;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg></span><span class="stop d"><svg class="ico" viewBox="0 0 24 24" style="width:26px;height:26px;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg><span class="bdg">In class</span></span><span class="stop d"><svg class="ico" viewBox="0 0 24 24" style="width:26px;height:26px;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg><span class="bdg">In class</span></span><span class="stop d"><svg class="ico" viewBox="0 0 24 24" style="width:26px;height:26px;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg><span class="bdg">In class</span></span><span class="stop d"><svg class="ico" viewBox="0 0 24 24" style="width:26px;height:26px;stroke-width:3"><path d="M20 6 9 17l-5-5"/></svg><span class="bdg">In class</span></span></div>
+  <div class="levels"><div class="lc ok">Level 2A<small>Complete</small></div><div class="lc ok" style="border-color:var(--y400)">Level 2B<small>Now open · Start here</small></div><div class="lc lockd">Level 3<small>Locked</small></div></div>
+  <div class="toast"><b>Great job in class!</b> Your teacher marked Level 2A as done. Level 2B is open now.</div></div></div>
+</div>
+<p style="margin-top:10px;font-size:.88rem;color:var(--muted)">Pupils can still open any "In class" lesson to practise again on their own.</p>
+</section>
+
+<div class="q"><h3>Please choose</h3><ol>
+<li><b>Which way?</b> A (Class Demo, whole class), B (pupil page, one pupil), or <b>both</b> (my suggestion).</li>
+<li><b>XP for "Done in class"?</b> Give the normal XP (counts toward badges and rewards), or no XP (XP only for work done on the app).</li>
+<li><b>Undo:</b> I'll add an "Undo" on the pupil's page for anything marked by mistake. Okay?</li>
+</ol></div>
+</div></body></html>
