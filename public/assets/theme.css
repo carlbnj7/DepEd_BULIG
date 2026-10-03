@@ -1726,3 +1726,24 @@ html.dark .qs-sheet{background:#16231b;color:#e8f0ea}html.dark .qs-title{color:#
 [data-lock]{cursor:pointer}
 html.dark .qo-box{background:#16231b}html.dark .qo-title{color:#86e0b0}html.dark .qo-text,html.dark .qo-small,html.dark .qo-check,html.dark .qo-b2{color:#a9bcb0}html.dark .qo-b2.danger{color:#ff9d8f}html.dark .qo-warn{background:#3a3216;color:#ffd966}
 @media(prefers-reduced-motion:reduce){.qo-ov,.qo-box,.qs-sheet{transition:none}.qo-ov.on .qo-padlock,.qo-ov.on .qo-spark,.qo-ov.on .qo-kid,.qo-ov.on .qo-byeart img,.qp-manage .qp-bub,.qs-sheet.on .qs-bub{animation:none}.qo-ov.on .qo-spark{opacity:0}}
+/* ===== v70 · "Tap ? anytime" note sits beside the ? button ===== */
+.tour-toast{position:fixed;left:auto;top:auto;transform:none;z-index:1900;width:280px;max-width:calc(100vw - 24px);background:#fff;border:2px solid var(--y400,#ffc629);border-radius:16px;padding:12px 14px;font-weight:700;font-size:.9rem;line-height:1.35;color:var(--g900,#0e3b28);box-shadow:0 12px 28px rgba(0,0,0,.22);animation:tour-toast-in .45s cubic-bezier(.2,1.4,.4,1) both;transition:opacity .4s,transform .4s}
+.tour-toast::after{content:"";position:absolute;bottom:-9px;width:16px;height:16px;background:#fff;border-right:2px solid var(--y400,#ffc629);border-bottom:2px solid var(--y400,#ffc629);transform:rotate(45deg)}
+.tour-toast.tail-left::after{left:18px}.tour-toast.tail-right::after{right:18px}
+.tour-toast.out{opacity:0;transform:translateY(8px)}
+@keyframes tour-toast-in{from{opacity:0;transform:translateY(12px) scale(.9)}}
+.tour-help-ping{animation:tour-ping 1.2s ease-out 3}
+@keyframes tour-ping{0%{box-shadow:0 0 0 0 rgba(255,198,41,.75),0 6px 14px rgba(0,0,0,.25)}100%{box-shadow:0 0 0 18px rgba(255,198,41,0),0 6px 14px rgba(0,0,0,.25)}}
+html.dark .tour-toast,html.dark .tour-toast::after{background:#16231b;color:#e8f0ea}
+@media(prefers-reduced-motion:reduce){.tour-toast{animation:none}.tour-help-ping{animation:none}}
+
+/* v71 · Two poses: the reading buddy switches to its cheer pose while it talks */
+.pf-helper image{transition:opacity .25s}
+.pf-helper .pk-cheer{opacity:0}
+.pf-bubble.on+.pf-helper .pk-hello{opacity:0}
+.pf-bubble.on+.pf-helper .pk-cheer{opacity:1}
+@media(prefers-reduced-motion:reduce){.pf-helper image{transition:none}}
+
+/* v72 · On computers the ? button sits at the bottom left of the page, right next to the menu */
+@media(min-width:741px){body:has(.sidebar) .tour-help,body:has(.sidebar) .tour-help.tour-help-pupil{left:262px;right:auto;bottom:24px}}
+@media(min-width:741px) and (max-width:960px){body:has(.sidebar) .tour-help,body:has(.sidebar) .tour-help.tour-help-pupil{left:222px}}

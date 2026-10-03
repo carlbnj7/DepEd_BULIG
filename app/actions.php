@@ -22,6 +22,7 @@ function action():void{
   $t=saved_login_create($u);audit('saved_login','device');saved_login_json(['ok'=>true,'token'=>$t,'profile'=>saved_login_profile($u)]);
  }
  if($action==='forget_login'){if(saved_login_ready())saved_login_forget((string)($_POST['token']??''));saved_login_json(['ok'=>true]);}
+ if($action==='tour_seen'){$u=current_user();if($u)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['tour_seen_'.(int)$u['id'],date('Y-m-d H:i:s')]);saved_login_json(['ok'=>(bool)$u]);}
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
  if($action==='save_section'){
   $u=require_role('teacher');$sid=(int)($_POST['id']??0);$name=trim((string)($_POST['name']??''));$grade=(int)($_POST['grade_level']??0);
