@@ -61,12 +61,12 @@
  document.addEventListener('submit',async e=>{const f=e.target;if(!f.querySelector||!f.querySelector('input[name="action"][value="logout"]')||f.dataset.ok||!me)return;e.preventDefault();
   const saved=load().find(x=>String(x.uid)===String(me.id));let pending=0;
   try{if(window.buligOffline&&window.buligOffline.pending)pending=await Promise.race([window.buligOffline.pending(),new Promise(r=>setTimeout(()=>r(0),800))]);}catch(x){}
-  const art=el('div','qo-byeart');if(me.char){const i=el('img');i.src=me.char;i.alt='';art.append(i);}
+  const art=el('div','qo-byeart');if(me.hi||me.char){const i=el('img');i.src=me.hi||me.char;i.alt='';art.append(i);}
   const extra=[];let box=null;
   if(saved){const l=el('label','qo-check');box=el('input');box.type='checkbox';box.checked=true;l.append(box,document.createTextNode(' Keep me saved on this device'));extra.push(l);}
   if(pending)extra.push(el('p','qo-warn',pending+' '+(pending===1?'answer is':'answers are')+' still waiting to upload. They will upload the next time you sign in on this device.'));
   overlay({cls:'qo-bye',art,title:'Leaving already, '+(me.role==='teacher'?'Teacher ':'')+me.name+'?',text:'Are you sure you want to sign out? Your work is saved.',extra,
-   primary:{label:me.role==='teacher'?'Stay':'Stay and learn'},
+   primary:{label:me.role==='pupil'?'Stay and learn':'Stay'},
    secondary:{label:'Yes, sign out',danger:true,run:close=>{if(saved&&box&&!box.checked){store(load().filter(x=>x.token!==saved.token));post({action:'forget_login',token:saved.token}).catch(()=>{});}f.dataset.ok='1';close();setTimeout(()=>f.submit(),still?0:150);}}});
  },true);
 
@@ -104,12 +104,15 @@
  }
 
  /* ---------- login page: Who's learning today? ---------- */
+ /* After "Sign in with another account", switching Pupil / Teacher keeps the form. The choice lasts until someone signs in. */
+ const QF='bulig-qp-form',ss=(v)=>{try{if(v===undefined)return sessionStorage.getItem(QF);if(v)sessionStorage.setItem(QF,'1');else sessionStorage.removeItem(QF);}catch(e){return null;}};
  const card=$('body.login-page:not(.admin-mode) .login-card');
+ if(!$('body.login-page'))ss(false);
  if(card&&!new URLSearchParams(location.search).has('form')){
   const alert=el('p','qp-alert');alert.setAttribute('role','alert');alert.hidden=true;card.prepend(alert);
   const back=el('button','qp-back');back.type='button';back.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';back.append('Back to saved accounts');back.hidden=true;card.prepend(back);
   const wrap=el('div','qp');card.append(wrap);let managing=false;
-  back.addEventListener('click',()=>{card.classList.add('qp-on');back.hidden=true;render();});
+  back.addEventListener('click',()=>{ss(false);card.classList.add('qp-on');back.hidden=true;render();});
   function render(){
    const list=load();wrap.replaceChildren();if(!list.length){card.classList.remove('qp-on','qp-manage');back.hidden=true;return;}
    card.classList.add('qp-on');card.classList.toggle('qp-manage',managing);
@@ -120,7 +123,7 @@
     b.addEventListener('click',()=>managing?remove(p):signin(p,b,row));row.append(b);});
    wrap.append(row);
    if(!managing){wrap.append(el('div','qp-or','OR'));const o=el('button','qp-other');o.type='button';o.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>';o.append('Sign in with another account');
-    o.addEventListener('click',()=>{card.classList.remove('qp-on');back.hidden=false;alert.hidden=true;const f=card.querySelector('input[name="public_id"]');if(f)f.focus();});wrap.append(o);}
+    o.addEventListener('click',()=>{ss(true);card.classList.remove('qp-on');back.hidden=false;alert.hidden=true;const f=card.querySelector('input[name="public_id"]');if(f)f.focus();});wrap.append(o);}
    const foot=el('div','qp-foot'),lk=el('span');lk.innerHTML=svgLock;lk.append('Saved only on this device');const m=el('button','linkbutton qp-manage-btn',managing?'Done':'Manage');m.type='button';
    m.addEventListener('click',()=>{managing=!managing;render();});foot.append(lk,m);wrap.append(foot);
   }
@@ -131,5 +134,6 @@
     store(load().filter(x=>x.token!==p.token));alert.textContent=r.error||'This saved sign-in no longer works. Please sign in with your ID and password.';alert.hidden=false;render();
    }).catch(()=>{alert.textContent=navigator.onLine===false?'You are offline. Connect to the internet to sign in.':'Could not sign in. Please try again.';alert.hidden=false;render();});}
   render();
+  if(ss()&&card.classList.contains('qp-on')){card.classList.remove('qp-on');back.hidden=false;}
  }
 })();

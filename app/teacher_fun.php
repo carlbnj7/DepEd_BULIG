@@ -7,7 +7,7 @@ const TF_BOARD='<svg class="tf-board" aria-hidden="true" viewBox="0 0 300 150"><
 /** Teachers pick their character (female or male) in My profile. */
 function tf_is_male(?int $id=null):bool{$id=$id??(int)(current_user()['id']??0);return $id&&(string)val('SELECT setting_value FROM settings WHERE setting_key=?',['teacher_char_'.$id])==='male';}
 function tf_set_sex(int $id,string $sex):void{if(in_array($sex,['female','male'],true))q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['teacher_char_'.$id,$sex]);}
-function tf_teacher_art():string{return '<g class="tf-body"><image href="assets/images/characters/teacher-'.(tf_is_male()?'male':'female').'.webp?v=1" x="14" y="2" width="116" height="194" preserveAspectRatio="xMidYMax meet"/></g>';}
+function tf_teacher_art():string{return '<g class="tf-body"><image href="'.char_src(tf_is_male()?'teacher-male':'teacher-female').'" x="14" y="2" width="116" height="194" preserveAspectRatio="xMidYMax meet"/></g>';}
 function tf_defs():string{return '<svg class="pf-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>'.PF_DEFS.TF_DEFS.'</defs></svg>';}
 function tf_in(array $ids):string{return $ids?implode(',',array_map('intval',$ids)):'0';}
 function tf_days():array{$d=[];for($i=6;$i>=0;$i--)$d[]=date('Y-m-d',strtotime("-$i days"));return $d;}

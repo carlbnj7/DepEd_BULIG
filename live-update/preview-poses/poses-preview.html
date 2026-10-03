@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Character Poses</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y100:#fff4cf;--muted:#5f6f63;--line:#e9e2cc}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1200px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:880px}
+.sec{margin-top:34px}.sec h2{margin:0 0 4px;font-size:1.2rem}.sec>p{margin:0 0 14px;color:var(--muted);font-size:.92rem;max-width:880px}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--g700);color:#fff;font-size:.85rem;margin-right:8px;vertical-align:1px}
+.rec{display:inline-block;background:var(--y400);color:#3d2a00;font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:99px;margin-left:8px;vertical-align:3px}
+/* pose gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.who{background:#fff;border-radius:20px;padding:12px 12px 10px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.who h3{margin:0 0 8px;font-size:.95rem;color:var(--g700)}
+.pair{display:flex;gap:6px;align-items:flex-end;justify-content:space-around}
+.pose{text-align:center;flex:1}.pose img{height:190px;width:auto;display:block;margin:0 auto 6px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.15))}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--g100);color:var(--g700)}
+.tag.new{background:var(--y100);color:#7a5200}
+.pose small{display:block;color:var(--muted);font-size:.72rem;margin-top:3px}
+/* placement table */
+.tbl{width:100%;border-collapse:separate;border-spacing:0 8px}
+.tbl th{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;padding:0 6px 2px}
+.tbl th:first-child{text-align:left}
+.tbl td{background:#fff;padding:8px;text-align:center;vertical-align:middle}
+.tbl td:first-child{text-align:left;border-radius:16px 0 0 16px;padding-left:16px;width:31%}
+.tbl td:last-child{border-radius:0 16px 16px 0}
+.tbl td b{display:block;font-size:.92rem}.tbl td span.d{display:block;font-size:.78rem;color:var(--muted);line-height:1.35}
+.cell{display:inline-flex;flex-direction:column;align-items:center;gap:3px}
+.cell .bg{width:92px;height:96px;border-radius:14px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;background:linear-gradient(#eaf6ff,#fff8e2)}
+.cell .bg img{height:90px;width:auto}
+.cell .bg.two img{height:80px;margin:0 -4px}
+.cell .tag{font-size:.62rem;padding:2px 7px}
+.none{color:#b9b29a;font-size:.8rem}
+/* scene mockups */
+.scenes{display:flex;gap:22px;flex-wrap:wrap}
+.phone{position:relative;width:270px;height:540px;flex:none;border:8px solid #1d2a22;border-radius:34px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.22);background:#fdf8ea}
+.cap{width:270px;font-size:.82rem;color:var(--muted);margin-top:8px;text-align:center}
+.scene-col{display:flex;flex-direction:column;align-items:center}
+.dim{position:absolute;inset:0;background:rgba(10,30,20,.55)}
+.card{position:absolute;left:14px;right:14px;top:150px;background:#fff;border-radius:24px;padding:96px 16px 16px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.card h4{margin:0 0 4px;color:var(--g700);font-size:1.05rem}.card p{margin:0 0 12px;font-size:.78rem;color:var(--muted)}
+.card .art{position:absolute;left:0;right:0;top:-92px;display:flex;justify-content:center}
+.card .art img{height:180px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.25))}
+.btn{display:block;border-radius:12px;padding:9px;font-weight:800;font-size:.8rem;background:linear-gradient(#1c7a50,#0e5a35);color:#fff}
+.btn.alt{background:#eef5ef;color:var(--g700);margin-top:6px}
+.stars{font-size:1.6rem;color:#f6b500;letter-spacing:4px;margin-bottom:4px}
+.fakebar{height:54px;background:#fff;border-bottom:1px solid var(--line)}
+.fakecard{margin:12px;height:120px;border-radius:18px;background:linear-gradient(135deg,#176444,#0e3b28)}
+.fakecard.l{background:#fff;height:90px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.bub{position:absolute;left:12px;right:12px;bottom:70px;background:#fff;border-radius:20px;padding:12px;display:flex;gap:10px;align-items:center;box-shadow:0 14px 30px rgba(0,0,0,.3)}
+.bub img{height:84px;width:auto;flex:none}.bub h5{margin:0 0 2px;font-size:.88rem;color:var(--g700)}.bub p{margin:0;font-size:.72rem;color:var(--muted);line-height:1.35}
+.spot{position:absolute;left:8px;right:8px;top:192px;height:104px;border-radius:20px;box-shadow:0 0 0 4px var(--y400),0 0 0 2000px rgba(10,30,20,.5)}
+.buddy{position:absolute;right:6px;bottom:6px;display:flex;align-items:flex-end;gap:4px}
+.buddy img{height:120px}.buddy .say{background:#fff;border:2px solid var(--y400);border-radius:14px;padding:6px 9px;font-size:.7rem;font-weight:700;margin-bottom:70px;max-width:120px}
+.login{position:absolute;inset:0;background:linear-gradient(#56b5e8,#bfe6f7 60%,#7cc36b 60%)}
+.login .logo{position:absolute;top:40px;left:0;right:0;text-align:center;font-weight:800;font-size:1.6rem;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.3)}
+.login .form{position:absolute;left:16px;right:16px;top:110px;height:210px;background:#fff;border-radius:20px;box-shadow:0 10px 26px rgba(0,0,0,.18)}
+.login .kids{position:absolute;left:6px;right:6px;bottom:8px;display:flex;justify-content:space-between;align-items:flex-end}
+.login .kids img{height:150px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3))}
+/* option b */
+.turns{display:flex;gap:14px;flex-wrap:wrap}
+.turn{background:#fff;border-radius:18px;padding:12px;flex:1 1 250px}
+.turn h4{margin:0 0 8px;font-size:.88rem}
+.visits{display:flex;gap:10px;justify-content:space-around}
+.visit{text-align:center;font-size:.72rem;color:var(--muted)}
+.visit .bg{width:110px;height:118px;border-radius:14px;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(#eaf6ff,#fff8e2);margin-bottom:4px}
+.visit .bg img{height:110px}
+.note{background:var(--y100);border-radius:16px;padding:12px 16px;font-size:.88rem;margin-top:14px}
+@media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
+</style></head><body><div class="wrap">
+<h1>Two poses for every character</h1>
+<p class="lead">Your four new pictures become the second pose of each character, so BULIG does not show the same picture everywhere. The saved-account circle keeps the first pose, so each person's face is always the same.</p>
+
+<div class="sec"><h2><span class="num">1</span>The poses</h2>
+<p>Each character now has a "hello" pose and a "cheer" or "explain" pose.</p>
+<div class="gallery">
+ <div class="who"><h3>Boy</h3><div class="pair">
+  <div class="pose"><img src="boy.webp" alt=""><span class="tag">Hello</span><small>Waving (now)</small></div>
+  <div class="pose"><img src="boy-cheer.webp" alt=""><span class="tag new">Cheer · new</span><small>Thumbs up</small></div></div></div>
+ <div class="who"><h3>Girl</h3><div class="pair">
+  <div class="pose"><img src="girl.webp" alt=""><span class="tag">Hello</span><small>Waving (now)</small></div>
+  <div class="pose"><img src="girl-cheer.webp" alt=""><span class="tag new">Cheer · new</span><small>Excited, ready to go</small></div></div></div>
+ <div class="who"><h3>Female teacher</h3><div class="pair">
+  <div class="pose"><img src="teacher-female-wave.webp" alt=""><span class="tag new">Hello · new</span><small>Waving</small></div>
+  <div class="pose"><img src="teacher-female.webp" alt=""><span class="tag">Explain</span><small>Showing (now)</small></div></div></div>
+ <div class="who"><h3>Male teacher</h3><div class="pair">
+  <div class="pose"><img src="teacher-male.webp" alt=""><span class="tag">Hello</span><small>Smiling (now)</small></div>
+  <div class="pose"><img src="teacher-male-tip.webp" alt=""><span class="tag new">Explain · new</span><small>Pointing up, a tip</small></div></div></div>
+</div></div>
+
+<div class="sec"><h2><span class="num">A</span>A pose for each moment<span class="rec">Recommended</span></h2>
+<p>Each place always uses the pose that fits it: hello and goodbye wave, while finishing, unlocking and tips cheer or point.</p>
+<table class="tbl">
+<tr><th>Where</th><th>Boy</th><th>Girl</th><th>Female teacher</th><th>Male teacher</th></tr>
+<tr><td><b>Sign-in page</b><span class="d">The two characters at the bottom now show different poses instead of both waving.</span></td>
+ <td colspan="2"><span class="cell"><span class="bg two" style="width:150px"><img src="boy-cheer.webp" alt=""><img src="girl.webp" alt=""></span><span class="tag new">Thumbs up + waving</span></span></td>
+ <td colspan="2"><span class="cell"><span class="bg two" style="width:150px"><img src="teacher-male-tip.webp" alt=""><img src="teacher-female-wave.webp" alt=""></span><span class="tag new">Pointing + waving</span></span></td></tr>
+<tr><td><b>Welcome screen</b><span class="d">The hello after signing in.</span></td>
+ <td><span class="cell"><span class="bg"><img src="boy.webp" alt=""></span><span class="tag">Hello</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="girl.webp" alt=""></span><span class="tag">Hello</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="teacher-female-wave.webp" alt=""></span><span class="tag new">Hello · new</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="teacher-male.webp" alt=""></span><span class="tag">Hello</span></span></td></tr>
+<tr><td><b>Reading buddy</b><span class="d">Waves in the corner. When tapped, it switches to the cheer pose while it talks.</span></td>
+ <td><span class="cell"><span class="bg two"><img src="boy.webp" alt=""><img src="boy-cheer.webp" alt=""></span><span class="tag new">Tap: cheer</span></span></td>
+ <td><span class="cell"><span class="bg two"><img src="girl.webp" alt=""><img src="girl-cheer.webp" alt=""></span><span class="tag new">Tap: cheer</span></span></td>
+ <td><span class="none">pupils only</span></td><td><span class="none">pupils only</span></td></tr>
+<tr><td><b>Learning map</b><span class="d">The character that walks to the next stop.</span></td>
+ <td><span class="cell"><span class="bg"><img src="boy-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="girl-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="none">pupils only</span></td><td><span class="none">pupils only</span></td></tr>
+<tr><td><b>Activity finished</b><span class="d">With the stars and XP.</span></td>
+ <td><span class="cell"><span class="bg"><img src="boy-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="girl-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="none">pupils only</span></td><td><span class="none">pupils only</span></td></tr>
+<tr><td><b>Level unlocked</b><span class="d">The "Level 5 unlocked!" moment.</span></td>
+ <td><span class="cell"><span class="bg"><img src="boy-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="girl-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="none">pupils only</span></td><td><span class="none">pupils only</span></td></tr>
+<tr><td><b>Guided tour helper</b><span class="d">The character in the tour bubbles and the tour offer.</span></td>
+ <td><span class="cell"><span class="bg"><img src="boy-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="girl-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="teacher-female.webp" alt=""></span><span class="tag">Explain</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="teacher-male-tip.webp" alt=""></span><span class="tag new">Explain · new</span></span></td></tr>
+<tr><td><b>Locked level</b><span class="d">"Finish this level first" message.</span></td>
+ <td><span class="cell"><span class="bg"><img src="boy-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="girl-cheer.webp" alt=""></span><span class="tag new">Cheer · new</span></span></td>
+ <td><span class="none">pupils only</span></td><td><span class="none">pupils only</span></td></tr>
+<tr><td><b>Signing out</b><span class="d">The goodbye message.</span></td>
+ <td><span class="cell"><span class="bg"><img src="boy.webp" alt=""></span><span class="tag">Hello</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="girl.webp" alt=""></span><span class="tag">Hello</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="teacher-female-wave.webp" alt=""></span><span class="tag new">Hello · new</span></span></td>
+ <td><span class="cell"><span class="bg"><img src="teacher-male.webp" alt=""></span><span class="tag">Hello</span></span></td></tr>
+</table>
+
+<div class="scenes" style="margin-top:18px">
+ <div class="scene-col"><div class="phone"><div class="login"><div class="logo">BULIG</div><div class="form"></div><div class="kids"><img src="boy-cheer.webp" alt=""><img src="girl.webp" alt=""></div></div></div><div class="cap">Sign-in page: thumbs up and waving</div></div>
+ <div class="scene-col"><div class="phone"><div class="fakebar"></div><div class="fakecard"></div><div class="fakecard l"></div><div class="dim"></div><div class="card"><div class="art"><img src="girl-cheer.webp" alt=""></div><div class="stars">&#9733;&#9733;&#9733;</div><h4>Great job, Maria!</h4><p>You earned 20 XP.</p><span class="btn">Next activity</span></div></div><div class="cap">Activity finished: the cheer pose</div></div>
+ <div class="scene-col"><div class="phone"><div class="fakebar"></div><div class="fakecard"></div><div class="fakecard l"></div><div class="fakecard l"></div><div class="spot"></div><div class="bub"><img src="teacher-male-tip.webp" alt=""><div><h5>Check-ins</h5><p>Pupils who have not learned for a while appear here so you can follow up.</p></div></div></div><div class="cap">Teacher tour: pointing for a tip</div></div>
+ <div class="scene-col"><div class="phone"><div class="fakebar"></div><div class="fakecard"></div><div class="fakecard l"></div><div class="dim"></div><div class="card"><div class="art"><img src="teacher-female-wave.webp" alt=""></div><h4>Leaving already, Maria?</h4><p>Are you sure you want to sign out? Your work is saved.</p><span class="btn">Stay</span><span class="btn alt">Yes, sign out</span></div></div><div class="cap">Signing out: waving goodbye</div></div>
+</div>
+</div>
+
+<div class="sec"><h2><span class="num">B</span>Take turns</h2>
+<p>Every place picks one of the two poses each time it opens, so the pictures keep changing. The poses won't always match the moment, for example a thumbs up while saying goodbye.</p>
+<div class="turns">
+ <div class="turn"><h4>Welcome screen</h4><div class="visits"><div class="visit"><div class="bg"><img src="girl.webp" alt=""></div>Monday</div><div class="visit"><div class="bg"><img src="girl-cheer.webp" alt=""></div>Tuesday</div></div></div>
+ <div class="turn"><h4>Tour helper</h4><div class="visits"><div class="visit"><div class="bg"><img src="teacher-female.webp" alt=""></div>First open</div><div class="visit"><div class="bg"><img src="teacher-female-wave.webp" alt=""></div>Next open</div></div></div>
+ <div class="turn"><h4>Signing out</h4><div class="visits"><div class="visit"><div class="bg"><img src="boy.webp" alt=""></div>Morning</div><div class="visit"><div class="bg"><img src="boy-cheer.webp" alt=""></div>Afternoon</div></div></div>
+</div>
+<div class="note">You can also choose <b>A and B together</b>: every place keeps the pose that fits it, but the sign-in page and the reading buddy take turns between the two poses.</div>
+</div>
+</div></body></html>

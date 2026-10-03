@@ -30,11 +30,12 @@
    [['.pupil-tabbar a[href="?page=calendar"]','.sidebar nav a[href="?page=calendar"]'],'Your calendar','See every day you learned.'],
    [['.pupil-tabbar a[href="?page=profile"]','.sidebar nav a[href="?page=profile"]'],'Your profile','Change your picture, see this week, and find your offline lessons.'],
    [['.mode-mobile','.mode-top'],'Light or dark','Tap the moon to make BULIG dark, easy on your eyes at night. Tap the sun to make it bright again.'],
+   [['.mobile-signout button','.sidebar .signout'],'Signing out','Tap here when you are done. BULIG asks first, so you never leave by accident.'],
    [null,'Need help again?','Tap the yellow ? button on any page and I will show you how it works. Have fun learning!']],
   lessons:[
    ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
    [['.level-card.pf-current','.level-card.available'],'Open a level','Tap "Open lessons" to see the road map of a level and start learning.'],
-   [['.level-card.unavailable'],'Locked levels','A lock means you need to finish the level before it first. Keep going!'],
+   [['.level-card.unavailable'],'Locked levels','A lock means you need to finish the level before it first. Tap a locked level to see what to do.'],
    offline?[['.level-card.pf-current .off-slot','.off-slot'],'Save for offline','No internet at home? Tap "Save for offline" while you have internet. The level is kept on this device so you can learn without internet.']:null,
    offline?[null,'Learning offline','When there is no internet, open a saved level and answer as usual. Your answers wait on this device and upload by themselves when the internet comes back.']:null],
   map:[
@@ -42,7 +43,7 @@
    ['.level-banner','This level','The name of the level and how many activities you finished.'],
    [['.pfm-node.pfm-cur','.pf-mapcard'],'You are here','The big yellow stop is your next lesson. Tap it to start.'],
    [['.pfm-node.pfm-done','.pf-mapcard'],'Finished lessons','Green stops with a check are done. You can open them again to practise.'],
-   [['.pfm-node.pfm-lock','.pf-mapcard'],'Coming next','Grey stops open one by one as you finish each lesson.']],
+   [['.pfm-node.pfm-lock','.pf-mapcard'],'Coming next','Grey stops open one by one as you finish each lesson. Tap one to see which lesson to finish first.']],
   activity:[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
    ['.narration','Listen','Tap Listen to hear the instructions read aloud. You can pause, replay or stop.'],
@@ -88,6 +89,7 @@
    ['.sidebar nav a[href="?page=review"]','Activity history','Read your pupils’ answers and leave short feedback.'],
    ['.sidebar nav a[href="?page=guide"]','Teaching guide','Lesson plans and the original module pages for each lesson.'],
    [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
+   [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. On a shared computer, untick "Keep me saved" when BULIG asks.'],
    [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
   class_demo:[
    ['.pageheading','Class Demo','Present lessons to the whole class on a TV or projector. Nothing is saved for pupils here.'],
@@ -127,14 +129,66 @@
    ['#learning-path','Learning path','Mark lessons as done in class here, or use Manage pupils for activities too.']],
   profile:P.profile
  };
- const raw=(pupil?P:T)[key];if(!raw)return;
+ const A={
+  dashboard:[
+   ['.ws-kpis','The school at a glance','Pupils, teachers, grades and learning this week, for the whole school.'],
+   [['.ws-g2 section.card'],'Pupils at each level','How many pupils are working in each BULIG level.'],
+   [['.ws-g2 section.card:nth-child(2)'],'Needs attention','Teachers who have not signed in lately and other things to follow up.'],
+   ['.ws-btns','Quick actions','Post an announcement for teachers, or open the school reports.'],
+   ['.sidebar nav a[href="?page=accounts"]','Teachers','Add teachers, reset passwords and move pupils between teachers.'],
+   ['.sidebar nav a[href="?page=reports"]','Reports','Progress by grade and section. Download it for division reports.'],
+   ['.sidebar nav a[href="?page=content"]','Lesson studio','Show, hide or edit the activities of each level.'],
+   ['.sidebar nav a[href="?page=activity_log"]','Activity log','Who signed in and what changed, with wrong passwords and PINs.'],
+   ['.sidebar nav a[href="?page=health"]','System health','Install checks, pictures, database updates and backups.'],
+   ['.sidebar nav a[href="?page=settings"]','Settings','Your PIN, school details, announcements, badges and the school year.'],
+   ['.mobile-menu-toggle','Menu','Tap here to open the menu: Teachers, Reports, Lesson studio, Activity log, System health and Settings. Each page has its own short tour.'],
+   [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
+   [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. Admin accounts are never saved on a device.'],
+   [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
+  accounts:[
+   [['#add-teacher','.ws-btns'],'Add a teacher','Enter the name and sex. BULIG makes the teacher ID and a first password.'],
+   ['.ws-filters','Find a teacher','Search by name, or filter by grade and status.'],
+   ['table.ws-table','Your teaching team','Sections, pupils and last sign-in for each teacher. Edit names, reset passwords or turn an account off here.'],
+   ['#move','Move pupils','Move pupils to another teacher. They keep their progress, XP and badges.']],
+  reports:[
+   ['.ws-filters','Choose what to see','Pick the period, grade and section, then choose Show.'],
+   ['.ws-kpis','Key numbers','Pupils, average score, finished lessons and pupils who need a check-in.'],
+   ['table.ws-table','Progress by section','Each grade and section with its teacher, pupils and activities.'],
+   ['.ws-btns','Download or print','Download the report for Excel, or print it and save it as a PDF.']],
+  content:[
+   ['nav.ws-levels','Choose a level','Pick the level you want to look at.'],
+   ['form.ws-filters','Choose a lesson','Pick a grade and lesson, then choose Open.'],
+   ['table.ws-table','Activities','Every activity in the lesson. Show or hide it for pupils, or edit its text and pictures.'],
+   [['details.card'],'Assessments','Open an assessment to update its rubric and scoring.']],
+  activity_log:[
+   ['nav.ws-tabs','Filter by kind','See all events, or only sign-ins, wrong passwords and PINs, account changes or content changes.'],
+   ['.ws-filters','Search','Search for a name or ID and pick the dates.'],
+   ['table.ws-table','What happened','When, who, what happened and the details.'],
+   ['.ws-btns','Download','Download the log as a CSV file.']],
+  health:[
+   [['.ws-g2 section.card'],'Checks','Green means fine. Red shows what needs attention, with the fix next to it.'],
+   ['.ws-btns','Run all checks','Check everything again after you upload an update.'],
+   ['#backup','Backup','Download a copy of the database. Keep it somewhere safe.']],
+  settings:[
+   ['nav.ws-tabs','Settings sections','Security, school details, announcements, badges and rewards, and the school year.'],
+   ['#admin-pin','Admin PIN','Change the 4-digit PIN you enter after your password.'],
+   [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG protects accounts from wrong passwords.']],
+  profile:[
+   ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
+   [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
+   [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']]
+ };
+ const raw=(pupil?P:me.role==='admin'?A:T)[key];if(!raw)return;
  const steps=raw.filter(Boolean);
- const seenKey='bulig-tour-'+me.id+'-'+key;
+ const seenKey='bulig-tour-'+me.id+'-dashboard';
+ /* The automatic offer appears once per account, on the dashboard only; the server remembers it. */
+ function markDone(){if(key!=='dashboard'||me.seen)return;me.seen=true;store(seenKey,'1');
+  try{const fd=new FormData();fd.set('csrf',(document.querySelector('meta[name="csrf"]')||{}).content||'');fd.set('action','tour_seen');fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
 
  /* ---------- UI ---------- */
  const charImg=()=>{const i=document.createElement('img');i.src=me.char;i.alt='';i.width=62;i.height=84;return i;};
  let layer=null,idx=-1,cur=[],raf=0;
- function close(markSeen){if(markSeen)store(seenKey,'1');if(layer){layer.remove();layer=null;}document.removeEventListener('keydown',keys,true);removeEventListener('resize',place);removeEventListener('scroll',place,true);document.body.classList.remove('tour-on');}
+ function close(markSeen){if(markSeen)markDone();if(layer){layer.remove();layer=null;}document.removeEventListener('keydown',keys,true);removeEventListener('resize',place);removeEventListener('scroll',place,true);document.body.classList.remove('tour-on');}
  function keys(e){if(!layer)return;if(e.key==='Escape'){e.preventDefault();e.stopPropagation();close(true);}else if(e.key==='ArrowRight'){e.preventDefault();e.stopPropagation();go(idx+1);}else if(e.key==='ArrowLeft'){e.preventDefault();e.stopPropagation();if(idx>0)go(idx-1);}}
  function start(){close(false);cur=steps.filter(s=>!s[0]||find(s[0]));if(!cur.length)return;
   layer=document.createElement('div');layer.className='tour-layer';layer.setAttribute('role','dialog');layer.setAttribute('aria-modal','true');layer.setAttribute('aria-label','Guided tour');
@@ -149,7 +203,7 @@
   const el=find(sel);layer.classList.toggle('tour-center',!el);
   if(el){const r=el.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-(find('.pupil-tabbar')?240:150))el.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}
   place();setTimeout(place,380);setTimeout(()=>nx.focus({preventScroll:true}),60);}
- function place(){if(!layer)return;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{
+ function place(){if(!layer)return;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{if(!layer)return;
   const spot=layer.querySelector('.tour-spot'),bub=layer.querySelector('.tour-bub');const el=cur[idx]&&find(cur[idx][0]);
   if(!el){spot.style.cssText='left:50%;top:50%;width:0;height:0';bub.style.left=Math.max(12,(innerWidth-bub.offsetWidth)/2)+'px';bub.style.top=Math.max(12,(innerHeight-bub.offsetHeight)/2)+'px';return;}
   const r=el.getBoundingClientRect(),pad=8,big=r.height>innerHeight*.7;
@@ -169,15 +223,21 @@
   o.querySelector('b').textContent=big?(pupil?'Hi, '+me.name+'! I am your reading buddy.':'Welcome to BULIG, Teacher '+me.name+'!'):(pupil?'New here?':'New page');
   o.querySelector('.tour-offer-txt span').textContent=big?(pupil?'Do you want me to show you around BULIG?':'Would you like a quick tour of your workspace?'):(pupil?'I can show you how this page works.':'Want a quick tour of this page?');
   o.querySelector('.tour-yes').textContent=big?'Yes, show me!':'Show me';
-  o.querySelector('.tour-yes').onclick=()=>{o.remove();start();};
-  o.querySelector('.tour-no').onclick=()=>{o.remove();store(seenKey,'1');toast(pupil?'Okay! Tap the yellow ? anytime to see the tour.':'You can open the tour anytime with the ? button.');};
+  o.querySelector('.tour-yes').onclick=()=>{o.remove();markDone();start();};
+  o.querySelector('.tour-no').onclick=()=>{o.remove();markDone();toast(pupil?'Okay! Tap the yellow ? anytime to see the tour.':'You can open the tour anytime with the ? button.');};
   document.body.append(o);setTimeout(()=>o.querySelector('.tour-yes').focus({preventScroll:true}),80);}
- function toast(t){const d=document.createElement('div');d.className='tour-toast';d.setAttribute('role','status');d.textContent=t;document.body.append(d);setTimeout(()=>d.remove(),4200);}
+ function toast(t){document.querySelectorAll('.tour-toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='tour-toast';d.setAttribute('role','status');d.textContent=t;document.body.append(d);
+  /* Sit right next to the ? button, with a little tail pointing at it. */
+  const r=help.getBoundingClientRect(),w=Math.min(280,innerWidth-24),left=r.left+r.width/2<innerWidth/2;d.style.width=w+'px';
+  d.style.left=(left?Math.max(12,r.left):Math.min(innerWidth-w-12,r.right-w+4))+'px';d.style.bottom=(innerHeight-r.top+14)+'px';d.classList.add(left?'tail-left':'tail-right');
+  help.classList.add('tour-help-ping');setTimeout(()=>help.classList.remove('tour-help-ping'),3600);setTimeout(()=>d.classList.add('out'),4200);setTimeout(()=>d.remove(),4700);}
 
  /* The ? button on every page that has a tour. */
  const help=document.createElement('button');help.type='button';help.className='tour-help'+(pupil?' tour-help-pupil':'')+(key==='demo-slide'?' tour-help-demo':'')+(key==='activity'||key==='lesson-done'?' tour-help-activity':'');help.setAttribute('aria-label','Show me how this page works');help.title='Show me how this page works';help.textContent='?';
  help.addEventListener('click',()=>{document.querySelector('.tour-offer')?.remove();start();});document.body.append(help);
 
- const ready=()=>{if(!store(seenKey))setTimeout(offer,key==='dashboard'?900:1200);};
+ /* Someone who already answered the offer on this device (older BULIG kept it per page) is told to the server, not asked again. */
+ const answeredHere=()=>{try{for(let i=0;i<localStorage.length;i++)if((localStorage.key(i)||'').indexOf('bulig-tour-'+me.id+'-')===0)return true;}catch(e){}return false;};
+ const ready=()=>{if(key!=='dashboard'||me.seen)return;if(answeredHere())markDone();else setTimeout(offer,900);};
  if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',ready,{once:true});else ready();
 })();
