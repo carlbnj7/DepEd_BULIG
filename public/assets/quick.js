@@ -20,6 +20,10 @@
  const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;};
  const face=p=>{const f=el('span','qp-face'),i=el('img',p.char?'char':'');i.src=p.img;i.alt='';f.append(i);return f;};
  const bubble=(p,n)=>{const b=el('span','qp-bub g'+((n%3)+1));b.append(face(p));const t=el('span','qp-tag'+(p.role==='teacher'?' t':''),p.role==='teacher'?'TEACHER':'PUPIL');b.append(t);return b;};
+/* Offline: which pupil is using this device (the service worker opens only that pupil's saved pages). */
+ const setWho=v=>('caches' in window?caches.open('bulig-who').then(c=>c.put('who',new Response(String(v)))):Promise.resolve()).catch(()=>{});
+ const offLevels=p=>{try{const m=JSON.parse(localStorage.getItem('bulig-off-'+p.uid)||'null');return m&&m.levels?Object.keys(m.levels).length:0;}catch(e){return 0;}};
+ const isOffline=()=>navigator.onLine===false;
  const svgLock='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
 
  /* ---------- generic overlay ---------- */
@@ -67,7 +71,7 @@
   if(pending)extra.push(el('p','qo-warn',pending+' '+(pending===1?'answer is':'answers are')+' still waiting to upload. They will upload the next time you sign in on this device.'));
   overlay({cls:'qo-bye',art,title:'Leaving already, '+(me.role==='teacher'?'Teacher ':'')+me.name+'?',text:'Are you sure you want to sign out? Your work is saved.',extra,
    primary:{label:me.role==='pupil'?'Stay and learn':'Stay'},
-   secondary:{label:'Yes, sign out',danger:true,run:close=>{if(saved&&box&&!box.checked){store(load().filter(x=>x.token!==saved.token));post({action:'forget_login',token:saved.token}).catch(()=>{});}f.dataset.ok='1';close();setTimeout(()=>f.submit(),still?0:150);}}});
+   secondary:{label:'Yes, sign out',danger:true,run:close=>{if(isOffline()){close();setWho('').then(()=>{location.href='?page=login';});return;}if(saved&&box&&!box.checked){store(load().filter(x=>x.token!==saved.token));post({action:'forget_login',token:saved.token}).catch(()=>{});}f.dataset.ok='1';close();setTimeout(()=>f.submit(),still?0:150);}}});
  },true);
 
  /* ---------- offer to save the account (first page after a password sign-in) ---------- */
@@ -115,14 +119,18 @@
   back.addEventListener('click',()=>{ss(false);card.classList.add('qp-on');back.hidden=true;render();});
   function render(){
    const list=load();wrap.replaceChildren();if(!list.length){card.classList.remove('qp-on','qp-manage');back.hidden=true;return;}
-   card.classList.add('qp-on');card.classList.toggle('qp-manage',managing);
+   card.classList.add('qp-on');card.classList.toggle('qp-manage',managing);const off=isOffline();card.classList.toggle('qp-offline',off);
+   if(off&&!managing){const pill=el('div','qp-offpill');pill.innerHTML='<i></i>';pill.append('Offline · saved accounts only');wrap.append(pill);}
    const head=el('div','qp-head');head.append(el('span','eyebrow','WELCOME BACK'),el('h2','','Who’s learning today?'),el('p','muted',managing?'Tap a picture to remove it from this device.':'Tap your picture to continue.'));wrap.append(head);
    const row=el('div','qp-row');
    list.forEach((p,i)=>{const b=el('button','qp-p');b.type='button';b.setAttribute('aria-label',(managing?'Remove ':'Sign in as ')+p.first+' ('+(p.role==='teacher'?'Teacher':'Pupil')+')');
-    const bb=bubble(p,i);if(managing)bb.append(el('span','qp-x','×'));b.append(bb,el('span','qp-name',p.first),el('span','qp-meta',ago(p.last)));
-    b.addEventListener('click',()=>managing?remove(p):signin(p,b,row));row.append(b);});
+    const bb=bubble(p,i);if(managing)bb.append(el('span','qp-x','×'));b.append(bb,el('span','qp-name',p.first));
+    if(off&&!managing){const n=p.role==='pupil'?offLevels(p):0;b.classList.toggle('qp-dimmed',p.role!=='pupil');b.append(el('span','qp-ready'+(p.role!=='pupil'?' need':n?'':' none'),p.role!=='pupil'?'Needs internet':n?'✓ '+n+' '+(n===1?'level':'levels')+' saved':'No levels saved'));}
+    else b.append(el('span','qp-meta',ago(p.last)));
+    b.addEventListener('click',()=>managing?remove(p):(isOffline()?openOffline(p):signin(p,b,row)));row.append(b);});
    wrap.append(row);
-   if(!managing){wrap.append(el('div','qp-or','OR'));const o=el('button','qp-other');o.type='button';o.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>';o.append('Sign in with another account');
+   if(off&&!managing){const n=el('p','qp-offnote','Signing in with an ID and password needs the internet. Saved pupils can learn offline with the levels they saved.');wrap.append(n);}
+   else if(!managing){wrap.append(el('div','qp-or','OR'));const o=el('button','qp-other');o.type='button';o.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>';o.append('Sign in with another account');
     o.addEventListener('click',()=>{ss(true);card.classList.remove('qp-on');back.hidden=false;alert.hidden=true;const f=card.querySelector('input[name="public_id"]');if(f)f.focus();});wrap.append(o);}
    const foot=el('div','qp-foot'),lk=el('span');lk.innerHTML=svgLock;lk.append('Saved only on this device');const m=el('button','linkbutton qp-manage-btn',managing?'Done':'Manage');m.type='button';
    m.addEventListener('click',()=>{managing=!managing;render();});foot.append(lk,m);wrap.append(foot);
@@ -130,10 +138,19 @@
   function remove(p){store(load().filter(x=>x.token!==p.token));post({action:'forget_login',token:p.token}).catch(()=>{});if(!load().length)managing=false;render();}
   function signin(p,b,row){if(row.classList.contains('busy'))return;row.classList.add('busy');b.classList.add('qp-busy');row.querySelectorAll('.qp-p').forEach(x=>{if(x!==b)x.classList.add('qp-dim');});b.querySelector('.qp-meta').textContent='Signing in…';alert.hidden=true;
    post({action:'quick_login',token:p.token}).then(r=>{
-    if(r.ok){store(load().map(x=>x.token===p.token?Object.assign({},x,r.profile,{token:p.token,last:Date.now()}):x));location.href=r.url||'?page=dashboard';return;}
+    if(r.ok){store(load().map(x=>x.token===p.token?Object.assign({},x,r.profile,{token:p.token,last:Date.now()}):x));if(window.buligLoading)window.buligLoading.boot();location.href=r.url||'?page=dashboard';return;}
     store(load().filter(x=>x.token!==p.token));alert.textContent=r.error||'This saved sign-in no longer works. Please sign in with your ID and password.';alert.hidden=false;render();
-   }).catch(()=>{alert.textContent=navigator.onLine===false?'You are offline. Connect to the internet to sign in.':'Could not sign in. Please try again.';alert.hidden=false;render();});}
+   }).catch(()=>{if(p.role==='pupil'&&offLevels(p)){render();openOffline(p);return;}alert.textContent=navigator.onLine===false?'You are offline. Connect to the internet to sign in.':'Could not sign in. Please try again.';alert.hidden=false;render();});}
+  /* No internet: a saved pupil opens the levels saved on this device. Answers wait here and upload later with the saved key. */
+  function openOffline(p){
+   const art=el('div','qo-byeart'),img=el('img');img.alt='';img.src='assets/images/characters/'+(p.img&&/girl/.test(p.img)?'girl':'boy')+'-cheer.webp';
+   if(p.role!=='pupil'){overlay({cls:'qo-bye',title:'Teachers need the internet',text:'Your class pages show live information, so please connect to the internet to sign in.',primary:{label:'Okay'}});return;}
+   if(!offLevels(p)){img.src='assets/images/characters/'+(p.img&&/girl/.test(p.img)?'girl':'boy')+'.webp';art.append(img);overlay({cls:'qo-bye',art,title:'No saved lessons yet, '+p.first,text:'Next time you have internet, open My lessons and tap “Save for offline” on your level. Then you can learn here without internet.',primary:{label:'Okay'}});return;}
+   art.append(img);const dots=el('div','qo-dots');dots.innerHTML='<i></i><i></i><i></i>';
+   overlay({cls:'qo-bye qo-offgo',art,title:'Hi, '+p.first+'!',text:'Opening your saved lessons. You can learn without internet.',extra:[dots]});
+   setWho(p.uid).then(()=>setTimeout(()=>{location.href='?page=dashboard';},still?100:1100));}
   render();
-  if(ss()&&card.classList.contains('qp-on')){card.classList.remove('qp-on');back.hidden=false;}
+  if(ss()&&card.classList.contains('qp-on')&&!isOffline()){card.classList.remove('qp-on');back.hidden=false;}
+  addEventListener('online',()=>{if(card.classList.contains('qp-on'))render();});addEventListener('offline',()=>{card.classList.add('qp-on');back.hidden=true;render();});
  }
 })();

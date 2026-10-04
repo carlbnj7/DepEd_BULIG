@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BULIG Improvements</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y100:#fff4cf;--muted:#5f6f63;--line:#e9e2cc;--red:#c0392b}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1240px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:900px}
+.sec{margin-top:40px;padding-top:24px;border-top:2px dashed #e2d9bd}.sec h2{margin:0 0 4px;font-size:1.25rem}
+.why{margin:0 0 14px;color:var(--muted);font-size:.9rem;max-width:920px}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--g700);color:#fff;font-size:.9rem;margin-right:8px;vertical-align:1px}
+.rec{display:inline-block;background:var(--y400);color:#3d2a00;font-size:.68rem;font-weight:800;padding:3px 9px;border-radius:99px;margin-left:8px;vertical-align:3px}
+.who{display:inline-block;background:var(--g100);color:var(--g700);font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:99px;margin-left:6px;vertical-align:3px}
+.row{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:6px}
+.lab{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.lab.now{color:#9a6b00}.lab.new{color:var(--g700)}
+.shot{border:6px solid #1d2a22;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 10px 26px rgba(0,0,0,.16)}
+.shot img{display:block;width:100%;height:auto}
+.phone{width:300px;border:8px solid #1d2a22;border-radius:34px;overflow:hidden;background:#fdf8ea;box-shadow:0 14px 30px rgba(0,0,0,.2);flex:none}
+.pc{flex:1 1 560px;max-width:720px;border:6px solid #1d2a22;border-radius:18px;overflow:hidden;background:#fdf8ea;box-shadow:0 10px 26px rgba(0,0,0,.16)}
+.pad{padding:14px}
+.card{background:#fff;border-radius:18px;box-shadow:0 4px 14px rgba(0,0,0,.06);border-top:3px solid var(--y400);padding:14px}
+.small{font-size:.75rem;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:9px 14px;font-weight:800;font-size:.8rem;background:linear-gradient(#1c7a50,#0e5a35);color:#fff;border:0}
+.btn.alt{background:#fff;color:var(--g700);border:2px solid #cfe3d4}
+.btn.block{display:flex;width:100%}
+.note{background:var(--y100);border-radius:14px;padding:10px 14px;font-size:.85rem;margin-top:12px;max-width:920px}
+/* 1 tap answers */
+.q{font-weight:800;font-size:1.08rem;text-align:center;color:var(--g900);line-height:1.35;margin:6px 0 12px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ch{border:3px solid #f1dc94;background:#fffbea;border-radius:16px;padding:12px 8px;text-align:center;font-weight:800;font-size:1rem;color:var(--g900);position:relative}
+.ch b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#fff;border:2px solid #f1dc94;margin-right:4px;font-size:.8rem}
+.ch.on{border-color:var(--g600);background:#e3f5e8;box-shadow:0 0 0 4px rgba(28,122,80,.15)}
+.ch.on b{background:var(--g600);border-color:var(--g600);color:#fff}
+.ch.on::after{content:"\2713";position:absolute;top:-9px;right:-7px;width:24px;height:24px;border-radius:50%;background:var(--g600);color:#fff;font-size:.8rem;display:grid;place-items:center;border:2px solid #fff}
+.ans{margin-top:12px;border:2px solid #cfe3d4;border-radius:14px;padding:10px 12px;font-weight:700;background:#fff}
+.ans span{display:block;font-size:.66rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.alt-ways{display:flex;gap:8px;margin-top:8px}.alt-ways span{flex:1;text-align:center;border:1px dashed #cfe3d4;border-radius:10px;padding:6px;font-size:.72rem;color:var(--g700);font-weight:700}
+/* listen bar */
+.listen{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.bigl{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(#ffe066,#f2b10c);border-radius:16px;padding:12px;font-weight:800;color:#3d2a00;font-size:.95rem}
+.bigl i{width:0;height:0;border-left:12px solid #3d2a00;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.more{width:44px;height:44px;border-radius:14px;background:#fff;border:2px solid #f1dc94;display:grid;place-items:center;font-weight:800;color:#7a5200}
+/* 2 lessons */
+.mine{border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.08);border:3px solid var(--y400)}
+.mine img{display:block;width:100%;height:120px;object-fit:cover}
+.mine .in{padding:12px 14px}
+.pill{display:inline-block;font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:99px;background:var(--y100);color:#7a5200}
+.bar{height:8px;border-radius:99px;background:#eee8d3;margin:8px 0 4px;overflow:hidden}.bar i{display:block;height:100%;width:9%;background:linear-gradient(90deg,#f6c02c,#e9a400)}
+.fold{margin-top:12px;background:#fff;border-radius:16px;padding:10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 3px 10px rgba(0,0,0,.05)}
+.thumbs{display:flex}.thumbs img{width:34px;height:34px;border-radius:10px;object-fit:cover;border:2px solid #fff;margin-left:-8px}.thumbs img:first-child{margin-left:0}
+.fold b{font-size:.82rem;display:block}.fold .small{font-size:.68rem}
+.chev{margin-left:auto;font-weight:800;color:var(--g700)}
+.lockrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.lk{background:#fff;border-radius:14px;padding:8px;display:flex;gap:8px;align-items:center;opacity:.75}.lk img{width:40px;height:40px;border-radius:10px;object-fit:cover;filter:grayscale(.6)}
+.lk b{font-size:.75rem;display:block}.lk span{font-size:.62rem;color:var(--muted)}
+/* 3 review inbox */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tab{padding:6px 12px;border-radius:99px;font-size:.75rem;font-weight:700;background:#fff;border:1px solid #e3dcc4}
+.tab.on{background:var(--g700);color:#fff;border-color:var(--g700)}
+.tab .c{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:99px;background:var(--y400);color:#3d2a00;font-size:.65rem;margin-left:4px;padding:0 5px}
+.sel{margin-left:auto;padding:6px 12px;border-radius:10px;background:#fff;border:1px solid #e3dcc4;font-size:.75rem}
+.it{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:9px 12px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.av{width:34px;height:34px;border-radius:50%;background:#e3f0e4;display:grid;place-items:center;font-weight:800;color:var(--g700);font-size:.8rem;flex:none}
+.it b{font-size:.82rem;display:block}.it .small{font-size:.7rem}
+.it .go{margin-left:auto;font-size:.72rem;font-weight:800;color:var(--g700);border:2px solid #cfe3d4;border-radius:10px;padding:5px 10px;white-space:nowrap}
+.it.open{flex-wrap:wrap;border:2px solid var(--y400)}
+.ansbox{flex-basis:100%;background:#f7f4e8;border-radius:10px;padding:8px 10px;font-size:.78rem;margin-top:4px}
+.quick{flex-basis:100%;display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.quick span{font-size:.72rem;font-weight:700;padding:5px 10px;border-radius:99px;background:var(--g100);color:var(--g700)}
+.quick span.on{background:var(--g700);color:#fff}
+.it.open .btn{margin-left:auto;margin-top:6px}
+/* 4 empty */
+.emp{display:flex;gap:12px;align-items:center;background:#fff;border-radius:16px;padding:12px 14px;margin-bottom:10px;border-top:3px solid var(--y400)}
+.emp .ic{width:44px;height:44px;border-radius:14px;background:var(--y100);display:grid;place-items:center;font-size:1.3rem;flex:none;color:#9a6b00;font-weight:800}
+.emp b{display:block;font-size:.9rem}.emp .small{font-size:.75rem}
+/* 5 login cards */
+.sheet{background:#fff;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lc{border:2px dashed #b9c9bd;border-radius:14px;padding:10px;display:flex;gap:10px;align-items:center}
+.lc img{height:70px;width:auto}
+.lc .logo{height:16px;width:auto;display:block;margin-bottom:4px}
+.lc b{display:block;font-size:.9rem}.lc .small{display:block}.lc .id{display:block;font-family:ui-monospace,Consolas,monospace;font-size:1rem;font-weight:800;letter-spacing:.06em;color:var(--g700)}
+.lc .small{font-size:.65rem}
+.lc .qr{width:46px;height:46px;margin-left:auto;background:repeating-conic-gradient(#17331f 0 25%,#fff 0 50%) 0 0/9px 9px;border:3px solid #fff;outline:2px solid #17331f;border-radius:4px;flex:none}
+.prow{display:flex;gap:8px;align-items:center;padding:10px 14px;background:#fdf8ea;border-bottom:1px solid var(--line);flex-wrap:wrap}
+/* table */
+.sum{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:8px;background:#fff;border-radius:14px;overflow:hidden}
+.sum th,.sum td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.sum th{background:var(--g700);color:#fff;font-size:.75rem}
+.col>.pc{flex:none;width:100%}
+@media(max-width:700px){.phone{width:100%}}
+</style></head><body><div class="wrap">
+<h1>What I'd improve in BULIG</h1>
+<p class="lead">I went through the pupil screens on a phone and the teacher screens on a computer. These six improvements fix things that are slow, crowded or confusing today. They are not new features. On each one, the left side is a real screenshot of BULIG now.</p>
+
+<!-- 1 -->
+<div class="sec"><h2><span class="num">1</span>Tap the answer<span class="who">Pupils</span><span class="rec">Recommended</span></h2>
+<p class="why">Now: the a, b, c, d choices look like buttons but can't be tapped. A Grade 1 pupil has to type "b" or "b. Ball" in the box. Improved: tap a choice and it fills the answer for you. Typing and Speak Answer still work.</p>
+<div class="row">
+ <div class="col"><span class="lab now">Now</span><div class="phone"><img src="now-activity.jpg" alt="" style="display:block;width:100%"></div></div>
+ <div class="col"><span class="lab new">Improved</span><div class="phone"><div class="pad">
+  <div class="card">
+   <div class="small" style="text-align:center;margin-bottom:4px">Card 1 of 4</div>
+   <div class="q">"My parents gave me something I can throw and catch. It's round and bouncy. What is it?"</div>
+   <div class="choices"><div class="ch"><b>a</b>Kite</div><div class="ch on"><b>b</b>Ball</div><div class="ch"><b>c</b>Doll</div><div class="ch"><b>d</b>Teddy Bear</div></div>
+   <div class="ans"><span>Your answer</span>b. Ball</div>
+   <div class="alt-ways"><span>Type instead</span><span>Speak instead</span></div>
+   <div style="margin-top:12px"><span class="btn block">Next picture &rarr;</span></div>
+  </div></div></div></div>
+</div></div>
+
+<!-- 2 -->
+<div class="sec"><h2><span class="num">2</span>Your level comes first<span class="who">Pupils</span><span class="rec">Recommended</span></h2>
+<p class="why">Now: a pupil who starts at Level 5 must scroll past four big skipped levels (1, 2A, 2B, 3, 4) before finding their own. Improved: their level is at the top with one big Continue button. Skipped levels fold into one "Optional practice" row, and locked levels are small.</p>
+<div class="row">
+ <div class="col"><span class="lab now">Now</span><div class="phone"><img src="now-lessons.jpg" alt="" style="display:block;width:100%"></div></div>
+ <div class="col"><span class="lab new">Improved</span><div class="phone"><div class="pad">
+  <div class="small" style="font-weight:800;letter-spacing:.08em;color:var(--g700);font-size:.66rem">ONE LESSON AT A TIME</div>
+  <div style="font-weight:800;font-size:1.1rem;margin:2px 0 10px">Your learning adventures</div>
+  <div class="mine"><img src="level-5.webp" alt=""><div class="in">
+   <span class="pill">YOUR LEVEL</span>
+   <div style="font-weight:800;font-size:1.05rem;margin-top:4px">Level 5 &middot; Listening and Vocabulary</div>
+   <div class="bar"><i></i></div><div class="small">2 of 23 activities &middot; Next: My Toys, page 2</div>
+   <div style="margin-top:10px"><span class="btn block">Continue learning &rarr;</span></div>
+   <div style="margin-top:8px;text-align:center"><span class="small" style="font-weight:700;color:var(--g700)">Save for offline</span></div>
+  </div></div>
+  <div class="fold"><div class="thumbs"><img src="level-1.webp" alt=""><img src="level-2.webp" alt=""><img src="level-3.webp" alt=""><img src="level-4.webp" alt=""></div><div><b>Optional practice</b><span class="small">Levels 1 to 4 &middot; skipped by your teacher</span></div><span class="chev">&#9662;</span></div>
+  <div class="lockrow"><div class="lk"><img src="level-6.webp" alt=""><div><b>Level 6</b><span>Finish Level 5 first</span></div></div><div class="lk"><img src="level-7.webp" alt=""><div><b>Level 7</b><span>Finish Level 6 first</span></div></div></div>
+ </div></div></div>
+</div></div>
+
+<!-- 3 -->
+<div class="sec"><h2><span class="num">3</span>Activity history as a short to-do list<span class="who">Teachers</span><span class="rec">Recommended</span></h2>
+<p class="why">Now: every finished activity shows a big form with rating boxes and a feedback box. With only a few test pupils, the page is already about 28,000 pixels long, around 35 screens of scrolling. Improved: one line per answer, tabs for "Needs feedback" and "Reviewed", a pupil filter, and one-tap feedback phrases. A form opens only for the answer you pick.</p>
+<div class="row">
+ <div class="col" style="flex:1 1 420px;max-width:520px"><span class="lab now">Now</span><div class="shot"><img src="now-review.jpg" alt=""></div></div>
+ <div class="col" style="flex:1 1 560px;max-width:700px"><span class="lab new">Improved</span><div class="pc"><div class="pad">
+  <div style="font-weight:800;font-size:1.15rem;margin-bottom:8px">Activity history</div>
+  <div class="tabs"><span class="tab on">Needs feedback<span class="c">9</span></span><span class="tab">Reviewed</span><span class="tab">All</span><span class="sel">All pupils &#9662;</span></div>
+  <div class="it open"><span class="av">AR</span><div><b>Ana Reyes &middot; Meet &amp; Greet pre-assessment</b><span class="small">Level 1 &middot; Sep 29</span></div><span class="go">Close</span>
+   <div class="ansbox"><b>Answer:</b> "My name is Ana. I am 6 years old. I like to draw."</div>
+   <div class="quick"><span class="on">Great job!</span><span>Good try, let's read it again together.</span><span>Speak a little louder next time.</span><span>Write your own&hellip;</span></div>
+   <span class="btn">Save feedback</span></div>
+  <div class="it"><span class="av">GC</span><div><b>Grid Check &middot; CVC Short "a" assessment</b><span class="small">Level 3 &middot; Sep 30</span></div><span class="go">Give feedback</span></div>
+  <div class="it"><span class="av">GC</span><div><b>Grid Check &middot; CVC Short "e" assessment</b><span class="small">Level 3 &middot; Sep 30</span></div><span class="go">Give feedback</span></div>
+  <div class="it"><span class="av">MP</span><div><b>Maria Pupil &middot; My Body, Activity 3</b><span class="small">Level 5 &middot; Oct 1</span></div><span class="go">Give feedback</span></div>
+  <div class="small" style="text-align:center;margin-top:4px">Showing 4 of 9 &middot; Show more</div>
+ </div></div></div>
+</div></div>
+
+<!-- 4 -->
+<div class="sec"><h2><span class="num">4</span>Friendly empty sections<span class="who">Teachers</span></h2>
+<p class="why">Now: for a pupil who hasn't started, the progress page shows empty tables with only column titles (Assessment results, Recent learning, Word matches, Badges). It looks broken. Improved: each empty part says what will appear there and when.</p>
+<div class="row">
+ <div class="col" style="flex:1 1 420px;max-width:540px"><span class="lab now">Now</span><div class="shot"><img src="now-empty.jpg" alt=""></div></div>
+ <div class="col" style="flex:1 1 420px;max-width:540px"><span class="lab new">Improved</span><div class="pc" style="max-width:540px"><div class="pad">
+  <div class="emp"><span class="ic">A</span><div><b>No assessment results yet</b><span class="small">Results show here after Juan takes a pre-test or post-test.</span></div></div>
+  <div class="emp"><span class="ic">&#9998;</span><div><b>No answers yet</b><span class="small">Juan hasn't started. Level 1 &middot; Meet &amp; Greet is waiting.</span></div></div>
+  <div class="emp"><span class="ic">&#9835;</span><div><b>No reading recordings yet</b><span class="small">Word matches appear when Juan uses Speak Answer.</span></div></div>
+  <div class="emp"><span class="ic">&#9733;</span><div><b>No badges yet</b><span class="small">The first badge comes after the first finished activity.</span></div></div>
+ </div></div></div>
+</div></div>
+
+<!-- 5 -->
+<div class="sec"><h2><span class="num">5</span>Printable sign-in cards<span class="who">Teachers</span><span class="rec">Recommended</span></h2>
+<p class="why">Now: the "My pupils" list shows names and IDs only. Teachers copy IDs by hand for each child. Improved: one "Print sign-in cards" button makes a page of cut-out cards, 10 per sheet. Each card has the pupil's character, name and Pupil ID, and the first password if it hasn't been changed. The QR square is optional: scanning it opens the BULIG sign-in page with the ID filled in.</p>
+<div class="row">
+ <div class="col" style="flex:1 1 420px;max-width:540px"><span class="lab now">Now</span><div class="shot"><img src="now-accounts.jpg" alt=""></div></div>
+ <div class="col" style="flex:1 1 520px;max-width:640px"><span class="lab new">Improved</span><div class="pc" style="max-width:640px">
+  <div class="prow"><b style="font-size:.9rem">Sign-in cards</b><span class="sel" style="margin-left:0">Grade 1 &middot; Rizal &#9662;</span><span class="btn" style="margin-left:auto">Print</span></div>
+  <div class="sheet">
+   <div class="lc"><img src="girl.webp" alt=""><div><img class="logo" src="bulig-logo.png" alt=""><b>Ana Reyes</b><span class="id">20260002</span><span class="small">Password: 12345678</span></div><span class="qr"></span></div>
+   <div class="lc"><img src="girl-cheer.webp" alt=""><div><img class="logo" src="bulig-logo.png" alt=""><b>Maria Pupil</b><span class="id">20260005</span><span class="small">Password: ask your teacher</span></div><span class="qr"></span></div>
+   <div class="lc"><img src="boy.webp" alt=""><div><img class="logo" src="bulig-logo.png" alt=""><b>Juan Dela Cruz</b><span class="id">20260001</span><span class="small">Password: 12345678</span></div><span class="qr"></span></div>
+   <div class="lc"><img src="boy-cheer.webp" alt=""><div><img class="logo" src="bulig-logo.png" alt=""><b>Check Pupil</b><span class="id">20260003</span><span class="small">Password: 12345678</span></div><span class="qr"></span></div>
+  </div></div></div>
+</div>
+<p class="small" style="margin-top:8px">Each card shows the pupil's own character, a boy or a girl. The squares here only mark where the QR code would go.</p>
+</div>
+
+<!-- 6 -->
+<div class="sec"><h2><span class="num">6</span>One big Listen button<span class="who">Pupils</span></h2>
+<p class="why">Now: the top of every activity has six small controls (Listen, Pause, Replay, Stop, Mute, Voice). That's a lot for a young child. Improved: one big Listen button that turns into Pause while it's reading. Replay, stop, mute and voice choice move into a small "more" button.</p>
+<div class="row">
+ <div class="col"><span class="lab new">Improved</span><div class="phone"><div class="pad"><div class="card">
+  <div class="listen"><span class="bigl"><i></i>Listen</span><span class="more">&middot;&middot;&middot;</span></div>
+  <div style="font-weight:800;text-align:center;font-size:1.1rem">My Toys &middot; page 2</div>
+  <div class="small" style="text-align:center">Look at each card, listen, and share your answer.</div>
+ </div></div></div></div>
+ <div class="col" style="flex:1;min-width:260px;max-width:520px">
+  <table class="sum"><tr><th>Idea</th><th>Who</th><th>Size</th><th>SQL</th></tr>
+   <tr><td>1 Tap the answer</td><td>Pupils</td><td>Small</td><td>No</td></tr>
+   <tr><td>2 Your level comes first</td><td>Pupils</td><td>Small</td><td>No</td></tr>
+   <tr><td>3 Activity history to-do list</td><td>Teachers</td><td>Medium</td><td>No</td></tr>
+   <tr><td>4 Friendly empty sections</td><td>Teachers</td><td>Small</td><td>No</td></tr>
+   <tr><td>5 Printable sign-in cards</td><td>Teachers</td><td>Medium</td><td>No</td></tr>
+   <tr><td>6 One big Listen button</td><td>Pupils</td><td>Small</td><td>No</td></tr>
+  </table>
+  <div class="note">My suggestion: build 1, 2, 3 and 5 first. They save the most time for pupils and teachers every day. None of them needs SQL.</div>
+ </div>
+</div></div>
+</div></body></html>

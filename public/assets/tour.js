@@ -7,7 +7,10 @@
  const pupil=me.role==='pupil',q=new URLSearchParams(location.search),page=q.get('page')||'dashboard';
  const $=s=>document.querySelector(s);
  const store=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}};
- const visible=el=>{if(!el)return false;const r=el.getBoundingClientRect();if(r.width<4||r.height<4)return false;const cs=getComputedStyle(el);return cs.visibility!=='hidden'&&cs.display!=='none'&&!el.closest('[hidden]');};
+ const visible=el=>{if(!el)return false;const r=el.getBoundingClientRect();if(r.width<4||r.height<4)return false;const cs=getComputedStyle(el);if(cs.visibility==='hidden'||cs.display==='none'||el.closest('[hidden]'))return false;
+  /* Inside a closed fold (details) only the summary line shows. */
+  for(let d=el.parentElement&&el.parentElement.closest('details:not([open])');d;d=d.parentElement&&d.parentElement.closest('details:not([open])')){const sm=d.querySelector(':scope>summary');if(!sm||!sm.contains(el))return false;}
+  return true;};
  const find=sel=>{if(!sel)return null;for(const s of [].concat(sel)){for(const el of document.querySelectorAll(s))if(visible(el))return el;}return null;};
  const offline='serviceWorker' in navigator&&!!document.querySelector('script[src*="assets/offline"]');
 
@@ -34,7 +37,8 @@
    [null,'Need help again?','Tap the yellow ? button on any page and I will show you how it works. Have fun learning!']],
   lessons:[
    ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
-   [['.level-card.pf-current','.level-card.available'],'Open a level','Tap "Open lessons" to see the road map of a level and start learning.'],
+   [['.level-card.pf-current','.level-card.available'],'Your level','Your level is always at the top. Tap "Continue learning" to open your next lesson, or "See my learning path" for the road map.'],
+   [['.level-fold>summary'],'Optional practice','Levels your teacher skipped are folded here. Tap to open them and practise whenever you like.'],
    [['.level-card.unavailable'],'Locked levels','A lock means you need to finish the level before it first. Tap a locked level to see what to do.'],
    offline?[['.level-card.pf-current .off-slot','.off-slot'],'Save for offline','No internet at home? Tap "Save for offline" while you have internet. The level is kept on this device so you can learn without internet.']:null,
    offline?[null,'Learning offline','When there is no internet, open a saved level and answer as usual. Your answers wait on this device and upload by themselves when the internet comes back.']:null],
@@ -46,12 +50,18 @@
    [['.pfm-node.pfm-lock','.pf-mapcard'],'Coming next','Grey stops open one by one as you finish each lesson. Tap one to see which lesson to finish first.']],
   activity:[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
-   ['.narration','Listen','Tap Listen to hear the instructions read aloud. You can pause, replay or stop.'],
+   ['.narration','Listen','Tap Listen to hear the instructions. Tap again to pause. The dots button has Start again, Stop, Mute and the voice.'],
    [['.activity-title','.activity-instruction'],'What to do','Read the activity name and what you need to do.'],
-   [['.native-deck','.visual-gallery','.demo-fluency','.activity-visual'],'Look at the pictures','Look carefully at the pictures and words. If there are cards, use "Next picture" to see each one.'],
+   [['.native-deck','.visual-gallery','.demo-fluency','.activity-visual'],'Look at the pictures','Look carefully at the pictures and words. Tap a picture to see it big.'],
+   [['.native-card:not([hidden]) .tap-choices'],'Tap your answer','Tap the answer you choose. It turns green and fills your answer box. Tap it again to undo.'],
    [['.native-card:not([hidden]) .native-answer-label','.answer-card','#response','.drawing-wrap','#drawing-canvas','.match-board','.choice-list'],'Your answer','Type or choose your answer here. Take your time.'],
+   [['.native-card:not([hidden]) .ab-mic','.ab-mic'],'Speak your answer','Tap the red microphone and say your answer. The words you say appear in the box. Speaking needs internet.'],
    ['.speak-row','Speak or type','Tap "Speak Answer" and say your answer, or tap "Type Answer" to type it. Speaking needs internet.'],
-   ['#submit-answer','Submit','When you are done, tap Submit. Your work saves by itself while you type, so nothing is lost.'],
+   [['.native-card:not([hidden]) .lt-keys'],'Letter tiles','Tap a letter to fill in the missing letter. Tap Erase to undo, or abc to use the keyboard.'],
+   [['.cd-dots'],'Your cards','Each number is a card. Green cards are answered. Tap a number to jump to that card.'],
+   [['.rh-bar'],'Reading helpers','Tap Aa to make the words bigger. Tap Reading ruler to see one line at a time.'],
+   [['.draw-kit'],'Drawing tools','Pick a crayon colour and pen size. Undo removes your last line. Full screen gives you more room.'],
+   [['.native-card-nav.deck-bar','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, the yellow button sends your activity. Your work saves by itself.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null,
    ['.lesson-outline','All activities','Open this to see every activity in this lesson and what you already finished.']],
   'lesson-done':[
@@ -70,7 +80,7 @@
    ['.off-profile','Offline lessons','Levels saved on this device are listed here. If answers are waiting to upload, tap "Upload now".'],
    [['.weekdays'],'This week','The days you learned this week have a check.'],
    ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.']]:[
-   ['.char-pick','Your teacher character','Choose the character that greets you after you sign in.'],
+   ['.char-pick','Your teacher character','Choose the character that greets you after you sign in and guides your tours.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
    ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']]
@@ -105,7 +115,13 @@
    ['.pageheading','Your pupils','Create pupil accounts and keep their details up to date.'],
    [['form.formgrid:not(.import-form)'],'Add one pupil','Fill in the name, section, sex and starting level. BULIG makes the Pupil ID for you.'],
    ['#import','Import a class','Download the template, fill it in Excel, then upload it to add a whole class at once.'],
-   [['details.account-detail'],'Pupil details','Open a pupil to edit details, reset the password, or print sign-in cards.']],
+   [['details.account-detail'],'Pupil details','Open a pupil to edit details or reset the password.'],
+   [['.acc-head a[href="?page=cards"]'],'Sign-in cards','Print cut-out cards with each pupil’s ID, first password and a QR code that opens the sign-in page.']],
+  cards:[
+   ['.lc-filter','Choose a section','Print cards for one section or for all your pupils.'],
+   [['.lc-opt'],'What to show','Turn the QR code or the first password on or off. BULIG remembers your choice.'],
+   ['[data-lc-print]','Print','Print on A4 paper, 10 cards per sheet. Cut along the dashed lines.'],
+   [['.lc-card'],'One card per pupil','The QR code opens the BULIG sign-in page with the Pupil ID filled in. The password shows only if the pupil still uses the first password.']],
   manage:[
    ['.mp-list','Your pupils','Search or filter by section, then tap a pupil to manage them.'],
    ['.mp-bulkbar','Many pupils at once','Tick pupils in the list and set one starting level for all of them.'],
@@ -116,10 +132,11 @@
    ['.section-add','Add a section','Type the section name, choose the grade and add it.'],
    ['.section-board','Your sections','Sections grouped by grade. Tap one to rename or archive it.']],
   review:[
-   ['.pageheading','Activity history','Read what your pupils answered.'],
-   [['.assessment-review'],'Assessment feedback','For assessments, read the original rubric and give an optional score.'],
-   [['.review-card'],'Pupil answers','Each card shows the activity, the pupil’s answer and drawings. Answers made offline have a blue tag.'],
-   [['.review-card form','.assessment-review form'],'Leave feedback','Write a short note. The pupil sees it in their lesson.']],
+   ['.pageheading','Activity history','Read what your pupils answered and leave short notes.'],
+   ['.rv-tabs','Needs feedback','New answers wait here. Once you save feedback, an answer moves to Reviewed.'],
+   ['.rv-filter','One pupil at a time','Choose a pupil to see only their answers.'],
+   [['.rv-item'],'Open an answer','Tap a line to read the answer, drawing or reading result.'],
+   [['.rv-phrases'],'Quick feedback','Tap a ready-made phrase, or write your own note. Then press Save.']],
   guide:[
    [['form.card'],'Choose a lesson','Pick a level and lesson, then open its guide.'],
    [['.source-pages'],'Original pages','Open the matching pages of the official module.'],
@@ -174,7 +191,8 @@
    ['#admin-pin','Admin PIN','Change the 4-digit PIN you enter after your password.'],
    [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG protects accounts from wrong passwords.']],
   profile:[
-   ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
+   [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in and guides your tours.'],
+    ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']]
  };
@@ -216,7 +234,7 @@
   bub.style.left=x+'px';bub.style.top=y+'px';});}
 
  /* First visit: the character offers the tour. */
- function offer(){if(document.querySelector('.tour-offer'))return;if(document.querySelector('[data-save-offer]')&&!window.buligSaveDone){document.addEventListener('bulig:save-done',()=>setTimeout(offer,500),{once:true});return;}const big=key==='dashboard';
+ function offer(){if(document.querySelector('.tour-offer'))return;if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeout(offer,600),{once:true});return;}if(document.querySelector('[data-save-offer]')&&!window.buligSaveDone){document.addEventListener('bulig:save-done',()=>setTimeout(offer,500),{once:true});return;}const big=key==='dashboard';
   const o=document.createElement('div');o.className='tour-offer'+(big?' tour-offer-big':'');o.setAttribute('role','dialog');o.setAttribute('aria-label','Guided tour');
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Skip for now</button></div></div>';
   o.querySelector('.tour-offer-card').prepend(charImg());

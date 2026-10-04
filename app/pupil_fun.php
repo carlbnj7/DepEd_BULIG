@@ -9,7 +9,7 @@ function pf_is_girl():bool{static $g=null;if($g===null){$u=current_user();$g=fal
 /* Character art: painted pictures with transparent backgrounds (assets/images/characters). */
 /* Each character has two poses: "hello" (welcome, goodbye) and "cheer" (finishing, unlocking, tips and tours). */
 function char_src(string $who,string $pose='hello'):string{
- $map=['boy'=>['hello'=>'boy','cheer'=>'boy-cheer'],'girl'=>['hello'=>'girl','cheer'=>'girl-cheer'],'teacher-female'=>['hello'=>'teacher-female-wave','cheer'=>'teacher-female'],'teacher-male'=>['hello'=>'teacher-male','cheer'=>'teacher-male-tip']];
+ $map=['boy'=>['hello'=>'boy','cheer'=>'boy-cheer'],'girl'=>['hello'=>'girl','cheer'=>'girl-cheer'],'teacher-female'=>['hello'=>'teacher-female-wave','cheer'=>'teacher-female'],'teacher-male'=>['hello'=>'teacher-male','cheer'=>'teacher-male-tip'],'admin-female'=>['hello'=>'admin-f-wave','cheer'=>'admin-f-show'],'admin-male'=>['hello'=>'admin-m-wave','cheer'=>'admin-m-tip']];
  return 'assets/images/characters/'.($map[$who][$pose]??$who).'.webp?v=1';}
 function pf_kid_img(string $pose,string $cls=''):string{return '<image'.($cls?' class="'.$cls.'"':'').' href="'.char_src(pf_is_girl()?'girl':'boy',$pose).'" x="92" y="14" width="142" height="184" preserveAspectRatio="xMidYMax meet"/>';}
 function pf_kid_art(string $pose='hello'):string{return '<g class="pw-kid">'.pf_kid_img($pose).'</g>';}

@@ -21,6 +21,8 @@
   document.body.appendChild(fx);requestAnimationFrame(function(){requestAnimationFrame(function(){fx.classList.add('go');});});
   setTimeout(apply,1050);setTimeout(function(){fx.classList.add('out');},1150);setTimeout(function(){fx.remove();},2100);}
  apply();
+ /* First page of a visit: show the BULIG opening screen while it loads (loading.js hides it). */
+ try{if(!sessionStorage.getItem('bulig-open'))d.classList.add('bulig-boot');}catch(e){}
  if(mq.addEventListener)mq.addEventListener('change',apply);else if(mq.addListener)mq.addListener(apply);
  document.addEventListener('DOMContentLoaded',function(){sync();
   document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-mode-toggle],[data-mode-set]');if(!t)return;
