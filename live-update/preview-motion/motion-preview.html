@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion Ideas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y100:#fff4cf;--muted:#5f6f63;--line:#e9e2cc}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1280px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:940px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}
+.idea{background:#fff;border-radius:22px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:10px}
+.idea h2{margin:0;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--g700);color:#fff;font-size:.82rem;flex:none}
+.who{font-size:.64rem;font-weight:800;padding:2px 8px;border-radius:99px;background:var(--g100);color:var(--g700);margin-left:auto}
+.rec{font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:99px;background:var(--y400);color:#3d2a00}
+.idea p{margin:0;font-size:.82rem;color:var(--muted)}
+.frames{display:flex;gap:8px;align-items:stretch}
+.fr{flex:1;min-width:0;border-radius:14px;background:#fdf8ea;border:1px solid var(--line);padding:10px;position:relative;overflow:hidden;min-height:150px}
+.fr .t{position:absolute;top:6px;left:8px;font-size:.58rem;font-weight:800;letter-spacing:.08em;color:#9a8a5a}
+.arrow{align-self:center;color:#c9b98a;font-weight:800}
+/* 1 page change */
+.pg{position:absolute;inset:24px 10px 10px;border-radius:10px;background:#fff;border:1px solid #eee3c4;overflow:hidden}
+.pg .sb{position:absolute;left:0;top:0;bottom:0;width:30%;background:#0d5a2e}
+.pg .hd{position:absolute;left:34%;right:6%;top:8px;height:14px;border-radius:6px;background:#e9e2cc}
+.pg .c1,.pg .c2{position:absolute;left:34%;right:6%;border-radius:8px;background:#f1ead4}
+.pg .c1{top:30px;height:30px}.pg .c2{top:66px;height:40px}
+.pg.a .c1,.pg.a .c2{opacity:.35;transform:translateX(-10px)}
+.pg.b .c1,.pg.b .c2{background:#dbeee1;transform:translateX(10px);opacity:.6}
+.pg.c .c1,.pg.c .c2{background:#dbeee1}
+.still{position:absolute;left:4px;bottom:4px;font-size:.55rem;color:#fff;font-weight:700}
+/* 2 read along */
+.ra{font-size:.95rem;font-weight:700;line-height:1.6;color:#0e3b28;margin-top:16px}
+.ra mark{background:linear-gradient(transparent 45%,#ffe066 45%);color:inherit;border-radius:3px;padding:0 2px}
+.ra .done{color:#9aa79e}
+.lbtn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:linear-gradient(#ffe066,#f2b10c);border-radius:12px;padding:6px 12px;font-size:.72rem;font-weight:800;color:#3d2a00;box-shadow:0 0 0 5px rgba(246,192,44,.3)}
+/* 3 mic */
+.mic{width:70px;height:70px;border-radius:50%;margin:18px auto 8px;background:linear-gradient(#ff8a7a,#e35d4a);display:grid;place-items:center;position:relative;color:#fff;font-size:1.6rem}
+.mic::before,.mic::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:3px solid rgba(227,93,74,.35)}.mic::after{inset:-24px;border-color:rgba(227,93,74,.18)}
+.bars{display:flex;gap:4px;justify-content:center;align-items:flex-end;height:30px}
+.bars i{width:6px;border-radius:4px;background:#1c7a50}
+.heard{margin-top:8px;font-size:.78rem;text-align:center;color:#0e3b28}.heard b{background:#e6f4ec;border-radius:6px;padding:1px 5px}
+.lst{font-size:.66rem;text-align:center;color:#c0392b;font-weight:800}
+/* 4 card slide */
+.cards{position:absolute;inset:26px 10px 30px}
+.cd{position:absolute;inset:0;background:#fff;border:2px solid #f1dc94;border-radius:12px;padding:10px;font-size:.72rem;font-weight:700;color:#0e3b28}
+.cd.out{transform:translateX(-62%) rotate(-6deg);opacity:.5}
+.cd.in{transform:translateX(30%) rotate(3deg)}
+.dots{position:absolute;left:0;right:0;bottom:8px;display:flex;gap:5px;justify-content:center}.dots i{width:8px;height:8px;border-radius:50%;background:#e9e2cc}.dots i.on{background:#1c7a50;width:18px;border-radius:9px}
+/* 5 xp fly */
+.xpchip{position:absolute;top:22px;right:10px;background:#fff4cf;border:2px solid #ffd966;border-radius:99px;padding:3px 10px;font-size:.72rem;font-weight:800;color:#7a5200}
+.xpchip.bump{transform:scale(1.25);box-shadow:0 0 0 6px rgba(255,214,77,.35)}
+.coin{position:absolute;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff3b0,#f2b10c);border:2px solid #c98f00}
+.trail{position:absolute;border-top:2px dashed #f2b10c;opacity:.6;transform-origin:left}
+.stars{position:absolute;left:0;right:0;top:70px;text-align:center;font-size:1.5rem;color:#f6b500;letter-spacing:4px}
+/* 6 squish */
+.bt{display:block;margin:30px auto 0;width:80%;text-align:center;border-radius:14px;padding:12px;font-weight:800;font-size:.8rem;color:#fff;background:linear-gradient(#1c7a50,#0e5a35);box-shadow:0 6px 0 #0a4426}
+.bt.press{transform:translateY(4px) scale(.96);box-shadow:0 2px 0 #0a4426}
+.ripple{position:absolute;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.45);left:46%;top:48px}
+/* 7 feedback plane */
+.row{position:absolute;left:10px;right:10px;background:#fff;border:1px solid #eee3c4;border-radius:10px;padding:7px 9px;font-size:.66rem;font-weight:700;display:flex;align-items:center;gap:6px}
+.row .av{width:22px;height:22px;border-radius:50%;background:#e6f4ec;display:grid;place-items:center;font-size:.55rem;color:#176444;flex:none}
+.row.go{transform:translateX(70%);opacity:.3}
+.plane{position:absolute;font-size:1.4rem;color:#1c7a50}
+.cnt{position:absolute;top:22px;right:10px;background:#176444;color:#fff;border-radius:99px;padding:2px 9px;font-size:.66rem;font-weight:800}
+.cnt b{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:99px;background:#ffc629;color:#3d2a00;margin-left:4px}
+/* 8 count up */
+.kpis{position:absolute;inset:26px 10px 10px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.kp{background:#fff;border:1px solid #eee3c4;border-radius:10px;padding:6px 8px}
+.kp b{display:block;font-size:1.1rem;color:#0e3b28}.kp span{font-size:.58rem;color:var(--muted)}
+.br{height:7px;border-radius:99px;background:#eee8d3;margin-top:4px;overflow:hidden}.br i{display:block;height:100%;background:linear-gradient(90deg,#3cb371,#1c7a50)}
+.summary{margin-top:22px;background:#fff;border-radius:18px;padding:14px 18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.summary table{width:100%;border-collapse:collapse;font-size:.85rem}.summary th,.summary td{padding:7px 8px;border-bottom:1px solid #eee8d3;text-align:left}.summary th{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.note{background:var(--y100);border-radius:14px;padding:12px 16px;font-size:.86rem;margin-top:16px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<h1>Animation ideas for BULIG</h1>
+<p class="lead">The pupil dashboard, sign-in page, celebrations and the learning map already have lots of motion. These 8 ideas add movement where there is none yet: moving between pages, inside activities, the microphone, feedback and the admin numbers. Each frame below is a moment in the animation, left to right.</p>
+
+<div class="grid">
+
+<div class="idea"><h2><span class="num">1</span>Smooth page changes<span class="rec">Recommended</span><span class="who">Everyone</span></h2>
+<p>Now every page change is a sudden jump. Instead, the old content fades out and the new content slides in gently, while the menu and header stay still. Built into modern browsers, so it costs almost nothing.</p>
+<div class="frames"><div class="fr"><span class="t">TAP "MY LESSONS"</span><div class="pg a"><div class="sb"></div><div class="hd"></div><div class="c1"></div><div class="c2"></div><span class="still">menu stays</span></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">0.15 s</span><div class="pg b"><div class="sb"></div><div class="hd"></div><div class="c1"></div><div class="c2"></div></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">0.3 s · NEW PAGE</span><div class="pg c"><div class="sb"></div><div class="hd"></div><div class="c1"></div><div class="c2"></div></div></div></div></div>
+
+<div class="idea"><h2><span class="num">2</span>Read-along highlight<span class="rec">Recommended</span><span class="who">Pupils</span></h2>
+<p>When the pupil taps Listen, each word lights up yellow as it is spoken, like karaoke. Words already read turn grey. Helps young readers follow the text with their eyes.</p>
+<div class="frames"><div class="fr"><span class="t">LISTEN</span><div class="ra"><mark>Look</mark> at each card, listen, and share your answer.</div><span class="lbtn">&#10074;&#10074; Pause</span></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">1.2 s</span><div class="ra"><span class="done">Look at each card,</span> <mark>listen,</mark> and share your answer.</div><span class="lbtn">&#10074;&#10074; Pause</span></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">2.4 s</span><div class="ra"><span class="done">Look at each card, listen, and share your</span> <mark>answer.</mark></div><span class="lbtn">&#10074;&#10074; Pause</span></div></div></div>
+
+<div class="idea"><h2><span class="num">3</span>Microphone that shows it's listening<span class="who">Pupils</span></h2>
+<p>Now Speak Answer only shows small text. Instead, the microphone glows red with rings, the sound bars move with the pupil's voice, and the words they said appear as they speak.</p>
+<div class="frames"><div class="fr"><span class="t">TAP SPEAK</span><div class="mic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div class="lst">Listening&hellip;</div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">SPEAKING</span><div class="mic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div class="bars"><i style="height:10px"></i><i style="height:24px"></i><i style="height:16px"></i><i style="height:30px"></i><i style="height:12px"></i><i style="height:20px"></i><i style="height:8px"></i></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">DONE</span><div class="heard" style="margin-top:40px">I heard:<br><b>b. Ball</b></div><div class="lst" style="color:#1c7a50;margin-top:6px">&#10003; Added to your answer</div></div></div></div>
+
+<div class="idea"><h2><span class="num">4</span>Cards slide like turning pages<span class="who">Pupils</span></h2>
+<p>Now Next and Previous swap cards instantly. Instead, the card slides away with a small tilt, the next one slides in, and the progress dots stretch to show where you are.</p>
+<div class="frames"><div class="fr"><span class="t">CARD 1</span><div class="cards"><div class="cd">“My parents gave me something I can throw&hellip;”</div></div><div class="dots"><i class="on"></i><i></i><i></i><i></i></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">TAP NEXT</span><div class="cards"><div class="cd in">Card 2 · the next question</div><div class="cd out">“My parents gave me&hellip;”</div></div><div class="dots"><i></i><i class="on"></i><i></i><i></i></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">CARD 2</span><div class="cards"><div class="cd">Card 2 · the next question slides in</div></div><div class="dots"><i></i><i class="on"></i><i></i><i></i></div></div></div></div>
+
+<div class="idea"><h2><span class="num">5</span>XP coins fly to the counter<span class="rec">Recommended</span><span class="who">Pupils</span></h2>
+<p>After an activity, small coins fly from the stars up to the XP counter, which bumps and counts up (20 &rarr; 30). Pupils see exactly where their points go.</p>
+<div class="frames"><div class="fr"><span class="t">SUBMIT</span><span class="xpchip"><svg width="11" height="11" viewBox="0 0 24 24" fill="#c98f00"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg> 20 XP</span><div class="stars">&#9733;&#9733;&#9733;</div><span class="coin" style="left:48%;top:105px"></span></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">0.5 s</span><span class="xpchip"><svg width="11" height="11" viewBox="0 0 24 24" fill="#c98f00"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg> 24 XP</span><div class="stars">&#9733;&#9733;&#9733;</div><span class="trail" style="left:46%;top:95px;width:70px;transform:rotate(-38deg)"></span><span class="coin" style="left:68%;top:55px"></span><span class="coin" style="left:58%;top:76px"></span></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">1 s</span><span class="xpchip bump"><svg width="11" height="11" viewBox="0 0 24 24" fill="#c98f00"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg> 30 XP</span><div class="stars">&#9733;&#9733;&#9733;</div><div style="position:absolute;right:16px;top:54px;font-size:.7rem;font-weight:800;color:#7a5200">+10!</div></div></div></div>
+
+<div class="idea"><h2><span class="num">6</span>Buttons that squish when pressed<span class="who">Everyone</span></h2>
+<p>Big buttons sink a little and show a soft ripple where the finger touched, like a real button. Small children can feel that the tap worked, so they tap less often twice.</p>
+<div class="frames"><div class="fr"><span class="t">BEFORE</span><span class="bt">Next activity &rarr;</span></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">PRESSED</span><span class="bt press">Next activity &rarr;</span><span class="ripple"></span></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">RELEASED</span><span class="bt">Next activity &rarr;</span></div></div></div>
+
+<div class="idea"><h2><span class="num">7</span>Feedback flies off to the pupil<span class="who">Teachers</span></h2>
+<p>When a teacher saves feedback, a little paper plane flies off, the answer slides out of "Needs feedback", and the count goes down by one. A small, satisfying "done".</p>
+<div class="frames"><div class="fr"><span class="t">SAVE</span><span class="cnt">Needs feedback<b>9</b></span><div class="row" style="top:60px"><span class="av">AR</span>Ana · Meet &amp; Greet</div><div class="row" style="top:96px"><span class="av">GC</span>Grid · CVC "a"</div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">0.4 s</span><span class="cnt">Needs feedback<b>9</b></span><span class="plane" style="right:30px;top:44px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1c7a50" stroke-width="2" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span><div class="row go" style="top:60px"><span class="av">AR</span>Ana · Meet &amp; Greet</div><div class="row" style="top:96px"><span class="av">GC</span>Grid · CVC "a"</div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">DONE</span><span class="cnt">Needs feedback<b>8</b></span><div class="row" style="top:60px"><span class="av">GC</span>Grid · CVC "a"</div></div></div></div>
+
+<div class="idea"><h2><span class="num">8</span>Numbers count up, bars grow<span class="who">Teachers · Admin</span></h2>
+<p>On the teacher and admin overview and the reports, numbers roll up from zero and progress bars grow to their size the first time the page opens. Easier to notice what changed.</p>
+<div class="frames"><div class="fr"><span class="t">OPEN</span><div class="kpis"><div class="kp"><b>0</b><span>Pupils</span><div class="br"><i style="width:0"></i></div></div><div class="kp"><b>0</b><span>Activities</span><div class="br"><i style="width:0"></i></div></div></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">0.5 s</span><div class="kpis"><div class="kp"><b>3</b><span>Pupils</span><div class="br"><i style="width:40%"></i></div></div><div class="kp"><b>96</b><span>Activities</span><div class="br"><i style="width:35%"></i></div></div></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">1 s</span><div class="kpis"><div class="kp"><b>5</b><span>Pupils</span><div class="br"><i style="width:70%"></i></div></div><div class="kp"><b>161</b><span>Activities</span><div class="br"><i style="width:62%"></i></div></div></div></div></div></div>
+
+</div>
+
+<div class="summary"><table>
+<tr><th>Idea</th><th>Who</th><th>Where</th><th>Size</th></tr>
+<tr><td>1 Smooth page changes</td><td>Everyone</td><td>Every page</td><td>Small</td></tr>
+<tr><td>2 Read-along highlight</td><td>Pupils</td><td>Activities (Listen)</td><td>Medium</td></tr>
+<tr><td>3 Microphone that shows it's listening</td><td>Pupils</td><td>Activities (Speak Answer)</td><td>Medium</td></tr>
+<tr><td>4 Cards slide like turning pages</td><td>Pupils</td><td>Activities</td><td>Small</td></tr>
+<tr><td>5 XP coins fly to the counter</td><td>Pupils</td><td>After each activity</td><td>Small</td></tr>
+<tr><td>6 Buttons that squish</td><td>Everyone</td><td>All big buttons</td><td>Small</td></tr>
+<tr><td>7 Feedback flies off</td><td>Teachers</td><td>Activity history</td><td>Small</td></tr>
+<tr><td>8 Numbers count up, bars grow</td><td>Teachers, admins</td><td>Overviews and reports</td><td>Small</td></tr>
+</table>
+<div class="note">My suggestion: 1, 2 and 5 first. They make every visit feel smoother and help pupils read and see their progress. All of them are switched off for devices set to "reduce motion", and none needs SQL.</div></div>
+</div></body></html>

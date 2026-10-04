@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opening and Downloads</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y100:#fff4cf;--muted:#5f6f63}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1300px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:920px}
+h2{margin:34px 0 4px;font-size:1.25rem}.sub{margin:0;color:var(--muted);font-size:.9rem;max-width:920px}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--g700);color:#fff;font-size:.9rem;margin-right:8px;vertical-align:2px}
+.row{display:flex;gap:24px;flex-wrap:wrap;margin-top:16px;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px;width:280px}
+.cap{font-size:.82rem;color:var(--muted);min-height:40px}.cap b{color:#17331f;display:block;font-size:.9rem}
+.phone{position:relative;width:280px;height:580px;border:8px solid #1d2a22;border-radius:34px;overflow:hidden;background:#fdf8ea;box-shadow:0 14px 30px rgba(0,0,0,.2)}
+/* splash */
+.splash{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 35%,#2f8a45 0%,#13602f 45%,#0b4421 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;overflow:hidden}
+.splash .glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,77,.45),rgba(255,214,77,0) 65%);top:120px}
+.logo-card{position:relative}
+.logo-card img{display:block;width:230px;filter:drop-shadow(0 8px 16px rgba(0,0,0,.35))}
+.s0 .logo-card{transform:scale(.55);opacity:.4}
+.s1 .logo-card{transform:scale(1.06)}
+.tag{margin-top:18px;font-weight:700;font-size:.82rem;letter-spacing:.02em;text-align:center;opacity:0}
+.tag small{display:block;font-weight:500;font-size:.68rem;color:#cfe9d6;margin-top:2px}
+.s1 .tag,.s2 .tag{opacity:1}
+.bar{margin-top:18px;width:150px;height:8px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden;opacity:0}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#ffe066,#f2b10c)}
+.s1 .bar,.s2 .bar{opacity:1}.s1 .bar i{width:45%}.s2 .bar i{width:100%}
+.letters span{position:absolute;font-weight:800;color:rgba(255,255,255,.18);font-size:1.6rem}
+.kids{position:absolute;left:0;right:0;bottom:-6px;display:flex;justify-content:space-between;padding:0 6px}
+.kids img{height:118px}.s0 .kids img{transform:translateY(70px)}
+.hills{position:absolute;left:-10%;right:-10%;bottom:-40px;height:110px;border-radius:50% 50% 0 0;background:#0a3a1c}
+.s3{background:#fdf8ea}
+.s3 .fade{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 35%,#2f8a45,#0b4421);opacity:.35}
+.lg{position:absolute;inset:0;padding:0}
+.lg .hd{height:118px;background:linear-gradient(160deg,#1f6a2f,#0e4a23);display:flex;align-items:center;justify-content:center;position:relative}
+.lg .hd img.l{height:56px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3))}
+.lg .hd .k1,.lg .hd .k2{position:absolute;bottom:0;height:80px}.lg .hd .k1{left:6px}.lg .hd .k2{right:6px}
+.lg .bd{padding:16px}.lg h3{margin:0 0 10px;font-size:1.2rem}
+.fld{height:40px;border:1.5px solid #dfe8d8;border-radius:12px;background:#fff;margin-bottom:10px}
+.go{height:42px;border-radius:12px;background:linear-gradient(#1c7a50,#0e5a35)}
+/* download */
+.dash{position:absolute;inset:0}
+.dh{height:48px;background:#eef5e4;display:flex;align-items:center;justify-content:center}.dh img{height:26px}
+.idc{margin:8px 10px;border-radius:16px;background:linear-gradient(120deg,#0d5a2e,#137a3b);color:#fff;padding:10px;display:flex;gap:8px;align-items:center;border-bottom:3px solid var(--y400)}
+.idc img{width:36px;height:36px;border-radius:50%;background:#e9f5ec}.idc b{font-size:.8rem}.idc small{display:block;font-size:.5rem;color:#ffe48a;font-weight:800;letter-spacing:.1em}
+.ghost{margin:8px 10px;height:90px;border-radius:16px;background:#fff}
+.dim{position:absolute;inset:0;background:rgba(10,30,20,.55)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:26px 26px 0 0;padding:70px 16px 16px;box-shadow:0 -10px 30px rgba(0,0,0,.25)}
+.sheet .art{position:absolute;left:0;right:0;top:-76px;display:flex;justify-content:center}.sheet .art img{height:140px}
+.sheet h3{margin:0 0 4px;text-align:center;font-size:1.05rem;color:var(--g700)}
+.sheet p{margin:0 0 10px;text-align:center;font-size:.72rem;color:var(--muted)}
+.opt{display:flex;gap:10px;align-items:center;border:2px solid #e3dcc4;border-radius:14px;padding:9px 10px;margin-bottom:8px}
+.opt.on{border-color:var(--g600);background:#eef8f1}
+.opt .rd{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid #b9c9bd}.opt.on .rd{border:5px solid var(--g600)}
+.opt b{display:block;font-size:.78rem}.opt span{font-size:.64rem;color:var(--muted)}
+.opt .rec{margin-left:auto;font-size:.55rem;font-weight:800;background:var(--y400);color:#3d2a00;padding:2px 6px;border-radius:99px;white-space:nowrap}
+.wifi{display:flex;gap:6px;align-items:center;font-size:.62rem;color:#3a5163;background:#eef4f8;border-radius:10px;padding:6px 8px;margin-bottom:10px}
+.btn{display:flex;align-items:center;justify-content:center;border-radius:12px;padding:10px;font-weight:800;font-size:.8rem;background:linear-gradient(#1c7a50,#0e5a35);color:#fff}
+.btn.alt{background:none;color:var(--g700);margin-top:2px}
+.prog{position:absolute;left:0;right:0;bottom:0;top:110px;background:#fff;border-radius:26px 26px 0 0;padding:16px;box-shadow:0 -10px 30px rgba(0,0,0,.25)}
+.prog h3{margin:0;font-size:1rem;color:var(--g700)}.prog .tot{font-size:.68rem;color:var(--muted);margin:2px 0 8px}
+.big{height:10px;border-radius:99px;background:#e3efe6;overflow:hidden;margin-bottom:10px}.big i{display:block;height:100%;width:58%;background:linear-gradient(90deg,#3cb371,#1c7a50)}
+.li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0ebda}
+.li img{width:32px;height:32px;border-radius:9px;object-fit:cover}
+.li b{font-size:.72rem;display:block}.li .pb{height:5px;border-radius:99px;background:#eee8d3;overflow:hidden;width:120px;margin-top:3px}.li .pb i{display:block;height:100%;background:#f0b400}
+.li .st{margin-left:auto;font-size:.62rem;font-weight:800;color:var(--g700)}.li .st.w{color:#9a8a5a}
+.keep{margin-top:8px;font-size:.64rem;color:var(--muted);text-align:center}
+.chip{position:absolute;left:12px;right:12px;bottom:70px;background:#fff;border-radius:14px;padding:8px 10px;display:flex;gap:8px;align-items:center;box-shadow:0 10px 24px rgba(0,0,0,.2);border:2px solid #cfe3d4}
+.chip .ring{width:34px;height:34px;border-radius:50%;background:conic-gradient(#1c7a50 0 58%,#e3efe6 0);display:grid;place-items:center}.chip .ring i{width:24px;height:24px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:.55rem;font-weight:800;font-style:normal}
+.chip b{font-size:.72rem;display:block}.chip span{font-size:.6rem;color:var(--muted)}
+.tabbar{position:absolute;left:8px;right:8px;bottom:8px;height:48px;border-radius:18px;background:#0e4a23}
+.done{position:absolute;left:14px;right:14px;top:160px;background:#fff;border-radius:22px;padding:80px 16px 16px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.done .art{position:absolute;left:0;right:0;top:-80px;display:flex;justify-content:center}.done .art img{height:150px}
+.done h3{margin:0 0 4px;color:var(--g700)}.done p{margin:0 0 10px;font-size:.72rem;color:var(--muted)}
+.ok{display:inline-flex;gap:5px;align-items:center;background:var(--g100);color:var(--g700);font-size:.66rem;font-weight:800;border-radius:99px;padding:3px 10px;margin-bottom:10px}
+.note{background:var(--y100);border-radius:14px;padding:12px 16px;font-size:.86rem;margin-top:18px;max-width:1000px}
+.note ul{margin:6px 0 0;padding-left:18px;line-height:1.6}
+</style></head><body><div class="wrap">
+<h1>Opening screen and "download everything" after signing in</h1>
+<p class="lead">Two additions: a short BULIG opening screen when the app starts, and right after a pupil signs in, an offer to download their lessons so BULIG works without internet.</p>
+
+<h2><span class="num">A</span>Opening screen with the BULIG logo</h2>
+<p class="sub">Shows once each time BULIG is opened (not on every page), for about 1.5 seconds while the sign-in page loads, then fades away. It never makes the pupil wait longer than the page itself.</p>
+<div class="row">
+ <div class="col"><div class="cap"><b>0.0 s</b>The logo pops in on BULIG green, with no box behind it, the same as on the sign-in page.</div>
+  <div class="phone"><div class="splash s0"><div class="glow"></div><div class="letters"><span style="left:30px;top:80px">a</span><span style="right:40px;top:150px">b</span><span style="left:50px;top:360px">ma</span><span style="right:30px;top:420px">E</span></div><div class="logo-card"><img src="bulig-logo.png" alt=""></div><div class="bar"><i></i></div><div class="hills"></div><div class="kids"><img src="boy.webp" alt=""><img src="girl.webp" alt=""></div></div></div></div>
+ <div class="col"><div class="cap"><b>0.6 s</b>A little sun-yellow loading bar appears under the logo. The two kids peek up and wave.</div>
+  <div class="phone"><div class="splash s1"><div class="glow"></div><div class="letters"><span style="left:30px;top:70px">a</span><span style="right:40px;top:140px">b</span><span style="left:50px;top:350px">ma</span><span style="right:30px;top:410px">E</span></div><div class="logo-card"><img src="bulig-logo.png" alt=""></div><div class="bar"><i></i></div><div class="hills"></div><div class="kids"><img src="boy.webp" alt=""><img src="girl.webp" alt=""></div></div></div></div>
+ <div class="col"><div class="cap"><b>1.2 s</b>The bar fills once the page is ready.</div>
+  <div class="phone"><div class="splash s2"><div class="glow"></div><div class="logo-card"><img src="bulig-logo.png" alt=""></div><div class="bar"><i></i></div><div class="hills"></div><div class="kids"><img src="boy.webp" alt=""><img src="girl.webp" alt=""></div></div></div></div>
+ <div class="col"><div class="cap"><b>1.5 s</b>It fades into the sign-in page.</div>
+  <div class="phone"><div class="lg"><div class="hd"><img class="k1" src="boy.webp" alt=""><img class="l" src="bulig-logo.png" alt=""><img class="k2" src="girl.webp" alt=""></div><div class="bd"><h3>Your next adventure starts here.</h3><div class="fld"></div><div class="fld"></div><div class="go"></div></div></div><div class="splash s2" style="opacity:.25"></div></div></div>
+</div>
+
+<h2><span class="num">B</span>Download lessons right after signing in</h2>
+<p class="sub">Only for pupils. It appears once per pupil on each phone (after the "Keep me saved" question), and the pupil can keep learning while it downloads.</p>
+<div class="row">
+ <div class="col"><div class="cap"><b>1. The offer</b>"My level" is chosen by default because it's small. "All my levels" downloads everything the pupil can open.</div>
+  <div class="phone"><div class="dash"><div class="dh"><img src="bulig-logo.png" alt=""></div><div class="idc"><img src="girl-2.png" alt=""><div><small>YOUR BULIG SPACE</small><b>Maria Pupil</b></div></div><div class="ghost"></div></div><div class="dim"></div>
+   <div class="sheet"><div class="art"><img src="girl-cheer.webp" alt=""></div><h3>Learn even without internet!</h3><p>Download your lessons to this phone now. You only do this once.</p>
+    <div class="opt on"><span class="rd"></span><div><b>My level · Level 5</b><span>23 activities · about 3 MB</span></div><span class="rec">BEST</span></div>
+    <div class="opt"><span class="rd"></span><div><b>All my levels</b><span>6 levels you can open · about 50 MB</span></div></div>
+    <div class="wifi">Tip: use Wi-Fi for "All my levels" to save mobile data.</div>
+    <span class="btn">Download</span><span class="btn alt">Not now</span></div></div></div>
+ <div class="col"><div class="cap"><b>2. Downloading</b>Each level shows its own progress. Big pictures come last.</div>
+  <div class="phone"><div class="dash"><div class="dh"><img src="bulig-logo.png" alt=""></div><div class="idc"><img src="girl-2.png" alt=""><div><small>YOUR BULIG SPACE</small><b>Maria Pupil</b></div></div></div><div class="dim"></div>
+   <div class="prog"><h3>Downloading your lessons</h3><div class="tot">29 of 50 MB · about 1 minute left</div><div class="big"><i></i></div>
+    <div class="li"><img src="level-6.webp" alt=""><div><b>Level 5 · your level</b><div class="pb"><i style="width:100%;background:#1c7a50"></i></div></div><span class="st">&#10003; Ready</span></div>
+    <div class="li"><img src="level-1.webp" alt=""><div><b>Level 1</b><div class="pb"><i style="width:100%;background:#1c7a50"></i></div></div><span class="st">&#10003; Ready</span></div>
+    <div class="li"><img src="level-2.webp" alt=""><div><b>Level 2A</b><div class="pb"><i style="width:60%"></i></div></div><span class="st">60%</span></div>
+    <div class="li"><img src="level-3.webp" alt=""><div><b>Level 2B</b><div class="pb"><i style="width:0"></i></div></div><span class="st w">Waiting</span></div>
+    <div class="li"><img src="level-4.webp" alt=""><div><b>Level 3</b><div class="pb"><i style="width:0"></i></div></div><span class="st w">Waiting</span></div>
+    <span class="btn" style="margin-top:10px">Keep learning while it downloads</span><div class="keep">You can close BULIG. It continues next time.</div></div></div></div>
+ <div class="col"><div class="cap"><b>3. Learning while it downloads</b>A small chip shows the progress. Tap it to see the list again.</div>
+  <div class="phone"><div class="dash"><div class="dh"><img src="bulig-logo.png" alt=""></div><div class="idc"><img src="girl-2.png" alt=""><div><small>YOUR BULIG SPACE</small><b>Maria Pupil</b></div></div><div class="ghost"></div><div class="ghost"></div><div class="ghost" style="height:60px"></div></div>
+   <div class="chip"><span class="ring"><i>58%</i></span><div><b>Downloading lessons</b><span>Level 2A · 3 of 6 ready</span></div></div><div class="tabbar"></div></div></div>
+ <div class="col"><div class="cap"><b>4. All done</b>A short celebration. From now on BULIG works offline for these levels.</div>
+  <div class="phone"><div class="dash"><div class="dh"><img src="bulig-logo.png" alt=""></div><div class="idc"><img src="girl-2.png" alt=""><div><small>YOUR BULIG SPACE</small><b>Maria Pupil</b></div></div></div><div class="dim"></div>
+   <div class="done"><div class="art"><img src="girl-cheer.webp" alt=""></div><span class="ok">&#10003; 6 levels ready offline</span><h3>All set, Maria!</h3><p>You can learn even without internet. Your answers will upload when you're back online.</p><span class="btn">Let’s learn!</span></div></div></div>
+</div>
+
+<div class="note"><b>Good to know</b><ul>
+<li>"All my levels" is about 50 MB for one pupil (mostly pictures). "My level" is usually 2 to 10 MB.</li>
+<li>Levels the pupil hasn't unlocked yet are not downloaded. When a new level opens, BULIG offers to download it too.</li>
+<li>Phones with little storage: if space runs out, BULIG stops and keeps what is already downloaded.</li>
+<li>Teachers and admins don't get the download offer, because their pages show live class data.</li>
+<li>With the offline sign-in from the last preview, a pupil can then open BULIG with no internet at all.</li>
+</ul></div>
+</div></body></html>

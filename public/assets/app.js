@@ -5,9 +5,30 @@ const narration=$('.narration');let muted=false;
 if(narration){
  const synth=window.speechSynthesis,select=$('#voice-select'),info=$('#voice-info');
  function voices(){if(!synth)return;const list=synth.getVoices().filter(v=>v.lang.toLowerCase().startsWith('en'));select.replaceChildren();for(const v of list){const o=document.createElement('option');o.value=v.voiceURI;o.textContent=v.name;select.append(o);}const remembered=localStorage.getItem('bulig-voice');const preferred=list.find(v=>v.voiceURI===remembered)||list.find(v=>/female|samantha|zira|susan|karen|aria|jenny|ava|hazel/i.test(v.name));if(preferred)select.value=preferred.voiceURI;info.textContent=preferred?'Selected voice: '+preferred.name:'Choose a friendly female voice if your device provides one. Voice gender is not supplied by browsers.';}
- function speak(){if(!synth){info.textContent='Narration is unavailable in this browser. Ask your teacher to read along.';return;}synth.cancel();if(muted)return;const text=narration.dataset.text||'';const chunks=text.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[text];for(const chunk of chunks){const utterance=new SpeechSynthesisUtterance(chunk);utterance.voice=synth.getVoices().find(v=>v.voiceURI===select.value)||null;utterance.lang='en-US';utterance.rate=.85;utterance.pitch=1.05;utterance.onerror=()=>{info.textContent='The voice could not play. Choose another voice or ask your teacher.';};synth.speak(utterance);}}
+ /* One big Listen button: Listen -> Pause -> Keep listening. Reads sentence by sentence so it can carry on where it stopped. */
+ const big=narration.querySelector('[data-speech="toggle"]'),more=narration.querySelector('.narr-more');let chunks=[],at=0,state='idle',run=0;
+ function setState(s){if(s==='idle'&&state!=='idle')document.dispatchEvent(new CustomEvent('bulig:speak',{detail:{type:'end'}}));state=s;if(!big)return;big.querySelector('span').textContent=s==='playing'?'Pause':s==='paused'?'Keep listening':'Listen';big.setAttribute('aria-pressed',s==='playing'?'true':'false');big.classList.toggle('is-playing',s==='playing');}
+ function speakFrom(i){if(!synth){info.textContent='Narration is unavailable in this browser. Ask your teacher to read along.';return;}const my=++run;synth.cancel();if(muted){setState('idle');return;}
+  const text=narration.dataset.text||'';chunks=text.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[text];at=Math.min(i,chunks.length-1);
+  for(let k=at;k<chunks.length;k++){const utterance=new SpeechSynthesisUtterance(chunks[k]);utterance.voice=synth.getVoices().find(v=>v.voiceURI===select.value)||null;utterance.lang='en-US';utterance.rate=.85;utterance.pitch=1.05;
+   utterance.onstart=()=>{if(my===run){at=k;document.dispatchEvent(new CustomEvent('bulig:speak',{detail:{type:'chunk',k}}));}};
+   utterance.onboundary=e=>{if(my!==run||(e.name&&e.name!=='word'))return;const w=(chunks[k].slice(e.charIndex).match(/^[\p{L}\p{N}'’-]+/u)||[''])[0];if(w)document.dispatchEvent(new CustomEvent('bulig:speak',{detail:{type:'word',word:w}}));};if(k===chunks.length-1)utterance.onend=()=>{if(my===run&&state==='playing')setState('idle');};
+   utterance.onerror=e=>{if(my!==run||e.error==='interrupted'||e.error==='canceled')return;info.textContent='The voice could not play. Choose another voice or ask your teacher.';setState('idle');};synth.speak(utterance);}
+  setState('playing');document.dispatchEvent(new CustomEvent('bulig:speak',{detail:{type:'start',from:at}}));}
+ function speak(){speakFrom(0);}
+ function stop(){run++;synth?.cancel();setState('idle');}
+ setInterval(()=>{if(state==='playing'&&synth&&!synth.speaking&&!synth.pending)setState('idle');},800);
  voices();if(synth)synth.addEventListener('voiceschanged',voices);select.addEventListener('change',()=>localStorage.setItem('bulig-voice',select.value));
- document.querySelectorAll('[data-speech]').forEach(b=>b.addEventListener('click',()=>{switch(b.dataset.speech){case 'play':case 'replay':speak();break;case 'pause':if(synth?.paused)synth.resume();else synth?.pause();break;case 'stop':synth?.cancel();break;case 'mute':muted=!muted;b.setAttribute('aria-pressed',String(muted));b.setAttribute('aria-label',muted?'Unmute narration':'Mute narration');if(muted)synth?.cancel();break;}}));window.addEventListener('pagehide',()=>synth?.cancel());
+ document.querySelectorAll('[data-speech]').forEach(b=>b.addEventListener('click',()=>{switch(b.dataset.speech){
+  case 'toggle':if(state==='playing'){synth?.pause();setState('paused');setTimeout(()=>{if(state==='paused'&&synth&&!synth.paused){run++;synth.cancel();}},300);}
+   else if(state==='paused'){if(synth?.paused&&synth.speaking){synth.resume();setState('playing');}else speakFrom(at);}else speak();break;
+  case 'play':case 'replay':speak();break;
+  case 'pause':if(synth?.paused)synth.resume();else synth?.pause();break;
+  case 'stop':stop();break;
+  case 'mute':muted=!muted;b.setAttribute('aria-pressed',String(muted));b.setAttribute('aria-label',muted?'Unmute narration':'Mute narration');const t=b.querySelector('span');if(t)t.textContent=muted?'Sound on':'Mute';if(muted)stop();break;}
+  if(more&&b.closest('.narr-menu')&&b.dataset.speech!=='mute')more.open=false;}));
+ document.addEventListener('click',e=>{if(more&&more.open&&!more.contains(e.target))more.open=false;});
+ window.addEventListener('pagehide',()=>synth?.cancel());
 }
 const form=$('#activity-form');let draftTimer,submitting=false,drawingDirty=false;
 function draft(){if(!form||form.dataset.draft!=='on'||submitting)return;clearTimeout(draftTimer);draftTimer=setTimeout(saveDraft,650);}
@@ -38,9 +59,35 @@ if(form){
 $('#type-answer')?.addEventListener('click',()=>{(document.querySelector('.native-card:not([hidden]) .native-answer')||$('#response'))?.focus();});
 for(const select of document.querySelectorAll('[data-section-filter]'))select.addEventListener('change',()=>select.form.requestSubmit());
 const canvas=$('#drawing-canvas');
-if(canvas){const ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=5;let drawing=false;const output=$('#drawing-data');if(output.value){const image=new Image();image.onload=()=>ctx.drawImage(image,0,0,canvas.width,canvas.height);image.src=output.value;}function point(event){const r=canvas.getBoundingClientRect();return [(event.clientX-r.left)*canvas.width/r.width,(event.clientY-r.top)*canvas.height/r.height];}canvas.addEventListener('pointerdown',event=>{if(form.dataset.draft!=='on')return;drawing=true;canvas.setPointerCapture(event.pointerId);ctx.strokeStyle=$('#pen-color').value;ctx.beginPath();ctx.moveTo(...point(event));});canvas.addEventListener('pointermove',event=>{if(!drawing)return;ctx.lineTo(...point(event));ctx.stroke();});function finish(){if(!drawing)return;drawing=false;output.value=canvas.toDataURL('image/png');drawingDirty=true;draft();}canvas.addEventListener('pointerup',finish);canvas.addEventListener('pointercancel',finish);$('#clear-drawing').addEventListener('click',()=>{if(form.dataset.draft!=='on')return;ctx.clearRect(0,0,canvas.width,canvas.height);output.value='';draft();});}
+/* Drawing kit (v2): crayon colours, three pen sizes, eraser, Undo (last line only), Clear and Full screen. */
+if(canvas){const ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='round';let drawing=false,erase=false,size=1;const output=$('#drawing-data'),pen=$('#pen-color'),panel=canvas.closest('.drawing-panel'),undo=[];
+ if(output.value){const image=new Image();image.onload=()=>ctx.drawImage(image,0,0,canvas.width,canvas.height);image.src=output.value;}
+ const scale=Math.max(1,canvas.width/600),SIZES=[3,6,12];
+ function point(event){const r=canvas.getBoundingClientRect();return [(event.clientX-r.left)*canvas.width/r.width,(event.clientY-r.top)*canvas.height/r.height];}
+ function save(){output.value=canvas.toDataURL('image/png');drawingDirty=true;draft();}
+ canvas.addEventListener('pointerdown',event=>{if(form.dataset.draft!=='on')return;
+  try{undo.push(ctx.getImageData(0,0,canvas.width,canvas.height));if(undo.length>15)undo.shift();}catch(e){}
+  drawing=true;canvas.setPointerCapture(event.pointerId);ctx.globalCompositeOperation=erase?'destination-out':'source-over';ctx.strokeStyle=pen.value;ctx.lineWidth=SIZES[size]*scale*(erase?2.2:1);ctx.beginPath();ctx.moveTo(...point(event));ctx.lineTo(...point(event));ctx.stroke();});
+ canvas.addEventListener('pointermove',event=>{if(!drawing)return;ctx.lineTo(...point(event));ctx.stroke();});
+ function finish(){if(!drawing)return;drawing=false;ctx.globalCompositeOperation='source-over';save();}canvas.addEventListener('pointerup',finish);canvas.addEventListener('pointercancel',finish);
+ $('#clear-drawing').addEventListener('click',()=>{if(form.dataset.draft!=='on')return;try{undo.push(ctx.getImageData(0,0,canvas.width,canvas.height));}catch(e){}ctx.clearRect(0,0,canvas.width,canvas.height);output.value='';draft();});
+ const bar=panel&&panel.querySelector('.drawing-toolbar');
+ if(bar&&form.dataset.draft==='on'){const kit=document.createElement('div');kit.className='draw-kit';
+  const COLORS=[['#217c4b','Green'],['#e35d4a','Red'],['#2f6fd6','Blue'],['#f2b10c','Yellow'],['#8e5bd6','Purple'],['#2b2b2b','Black']];
+  const mk=(cls,label,html)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.setAttribute('aria-label',label);b.title=label;if(html)b.innerHTML=html;return b;};
+  const crayons=document.createElement('div');crayons.className='dk-colors';crayons.setAttribute('role','radiogroup');crayons.setAttribute('aria-label','Crayon colour');
+  const pick=b=>{crayons.querySelectorAll('.dk-c').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-checked',on?'true':'false');});};
+  COLORS.forEach(([c,n],i)=>{const b=mk('dk-c',n);b.setAttribute('role','radio');b.style.setProperty('--c',c);b.addEventListener('click',()=>{pen.value=c;erase=false;er.classList.remove('on');er.setAttribute('aria-pressed','false');pick(b);});crayons.append(b);if(i===0)pick(b);});
+  const sizes=document.createElement('div');sizes.className='dk-sizes';['Thin','Medium','Thick'].forEach((n,i)=>{const b=mk('dk-s'+(i===size?' on':''),n+' pen','<i></i>');b.style.setProperty('--s',(4+i*4)+'px');b.addEventListener('click',()=>{size=i;sizes.querySelectorAll('.dk-s').forEach(x=>x.classList.toggle('on',x===b));});sizes.append(b);});
+  const er=mk('dk-t','Eraser','<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21h10M4 15l8-8 6 6-6 6H8z"/></svg><span>Eraser</span>');er.setAttribute('aria-pressed','false');er.addEventListener('click',()=>{erase=!erase;er.classList.toggle('on',erase);er.setAttribute('aria-pressed',String(erase));});
+  const un=mk('dk-t','Undo','<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg><span>Undo</span>');un.addEventListener('click',()=>{const last=undo.pop();if(!last)return;ctx.putImageData(last,0,0);save();});
+  const fs=mk('dk-t','Full screen','<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Full screen</span>');
+  fs.addEventListener('click',()=>{const on=!panel.classList.contains('dk-full');panel.classList.toggle('dk-full',on);document.body.classList.toggle('dk-lock',on);fs.querySelector('span').textContent=on?'Done':'Full screen';fs.setAttribute('aria-pressed',String(on));});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('dk-full'))fs.click();});
+  kit.append(crayons,sizes,er,un,fs);bar.append(kit);bar.classList.add('has-kit');}
+}
 const mic=$('#recognize');
-if(mic){const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;const status=$('#speech-status');let recognition=null,active=false;if(!Recognition){mic.disabled=true;status.textContent='Speech recognition is unavailable here. Type your answer or ask your teacher.';}else{mic.addEventListener('click',()=>{if(active){recognition.stop();return;}recognition=new Recognition();recognition.lang='en-US';recognition.continuous=false;recognition.interimResults=false;recognition.onstart=()=>{active=true;mic.textContent='Stop listening';status.textContent='Listening…';window.speechSynthesis?.cancel();};recognition.onresult=event=>{const heard=event.results[0][0].transcript;const target=document.querySelector('.native-card:not([hidden]) .native-answer')||$('#response');target.value=canvas&&$('.worksheet-panel')?[target.value,heard].filter(Boolean).join('\n'):heard;target.dispatchEvent(new Event('input',{bubbles:true}));$('#transcript').value=heard;status.textContent='Check the words — the microphone can mishear.';showWords($('#expected-text').value,heard);draft();};recognition.onerror=event=>{status.textContent=event.error==='not-allowed'?'Microphone permission was not granted. You can type your answer.':'We could not hear clearly. Try again or type your answer.';};recognition.onend=()=>{active=false;mic.textContent='Speak Answer';};try{recognition.start();}catch{status.textContent='Microphone could not start. Try typing your answer.';}});window.addEventListener('pagehide',()=>recognition?.abort());}}
+if(mic){const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;const status=$('#speech-status');let recognition=null,active=false;if(!Recognition){mic.disabled=true;status.textContent='Speech recognition is unavailable here. Type your answer or ask your teacher.';}else{mic.addEventListener('click',()=>{if(active){recognition.stop();return;}recognition=new Recognition();recognition.lang='en-US';recognition.continuous=false;recognition.interimResults=true;const micEv=d=>document.dispatchEvent(new CustomEvent('bulig:mic',{detail:d}));recognition.onstart=()=>{active=true;mic.textContent='Stop listening';status.textContent='Listening…';window.speechSynthesis?.cancel();micEv({on:true});};recognition.onresult=event=>{const r=event.results[event.results.length-1];if(!r.isFinal){micEv({words:[...event.results].map(x=>x[0].transcript).join(' ')});return;}const heard=[...event.results].map(x=>x[0].transcript).join(' ').trim();micEv({heard});const target=document.querySelector('.native-card:not([hidden]) .native-answer')||$('#response');target.value=canvas&&$('.worksheet-panel')?[target.value,heard].filter(Boolean).join('\n'):heard;target.dispatchEvent(new Event('input',{bubbles:true}));$('#transcript').value=heard;status.textContent='Check the words — the microphone can mishear.';showWords($('#expected-text').value,heard);draft();};recognition.onerror=event=>{micEv({error:event.error});status.textContent=event.error==='not-allowed'?'Microphone permission was not granted. You can type your answer.':'We could not hear clearly. Try again or type your answer.';};recognition.onend=()=>{active=false;mic.textContent='Speak Answer';micEv({on:false});};try{recognition.start();}catch{status.textContent='Microphone could not start. Try typing your answer.';}});window.addEventListener('pagehide',()=>recognition?.abort());}}
 function showWords(expected,heard){const el=$('#word-feedback');el.replaceChildren();if(!expected)return;const words=s=>s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim().split(/\s+/).filter(Boolean);const a=words(expected),b=words(heard),d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=0;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));const result=[];let i=a.length,j=b.length;while(i||j){if(i&&j&&d[i][j]===d[i-1][j-1]+(a[i-1]===b[j-1]?0:1)){result.push({word:a[i-1],ok:a[i-1]===b[j-1]});i--;j--;}else if(i&&d[i][j]===d[i-1][j]+1){result.push({word:a[i-1],ok:false});i--;}else{result.push({word:'+'+b[j-1],ok:false});j--;}}const p=document.createElement('p');p.textContent='Recognized word match: '+Math.round(Math.max(0,1-d[a.length][b.length]/Math.max(1,a.length))*100)+'% · Your teacher reviews pronunciation.';el.append(p);for(const item of result.reverse()){const span=document.createElement('span');span.className='word-chip'+(item.ok?'':' missed');span.textContent=item.word;el.append(span);}}
 
 // Accessible mobile navigation drawer with focus containment and Escape dismissal.
@@ -109,8 +156,14 @@ if(nativeDeck){
  const original=nativeDeck.dataset.earlierAnswer||'';
  function collect(){if(nativeDeck.dataset.readonly==='yes'||!all)return;const lines=[...nativeDeck.querySelectorAll('.native-answer')].map(el=>'Card '+el.dataset.number+': '+el.value.trim());const hasAnswer=[...nativeDeck.querySelectorAll('.native-answer')].some(el=>el.value.trim());all.value=hasAnswer?'BULIG card answers\n'+lines.join('\n')+(original?'\nEarlier answer: '+original:''):original;all.dispatchEvent(new Event('input',{bubbles:true}));}
  for(const input of nativeDeck.querySelectorAll('.native-answer'))input.addEventListener('input',collect);
- function show(n){at=Math.max(0,Math.min(cards.length-1,n));cards.forEach((c,i)=>{c.hidden=i!==at;});prev.disabled=at===0;next.disabled=at===cards.length-1;next.textContent=at===cards.length-1?'Last card':'Next picture / question →';nativeDeck.querySelector('.native-counter').textContent='Card '+(at+1)+' of '+cards.length;if(narration)narration.dataset.text=cards[at].dataset.narration;window.speechSynthesis?.cancel();}
- prev.addEventListener('click',()=>show(at-1));next.addEventListener('click',()=>show(at+1));show(0);
+ /* Last card: Next becomes Submit (or Next / Done when nothing is written). Read-only decks stop at the last card. */
+ const ro=nativeDeck.dataset.readonly==='yes',fm=form?form.dataset.mode:'',lastLabel=fm==='none'?'Next →':fm==='perform'?'Done ✓':'Submit activity ✓';
+ function show(n,quiet){const from=at;at=Math.max(0,Math.min(cards.length-1,n));cards.forEach((c,i)=>{c.hidden=i!==at;});const last=at===cards.length-1;prev.disabled=at===0;prev.textContent='Back';
+  next.disabled=last&&(ro||!form);next.classList.toggle('deck-submit',last&&!ro&&!!form);next.textContent=last?(ro||!form?'Last card':lastLabel):'Next card →';
+  nativeDeck.querySelector('.native-counter').textContent='Card '+(at+1)+' of '+cards.length;if(narration)narration.dataset.text=cards[at].dataset.narration;window.speechSynthesis?.cancel();
+  if(!quiet)document.dispatchEvent(new CustomEvent('bulig:card',{detail:{at,from,total:cards.length}}));}
+ prev.addEventListener('click',()=>show(at-1));next.addEventListener('click',()=>{if(next.classList.contains('deck-submit')){form.requestSubmit();return;}show(at+1);});show(0,true);
+ window.buligDeck={show:n=>show(n),get at(){return at;},cards};
 }
 
 // Level 4 fluency: time the read-aloud, listen continuously, and record words per minute with the answer.
@@ -385,3 +438,27 @@ document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600
  q.addEventListener('input',run);sec.addEventListener('change',run);
  list.querySelectorAll('[data-mp-all]').forEach(b=>b.addEventListener('click',()=>{const boxes=[...b.closest('[data-mp-group]').querySelectorAll('.mp-item:not([hidden]) input')],on=!boxes.every(x=>x.checked);boxes.forEach(x=>x.checked=on);b.textContent=on?'Clear all':'Select all';}));
 })();
+
+/* Tap a choice to answer (v40): the choice fills the card's answer box. Typing and Speak Answer still work. */
+(()=>{
+ const lists=document.querySelectorAll('.native-choices');if(!lists.length)return;
+ const boxOf=li=>{const card=li.closest('.native-card');return card&&card.querySelector('.native-answer');};
+ const locked=li=>{const box=boxOf(li),deck=li.closest('[data-native-deck]');return (box&&box.readOnly)||(deck&&deck.dataset.readonly==='yes');};
+ const mark=(list,pick)=>list.querySelectorAll('li').forEach(x=>{const on=x===pick;x.classList.toggle('picked',on);x.setAttribute('aria-pressed',on?'true':'false');});
+ const norm=t=>t.trim().toLowerCase().replace(/\s+/g,' ');let picking=false;
+ lists.forEach(list=>{const items=[...list.querySelectorAll('li')];if(locked(items[0]||list))return;list.classList.add('tap-choices');
+  items.forEach(li=>{li.setAttribute('role','button');li.tabIndex=0;li.setAttribute('aria-pressed','false');});
+  const box=items[0]&&boxOf(items[0]);
+  const sync=()=>{if(!box)return;const v=norm(box.value);mark(list,items.find(li=>norm(li.textContent)===v)||null);};
+  sync();if(box)box.addEventListener('input',()=>{if(!picking)sync();});});
+ function pick(li){if(locked(li))return;const list=li.parentNode,was=li.classList.contains('picked'),box=boxOf(li);mark(list,was?null:li);
+  if(box){box.value=was?'':li.textContent.trim();picking=true;box.dispatchEvent(new Event('input',{bubbles:true}));picking=false;}
+  if(!was&&navigator.vibrate)try{navigator.vibrate(12);}catch(e){}}
+ document.addEventListener('click',e=>{const li=e.target.closest('.tap-choices li');if(li)pick(li);});
+ document.addEventListener('keydown',e=>{const li=e.target.closest&&e.target.closest('.tap-choices li');if(li&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pick(li);}});
+})();
+
+/* Activity history: tap a ready-made phrase to add it to the feedback (v40). */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-phrase]');if(!b)return;const f=b.closest('form'),t=f&&f.querySelector('textarea[name=feedback]');if(!t)return;
+ const p=b.dataset.phrase,v=t.value.trim();if(v.includes(p)){t.value=v.replace(p,'').replace(/\s{2,}/g,' ').trim();b.classList.remove('on');}else{t.value=(v?v+' ':'')+p;b.classList.add('on');}t.dispatchEvent(new Event('input',{bubbles:true}));t.focus();});
+document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('textarea[name=feedback]');if(!t)return;f.querySelectorAll('[data-phrase]').forEach(b=>b.classList.toggle('on',t.value.includes(b.dataset.phrase)));});

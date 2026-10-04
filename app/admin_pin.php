@@ -56,7 +56,7 @@ function admin_pin_actions(string $action):void{
 /** Audit with the admin as actor (they are not signed in yet during the PIN step). */
 function admin_pin_audit(int $uid,string $action,string $detail):void{q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$uid,$action,$detail]);}
 function admin_pin_finish(array $u):never{
- unset($_SESSION['pin_pending']);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));audit('login','admin');go('?page=dashboard');
+ unset($_SESSION['pin_pending']);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));$_SESSION['hello']=1;audit('login','admin');go('?page=dashboard');
 }
 function admin_pin_card(int $uid):void{
  $s=admin_security($uid);$create=!$s['pin_hash'];

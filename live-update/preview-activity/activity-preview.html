@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Screen Ideas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y100:#fff4cf;--muted:#5f6f63;--line:#e9e2cc}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1280px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:960px}
+.sec{margin-top:34px;padding-top:22px;border-top:2px dashed #e2d9bd}.sec h2{margin:0 0 4px;font-size:1.2rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--g700);color:#fff;font-size:.88rem}
+.rec{font-size:.64rem;font-weight:800;padding:3px 9px;border-radius:99px;background:var(--y400);color:#3d2a00}
+.why{margin:0 0 12px;color:var(--muted);font-size:.88rem;max-width:960px}
+.why ul{margin:6px 0 0;padding-left:18px;line-height:1.55}
+.row{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:6px}
+.lab{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.lab.now{color:#9a6b00}.lab.new{color:var(--g700)}
+.nowimg{width:240px;border:6px solid #1d2a22;border-radius:22px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.16);background:#fff}
+.nowimg img{display:block;width:100%}
+.nowcap{width:240px;font-size:.72rem;color:var(--muted)}
+.phone{position:relative;width:300px;height:640px;border:8px solid #1d2a22;border-radius:36px;overflow:hidden;background:#fdf8ea;box-shadow:0 14px 30px rgba(0,0,0,.2);flex:none}
+.top{background:linear-gradient(120deg,#0d5a2e,#137a3b);color:#fff;padding:10px 12px 8px;border-bottom:3px solid var(--y400)}
+.top .r1{display:flex;align-items:center;gap:8px}.top .x{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.15);display:grid;place-items:center;font-weight:800}
+.top b{font-size:.78rem;display:block}.top small{font-size:.58rem;opacity:.8}
+.saved{margin-left:auto;font-size:.56rem;font-weight:700;background:rgba(255,255,255,.15);border-radius:99px;padding:2px 7px;white-space:nowrap}
+.seg{display:flex;gap:3px;margin-top:7px}.seg i{flex:1;height:5px;border-radius:9px;background:rgba(255,255,255,.25)}.seg i.d{background:#ffc629}.seg i.c{background:#fff}
+.body{padding:10px 12px}
+.ttl{display:flex;align-items:center;gap:8px;margin-bottom:6px}.ttl b{font-size:.98rem;flex:1}
+.lis{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(#ffe066,#f2b10c);border-radius:11px;padding:6px 10px;font-size:.66rem;font-weight:800;color:#3d2a00}
+.aa{width:30px;height:30px;border-radius:9px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:.72rem;color:var(--g700)}
+.card{background:#fff;border-radius:16px;border:2px solid #f1dc94;padding:10px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.q{font-weight:800;text-align:center;color:var(--g900);font-size:.92rem;line-height:1.3;margin:4px 0 8px}
+.chs{display:grid;grid-template-columns:1fr 1fr;gap:6px}.ch{border:2px solid #f1dc94;background:#fffbea;border-radius:12px;padding:7px;text-align:center;font-weight:800;font-size:.78rem}
+.ch.on{border-color:var(--g600);background:#e3f5e8}
+.ansbox{margin-top:8px;display:flex;align-items:center;gap:6px;border:2px solid #cfe3d4;border-radius:14px;padding:6px 6px 6px 10px;background:#fff}
+.ansbox span:not(.micb){flex:1;font-size:.78rem;font-weight:700}.ansbox span.ph{color:#9aa79e;font-weight:500}
+.micb{width:34px;height:34px;border-radius:50%;background:linear-gradient(#ff8a7a,#e35d4a);display:grid;place-items:center;flex:none}
+.cdots{display:flex;justify-content:center;gap:6px;margin:10px 0 2px}
+.cdot{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.62rem;font-weight:800;border:2px solid #e3dcc4;background:#fff;color:#9a8a5a}
+.cdot.ok{background:#1c7a50;border-color:#1c7a50;color:#fff}.cdot.cur{border-color:#f2b10c;box-shadow:0 0 0 3px rgba(242,177,12,.25);color:#0e3b28}
+.hint{text-align:center;font-size:.6rem;color:var(--muted)}
+.bar{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:9px 12px 12px;display:flex;gap:8px;box-shadow:0 -6px 16px rgba(0,0,0,.06)}
+.bb{flex:1;display:flex;align-items:center;justify-content:center;border-radius:13px;padding:10px;font-weight:800;font-size:.76rem;background:linear-gradient(#1c7a50,#0e5a35);color:#fff}
+.bb.alt{flex:0 0 70px;background:#fff;border:2px solid #cfe3d4;color:var(--g700)}
+.bb.sub{background:linear-gradient(#ffd34d,#f2b10c);color:#3d2a00}
+.toast{position:absolute;left:12px;right:12px;bottom:70px;background:#fff;border:2px solid var(--y400);border-radius:14px;padding:9px 10px;font-size:.66rem;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.toast b{display:block;font-size:.74rem;color:#7a5200}.toast .tb{display:flex;gap:6px;margin-top:6px}.toast .tb span{flex:1;text-align:center;border-radius:9px;padding:5px;font-weight:800;font-size:.62rem;background:#eef8f1;color:var(--g700)}.toast .tb span.y{background:#1c7a50;color:#fff}
+/* letters */
+.pic{display:block;margin:4px auto;height:110px}
+.blank{display:flex;justify-content:center;gap:4px;font-size:1.6rem;font-weight:800;color:var(--g900);margin:4px 0}
+.blank .s{width:34px;height:42px;border-radius:9px;border:3px dashed #f2b10c;display:grid;place-items:center;background:#fffbea}
+.blank .s.f{border-style:solid;border-color:#1c7a50;background:#e3f5e8}
+.keys{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:8px}
+.k{height:34px;border-radius:9px;background:#fff;border:2px solid #e3dcc4;display:grid;place-items:center;font-weight:800;font-size:.9rem;color:#0e3b28;box-shadow:0 2px 0 #e3dcc4}
+.k.on{background:#ffc629;border-color:#f2b10c}.k.w{grid-column:span 2;font-size:.6rem}
+/* viewer */
+.view{position:absolute;inset:0;background:rgba(8,20,14,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff}
+.view img{width:86%;border-radius:14px;background:#fff;transform:scale(1.08)}
+.vt{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;font-size:.66rem;font-weight:700}
+.vx{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-weight:800}
+.pinch{font-size:.62rem;opacity:.8}
+.vd{display:flex;gap:5px}.vd i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35)}.vd i.on{background:#ffc629}
+/* drawing */
+.canvas{height:300px;border-radius:14px;background:#fff;border:2px solid #e3dcc4;position:relative;overflow:hidden}
+.canvas svg{position:absolute;inset:0}
+.tools{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap}
+.cr{width:26px;height:26px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px #d6cdb0}.cr.on{box-shadow:0 0 0 3px #0e3b28}
+.tb2{height:30px;padding:0 9px;border-radius:9px;background:#fff;border:2px solid #e3dcc4;display:grid;place-items:center;font-size:.6rem;font-weight:800;color:var(--g700)}
+.sz{display:flex;gap:5px;align-items:center}.sz i{border-radius:50%;background:#0e3b28;display:block}
+/* reading */
+.pass{background:#fff;border-radius:14px;border:2px solid #cfe3d4;padding:10px 12px;position:relative}
+.pass p{margin:0;font-size:.95rem;line-height:2;white-space:nowrap;color:#0e3b28;font-weight:600}
+.ruler{position:absolute;left:6px;right:6px;top:39px;height:32px;border-radius:9px;background:rgba(255,214,77,.35);border:2px solid #f2b10c}
+.dim{opacity:.35}
+.timer{display:flex;align-items:center;gap:8px;margin-top:8px}
+.tring{width:46px;height:46px;border-radius:50%;background:conic-gradient(#1c7a50 0 40%,#e3efe6 0);display:grid;place-items:center}.tring i{width:36px;height:36px;border-radius:50%;background:#fff;display:grid;place-items:center;font-style:normal;font-size:.62rem;font-weight:800}
+.summary{margin-top:30px;background:#fff;border-radius:18px;padding:14px 18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.summary table{width:100%;border-collapse:collapse;font-size:.85rem}.summary th,.summary td{padding:7px 8px;border-bottom:1px solid #eee8d3;text-align:left}.summary th{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.note{background:var(--y100);border-radius:14px;padding:12px 16px;font-size:.86rem;margin-top:14px}
+</style></head><body><div class="wrap">
+<h1>Ideas for the activity screen</h1>
+<p class="lead">I opened each kind of activity a pupil meets on a phone: open answers, picture cards, word building, drawing, act it out, reading aloud and multiple choice. The left side of each idea is a real screenshot of today's screen, shown at full length so you can see how far pupils scroll.</p>
+
+<!-- A -->
+<div class="sec"><h2><span class="num">1</span>Everything for the answer in one place<span class="rec">Recommended</span></h2>
+<div class="why">Now the question, the answer box, the Speak and Type buttons, the Submit button and the card buttons are spread down a long page. Pupils scroll a lot and may submit before answering every card.
+<ul><li><b>Microphone inside the answer box:</b> tap the box to type, or the red microphone to speak. The separate Speak and Type buttons and the small print go away.</li>
+<li><b>Numbered card dots:</b> answered cards turn green, so pupils see which ones are still empty and can jump to any card.</li>
+<li><b>Buttons always at the bottom:</b> Back and Next stay on screen. On the last card, Next turns into a yellow <b>Submit activity</b>.</li>
+<li><b>Friendly check:</b> if a card is still empty, BULIG asks "Card 3 is still empty. Go back, or submit anyway?"</li>
+<li><b>Tidier header:</b> a small "Saved ✓" sign replaces "Your work saves automatically", and the progress bar has one piece per activity. The "Official PDF page" link stays for teachers only.</li></ul></div>
+<div class="row">
+ <div class="col"><span class="lab now">Now</span><div class="nowimg"><img src="now-l5.jpg" alt=""></div><span class="nowcap">Level 5 · My Toys, full length on a phone</span></div>
+ <div class="col"><span class="lab new">Improved</span><div class="phone">
+  <div class="top"><div class="r1"><span class="x">&times;</span><div><b>Level 5 · My Toys</b><small>Activity 2 of 4</small></div><span class="saved">&#10003; Saved</span></div><div class="seg"><i class="d"></i><i class="c"></i><i></i><i></i></div></div>
+  <div class="body">
+   <div class="ttl"><b>My Toys · page 2</b><span class="lis">&#9654; Listen</span></div>
+   <div class="card"><div class="hint" style="margin-bottom:2px">Card 1</div><div class="q">“My parents gave me something I can throw and catch. It’s round and bouncy. What is it?”</div>
+    <div class="chs"><div class="ch">a. Kite</div><div class="ch on">b. Ball</div><div class="ch">c. Doll</div><div class="ch">d. Teddy Bear</div></div>
+    <div class="ansbox"><span>b. Ball</span><span class="micb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span></div></div>
+   <div class="cdots"><span class="cdot ok">1</span><span class="cdot cur">2</span><span class="cdot">3</span><span class="cdot">4</span></div><div class="hint">Green cards are answered. Tap a number to jump.</div>
+  </div>
+  <div class="bar"><span class="bb alt">Back</span><span class="bb">Next card &rarr;</span></div></div></div>
+ <div class="col"><span class="lab new">Last card</span><div class="phone">
+  <div class="top"><div class="r1"><span class="x">&times;</span><div><b>Level 5 · My Toys</b><small>Activity 2 of 4</small></div><span class="saved">&#10003; Saved</span></div><div class="seg"><i class="d"></i><i class="c"></i><i></i><i></i></div></div>
+  <div class="body">
+   <div class="ttl"><b>My Toys · page 2</b><span class="lis">&#9654; Listen</span></div>
+   <div class="card"><div class="hint" style="margin-bottom:2px">Card 4</div><div class="q">(The last question on this page.)</div>
+    <div class="chs"><div class="ch">a. Kite</div><div class="ch">b. Ball</div><div class="ch">c. Doll</div><div class="ch on">d. Teddy Bear</div></div>
+    <div class="ansbox"><span>d. Teddy Bear</span><span class="micb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span></div></div>
+   <div class="cdots"><span class="cdot ok">1</span><span class="cdot ok">2</span><span class="cdot">3</span><span class="cdot ok cur">4</span></div>
+  </div>
+  <div class="toast"><b>Card 3 is still empty.</b>Go back and answer it, or submit anyway?<div class="tb"><span>Go to card 3</span><span class="y">Submit anyway</span></div></div>
+  <div class="bar"><span class="bb alt">Back</span><span class="bb sub">Submit activity &#10003;</span></div></div></div>
+</div></div>
+
+<!-- B -->
+<div class="sec"><h2><span class="num">2</span>Letter tiles for missing letters</h2>
+<p class="why">For cards like "Name the picture. Write the missing beginning letter. ___og", Grade 1 pupils must find letters on a small phone keyboard. Instead, big letter tiles appear and the letter drops into the blank. The normal keyboard is still one tap away (the "abc" key).</p>
+<div class="row">
+ <div class="col"><span class="lab now">Now</span><div class="nowimg"><img src="now-l2a-draw.jpg" alt=""></div><span class="nowcap">Level 2A · Beginning sounds</span></div>
+ <div class="col"><span class="lab new">Improved</span><div class="phone">
+  <div class="top"><div class="r1"><span class="x">&times;</span><div><b>Level 2A · Before we begin</b><small>Beginning sounds</small></div><span class="saved">&#10003; Saved</span></div><div class="seg"><i class="c"></i><i></i><i></i></div></div>
+  <div class="body"><div class="card"><div class="q" style="font-size:.8rem">Name the picture. Tap the missing beginning letter.</div><img class="pic" src="dog.webp" alt="">
+   <div class="blank"><span class="s f">d</span><span>o</span><span>g</span></div>
+   <div class="keys"><span class="k">a</span><span class="k">b</span><span class="k">c</span><span class="k on">d</span><span class="k">e</span><span class="k">f</span><span class="k">g</span><span class="k">h</span><span class="k">i</span><span class="k">j</span><span class="k">k</span><span class="k">l</span><span class="k">m</span><span class="k">n</span><span class="k">o</span><span class="k">p</span><span class="k">r</span><span class="k">s</span><span class="k">t</span><span class="k w">&#9003; Erase</span><span class="k w">abc</span></div></div>
+   <div class="cdots"><span class="cdot ok cur">1</span><span class="cdot">2</span><span class="cdot">3</span><span class="cdot">4</span><span class="cdot">5</span></div></div>
+  <div class="bar"><span class="bb alt">Back</span><span class="bb">Next card &rarr;</span></div></div></div>
+</div></div>
+
+<!-- C -->
+<div class="sec"><h2><span class="num">3</span>Pictures open big, inside BULIG</h2>
+<p class="why">Now tapping a picture opens it in a new browser tab, so the pupil leaves the lesson and may not find the way back. Instead, it opens full screen inside BULIG. Pupils can pinch to zoom, swipe to the next picture, and tap &times; to go back to the question.</p>
+<div class="row">
+ <div class="col"><span class="lab new">Improved</span><div class="phone"><div class="top"><div class="r1"><span class="x">&times;</span><div><b>Level 2A · Before we begin</b><small>Beginning sounds</small></div></div></div>
+  <div class="view"><div class="vt"><span>Picture 1 of 5</span><span class="vx">&times;</span></div><img src="dog.webp" alt=""><span class="pinch">Pinch to zoom · swipe for the next picture</span><div class="vd"><i class="on"></i><i></i><i></i><i></i><i></i></div></div></div></div>
+</div></div>
+
+<!-- D -->
+<div class="sec"><h2><span class="num">4</span>A real drawing kit</h2>
+<p class="why">Now the drawing box is small, with one colour picker and "Clear my marks", which erases everything. Instead, pupils get six crayon colours, three pen sizes, an eraser, an <b>Undo</b> that removes only the last line, and a <b>Full screen</b> button for more room.</p>
+<div class="row">
+ <div class="col"><span class="lab now">Now</span><div class="nowimg"><img src="now-l1-draw.jpg" alt=""></div><span class="nowcap">Level 1 · Quick Draw</span></div>
+ <div class="col"><span class="lab new">Improved</span><div class="phone">
+  <div class="top"><div class="r1"><span class="x">&times;</span><div><b>Level 1 · Describe &amp; Draw</b><small>Quick Draw</small></div><span class="saved">&#10003; Saved</span></div><div class="seg"><i class="d"></i><i class="c"></i><i></i></div></div>
+  <div class="body"><div class="ttl"><b>Draw: a small, blue square</b></div>
+   <div class="canvas"><svg viewBox="0 0 260 300"><rect x="80" y="90" width="90" height="90" rx="6" fill="none" stroke="#2f6fd6" stroke-width="7" stroke-linejoin="round"/><path d="M40 250q30-20 60 0t60 0" stroke="#2e9a4a" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="215" cy="55" r="22" fill="none" stroke="#f2b10c" stroke-width="6"/></svg></div>
+   <div class="tools"><span class="cr" style="background:#e35d4a"></span><span class="cr on" style="background:#2f6fd6"></span><span class="cr" style="background:#2e9a4a"></span><span class="cr" style="background:#f2b10c"></span><span class="cr" style="background:#8e5bd6"></span><span class="cr" style="background:#2b2b2b"></span></div>
+   <div class="tools"><span class="sz"><i style="width:6px;height:6px"></i><i style="width:10px;height:10px"></i><i style="width:15px;height:15px"></i></span><span class="tb2">Eraser</span><span class="tb2">&#8630; Undo</span><span class="tb2">Full screen</span></div></div>
+  <div class="bar"><span class="bb alt">Back</span><span class="bb sub">Submit drawing &#10003;</span></div></div></div>
+</div></div>
+
+<!-- E -->
+<div class="sec"><h2><span class="num">5</span>Reading helpers: bigger text and a reading ruler</h2>
+<p class="why">For reading passages: an <b>Aa</b> button makes the text bigger. A yellow <b>reading ruler</b> highlights one line at a time and moves down as the pupil taps or drags, helping eyes stay on the line. The timer becomes a ring that fills while they read.</p>
+<div class="row">
+ <div class="col"><span class="lab now">Now</span><div class="nowimg"><img src="now-l4-read.jpg" alt=""></div><span class="nowcap">Level 4 · Read aloud: The Cat</span></div>
+ <div class="col"><span class="lab new">Improved</span><div class="phone">
+  <div class="top"><div class="r1"><span class="x">&times;</span><div><b>Level 4 · The Cat</b><small>Pre-test passage</small></div><span class="saved">&#10003; Saved</span></div><div class="seg"><i class="c"></i><i></i></div></div>
+  <div class="body"><div class="ttl"><b>Read aloud: The Cat</b><span class="aa">Aa</span><span class="lis">&#9654; Listen</span></div>
+   <div class="pass"><span class="ruler"></span><p><span class="dim">The cat is small and white.</span><br>It likes to sleep on the mat.<br><span class="dim">The cat plays with a ball.<br>It runs fast in the yard.</span></p></div>
+   <div class="timer"><span class="tring"><i>0:12</i></span><div style="font-size:.68rem;color:#5f6f63"><b style="color:#0e3b28;display:block;font-size:.78rem">Reading&hellip;</b>Tap the next line when you get there.</div></div></div>
+  <div class="bar"><span class="bb sub">I'm done reading &#10003;</span></div></div></div>
+</div></div>
+
+<div class="summary"><table>
+<tr><th>Idea</th><th>Activities</th><th>Size</th></tr>
+<tr><td>1 Everything for the answer in one place</td><td>All answer activities</td><td>Medium</td></tr>
+<tr><td>2 Letter tiles for missing letters</td><td>Cards with blanks (mostly Levels 2A, 2B and 3)</td><td>Medium</td></tr>
+<tr><td>3 Pictures open big inside BULIG</td><td>All activities with pictures</td><td>Small</td></tr>
+<tr><td>4 A real drawing kit</td><td>Drawing activities</td><td>Medium</td></tr>
+<tr><td>5 Reading helpers</td><td>Reading passages (Levels 4, 6 and 7)</td><td>Small</td></tr>
+</table>
+<div class="note">My suggestion: 1 and 3 first. They change every activity and stop pupils from getting lost or submitting half-done work. None of them needs SQL. The lesson content stays exactly as it is in the module.</div></div>
+</div></body></html>
