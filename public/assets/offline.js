@@ -160,8 +160,9 @@
   slot(el);}
  const slots=()=>document.querySelectorAll('[data-off-level]').forEach(slot);
 
- /* ---------- My profile: Offline lessons ---------- */
- async function renderProfile(n){const box=$('[data-off-profile]');if(!box)return;const head=$('.pageheading');if(head&&box.previousElementSibling!==head)head.after(box);
+ /* ---------- Settings: offline lessons count (and the old profile card, if a page still has it) ---------- */
+ async function renderProfile(n){const oc=$('[data-off-count]');if(oc){const k=Object.keys(meta().levels).length;oc.textContent=(k?k+' '+(k===1?'level':'levels')+' saved on this device':'No levels saved yet')+(n?' · '+n+' '+(n===1?'answer':'answers')+' waiting to upload':'');}
+  const box=$('[data-off-profile]');if(!box)return;const head=$('.pageheading');if(head&&box.previousElementSibling!==head)head.after(box);
   const m=meta(),levels=Object.entries(m.levels);box.hidden=false;box.replaceChildren();
   const h=document.createElement('h2');h.textContent='Offline lessons';const p=document.createElement('p');p.className='muted';p.textContent=levels.length?'Saved on this device. They open even without internet.':'No levels saved yet. Open My lessons and choose “Save for offline” on a level.';box.append(h,p);
   let used=levels.reduce((t,[,l])=>t+(l.bytes||0),0);

@@ -65,6 +65,12 @@
 
  /* ---------- small helpers: print buttons and filters that apply on change ---------- */
  $$('[data-print]').forEach(b=>b.addEventListener('click',()=>window.print()));
+ /* My profile: "Upload a photo" saves right after a photo is picked. */
+ $$('[data-upload-auto]').forEach(i=>{const f=i.form;if(!f)return;f.classList.add('auto-up');i.addEventListener('change',()=>{if(i.files&&i.files.length){const b=f.querySelector('.me-file');if(b)b.classList.add('busy');f.requestSubmit?f.requestSubmit():f.submit();}});});
+ /* About BULIG opens in a window over the page. */
+ const abd=$('.ab-dialog');
+ if(abd){$$('[data-about-open]').forEach(b=>b.addEventListener('click',()=>{if(abd.showModal)abd.showModal();else abd.setAttribute('open','');}));
+  abd.addEventListener('click',e=>{if(e.target===abd)abd.close();});}
  $$('select[data-autosubmit]').forEach(sel=>{const f=sel.form;if(!f)return;const go=f.querySelector('.pg-go');if(go)go.hidden=true;sel.addEventListener('change',()=>f.submit());});
 
  /* ---------- daily goal ring: fills up, and sparkles the first time the goal is reached today ---------- */
