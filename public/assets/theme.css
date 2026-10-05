@@ -2345,3 +2345,31 @@ html.dark .dc-tab{color:#9be0b4!important}html.dark .dc-tab.on{background:#2e8a5
 html.dark .pp-empty{background:rgba(155,224,180,.06)!important;border-color:#3d5c48!important}html.dark .pp-empty p{color:#c9d6cd!important}
 html.dark .pp-ic{background:rgba(155,224,180,.14)!important;color:#9be0b4!important}html.dark .pp-status{color:#9be0b4!important}
 html.dark .rv-photo-tag{background:rgba(155,224,180,.1)!important;border-color:#3d5c48!important;color:#9be0b4!important}
+/* v80 · teacher: My pupils tabs, and the Lesson plan panel in Class Demo */
+.pupil-tabs{display:inline-flex;gap:4px;padding:4px;margin:0 0 16px;border-radius:999px;background:#eef7f1;border:1.5px solid #cfe3d6;max-width:100%}
+.pt-tab{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;font-weight:700;color:var(--g700,#176444);text-decoration:none!important;transition:background .2s,color .2s}
+.pt-tab .icon{width:18px;height:18px}.pt-tab b{font-size:.72rem;padding:1px 8px;border-radius:999px;background:#cfe3d6}
+.pt-tab:hover{background:#dff0e5}.pt-tab.on{background:var(--g700,#176444);color:#fff;box-shadow:0 4px 10px -4px rgba(14,59,40,.6)}.pt-tab.on b{background:rgba(255,255,255,.25)}
+.pt-tab:focus-visible{outline:3px solid #f2b10c;outline-offset:2px}
+@media(max-width:520px){.pupil-tabs{display:flex}.pt-tab{flex:1;justify-content:center;padding:9px 10px}}
+html.dark .pupil-tabs{background:rgba(155,224,180,.08)!important;border-color:#3d5c48!important}html.dark .pt-tab{color:#9be0b4!important}html.dark .pt-tab.on{background:#2e8a5c!important;color:#fff!important}html.dark .pt-tab b{background:rgba(155,224,180,.15)!important}
+.cd-plan{background:#fff;border:2px solid #cfe3d6;color:var(--g700,#176444);font-weight:800}.cd-plan:hover{border-color:#9fcdb0;background:#f4faf6}.cd-plan .icon{width:18px;height:18px}
+.plan-ov{position:fixed;inset:0;z-index:80;background:rgba(10,30,20,0);transition:background .22s}
+.plan-ov.on{background:rgba(10,30,20,.38)}
+.plan-panel{position:absolute;top:0;right:0;bottom:0;width:min(440px,100vw);background:#fffdf7;box-shadow:-18px 0 34px -18px rgba(0,0,0,.5);transform:translateX(102%);transition:transform .25s cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column}
+.plan-ov.on .plan-panel{transform:none}
+.plan-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:#eef7f1;color:var(--g700,#176444);display:grid;place-items:center;cursor:pointer}.plan-x .icon{width:18px;height:18px}
+.plan-body{overflow:auto;padding:22px 22px 26px;flex:1}
+.plan-body .eyebrow{display:block;padding-right:44px;font-size:.66rem;letter-spacing:.12em;color:var(--g700,#176444)}
+.plan-body h2{margin:4px 44px 0 0;font-size:1.45rem;line-height:1.2;color:#0e3b28}.plan-sub{margin:4px 0 0;font-size:.85rem;color:var(--muted,#5f6f63)}
+.plan-sec{margin-top:18px}.plan-sec h3{display:flex;align-items:center;gap:7px;margin:0 0 8px;font-size:.95rem;color:var(--g700,#176444)}.plan-sec h3 .icon{width:18px;height:18px}
+.plan-sec ol{margin:0;padding-left:22px;line-height:1.5}.plan-sec li{margin-bottom:6px}.plan-sec p{margin:0;line-height:1.5}
+.plan-pages{display:flex;flex-wrap:wrap;gap:6px}
+.plan-pg{display:inline-flex;align-items:center;padding:6px 13px;border-radius:999px;background:#eef7f1;border:1.5px solid #cfe3d6;color:var(--g700,#176444);font-weight:700;font-size:.85rem;text-decoration:none!important}.plan-pg:hover{background:#dff0e5}
+.plan-note{margin-top:6px!important;font-size:.78rem;color:var(--muted,#5f6f63)}
+.plan-dl,.plan-txt{display:flex!important;justify-content:center;gap:8px;width:100%;margin-top:14px}.plan-txt{margin-top:8px}
+html.dark .plan-panel{background:var(--sf,#16231b)!important}html.dark .plan-body h2{color:var(--tx,#e8f0ea)!important}html.dark .plan-sec h3,html.dark .plan-body .eyebrow{color:#9be0b4!important}
+html.dark .plan-pg,html.dark .plan-x{background:rgba(155,224,180,.1)!important;border-color:#3d5c48!important;color:#9be0b4!important}
+@media(prefers-reduced-motion:reduce){.plan-ov,.plan-panel,.pt-tab{transition:none}}
+html.dark .plan-sec ol,html.dark .plan-sec li,html.dark .plan-sec p,html.dark .plan-sub,html.dark .plan-note{color:var(--tx,#e8f0ea)!important}html.dark .plan-sub,html.dark .plan-note{opacity:.75}
+html.dark .plan-txt{background:rgba(155,224,180,.1)!important;border:1.5px solid #3d5c48!important;color:#9be0b4!important}
