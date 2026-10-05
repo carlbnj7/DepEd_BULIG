@@ -73,7 +73,7 @@ function action():void{
   if(!password_verify($old,$u['password_hash']))fail('Your current password is incorrect.');
   if(strlen($new)<8||strlen($new)>72)fail('Use a new password of 8–72 characters.');
   if($new!==(string)($_POST['confirm_password']??''))fail('The new passwords do not match.');
-  q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go('?page=profile');
+  q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go($u['role']==='pupil'?'?page=settings':'?page=profile');
  }
  if($action==='set_start_level'){
   $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=manage(&id=[0-9]+)?$~',$back))$back='?page=manage';
