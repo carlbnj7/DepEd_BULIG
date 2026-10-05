@@ -33,7 +33,7 @@
    [['.next-adventure .btn.primary','.next-adventure'],'Start learning','Tap this button to go to your next lesson. BULIG remembers where you stopped.'],
    [['.pupil-tabbar .tab-play','.sidebar nav a[href="?page=lessons"]'],'All your lessons','Here you find all your levels and the road map of each level.'],
    [['.pupil-tabbar a[href="?page=calendar"]','.sidebar nav a[href="?page=calendar"]'],'Your calendar','See every day you learned.'],
-   [['.pupil-tabbar a[href="?page=profile"]','.sidebar nav a[href="?page=profile"]'],'Your profile','Change your picture, see this week, and find your offline lessons.'],
+   [['.pupil-tabbar a[href="?page=profile"]','.sidebar nav a[href="?page=profile"]'],'Your profile','Change your picture and see this week. Settings are there too.'],
    [['.mode-mobile','.mode-top'],'Light or dark','Tap the moon to make BULIG dark, easy on your eyes at night. Tap the sun to make it bright again.'],
    [['.mobile-signout button','.sidebar .signout'],'Signing out','Tap here when you are done. BULIG asks first, so you never leave by accident.'],
    [null,'Need help again?','Tap the yellow ? button on any page and I will show you how it works. Have fun learning!']],
@@ -83,11 +83,17 @@
    ['.off-sum','Your saved lessons','See how many levels are saved on this device, and how much space they use.'],
    [['.op-all'],'Download everything','One tap saves every level you can open. Use Wi-Fi for big downloads.'],
    [['.op-row'],'Each level','Download, update or remove one level. “Needs update” means BULIG has new things.']],
+  settings:[
+   ['.st-sfx','Sound effects','Turn the little sounds on or off on this device.'],
+   [['.st-seg'],'How BULIG looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.'],
+   [['a.st-row[href="?page=offline"]'],'Offline lessons','Save lessons on this device so they open even without internet.'],
+   ['.st-pw','Your password','Tap here when you want to change your password.'],
+   ['.st-about','About BULIG','See who made BULIG.']],
   profile:pupil?[
-   ['.avatar-picker','Your picture','Choose a character for your profile picture.'],
-   ['.off-profile','Offline lessons','Levels saved on this device are listed here. If answers are waiting to upload, tap "Upload now".'],
-   [['.weekdays'],'This week','The days you learned this week have a check.'],
-   ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.']]:[
+   ['.me-hero','Your profile','Your picture, your name and your class.'],
+   [['.me-week .weekdays'],'This week','The days you learned this week have a check.'],
+   ['.me-pic','Your picture','Choose a character, or upload your own photo.'],
+   [['.me-setbtn','.sidebar nav a[href="?page=settings"]'],'Settings','Sound, colours, offline lessons, your password and About BULIG are in Settings.']]:[
    ['.char-pick','Your teacher character','Choose the character that greets you after you sign in and guides your tours.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],

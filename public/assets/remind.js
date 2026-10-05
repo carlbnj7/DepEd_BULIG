@@ -1,7 +1,7 @@
 /* BULIG reminders on the phone (Web Push)
    - After BULIG is added to the home screen, a friendly box asks first. Only "Yes, remind me" opens the phone's own question.
-   - "Not now" is remembered on this device; reminders can be turned on later in My profile.
-   - My profile: turn each reminder on or off, pick the reading-time hour, send a test, or turn reminders off. */
+   - "Not now" is remembered on this device; reminders can be turned on later in Settings.
+   - Settings: turn each reminder on or off, pick the reading-time hour, send a test, or turn reminders off. */
 (function(){
  'use strict';
  const $=s=>document.querySelector(s),key=($('meta[name="bulig-vapid"]')||{}).content||'';
@@ -24,7 +24,7 @@
  /* Must start inside a tap: the phone only asks after a real tap. */
  async function turnOn(){
   let perm;try{perm=await Notification.requestPermission();}catch(e){perm='denied';}
-  if(perm!=='granted'){toast(perm==='denied'?'Reminders are blocked. You can allow them in this phone’s settings.':'Okay! You can turn reminders on later in My profile.','in');return false;}
+  if(perm!=='granted'){toast(perm==='denied'?'Reminders are blocked. You can allow them in this phone’s settings.':'Okay! You can turn reminders on later in Settings.','in');return false;}
   try{const sub=await (await reg()).pushManager.subscribe({userVisibleOnly:true,applicationServerKey:keyBytes()}),j=sub.toJSON();
    const r=await post('push_subscribe',{endpoint:j.endpoint,p256dh:j.keys.p256dh,auth:j.keys.auth});if(!r.ok)throw new Error(r.error||'');
    toast('Reminders are on! See you at reading time.');return true;}
@@ -52,7 +52,7 @@
   yes.addEventListener('click',()=>{set(ASK,'yes');close();turnOn().then(paintCard);});}
  ask();
 
- /* ---------- My profile: Reminders ---------- */
+ /* ---------- Settings: Reminders ---------- */
  const card=$('[data-push-card]');
  const HOURS=[];for(let h=6;h<=20;h++)HOURS.push([h,(h%12||12)+':00 '+(h<12?'AM':'PM')]);
  function sw(label,sub,on,name){const l=el('label','rm-tg'),t=el('span','');t.append(el('b','',label),el('small','',sub));const i=el('input');i.type='checkbox';i.checked=!!on;i.name=name;i.className='rm-sw';l.append(t,i);return l;}
