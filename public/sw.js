@@ -1,7 +1,7 @@
 /* BULIG service worker: lets the app be installed, shows a friendly page when offline,
    opens levels a pupil saved for offline use (caches named bulig-off-<pupil>-L<level>),
    and keeps the sign-in page (cache bulig-login) so saved accounts can open their lessons offline. */
-const CACHE='bulig-offline-v7';
+const CACHE='bulig-offline-v8';
 const FILES=['offline.html','assets/offline.css','assets/brand/bulig-tab.png','assets/brand/bulig-app-medium.png','assets/bulig-logo.png','assets/fonts/poppins-latin-600-normal.woff2'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&!k.startsWith('bulig-off-')&&k!=='bulig-who'&&k!=='bulig-login').map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});

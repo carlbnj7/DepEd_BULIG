@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Smart sign-in preview</title><style>
+@font-face{font-family:P;src:url(poppins-latin-400-normal.woff2)}@font-face{font-family:P;font-weight:600;src:url(poppins-latin-600-normal.woff2)}@font-face{font-family:P;font-weight:700;src:url(poppins-latin-700-normal.woff2)}
+*{box-sizing:border-box}body{margin:0;padding:26px;background:#f4efe0;font-family:P,sans-serif;color:#0e3b28;width:1500px}
+h1{margin:0 0 4px;font-size:28px}.sub{margin:0 0 18px;color:#5f6f63}
+.row{display:flex;gap:20px;align-items:flex-start}.cap{font-weight:700;color:#176444;margin:0 0 8px}.cap small{display:block;font-weight:400;color:#5f6f63;font-size:12.5px}
+.f{border-radius:14px;overflow:hidden;border:1px solid #d9d2bc;box-shadow:0 12px 26px -18px #0007;position:relative;background:#fff}.f img{display:block}
+.ring{position:absolute;border:4px solid #e2564a;border-radius:999px}
+.tag{position:absolute;padding:4px 10px;border-radius:999px;font-weight:700;font-size:12px;color:#fff}
+.flow{display:flex;align-items:stretch;gap:10px;margin-top:22px}
+.st{flex:1;background:#fff;border-radius:16px;padding:14px;border:1px solid #e9e2cc}.st b{display:block;font-size:14.5px;margin-bottom:4px}.st p{margin:0;font-size:12.5px;color:#4a5a4f;line-height:1.45}
+.ar{display:grid;place-items:center;color:#9fcdb0;font-size:26px;font-weight:700}
+.res{display:flex;flex-direction:column;gap:6px;flex:1.3}.res div{background:#fff;border-radius:12px;padding:8px 12px;border:1px solid #e9e2cc;font-size:12.5px}.res span{display:inline-block;min-width:66px;font-weight:700;color:#176444}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.how div{background:#fff;border-radius:14px;padding:12px 14px;border:1px solid #e9e2cc;font-size:13px;line-height:1.45}.how b{display:block;font-size:14.5px;margin-bottom:3px}
+</style></head><body>
+<h1>Smart sign-in: no “Administrator access” link</h1><p class="sub">Everyone signs in with the same form. BULIG finds the account from the ID, so the right place opens even if the wrong tab is chosen.</p>
+<div class="row">
+ <div><p class="cap">Now<small>A separate link for admins. An admin ID in the Pupil tab says “incorrect”.</small></p>
+ <div class="f" style="width:250px"><img src="m-before.png" width="250"><span class="ring" style="left:58px;top:512px;width:140px;height:34px"></span></div></div>
+ <div><p class="cap">After · phone<small>The link is gone. The same form works for everyone.</small></p>
+ <div class="f" style="width:250px"><img src="m-after.png" width="250"></div></div>
+ <div><p class="cap">After · PC<small>Cleaner card for the children. Admins type their ID like everyone else.</small></p>
+ <div class="f" style="width:870px"><img src="pc-after.png" width="870"></div></div>
+</div>
+<div class="flow">
+ <div class="st"><b>1. Type your ID and password</b><p>In any tab. Pupil, Teacher or administrator: it is the same form.</p></div><div class="ar">→</div>
+ <div class="st"><b>2. BULIG finds the account</b><p>It checks the ID and password. A wrong password still says “incorrect”, and 8 tries still locks for 15 minutes.</p></div><div class="ar">→</div>
+ <div class="res"><div><span>Pupil</span>opens the pupil home</div><div><span>Teacher</span>opens the teacher overview (even from the Pupil tab)</div><div><span>Admin</span>asks for the admin PIN first, then the admin area</div></div>
+</div>
+<div class="how"><div><b>Safer for children</b>Pupils never see an admin button, so they do not wander into it.</div><div><b>Fixes the mix-up</b>An admin or teacher ID typed in the Pupil tab now works, instead of saying “incorrect password”.</div><div><b>Same protection</b>Password check, attempt lock and the admin PIN all stay. Old admin links still open the admin sign-in. No SQL.</div></div>
+</body></html>
