@@ -6,6 +6,7 @@
  if(!('caches' in window)||!('indexedDB' in window))return;
  const uid=(document.querySelector('meta[name="bulig-uid"]')||{}).content||'0';
  const base=location.origin+location.pathname,abs=u=>new URL(u,base).href,$=s=>document.querySelector(s);
+ const toast=t=>{if(window.buligToast)window.buligToast(t,'ok');};
  const online=()=>navigator.onLine!==false;
  const store=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}};
  /* Tell the service worker who is signed in, so saved pages only open for that pupil. */
@@ -25,6 +26,8 @@
  if(uid==='0'){if(online()&&document.body.classList.contains('login-page'))setTimeout(cacheLogin,1500);return;}
  const META='bulig-off-'+uid,DONE='bulig-off-done-'+uid;
  const meta=()=>store(META)||{levels:{}},saveMeta=m=>store(META,m);
+ /* A saved level is out of date when BULIG's files changed after it was saved. */
+ const BUILD=($('meta[name="bulig-build"]')||{}).content||'',stale=lv=>!!(BUILD&&lv&&lv.build!==BUILD);
  const localDone=()=>new Set(store(DONE)||[]),addDone=id=>{const s=localDone();s.add(id);store(DONE,[...s]);},dropDone=id=>{const s=localDone();s.delete(id);store(DONE,[...s]);};
  const mb=b=>b>=1048576?(b/1048576).toFixed(b>=10485760?0:1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
  const day=t=>new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric'});
@@ -41,9 +44,9 @@
  async function saveLevel(level,ui){
   const r=await fetch('?page=offline_manifest&level='+level,{credentials:'same-origin',cache:'no-store'});
   const m=await r.json().catch(()=>({error:'Could not reach BULIG.'}));if(!r.ok||m.error)throw new Error(m.error||'Could not save this level.');
-  const name='bulig-off-'+uid+'-L'+level;await caches.delete(name);const cache=await caches.open(name);
+  const name='bulig-off-'+uid+'-L'+level,was=meta().levels[level];if(!(was&&was.locked))await caches.delete(name);const cache=await caches.open(name);
   const pages=[...m.pages];m.lessons.forEach(l=>{pages.push('?page=lesson&id='+l.id);l.acts.forEach(a=>pages.push('?page=lesson&id='+l.id+'&activity='+a.id));});
-  const assets=new Set();let bytes=0,done=0;const total=pages.length;
+  const assets=new Set((m.assets||[]).map(abs));let bytes=0,done=0;const total=pages.length;
   const collect=root=>root.querySelectorAll('img[src],img[data-src],script[src],link[rel="stylesheet"][href],link[rel="icon"][href],source[src],image[href]').forEach(n=>{const v=n.getAttribute('src')||n.getAttribute('data-src')||n.getAttribute('href');if(v&&!v.startsWith('data:')){const u=new URL(v,base);if(u.origin===location.origin)assets.add(u.href);}});
   async function page(p){if(ui.cancelled)return;
    try{const res=await fetch(p+'&off=1',{credentials:'same-origin',cache:'no-store'});if(res.ok&&!res.url.includes('page=login')){const html=await res.text();bytes+=html.length;
@@ -55,9 +58,9 @@
   /* Pictures used by the style sheets (level covers and backgrounds). */
   for(const css of [...assets].filter(a=>/\.css(\?|$)/.test(a))){try{const t=await (await fetch(css)).text();for(const mt of t.matchAll(/url\(["']?([^"')]+)["']?\)/g)){if(mt[1].startsWith('data:'))continue;const u=new URL(mt[1],css);if(u.origin===location.origin)assets.add(u.href);}}catch(e){}}
   const list=[...assets];let ai=0;ui.progress(done,total,'pictures');
-  await Promise.all(Array.from({length:4},async()=>{while(list.length&&!ui.cancelled){const a=list.shift();try{const res=await fetch(a);if(res.ok){const b=await res.clone().blob();bytes+=b.size;await cache.put(a,res);}}catch(e){}ai++;}}));
+  await Promise.all(Array.from({length:4},async()=>{while(list.length&&!ui.cancelled){const a=list.shift();try{const had=await cache.match(a);if(had){bytes+=(await had.clone().blob()).size;ai++;continue;}const res=await fetch(a);if(res.ok){const b=await res.clone().blob();bytes+=b.size;await cache.put(a,res);}}catch(e){}ai++;}}));
   if(ui.cancelled){await caches.delete(name);return null;}
-  const all=meta();all.levels[level]={title:m.title,bytes,at:Date.now(),lessons:m.lessons};saveMeta(all);return all.levels[level];
+  const all=meta();all.levels[level]={title:m.title,bytes,at:Date.now(),lessons:m.lessons,build:BUILD,locked:!!m.locked};saveMeta(all);return all.levels[level];
  }
  async function removeLevel(level){await caches.delete('bulig-off-'+uid+'-L'+level);const m=meta();delete m.levels[level];saveMeta(m);}
 
@@ -145,7 +148,7 @@
  function slot(el){const level=+el.dataset.offLevel,saved=meta().levels[level];el.replaceChildren();const card=el.closest('.level-card');
   if(!online()){if(card)card.classList.toggle('off-dim',!saved);const chip=document.createElement('span');chip.className=saved?'off-chip saved':'off-chip need';chip.innerHTML=saved?svg('ok')+'Saved on this device':'Needs internet';el.append(chip);return;}
   if(card)card.classList.remove('off-dim');
-  if(saved){const chip=document.createElement('span');chip.className='off-chip saved';chip.innerHTML=svg('ok')+'Saved on this device';const sm=document.createElement('small');sm.className='off-small';sm.textContent=mb(saved.bytes)+' · saved '+day(saved.at)+' · ';
+  if(saved){const old=stale(saved),chip=document.createElement('span');chip.className='off-chip '+(old?'upd':'saved');chip.innerHTML=old?svg('wait')+'Needs update':svg('ok')+'Saved on this device';const sm=document.createElement('small');sm.className='off-small';sm.textContent=mb(saved.bytes)+' · saved '+day(saved.at)+' · ';
    const up=document.createElement('button');up.type='button';up.className='linkbutton';up.textContent='Update';up.addEventListener('click',()=>start(el));const rm=document.createElement('button');rm.type='button';rm.className='linkbutton';rm.textContent='Remove';rm.addEventListener('click',async()=>{await removeLevel(level);slot(el);});
    sm.append(up,' · ',rm);el.append(chip,sm);return;}
   const b=document.createElement('button');b.type='button';b.className='btn off-save';b.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>Save for offline';b.addEventListener('click',()=>start(el));el.append(b);}
@@ -166,6 +169,7 @@
    try{const est=await navigator.storage.estimate();if(est.quota){i.style.width=Math.max(3,Math.min(100,est.usage/est.quota*100))+'%';sm.textContent=mb(used)+' used · '+mb(Math.max(0,est.quota-est.usage))+' free';}}catch(e){i.style.width='10%';}
    levels.forEach(([lv,l])=>{const row=document.createElement('div');row.className='off-row';const t=document.createElement('div');t.innerHTML='<b></b><small></small>';t.querySelector('b').textContent=l.title;t.querySelector('small').textContent=mb(l.bytes)+' · saved '+day(l.at);
     const rm=document.createElement('button');rm.type='button';rm.className='linkbutton';rm.textContent='Remove';rm.addEventListener('click',async()=>{await removeLevel(lv);render();});row.append(t,rm);box.append(row);});}
+  const all=document.createElement('a');all.className='btn secondary off-all';all.href='?page=offline';all.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>See all offline lessons';box.append(all);
   if(n){const row=document.createElement('div');row.className='off-row';const chip=document.createElement('span');chip.className='off-chip wait';chip.innerHTML=svg('wait');chip.append(n+' '+(n===1?'answer':'answers')+' waiting');const b=document.createElement('button');b.type='button';b.className='btn secondary';b.textContent='Upload now';b.disabled=!online();b.addEventListener('click',()=>sync(true));row.append(chip,b);box.append(row);}}
 
  /* ---------- after signing in: download lessons so BULIG works without internet ---------- */
@@ -179,26 +183,37 @@
   if($('[data-save-offer]')&&!window.buligSaveDone)await ev('bulig:save-done');}
  async function offerDownload(){
   await settle();let info;try{info=await (await fetch('?page=offline_levels',{credentials:'same-origin',cache:'no-store'})).json();}catch(e){dlDone();return;}
-  const have=meta().levels,todo=(info.levels||[]).filter(l=>!have[l.level]);if(!todo.length){store(ASKED,1);dlDone();return;}
-  const cur=todo.find(l=>l.current),all=todo.reduce((t,l)=>t+l.bytes,0);
-  const ov=el('div','dl-ov'),sh=el('div','dl-sheet');ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Download lessons');
+  const have=meta().levels,levels=info.levels||[],opened=autoOpen(levels),todo=levels.filter(l=>!have[l.level]),old=levels.filter(l=>have[l.level]&&stale(have[l.level])&&!opened.includes(l));
+  if(!todo.length&&!old.length){if(!run)dlDone();return;}
+  const upd=!todo.length,cur=levels.find(l=>l.current&&(!have[l.level]||stale(have[l.level]))),need=todo.concat(old),all=need.reduce((t,l)=>t+l.bytes,0);
+  const ov=el('div','dl-ov'),sh=el('div','dl-sheet');ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label',upd?'Update saved lessons':'Download lessons');
   if(me.char){const im=el('img','dl-art');im.src=me.char;im.alt='';sh.append(im);}
-  sh.append(el('h3','','Learn even without internet!'),el('p','','Download your lessons to this '+(innerWidth<741?'phone':'device')+' now. You only do this once.'));
-  const opts=[];if(cur)opts.push({k:'mine',t:'My level · '+cur.title,d:cur.activities+' activities · about '+mb(cur.bytes),levels:[cur],best:true});
-  if(todo.length>1||!cur)opts.push({k:'all',t:'All my levels',d:todo.length+' '+(todo.length===1?'level':'levels')+' you can open · about '+mb(all),levels:(cur?[cur]:[]).concat(todo.filter(l=>l!==cur))});
+  if(upd){const tag=el('span','dl-new');tag.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg>BULIG has new things';sh.append(tag,el('h3','','Update your saved lessons'),el('p','','Your offline lessons are from an older BULIG. Update them to get the new things offline too.'));}
+  else sh.append(el('h3','','Learn even without internet!'),el('p','','Save your lessons on this '+(innerWidth<741?'phone':'device')+' so they open anytime, even without internet.'));
+  const opts=[];
+  if(upd)opts.push({t:'Update '+old.length+' saved '+(old.length===1?'level':'levels'),d:old.map(l=>l.title).join(', ')+' · about '+mb(all),levels:old});
+  else{if(cur)opts.push({t:'My level · '+cur.title,d:cur.activities+' activities · about '+mb(cur.bytes),levels:[cur],best:true});
+   if(need.length>1||!cur)opts.push({t:'Everything',d:need.length+' '+(need.length===1?'level':'levels')+(need.some(l=>l.locked)?', with '+need.filter(l=>l.locked).length+' locked for now':'')+(old.length?' ('+old.length+' to update)':'')+' · about '+mb(all),levels:(cur?[cur]:[]).concat(need.filter(l=>l!==cur))});}
   let pick=opts[0];const list=el('div','dl-opts');list.setAttribute('role','radiogroup');
   opts.forEach(o=>{const b=el('button','dl-opt'+(o===pick?' on':''));b.type='button';b.setAttribute('role','radio');b.setAttribute('aria-checked',o===pick?'true':'false');
    const tx=el('span','dl-opt-t');tx.append(el('b','',o.t),el('small','',o.d));b.append(el('span','dl-rd'),tx);if(o.best)b.append(el('span','dl-best','BEST'));
    b.addEventListener('click',()=>{pick=o;list.querySelectorAll('.dl-opt').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-checked',on?'true':'false');});});list.append(b);});
-  sh.append(list);if(all>15*1048576)sh.append(el('p','dl-tip','Tip: use Wi-Fi for "All my levels" to save mobile data.'));
-  const go=el('button','btn primary dl-go','Download'),later=el('button','linkbutton dl-later','Not now');go.type=later.type='button';sh.append(go,later);ov.append(sh);document.body.append(ov);requestAnimationFrame(()=>ov.classList.add('on'));go.focus();
-  later.addEventListener('click',()=>{store(ASKED,1);ov.remove();dlDone();});
-  go.addEventListener('click',()=>{store(ASKED,1);ov.remove();store(DLQ,pick.levels.map(l=>({level:l.level,title:l.title,bytes:l.bytes})));startRun(true);});}
+  sh.append(list);if(all>15*1048576)sh.append(el('p','dl-tip','Tip: use Wi-Fi for big downloads to save mobile data.'));
+  const go=el('button','btn primary dl-go',upd?'Update now':'Download');go.type='button';
+  const row=el('div','dl-row2'),see=el('a','btn secondary dl-see','See all offline lessons'),later=el('button','btn secondary dl-later','Not now');see.href='?page=offline';later.type='button';row.append(see,later);
+  sh.append(go,row);ov.append(sh);document.body.append(ov);requestAnimationFrame(()=>ov.classList.add('on'));go.focus();
+  later.addEventListener('click',()=>{ov.remove();dlDone();});
+  go.addEventListener('click',()=>{ov.remove();queueLevels(pick.levels);});}
+ /* Add levels to the download list and start (or continue) downloading. */
+ function queueLevels(levels,quiet){const q=store(DLQ)||[];levels.forEach(l=>{if(!q.some(x=>x.level===l.level))q.push({level:l.level,title:l.title,bytes:l.bytes});});store(DLQ,q);
+  if(run){levels.forEach(l=>{if(!run.q.some(x=>x.level===l.level)){run.q.push({level:l.level,title:l.title,bytes:l.bytes});run.total+=l.bytes||1;run.count++;addRow(l);}});paint();}else startRun(!quiet);if(!quiet&&run)run.loud=true;renderPage();}
+ /* A level saved while locked has only its pictures. Once it opens, add its lesson pages quietly. */
+ function autoOpen(levels){const have=meta().levels,up=levels.filter(l=>have[l.level]&&have[l.level].locked&&!l.locked);if(up.length&&online())queueLevels(up,true);return up;}
  function startRun(open){if(run)return;const q=store(DLQ)||[];if(!q.length){dlDone();return;}
-  run={q,total:q.reduce((t,l)=>t+(l.bytes||1),0),doneBytes:0,frac:0,i:0,count:q.length,ready:0,open,panel:null,chip:null,paused:false};build();next();}
+  run={q,total:q.reduce((t,l)=>t+(l.bytes||1),0),doneBytes:0,frac:0,i:0,count:q.length,ready:0,open,loud:open,panel:null,chip:null,paused:false};build();next();}
  function build(){const p=el('div','dl-panel');p.setAttribute('role','dialog');p.setAttribute('aria-label','Downloading your lessons');
   const h=el('div','dl-ph');h.append(el('h3','','Downloading your lessons'),el('small','dl-sum',''));p.append(h,el('div','dl-big'));p.querySelector('.dl-big').append(el('i'));
-  const ul=el('div','dl-list');run.q.forEach(l=>{const r=el('div','dl-row');r.dataset.level=l.level;const t=el('div','');t.append(el('b','',l.title));const pb=el('span','dl-pb');pb.append(el('i'));t.append(pb);r.append(el('span','dl-cv cv-'+l.level),t,el('span','dl-st','Waiting'));ul.append(r);});p.append(ul);
+  const ul=el('div','dl-list');p.append(ul);run.panel=p;run.q.forEach(addRow);
   const keep=el('button','btn primary dl-keep','Keep learning while it downloads');keep.type='button';keep.addEventListener('click',()=>{run.open=false;paint();dlDone();});p.append(keep,el('small','dl-note','You can close BULIG. It continues next time you open it.'));
   const chip=el('button','dl-chip');chip.type='button';chip.innerHTML='<span class="dl-ring"><i></i></span><span class="dl-ct"><b>Downloading lessons</b><small></small></span>';chip.addEventListener('click',()=>{run.open=true;paint();});
   document.body.append(p,chip);run.panel=p;run.chip=chip;paint();}
@@ -207,26 +222,56 @@
   run.panel.querySelector('.dl-big i').style.width=pct+'%';run.panel.querySelector('.dl-sum').textContent=run.paused?'Paused · waiting for the internet':pct+'% · '+run.ready+' of '+run.count+' ready';
   run.chip.querySelector('.dl-ring').style.setProperty('--p',pct);run.chip.querySelector('.dl-ring i').textContent=pct+'%';
   run.chip.querySelector('small').textContent=run.paused?'Paused · no internet':(run.q[0]?run.q[0].title+' · ':'')+run.ready+' of '+run.count+' ready';}
+ function addRow(l){const ul=run.panel.querySelector('.dl-list'),r=el('div','dl-row');r.dataset.level=l.level;const t=el('div','');t.append(el('b','',l.title));const pb=el('span','dl-pb');pb.append(el('i'));t.append(pb);r.append(el('span','dl-cv cv-'+l.level),t,el('span','dl-st','Waiting'));ul.append(r);}
  function rowOf(level){return run.panel.querySelector('.dl-row[data-level="'+level+'"]');}
  async function next(){if(!run)return;const l=run.q[0];
-  if(!l){run.panel.remove();run.chip.remove();const n=run.count;run=null;store(DLQ,[]);slots();render();celebrate(n);return;}
+  if(!l){run.panel.remove();run.chip.remove();const n=run.count,loud=run.loud,names=run.names||[];run=null;store(DLQ,[]);slots();render();renderPage();if(loud)celebrate(n);else{toast((names.join(', ')||'Your new level')+' is ready offline.');dlDone();}return;}
   if(!online()){run.paused=true;paint();window.addEventListener('online',()=>{if(run){run.paused=false;next();}},{once:true});return;}
   const row=rowOf(l.level);if(row){row.querySelector('.dl-st').textContent='0%';}run.frac=0;
-  const ui={cancelled:false,progress(d,t,what){run.frac=what?.92:.9*d/Math.max(1,t);if(row){row.querySelector('.dl-pb i').style.width=Math.round(run.frac*100)+'%';row.querySelector('.dl-st').textContent=Math.round(run.frac*100)+'%';}paint();}};
+  const ui={cancelled:false,progress(d,t,what){run.frac=what?.92:.9*d/Math.max(1,t);if(row){row.querySelector('.dl-pb i').style.width=Math.round(run.frac*100)+'%';row.querySelector('.dl-st').textContent=Math.round(run.frac*100)+'%';}pageProg(l.level,Math.round(run.frac*100));paint();}};
   try{await saveLevel(l.level,ui);}catch(e){}
   if(!online()){run.paused=true;paint();window.addEventListener('online',()=>{if(run){run.paused=false;next();}},{once:true});return;}
-  run.q.shift();store(DLQ,run.q);run.doneBytes+=l.bytes||1;run.frac=0;run.ready++;
-  if(row){row.classList.add('ok');row.querySelector('.dl-pb i').style.width='100%';row.querySelector('.dl-st').textContent='Ready';}paint();next();}
+  (run.names=run.names||[]).push(l.title);run.q.shift();store(DLQ,run.q);run.doneBytes+=l.bytes||1;run.frac=0;run.ready++;
+  if(row){row.classList.add('ok');row.querySelector('.dl-pb i').style.width='100%';row.querySelector('.dl-st').textContent='Ready';}paint();renderPage();next();}
  function celebrate(n){const ov=el('div','dl-ov dl-done');const c=el('div','dl-sheet');if(me.char){const im=el('img','dl-art');im.src=me.char;im.alt='';c.append(im);}
   c.append(el('span','dl-ok',n+' '+(n===1?'level':'levels')+' ready offline'),el('h3','','All set'+(me.name?', '+me.name:'')+'!'),el('p','','You can learn even without internet. Your answers will upload when you are back online.'));
   const b=el('button','btn primary dl-go','Let’s learn!');b.type='button';b.addEventListener('click',()=>{ov.remove();dlDone();});c.append(b);ov.append(c);document.body.append(ov);requestAnimationFrame(()=>ov.classList.add('on'));}
  if(online()&&me.role==='pupil'){
   if((store(DLQ)||[]).length)setTimeout(()=>startRun(false),1500);
-  else if(!store(ASKED)&&new URLSearchParams(location.search).get('page')==='dashboard'){window.buligDlPending=true;offerDownload();}}
+  else if($('meta[name="bulig-dl-offer"]')){window.buligDlPending=true;offerDownload();}
+  else if(!$('[data-off-page]')&&Object.values(meta().levels).some(l=>l.locked))fetch('?page=offline_levels',{credentials:'same-origin',cache:'no-store'}).then(r=>r.json()).then(j=>autoOpen(j.levels||[])).catch(()=>{});}
 
+ /* ---------- page: Offline lessons ---------- */
+ let pageInfo=null;
+ function pageProg(level,pct){const c=document.querySelector('[data-pg-level="'+level+'"] .off-chip');if(c){c.className='off-chip go';c.textContent='Downloading '+pct+'%';const b=c.closest('.op-row').querySelector('.op-bar i');if(b)b.style.width=pct+'%';}}
+ async function renderPage(){const box=$('[data-off-page]');if(!box)return;
+  if(online()){try{pageInfo=await (await fetch('?page=offline_levels',{credentials:'same-origin',cache:'no-store'})).json();if(!run&&autoOpen(pageInfo.levels||[]).length)return;}catch(e){}}
+  const have=meta().levels,levels=pageInfo&&pageInfo.levels?pageInfo.levels:Object.keys(have).map(k=>({level:+k,title:have[k].title,bytes:have[k].bytes}));
+  const st=l=>!have[l.level]?'no':stale(have[l.level])||(have[l.level].locked&&l.locked===false)?'up':'ok',queued=new Set((store(DLQ)||[]).map(x=>x.level));
+  const nOk=levels.filter(l=>st(l)==='ok').length,nUp=levels.filter(l=>st(l)==='up').length,nNo=levels.filter(l=>st(l)==='no').length;
+  const need=levels.filter(l=>st(l)!=='ok'&&!queued.has(l.level)),needB=need.reduce((t,l)=>t+(l.bytes||0),0),used=Object.values(have).reduce((t,l)=>t+(l.bytes||0),0);
+  box.replaceChildren();const sum=el('div','card off-sum'),top=el('div','op-top'),ring=el('div','op-ring');ring.style.setProperty('--p',levels.length?Math.round(nOk/levels.length*100):0);ring.append(el('b','',nOk+'/'+levels.length));
+  const tx=el('div','');tx.append(el('h2','',levels.length?nOk+' of '+levels.length+' levels saved':'No levels to save yet'),el('p','muted',[nUp?nUp+' '+(nUp===1?'needs':'need')+' an update':'',nNo?nNo+' not saved yet':'',!nUp&&!nNo&&levels.length?'Everything is saved and up to date.':''].filter(Boolean).join(' · ')));top.append(ring,tx);sum.append(top);
+  const meter=el('div','off-meter'),mi=el('i');meter.append(mi);const ms=el('small','off-small',mb(used)+' used');sum.append(meter,ms);
+  try{const est=await navigator.storage.estimate();if(est.quota){mi.style.width=Math.max(2,Math.min(100,est.usage/est.quota*100))+'%';ms.textContent=mb(used)+' used · '+mb(Math.max(0,est.quota-est.usage))+' free on this device';}}catch(e){mi.style.width='5%';}
+  if(!online())sum.append(el('p','op-note','You are offline. Connect to the internet to download or update lessons.'));
+  else if(run)sum.append(el('p','op-note go','Downloading… You can keep using BULIG while it downloads.'));
+  else if(need.length){const b=el('button','btn primary op-all');b.type='button';b.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>';b.append((nOk?'Download the rest':'Download everything')+' · '+mb(needB));b.addEventListener('click',()=>queueLevels(need));sum.append(b);if(needB>15*1048576)sum.append(el('p','op-note','Use Wi-Fi for big downloads.'));}
+  if(levels.some(l=>l.locked))sum.append(el('p','op-note','Locked levels can be saved now. They open when you finish the level before them.'));
+  box.append(sum);
+  levels.forEach(l=>{const s=queued.has(l.level)?'q':st(l),r=el('div','card op-row');r.dataset.pgLevel=l.level;
+   if(l.cover){const im=el('img','op-cover');im.src=l.cover;im.alt='';im.loading='lazy';r.append(im);}
+   const t=el('div','op-t');t.append(el('b','',l.title),el('small','',mb(l.bytes||0)+(s==='ok'&&have[l.level]?' · saved '+day(have[l.level].at):'')));
+   const chip=el('span','off-chip '+{ok:'saved',up:'upd',no:'need',q:'go'}[s]);chip.innerHTML=s==='ok'?svg('ok')+'Saved':s==='up'?svg('wait')+'Needs update':s==='q'?'Waiting to download':'Not saved';t.append(chip);
+   if(l.locked){const lk=el('span','op-lock');lk.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Locked for now';lk.title='It opens when you finish the level before it.';t.append(lk);}
+   if(s==='q'){const bar=el('div','op-bar');bar.append(el('i'));t.append(bar);}r.append(t);
+   const acts=el('div','op-acts');
+   if(online()&&!run&&(s==='no'||s==='up')){const b=el('button','btn '+(s==='up'?'primary':'secondary'),s==='up'?'Update':'Download');b.type='button';b.addEventListener('click',()=>queueLevels([l]));acts.append(b);}
+   if(have[l.level]&&s!=='q'){const b=el('button','btn secondary','Remove');b.type='button';b.addEventListener('click',async()=>{await removeLevel(l.level);slots();render();renderPage();});acts.append(b);}
+   r.append(acts);box.append(r);});}
  try{const d=JSON.parse(sessionStorage.getItem('bulig-off-done')||'null');if(d){sessionStorage.removeItem('bulig-off-done');state.done=d;setTimeout(()=>{state.done=null;render();},9000);}}catch(e){}
- window.addEventListener('online',()=>{slots();render();sync();});
- window.addEventListener('offline',()=>{slots();render();});
- slots();render();if(online())setTimeout(sync,800);
+ window.addEventListener('online',()=>{slots();render();renderPage();sync();});
+ window.addEventListener('offline',()=>{slots();render();renderPage();});
+ slots();render();renderPage();if(online())setTimeout(sync,800);
  setInterval(async()=>{if(online()&&!state.syncing&&(await waiting()).length)sync();},60000);
 })();

@@ -29,6 +29,7 @@
    ['.xp-stat','Your XP','You earn XP for every activity you finish. Collect XP to get rewards!'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
    ['.badge-stat','Your badges','Badges are prizes for learning. Tap to see the ones you earned.'],
+   ['.goal-card','Today’s goal','Finish 3 activities a day. The ring fills up as you go!'],
    [['.next-adventure .btn.primary','.next-adventure'],'Start learning','Tap this button to go to your next lesson. BULIG remembers where you stopped.'],
    [['.pupil-tabbar .tab-play','.sidebar nav a[href="?page=lessons"]'],'All your lessons','Here you find all your levels and the road map of each level.'],
    [['.pupil-tabbar a[href="?page=calendar"]','.sidebar nav a[href="?page=calendar"]'],'Your calendar','See every day you learned.'],
@@ -76,7 +77,12 @@
    ['.pf-shelf','Your badge shelf','All the badges you can earn in BULIG.'],
    [['.pf-shelf-item.pf-got'],'Badges you earned','Shiny badges are yours! The date shows when you earned it.'],
    [['.pf-shelf-item.pf-locked'],'Badges to earn','Read what to do to unlock each badge.'],
+   ['.cert-card','My certificates','Finish every lesson of a level to get a certificate. Tap it to print.'],
    ['.badgegrid','Rewards','Collect XP to reach each reward.']],
+  offline:[
+   ['.off-sum','Your saved lessons','See how many levels are saved on this device, and how much space they use.'],
+   [['.op-all'],'Download everything','One tap saves every level you can open. Use Wi-Fi for big downloads.'],
+   [['.op-row'],'Each level','Download, update or remove one level. “Needs update” means BULIG has new things.']],
   profile:pupil?[
    ['.avatar-picker','Your picture','Choose a character for your profile picture.'],
    ['.off-profile','Offline lessons','Levels saved on this device are listed here. If answers are waiting to upload, tap "Upload now".'],
@@ -95,7 +101,7 @@
    ['.tdash-stats','Quick numbers','Total pupils, finished activities and learning steps.'],
    ['.mobile-menu-toggle','Menu','Tap here to open the menu: Class Demo, My pupils, My sections, Activity history and more. Each page has its own short tour.'],
    ['.sidebar nav a[href="?page=class_demo"]','Class Demo','Show any level on your TV or projector. Use "Mark as done" after you teach a lesson together.'],
-   ['.sidebar nav a[href="?page=manage"]','My pupils','Two tabs: Learning (starting levels, lessons done in class) and Accounts (add, import, edit, sign-in cards).'],
+   ['.sidebar nav a[href="?page=manage"]','My pupils','Three tabs: Learning (starting levels, lessons done in class), Accounts (add, import, edit, sign-in cards) and Progress (the whole class at a glance).'],
    ['.sidebar nav a[href="?page=sections"]','My sections','Add the sections you handle.'],
    ['.sidebar nav a[href="?page=review"]','Activity history','Read your pupils’ answers and leave short feedback.'],
    [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
@@ -113,7 +119,7 @@
    ['.demo-footer','Move between slides','Use Previous and Next, or the arrow keys. Press F for full screen.'],
    ['[data-cd-open]','Mark as done','After teaching, tap here and tick the pupils who were present. Their next lesson opens right away.']],
   accounts:[
-   ['.pupil-tabs','Two tabs','Learning: starting levels and lessons done in class. Accounts: this tab, to add and edit pupils.'],
+   ['.pupil-tabs','Three tabs','Learning: starting levels and lessons done in class. Accounts: this tab, to add and edit pupils. Progress: the whole class at a glance.'],
    [['form.formgrid:not(.import-form)'],'Add one pupil','Fill in the name, section, sex and starting level. BULIG makes the Pupil ID for you.'],
    ['#import','Import a class','Download the template, fill it in Excel, then upload it to add a whole class at once.'],
    [['details.account-detail'],'Pupil details','Open a pupil to edit details or reset the password.'],
@@ -124,12 +130,17 @@
    ['[data-lc-print]','Print','Print on A4 paper, 10 cards per sheet. Cut along the dashed lines.'],
    [['.lc-card'],'One card per pupil','The QR code opens the BULIG sign-in page with the Pupil ID filled in. The password shows only if the pupil still uses the first password.']],
   manage:[
-   ['.pupil-tabs','Two tabs','You are on Learning. Open Accounts to add pupils, import a class list or print sign-in cards.'],
+   ['.pupil-tabs','Three tabs','You are on Learning. Open Accounts to add pupils or print sign-in cards, and Progress to see the whole class.'],
    ['.mp-list','Your pupils','Search or filter by section, then tap a pupil to manage them.'],
    ['.mp-bulkbar','Many pupils at once','Tick pupils in the list and set one starting level for all of them.'],
    ['.mp-start','Starting level','Change where this pupil begins. Earlier levels become optional practice.'],
    ['.cd-path','Learning path','Every level and lesson with its status. Open "Activities" to tick single activities.'],
    [['.cd-actions'],'Mark as done in class','Tick lessons or activities you did together, then save. Use "Undo" if you made a mistake.']],
+  progress:[
+   ['.pupil-tabs','Progress tab','Every pupil and every lesson of one level, on one screen.'],
+   ['.pg-filter','Choose a section and level','The grid changes as soon as you pick.'],
+   [['.pg-table'],'The grid','Green is done, light green is started, yellow means no work for 7+ days. Tap a name to open that pupil.'],
+   [['a[href*="page=certificates"]'],'Certificates','Print certificates for every pupil who finished this level.']],
   sections:[
    ['.section-add','Add a section','Type the section name, choose the grade and add it.'],
    ['.section-board','Your sections','Sections grouped by grade. Tap one to rename or archive it.']],

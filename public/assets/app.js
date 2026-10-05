@@ -331,7 +331,17 @@ document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600
  const NS='http://www.w3.org/2000/svg';const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const card=document.createElement('div');card.className='pf-mapcard';box.prepend(card);box.classList.add('pf-has-map');
  const svg=document.createElementNS(NS,'svg');svg.setAttribute('class','pf-mapsvg');svg.setAttribute('role','group');svg.setAttribute('aria-label',data.level+' road map');card.appendChild(svg);
- let lastWide=null,pop=null;
+ let lastWide=null,pop=null,walked=false;
+ /* The pupil's character walks along the road from the last lesson it stood on to the newly opened one (once per new lesson). */
+ function walk(k,P,CUR,pts){if(walked)return;walked=true;let key='',prev=null;
+  try{const me=JSON.parse((document.querySelector('meta[name="bulig-tour"]')||{}).content||'null');if(!me)return;key='bulig-walk-'+me.id+'-'+data.level;prev=localStorage.getItem(key);localStorage.setItem(key,String(CUR));}catch(e){return;}
+  prev=prev===null?null:+prev;if(prev===null||!(prev<CUR)||!P[prev]||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const near=p=>pts.reduce((b,q,i)=>Math.hypot(q.x-p.x,q.y-p.y)<Math.hypot(pts[b].x-p.x,pts[b].y-p.y)?i:b,0),a=near(P[prev]),b=near(P[CUR]);if(b<=a)return;
+  const fx=+k.getAttribute('x'),fy=+k.getAttribute('y'),off=q=>({x:q.x-52,y:q.y-140}),set=o=>{k.setAttribute('x',o.x);k.setAttribute('y',o.y);};
+  set(off(pts[a]));k.classList.add('pfm-walking');const dur=Math.min(4200,900+(b-a)*70),t0=performance.now()+700;
+  const glide=()=>{const sx=+k.getAttribute('x'),sy=+k.getAttribute('y'),g0=performance.now(),g=t=>{const v=Math.min(1,(t-g0)/450);set({x:sx+(fx-sx)*v,y:sy+(fy-sy)*v});if(v<1)requestAnimationFrame(g);};requestAnimationFrame(g);};
+  const step=t=>{const v=Math.max(0,Math.min(1,(t-t0)/dur)),e=v<.5?2*v*v:1-Math.pow(-2*v+2,2)/2,x=a+(b-a)*e,i=Math.floor(x),f=x-i,q1=pts[i],q2=pts[Math.min(i+1,pts.length-1)];set(off({x:q1.x+(q2.x-q1.x)*f,y:q1.y+(q2.y-q1.y)*f}));if(v<1)requestAnimationFrame(step);else{k.classList.remove('pfm-walking');glide();}};
+  requestAnimationFrame(step);}
  function build(){const wide=card.clientWidth>700;if(wide===lastWide&&svg.childNodes.length)return;lastWide=wide;if(pop){pop.remove();pop=null;}
   const W=wide?1000:420,STEP=150,TOP=wide?210:200,N=items.length,H=TOP+STEP*(N-1)+300,XS=wide?[500,760,500,240]:[210,320,210,100];
   const P=items.map((it,i)=>({x:XS[i%4],y:TOP+i*STEP}));let CUR=items.findIndex(it=>it.s==='cur');
@@ -381,7 +391,7 @@ document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600
    g+=`<g transform="translate(${p.x} ${p.y+R+30})"><rect x="${-lw/2}" y="-14" width="${lw}" height="26" rx="13" fill="#fff" stroke="${st==='done'?'#9fd8a8':st==='cur'?'#f6c02c':'#e2e6df'}" stroke-width="2"/><text y="4" text-anchor="middle" font-weight="700" font-size="${wide?12:13}" fill="${st==='lock'?'#8a958d':'#17633a'}">${i+1}. ${esc(name)}</text></g></a>`;s+=g;});
   svg.innerHTML=s;
   svg.querySelectorAll('.pfm-check').forEach((c,k)=>{c.style.animationDelay=(.2+k*.08)+'s';});
-  const tpl=box.querySelector('template.pf-map-kid');if(CUR>=0&&tpl&&tpl.content.firstElementChild){const k=tpl.content.firstElementChild.cloneNode(true),C=P[CUR];k.setAttribute('x',C.x>W/2?C.x-(wide?175:150):C.x+(wide?60:48));k.setAttribute('y',C.y-132);k.setAttribute('width',104);k.setAttribute('height',148);svg.appendChild(k);}
+  const tpl=box.querySelector('template.pf-map-kid');if(CUR>=0&&tpl&&tpl.content.firstElementChild){const k=tpl.content.firstElementChild.cloneNode(true),C=P[CUR];k.setAttribute('x',C.x>W/2?C.x-(wide?175:150):C.x+(wide?60:48));k.setAttribute('y',C.y-132);k.setAttribute('width',104);k.setAttribute('height',148);svg.appendChild(k);walk(k,P,CUR,pts);}
   svg.querySelectorAll('.pfm-node').forEach(n=>n.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();show(+n.dataset.i,W);}));
   svg.querySelectorAll('.pfm-node').forEach(n=>n.addEventListener('keydown',e=>{if(e.key==='Enter'&&!n.hasAttribute('href')){e.preventDefault();show(+n.dataset.i,W);}}));
   if(CUR>=0){const C=P[CUR];requestAnimationFrame(()=>{const r=svg.getBoundingClientRect(),k=r.width/W,y=window.scrollY+r.top+C.y*k-window.innerHeight*.45;if(y>window.scrollY+80)window.scrollTo({top:y,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});}
