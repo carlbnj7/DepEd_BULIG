@@ -116,9 +116,9 @@ function manage_pupils_view(array $u):void{
  $levels=rows('SELECT id,title FROM bulig_levels WHERE published=1 ORDER BY id');
  $opts=fn(int $cur)=>implode('',array_map(fn($l)=>'<option value="'.(int)$l['id'].'"'.((int)$l['id']===$cur?' selected':'').'>'.e(level_label((int)$l['id']).' · '.preg_replace('~\s*·\s*Level \w+$~u','',(string)$l['title'])).'</option>',$levels));
  $groups=[];foreach($pupils as $p)$groups['Grade '.$p['grade_level'].' · '.$p['section']][]=$p;
- echo '<div class="pageheading"><div><span class="eyebrow">MANAGE PUPILS</span><h1>Manage pupils</h1><p class="muted">Change a pupil’s starting level, or mark a level, lesson or activity as done in class.</p></div></div>';
+ echo pupils_tabs('manage',count($pupils));
  echo '<div class="mp-grid'.($sel?' has-pick':'').'"><section class="card mp-list"><h2>Your pupils</h2>';
- if(!$pupils){echo '<p class="muted">You have no pupils yet. Add pupils in My pupils.</p></section></div>';return;}
+ if(!$pupils){echo '<p class="muted">You have no pupils yet. Add them in the Accounts tab.</p></section></div>';return;}
  echo '<div class="mp-tools"><input type="search" placeholder="Search pupils" aria-label="Search pupils" data-mp-search><select aria-label="Show section" data-mp-section><option value="">All sections</option>';foreach(array_keys($groups) as $g)echo '<option>'.e($g).'</option>';echo '</select></div>';
  echo '<form method="post" class="mp-bulk">'.csrf_field().'<input type="hidden" name="action" value="set_start_level"><input type="hidden" name="back" value="?page=manage'.($sel?'&amp;id='.$sel:'').'">';
  foreach($groups as $g=>$list){echo '<div class="mp-group" data-mp-group="'.e($g).'"><div class="mp-gh"><strong>'.e($g).'</strong><button type="button" class="linkbutton" data-mp-all>Select all</button></div>';

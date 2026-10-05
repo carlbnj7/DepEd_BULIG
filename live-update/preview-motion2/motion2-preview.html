@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Effects and UI Ideas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y100:#fff4cf;--muted:#5f6f63;--line:#e9e2cc}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1280px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:960px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}
+.idea{background:#fff;border-radius:22px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:10px}
+.idea h2{margin:0;font-size:1.05rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--g700);color:#fff;font-size:.82rem;flex:none}
+.who{font-size:.64rem;font-weight:800;padding:2px 8px;border-radius:99px;background:var(--g100);color:var(--g700);margin-left:auto}
+.rec{font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:99px;background:var(--y400);color:#3d2a00}
+.idea>p{margin:0;font-size:.82rem;color:var(--muted)}
+.frames{display:flex;gap:8px;align-items:stretch}
+.fr{flex:1;min-width:0;border-radius:14px;background:#fdf8ea;border:1px solid var(--line);position:relative;overflow:hidden;min-height:150px}
+.fr .t{position:absolute;top:6px;left:8px;font-size:.56rem;font-weight:800;letter-spacing:.08em;color:#9a8a5a;z-index:3}
+.fr .t.w{color:#fff}
+.arrow{align-self:center;color:#c9b98a;font-weight:800}
+/* 1 sky */
+.sky{position:absolute;inset:0;padding:30px 10px 10px;color:#fff}
+.sky.m{background:linear-gradient(#7cc7f0,#c9ecfb 70%,#bfe3a0 70%)}
+.sky.a{background:linear-gradient(#f7b267,#fde3b0 70%,#a8d28a 70%)}
+.sky.n{background:linear-gradient(#1b2a5a,#3b4f8f 70%,#2f5a3a 70%)}
+.sun{position:absolute;right:16px;top:22px;width:34px;height:34px;border-radius:50%;background:#ffd84d;box-shadow:0 0 0 8px rgba(255,216,77,.3)}
+.sky.a .sun{top:56px;background:#ff9f45;box-shadow:0 0 0 8px rgba(255,159,69,.3)}
+.moon{position:absolute;right:18px;top:22px;width:28px;height:28px;border-radius:50%;box-shadow:-7px 3px 0 0 #fff3c4}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff}
+.cloud{position:absolute;top:34px;left:14px;width:46px;height:14px;border-radius:99px;background:rgba(255,255,255,.85)}
+.greet{position:absolute;left:10px;bottom:12px;right:10px;background:rgba(255,255,255,.92);border-radius:12px;padding:6px 8px;color:#0e3b28}
+.sky.n .greet{background:rgba(20,30,60,.75);color:#fff}
+.greet small{display:block;font-size:.5rem;font-weight:800;letter-spacing:.12em;opacity:.7}.greet b{font-size:.78rem}
+/* 2 try again */
+.box{position:absolute;left:10px;right:10px;top:28px;background:#fff;border:2px solid #cfe3d4;border-radius:12px;padding:8px;font-size:.72rem;font-weight:700}
+.box.wig{border-color:#f2b10c;transform:translateX(-4px) rotate(-1deg)}
+.hint{position:absolute;left:10px;right:52px;bottom:14px;background:#fff4cf;border:2px solid #ffd966;border-radius:12px 12px 12px 2px;padding:6px 8px;font-size:.64rem;font-weight:700;color:#7a5200}
+.buddy{position:absolute;right:4px;bottom:4px;height:76px}
+/* 3 badge */
+.shelf{position:absolute;left:10px;right:10px;bottom:16px;height:36px;border-bottom:6px solid #c9a46a;display:flex;align-items:flex-end;gap:6px;padding-left:6px}
+.bdg{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3b0,#f2b10c);border:2px solid #c98f00;display:grid;place-items:center;font-size:.6rem;font-weight:800;color:#5a3d00}
+.bdg.g{background:radial-gradient(circle at 35% 30%,#b9f0cf,#1c7a50);border-color:#0e5a35;color:#fff}
+.bdg.big{position:absolute;width:62px;height:62px;font-size:.8rem;box-shadow:0 0 0 10px rgba(255,214,77,.25),0 0 30px rgba(255,214,77,.6)}
+.rays{position:absolute;width:120px;height:120px;border-radius:50%;background:repeating-conic-gradient(rgba(255,214,77,.35) 0 10deg,transparent 10deg 25deg)}
+.lab2{position:absolute;left:0;right:0;top:100px;text-align:center;font-size:.66rem;font-weight:800;color:#7a5200}
+/* 4 flame */
+.flames{display:flex;align-items:flex-end;justify-content:center;gap:4px;height:110px;padding-top:26px}
+.fl{width:30px;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 75%,#ffe066,#ff8a3d 55%,#e35d4a)}
+.fl.blue{background:radial-gradient(circle at 50% 75%,#e0f4ff,#6cc3ff 55%,#2f6fd6)}
+.fcap{text-align:center;font-size:.62rem;color:var(--muted);font-weight:700;padding:0 6px 8px}
+/* 5 skeleton */
+.sk{position:absolute;left:10px;right:10px;top:28px;display:grid;gap:7px}
+.sk i{display:block;height:14px;border-radius:7px;background:linear-gradient(90deg,#efe8d2 25%,#fbf6e6 45%,#efe8d2 65%);background-size:200% 100%}
+.sk i.s{width:60%}.sk i.r{height:32px;border-radius:10px}
+.real{position:absolute;left:10px;right:10px;top:28px;display:grid;gap:6px}
+.real div{background:#fff;border:1px solid #eee3c4;border-radius:10px;padding:6px 8px;font-size:.62rem;font-weight:700}
+/* 6 toasts */
+.ts{position:absolute;left:10px;right:10px;border-radius:12px;padding:7px 9px;font-size:.62rem;font-weight:700;display:flex;gap:7px;align-items:center;box-shadow:0 6px 16px rgba(0,0,0,.14);background:#fff}
+.ts i{width:20px;height:20px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-style:normal;font-size:.62rem}
+.ts.ok{border-left:5px solid #1c7a50}.ts.ok i{background:#1c7a50}
+.ts.wa{border-left:5px solid #f2b10c}.ts.wa i{background:#f2b10c}
+.ts.in{border-left:5px solid #2f6fd6}.ts.in i{background:#2f6fd6}
+.ts .bar{position:absolute;left:0;bottom:0;height:3px;background:#1c7a50;border-radius:0 0 0 12px}
+/* 7 kid mode */
+.km{position:absolute;inset:26px 8px 8px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.kt{border-radius:14px;padding:8px;color:#fff;font-weight:800;font-size:.72rem;display:flex;flex-direction:column;justify-content:space-between}
+.kt i{width:24px;height:24px;border-radius:8px;background:rgba(255,255,255,.3);display:block}
+.k1{background:linear-gradient(135deg,#1c7a50,#2e9a62)}.k2{background:linear-gradient(135deg,#f2b10c,#f7c948);color:#3d2a00}.k3{background:linear-gradient(135deg,#2f6fd6,#5b93ea)}.k4{background:linear-gradient(135deg,#e35d4a,#f08a5d)}
+.small{position:absolute;inset:26px 8px 8px;display:grid;gap:4px;align-content:start}
+.small div{background:#fff;border:1px solid #eee3c4;border-radius:6px;padding:4px 6px;font-size:.5rem}
+/* 8 buddy */
+.bd{position:absolute;right:6px;bottom:4px;height:96px}
+.bub{position:absolute;left:10px;right:76px;top:34px;background:#fff;border:2px solid #cfe3d4;border-radius:14px 14px 2px 14px;padding:7px 9px;font-size:.66rem;font-weight:700;color:#0e3b28}
+.dots3{display:inline-flex;gap:3px}.dots3 i{width:6px;height:6px;border-radius:50%;background:#9aa79e}
+.summary{margin-top:22px;background:#fff;border-radius:18px;padding:14px 18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.summary table{width:100%;border-collapse:collapse;font-size:.85rem}.summary th,.summary td{padding:7px 8px;border-bottom:1px solid #eee8d3;text-align:left}.summary th{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.note{background:var(--y100);border-radius:14px;padding:12px 16px;font-size:.86rem;margin-top:14px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<h1>More animation, effects and design ideas</h1>
+<p class="lead">BULIG now moves between pages, inside activities and in celebrations. These 8 ideas add personality and polish in places that are still plain. Each row shows the effect moment by moment, left to right.</p>
+<div class="grid">
+
+<div class="idea"><h2><span class="num">1</span>Sky that follows the time of day<span class="rec">Recommended</span><span class="who">Pupils</span></h2>
+<p>The top of the pupil dashboard changes with the clock: a bright sun and clouds in the morning, a warm orange sun in the afternoon, and a moon with twinkling stars in the evening. The greeting matches the time.</p>
+<div class="frames"><div class="fr"><span class="t">MORNING</span><div class="sky m"><span class="sun"></span><span class="cloud"></span><div class="greet"><small>GOOD MORNING</small><b>Ready to read, Maria?</b></div></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">AFTERNOON</span><div class="sky a"><span class="sun"></span><span class="cloud" style="left:30px"></span><div class="greet"><small>GOOD AFTERNOON</small><b>One more story?</b></div></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t w">EVENING</span><div class="sky n"><span class="moon"></span><span class="star" style="left:20px;top:30px"></span><span class="star" style="left:60px;top:46px"></span><span class="star" style="left:100px;top:26px"></span><span class="star" style="left:40px;top:62px"></span><div class="greet"><small>GOOD EVENING</small><b>A bedtime story?</b></div></div></div></div></div>
+
+<div class="idea"><h2><span class="num">2</span>Gentle "try again"<span class="rec">Recommended</span><span class="who">Pupils</span></h2>
+<p>When an answer needs another try, the box does a soft wiggle and the character gives a kind hint in a speech bubble, instead of only a yellow box. No red, no buzzing, so mistakes feel safe.</p>
+<div class="frames"><div class="fr"><span class="t">SUBMIT</span><div class="box">cat</div><img class="buddy" src="girl.webp" alt=""></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">WIGGLE</span><div class="box wig">cat</div><img class="buddy" src="girl.webp" alt=""></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">HINT</span><div class="box">cat</div><div class="hint">Almost! Listen to the first sound again.</div><img class="buddy" src="girl-cheer.webp" alt=""></div></div></div>
+
+<div class="idea"><h2><span class="num">3</span>Badge reveal and shiny shelf<span class="who">Pupils</span></h2>
+<p>A new badge spins in with sun rays, then flies onto the badge shelf. Badges on the shelf shine now and then, and tapping one flips it to show how it was earned.</p>
+<div class="frames"><div class="fr"><span class="t">NEW BADGE</span><span class="rays" style="left:calc(50% - 60px);top:14px"></span><span class="bdg big" style="left:calc(50% - 31px);top:42px">&#9733;</span><div class="lab2">Reading spark!</div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">FLIES TO SHELF</span><span class="bdg" style="position:absolute;left:62%;top:60px;transform:scale(1.3)">&#9733;</span><div class="shelf"><span class="bdg g">1</span><span class="bdg g">2</span></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">ON THE SHELF</span><div class="shelf"><span class="bdg g">1</span><span class="bdg g">2</span><span class="bdg" style="box-shadow:0 0 12px #ffd966">&#9733;</span></div><div class="lab2" style="top:60px;color:#5f6f63">Tap a badge to flip it</div></div></div></div>
+
+<div class="idea"><h2><span class="num">4</span>Streak flame that grows<span class="who">Pupils</span></h2>
+<p>The learning streak flame gets bigger every day in a row. At 7 days it turns into a special blue flame. If a day is missed, the flame gets smaller, but it never disappears.</p>
+<div class="frames"><div class="fr"><span class="t">1 DAY</span><div class="flames"><span class="fl" style="height:28px"></span></div><div class="fcap">Small spark</div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">4 DAYS</span><div class="flames"><span class="fl" style="height:56px;width:40px"></span></div><div class="fcap">Growing</div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">7 DAYS</span><div class="flames"><span class="fl blue" style="height:80px;width:50px"></span></div><div class="fcap">Blue super flame!</div></div></div></div>
+
+<div class="idea"><h2><span class="num">5</span>Shimmer placeholders while loading<span class="who">Everyone</span></h2>
+<p>When a list takes a moment (Activity history, reports, saving a level), soft grey shapes with a moving shine show where things will appear, instead of a blank page. It feels faster.</p>
+<div class="frames"><div class="fr"><span class="t">LOADING</span><div class="sk"><i class="r"></i><i class="r"></i><i class="s"></i></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">SHINE MOVES</span><div class="sk"><i class="r" style="background-position:-60% 0"></i><i class="r" style="background-position:-60% 0"></i><i class="s" style="background-position:-60% 0"></i></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">READY</span><div class="real"><div>Ana Reyes · Meet &amp; Greet</div><div>Grid Check · CVC "a"</div><div>Maria · My Toys</div></div></div></div></div>
+
+<div class="idea"><h2><span class="num">6</span>One style for all messages<span class="who">Everyone</span></h2>
+<p>Messages like "Saved", "Account created" or "No internet" all slide in from the top in one look, with a colour and icon for the kind of message. They disappear by themselves (a thin bar shows the time left), and can be swiped away.</p>
+<div class="frames"><div class="fr"><span class="t">SAVED</span><div class="ts ok" style="top:30px"><i>&#10003;</i>Feedback saved for Ana.<span class="bar" style="width:70%"></span></div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">HEADS UP</span><div class="ts wa" style="top:30px"><i>!</i>3 answers are waiting to upload.</div></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">INFO</span><div class="ts in" style="top:30px"><i>i</i>New version of BULIG installed.</div></div></div></div>
+
+<div class="idea"><h2><span class="num">7</span>Big, colourful tiles for young pupils<span class="who">Pupils</span></h2>
+<p>For Grade 1 and 2, the pupil pages switch to bigger buttons and colour tiles with icons (Continue, My map, Badges, Calendar), so children who can't read well yet can still find their way. Older grades keep today's look.</p>
+<div class="frames"><div class="fr"><span class="t">GRADES 3–6</span><div class="small"><div>Continue learning</div><div>My lessons</div><div>My achievements</div><div>My calendar</div></div></div><span class="arrow">&rarr;</span>
+<div class="fr" style="flex:2"><span class="t">GRADES 1–2</span><div class="km"><div class="kt k1"><i></i>Continue</div><div class="kt k2"><i></i>My map</div><div class="kt k3"><i></i>Badges</div><div class="kt k4"><i></i>Calendar</div></div></div></div></div>
+
+<div class="idea"><h2><span class="num">8</span>A reading buddy inside activities<span class="who">Pupils</span></h2>
+<p>The pupil's character sits in the corner of the activity screen and reacts: thinking dots while the pupil types, a thumbs up when they submit, and a soft "You can do it" if they wait a long time.</p>
+<div class="frames"><div class="fr"><span class="t">TYPING</span><div class="bub"><span class="dots3"><i></i><i></i><i></i></span></div><img class="bd" src="boy.webp" alt=""></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">SUBMITTED</span><div class="bub">Great answer!</div><img class="bd" src="boy-cheer.webp" alt=""></div><span class="arrow">&rarr;</span>
+<div class="fr"><span class="t">WAITING A WHILE</span><div class="bub">You can do it! Tap Listen if you need help.</div><img class="bd" src="boy.webp" alt=""></div></div></div>
+
+</div>
+<div class="summary"><table>
+<tr><th>Idea</th><th>Who</th><th>Size</th></tr>
+<tr><td>1 Sky that follows the time of day</td><td>Pupils</td><td>Small</td></tr>
+<tr><td>2 Gentle "try again"</td><td>Pupils</td><td>Small</td></tr>
+<tr><td>3 Badge reveal and shiny shelf</td><td>Pupils</td><td>Medium</td></tr>
+<tr><td>4 Streak flame that grows</td><td>Pupils</td><td>Small</td></tr>
+<tr><td>5 Shimmer placeholders</td><td>Everyone</td><td>Small</td></tr>
+<tr><td>6 One style for all messages</td><td>Everyone</td><td>Medium</td></tr>
+<tr><td>7 Big, colourful tiles for Grades 1–2</td><td>Pupils</td><td>Medium</td></tr>
+<tr><td>8 Reading buddy inside activities</td><td>Pupils</td><td>Small</td></tr>
+</table>
+<div class="note">My suggestion: 1, 2 and 8 first. They make BULIG feel warmer for young pupils every day. None of these needs SQL, and all of them stay still on devices set to reduce motion.</div></div>
+</div></body></html>

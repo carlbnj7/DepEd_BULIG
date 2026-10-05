@@ -1,4 +1,8 @@
 <?php
+/* After feedback, go back to the same Activity history tab and pupil filter. */
+/* Drawing answers (draw in the app or upload a photo) are only for the real drawing activities of Level 1. */
+function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing'&&lesson_level((int)$a['lesson_id'])===1;}
+function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=review&tab=(todo|done|all)(&pupil=[0-9]+)?$~',$b)?$b:'?page=review';}
 function action():void{
  check_csrf();$action=(string)($_POST['action']??'');
  if($action==='login'){
@@ -6,8 +10,23 @@ function action():void{
   if(val('SELECT COUNT(*) FROM login_attempts WHERE identifier_hash=? AND attempted_at>DATE_SUB(NOW(),INTERVAL 15 MINUTE)',[$key])>=8){audit('login_locked',mb_substr($role.' · '.$id,0,60));fail('Too many attempts. Please wait 15 minutes.',429);}
   $u=one('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
   if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));fail('The ID or password is incorrect.');}
-  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher')$_SESSION['teacher_welcome']=1;audit('login',$role);go('?page=dashboard');
+  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin'){$_SESSION['offer_save']=1;$_SESSION['hello']=1;}audit('login',$role);go('?page=dashboard');
  }
+ if($action==='quick_login'){
+  if(!saved_login_ready())saved_login_json(['ok'=>false,'error'=>'Saved sign-in is not ready yet. Please sign in with your ID.']);
+  $u=saved_login_use((string)($_POST['token']??''));
+  if(!$u){audit('login_failed','saved sign-in');saved_login_json(['ok'=>false,'error'=>'This saved sign-in has expired. Please sign in with your ID and password.']);}
+  session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($u['role']==='pupil')$_SESSION['pupil_welcome']=1;else $_SESSION['teacher_welcome']=1;$_SESSION['hello']=1;
+  audit('login',$u['role']);saved_login_json(['ok'=>true,'url'=>'?page=dashboard','profile'=>saved_login_profile($u)]);
+ }
+ if($action==='save_login'){
+  $u=current_user();if(!$u||!in_array($u['role'],['pupil','teacher'],true))saved_login_json(['ok'=>false,'error'=>'Only pupils and teachers can be saved.']);
+  if(!saved_login_ready())saved_login_json(['ok'=>false,'error'=>'Saved sign-in is not ready yet.']);
+  $old=(string)($_POST['replace']??'');if($old!=='')saved_login_forget($old);
+  $t=saved_login_create($u);audit('saved_login','device');saved_login_json(['ok'=>true,'token'=>$t,'profile'=>saved_login_profile($u)]);
+ }
+ if($action==='forget_login'){if(saved_login_ready())saved_login_forget((string)($_POST['token']??''));saved_login_json(['ok'=>true]);}
+ if($action==='tour_seen'){$u=current_user();if($u)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['tour_seen_'.(int)$u['id'],date('Y-m-d H:i:s')]);saved_login_json(['ok'=>(bool)$u]);}
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
  if($action==='save_section'){
   $u=require_role('teacher');$sid=(int)($_POST['id']??0);$name=trim((string)($_POST['name']??''));$grade=(int)($_POST['grade_level']??0);
@@ -40,7 +59,7 @@ function action():void{
   $name=trim((string)($_POST['name']??''));if(!$name||strlen($name)>150)fail('Enter a valid name.');$password=(string)($_POST['password']??'');
   if($password!==''&&(strlen($password)<8||strlen($password)>72))fail('Use a password of 8–72 characters.');
   db()->beginTransaction();try{
-   q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!=='')q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);
+   q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!==''||!isset($_POST['active']))saved_login_clear($id);if($password!=='')q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);
    if($u['role']==='teacher'){
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);
     save_pupil_details($id,pupil_details_input($id));
@@ -53,7 +72,7 @@ function action():void{
   if(!password_verify($old,$u['password_hash']))fail('Your current password is incorrect.');
   if(strlen($new)<8||strlen($new)>72)fail('Use a new password of 8–72 characters.');
   if($new!==(string)($_POST['confirm_password']??''))fail('The new passwords do not match.');
-  q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go('?page=profile');
+  q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go('?page=profile');
  }
  if($action==='set_start_level'){
   $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=manage(&id=[0-9]+)?$~',$back))$back='?page=manage';
@@ -86,8 +105,8 @@ function action():void{
   flash('Marked as done in class: '.$what.' for '.count($pupils).' '.(count($pupils)===1?'pupil':'pupils').'.');go($back);
  }
  if($action==='teacher_character'){
-  $u=require_role('teacher');$c=(string)($_POST['character']??'');if(!in_array($c,['female','male'],true))fail('Choose a character.');
-  tf_set_sex((int)$u['id'],$c);flash('Your teacher character is saved.');go('?page=profile');
+  $u=require_role('teacher','admin');$c=(string)($_POST['character']??'');if(!in_array($c,['female','male'],true))fail('Choose a character.');
+  tf_set_sex((int)$u['id'],$c);flash('Your '.($u['role']==='admin'?'admin':'teacher').' character is saved.');go('?page=profile');
  }
  if($action==='choose_avatar'){
   $u=require_role('pupil');$key=(string)($_POST['avatar_key']??'');
@@ -102,15 +121,15 @@ function action():void{
  if(in_array($action,['draft','submit'],true)){
   $u=require_role('pupil');$pid=(int)$u['id'];$aid=(int)($_POST['activity_id']??0);$answer=trim((string)($_POST['response']??''));$drawing=(string)($_POST['drawing']??'');$transcript=trim((string)($_POST['transcript']??''));
   if(strlen($answer)>12000||strlen($transcript)>12000||strlen($drawing)>1500000)fail('This response is too large.');
-  if($drawing!==''&&!preg_match('~^data:image/png;base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
+  if($drawing!==''&&!preg_match('~^data:image/(png|jpeg);base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
   db()->beginTransaction();try{
-   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
+   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a))$drawing='';$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
    if(completion_ok($old)){db()->commit();submission_reply($a,true,'Already saved. You can continue.',0);}
    if($action==='draft'){
     q('INSERT INTO activity_drafts(pupil_id,activity_id,response,drawing,transcript) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript)',[$pid,$aid,$answer,$drawing?:null,$transcript?:null]);db()->commit();header('Content-Type: application/json');echo json_encode(['saved'=>true]);exit;
    }
-   $question=one('SELECT * FROM questions WHERE activity_id=?',[$aid]);$exact=$question&&$question['grading']==='exact';$mode=$exact?'answer':$a['response_mode'];
-   if(in_array($mode,['answer','drawing'],true)&&$answer===''&&$drawing==='')fail('Share an answer or a drawing before continuing.');
+   $question=one('SELECT * FROM questions WHERE activity_id=?',[$aid]);$exact=$question&&$question['grading']==='exact';$mode=$exact||($a['response_mode']==='drawing'&&!draw_allowed($a))?'answer':$a['response_mode'];
+   if(in_array($mode,['answer','drawing'],true)&&$answer===''&&$drawing==='')fail('Draw it, upload a photo, or tell about your drawing before continuing.');
    if($mode==='answer'&&$answer==='')fail('Speak or type an answer first.');
    $ok=true;$score=null;$max=null;$outcome=['none'=>'viewed','perform'=>'performed','drawing'=>'recorded','answer'=>'recorded'][$mode];
    if($exact){
@@ -132,7 +151,7 @@ function action():void{
  if($action==='review'){
   $u=require_role('teacher');$cid=(int)($_POST['completion_id']??0);$c=one('SELECT * FROM activity_completion WHERE id=?',[$cid]);if(!$c)fail('Response not found.',404);own_pupil((int)$c['pupil_id']);
   $feedback=trim((string)($_POST['feedback']??''));if(!$feedback||strlen($feedback)>3000)fail('Enter feedback of up to 3,000 characters.');
-  q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback,$u['id'],$cid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit('feedback_response',(string)$cid);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash('Feedback saved. Pupil progression is unchanged.');go('?page=review');
+  q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback,$u['id'],$cid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit('feedback_response',(string)$cid);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash('Feedback saved. Pupil progression is unchanged.');go(review_back());
  }
  if($action==='review_assessment'){
   $u=require_role('teacher');$pid=(int)($_POST['pupil_id']??0);own_pupil($pid);$aid=(int)($_POST['assessment_id']??0);
@@ -142,7 +161,7 @@ function action():void{
    $criteria=json_decode($a['rubric_criteria']??'[]',true)?:[];$scores=[];$sum=0;foreach($criteria as $i=>$label){$s=(int)($_POST['scores'][$i]??0);if($s<1||$s>4)fail('Rate each official criterion from 1 to 4.');$scores[$label]=$s;$sum+=$s;}
    q("INSERT INTO assessment_attempts(pupil_id,assessment_id,status,score,max_score,completed_at,rubric_scores,feedback,reviewed_by) VALUES(?,?,'reviewed',?,?,NOW(),?,?,?) ON DUPLICATE KEY UPDATE status='reviewed',score=VALUES(score),max_score=VALUES(max_score),completed_at=NOW(),rubric_scores=VALUES(rubric_scores),feedback=VALUES(feedback),reviewed_by=VALUES(reviewed_by)",[$pid,$aid,$criteria?$sum:null,$criteria?count($criteria)*4:null,json_encode($scores),substr((string)($_POST['feedback']??''),0,3000),$u['id']]);
    refresh_progress($pid,(int)$a['lesson_id']);award_badges($pid);audit('review_assessment',$pid.':'.$aid);db()->commit();flash('Optional assessment feedback saved. Learning progression is unchanged.');
-  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=review');
+  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go(review_back());
  }
  if($action==='save_lesson'){
   require_role('admin');$id=(int)($_POST['id']??0);$title=trim((string)($_POST['title']??''));if(!$title||strlen($title)>255)fail('Enter a lesson title.');$image=trim((string)($_POST['image_path']??''));if($image)checked_image($image);
@@ -151,7 +170,7 @@ function action():void{
  }
  if($action==='save_activity'){
   require_role('admin');$id=(int)($_POST['id']??0);$a=one('SELECT * FROM activities WHERE id=?',[$id]);if(!$a)fail('Activity not found.',404);
-  $title=trim((string)($_POST['title']??''));$prompt=trim((string)($_POST['prompt']??''));$type=(string)($_POST['type']??'');$xp=(int)($_POST['xp_reward']??10);$grading=(string)($_POST['grading']??'teacher');$mode=(string)($_POST['response_mode']??'answer');if(!in_array($mode,['answer','none','perform','drawing'],true))fail('Choose an interaction mode.');if($grading==='exact')$mode='answer';
+  $title=trim((string)($_POST['title']??''));$prompt=trim((string)($_POST['prompt']??''));$type=(string)($_POST['type']??'');$xp=(int)($_POST['xp_reward']??10);$grading=(string)($_POST['grading']??'teacher');$mode=(string)($_POST['response_mode']??'answer');if(!in_array($mode,['answer','none','perform','drawing'],true))fail('Choose an interaction mode.');if($grading==='exact'||$mode==='drawing')$mode='answer';
   if(!$title||strlen($title)>255||!$prompt||strlen($prompt)>30000||!in_array($type,['open','sentence','reading','physical','group','drawing','choice','exact','reference'],true)||$xp<0||$xp>1000||!in_array($grading,['teacher','exact'],true))fail('Check the activity fields.');
   $imgs=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['image_paths']??'')))));foreach($imgs as $image)checked_image($image);
   $answers=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['answers']??'')))));$options=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['options']??'')))));

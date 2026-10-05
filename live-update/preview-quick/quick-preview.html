@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saved Accounts and Overlays</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y300:#ffd966;--y100:#fff4cf;--muted:#5f6f63;--line:#e9e2cc}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1200px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:860px}
+.sec{margin-top:34px}.sec h2{margin:0 0 4px;font-size:1.2rem}.sec>p{margin:0 0 14px;color:var(--muted);font-size:.92rem;max-width:860px}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--g700);color:#fff;font-size:.85rem;margin-right:8px;vertical-align:1px}
+.row{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.shot{border:8px solid #1d2a22;border-radius:22px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.2);background:#fff}
+.shot img{display:block;width:100%;height:auto}
+.pc{flex:1 1 640px;max-width:780px}.ph{width:300px;flex:none}
+.phone{position:relative;width:300px;height:650px;flex:none;border:8px solid #1d2a22;border-radius:36px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.22);background:center/cover no-repeat}
+.side{flex:1;min-width:260px;font-size:.9rem}.side ul{padding-left:20px;line-height:1.7;margin:6px 0}
+.replay{border:0;border-radius:12px;padding:9px 14px;font:700 .82rem Poppins;cursor:pointer;background:linear-gradient(#1c7a50,#0e5a35);color:#fff;margin-top:8px}
+/* overlay */
+.ov{position:absolute;inset:0;background:rgba(10,30,20,.55);display:grid;place-items:center;padding:16px;opacity:0;transition:opacity .3s}
+.ov.on{opacity:1}
+.box{position:relative;width:100%;background:#fff;border-radius:26px;padding:20px 18px 16px;text-align:center;box-shadow:0 22px 48px rgba(0,0,0,.35);transform:scale(.6) translateY(30px);opacity:0;transition:transform .55s cubic-bezier(.2,1.5,.4,1),opacity .3s}
+.ov.on .box{transform:none;opacity:1}
+.box h3{margin:6px 0 4px;font-size:1.15rem;color:var(--g700)}.box p{margin:0 0 12px;font-size:.84rem;color:var(--muted);line-height:1.45}
+.b1{display:block;width:100%;border:0;border-radius:14px;padding:11px;font:800 .9rem Poppins;background:linear-gradient(#1c7a50,#0e5a35);color:#fff;cursor:pointer}
+.b2{display:block;width:100%;border:0;background:none;margin-top:8px;font:700 .84rem Poppins;color:var(--muted);text-decoration:underline;cursor:pointer}
+.b2.red{color:#b3261e}
+/* lock */
+.lockart{position:relative;height:120px;margin-top:-6px}
+.padlock{position:absolute;left:50%;top:6px;width:84px;margin-left:-42px}
+.ov.on .padlock{animation:shake .7s .35s cubic-bezier(.36,.07,.19,.97) 2}
+@keyframes shake{10%,90%{transform:translateX(-2px) rotate(-3deg)}20%,80%{transform:translateX(4px) rotate(4deg)}30%,50%,70%{transform:translateX(-7px) rotate(-7deg)}40%,60%{transform:translateX(7px) rotate(7deg)}}
+.shackle{transform-origin:70% 100%}
+.ov.on .shackle{animation:tug .9s 1.8s ease-in-out}
+@keyframes tug{30%{transform:translateY(-6px)}60%{transform:translateY(0)}}
+.spark{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--y400);left:50%;top:50%;opacity:0}
+.ov.on .spark{animation:spk .9s .5s ease-out forwards}
+@keyframes spk{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+.kid{position:absolute;right:-6px;bottom:-14px;height:96px}
+.ov.on .kid{animation:peek .7s .4s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes peek{from{transform:translateY(60px);opacity:0}}
+.prog{height:10px;background:var(--y100);border-radius:9px;overflow:hidden;margin:4px 0 4px}.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd54a,#f0a400);border-radius:9px;transition:width 1.2s .6s ease}
+.ov.on .prog i{width:var(--w)}
+.small{font-size:.72rem;color:var(--muted)}
+/* bye */
+.byeart{height:150px;margin:-70px 0 0;position:relative}
+.byeart img{height:170px;transform-origin:50% 100%}
+.ov.on .byeart img{animation:wave 1.4s .3s ease-in-out 2}
+@keyframes wave{25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+.chk{display:flex;align-items:center;gap:8px;justify-content:center;font-size:.78rem;color:var(--muted);margin:0 0 12px}
+.chk i{width:18px;height:18px;border-radius:5px;background:var(--g600);display:grid;place-items:center;color:#fff;font-style:normal;font-size:12px}
+/* save prompt */
+.toast{position:absolute;left:12px;right:12px;bottom:96px;background:#fff;border:3px solid var(--y400);border-radius:22px;padding:14px;box-shadow:0 16px 36px rgba(0,0,0,.25);display:flex;gap:12px;align-items:center;transform:translateY(140%);transition:transform .6s cubic-bezier(.2,1.4,.4,1)}
+.toast.on{transform:none}
+.toast img{width:54px;height:54px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 3px var(--y400)}
+.toast b{display:block;color:var(--g700);font-size:.95rem}.toast span{font-size:.8rem;color:var(--muted)}
+.tbtns{display:flex;gap:8px;margin-top:8px}.tbtns button{border:0;border-radius:11px;padding:7px 12px;font:800 .78rem Poppins;cursor:pointer}
+.tbtns .y{background:linear-gradient(#1c7a50,#0e5a35);color:#fff}.tbtns .n{background:var(--g100);color:var(--g700)}
+.sheet{flex-direction:column;align-items:center;text-align:center;gap:4px;border:0;border-top:5px solid var(--y400);padding:44px 16px 14px;bottom:88px}
+.sheet b{font-size:1.05rem}.sheet>span{max-width:240px}
+.sh-bub{position:absolute;top:-38px;left:50%;margin-left:-38px;width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#b8ecc9,#4fb57c 70%);box-shadow:0 10px 20px -8px rgba(28,122,80,.6)}
+.toast.on .sh-bub{animation:shpop .7s .45s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes shpop{from{transform:scale(.3) rotate(-20deg)}}
+.sh-face{position:absolute;inset:7%;border-radius:50%;overflow:hidden;background:#e9f5ec}.sh-face img{width:100%;height:100%;object-fit:cover;border:0;box-shadow:none}
+.sh-plus{position:absolute;right:-4px;bottom:-2px;width:26px;height:26px;border-radius:50%;background:var(--y400);color:#3d2a00;font-weight:800;display:grid;place-items:center;border:3px solid #fff}
+.sh-mini{display:flex;align-items:center;gap:6px;margin:6px 0 2px}.sh-mini .m{width:22px;height:22px;border-radius:50%}
+.sh-mini .g1{background:radial-gradient(circle at 30% 25%,#ffe9a3,#f5b91a)}.sh-mini .g2{background:radial-gradient(circle at 30% 25%,#cfe3ff,#5c8fe0)}
+.sh-mini .new{border:2px dashed #4fb57c}.toast.on .sh-mini .new{animation:shnew 1s 1s ease-in-out 2}
+@keyframes shnew{50%{background:#b8ecc9;transform:scale(1.2)}}
+.sh-mini small,.sh-note{font-size:.68rem;color:var(--muted)}
+.sheet .tbtns{width:100%;margin-top:8px}.sheet .tbtns button{flex:1;padding:10px}
+.sh-note{margin-top:6px}
+.notes{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 20px;margin-top:30px}.notes ul{margin:6px 0 0;padding-left:20px;line-height:1.75;font-size:.9rem}
+</style></head><body><div class="wrap">
+<h1>Saved accounts and friendly overlays</h1>
+<p class="lead">Three ideas on real BULIG screens. Press the green buttons to replay each animation.</p>
+
+<section class="sec"><h2><span class="num">1</span>Saved accounts on the login page</h2>
+<p>After signing in, BULIG asks "Save your account on this device?". Next time, the login page shows <b>Who's learning today?</b> with up to <b>3 saved accounts</b> (pupils and teachers). One tap on a picture signs them in. "Use another account" shows the normal form, and × removes an account from this device.</p>
+<div class="row"><div class="shot pc"><img src="picker2-pc.png" alt="Login with saved accounts on a computer"></div><div class="shot ph"><img src="picker2-m.png" alt="Login with saved accounts on a phone"></div></div>
+<p style="margin:18px 0 8px;color:var(--muted);font-size:.9rem"><b>Manage</b> makes the bubbles jiggle with a red × to remove one. Tapping a picture shows a gold spinning ring with "Signing in…" while the others fade. It also works in dark mode.</p>
+<div class="row"><div class="shot ph"><img src="picker2-m-manage.png" alt="Manage saved accounts"></div><div class="shot ph"><img src="picker2-m-busy.png" alt="Signing in"></div><div class="shot ph"><img src="picker2-m-dark.png" alt="Dark mode"></div></div>
+<div class="row" style="margin-top:20px"><div class="phone" id="p-save" style="background-image:url(bg-dash.png)"><div class="toast sheet"><div class="sh-bub"><span class="sh-face"><img src="girl-2.png" alt=""></span><span class="sh-plus">+</span></div><b>Save Maria on this phone?</b><span>Next time, just tap your picture. No ID or password needed.</span>
+<div class="sh-mini"><i class="m g1"></i><i class="m g2"></i><i class="m new"></i><small>1 more space</small></div>
+<div class="tbtns"><button class="y">Yes, save me</button><button class="n">Not now</button></div><small class="sh-note">Saved only on this device. You can remove it anytime.</small></div></div>
+<div class="side"><b>The "Save your account?" card</b><ul><li>Slides up once, right after signing in, with the pupil's own picture popping in.</li><li>The little dots show how many of the 3 places are used.</li><li>"Yes, save me" adds the picture to this device's login page.</li><li>If 3 are already saved, it asks which one to replace.</li></ul><button class="replay" data-r="save">Replay</button></div></div>
+</section>
+
+<section class="sec"><h2><span class="num">2</span>Tapping a locked level</h2>
+<p>Instead of nothing happening, a friendly card pops up: the padlock shakes, sparks fly, and the pupil's character peeks in. It says which level to finish first and how far they are.</p>
+<div class="row"><div class="phone" id="p-lock" style="background-image:url(bg-lessons.png)"><div class="ov"><div class="box">
+ <div class="lockart"><svg class="padlock" viewBox="0 0 64 72" aria-hidden="true"><path class="shackle" d="M18 32V22a14 14 0 0 1 28 0v10" fill="none" stroke="#9aa395" stroke-width="7" stroke-linecap="round"/><rect x="8" y="30" width="48" height="38" rx="10" fill="#ffc629"/><rect x="8" y="30" width="48" height="12" rx="6" fill="#ffd966"/><circle cx="32" cy="50" r="6" fill="#7d5a00"/><rect x="29.5" y="52" width="5" height="9" rx="2" fill="#7d5a00"/></svg>
+ <i class="spark" style="--dx:-60px;--dy:-30px"></i><i class="spark" style="--dx:60px;--dy:-24px"></i><i class="spark" style="--dx:-46px;--dy:30px"></i><i class="spark" style="--dx:52px;--dy:34px"></i><img class="kid" src="girl.webp" alt=""></div>
+ <h3>Level 6 is still locked</h3><p>Finish <b>Level 5</b> first to unlock it. You can do it!</p>
+ <div class="prog" style="--w:9%"><i></i></div><p class="small" style="margin:0 0 12px">Level 5 · 9% done</p>
+ <button class="b1">Go to Level 5</button><button class="b2">Okay</button></div></div></div>
+<div class="side"><b>Locked level card</b><ul><li>Shows on My lessons (level cards) and on locked stops of the level map.</li><li>"Go to Level 5" opens the level they need to finish.</li><li>Uses the pupil's own boy or girl character.</li></ul><button class="replay" data-r="lock">Replay</button></div></div>
+</section>
+
+<section class="sec"><h2><span class="num">3</span>Signing out</h2>
+<p>Tapping Sign out asks first, with the character waving goodbye. "Stay and learn" closes the card. For saved accounts, a tick keeps the account on this device.</p>
+<div class="row"><div class="phone" id="p-bye" style="background-image:url(bg-dash.png)"><div class="ov"><div class="box" style="margin-top:60px">
+ <div class="byeart"><img src="girl.webp" alt=""></div>
+ <h3>Leaving already, Maria?</h3><p>Are you sure you want to sign out? Your work is saved.</p>
+ <div class="chk"><i>✓</i>Keep me saved on this device</div>
+ <button class="b1">Stay and learn</button><button class="b2 red">Yes, sign out</button></div></div></div>
+<div class="side"><b>Sign-out card</b><ul><li>For pupils and teachers, on phone and computer.</li><li>Teachers see their teacher character and "Leaving already, Teacher Maria?"</li><li>If answers are still waiting to upload (offline), it warns them before signing out.</li></ul><button class="replay" data-r="bye">Replay</button></div></div>
+</section>
+
+<div class="notes"><b>How saved accounts stay safe</b><ul>
+<li>BULIG never stores passwords on the device. It saves a secret sign-in key that only works on that device.</li>
+<li>Keys expire after 60 days without use, and stop working if the password is changed or the account is turned off.</li>
+<li>A teacher or admin can remove all saved sign-ins for an account from its details page.</li>
+<li>Administrator accounts are never saved; they always use the password and PIN.</li>
+<li>This needs one small database update (a new table for the sign-in keys). I will include the SQL file.</li>
+</ul></div>
+</div>
+<script>
+const play={
+ lock(){const o=document.querySelector('#p-lock .ov');o.classList.remove('on');void o.offsetWidth;setTimeout(()=>o.classList.add('on'),120);},
+ bye(){const o=document.querySelector('#p-bye .ov');o.classList.remove('on');void o.offsetWidth;setTimeout(()=>o.classList.add('on'),120);},
+ save(){const t=document.querySelector('#p-save .toast');t.classList.remove('on');void t.offsetWidth;setTimeout(()=>t.classList.add('on'),300);}};
+document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>play[b.dataset.r]());
+Object.values(play).forEach(f=>f());
+document.querySelectorAll('.b1,.b2,.tbtns button').forEach(b=>b.addEventListener('click',()=>{const o=b.closest('.ov,.toast');o.classList.remove('on');}));
+</script></body></html>
