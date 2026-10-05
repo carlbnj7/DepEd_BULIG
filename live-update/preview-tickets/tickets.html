@@ -1,0 +1,95 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Sign-in tickets preview</title>
+<style>
+@font-face{font-family:P;src:url(../../public/assets/fonts/poppins-latin-400-normal.woff2)}
+@font-face{font-family:P;font-weight:600;src:url(../../public/assets/fonts/poppins-latin-600-normal.woff2)}
+@font-face{font-family:P;font-weight:700;src:url(../../public/assets/fonts/poppins-latin-700-normal.woff2)}
+@page{size:A4;margin:10mm}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:P,sans-serif;color:#10281b;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet{display:grid;grid-template-columns:1fr 1fr;gap:4mm 5mm;width:190mm}
+.t{position:relative;height:52mm;display:flex;break-inside:avoid;page-break-inside:avoid}
+.main{flex:1;min-width:0;position:relative;overflow:hidden}
+.stub{width:27mm;flex:none;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1mm;text-align:center}
+.qr svg{display:block;width:21mm;height:21mm}
+.logo{height:6.5mm;display:block}
+.nm{font-weight:700;font-size:11.5pt;line-height:1.1;margin:0}
+.sec{font-size:7pt;opacity:.8}
+.lab{font-size:5.6pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.id{font-family:"Courier New",monospace;font-weight:700;font-size:15pt;letter-spacing:.06em;line-height:1}
+.pw{font-family:"Courier New",monospace;font-weight:700;font-size:11.5pt;letter-spacing:.05em}
+.kid{position:absolute;bottom:0;height:40mm;pointer-events:none}
+.scan{font-size:6pt;font-weight:700;line-height:1.15}
+.serial{font-size:5.5pt;letter-spacing:.12em;opacity:.7}
+
+/* ---------- A: Movie ticket ---------- */
+.A .t{border-radius:4mm;background:#fff;border:.5mm solid #1c7a50}
+.A .main{background:linear-gradient(135deg,#0f5a37,#1c7a50);color:#fff;border-radius:3.5mm 0 0 3.5mm;padding:3.5mm 4mm 3mm 4mm}
+.A .main::after{content:"";position:absolute;right:-6mm;top:-8mm;width:30mm;height:30mm;border-radius:50%;background:rgba(255,214,77,.16)}
+.A .band{display:flex;align-items:center;gap:2mm;margin-bottom:2mm}
+.A .band .logo{background:#fff;border-radius:1.5mm;padding:.6mm 1.2mm;height:7mm}
+.A .band b{font-size:7pt;letter-spacing:.2em;color:#ffd84d}
+.A .info{position:relative;z-index:1;width:41mm}
+.A .sec{color:#d9f0e2;margin:.4mm 0 2mm}
+.A .lab{color:#ffd84d}
+.A .id{color:#fff;margin:.4mm 0 1.6mm}
+.A .pwbox{display:inline-block;background:#fff;color:#0f5a37;border-radius:1.6mm;padding:.5mm 2mm;margin-top:.4mm}
+.A .kid{right:1mm;height:38mm;z-index:1}
+.A .stub{background:#fff8de;border-radius:0 3.5mm 3.5mm 0;border-left:.6mm dashed #1c7a50}
+.A .stub::before,.A .stub::after{content:"";position:absolute;left:-2.6mm;width:4.6mm;height:4.6mm;border-radius:50%;background:#fff;border:.5mm solid #1c7a50}
+.A .stub::before{top:-2.8mm;clip-path:inset(50% 0 0 0)}.A .stub::after{bottom:-2.8mm;clip-path:inset(0 0 50% 0)}
+.A .scan{color:#0f5a37}
+
+/* ---------- B: Boarding pass ---------- */
+.B .t{border:.4mm solid #c9d6cc;border-radius:3mm;background:#fff;overflow:hidden}
+.B .main{padding:0}
+.B .head{background:#1c7a50;color:#fff;display:flex;align-items:center;gap:2mm;padding:1.6mm 3mm;height:9mm}
+.B .head .logo{background:#fff;border-radius:1.2mm;padding:.5mm 1mm;height:6mm}
+.B .head b{font-size:7pt;letter-spacing:.14em;white-space:nowrap}
+.B .head span{margin-left:auto;font-size:6pt;color:#ffd84d;font-weight:700;letter-spacing:.08em;white-space:nowrap}
+.B .body{padding:2.2mm 3mm 0 3mm;position:relative}
+.B .nm{font-size:11pt}
+.B .grid{display:grid;grid-template-columns:1fr;gap:1mm;margin-top:1.6mm;width:40mm}
+.B .lab{color:#5f7a68}
+.B .id{font-size:13pt;color:#0f5a37}.B .pw{color:#0f5a37}
+.B .route{display:none}
+.B .route i{flex:none;width:12mm;border-top:.4mm dashed #9ab3a2;position:relative}
+.B .kid{right:0;height:31mm}
+.B .stub{border-left:.5mm dashed #9ab3a2;background:#f4f8f1}
+.B .stub .lab{color:#1c7a50}
+.B .scan{color:#10281b}
+
+/* ---------- C: Carnival ticket ---------- */
+.C .t{background:#ffd84d;border-radius:2mm;
+ -webkit-mask:radial-gradient(circle 2.2mm at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 2.2mm at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat;
+ mask:radial-gradient(circle 2.2mm at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 2.2mm at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat}
+.C .main{margin:1.6mm 0 1.6mm 4mm;border:.45mm solid #10281b;border-right:0;border-radius:1.5mm 0 0 1.5mm;background:#fff7d1;padding:2.4mm 3mm}
+.C .admit{display:flex;align-items:center;gap:2mm}
+.C .admit b{font-size:8.5pt;letter-spacing:.24em;font-weight:700}
+.C .admit .logo{height:6mm;margin-left:auto}
+.C .stars{font-size:6pt;letter-spacing:.3em;color:#b07a00}
+.C .nm{margin-top:1.2mm}
+.C .row{display:flex;gap:4mm;margin-top:1.6mm}
+.C .id{font-size:13.5pt}
+.C .kid{right:0;height:33mm;opacity:1}
+.C .stub{margin:1.6mm 4mm 1.6mm 0;border:.45mm solid #10281b;border-left:.6mm dashed #10281b;border-radius:0 1.5mm 1.5mm 0;background:#fff;width:28mm}
+.C .stub .serial{opacity:.9}
+.C .pwbox{display:inline-block;border:.4mm solid #10281b;border-radius:1mm;padding:.2mm 1.6mm;background:#fff}
+
+.cut{position:absolute;inset:-2mm;border:.2mm dashed #c7c7c7;border-radius:5mm;pointer-events:none}
+.C .cut{inset:-1.4mm;border-radius:3mm}
+</style></head><body>
+<div class="sheet" id="sheet"></div>
+<script src="../../public/assets/qrcode.js"></script>
+<script>
+const S=(new URLSearchParams(location.search).get('s')||'A');document.body.className=S;
+const A='../../public/assets/',kids={g:A+'images/characters/girl-cheer.webp',b:A+'images/characters/boy-cheer.webp'};
+const P=[['Maria Santos','g','Grade 1 · Rizal','20260005','mango4721'],['Juan Dela Cruz','b','Grade 1 · Rizal','20260001','tiger8315'],['Ana Reyes','g','Grade 1 · Rizal','20260002','lemon2694'],['Pedro Garcia','b','Grade 1 · Rizal','20260006','zebra5072'],['Liza Mae Bautista','g','Grade 1 · Rizal','20260007','apple6148'],['Jose Rizal Cruz','b','Grade 1 · Rizal','20260008','panda3907'],['Carla Mendoza','g','Grade 1 · Rizal','20260009',''],['Mark Villanueva','b','Grade 1 · Rizal','20260010','koala7461'],['Grace Tan','g','Grade 1 · Rizal','20260011','melon1285'],['Ramon Aquino','b','Grade 1 · Rizal','20260012','camel9536']];
+function qr(t){const q=qrcode(0,'M');q.addData(t);q.make();const n=q.getModuleCount(),m=1;let d='';for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))d+='M'+(c+m)+' '+(r+m)+'h1v1h-1z';return '<svg viewBox="0 0 '+(n+2*m)+' '+(n+2*m)+'" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="'+d+'" fill="#10281b"/></svg>';}
+const pw=x=>x?'<span class="pw">'+x+'</span>':'<span class="pw" style="font-family:P;font-size:7.5pt;font-weight:600">Your own password</span>';
+const logo='<img class="logo" src="'+A+'bulig-logo.png" alt="">';
+document.getElementById('sheet').innerHTML=P.map((p,i)=>{const code=qr('https://bulig.example/?page=login&key=Q7'+p[3]+'x9fK2');const k='<img class="kid" src="'+kids[p[1]]+'" alt="">';
+ if(S==='A')return '<div class="t"><span class="cut"></span><div class="main"><div class="band">'+logo+'<b>READING PASS</b></div><div class="info"><p class="nm">'+p[0]+'</p><div class="sec">'+p[2]+'</div><div class="lab">Pupil ID</div><div class="id">'+p[3]+'</div><div class="lab">'+(p[4]?'Starter password':'Password')+'</div><span class="pwbox">'+pw(p[4])+'</span></div>'+k+'</div><div class="stub"><div class="qr">'+code+'</div><div class="scan">SCAN TO<br>SIGN IN</div><div class="serial">No. '+String(i+1).padStart(3,'0')+'</div></div></div>';
+ if(S==='B')return '<div class="t"><span class="cut"></span><div class="main"><div class="head">'+logo+'<b>BOARDING PASS</b><span>TO: READING</span></div><div class="body"><p class="nm">'+p[0]+'</p><div class="sec">'+p[2]+'</div><div class="grid"><div><div class="lab">Pupil ID</div><div class="id">'+p[3]+'</div></div><div><div class="lab">'+(p[4]?'Starter password':'Password')+'</div>'+pw(p[4])+'</div></div><div class="route">HOME<i></i>BULIG</div>'+k+'</div></div><div class="stub"><div class="lab">Scan me</div><div class="qr">'+code+'</div><div class="scan">Sign in<br>with one scan</div></div></div>';
+ return '<div class="t"><span class="cut"></span><div class="main"><div class="admit"><b>ADMIT ONE</b>'+logo+'</div><div class="stars">★ ★ ★ BULIG READER ★ ★ ★</div><p class="nm">'+p[0]+'</p><div class="sec">'+p[2]+'</div><div class="row"><div><div class="lab">Pupil ID</div><div class="id">'+p[3]+'</div></div></div><div class="lab" style="margin-top:1.2mm">'+(p[4]?'Starter password':'Password')+'</div><span class="pwbox">'+pw(p[4])+'</span>'+k+'</div><div class="stub"><div class="qr">'+code+'</div><div class="scan">SCAN TO<br>SIGN IN</div><div class="serial">№ '+String(i+1).padStart(4,'0')+'</div></div></div>';
+}).join('');
+</script></body></html>
