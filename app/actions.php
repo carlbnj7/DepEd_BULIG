@@ -138,6 +138,7 @@ function action():void{
   $u=require_role('pupil');$pid=(int)$u['id'];$aid=(int)($_POST['activity_id']??0);$answer=trim((string)($_POST['response']??''));$drawing=(string)($_POST['drawing']??'');$transcript=trim((string)($_POST['transcript']??''));
   if(strlen($answer)>12000||strlen($transcript)>12000||strlen($drawing)>1500000)fail('This response is too large.');
   if($drawing!==''&&!preg_match('~^data:image/(png|jpeg);base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
+  $audio=$action==='submit'?(string)($_POST['audio']??''):'';$heard=($_POST['heard']??'')==='1';if(strlen($audio)>4200000)fail('This recording is too long. Please keep it under one minute.');
   db()->beginTransaction();try{
    q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a))$drawing='';$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
    if(completion_ok($old)){db()->commit();submission_reply($a,true,'Already saved. You can continue.',0);}
@@ -145,6 +146,9 @@ function action():void{
     q('INSERT INTO activity_drafts(pupil_id,activity_id,response,drawing,transcript) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript)',[$pid,$aid,$answer,$drawing?:null,$transcript?:null]);db()->commit();header('Content-Type: application/json');echo json_encode(['saved'=>true]);exit;
    }
    $question=one('SELECT * FROM questions WHERE activity_id=?',[$aid]);$exact=$question&&$question['grading']==='exact';$mode=$exact||($a['response_mode']==='drawing'&&!draw_allowed($a))?'answer':$a['response_mode'];
+   /* Level 1 is oral: the answer is a voice recording, or the teacher heard it in class. */
+   $oral=$mode==='answer'&&!$exact&&lesson_level((int)$a['lesson_id'])===1;$apath=null;
+   if($oral){if($audio===''&&!$heard)fail('Record your answer first.');if($answer==='')$answer=$audio!==''?'Spoken answer (voice recording)':'Answered out loud. My teacher heard me.';if($audio!==''&&l1_audio_supported())$apath=l1_save_audio($audio,$pid,$aid);}
    if(in_array($mode,['answer','drawing'],true)&&$answer===''&&$drawing==='')fail('Draw it, upload a photo, or tell about your drawing before continuing.');
    if($mode==='answer'&&$answer==='')fail('Speak or type an answer first.');
    $ok=true;$score=null;$max=null;$outcome=['none'=>'viewed','perform'=>'performed','drawing'=>'recorded','answer'=>'recorded'][$mode];
@@ -155,19 +159,25 @@ function action():void{
    }
    $status=$ok?'completed':'retry';$when=offline_answer_time()??date('Y-m-d H:i:s');
    q('INSERT INTO activity_completion(pupil_id,activity_id,response,drawing,transcript,prompt_snapshot,activity_revision,status,submitted_at,outcome,score,max_score) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript),prompt_snapshot=VALUES(prompt_snapshot),activity_revision=VALUES(activity_revision),status=VALUES(status),submitted_at=VALUES(submitted_at),outcome=VALUES(outcome),score=VALUES(score),max_score=VALUES(max_score)',[$pid,$aid,$answer,$drawing?:null,$transcript?:null,level2_prompt_snapshot($a),$a['revision'],$status,$when,$outcome,$score,$max]);
+   if($apath)q('UPDATE activity_completion SET audio_path=? WHERE pupil_id=? AND activity_id=?',[$apath,$pid,$aid]);
    if(offline_answer_time())q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$pid,'offline_answer','activity '.$aid.' at '.$when]);
    $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
    q('INSERT INTO pupil_progress(pupil_id,lesson_id,last_activity_id) VALUES(?,?,?) ON DUPLICATE KEY UPDATE last_activity_id=VALUES(last_activity_id)',[$pid,$a['lesson_id'],$aid]);
    if($a['expected_text']&&$transcript!==''){$match=word_match($a['expected_text'],$transcript);q('INSERT INTO reading_assessments(pupil_id,activity_id,transcript,expected_text,word_match_percent,detail) VALUES(?,?,?,?,?,?)',[$pid,$aid,$transcript,$a['expected_text'],$match['percent'],json_encode($match['words'])]);}
    if($ok){q('DELETE FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);update_learning($pid,$aid);}
-   db()->commit();$message=$ok?($exact?'Correct! Great work.':($mode==='none'?'You’re ready for the next step.':($mode==='perform'?'Activity completed. Well done!':'Your response is saved. Thank you for sharing!'))):'Not quite yet. Listen again and give it another try.';
+   db()->commit();$message=$ok?($exact?'Correct! Great work.':($mode==='none'?'You’re ready for the next step.':($mode==='perform'?'Activity completed. Well done!':($oral?'Your answer is saved. Great speaking!':'Your response is saved. Thank you for sharing!')))):'Not quite yet. Listen again and give it another try.';
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   submission_reply($a,$ok,$message,$ok?(int)$a['xp_reward']:0);
  }
  if($action==='review'){
   $u=require_role('teacher');$cid=(int)($_POST['completion_id']??0);$c=one('SELECT * FROM activity_completion WHERE id=?',[$cid]);if(!$c)fail('Response not found.',404);own_pupil((int)$c['pupil_id']);
-  $feedback=trim((string)($_POST['feedback']??''));if(!$feedback||strlen($feedback)>3000)fail('Enter feedback of up to 3,000 characters.');
-  q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback,$u['id'],$cid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit('feedback_response',(string)$cid);$fa=one('SELECT title,lesson_id FROM activities WHERE id=?',[(int)$c['activity_id']]);if($fa)push_queue((int)$c['pupil_id'],'teacher','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','Open “'.$fa['title'].'” to read it.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash('Feedback saved. Pupil progression is unchanged.');go(review_back());
+  $feedback=trim((string)($_POST['feedback']??''));$fa=one('SELECT title,lesson_id FROM activities WHERE id=?',[(int)$c['activity_id']]);
+  /* Level 1: the module rubric (or the lesson-plan checklist) for this lesson. */
+  $rv=null;$rub=$fa&&isset($_POST['rubric'])&&l1_audio_supported()?l1_rubric(l1_position((int)$fa['lesson_id'])):null;
+  if($rub){$rv=l1_rubric_values($rub,(array)$_POST['rubric']);if($rv===null)fail($rub['kind']==='rubric'?'Choose a score for each part of the rubric.':'Choose one rating first.');}
+  if(strlen($feedback)>3000||($feedback===''&&$rv===null))fail('Enter feedback of up to 3,000 characters.');
+  if($rv!==null)q('UPDATE activity_completion SET rubric_scores=? WHERE id=?',[json_encode(['v'=>$rv]),$cid]);
+  q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback!==''?$feedback:$c['feedback'],$u['id'],$cid]);if($feedback!=='')q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit($rv!==null?'score_response':'feedback_response',(string)$cid);if($fa&&$feedback!=='')push_queue((int)$c['pupil_id'],'teacher','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','Open “'.$fa['title'].'” to read it.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash($rv!==null?($feedback!==''?'Score and feedback saved.':'Score saved.'):'Feedback saved. Pupil progression is unchanged.');go(review_back());
  }
  if($action==='review_assessment'){
   $u=require_role('teacher');$pid=(int)($_POST['pupil_id']??0);own_pupil($pid);$aid=(int)($_POST['assessment_id']??0);
