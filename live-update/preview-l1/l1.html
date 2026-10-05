@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Level 1 speaking preview</title><style>
+@font-face{font-family:P;src:url(../../public/assets/fonts/poppins-latin-400-normal.woff2)}@font-face{font-family:P;font-weight:600;src:url(../../public/assets/fonts/poppins-latin-600-normal.woff2)}@font-face{font-family:P;font-weight:700;src:url(../../public/assets/fonts/poppins-latin-700-normal.woff2)}
+*{box-sizing:border-box}body{margin:0;padding:24px;background:#e8eee8;font-family:P,sans-serif;color:#0e3b28;width:1880px}
+h1{margin:0 0 4px;font-size:26px}.sub{margin:0 0 18px;color:#4c5f52;font-size:15px}
+.row{display:flex;gap:26px;align-items:flex-start}.col{width:340px}.cap{font-weight:700;font-size:15px;margin:0 0 8px;min-height:44px}.cap small{display:block;font-weight:400;color:#56695c;font-size:12.5px}
+.ph{width:340px;height:720px;border-radius:30px;border:7px solid #1a2a20;overflow:hidden;position:relative;background:#fdf8ea;display:flex;flex-direction:column}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+/* top bar */
+.top{display:flex;align-items:center;gap:10px;padding:12px 14px 10px;background:#0f5a37;color:#fff}
+.x{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.15);display:grid;place-items:center;flex:none}
+.top b{font-size:13.5px;line-height:1.2;display:block}.top small{font-size:11px;opacity:.8}
+.dots{display:flex;gap:3px;padding:8px 14px;background:#0f5a37}.dots i{flex:1;height:5px;border-radius:5px;background:rgba(255,255,255,.25)}.dots i.d{background:#ffd84d}.dots i.c{background:#fff}
+/* A */
+.a .body{flex:1;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.tag{align-self:flex-start;font-size:10.5px;font-weight:700;letter-spacing:.08em;color:#176444;background:#e4f3ea;border-radius:99px;padding:4px 10px}
+.q{background:#fff;border-radius:22px;padding:16px;box-shadow:0 6px 18px rgba(14,59,40,.08);display:flex;gap:10px;align-items:flex-start}
+.q p{margin:0;font-size:21px;font-weight:700;line-height:1.3;flex:1}
+.spk{width:44px;height:44px;flex:none;border-radius:50%;background:#ffd84d;display:grid;place-items:center;color:#0e3b28}
+.pic{border-radius:18px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12)}.pic img{display:block;width:100%;height:170px;object-fit:cover}
+.rec{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:6px;padding-bottom:6px}
+.mic{width:98px;height:98px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6b,#e2452b);display:grid;place-items:center;color:#fff;box-shadow:0 0 0 10px rgba(226,69,43,.15),0 10px 22px rgba(226,69,43,.35)}
+.mic svg{width:42px;height:42px;stroke-width:2}
+.rec b{font-size:16px}.rec small{color:#5f6f63;font-size:12px}
+.mic.on{background:radial-gradient(circle at 35% 30%,#ff8a6b,#c9301b);box-shadow:0 0 0 12px rgba(226,69,43,.22),0 0 0 26px rgba(226,69,43,.10)}
+.mic.on svg{width:34px;height:34px}
+.wave{display:flex;align-items:center;gap:3px;height:34px}.wave i{width:5px;border-radius:5px;background:#e2452b}
+.timer{font-size:22px;font-weight:700;color:#c9301b}
+.play{display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;padding:10px 12px;box-shadow:0 4px 12px rgba(0,0,0,.08);width:100%}
+.pbtn{width:46px;height:46px;border-radius:50%;background:#1c7a50;color:#fff;display:grid;place-items:center;flex:none}
+.bar{flex:1;height:8px;border-radius:8px;background:#e3efe7;position:relative}.bar i{position:absolute;left:0;top:0;bottom:0;width:38%;border-radius:8px;background:#1c7a50}
+.btns{display:flex;gap:10px;width:100%}.btn{flex:1;border-radius:16px;padding:13px 10px;font-weight:700;font-size:14.5px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn.g{background:#0f5a37;color:#fff}.btn.s{background:#fff;border:2px solid #f2d27a;color:#0e3b28}
+.ok{display:flex;align-items:center;gap:8px;color:#1c7a50;font-weight:700;font-size:14px}
+/* B buddy */
+.b .body{flex:1;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(#fff6d6,#fdf8ea 40%)}
+.bud{display:flex;align-items:flex-end;gap:8px}.bud img{width:86px;flex:none}
+.bub{position:relative;background:#fff;border-radius:20px 20px 20px 6px;padding:12px 14px;box-shadow:0 6px 16px rgba(14,59,40,.1);font-size:19px;font-weight:700;line-height:1.3}
+.bub .spk{position:absolute;right:-10px;top:-12px;width:36px;height:36px}
+.b .pic img{height:150px}
+.side{display:flex;flex-direction:column;align-items:center;gap:8px;padding:6px 0}
+/* teacher */
+.tv{width:560px;background:#fff;border-radius:22px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.tv h3{margin:0 0 2px;font-size:18px}.tv .m{color:#5f6f63;font-size:13px;margin:0 0 12px}
+.tq{background:#f6f9f4;border-radius:14px;padding:10px 12px;font-weight:600;font-size:14px;margin-bottom:10px}
+.rub{width:100%;border-collapse:separate;border-spacing:6px;margin-top:10px;font-size:13px}.rub th{text-align:left;font-weight:700;width:120px}
+.rub td{border:2px solid #e3e9e1;border-radius:10px;text-align:center;padding:7px 4px;font-weight:600;color:#56695c}.rub td small{display:block;font-weight:400;font-size:10.5px}
+.rub td.on{background:#1c7a50;border-color:#1c7a50;color:#fff}
+.tot{display:flex;justify-content:space-between;align-items:center;margin-top:10px}.tot b{font-size:15px}
+.note{font-size:12.5px;color:#56695c;margin-top:6px}
+</style></head><body>
+<h1>Level 1 · Speak your answer (no typing)</h1><p class="sub">The question is the biggest thing on the screen, the picture supports it, and one big microphone button records the pupil’s voice for the teacher.</p>
+<div class="row">
+ <div class="col"><p class="cap">A1 · Question first<small>Tap the speaker to hear it again. Tap the big button to talk.</small></p>
+  <div class="ph a"><div class="top"><span class="x"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></span><div><b>Meet &amp; Greet</b><small>Lesson 1 · Before we begin</small></div></div>
+  <div class="dots"><i class="d"></i><i class="d"></i><i class="c"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="body"><span class="tag">QUESTION 3 OF 5</span>
+   <div class="q"><p>Who do you see in this picture? What do you like to do with your family?</p><span class="spk"><svg class="i" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></span></div>
+   <div class="pic"><img src="../../public/assets/images/level1/lesson01/image-97.jpeg"></div>
+   <div class="rec"><span class="mic"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><b>Tap and say your answer</b><small>Speak loud and clear!</small></div></div></div></div>
+ <div class="col"><p class="cap">A2 · Recording<small>Big stop button, timer and moving sound bars.</small></p>
+  <div class="ph a"><div class="top"><span class="x"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></span><div><b>Meet &amp; Greet</b><small>Lesson 1 · Before we begin</small></div></div>
+  <div class="dots"><i class="d"></i><i class="d"></i><i class="c"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="body"><span class="tag">QUESTION 3 OF 5</span>
+   <div class="q"><p>Who do you see in this picture? What do you like to do with your family?</p><span class="spk"><svg class="i" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></span></div>
+   <div class="pic"><img src="../../public/assets/images/level1/lesson01/image-97.jpeg"></div>
+   <div class="rec"><div class="wave">WAVE</div><span class="mic on"><svg class="i" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" fill="#fff"/></svg></span><span class="timer">0:07</span><small>Tap to stop</small></div></div></div></div>
+ <div class="col"><p class="cap">A3 · Listen, then send<small>Hear yourself, try again, or send it to the teacher.</small></p>
+  <div class="ph a"><div class="top"><span class="x"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></span><div><b>Meet &amp; Greet</b><small>Lesson 1 · Before we begin</small></div></div>
+  <div class="dots"><i class="d"></i><i class="d"></i><i class="c"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="body"><span class="tag">QUESTION 3 OF 5</span>
+   <div class="q"><p>Who do you see in this picture? What do you like to do with your family?</p><span class="spk"><svg class="i" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></span></div>
+   <div class="pic"><img src="../../public/assets/images/level1/lesson01/image-97.jpeg"></div>
+   <div class="rec"><span class="ok"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Great talking! 0:12</span>
+    <div class="play"><span class="pbtn"><svg class="i" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></span><div class="bar"><i></i></div><small>0:05</small></div>
+    <div class="btns"><span class="btn s"><svg class="i" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Try again</span><span class="btn g">Send<svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></div></div></div></div>
+ <div class="col"><p class="cap">B · Buddy asks the question<small>The pupil’s own character asks, like a conversation.</small></p>
+  <div class="ph b"><div class="top"><span class="x"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></span><div><b>Describing Words</b><small>Lesson 4 · Before we begin</small></div></div>
+  <div class="dots"><i class="d"></i><i class="c"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="body"><div class="bud"><img src="../../public/assets/images/characters/girl.webp"><div class="bub">Look at this red apple. What color is it?<span class="spk"><svg class="i" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></span></div></div>
+   <div class="pic"><img src="../../public/assets/images/level1/lesson04/v11-red-apple.webp" style="object-fit:contain;background:#fff"></div>
+   <div class="rec"><span class="mic"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><b>Tap and say your answer</b><small>Speak loud and clear!</small></div></div></div></div>
+ <div class="col" style="width:560px"><p class="cap">Teacher · Activity history<small>Listen to the pupil and tap the module’s rubric. Total is saved.</small></p>
+  <div class="tv"><h3>Maria Santos · Lesson 1 Pre-test, item 3</h3><p class="m">Recorded today, 9:42 AM · 0:12</p>
+   <div class="tq">“Who do you see in this picture? What do you like to do with your family?”</div>
+   <div class="play" style="box-shadow:none;background:#f6f9f4"><span class="pbtn"><svg class="i" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></span><div class="bar"><i></i></div><small>0:05 / 0:12</small></div>
+   <table class="rub"><tr><th></th><td style="border:0">4<small>Excellent</small></td><td style="border:0">3<small>Good</small></td><td style="border:0">2<small>Satisfactory</small></td><td style="border:0">1<small>Needs improvement</small></td></tr>
+    <tr><th>Completeness</th><td>4</td><td class="on">3</td><td>2</td><td>1</td></tr>
+    <tr><th>Clarity</th><td class="on">4</td><td>3</td><td>2</td><td>1</td></tr>
+    <tr><th>Organization</th><td>4</td><td class="on">3</td><td>2</td><td>1</td></tr></table>
+   <div class="tot"><b>Score: 10 / 12</b><span class="btn g" style="flex:none;padding:10px 18px">Save score</span></div>
+   <p class="note">The rubric rows come from the module for each lesson (for example Lesson 2 uses “Correctness of steps”).</p></div></div>
+</div>
+<script>document.querySelectorAll('.wave').forEach(w=>{w.textContent='';[10,22,30,16,26,34,18,28,12,24,32,14,20,8].forEach(h=>{const i=document.createElement('i');i.style.height=h+'px';w.append(i);});});</script>
+</body></html>
