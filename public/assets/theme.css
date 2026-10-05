@@ -2373,3 +2373,9 @@ html.dark .plan-pg,html.dark .plan-x{background:rgba(155,224,180,.1)!important;b
 @media(prefers-reduced-motion:reduce){.plan-ov,.plan-panel,.pt-tab{transition:none}}
 html.dark .plan-sec ol,html.dark .plan-sec li,html.dark .plan-sec p,html.dark .plan-sub,html.dark .plan-note{color:var(--tx,#e8f0ea)!important}html.dark .plan-sub,html.dark .plan-note{opacity:.75}
 html.dark .plan-txt{background:rgba(155,224,180,.1)!important;border:1.5px solid #3d5c48!important;color:#9be0b4!important}
+/* v81 · login: small "Admin" pill on the welcome line (replaces the "Administrator access" link) */
+.login-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.admin-pill{display:inline-flex;align-items:center;gap:6px;flex:none;padding:5px 12px;border-radius:999px;border:1.5px solid #e4dcc2;background:#fffaf0;color:#6b6a55;font-weight:700;font-size:.78rem;text-decoration:none!important;transition:background .15s,border-color .15s,color .15s}
+.admin-pill .icon{width:15px;height:15px;color:#b07d00}
+.admin-pill:hover{background:#fff3cf;border-color:#e9c96a;color:#3d2a00}.admin-pill:focus-visible{outline:3px solid #f2b10c;outline-offset:2px}
+html.dark .admin-pill{background:rgba(255,226,122,.08)!important;border-color:#5a5030!important;color:#e6dcb8!important}html.dark .admin-pill .icon{color:#f2c94c!important}
