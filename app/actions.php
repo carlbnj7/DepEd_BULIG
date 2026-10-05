@@ -13,6 +13,19 @@ function action():void{
   if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));fail('The ID or password is incorrect.');}
   q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil'){$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;}if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin'){$_SESSION['offer_save']=1;$_SESSION['hello']=1;}audit('login',$role);go('?page=dashboard');
  }
+ if($action==='key_login'){
+  /* One scan of a sign-in ticket: the QR code opens a "Hi, NAME!" page, and this button signs the pupil in. */
+  $u=card_user((string)($_POST['key']??''));if(!$u){audit('login_failed','ticket');fail('This sign-in ticket no longer works. Ask your teacher for a new ticket, or sign in with your Pupil ID and password.');}
+  session_regenerate_id(true);$_SESSION=[];$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;$_SESSION['offer_save']=1;$_SESSION['hello']=1;audit('login','pupil · ticket');go('?page=dashboard');
+ }
+ if($action==='card_new'||$action==='cards_starter'){
+  $u=require_role('teacher');if(!cards_ready())fail('Ask the administrator to import 018_pupil_cards.sql first.');$sec=(int)($_POST['section']??0);$back='?page=cards'.($sec?'&section='.$sec:'');
+  if($action==='card_new'){$id=(int)($_POST['id']??0);own_pupil($id);$n=card_issue($id,true);$p=one('SELECT name,public_id FROM users WHERE id=?',[$id]);audit('card_new',(string)$p['public_id']);
+   flash('New ticket for '.$p['name'].'. Starter password: '.$n['pw'].'. The old QR code no longer works.');go($back);}
+  $ids=array_map('intval',array_column(rows('SELECT t.pupil_id FROM teacher_pupils t JOIN users u ON u.id=t.pupil_id WHERE t.teacher_id=? AND u.active=1'.($sec?' AND EXISTS(SELECT 1 FROM pupil_sections ps WHERE ps.pupil_id=u.id AND ps.section_id=?)':''),$sec?[$u['id'],$sec]:[$u['id']]),'pupil_id'));$done=0;
+  foreach($ids as $id){$h=(string)val('SELECT password_hash FROM users WHERE id=?',[$id]);if(password_verify('12345678',$h)){card_issue($id,true);$done++;}}
+  audit('cards_starter',(string)$done);flash($done?$done.' '.($done===1?'pupil has':'pupils have').' a new starter password. Print their tickets now.':'Every pupil here already has their own password.');go($back);
+ }
  if($action==='quick_login'){
   if(!saved_login_ready())saved_login_json(['ok'=>false,'error'=>'Saved sign-in is not ready yet. Please sign in with your ID.']);
   $u=saved_login_use((string)($_POST['token']??''));
@@ -50,8 +63,8 @@ function action():void{
    q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
    if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);}else{
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level();$details=pupil_details_input();
-    q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);
-   }audit('create_'.$role,$public);db()->commit();flash('Account created. '.$role.' ID: '.$public.($role==='pupil'?'. Default password: 12345678. The pupil may change it in My profile.':'. Share the password you set privately.'));
+    q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);$password=new_pupil_password($id);
+   }audit('create_'.$role,$public);db()->commit();flash('Account created. '.$role.' ID: '.$public.($role==='pupil'?'. Starter password: '.$password.'. It is on the pupil’s sign-in ticket, and the pupil may change it in Settings.':'. Share the password you set privately.'));
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=accounts');
  }
  if($action==='update_account'){
@@ -60,7 +73,7 @@ function action():void{
   $name=trim((string)($_POST['name']??''));if(!$name||strlen($name)>150)fail('Enter a valid name.');$password=(string)($_POST['password']??'');
   if($password!==''&&(strlen($password)<8||strlen($password)>72))fail('Use a password of 8–72 characters.');
   db()->beginTransaction();try{
-   q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!==''||!isset($_POST['active']))saved_login_clear($id);if($password!=='')q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);
+   q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!==''||!isset($_POST['active']))saved_login_clear($id);if($password!==''){q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);card_forget_starter($id);}
    if($u['role']==='teacher'){
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);
     save_pupil_details($id,pupil_details_input($id));
@@ -73,7 +86,7 @@ function action():void{
   if(!password_verify($old,$u['password_hash']))fail('Your current password is incorrect.');
   if(strlen($new)<8||strlen($new)>72)fail('Use a new password of 8–72 characters.');
   if($new!==(string)($_POST['confirm_password']??''))fail('The new passwords do not match.');
-  q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go($u['role']==='pupil'?'?page=settings':'?page=profile');
+  q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);card_forget_starter((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go($u['role']==='pupil'?'?page=settings':'?page=profile');
  }
  if($action==='set_start_level'){
   $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=manage(&id=[0-9]+)?$~',$back))$back='?page=manage';

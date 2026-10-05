@@ -6,8 +6,9 @@ try{
  if($_SERVER['REQUEST_METHOD']==='POST')action();
  $page=(string)($_GET['page']??'dashboard');$u=current_user();
  if($page==='offline_sync'){offline_sync_info();}
- if(!$u){if($page!=='login')go('?page=login');login_view();}
- elseif($page==='login'){go('?page=dashboard');}
+ $tk=$page==='login'&&isset($_GET['key'])?(string)$_GET['key']:'';
+ if(!$u){if($page!=='login')go('?page=login');if($tk!=='')key_login_view($tk);else login_view();}
+ elseif($page==='login'){$cu=$tk!==''?card_user($tk):null;if($cu&&(int)$cu['id']!==(int)$u['id'])key_login_view($tk);else go('?page=dashboard');}
  elseif($page==='source'){
   $level=(int)($_GET['level']??1);
   if(in_array($level,[2,3,4,5,6,7,8],true)){
