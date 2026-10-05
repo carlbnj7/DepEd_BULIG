@@ -64,8 +64,10 @@ function tf_tree(array $pupils,array $stats,array $badgeWeek):string{
 /* 5 · Check-in reminder */
 function tf_checkin(array $need):string{
  if(!$need)return '';$names=array_map(fn($p)=>tf_first($p),array_slice($need,0,3));$c=count($need);
- $av='';foreach(array_slice($need,0,4) as $p)$av.='<a href="?page=pupil&amp;id='.(int)$p['id'].'" title="'.e($p['name']).'">'.avatar($p).'</a>';
- return '<section class="tf-alert" role="status"><svg viewBox="0 0 40 40" class="tf-bell" aria-hidden="true"><path d="M20 5a3 3 0 0 1 3 3v1a10 10 0 0 1 7 10v6l3 4H7l3-4v-6a10 10 0 0 1 7-10V8a3 3 0 0 1 3-3z" fill="url(#pf-gold)" stroke="#c98200" stroke-width="1.5"/><circle class="tf-clap" cx="20" cy="33" r="3.5" fill="#c98200"/><path d="M14 16a7 7 0 0 1 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg><div><strong>'.$c.' '.($c===1?'pupil needs':'pupils need').' a check-in</strong><span>'.e(implode(', ',$names).($c>3?' and '.($c-3).' more':'')).' · no learning in the past 7 days</span></div><div class="tf-avs">'.$av.'</div></section>';
+ /* One clear button per pupil (picture, first name, arrow) that opens their progress; the rest are counted. */
+ $av='';foreach(array_slice($need,0,3) as $p)$av.='<a class="tf-ci" href="?page=pupil&amp;id='.(int)$p['id'].'" title="See '.e($p['name']).'’s progress">'.avatar($p).'<span>'.e(tf_first($p)).'</span>'.icon('arrow').'</a>';
+ if($c>3)$av.='<a class="tf-ci tf-ci-more" href="?page=progress">+'.($c-3).' more'.icon('arrow').'</a>';
+ return '<section class="tf-alert" role="status"><svg viewBox="0 0 40 40" class="tf-bell" aria-hidden="true"><path d="M20 5a3 3 0 0 1 3 3v1a10 10 0 0 1 7 10v6l3 4H7l3-4v-6a10 10 0 0 1 7-10V8a3 3 0 0 1 3-3z" fill="url(#pf-gold)" stroke="#c98200" stroke-width="1.5"/><circle class="tf-clap" cx="20" cy="33" r="3.5" fill="#c98200"/><path d="M14 16a7 7 0 0 1 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/></svg><div><strong>'.$c.' '.($c===1?'pupil needs':'pupils need').' a check-in</strong><span>'.e(implode(', ',$names).($c>3?' and '.($c-3).' more':'')).' · no learning in the past 7 days</span></div><div class="tf-cis">'.$av.'</div></section>';
 }
 
 /* 6 · Pupil milestones feed */

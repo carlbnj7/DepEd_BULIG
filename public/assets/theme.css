@@ -2703,3 +2703,16 @@ html.dark body:not(.demo-page) .tk-name,html.dark body:not(.demo-page) .tk-id{co
 @media(min-width:900px){.tk-sheet.sz-s{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .sz-s .tk-bar{flex-wrap:wrap;gap:4px}.sz-s .tk-new .btn{padding:4px 9px;font-size:.74rem}
 @media print{.tk-sheet.sz-s{grid-template-columns:repeat(3,1fr)!important;gap:4mm 4mm!important}}
+/* v94: check-in card: a clear button for each pupil */
+.tf-alert{flex-wrap:wrap}
+.tf-alert>div:not(.tf-cis){flex:1 1 220px;min-width:0}
+.tf-cis{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto;justify-content:flex-end}
+.tf-ci{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:999px;background:#fff;border:1.5px solid #f2c84b;color:#7a4f00;font-weight:700;font-size:.88rem;text-decoration:none;box-shadow:0 2px 6px rgba(201,130,0,.12);transition:transform .15s,box-shadow .15s;animation:tf-avin .4s cubic-bezier(.2,1.6,.4,1) both}
+.tf-ci:nth-child(2){animation-delay:.1s}.tf-ci:nth-child(3){animation-delay:.2s}.tf-ci:nth-child(4){animation-delay:.3s}
+.tf-ci:hover{transform:translateY(-2px);box-shadow:0 5px 12px rgba(201,130,0,.22)}
+.tf-ci .avatar,.tf-ci img{width:32px!important;height:32px!important;border-radius:50%;object-fit:cover;flex:none;margin:0}
+.tf-ci .icon{width:16px;height:16px}
+.tf-ci-more{padding:8px 12px}
+@media(max-width:600px){.tf-cis{margin-left:54px;justify-content:flex-start}}
+@media(prefers-reduced-motion:reduce){.tf-ci{animation:none;transition:none}}
+html.dark body:not(.demo-page) .tf-ci{background:#1d2c23!important;color:#ffd77a!important;border-color:#6b5520!important}
