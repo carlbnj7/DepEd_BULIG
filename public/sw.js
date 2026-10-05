@@ -37,3 +37,9 @@ self.addEventListener('fetch',e=>{
  if(FILES.some(f=>url.pathname.endsWith('/'+f))){e.respondWith(fetch(r).catch(()=>caches.match(r,{ignoreSearch:true})));return;}
  if(/\.(css|js|png|jpe?g|webp|gif|svg|woff2?|ico)$/i.test(url.pathname))e.respondWith(fetch(r).catch(async()=>(await saved(r,false))||Response.error()));
 });
+
+/* Reminders (Web Push): show the note, and open BULIG at the right page when it is tapped. */
+self.addEventListener('push',e=>{let d={};try{d=e.data?e.data.json():{};}catch(x){d={body:e.data?e.data.text():''};}
+ e.waitUntil(self.registration.showNotification(d.title||'BULIG',{body:d.body||'',icon:'assets/brand/bulig-app-medium.png?v=2',badge:'assets/brand/bulig-tab-big.png?v=2',tag:d.tag||'bulig',data:{url:d.url||'?page=dashboard'}}));});
+self.addEventListener('notificationclick',e=>{e.notification.close();const url=new URL((e.notification.data&&e.notification.data.url)||'?page=dashboard',self.registration.scope).href;
+ e.waitUntil(clients.matchAll({type:'window',includeUncontrolled:true}).then(list=>{for(const c of list){if(c.url.startsWith(self.registration.scope)&&'focus' in c){if('navigate' in c)c.navigate(url).catch(()=>{});return c.focus();}}return clients.openWindow(url);}));});

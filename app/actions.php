@@ -5,18 +5,19 @@ function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing
 function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=review&tab=(todo|done|all)(&pupil=[0-9]+)?$~',$b)?$b:'?page=review';}
 function action():void{
  check_csrf();$action=(string)($_POST['action']??'');
+ if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if($action==='login'){
   $id=trim((string)($_POST['public_id']??''));$role=(string)($_POST['role']??'pupil');$key=hash('sha256',strtolower($id));
   if(val('SELECT COUNT(*) FROM login_attempts WHERE identifier_hash=? AND attempted_at>DATE_SUB(NOW(),INTERVAL 15 MINUTE)',[$key])>=8){audit('login_locked',mb_substr($role.' · '.$id,0,60));fail('Too many attempts. Please wait 15 minutes.',429);}
   $u=one('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
   if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));fail('The ID or password is incorrect.');}
-  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin'){$_SESSION['offer_save']=1;$_SESSION['hello']=1;}audit('login',$role);go('?page=dashboard');
+  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil'){$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;}if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin'){$_SESSION['offer_save']=1;$_SESSION['hello']=1;}audit('login',$role);go('?page=dashboard');
  }
  if($action==='quick_login'){
   if(!saved_login_ready())saved_login_json(['ok'=>false,'error'=>'Saved sign-in is not ready yet. Please sign in with your ID.']);
   $u=saved_login_use((string)($_POST['token']??''));
   if(!$u){audit('login_failed','saved sign-in');saved_login_json(['ok'=>false,'error'=>'This saved sign-in has expired. Please sign in with your ID and password.']);}
-  session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($u['role']==='pupil')$_SESSION['pupil_welcome']=1;else $_SESSION['teacher_welcome']=1;$_SESSION['hello']=1;
+  session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($u['role']==='pupil'){$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;}else $_SESSION['teacher_welcome']=1;$_SESSION['hello']=1;
   audit('login',$u['role']);saved_login_json(['ok'=>true,'url'=>'?page=dashboard','profile'=>saved_login_profile($u)]);
  }
  if($action==='save_login'){
@@ -81,6 +82,7 @@ function action():void{
   $level=selected_start_level();if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))fail('Choose a level that is available.');
   foreach($pupils as $pid)if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))fail('This pupil is not assigned to you.',403);
   foreach($pupils as $pid)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?) ON DUPLICATE KEY UPDATE level_id=VALUES(level_id),assigned_by=VALUES(assigned_by),assigned_at=NOW()',[$pid,$level,$tid]);
+  foreach($pupils as $pid)push_queue($pid,'lessons',level_label($level).' is open!','Your teacher chose '.level_label($level).' for you. Your next adventure is waiting.','?page=lessons&level='.$level);
   audit('start_level',level_label($level).' for '.count($pupils).' pupils');flash('Starting level set to '.level_label($level).' for '.count($pupils).' '.(count($pupils)===1?'pupil':'pupils').'.');go($back);
  }
  if($action==='class_done'){
@@ -98,6 +100,7 @@ function action():void{
     $aids=[];if($scope==='lessons'){foreach($lids as $lid)$aids=array_merge($aids,class_done_activities($pid,'lesson',$lid));foreach($acts as $aid)$aids=array_merge($aids,class_done_activities($pid,'activity',$aid));}
     else $aids=class_done_activities($pid,$scope,$scope==='level'?$level:(int)($_POST[$scope==='activity'?'aid':'lid']??0));
     $n=class_done_apply($tid,$pid,$aids);$marked+=$n;
+    if($n)push_queue($pid,'lessons','Your next lesson is open!','Your class did it together. Your next step in BULIG is ready.','?page=dashboard');
     if($n)class_done_note_set($pid,$scope==='level'?'Your teacher marked '.level_label($level).' as done.'.(level_available($pid,$level+1)?' '.level_label($level+1).' is open now.':''):'Your teacher marked '.($scope==='activity'?'an activity':'your lesson').' as done. Your next step is ready.');
    }
    audit('class_done',$what.' for '.count($pupils).' pupils, '.$marked.' activities');db()->commit();
@@ -151,7 +154,7 @@ function action():void{
  if($action==='review'){
   $u=require_role('teacher');$cid=(int)($_POST['completion_id']??0);$c=one('SELECT * FROM activity_completion WHERE id=?',[$cid]);if(!$c)fail('Response not found.',404);own_pupil((int)$c['pupil_id']);
   $feedback=trim((string)($_POST['feedback']??''));if(!$feedback||strlen($feedback)>3000)fail('Enter feedback of up to 3,000 characters.');
-  q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback,$u['id'],$cid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit('feedback_response',(string)$cid);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash('Feedback saved. Pupil progression is unchanged.');go(review_back());
+  q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback,$u['id'],$cid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit('feedback_response',(string)$cid);$fa=one('SELECT title,lesson_id FROM activities WHERE id=?',[(int)$c['activity_id']]);if($fa)push_queue((int)$c['pupil_id'],'teacher','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','Open “'.$fa['title'].'” to read it.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash('Feedback saved. Pupil progression is unchanged.');go(review_back());
  }
  if($action==='review_assessment'){
   $u=require_role('teacher');$pid=(int)($_POST['pupil_id']??0);own_pupil($pid);$aid=(int)($_POST['assessment_id']??0);

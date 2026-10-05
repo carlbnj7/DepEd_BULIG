@@ -62,4 +62,32 @@
   let last='';if(fb)new MutationObserver(()=>{const now=fb.className.replace(/\s*gentle/,'')+'|'+fb.textContent.trim();if(now===last)return;last=now;if(fb.classList.contains('tryagain')&&fb.textContent.trim()){fb.classList.add('gentle');const box=$('.native-card:not([hidden]) .native-answer')||$('#response')||$('.answer-card');
      if(box&&!still){box.classList.remove('wig');void box.offsetWidth;box.classList.add('wig');}say(HINTS[tries++%HINTS.length],'hint',8000,'cheer');}
     else if(fb.classList.contains('success')&&fb.textContent.trim()){clearTimeout(idle);say(['Great answer!','Well done!','You did it!','Super reading!'][Math.floor(Math.random()*4)],'yay',4500,'cheer');}}).observe(fb,{attributes:true,attributeFilter:['class'],childList:true});}
+
+ /* ---------- small helpers: print buttons and filters that apply on change ---------- */
+ $$('[data-print]').forEach(b=>b.addEventListener('click',()=>window.print()));
+ $$('select[data-autosubmit]').forEach(sel=>{const f=sel.form;if(!f)return;const go=f.querySelector('.pg-go');if(go)go.hidden=true;sel.addEventListener('change',()=>f.submit());});
+
+ /* ---------- daily goal ring: fills up, and sparkles the first time the goal is reached today ---------- */
+ const goal=$('.goal-card');
+ if(goal){const ring=goal.querySelector('.goal-ring'),to=+(ring.dataset.p||0),k='bulig-goal-'+(me?me.id:'x');
+  if(still){ring.style.setProperty('--p',to);}else{let v=0;const t0=performance.now(),step=t=>{v=Math.min(1,(t-t0)/900);ring.style.setProperty('--p',Math.round(to*(1-Math.pow(1-v,3))));if(v<1)requestAnimationFrame(step);};setTimeout(()=>requestAnimationFrame(step),300);}
+  if(goal.classList.contains('goal-done')&&store(k)!==goal.dataset.goal){store(k,goal.dataset.goal);if(!still)setTimeout(()=>goal.classList.add('goal-pop'),1200);}}
+
+ /* ---------- tap any word to hear it (instructions, questions and card text; never in reading tests) ---------- */
+ const TAP='.activity-title,.activity-instruction,.answer-card .prompt,.sentence-card label,.native-direction,.native-lead,.native-heading,.native-item-label,.native-answer-label';
+ if($('#activity-form')&&window.speechSynthesis&&!$('.word-grid,.fluency-passage')){
+  let bub=null,hl=null;const close=()=>{if(bub){bub.remove();bub=null;}if(window.CSS&&CSS.highlights)CSS.highlights.delete('bulig-word');};
+  const say=w=>{try{const s=speechSynthesis,u=new SpeechSynthesisUtterance(w),vs=s.getVoices(),pick=vs.find(v=>v.voiceURI===store('bulig-voice'))||vs.find(v=>/^en/i.test(v.lang)&&/female|samantha|zira|susan|karen|aria|jenny|ava|hazel/i.test(v.name))||vs.find(v=>/^en/i.test(v.lang));if(pick)u.voice=pick;u.lang=pick?pick.lang:'en-US';u.rate=.8;s.cancel();s.speak(u);}catch(e){}};
+  document.addEventListener('click',e=>{if(bub&&bub.contains(e.target))return;close();
+   const host=e.target.closest&&e.target.closest(TAP);if(!host||e.target.closest('a,button,input,textarea,select,label.answer-option,.lt-k,.native-choices'))return;
+   if(String(window.getSelection&&getSelection())!=='')return;
+   let node=null,off=0;if(document.caretPositionFromPoint){const c=document.caretPositionFromPoint(e.clientX,e.clientY);if(c){node=c.offsetNode;off=c.offset;}}else if(document.caretRangeFromPoint){const r=document.caretRangeFromPoint(e.clientX,e.clientY);if(r){node=r.startContainer;off=r.startOffset;}}
+   if(!node||node.nodeType!==3||!host.contains(node))return;const t=node.textContent;let a=off,b=off;const W=/[\p{L}\p{N}'’-]/u;while(a>0&&W.test(t[a-1]))a--;while(b<t.length&&W.test(t[b]))b++;
+   const word=t.slice(a,b).replace(/^['’-]+|['’-]+$/g,'');if(!word||word.length>30||!/\p{L}/u.test(word))return;
+   const rg=document.createRange();rg.setStart(node,a);rg.setEnd(node,b);const box=rg.getBoundingClientRect();if(!box.width)return;
+   if(window.CSS&&CSS.highlights&&window.Highlight)CSS.highlights.set('bulig-word',new Highlight(rg));
+   bub=el('div','word-pop');bub.setAttribute('role','status');const big=el('b','',word),again=el('button','word-again','Hear it again');again.type='button';again.addEventListener('click',()=>say(word));bub.append(big,again);document.body.append(bub);
+   const bw=bub.offsetWidth,bh=bub.offsetHeight;let x=Math.min(Math.max(8,box.left+box.width/2-bw/2),innerWidth-bw-8),y=box.top-bh-12;if(y<8){y=box.bottom+12;bub.classList.add('below');}
+   bub.style.setProperty('--x',x+'px');bub.style.setProperty('--y',y+'px');bub.style.setProperty('--ax',(box.left+box.width/2-x)+'px');requestAnimationFrame(()=>bub.classList.add('on'));say(word);});
+  window.addEventListener('scroll',close,{passive:true});document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});}
 })();
