@@ -100,7 +100,7 @@ if(choice&&photoBox){const out=$('#drawing-data'),drawPanel=$('.drawing-panel'),
  photoBox.addEventListener('change',async e=>{const inp=e.target.closest('.pp-input');if(!inp||!inp.files||!inp.files[0]||form.dataset.draft!=='on')return;const f=inp.files[0];inp.value='';
   if(!/^image\//.test(f.type)){status.textContent='Please choose a photo.';return;}
   status.textContent='Getting your photo ready…';
-  try{const url=await shrink(f);out.value=url;setPhoto(url);status.textContent='Photo added. Tell about your drawing, then submit.';
+  try{const url=await shrink(f);out.value=url;setPhoto(url);status.textContent=form.classList.contains('l1-form')?'Photo added. Check it, then send it.':'Photo added. Tell about your drawing, then submit.';
    if(canvas)canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);drawingDirty=true;draft();}
   catch(x){status.textContent='This photo could not be opened. Try another one.';}});
  if(canvas)canvas.addEventListener('pointerup',()=>{if(out.value.startsWith('data:image/png')){setPhoto('');status.textContent='';}});
