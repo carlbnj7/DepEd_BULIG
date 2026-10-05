@@ -61,7 +61,7 @@ for(const select of document.querySelectorAll('[data-section-filter]'))select.ad
 const canvas=$('#drawing-canvas');
 /* Drawing kit (v2): crayon colours, three pen sizes, eraser, Undo (last line only), Clear and Full screen. */
 if(canvas){const ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='round';let drawing=false,erase=false,size=1;const output=$('#drawing-data'),pen=$('#pen-color'),panel=canvas.closest('.drawing-panel'),undo=[];
- if(output.value){const image=new Image();image.onload=()=>ctx.drawImage(image,0,0,canvas.width,canvas.height);image.src=output.value;}
+ if(output.value.startsWith('data:image/png')){const image=new Image();image.onload=()=>ctx.drawImage(image,0,0,canvas.width,canvas.height);image.src=output.value;}
  const scale=Math.max(1,canvas.width/600),SIZES=[3,6,12];
  function point(event){const r=canvas.getBoundingClientRect();return [(event.clientX-r.left)*canvas.width/r.width,(event.clientY-r.top)*canvas.height/r.height];}
  function save(){output.value=canvas.toDataURL('image/png');drawingDirty=true;draft();}
@@ -85,6 +85,25 @@ if(canvas){const ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='r
   fs.addEventListener('click',()=>{const on=!panel.classList.contains('dk-full');panel.classList.toggle('dk-full',on);document.body.classList.toggle('dk-lock',on);fs.querySelector('span').textContent=on?'Done':'Full screen';fs.setAttribute('aria-pressed',String(on));});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('dk-full'))fs.click();});
   kit.append(crayons,sizes,er,un,fs);bar.append(kit);bar.classList.add('has-kit');}
+}
+/* Drawing activities: draw in the app, or upload a photo of a paper drawing. The last one made is the answer. */
+const choice=$('.draw-choice'),photoBox=$('.photo-panel');
+if(choice&&photoBox){const out=$('#drawing-data'),drawPanel=$('.drawing-panel'),empty=photoBox.querySelector('.pp-empty'),done=photoBox.querySelector('.pp-done'),img=photoBox.querySelector('.pp-img'),status=photoBox.querySelector('.pp-status');
+ const show=k=>{choice.querySelectorAll('.dc-tab').forEach(t=>{const on=t.dataset.dc===k;t.classList.toggle('on',on);t.setAttribute('aria-pressed',on?'true':'false');});if(drawPanel)drawPanel.hidden=k!=='draw';photoBox.hidden=k!=='photo';};
+ choice.addEventListener('click',e=>{const t=e.target.closest('.dc-tab');if(t)show(t.dataset.dc);});
+ const setPhoto=src=>{if(src)img.src=src;else img.removeAttribute('src');done.hidden=!src;empty.hidden=!!src;};
+ /* make the photo smaller on the phone (longest side 1280 px, JPEG) so it uploads fast on mobile data */
+ const shrink=file=>new Promise((ok,bad)=>{const r=new FileReader();r.onerror=bad;r.onload=()=>{const im=new Image();im.onerror=bad;im.onload=()=>{let q=.82,max=1280,url='';
+   for(let i=0;i<4;i++){const k=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.naturalWidth*k));c.height=Math.max(1,Math.round(im.naturalHeight*k));
+    const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);url=c.toDataURL('image/jpeg',q);if(url.length<1400000)break;q-=.15;max=Math.round(max*.75);}
+   ok(url);};im.src=r.result;};r.readAsDataURL(file);});
+ photoBox.addEventListener('change',async e=>{const inp=e.target.closest('.pp-input');if(!inp||!inp.files||!inp.files[0]||form.dataset.draft!=='on')return;const f=inp.files[0];inp.value='';
+  if(!/^image\//.test(f.type)){status.textContent='Please choose a photo.';return;}
+  status.textContent='Getting your photo ready…';
+  try{const url=await shrink(f);out.value=url;setPhoto(url);status.textContent='Photo added. Tell about your drawing, then submit.';
+   if(canvas)canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);drawingDirty=true;draft();}
+  catch(x){status.textContent='This photo could not be opened. Try another one.';}});
+ if(canvas)canvas.addEventListener('pointerup',()=>{if(out.value.startsWith('data:image/png')){setPhoto('');status.textContent='';}});
 }
 const mic=$('#recognize');
 if(mic){const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;const status=$('#speech-status');let recognition=null,active=false;if(!Recognition){mic.disabled=true;status.textContent='Speech recognition is unavailable here. Type your answer or ask your teacher.';}else{mic.addEventListener('click',()=>{if(active){recognition.stop();return;}recognition=new Recognition();recognition.lang='en-US';recognition.continuous=false;recognition.interimResults=true;const micEv=d=>document.dispatchEvent(new CustomEvent('bulig:mic',{detail:d}));recognition.onstart=()=>{active=true;mic.textContent='Stop listening';status.textContent='Listening…';window.speechSynthesis?.cancel();micEv({on:true});};recognition.onresult=event=>{const r=event.results[event.results.length-1];if(!r.isFinal){micEv({words:[...event.results].map(x=>x[0].transcript).join(' ')});return;}const heard=[...event.results].map(x=>x[0].transcript).join(' ').trim();micEv({heard});const target=document.querySelector('.native-card:not([hidden]) .native-answer')||$('#response');target.value=canvas&&$('.worksheet-panel')?[target.value,heard].filter(Boolean).join('\n'):heard;target.dispatchEvent(new Event('input',{bubbles:true}));$('#transcript').value=heard;status.textContent='Check the words — the microphone can mishear.';showWords($('#expected-text').value,heard);draft();};recognition.onerror=event=>{micEv({error:event.error});status.textContent=event.error==='not-allowed'?'Microphone permission was not granted. You can type your answer.':'We could not hear clearly. Try again or type your answer.';};recognition.onend=()=>{active=false;mic.textContent='Speak Answer';micEv({on:false});};try{recognition.start();}catch{status.textContent='Microphone could not start. Try typing your answer.';}});window.addEventListener('pagehide',()=>recognition?.abort());}}

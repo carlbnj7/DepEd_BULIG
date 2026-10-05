@@ -1,5 +1,7 @@
 <?php
 /* After feedback, go back to the same Activity history tab and pupil filter. */
+/* Drawing answers (draw in the app or upload a photo) are only for the real drawing activities of Level 1. */
+function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing'&&lesson_level((int)$a['lesson_id'])===1;}
 function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=review&tab=(todo|done|all)(&pupil=[0-9]+)?$~',$b)?$b:'?page=review';}
 function action():void{
  check_csrf();$action=(string)($_POST['action']??'');
@@ -119,15 +121,15 @@ function action():void{
  if(in_array($action,['draft','submit'],true)){
   $u=require_role('pupil');$pid=(int)$u['id'];$aid=(int)($_POST['activity_id']??0);$answer=trim((string)($_POST['response']??''));$drawing=(string)($_POST['drawing']??'');$transcript=trim((string)($_POST['transcript']??''));
   if(strlen($answer)>12000||strlen($transcript)>12000||strlen($drawing)>1500000)fail('This response is too large.');
-  if($drawing!==''&&!preg_match('~^data:image/png;base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
+  if($drawing!==''&&!preg_match('~^data:image/(png|jpeg);base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
   db()->beginTransaction();try{
-   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
+   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a))$drawing='';$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
    if(completion_ok($old)){db()->commit();submission_reply($a,true,'Already saved. You can continue.',0);}
    if($action==='draft'){
     q('INSERT INTO activity_drafts(pupil_id,activity_id,response,drawing,transcript) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript)',[$pid,$aid,$answer,$drawing?:null,$transcript?:null]);db()->commit();header('Content-Type: application/json');echo json_encode(['saved'=>true]);exit;
    }
-   $question=one('SELECT * FROM questions WHERE activity_id=?',[$aid]);$exact=$question&&$question['grading']==='exact';$mode=$exact?'answer':$a['response_mode'];
-   if(in_array($mode,['answer','drawing'],true)&&$answer===''&&$drawing==='')fail('Share an answer or a drawing before continuing.');
+   $question=one('SELECT * FROM questions WHERE activity_id=?',[$aid]);$exact=$question&&$question['grading']==='exact';$mode=$exact||($a['response_mode']==='drawing'&&!draw_allowed($a))?'answer':$a['response_mode'];
+   if(in_array($mode,['answer','drawing'],true)&&$answer===''&&$drawing==='')fail('Draw it, upload a photo, or tell about your drawing before continuing.');
    if($mode==='answer'&&$answer==='')fail('Speak or type an answer first.');
    $ok=true;$score=null;$max=null;$outcome=['none'=>'viewed','perform'=>'performed','drawing'=>'recorded','answer'=>'recorded'][$mode];
    if($exact){
@@ -168,7 +170,7 @@ function action():void{
  }
  if($action==='save_activity'){
   require_role('admin');$id=(int)($_POST['id']??0);$a=one('SELECT * FROM activities WHERE id=?',[$id]);if(!$a)fail('Activity not found.',404);
-  $title=trim((string)($_POST['title']??''));$prompt=trim((string)($_POST['prompt']??''));$type=(string)($_POST['type']??'');$xp=(int)($_POST['xp_reward']??10);$grading=(string)($_POST['grading']??'teacher');$mode=(string)($_POST['response_mode']??'answer');if(!in_array($mode,['answer','none','perform','drawing'],true))fail('Choose an interaction mode.');if($grading==='exact')$mode='answer';
+  $title=trim((string)($_POST['title']??''));$prompt=trim((string)($_POST['prompt']??''));$type=(string)($_POST['type']??'');$xp=(int)($_POST['xp_reward']??10);$grading=(string)($_POST['grading']??'teacher');$mode=(string)($_POST['response_mode']??'answer');if(!in_array($mode,['answer','none','perform','drawing'],true))fail('Choose an interaction mode.');if($grading==='exact'||$mode==='drawing')$mode='answer';
   if(!$title||strlen($title)>255||!$prompt||strlen($prompt)>30000||!in_array($type,['open','sentence','reading','physical','group','drawing','choice','exact','reference'],true)||$xp<0||$xp>1000||!in_array($grading,['teacher','exact'],true))fail('Check the activity fields.');
   $imgs=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['image_paths']??'')))));foreach($imgs as $image)checked_image($image);
   $answers=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['answers']??'')))));$options=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['options']??'')))));
