@@ -32,8 +32,23 @@ function offline_manifest(array $u):never{
  echo json_encode(['uid'=>$pid,'level'=>$level,'title'=>level_label($level),'lessons'=>$lessons,'pages'=>['?page=dashboard','?page=lessons','?page=lessons&level='.$level,'?page=profile','?page=calendar','?page=achievements']]);exit;
 }
 
-/** Who is signed in, and a fresh form token, so saved answers can be sent. */
+/** Who is signed in, and a fresh form token, so saved answers can be sent
+    (the token also lets a saved account sign in again before uploading). */
 function offline_sync_info():never{
  header('Content-Type: application/json');header('Cache-Control: no-store');
- $u=current_user();echo json_encode(['uid'=>$u&&$u['role']==='pupil'?(int)$u['id']:0,'csrf'=>$u?csrf():'']);exit;
+ $u=current_user();echo json_encode(['uid'=>$u&&$u['role']==='pupil'?(int)$u['id']:0,'csrf'=>csrf()]);exit;
+}
+
+/** The levels a pupil can open, with an estimate of how much each one takes on the device,
+    for the "Learn even without internet" download offer after signing in. */
+function offline_levels(array $u):never{
+ $pid=(int)$u['id'];$g=pupil_grade($pid);header('Content-Type: application/json');header('Cache-Control: no-store');
+ $next=next_learning_lesson($pid);$cur=(int)($next['level_id']??0);$out=[];$root=__DIR__.'/../public/';
+ foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $lv){$id=(int)$lv['id'];if(!level_available($pid,$id))continue;
+  $acts=rows('SELECT a.*,l.position lesson_position FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND a.published=1'.GRADE_SQL,[$id,$g]);if(!$acts)continue;
+  $files=[];foreach($acts as $a)foreach(activity_images($a) as $src){$p=resolved_image_path((string)$src);if($p)$files[strtok($p,'?')]=1;}
+  $bytes=0;foreach(array_keys($files) as $f)if(is_file($root.$f))$bytes+=filesize($root.$f);
+  $lessons=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$id,$g]);
+  $out[]=['level'=>$id,'title'=>level_label($id),'lessons'=>$lessons,'activities'=>count($acts),'bytes'=>$bytes+count($acts)*45000+$lessons*40000+600000,'current'=>$id===$cur];}
+ echo json_encode(['uid'=>$pid,'first'=>explode(' ',trim((string)$u['name']))[0],'levels'=>$out]);exit;
 }

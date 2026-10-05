@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Offline Sign-in</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--g50:#f3faf6;--y400:#ffc629;--y100:#fff4cf;--muted:#5f6f63;--line:#e9e2cc;--off:#5b6b7a}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1300px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:900px}
+.row{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:10px;width:300px}
+.step{display:flex;gap:8px;align-items:flex-start;font-size:.86rem;color:var(--muted);min-height:64px}
+.step b.n{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--g700);color:#fff;font-size:.8rem}
+.step strong{color:#17331f;display:block;font-size:.92rem}
+.phone{position:relative;width:300px;height:620px;border:8px solid #1d2a22;border-radius:36px;overflow:hidden;background:#fdf8ea;box-shadow:0 14px 30px rgba(0,0,0,.2)}
+.sbar{height:26px;background:#0b1f15;color:#fff;font-size:.62rem;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.sbar .nonet{display:flex;align-items:center;gap:4px;color:#ffb4a8;font-weight:700}
+.sbar .nonet.ok{color:#9be0b4}
+/* login */
+.lhead{height:120px;background:linear-gradient(160deg,#1f6a2f,#0e4a23);position:relative;display:flex;align-items:center;justify-content:center}
+.lhead img.logo{height:46px}.lhead .k1,.lhead .k2{position:absolute;bottom:0;height:86px}.lhead .k1{left:6px}.lhead .k2{right:6px}
+.offpill{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:#fff;color:#7a3a2a;border-radius:99px;padding:3px 10px;font-size:.62rem;font-weight:800;display:flex;gap:5px;align-items:center;box-shadow:0 3px 8px rgba(0,0,0,.2);white-space:nowrap}
+.offpill i{width:7px;height:7px;border-radius:50%;background:#e35d4a}
+.lbody{padding:14px 14px;text-align:center}
+.eb{font-size:.62rem;font-weight:800;letter-spacing:.14em;color:var(--g700)}
+.lbody h2{margin:4px 0 2px;font-size:1.35rem;line-height:1.15}
+.lbody p.sub{margin:0 0 12px;font-size:.75rem;color:var(--muted)}
+.people{display:flex;justify-content:center;gap:10px}
+.pp{width:84px;text-align:center;position:relative}
+.bub{width:72px;height:72px;margin:0 auto;border-radius:50%;padding:4px;background:linear-gradient(#7cc9a0,#2f8f5c);position:relative}
+.bub.y{background:linear-gradient(#ffd966,#e9a400)}.bub.b{background:linear-gradient(#a8c4f4,#4a7bd8)}
+.bub span.face{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;background:#e9f5ec}
+.bub img{width:100%;height:100%;object-fit:cover;object-position:top}
+.bub img.char{transform:scale(2.05);transform-origin:50% 0;object-position:50% 2%}
+.tag{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);background:#fff;border-radius:99px;padding:1px 7px;font-size:.52rem;font-weight:800;color:var(--g700);box-shadow:0 2px 5px rgba(0,0,0,.15)}
+.tag.t{color:#8a6100}
+.pp b{display:block;margin-top:12px;font-size:.82rem}
+.ready{display:inline-flex;align-items:center;gap:3px;margin-top:2px;font-size:.58rem;font-weight:700;color:var(--g700);background:var(--g100);padding:2px 6px;border-radius:99px}
+.ready.no{color:#8a5a00;background:var(--y100)}
+.pp.dim{opacity:.45}.pp.dim .ready{color:var(--off);background:#eef0f2}
+.pp.tap .bub{box-shadow:0 0 0 4px #fff,0 0 0 7px var(--y400)}
+.offnote{margin-top:14px;padding:9px 10px;border-radius:12px;background:#eef4f8;color:#3a5163;font-size:.66rem;text-align:left;display:flex;gap:8px;align-items:flex-start}
+.offnote svg{flex:none;width:16px;height:16px}
+/* overlay */
+.dim2{position:absolute;inset:26px 0 0;background:rgba(10,30,20,.55)}
+.ovcard{position:absolute;left:14px;right:14px;top:180px;background:#fff;border-radius:22px;padding:84px 16px 16px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.ovcard .art{position:absolute;left:0;right:0;top:-84px;display:flex;justify-content:center}.ovcard .art img{height:160px}
+.ovcard h3{margin:0 0 4px;color:var(--g700);font-size:1.05rem}.ovcard p{margin:0 0 10px;font-size:.74rem;color:var(--muted)}
+.dots{display:flex;gap:5px;justify-content:center}.dots i{width:8px;height:8px;border-radius:50%;background:var(--y400)}.dots i:nth-child(2){opacity:.6}.dots i:nth-child(3){opacity:.3}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:10px;font-weight:800;font-size:.78rem;background:linear-gradient(#1c7a50,#0e5a35);color:#fff}
+.btn.alt{background:#fff;color:var(--g700);border:2px solid #cfe3d4;margin-top:6px}
+/* dashboard */
+.dhead{display:flex;align-items:center;justify-content:center;height:50px;background:#eef5e4;position:relative}.dhead img{height:28px}
+.offbar{margin:8px 10px 0;padding:8px 10px;border-radius:12px;background:#33414c;color:#fff;font-size:.66rem;display:flex;gap:8px;align-items:center}
+.offbar b{display:block;font-size:.72rem}
+.offbar .ic{flex:none;width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+.idc{margin:8px 10px;border-radius:16px;background:linear-gradient(120deg,#0d5a2e,#137a3b);color:#fff;padding:10px;display:flex;gap:8px;align-items:center;border-bottom:3px solid var(--y400)}
+.idc img{width:38px;height:38px;border-radius:50%;background:#e9f5ec;object-fit:cover}
+.idc small{display:block;font-size:.5rem;color:#ffe48a;font-weight:800;letter-spacing:.1em}.idc b{font-size:.82rem}
+.lv{margin:8px 10px;background:#fff;border-radius:16px;overflow:hidden;border:3px solid var(--y400)}
+.lv img{display:block;width:100%;height:84px;object-fit:cover}
+.lv .in{padding:8px 10px}
+.saved{display:inline-flex;gap:4px;align-items:center;font-size:.55rem;font-weight:800;color:var(--g700);background:var(--g100);border-radius:99px;padding:2px 7px}
+.lv b{display:block;font-size:.85rem;margin-top:3px}.lv small{display:block;font-size:.62rem;color:var(--muted);margin-bottom:6px}
+.lv2{margin:8px 10px;background:#fff;border-radius:14px;padding:8px;display:flex;gap:8px;align-items:center;opacity:.6}
+.lv2 img{width:40px;height:40px;border-radius:10px;object-fit:cover;filter:grayscale(.7)}
+.lv2 b{font-size:.75rem;display:block}.lv2 span{font-size:.6rem;color:var(--off)}
+.tabbar{position:absolute;left:8px;right:8px;bottom:8px;height:50px;border-radius:18px;background:#0e4a23}
+/* done */
+.wait{display:inline-flex;align-items:center;gap:6px;background:#eef4f8;color:#3a5163;border-radius:99px;padding:5px 10px;font-size:.66rem;font-weight:700;margin-bottom:10px}
+.wait i{width:8px;height:8px;border-radius:50%;background:#e9a400}
+.stars{font-size:1.5rem;color:#f6b500;letter-spacing:3px}
+/* back online */
+.toast{position:absolute;left:10px;right:10px;top:36px;background:#fff;border-radius:16px;padding:10px 12px;box-shadow:0 14px 30px rgba(0,0,0,.25);border:2px solid #9be0b4}
+.toast b{display:block;font-size:.8rem;color:var(--g700)}.toast span{font-size:.66rem;color:var(--muted)}
+.pbar{height:7px;border-radius:99px;background:#e3efe6;margin-top:6px;overflow:hidden}.pbar i{display:block;height:100%;width:66%;background:linear-gradient(90deg,#3cb371,#1c7a50)}
+.toast.done{border-color:var(--y400)}
+.xp{display:inline-block;margin-top:4px;font-size:.66rem;font-weight:800;color:#7a5200;background:var(--y100);border-radius:99px;padding:2px 8px}
+.note{background:var(--y100);border-radius:14px;padding:12px 16px;font-size:.86rem;margin-top:24px;max-width:1000px}
+.note ul{margin:6px 0 0;padding-left:18px;line-height:1.6}
+.pc{margin-top:30px}
+</style></head><body><div class="wrap">
+<h1>Sign in with a saved account, even offline</h1>
+<p class="lead">No internet? The sign-in page still opens. Pupils who saved their account on this phone tap their picture and go straight to the levels they saved. Their answers wait on the phone and upload by themselves when the internet is back.</p>
+
+<div class="row">
+ <!-- 1 -->
+ <div class="col"><div class="step"><b class="n">1</b><div><strong>No internet: the sign-in page still opens</strong>A small "No internet" pill shows. Each saved pupil shows how many levels are saved. Teachers need internet, so they are greyed.</div></div>
+ <div class="phone"><div class="sbar"><span>9:41</span><span class="nonet"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M2 8.8a16 16 0 0 1 20 0M5.5 12.5a11 11 0 0 1 13 0M9 16.2a5.5 5.5 0 0 1 6 0M3 3l18 18"/></svg>No internet</span></div>
+  <div class="lhead"><span class="offpill"><i></i>Offline · saved accounts only</span><img class="k1" src="boy.webp" alt=""><img class="logo" src="bulig-logo.png" alt=""><img class="k2" src="girl.webp" alt=""></div>
+  <div class="lbody"><div class="eb">WELCOME BACK</div><h2>Who’s learning today?</h2><p class="sub">Tap your picture to continue.</p>
+   <div class="people">
+    <div class="pp"><div class="bub"><span class="face"><img src="av-girl.png" alt=""></span><span class="tag">PUPIL</span></div><b>Maria</b><span class="ready">&#10003; 2 levels saved</span></div>
+    <div class="pp"><div class="bub y"><span class="face"><img src="av-boy.png" alt=""></span><span class="tag">PUPIL</span></div><b>Juan</b><span class="ready no">No levels saved</span></div>
+    <div class="pp dim"><div class="bub b"><span class="face"><img class="char" src="teacher-female.webp" alt=""></span><span class="tag t">TEACHER</span></div><b>Teacher Maria</b><span class="ready">Needs internet</span></div>
+   </div>
+   <div class="offnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>Signing in with an ID and password needs the internet. Saved pupils can learn offline with the levels they saved.</span></div>
+  </div></div></div>
+
+ <!-- 2 -->
+ <div class="col"><div class="step"><b class="n">2</b><div><strong>Maria taps her picture</strong>A friendly card opens her saved lessons. No password is needed, just like the online saved sign-in.</div></div>
+ <div class="phone"><div class="sbar"><span>9:41</span><span class="nonet">No internet</span></div>
+  <div class="lhead"><img class="k1" src="boy.webp" alt=""><img class="logo" src="bulig-logo.png" alt=""><img class="k2" src="girl.webp" alt=""></div>
+  <div class="lbody"><div class="eb">WELCOME BACK</div><h2>Who’s learning today?</h2></div>
+  <div class="dim2"></div>
+  <div class="ovcard"><div class="art"><img src="girl-cheer.webp" alt=""></div><h3>Hi, Maria!</h3><p>Opening your saved lessons. You can learn without internet.</p><div class="dots"><i></i><i></i><i></i></div></div>
+ </div></div>
+
+ <!-- 3 -->
+ <div class="col"><div class="step"><b class="n">3</b><div><strong>Her dashboard, in offline mode</strong>Saved levels open as usual. Levels that are not saved say "Needs internet".</div></div>
+ <div class="phone"><div class="sbar"><span>9:42</span><span class="nonet">No internet</span></div>
+  <div class="dhead"><img src="bulig-logo.png" alt=""></div>
+  <div class="offbar"><span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 8.8a16 16 0 0 1 20 0M5.5 12.5a11 11 0 0 1 13 0M9 16.2a5.5 5.5 0 0 1 6 0M3 3l18 18"/></svg></span><div><b>You are offline</b>Learning with the levels saved on this phone.</div></div>
+  <div class="idc"><img src="av-girl.png" alt=""><div><small>YOUR BULIG SPACE</small><b>Maria Pupil</b></div></div>
+  <div class="lv"><img src="level-5.webp" alt=""><div class="in"><span class="saved">&#10003; Saved on this phone</span><b>Level 5 &middot; Listening and Vocabulary</b><small>Next: My Toys, page 2</small><span class="btn">Continue learning &rarr;</span></div></div>
+  <div class="lv2"><img src="level-7.webp" alt=""><div><b>Level 6</b><span>Needs internet</span></div></div>
+  <div class="tabbar"></div>
+ </div></div>
+
+ <!-- 4 -->
+ <div class="col"><div class="step"><b class="n">4</b><div><strong>Answers wait on the phone</strong>After each activity she still gets her stars. A chip shows how many answers are waiting to upload.</div></div>
+ <div class="phone"><div class="sbar"><span>9:55</span><span class="nonet">No internet</span></div>
+  <div class="dhead"><img src="bulig-logo.png" alt=""></div>
+  <div class="dim2"></div>
+  <div class="ovcard" style="top:170px"><div class="art"><img src="girl-cheer.webp" alt=""></div><div class="stars">&#9733;&#9733;&#9733;</div><h3>Great job, Maria!</h3><span class="wait"><i></i>3 answers waiting to upload</span><p>Saved on this phone. They upload by themselves when the internet is back.</p><span class="btn">Next activity &rarr;</span></div>
+ </div></div>
+
+ <!-- 5 -->
+ <div class="col"><div class="step"><b class="n">5</b><div><strong>Internet is back</strong>BULIG signs Maria in with her saved key and uploads her answers. Her XP and badges are added.</div></div>
+ <div class="phone"><div class="sbar"><span>10:20</span><span class="nonet ok">Wi-Fi</span></div>
+  <div class="dhead"><img src="bulig-logo.png" alt=""></div>
+  <div class="toast"><b>Internet is back!</b><span>Uploading Maria’s answers&hellip; 2 of 3</span><div class="pbar"><i></i></div></div>
+  <div class="toast done" style="top:120px"><b>All sent!</b><span>3 answers from Maria are saved to BULIG.</span><br><span class="xp">+30 XP</span></div>
+  <div class="idc" style="margin-top:210px"><img src="av-girl.png" alt=""><div><small>YOUR BULIG SPACE</small><b>Maria Pupil</b></div></div>
+  <div class="lv"><img src="level-5.webp" alt=""><div class="in"><b>Level 5 &middot; Listening and Vocabulary</b><small>5 of 23 done</small></div></div>
+  <div class="tabbar"></div>
+ </div></div>
+
+ <!-- 6 -->
+ <div class="col"><div class="step"><b class="n">6</b><div><strong>A saved pupil with no saved levels</strong>Juan's account is saved, but no levels are. BULIG explains what to do next time.</div></div>
+ <div class="phone"><div class="sbar"><span>9:41</span><span class="nonet">No internet</span></div>
+  <div class="lhead"><img class="k1" src="boy.webp" alt=""><img class="logo" src="bulig-logo.png" alt=""><img class="k2" src="girl.webp" alt=""></div>
+  <div class="lbody"><div class="eb">WELCOME BACK</div><h2>Who’s learning today?</h2></div>
+  <div class="dim2"></div>
+  <div class="ovcard"><div class="art"><img src="boy.webp" alt=""></div><h3>No saved lessons yet, Juan</h3><p>Next time you have internet, open My lessons and tap <b>Save for offline</b> on your level. Then you can learn here without internet.</p><span class="btn">Okay</span></div>
+ </div></div>
+</div>
+
+<div class="note"><b>How it stays safe</b><ul>
+<li>Only accounts saved with "Keep me saved" on this phone can open offline. Typing an ID and password still needs the internet.</li>
+<li>Each pupil sees only their own saved levels, and answers are kept separately for each child, even when siblings share a phone.</li>
+<li>If the teacher resets a pupil's password, the saved key stops working. The answers stay on the phone until the pupil signs in once with the new password, then they upload.</li>
+<li>Teachers and admins still need the internet to sign in, because their pages show live class data.</li>
+</ul></div>
+</div></body></html>

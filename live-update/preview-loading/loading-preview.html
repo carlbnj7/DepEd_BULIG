@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loading Screens</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g700:#176444;--muted:#5f6f63;--y400:#ffc629;--y100:#fff4cf}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1320px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:960px}
+h2{margin:36px 0 4px;font-size:1.25rem}.sub{margin:0;color:var(--muted);font-size:.9rem;max-width:960px}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--g700);color:#fff;font-size:.9rem;margin-right:8px;vertical-align:2px}
+.row{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px;align-items:flex-end}
+.col{display:flex;flex-direction:column;gap:6px}
+.lab{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#9a6b00}
+.pc{position:relative;width:600px;height:360px;border:10px solid #1d2a22;border-bottom-width:22px;border-radius:16px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.2)}
+.phone{position:relative;width:220px;height:440px;border:8px solid #1d2a22;border-radius:30px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.2)}
+.green{position:absolute;inset:0;background:radial-gradient(110% 80% at 50% 40%,#2f8a45 0%,#13602f 48%,#0b4421 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;overflow:hidden}
+.glow{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,77,.4),rgba(255,214,77,0) 65%)}
+.logo{position:relative;filter:drop-shadow(0 8px 16px rgba(0,0,0,.35))}
+.pc .logo{width:300px}.phone .logo{width:180px}
+.bar{position:relative;margin-top:16px;width:160px;height:8px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden}.phone .bar{width:120px}
+.bar i{display:block;height:100%;width:62%;border-radius:99px;background:linear-gradient(90deg,#ffe066,#f2b10c)}
+.hills{position:absolute;left:-10%;right:-10%;bottom:-50px;height:120px;border-radius:50% 50% 0 0;background:#0a3a1c}
+.kl,.kr{position:absolute;bottom:-4px}.pc .kl,.pc .kr{height:170px}.pc .kl{left:40px}.pc .kr{right:40px}
+.phone .kl,.phone .kr{height:100px}.phone .kl{left:4px}.phone .kr{right:4px}
+.lt{position:absolute;font-weight:800;color:rgba(255,255,255,.16);font-size:1.7rem}
+/* welcome */
+.cream{position:absolute;inset:0;background:radial-gradient(100% 80% at 50% 30%,#fffdf3,#f6efd9);display:flex;align-items:center;justify-content:center;gap:26px;overflow:hidden}
+.cream .who{height:250px;filter:drop-shadow(0 10px 14px rgba(0,0,0,.18))}
+.phone .cream{flex-direction:column;gap:6px}.phone .cream .who{height:170px}
+.wtxt{max-width:260px}.phone .wtxt{text-align:center;max-width:180px}
+.wtxt small{display:block;font-size:.62rem;font-weight:800;letter-spacing:.14em;color:var(--g700)}
+.wtxt b{display:block;font-size:1.5rem;line-height:1.15;color:#0e3b28;margin:2px 0 4px}.phone .wtxt b{font-size:1.15rem}
+.wtxt span{font-size:.78rem;color:var(--muted)}
+.wbar{margin-top:12px;width:180px;height:8px;border-radius:99px;background:#e9e2cc;overflow:hidden}.phone .wbar{margin:10px auto 0;width:130px}
+.wbar i{display:block;height:100%;width:70%;background:linear-gradient(90deg,#3cb371,#1c7a50)}
+.wbar.a i{background:linear-gradient(90deg,#4a7bd8,#1f3f8a)}
+.sun{position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,77,.55),rgba(255,214,77,0) 68%)}
+.ring{position:absolute;inset:auto;bottom:-120px;left:-80px;width:300px;height:300px;border-radius:50%;border:40px solid rgba(23,100,68,.06)}
+.navy{background:radial-gradient(100% 80% at 50% 30%,#f7f9ff,#e8edf8)}
+.navy .wtxt small{color:#1f3f8a}
+/* lesson */
+.les{position:absolute;inset:0;background:#0e3b28 url(level-6.webp) center/cover;overflow:hidden}
+.les::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,40,22,.55),rgba(9,40,22,.85))}
+.lcard{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;color:#fff;text-align:left}
+.phone .lcard{flex-direction:column;text-align:center;gap:6px;width:180px}
+.lcard img{height:190px;filter:drop-shadow(0 10px 14px rgba(0,0,0,.4))}.phone .lcard img{height:140px}
+.lcard small{display:block;font-size:.62rem;font-weight:800;letter-spacing:.14em;color:#ffe48a}
+.lcard b{display:block;font-size:1.45rem;line-height:1.15}.phone .lcard b{font-size:1.05rem}
+.lcard span{font-size:.78rem;color:#d7eadc}
+.ldots{display:flex;gap:6px;margin-top:10px}.phone .ldots{justify-content:center}
+.ldots i{width:10px;height:10px;border-radius:50%;background:var(--y400)}.ldots i:nth-child(2){opacity:.6}.ldots i:nth-child(3){opacity:.3}
+/* admin gallery */
+.gal{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.ad{background:#fff;border-radius:18px;padding:12px;text-align:center;width:180px;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.ad img{height:190px}.ad b{display:block;font-size:.85rem;margin-top:4px}.ad span{font-size:.72rem;color:var(--muted)}
+.tag{display:inline-block;font-size:.66rem;font-weight:800;padding:2px 8px;border-radius:99px;background:#e8eefb;color:#1f3f8a;margin-top:4px}
+.uses{flex:1;min-width:300px;background:#fff;border-radius:18px;padding:14px 18px;font-size:.86rem;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.uses table{width:100%;border-collapse:collapse}.uses td{padding:6px 4px;border-bottom:1px solid #eee8d3;vertical-align:top}.uses td:first-child{font-weight:700;width:42%}
+.note{background:var(--y100);border-radius:14px;padding:12px 16px;font-size:.86rem;margin-top:22px;max-width:1040px}
+.note ul{margin:6px 0 0;padding-left:18px;line-height:1.6}
+</style></head><body><div class="wrap">
+<h1>Loading screens on phone and PC, plus admin characters</h1>
+<p class="lead">Three loading screens: when BULIG opens, right after signing in, and when a lesson opens. Each one appears only while the next page is loading, so it never adds waiting time. Admins get their own characters.</p>
+
+<h2><span class="num">A</span>When BULIG opens (phone and PC)</h2>
+<p class="sub">Just the logo and a loading bar on BULIG green. On a computer it's wider, with the two kids on each side.</p>
+<div class="row">
+ <div class="col"><span class="lab">PC</span><div class="pc"><div class="green"><div class="glow"></div><span class="lt" style="left:70px;top:50px">a</span><span class="lt" style="right:120px;top:70px">b</span><span class="lt" style="left:150px;top:220px">ma</span><span class="lt" style="right:170px;top:200px">E</span><img class="logo" src="bulig-logo.png" alt=""><div class="bar"><i></i></div><div class="hills"></div><img class="kl" src="boy.webp" alt=""><img class="kr" src="girl.webp" alt=""></div></div></div>
+ <div class="col"><span class="lab">Phone</span><div class="phone"><div class="green"><div class="glow"></div><span class="lt" style="left:20px;top:60px">a</span><span class="lt" style="right:24px;top:120px">b</span><img class="logo" src="bulig-logo.png" alt=""><div class="bar"><i></i></div><div class="hills"></div><img class="kl" src="boy.webp" alt=""><img class="kr" src="girl.webp" alt=""></div></div></div>
+</div>
+
+<h2><span class="num">B</span>Right after signing in</h2>
+<p class="sub">A short hello from the person's own character while their dashboard loads: pupils see their kid, teachers their teacher, and admins the new admin character.</p>
+<div class="row">
+ <div class="col"><span class="lab">Pupil · PC</span><div class="pc"><div class="cream"><span class="sun"></span><span class="ring"></span><img class="who" src="girl.webp" alt=""><div class="wtxt"><small>GOOD MORNING</small><b>Hi, Maria!</b><span>Getting your lessons ready&hellip;</span><div class="wbar"><i></i></div></div></div></div></div>
+ <div class="col"><span class="lab">Teacher · phone</span><div class="phone"><div class="cream"><span class="sun"></span><img class="who" src="teacher-female-wave.webp" alt=""><div class="wtxt"><small>WELCOME BACK</small><b>Hi, Teacher Maria!</b><span>Opening your class&hellip;</span><div class="wbar"><i></i></div></div></div></div></div>
+ <div class="col"><span class="lab">Admin · PC</span><div class="pc"><div class="cream navy"><span class="sun"></span><img class="who" src="admin-female-wave.webp" alt=""><div class="wtxt"><small>ADMINISTRATOR</small><b>Welcome back, Admin!</b><span>Checking the whole school&hellip;</span><div class="wbar a"><i></i></div></div></div></div></div>
+</div>
+
+<h2><span class="num">C</span>When a lesson opens</h2>
+<p class="sub">The level's picture fills the background and the pupil's character cheers while the lesson loads. If the lesson opens quickly (under about 0.3 seconds), nothing shows, so it never flickers.</p>
+<div class="row">
+ <div class="col"><span class="lab">PC</span><div class="pc"><div class="les"><div class="lcard"><img src="girl-cheer.webp" alt=""><div><small>LEVEL 5 · LESSON 2</small><b>My Toys</b><span>Opening your lesson&hellip;</span><div class="ldots"><i></i><i></i><i></i></div></div></div></div></div></div>
+ <div class="col"><span class="lab">Phone</span><div class="phone"><div class="les"><div class="lcard"><img src="boy-cheer.webp" alt=""><div><small>LEVEL 5 · LESSON 2</small><b>My Toys</b><span>Opening your lesson&hellip;</span><div class="ldots"><i></i><i></i><i></i></div></div></div></div></div></div>
+</div>
+
+<h2><span class="num">D</span>Admin characters</h2>
+<p class="sub">The four new pictures become the admin's characters. Like teachers, an admin chooses male or female in My profile. Each has a hello pose and an explain pose.</p>
+<div class="row" style="align-items:stretch">
+ <div class="gal">
+  <div class="ad"><img src="admin-female-wave.webp" alt=""><b>Female admin</b><span class="tag">Hello</span></div>
+  <div class="ad"><img src="admin-female.webp" alt=""><b>Female admin</b><span class="tag">Explain</span></div>
+  <div class="ad"><img src="admin-male-wave.webp" alt=""><b>Male admin</b><span class="tag">Hello</span></div>
+  <div class="ad"><img src="admin-male-tip.webp" alt=""><b>Male admin</b><span class="tag">Explain</span></div>
+ </div>
+ <div class="uses"><b>Where admins see them</b><table>
+  <tr><td>Loading after signing in</td><td>Hello pose (waving)</td></tr>
+  <tr><td>Guided tour helper</td><td>Explain pose (showing or pointing)</td></tr>
+  <tr><td>Tour offer on Overview</td><td>Explain pose</td></tr>
+  <tr><td>Signing out</td><td>Hello pose (waving goodbye)</td></tr>
+  <tr><td>My profile</td><td>New "My admin character" choice: female or male</td></tr>
+ </table><p class="small" style="font-size:.75rem;color:#5f6f63;margin:8px 0 0">Right now admins borrow the teacher pictures. These replace them.</p></div>
+</div>
+
+<div class="note"><b>Good to know</b><ul>
+<li>A loading screen appears only while the next page loads. On fast internet it is very short, and it never makes anyone wait longer.</li>
+<li>Opening screen (A): once each time BULIG starts, not on every page.</li>
+<li>After signing in (B): once per sign-in.</li>
+<li>Opening a lesson (C): each time a lesson opens, only if it takes longer than about 0.3 seconds.</li>
+<li>Pupils, teachers and admins on phone, tablet and PC all get them. Settings that reduce motion on the device make them simple fades.</li>
+</ul></div>
+</div></body></html>

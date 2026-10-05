@@ -10,7 +10,19 @@
  const store=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}};
  /* Tell the service worker who is signed in, so saved pages only open for that pupil. */
  if(online())caches.open('bulig-who').then(c=>c.put('who',new Response(uid==='0'?'':uid))).catch(()=>{});
- if(uid==='0')return;
+ /* The sign-in page is kept on this device, so pupils with a saved account can open their saved lessons offline. */
+ async function cacheLogin(){try{
+  const urls=new Set(),add=v=>{if(!v||v.startsWith('data:'))return;const u=new URL(v,base);if(u.origin===location.origin)urls.add(u.href);};
+  document.querySelectorAll('link[rel="stylesheet"][href],script[src],img[src],link[rel="icon"][href],link[rel="preload"][href],link[rel="manifest"][href]').forEach(n=>add(n.getAttribute('src')||n.getAttribute('href')));
+  ['assets/bulig-logo.png','assets/images/characters/boy.webp','assets/images/characters/girl.webp','assets/images/characters/boy-cheer.webp','assets/images/characters/girl-cheer.webp','assets/fonts/poppins-latin-400-normal.woff2','assets/fonts/poppins-latin-500-normal.woff2','assets/fonts/poppins-latin-600-normal.woff2','assets/fonts/poppins-latin-700-normal.woff2'].forEach(add);
+  (store('bulig-saved')||[]).forEach(x=>{if(x&&x.img)add(x.img);});
+  const c=await caches.open('bulig-login'),sig=[...urls].sort().join('|');
+  if(store('bulig-login-sig')===sig&&await c.match(abs('?page=login')))return;
+  const r=await fetch('?page=login',{credentials:'same-origin',cache:'no-store'});if(!r.ok||!r.url.includes('page=login')&&new URL(r.url).search)return;
+  await c.put(abs('?page=login'),new Response(await r.text(),{headers:{'Content-Type':'text/html; charset=utf-8'}}));
+  for(const u of urls){try{const res=await fetch(u);if(res.ok)await c.put(u,res);}catch(e){}}
+  store('bulig-login-sig',sig);}catch(e){}}
+ if(uid==='0'){if(online()&&document.body.classList.contains('login-page'))setTimeout(cacheLogin,1500);return;}
  const META='bulig-off-'+uid,DONE='bulig-off-done-'+uid;
  const meta=()=>store(META)||{levels:{}},saveMeta=m=>store(META,m);
  const localDone=()=>new Set(store(DONE)||[]),addDone=id=>{const s=localDone();s.add(id);store(DONE,[...s]);},dropDone=id=>{const s=localDone();s.delete(id);store(DONE,[...s]);};
@@ -61,16 +73,28 @@
   if(!online())show('off','You are offline',n?n+' '+(n===1?'answer is':'answers are')+' kept on this device. Saved lessons still work.':'Your saved lessons still work. Answers will upload later.');
   else if(state.syncing)show('up','Uploading your answers…',state.sent+' of '+state.total+' sent');
   else if(state.done&&!n)show('ok','All '+state.done.sent+' '+(state.done.sent===1?'answer':'answers')+' uploaded!',(state.done.xp?'+'+state.done.xp+' XP · ':'')+'Your teacher can see them now.');
+  else if(n&&state.needSignIn)show('wait',n+' '+(n===1?'answer is':'answers are')+' still waiting','Sign in once with your Pupil ID and password, then they will upload.');
   else if(n&&state.blocked)show('wait',n+' '+(n===1?'answer is':'answers are')+' still waiting','Finish the earlier activity first, then they will upload.','Try again');
   else if(n)show('wait',n+' '+(n===1?'answer':'answers')+' waiting to upload','They will send when you are online.','Upload now');
   else bar.hidden=true;
   renderProfile(n);}
 
  /* ---------- upload ---------- */
- async function sync(manual){
+ /* Only one upload at a time (the online event and the timer can both start one). */
+ let syncBusy=false;
+ async function sync(manual){if(syncBusy)return;syncBusy=true;try{await doSync(manual);}finally{syncBusy=false;}}
+ async function doSync(manual){
   if(state.syncing||!online())return;const items=await waiting();if(!items.length){render();return;}
   let info;try{const r=await fetch('?page=offline_sync',{credentials:'same-origin',cache:'no-store'});info=await r.json();}catch(e){render();return;}
-  if(String(info.uid)!==uid){render();return;}
+  if(String(info.uid)!==uid){
+   /* Learning happened offline under a saved account: sign that account in again with its saved key, then upload. */
+   const acc=(store('bulig-saved')||[]).find(x=>x&&String(x.uid)===uid&&x.token);
+   if(!acc){state.blocked=true;state.needSignIn=true;render();return;}
+   try{const fd=new FormData();fd.set('csrf',info.csrf);fd.set('action','quick_login');fd.set('token',acc.token);
+    const q=await (await fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'}})).json();
+    if(!q.ok){state.blocked=true;state.needSignIn=true;render();return;}
+    info=await (await fetch('?page=offline_sync',{credentials:'same-origin',cache:'no-store'})).json();}catch(e){render();return;}
+   if(String(info.uid)!==uid){render();return;}}
   state={syncing:true,sent:0,total:items.filter(i=>i.kind==='answer').length,blocked:false,done:null};render();let xp=0;
   for(const it of items){
    const fd=new FormData();it.fields.forEach(([k,v])=>fd.append(k,v));fd.set('csrf',info.csrf);fd.set('offline_at',it.at);
@@ -90,6 +114,7 @@
  /* ---------- answering offline (called from the activity form) ---------- */
  function nextHref(lid,aid){const info=lessonInfo(lid);if(!info)return '?page=lesson&id='+lid;const s=doneSet(info);s.add(aid);const n=info.lesson.acts.find(a=>!s.has(a.id));return n?'?page=lesson&id='+lid+'&activity='+n.id:'?page=lesson&id='+lid;}
  window.buligOffline={
+  pending(){return waiting().then(a=>a.filter(i=>i.kind==='answer').length);},
   async queue(form){const fields=[...new FormData(form)].filter(([k,v])=>k!=='csrf'&&typeof v==='string');const aid=+(form.querySelector('[name=activity_id]')||{}).value||0;
    const lid=+new URLSearchParams(location.search).get('id')||0;
    await put({key:uid+'-a-'+aid,uid,kind:'answer',aid,lid,at:new Date().toISOString(),fields:fields.filter(([k])=>k!=='action').concat([['action','submit']])});
@@ -142,6 +167,62 @@
    levels.forEach(([lv,l])=>{const row=document.createElement('div');row.className='off-row';const t=document.createElement('div');t.innerHTML='<b></b><small></small>';t.querySelector('b').textContent=l.title;t.querySelector('small').textContent=mb(l.bytes)+' · saved '+day(l.at);
     const rm=document.createElement('button');rm.type='button';rm.className='linkbutton';rm.textContent='Remove';rm.addEventListener('click',async()=>{await removeLevel(lv);render();});row.append(t,rm);box.append(row);});}
   if(n){const row=document.createElement('div');row.className='off-row';const chip=document.createElement('span');chip.className='off-chip wait';chip.innerHTML=svg('wait');chip.append(n+' '+(n===1?'answer':'answers')+' waiting');const b=document.createElement('button');b.type='button';b.className='btn secondary';b.textContent='Upload now';b.disabled=!online();b.addEventListener('click',()=>sync(true));row.append(chip,b);box.append(row);}}
+
+ /* ---------- after signing in: download lessons so BULIG works without internet ---------- */
+ const DLQ='bulig-dl-q-'+uid,ASKED='bulig-dl-asked-'+uid;let me={};try{me=JSON.parse(($('meta[name="bulig-tour"]')||{}).content||'{}');}catch(e){}
+ const ev=n=>new Promise(r=>document.addEventListener(n,r,{once:true}));
+ const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+ const dlDone=()=>{window.buligDlPending=false;document.dispatchEvent(new Event('bulig:dl-done'));};
+ let run=null;
+ async function settle(){if(window.buligHelloOpen&&window.buligHelloOpen())await ev('bulig:hello-done');
+  if(window.pfOverlayOpen&&window.pfOverlayOpen())await ev('pf:overlays-done');
+  if($('[data-save-offer]')&&!window.buligSaveDone)await ev('bulig:save-done');}
+ async function offerDownload(){
+  await settle();let info;try{info=await (await fetch('?page=offline_levels',{credentials:'same-origin',cache:'no-store'})).json();}catch(e){dlDone();return;}
+  const have=meta().levels,todo=(info.levels||[]).filter(l=>!have[l.level]);if(!todo.length){store(ASKED,1);dlDone();return;}
+  const cur=todo.find(l=>l.current),all=todo.reduce((t,l)=>t+l.bytes,0);
+  const ov=el('div','dl-ov'),sh=el('div','dl-sheet');ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Download lessons');
+  if(me.char){const im=el('img','dl-art');im.src=me.char;im.alt='';sh.append(im);}
+  sh.append(el('h3','','Learn even without internet!'),el('p','','Download your lessons to this '+(innerWidth<741?'phone':'device')+' now. You only do this once.'));
+  const opts=[];if(cur)opts.push({k:'mine',t:'My level · '+cur.title,d:cur.activities+' activities · about '+mb(cur.bytes),levels:[cur],best:true});
+  if(todo.length>1||!cur)opts.push({k:'all',t:'All my levels',d:todo.length+' '+(todo.length===1?'level':'levels')+' you can open · about '+mb(all),levels:(cur?[cur]:[]).concat(todo.filter(l=>l!==cur))});
+  let pick=opts[0];const list=el('div','dl-opts');list.setAttribute('role','radiogroup');
+  opts.forEach(o=>{const b=el('button','dl-opt'+(o===pick?' on':''));b.type='button';b.setAttribute('role','radio');b.setAttribute('aria-checked',o===pick?'true':'false');
+   const tx=el('span','dl-opt-t');tx.append(el('b','',o.t),el('small','',o.d));b.append(el('span','dl-rd'),tx);if(o.best)b.append(el('span','dl-best','BEST'));
+   b.addEventListener('click',()=>{pick=o;list.querySelectorAll('.dl-opt').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-checked',on?'true':'false');});});list.append(b);});
+  sh.append(list);if(all>15*1048576)sh.append(el('p','dl-tip','Tip: use Wi-Fi for "All my levels" to save mobile data.'));
+  const go=el('button','btn primary dl-go','Download'),later=el('button','linkbutton dl-later','Not now');go.type=later.type='button';sh.append(go,later);ov.append(sh);document.body.append(ov);requestAnimationFrame(()=>ov.classList.add('on'));go.focus();
+  later.addEventListener('click',()=>{store(ASKED,1);ov.remove();dlDone();});
+  go.addEventListener('click',()=>{store(ASKED,1);ov.remove();store(DLQ,pick.levels.map(l=>({level:l.level,title:l.title,bytes:l.bytes})));startRun(true);});}
+ function startRun(open){if(run)return;const q=store(DLQ)||[];if(!q.length){dlDone();return;}
+  run={q,total:q.reduce((t,l)=>t+(l.bytes||1),0),doneBytes:0,frac:0,i:0,count:q.length,ready:0,open,panel:null,chip:null,paused:false};build();next();}
+ function build(){const p=el('div','dl-panel');p.setAttribute('role','dialog');p.setAttribute('aria-label','Downloading your lessons');
+  const h=el('div','dl-ph');h.append(el('h3','','Downloading your lessons'),el('small','dl-sum',''));p.append(h,el('div','dl-big'));p.querySelector('.dl-big').append(el('i'));
+  const ul=el('div','dl-list');run.q.forEach(l=>{const r=el('div','dl-row');r.dataset.level=l.level;const t=el('div','');t.append(el('b','',l.title));const pb=el('span','dl-pb');pb.append(el('i'));t.append(pb);r.append(el('span','dl-cv cv-'+l.level),t,el('span','dl-st','Waiting'));ul.append(r);});p.append(ul);
+  const keep=el('button','btn primary dl-keep','Keep learning while it downloads');keep.type='button';keep.addEventListener('click',()=>{run.open=false;paint();dlDone();});p.append(keep,el('small','dl-note','You can close BULIG. It continues next time you open it.'));
+  const chip=el('button','dl-chip');chip.type='button';chip.innerHTML='<span class="dl-ring"><i></i></span><span class="dl-ct"><b>Downloading lessons</b><small></small></span>';chip.addEventListener('click',()=>{run.open=true;paint();});
+  document.body.append(p,chip);run.panel=p;run.chip=chip;paint();}
+ function paint(){if(!run)return;const pct=Math.min(100,Math.round((run.doneBytes+run.frac*(run.q[0]?run.q[0].bytes||1:0))/run.total*100));
+  run.panel.classList.toggle('on',run.open);run.chip.classList.toggle('on',!run.open);
+  run.panel.querySelector('.dl-big i').style.width=pct+'%';run.panel.querySelector('.dl-sum').textContent=run.paused?'Paused · waiting for the internet':pct+'% · '+run.ready+' of '+run.count+' ready';
+  run.chip.querySelector('.dl-ring').style.setProperty('--p',pct);run.chip.querySelector('.dl-ring i').textContent=pct+'%';
+  run.chip.querySelector('small').textContent=run.paused?'Paused · no internet':(run.q[0]?run.q[0].title+' · ':'')+run.ready+' of '+run.count+' ready';}
+ function rowOf(level){return run.panel.querySelector('.dl-row[data-level="'+level+'"]');}
+ async function next(){if(!run)return;const l=run.q[0];
+  if(!l){run.panel.remove();run.chip.remove();const n=run.count;run=null;store(DLQ,[]);slots();render();celebrate(n);return;}
+  if(!online()){run.paused=true;paint();window.addEventListener('online',()=>{if(run){run.paused=false;next();}},{once:true});return;}
+  const row=rowOf(l.level);if(row){row.querySelector('.dl-st').textContent='0%';}run.frac=0;
+  const ui={cancelled:false,progress(d,t,what){run.frac=what?.92:.9*d/Math.max(1,t);if(row){row.querySelector('.dl-pb i').style.width=Math.round(run.frac*100)+'%';row.querySelector('.dl-st').textContent=Math.round(run.frac*100)+'%';}paint();}};
+  try{await saveLevel(l.level,ui);}catch(e){}
+  if(!online()){run.paused=true;paint();window.addEventListener('online',()=>{if(run){run.paused=false;next();}},{once:true});return;}
+  run.q.shift();store(DLQ,run.q);run.doneBytes+=l.bytes||1;run.frac=0;run.ready++;
+  if(row){row.classList.add('ok');row.querySelector('.dl-pb i').style.width='100%';row.querySelector('.dl-st').textContent='Ready';}paint();next();}
+ function celebrate(n){const ov=el('div','dl-ov dl-done');const c=el('div','dl-sheet');if(me.char){const im=el('img','dl-art');im.src=me.char;im.alt='';c.append(im);}
+  c.append(el('span','dl-ok',n+' '+(n===1?'level':'levels')+' ready offline'),el('h3','','All set'+(me.name?', '+me.name:'')+'!'),el('p','','You can learn even without internet. Your answers will upload when you are back online.'));
+  const b=el('button','btn primary dl-go','Let’s learn!');b.type='button';b.addEventListener('click',()=>{ov.remove();dlDone();});c.append(b);ov.append(c);document.body.append(ov);requestAnimationFrame(()=>ov.classList.add('on'));}
+ if(online()&&me.role==='pupil'){
+  if((store(DLQ)||[]).length)setTimeout(()=>startRun(false),1500);
+  else if(!store(ASKED)&&new URLSearchParams(location.search).get('page')==='dashboard'){window.buligDlPending=true;offerDownload();}}
 
  try{const d=JSON.parse(sessionStorage.getItem('bulig-off-done')||'null');if(d){sessionStorage.removeItem('bulig-off-done');state.done=d;setTimeout(()=>{state.done=null;render();},9000);}}catch(e){}
  window.addEventListener('online',()=>{slots();render();sync();});
