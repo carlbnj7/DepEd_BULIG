@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Notifications preview</title><style>
+@font-face{font-family:P;src:url(poppins-latin-400-normal.woff2)}@font-face{font-family:P;font-weight:600;src:url(poppins-latin-600-normal.woff2)}@font-face{font-family:P;font-weight:700;src:url(poppins-latin-700-normal.woff2)}
+*{box-sizing:border-box}body{margin:0;padding:26px;background:#f4efe0;font-family:P,sans-serif;color:#0e3b28;width:1560px}
+h1{margin:0 0 4px;font-size:28px}.sub{margin:0 0 18px;color:#5f6f63;max-width:1300px}
+.row{display:flex;gap:22px;align-items:flex-start}.cap{min-height:56px;font-weight:700;color:#176444;margin:0 0 8px;width:330px}.cap small{display:block;font-weight:400;color:#5f6f63;font-size:12.5px}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ph{width:330px;height:680px;border-radius:30px;background:#fbf6e6;border:8px solid #1a2a20;overflow:hidden;position:relative}
+.dim{position:absolute;inset:0;background:rgba(10,30,20,.5)}
+.home{position:absolute;inset:0;background:linear-gradient(160deg,#5fb8ea,#a9dcf4 55%,#d9f1e0)}
+.box{position:absolute;left:14px;right:14px;top:150px;background:#fff;border-radius:24px;padding:18px;text-align:center;box-shadow:0 20px 40px -20px #0008}
+.box img{width:80px;margin-top:-80px}.box h3{margin:2px 0 4px;font-size:19px}.box p{margin:0 0 10px;font-size:12.5px;color:#4a5a4f}
+.ex{text-align:left;display:grid;gap:6px;margin-bottom:12px}.ex div{display:flex;gap:8px;align-items:center;font-size:12.5px;background:#f4faf6;border-radius:12px;padding:7px 10px}.ex .ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:none;color:#fff}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:16px;padding:12px;font-weight:700;font-size:14px}.pri{background:linear-gradient(#1c7a50,#0e5a35);color:#fff}.sec{background:#eef7f1;border:1.5px solid #cfe3d6;color:#176444;margin-top:8px}
+.sys{position:absolute;left:18px;right:18px;top:230px;background:#f2f3f5;border-radius:26px;padding:20px;color:#1f1f1f;font-family:Roboto,Arial,sans-serif;box-shadow:0 20px 40px -18px #000a}
+.sys .bell{width:40px;height:40px;border-radius:50%;background:#dbe6f6;color:#1a56b8;display:grid;place-items:center;margin:0 auto 10px}
+.sys h4{margin:0 0 14px;font-size:17px;font-weight:500;text-align:center;line-height:1.35}.sys .b{display:block;text-align:center;background:#dbe6f6;color:#0b3a8a;border-radius:999px;padding:11px;font-weight:600;font-size:14px;margin-top:8px}
+.note{position:absolute;left:14px;right:14px;bottom:14px;background:#fffbea;border:1.5px dashed #e9c96a;border-radius:14px;padding:8px 10px;font-size:11px;color:#6b5a20}
+.lock{position:absolute;inset:0;background:linear-gradient(170deg,#1d3557,#2e6b5e 60%,#d9a441);color:#fff}
+.clock{text-align:center;margin-top:48px}.clock b{font-size:60px;font-weight:600;display:block;line-height:1}.clock small{font-size:13px;opacity:.85}
+.n{margin:10px 12px 0;background:rgba(255,255,255,.88);color:#1b1b1b;border-radius:18px;padding:10px 12px;display:flex;gap:10px}
+.n img{width:34px;height:34px;border-radius:9px;flex:none}.n .h{display:flex;justify-content:space-between;font-size:11px;color:#555}.n b{display:block;font-size:13.5px;margin-top:1px}.n p{margin:2px 0 0;font-size:12.5px;line-height:1.35;color:#333}
+.top{background:#0e5a35;color:#fff;padding:14px 16px;border-bottom:4px solid #f4b41a}.top small{opacity:.8;font-size:11px;letter-spacing:.12em;font-weight:700}.top b{display:block;font-size:20px}
+.card{margin:12px;background:#fff;border-radius:18px;padding:14px;box-shadow:0 8px 18px -14px #0007}
+.card h4{margin:0 0 4px;font-size:15px;display:flex;align-items:center;gap:8px}.card>p{margin:0 0 10px;font-size:12px;color:#5f6f63}
+.tg{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid #f0ebdc;font-size:13px}.tg span{flex:1}.tg small{display:block;font-size:11px;color:#7a8a7e}
+.sw{width:42px;height:24px;border-radius:99px;background:#1c7a50;position:relative;flex:none}.sw::after{content:"";position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff}.sw.off{background:#cfcabb}.sw.off::after{right:auto;left:3px}
+.time{display:inline-flex;border:1.5px solid #cfe3d6;border-radius:10px;padding:4px 10px;font-weight:700;color:#176444;font-size:12.5px}
+.how{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}.how div{background:#fff;border-radius:14px;padding:12px 14px;border:1px solid #e9e2cc;font-size:13px;line-height:1.45}.how b{display:block;font-size:14.5px;margin-bottom:3px}
+</style></head><body>
+<h1>Reminders from BULIG on the phone</h1>
+<p class="sub">After BULIG is added to the home screen, it asks kindly first. Only if the pupil taps “Yes, remind me” does the phone’s own “Allow notifications?” question appear.</p>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/></symbol><symbol id="fire" viewBox="0 0 24 24"><path d="M12 3c2 4-3 5-1 9 1-1 2-2 2-4 4 3 4 10-1 10s-7-4-4-9c0 2 1 3 2 3-1-3 2-5 2-9z"/></symbol><symbol id="msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol><symbol id="key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3"/></symbol></defs></svg>
+<div class="row">
+<div><p class="cap">1. BULIG asks first<small>Shows once, when BULIG is opened from the home screen.</small></p>
+<div class="ph"><div class="home"></div><div class="dim"></div><div class="box"><img src="girl.webp"><h3>Can BULIG remind you?</h3><p>We’ll send a short, friendly note. Never more than one a day.</p>
+<div class="ex"><div><span class="ic" style="background:#e2763a"><svg class="i"><use href="#fire"/></svg></span>Time to read! Keep your streak</div><div><span class="ic" style="background:#2a7fd4"><svg class="i"><use href="#msg"/></svg></span>Your teacher left you a note</div><div><span class="ic" style="background:#1c7a50"><svg class="i"><use href="#key"/></svg></span>A new lesson is open</div></div>
+<div class="btn pri"><svg class="i"><use href="#bell"/></svg>Yes, remind me</div><div class="btn sec">Not now</div></div></div></div>
+
+<div><p class="cap">2. Then the phone asks<small>The phone’s own question. It only appears after “Yes, remind me”.</small></p>
+<div class="ph"><div class="home"></div><div class="dim"></div><div class="sys"><div class="bell"><svg class="i"><use href="#bell"/></svg></div><h4>Allow <b>BULIG</b> to send you notifications?</h4><span class="b">Allow</span><span class="b">Don’t allow</span></div>
+<div class="note">Example of how the phone shows it. It looks a little different on each phone.</div></div></div>
+
+<div><p class="cap">3. What pupils get<small>Short notes on the lock screen. Tapping one opens BULIG at the right page.</small></p>
+<div class="ph"><div class="lock"><div class="clock"><b>4:30</b><small>Tuesday, October 6</small></div>
+<div class="n"><img src="bulig-app-apple.png"><div><div class="h"><span>BULIG</span><span>now</span></div><b>Time to read, Maria!</b><p>You’re on a 3-day streak. One activity keeps it going.</p></div></div>
+<div class="n"><img src="bulig-app-apple.png"><div><div class="h"><span>BULIG</span><span>Monday</span></div><b>Teacher Gabriela left you a note</b><p>Open My Toys to read it.</p></div></div>
+<div class="n"><img src="bulig-app-apple.png"><div><div class="h"><span>BULIG</span><span>Sunday</span></div><b>Level 2A is open!</b><p>You finished Level 1. Your next adventure is waiting.</p></div></div></div></div></div>
+
+<div><p class="cap">4. Pupils choose in My profile<small>Turn each reminder on or off, and pick the reading-time hour.</small></p>
+<div class="ph"><div class="top"><small>MY PROFILE</small><b>Reminders</b></div><div class="card"><h4><svg class="i"><use href="#bell"/></svg>Reminders on this phone</h4><p>BULIG sends at most one note a day.</p>
+<div class="tg"><span>Daily reading time<small>Every day at <span class="time">4:30 PM</span></small></span><i class="sw"></i></div>
+<div class="tg"><span>Notes from my teacher<small>When feedback arrives</small></span><i class="sw"></i></div>
+<div class="tg"><span>New lessons and levels<small>When something opens</small></span><i class="sw"></i></div>
+<div class="tg"><span>Weekends<small>Also send on Saturday and Sunday</small></span><i class="sw off"></i></div></div></div></div>
+</div>
+<div class="how"><div><b>Phones it works on</b>Android phones (Chrome). iPhones with iOS 16.4 or newer, only after “Add to Home Screen”.</div><div><b>Asks only once</b>“Not now” is remembered. Pupils can turn reminders on later in My profile.</div><div><b>Kind and short</b>Never more than one note a day, no notes at night, and nothing private in the text.</div><div><b>What it needs</b>One small database table (one SQL file to import) and a scheduled task on Hostinger that runs every 15 minutes.</div></div>
+</body></html>
