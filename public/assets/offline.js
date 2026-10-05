@@ -130,7 +130,7 @@
   const lid=+qs.get('id'),info=lessonInfo(lid);
   if(info){const s=doneSet(info),aid=+qs.get('activity')||0;const tot=info.lesson.acts.length,dn=info.lesson.acts.filter(a=>s.has(a.id)).length,ps=$('.activity-progress span'),pg=$('.activity-progress progress');if(ps)ps.textContent=dn+' / '+tot+' complete';if(pg){pg.max=tot;pg.value=dn;}
    if(!aid){const n=info.lesson.acts.find(a=>!s.has(a.id));const cur=+(($('#activity-form [name=activity_id]')||{}).value||0);
-    if(n&&n.id!==cur)location.replace('?page=lesson&id='+lid+'&activity='+n.id);
+    if(n&&n.id!==cur&&!(dn===0&&$('[data-l1-start]')))location.replace('?page=lesson&id='+lid+'&activity='+n.id);
     else if(!n)lessonDoneOffline(info);}
    else if(s.has(aid)){const f=$('#activity-form');if(f){f.dataset.draft='off';const b=$('#submit-answer'),nx=$('#next-activity'),fb=$('#answer-feedback');if(b)b.hidden=true;if(nx){nx.hidden=false;nx.href=nextHref(lid,aid);}if(fb){fb.className='answer-feedback success';fb.textContent='Saved on this device. It will upload when you are back online.';}}}}
  }

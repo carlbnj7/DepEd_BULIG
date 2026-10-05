@@ -27,6 +27,7 @@ function class_demo_view(array $u):void{
  $slides=rows("SELECT a.*,l.title lesson_title,l.subtitle,l.position lesson_position FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND a.published=1".GRADE_SQL." ORDER BY l.position,l.id,FIELD(a.phase,'pre','learn','post'),a.position,a.id",[$level,$grade]);
  if(!$slides)fail('This level has no published demo content yet.',404);
  $expanded=[];foreach($slides as $a){$native=level2_card_set($a);if(!$native){$expanded[]=$a;continue;}foreach($native['cards'] as $j=>$c){$slide=$a;$slide['native_card']=$c;$slide['card_index']=$j;$slide['title']=$native['title'].' · '.$c['title'];$slide['instructions']=$native['instruction'];$slide['narration']=$c['narration'];$expanded[]=$slide;}}$slides=$expanded;
+ if($level===1){l1_demo_view($u,$slides);return;}
  $index=0;$requested=(int)($_GET['activity']??0);
  if($requested){$found=false;foreach($slides as $i=>$a)if((int)$a['id']===$requested&&(int)($a['card_index']??0)===max(0,(int)($_GET['card']??0))){$index=$i;$found=true;break;}if(!$found)fail('That slide does not belong to this published level.',404);}
  $choices=[];foreach(rows('SELECT an.activity_id,ans.content FROM answers ans JOIN questions an ON an.id=ans.question_id JOIN activities a ON a.id=an.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND a.type=\'choice\''.GRADE_SQL.' ORDER BY ans.id',[$level,$grade]) as $c)$choices[(int)$c['activity_id']][]=$c['content'];

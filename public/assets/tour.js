@@ -17,8 +17,8 @@
  /* ---------- which tour belongs to this page ---------- */
  let key=page;
  if(page==='lessons'&&q.get('level'))key='map';
- if(page==='lesson')key=$('#activity-form')?'activity':($('.completion-card')?'lesson-done':'');
- if(page==='class_demo')key=$('#class-demo')?'demo-slide':($('.demo-catalog')?'class_demo':'');
+ if(page==='lesson')key=$('[data-l1-start]')?'l1-start':$('.l1-app')?'l1':$('#activity-form')?'activity':($('.completion-card')?'lesson-done':'');
+ if(page==='class_demo')key=$('#l1-demo')?'l1-demo':$('#class-demo')?'demo-slide':($('.demo-catalog')?'class_demo':'');
  if(page==='pupil')key='pupil-detail';
 
  /* Steps: [target selector(s) or null for a centred card, title, text] */
@@ -67,6 +67,28 @@
    [['.native-card-nav.deck-bar','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, the yellow button sends your activity. Your work saves by itself.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null,
    ['.lesson-outline','All activities','Open this to see every activity in this lesson and what you already finished.']],
+  'l1-start':[
+   ['.l1-start h1','Your lesson','This is the lesson you will learn today.'],
+   ['.l1-goals','Today you will…','These are the things you will learn. Tap the yellow speaker to hear them.'],
+   ['.l1-steps','Three parts','First a few questions, then practice, then show what you learned.'],
+   ['.l1-go','Start','Tap Let’s start! when you are ready.']],
+  l1:[
+   ['.l1-top','Your lesson','Tap X to go back to your map. The number shows how many you finished.'],
+   ['.l1-dots','Your progress','Each line is one activity. Yellow ones are done.'],
+   [['.l1-q .l1-spk','.l1-mission .l1-spk','.l1-listen .l1-spk','.l1-speed'],'Listen','Tap the yellow speaker to hear it again.'],
+   [['.l1-mic'],'Say your answer','Tap the red microphone and say your answer. Tap it again to stop. Then listen to it, and tap Send.'],
+   [['.l1-howto'],'Do it!','Listen, do the action, then tap I did it!'],
+   [['.l1-pair'],'With a friend','Do this together with your partner or group, then tap We did it!'],
+   [['.l1-dchoice'],'Your drawing','Draw on paper and take a photo, or draw here in BULIG. Check it, then send it.'],
+   offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null],
+  'l1-demo':[
+   ['.l1d-ln','The lesson','The lesson and the part you are on.'],
+   ['[data-d-stage]','The slide','Ask the question. Pupils answer out loud. No typing.'],
+   ['[data-d-listen]','Listen','BULIG reads the slide aloud.'],
+   ['[data-d-next]','Next','Tap Next (or press the right arrow key) to move on.'],
+   ['[data-d-lessons]','Jump to a lesson','Open any of the 12 lessons.'],
+   ['[data-plan-open]','Lesson plan','The goals and the official module pages for this lesson.'],
+   ['[data-cd-open]','Mark as done','Mark an activity or lesson done for the pupils who did it in class.']],
   'lesson-done':[
    ['.completion-card','Lesson finished!','Great job! Tap the button to save the lesson and go back to your map.']],
   calendar:[

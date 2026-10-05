@@ -99,7 +99,7 @@
   (card.querySelector('.native-pictures')||q).after(keys);card.classList.add('has-tiles');});
 
  /* ---------- pictures open big inside BULIG ---------- */
- const PICS='.native-pictures img,.activity-visual img,.visual-gallery img,.fluency-pictures img,.answer-card .prompt img';
+ const PICS='.l1-pic img,.native-pictures img,.activity-visual img,.visual-gallery img,.fluency-pictures img,.answer-card .prompt img';
  function openViewer(list,start){let i=start,z=1,tx=0,ty=0;const v=el('div','pv');v.setAttribute('role','dialog');v.setAttribute('aria-modal','true');v.setAttribute('aria-label','Picture');
   const top=el('div','pv-top'),cnt=el('span','pv-cnt'),x=el('button','pv-x','×');x.type='button';x.setAttribute('aria-label','Close picture');top.append(cnt,x);
   const stage=el('div','pv-stage'),img=el('img','pv-img');img.alt='';stage.append(img);const tip=el('p','pv-tip',list.length>1?'Pinch or double-tap to zoom · swipe for the next picture':'Pinch or double-tap to zoom');
@@ -121,7 +121,7 @@
   stage.addEventListener('wheel',e=>{e.preventDefault();z=Math.max(1,Math.min(4,z*(e.deltaY<0?1.15:1/1.15)));if(z===1)tx=ty=0;apply();},{passive:false});
   show(start);x.focus();}
  document.addEventListener('click',e=>{const im=e.target.closest&&e.target.closest(PICS);if(!im||im.closest('.match-board,.drawing-panel,.worksheet-surface'))return;
-  e.preventDefault();e.stopPropagation();const group=im.closest('.native-card,.native-pictures,.visual-gallery,.fluency-pictures,.answer-card,.activity-main')||document;
+  e.preventDefault();e.stopPropagation();const group=im.closest('.l1-pics,.native-card,.native-pictures,.visual-gallery,.fluency-pictures,.answer-card,.activity-main')||document;
   const list=$$(PICS,group).filter(x=>!x.closest('.match-board,.drawing-panel')&&(x.offsetParent!==null||x===im));openViewer(list.length?list:[im],Math.max(0,list.indexOf(im)));},true);
 
  /* ---------- reading helpers: bigger text and a reading ruler ---------- */
@@ -143,4 +143,7 @@
    ru.addEventListener('click',()=>{const on=!p.classList.contains('rh-ruler');p.classList.toggle('rh-ruler',on);ru.setAttribute('aria-pressed',String(on));ru.classList.toggle('on',on);if(on)move(cur);else lines().forEach(x=>x.classList.remove('rl-on'));});
    p.addEventListener('click',e=>{if(!p.classList.contains('rh-ruler'))return;const l=e.target.closest('.rl');const L=lines();if(l&&L.indexOf(l)!==cur)move(L.indexOf(l));else move(cur+1);});
    bar.append(aa,ru);p.before(bar);});}
+ /* Phones: show the question first. The picture moves just below the question, so the Submit bar never hides it. */
+ if(matchMedia('(max-width:700px)').matches){const g=document.querySelector('main .visual-gallery'),q=document.querySelector('#activity-form .answer-card > .prompt');
+  if(g&&q&&g.compareDocumentPosition(q)&Node.DOCUMENT_POSITION_FOLLOWING){const h=g.nextElementSibling&&g.nextElementSibling.classList.contains('image-hint')?g.nextElementSibling:null;q.after(g);if(h)g.after(h);g.classList.add('in-card');}}
 })();

@@ -31,6 +31,7 @@ try{
   $key=[1=>'1',2=>'2a',3=>'2b',4=>'3'][$level]??null;if(!$key)fail('Module not found.',404);header('Content-Type: application/pdf');header('Content-Disposition: attachment; filename="BULIG-Level-'.$key.'-Original.pdf"');readfile(__DIR__.'/../storage/level'.$key.'-original.pdf');}
  elseif($page==='class_demo'){require_role('teacher');class_demo_view($u);}
  elseif($page==='lesson'){require_role('pupil');lesson_view($u);}
+ elseif($page==='recording'){l1_recording($u);}
  elseif($page==='offline_manifest'){offline_manifest(require_role('pupil'));}
  elseif($page==='offline_levels'){offline_levels(require_role('pupil'));}
  else{
