@@ -129,12 +129,13 @@
    [['form.formgrid:not(.import-form)'],'Add one pupil','Fill in the name, section, sex and starting level. BULIG makes the Pupil ID for you.'],
    ['#import','Import a class','Download the template, fill it in Excel, then upload it to add a whole class at once.'],
    [['details.account-detail'],'Pupil details','Open a pupil to edit details or reset the password.'],
-   [['.acc-head a[href="?page=cards"]'],'Sign-in cards','Print cut-out cards with each pupil’s ID, first password and a QR code that opens the sign-in page.']],
+   [['.acc-head a[href="?page=cards"]'],'Sign-in tickets','Print a ticket for each pupil with their Pupil ID, starter password and a QR code that signs them in with one scan.']],
   cards:[
-   ['.lc-filter','Choose a section','Print cards for one section or for all your pupils.'],
-   [['.lc-opt'],'What to show','Turn the QR code or the first password on or off. BULIG remembers your choice.'],
-   ['[data-lc-print]','Print','Print on A4 paper, 10 cards per sheet. Cut along the dashed lines.'],
-   [['.lc-card'],'One card per pupil','The QR code opens the BULIG sign-in page with the Pupil ID filled in. The password shows only if the pupil still uses the first password.']],
+   ['.lc-filter','Choose a section','Print tickets for one section or for all your pupils.'],
+   [['.lc-opt'],'What to show','Turn the QR code or the starter password on or off. BULIG remembers your choice.'],
+   ['[data-lc-print]','Print','Print on A4 paper, 10 tickets per sheet. Cut along the dashed lines.'],
+   [['.tk'],'One ticket per pupil','One scan of the QR code signs the pupil in. The starter password shows until the pupil makes their own.'],
+   [['.tk-new button'],'New ticket','Lost a ticket? Make a new one: the old QR code stops working and the pupil gets a new starter password.']],
   manage:[
    ['.pupil-tabs','Three tabs','You are on Learning. Open Accounts to add pupils or print sign-in cards, and Progress to see the whole class.'],
    ['.mp-list','Your pupils','Search or filter by section, then tap a pupil to manage them.'],
