@@ -93,13 +93,11 @@
    ['.class-tabs','Grades and sections','Choose a grade or section to see only those pupils.'],
    ['.tf-alert','Check-ins','Pupils who have not learned for a while appear here so you can follow up.'],
    ['.tdash-stats','Quick numbers','Total pupils, finished activities and learning steps.'],
-   ['.mobile-menu-toggle','Menu','Tap here to open the menu: Class Demo, My pupils, Manage pupils, Activity history and more. Each page has its own short tour.'],
+   ['.mobile-menu-toggle','Menu','Tap here to open the menu: Class Demo, My pupils, My sections, Activity history and more. Each page has its own short tour.'],
    ['.sidebar nav a[href="?page=class_demo"]','Class Demo','Show any level on your TV or projector. Use "Mark as done" after you teach a lesson together.'],
-   ['.sidebar nav a[href="?page=accounts"]','My pupils','Add pupils one by one or import a whole class list.'],
-   ['.sidebar nav a[href="?page=manage"]','Manage pupils','Change starting levels and mark levels, lessons or activities as done in class.'],
+   ['.sidebar nav a[href="?page=manage"]','My pupils','Two tabs: Learning (starting levels, lessons done in class) and Accounts (add, import, edit, sign-in cards).'],
    ['.sidebar nav a[href="?page=sections"]','My sections','Add the sections you handle.'],
    ['.sidebar nav a[href="?page=review"]','Activity history','Read your pupils’ answers and leave short feedback.'],
-   ['.sidebar nav a[href="?page=guide"]','Teaching guide','Lesson plans and the original module pages for each lesson.'],
    [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
    [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. On a shared computer, untick "Keep me saved" when BULIG asks.'],
    [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
@@ -108,13 +106,14 @@
    [['.demo-catalog .level-card.available'],'Choose a level','Tap "Start class demo". Levels 4 to 7 ask you to choose a grade first.']],
   'demo-slide':[
    ['.demo-header','Demo controls','"Mark as done" saves the lesson for the pupils in class. "Full screen" fills the TV.'],
+   ['[data-plan-open]','Lesson plan','Open the goals, the official module pages and the PDF for the lesson on screen.'],
    ['.demo-controls','Jump around','Pick any lesson or slide. "Enlarge pictures" makes pictures bigger for the back row.'],
    [['.narration'],'Listen together','Read the instructions aloud with the same voice pupils hear.'],
    ['#demo-stage','The slide','Discuss the activity together. Pupils answer out loud or on paper.'],
    ['.demo-footer','Move between slides','Use Previous and Next, or the arrow keys. Press F for full screen.'],
    ['[data-cd-open]','Mark as done','After teaching, tap here and tick the pupils who were present. Their next lesson opens right away.']],
   accounts:[
-   ['.pageheading','Your pupils','Create pupil accounts and keep their details up to date.'],
+   ['.pupil-tabs','Two tabs','Learning: starting levels and lessons done in class. Accounts: this tab, to add and edit pupils.'],
    [['form.formgrid:not(.import-form)'],'Add one pupil','Fill in the name, section, sex and starting level. BULIG makes the Pupil ID for you.'],
    ['#import','Import a class','Download the template, fill it in Excel, then upload it to add a whole class at once.'],
    [['details.account-detail'],'Pupil details','Open a pupil to edit details or reset the password.'],
@@ -125,6 +124,7 @@
    ['[data-lc-print]','Print','Print on A4 paper, 10 cards per sheet. Cut along the dashed lines.'],
    [['.lc-card'],'One card per pupil','The QR code opens the BULIG sign-in page with the Pupil ID filled in. The password shows only if the pupil still uses the first password.']],
   manage:[
+   ['.pupil-tabs','Two tabs','You are on Learning. Open Accounts to add pupils, import a class list or print sign-in cards.'],
    ['.mp-list','Your pupils','Search or filter by section, then tap a pupil to manage them.'],
    ['.mp-bulkbar','Many pupils at once','Tick pupils in the list and set one starting level for all of them.'],
    ['.mp-start','Starting level','Change where this pupil begins. Earlier levels become optional practice.'],
@@ -140,12 +140,12 @@
    [['.rv-item'],'Open an answer','Tap a line to read the answer, drawing or reading result.'],
    [['.rv-phrases'],'Quick feedback','Tap a ready-made phrase, or write your own note. Then press Save.']],
   guide:[
-   [['form.card'],'Choose a lesson','Pick a level and lesson, then open its guide.'],
+   [['form.card'],'Choose a lesson','The full text of each lesson plan. In Class Demo, tap "Lesson plan" for a quick view.'],
    [['.source-pages'],'Original pages','Open the matching pages of the official module.'],
    [['a.btn.secondary[href*="download_source"]'],'Download the module','Get the original module file for printing.']],
   'pupil-detail':[
    ['.pageheading','Pupil progress','XP, finished lessons and streak for this pupil.'],
-   ['#learning-path','Learning path','Mark lessons as done in class here, or use Manage pupils for activities too.']],
+   ['#learning-path','Learning path','Mark lessons as done in class here, or use My pupils for activities too.']],
   profile:P.profile
  };
  const A={

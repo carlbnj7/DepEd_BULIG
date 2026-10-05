@@ -31,11 +31,11 @@ function class_demo_view(array $u):void{
  if($requested){$found=false;foreach($slides as $i=>$a)if((int)$a['id']===$requested&&(int)($a['card_index']??0)===max(0,(int)($_GET['card']??0))){$index=$i;$found=true;break;}if(!$found)fail('That slide does not belong to this published level.',404);}
  $choices=[];foreach(rows('SELECT an.activity_id,ans.content FROM answers ans JOIN questions an ON an.id=ans.question_id JOIN activities a ON a.id=an.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND a.type=\'choice\''.GRADE_SQL.' ORDER BY ans.id',[$level,$grade]) as $c)$choices[(int)$c['activity_id']][]=$c['content'];
  $mlabel=module_label($level,per_grade_level($level)?$grade:null);head('Class Demo · '.$mlabel,'demo-page');
- echo '<div id="class-demo" data-level="'.$level.'" data-start="'.$index.'"><header class="demo-header"><a class="demo-logo" href="?page=class_demo"><img src="assets/bulig-logo.png" alt="BULIG"></a><div><strong>'.e($mlabel).' · Class Demo</strong><span>Listen, discuss, and learn together</span></div><button class="btn cd-open" type="button" data-cd-open>'.icon('check').'Mark as done</button><a class="btn quiet" href="?page=class_demo">Exit demo</a><button class="btn secondary" type="button" id="demo-fullscreen">Full screen</button></header><div class="demo-controls"><label>Lesson<select id="demo-lesson">';
+ echo '<div id="class-demo" data-level="'.$level.'" data-start="'.$index.'"><header class="demo-header"><a class="demo-logo" href="?page=class_demo"><img src="assets/bulig-logo.png" alt="BULIG"></a><div><strong>'.e($mlabel).' · Class Demo</strong><span>Listen, discuss, and learn together</span></div><button class="btn cd-plan" type="button" data-plan-open aria-haspopup="dialog">'.icon('plan').'Lesson plan</button><button class="btn cd-open" type="button" data-cd-open>'.icon('check').'Mark as done</button><a class="btn quiet" href="?page=class_demo">Exit demo</a><button class="btn secondary" type="button" id="demo-fullscreen">Full screen</button></header><div class="demo-controls"><label>Lesson<select id="demo-lesson">';
  $seen=[];foreach($slides as $i=>$a){if(isset($seen[$a['lesson_id']]))continue;$seen[$a['lesson_id']]=true;echo '<option value="'.$i.'">'.e(lesson_display_label($level,(int)$a['lesson_position']).' · '.$a['subtitle']).'</option>';}
  echo '</select></label><label>Jump to slide<select id="demo-jump">';foreach($slides as $i=>$a)echo '<option value="'.$i.'">'.e(($i+1).' · '.lesson_display_label($level,(int)$a['lesson_position']).' · '.$a['subtitle'].' · '.ucfirst($a['phase']).' · '.$a['title']).'</option>';echo '</select></label><button type="button" class="btn quiet" id="demo-zoom" aria-pressed="false">Enlarge pictures</button></div>';
  if(isset($_SESSION['flash'])){echo '<div class="notice demo-notice" role="status">'.icon('check').'<span>'.e($_SESSION['flash']).'</span></div>';unset($_SESSION['flash']);}
- echo class_done_demo_panel($u,$level,per_grade_level($level)?$grade:0,$mlabel);
+ echo class_done_demo_panel($u,$level,per_grade_level($level)?$grade:0,$mlabel).demo_lesson_plans($slides,$level,per_grade_level($level)?$grade:0,$mlabel);
  narration_controls($slides[$index]['narration']);
  echo '<main id="demo-stage" class="demo-stage" tabindex="-1" aria-label="Class activity slide"></main><footer class="demo-footer"><button class="btn secondary" id="demo-prev" type="button">Previous</button><div><strong id="demo-counter" role="status" aria-live="polite"></strong><small id="demo-help">Arrow keys move between slides · F for full screen</small></div><button class="btn primary" id="demo-next" type="button">Next '.icon('arrow').'</button></footer>';
  foreach($slides as $i=>$a){
@@ -57,4 +57,22 @@ function class_demo_view(array $u):void{
   echo '</article></template>';
  }
  echo '</div>';foot();
+}
+
+/** "Lesson plan" side panel in Class Demo: the goals, the official module pages and the PDF for the lesson on screen.
+    One small template per lesson; the full lesson-plan text opens on its own page (text version). */
+function demo_lesson_plans(array $slides,int $level,int $grade,string $mlabel):string{
+ $ids=array_values(array_unique(array_map(fn($a)=>(int)$a['lesson_id'],$slides)));if(!$ids)return '';
+ $hasSrc=$level===1||module_source_meta($level,$grade?:null)!==null;
+ $rows=rows('SELECT id,title,subtitle,position,objectives,source_pages FROM lessons WHERE id IN ('.implode(',',$ids).')');
+ $h='<div class="plan-ov" data-plan hidden><aside class="plan-panel" role="dialog" aria-modal="true" aria-labelledby="plan-title"><button type="button" class="plan-x" data-plan-close aria-label="Close the lesson plan">'.icon('close').'</button><div class="plan-body"></div></aside></div>';
+ foreach($rows as $l){$obj=trim((string)$l['objectives']);
+  $items=[];
+  if(preg_match_all('~(?:^|\s)\d{1,2}\.\s+~',$obj)>=2){$pos=strpos($obj,':');$items=array_map(fn($x)=>rtrim(trim($x),' ;.'),preg_split('~(?:^|\s)\d{1,2}\.\s+~',$pos!==false&&$pos<160?substr($obj,$pos+1):$obj,-1,PREG_SPLIT_NO_EMPTY));}
+  $h.='<template class="plan-tpl" data-lesson="'.(int)$l['id'].'"><span class="eyebrow">LESSON PLAN · '.e(strtoupper($mlabel.' · '.lesson_display_label($level,(int)$l['position']))).'</span><h2 id="plan-title">'.e((string)$l['subtitle']).'</h2><p class="plan-sub">'.e((string)$l['title']).'</p>';
+  if($obj!==''){$h.='<section class="plan-sec"><h3>'.icon('flag').($items?'By the end of the lesson, pupils can:':'Lesson goal').'</h3>';$h.=$items?'<ol>'.implode('',array_map(fn($x)=>'<li>'.e($x).'</li>',$items)).'</ol>':'<p>'.e($obj).'</p>';$h.='</section>';}
+  $pages=$hasSrc?(json_decode((string)$l['source_pages'],true)?:[]):[];
+  if($pages){$h.='<section class="plan-sec"><h3>'.icon('book').'Official module pages</h3><div class="plan-pages">';foreach($pages as $n)$h.='<a class="plan-pg" href="?page=source&amp;level='.$level.($grade?'&amp;grade='.$grade:'').'&amp;n='.(int)$n.'" target="_blank" rel="noopener">Page '.(int)$n.'</a>';$h.='</div><p class="plan-note">Opens the real page of the DepEd module, with its tables and pictures.</p></section>';}
+  $h.=($hasSrc?'<a class="btn primary plan-dl" href="?page=download_source&amp;level='.$level.($grade?'&amp;grade='.$grade:'').'">'.icon('download').'Download the '.e($mlabel).' module (PDF)</a>':'').'<a class="btn secondary plan-txt" href="?page=guide&amp;id='.(int)$l['id'].'" target="_blank" rel="noopener">'.icon('book').'Text version of the lesson plan</a></template>';}
+ return $h;
 }
