@@ -135,7 +135,7 @@
    ['.lc-upgrade','Starter passwords','Pupils still on the old password 12345678 can each get their own easy starter password here. Print their new tickets right away.'],
    ['.lc-filter','Choose a section','Print tickets for one section or for all your pupils.'],
    [['.lc-opt'],'What to show','Turn the QR code or the starter password on or off. BULIG remembers your choice.'],
-   ['.lc-pick','Choose and size','Untick the tickets you do not need, and choose Small (12 per page), Medium (10) or Large (8).'],
+   ['.lc-pick','Choose and size','Untick the tickets you do not need, and choose Small (21 per page, 3 columns), Medium (10) or Large (8).'],
    ['[data-lc-print]','Print','Print on A4 paper and cut along the dashed lines.'],
    [['.tk'],'One ticket per pupil','One scan of the QR code signs the pupil in. The starter password shows until the pupil makes their own.'],
    [['.tk-new button'],'New ticket','Lost a ticket? Make a new one: the old QR code stops working and the pupil gets a new starter password.']],
