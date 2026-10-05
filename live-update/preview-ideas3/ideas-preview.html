@@ -1,0 +1,111 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>More BULIG ideas</title><style>
+@font-face{font-family:P;src:url(poppins-latin-400-normal.woff2)}@font-face{font-family:P;font-weight:600;src:url(poppins-latin-600-normal.woff2)}@font-face{font-family:P;font-weight:700;src:url(poppins-latin-700-normal.woff2)}
+*{box-sizing:border-box}body{margin:0;padding:28px;background:#f4efe0;font-family:P,sans-serif;color:#0e3b28;width:1500px}
+h1{margin:0 0 4px;font-size:30px}.sub{margin:0 0 20px;color:#5f6f63}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.c{background:#fff;border-radius:20px;border:1px solid #e9e2cc;overflow:hidden;display:flex;flex-direction:column}
+.st{height:250px;position:relative;overflow:hidden}
+.tx{padding:12px 16px 16px}.tx h2{margin:0;font-size:16.5px;display:flex;align-items:center;gap:8px}.tx h2 i{font-style:normal;flex:none;width:26px;height:26px;border-radius:8px;background:#176444;color:#fff;display:grid;place-items:center;font-size:13px}
+.tx p{margin:6px 0 8px;font-size:12.5px;color:#4a5a4f;line-height:1.45}
+.tg{display:flex;gap:5px;flex-wrap:wrap}.tg span{font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 9px;background:#eef7f1;color:#176444}.tg .w{background:#fff3cf;color:#8a5a00}.tg .e{background:#efe7ff;color:#5b3fa6}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* 1 level complete */
+.s1{background:radial-gradient(circle at 50% 45%,#2a8a59,#0b4429)}
+.s1 .rays{position:absolute;left:50%;top:44%;width:520px;height:520px;margin:-260px 0 0 -260px;background:repeating-conic-gradient(rgba(255,226,122,.35) 0 9deg,transparent 9deg 24deg);border-radius:50%}
+.s1 .cov{position:absolute;left:50%;top:30px;width:150px;height:110px;margin-left:-75px;border-radius:16px;overflow:hidden;border:4px solid #ffe27a;box-shadow:0 12px 26px rgba(0,0,0,.4);transform:rotate(-4deg)}.s1 .cov img{width:100%;height:100%;object-fit:cover}
+.s1 .badge{position:absolute;left:50%;top:118px;transform:translateX(-50%);background:#ffe27a;color:#3d2a00;font-weight:700;border-radius:999px;padding:6px 16px;font-size:15px;white-space:nowrap;box-shadow:0 6px 14px rgba(0,0,0,.3)}
+.s1 .nx{position:absolute;left:50%;top:166px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;color:#fff;font-size:12.5px;white-space:nowrap}
+.s1 .key{width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;color:#176444}
+.s1 .btn{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);background:#fff;color:#176444;font-weight:700;border-radius:14px;padding:8px 18px;font-size:13px;white-space:nowrap}
+.conf{position:absolute;width:8px;height:12px;border-radius:2px}
+/* 2 walk path */
+.s2{background:linear-gradient(#cfeefa,#eaf7e2 60%,#d6efc8)}
+.s2 svg.path{position:absolute;inset:0}
+.node{position:absolute;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;border:4px solid #fff;box-shadow:0 6px 12px rgba(0,0,0,.18)}
+.done{background:#1c7a50;color:#fff}.now{background:#ffe27a;color:#3d2a00;box-shadow:0 0 0 7px rgba(255,226,122,.45),0 6px 12px rgba(0,0,0,.2)}.lock{background:#e8e3d4;color:#9a9480}
+.walker{position:absolute;width:56px}.steps{position:absolute;font-size:16px;color:#1c7a50;opacity:.5;letter-spacing:6px;font-weight:700}
+.bub{position:absolute;background:#fff;border-radius:12px 12px 12px 3px;padding:5px 10px;font-size:11.5px;font-weight:700;box-shadow:0 6px 12px -6px rgba(0,0,0,.3)}
+/* 3 tap word */
+.s3{background:#fffdf7;padding:22px}
+.para{font-size:17px;line-height:1.9;color:#0e3b28}
+.w{padding:1px 3px;border-radius:6px}.w.hit{background:#ffe27a;box-shadow:0 0 0 3px #ffe27a}
+.pop{position:absolute;left:110px;top:28px;background:#0e5a35;color:#fff;border-radius:14px;padding:8px 12px;font-size:12.5px;box-shadow:0 10px 20px -8px rgba(0,0,0,.45)}
+.pop b{font-size:17px;display:block}.pop small{opacity:.85}.pop::after{content:"";position:absolute;left:30px;bottom:-7px;border:7px solid transparent;border-bottom:0;border-top-color:#0e5a35}
+.pop .sp{display:inline-flex;align-items:center;gap:5px;margin-top:5px;background:#ffe27a;color:#3d2a00;border-radius:999px;padding:3px 10px;font-weight:700;font-size:11.5px}
+/* 4 dress up */
+.s4{background:linear-gradient(160deg,#fff4d4,#ffe9f0)}
+.s4 .kid{position:absolute;left:30px;top:34px;height:215px;width:auto}
+.hat{position:absolute;left:46px;top:14px;width:58px;height:28px;transform:rotate(-8deg)}
+.closet{position:absolute;right:12px;top:16px;width:150px;display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.it{height:62px;border-radius:14px;background:#fff;border:2px solid #f0e3c0;display:grid;place-items:center;position:relative;font-size:10.5px;font-weight:700;color:#8a7a50}
+.it.on{border-color:#1c7a50;box-shadow:0 0 0 3px rgba(28,122,80,.2)}.it{display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:center}.it.lock{background:#f7f3e8;color:#9a9480}.it .lk{font-size:9.5px;font-weight:600;color:#b07d00}
+.xp{position:absolute;left:12px;bottom:14px;background:#fff;border-radius:999px;padding:4px 10px;font-weight:700;font-size:12px;color:#8a5a00;box-shadow:0 4px 10px -4px rgba(0,0,0,.25)}
+/* 5 teacher message */
+.s5{background:#fbf6e6;padding:16px}
+.msg{display:flex;gap:10px;align-items:flex-start;background:#fff;border-radius:18px;padding:12px;border:2px solid #f2d27a;box-shadow:0 10px 20px -14px rgba(0,0,0,.35)}
+.msg img{width:54px;flex:none}.msg b{font-size:13px}.msg p{margin:3px 0 0;font-size:13px;line-height:1.4}.msg small{display:block;margin-top:6px;font-size:10.5px;color:#7a8a7e}
+.hearts{display:flex;gap:6px;margin-top:8px}.hearts span{border-radius:999px;background:#fff3cf;padding:3px 10px;font-size:11px;font-weight:700;color:#8a5a00}
+.tform{margin-top:12px;background:#fff;border-radius:14px;padding:10px;border:1px dashed #cfe3d6;font-size:11.5px;color:#5f6f63}
+.tform .in{border:1.5px solid #e4e0d2;border-radius:10px;padding:6px 8px;margin:5px 0;color:#999}
+.tform .sb{display:inline-block;background:#176444;color:#fff;border-radius:10px;padding:5px 12px;font-weight:700}
+/* 6 certificate */
+.s6{background:#efe7d0;display:grid;place-items:center}
+.cert{width:270px;height:196px;background:#fffdf5;border:6px double #c9a227;border-radius:8px;padding:12px;text-align:center;position:relative;box-shadow:0 12px 24px -12px rgba(0,0,0,.4)}
+.cert img{height:26px}.cert h3{margin:4px 0 0;font-size:10px;letter-spacing:.2em;color:#8a5a00}.cert .nm{font-size:21px;font-weight:700;margin:4px 0 0;font-family:Georgia,serif;font-style:italic}
+.cert p{margin:3px 0 0;font-size:9.5px;color:#4a5a4f}.cert .sig{display:flex;justify-content:space-between;margin-top:12px;font-size:8.5px;color:#6b6a55}.cert .sig span{border-top:1px solid #999;padding-top:2px;width:80px}
+.seal{position:absolute;right:-12px;bottom:-12px;width:54px;height:54px;border-radius:50%;background:radial-gradient(#ffe27a,#d1a00b);display:grid;place-items:center;color:#5a3c00;font-weight:700;font-size:10px;border:3px solid #fff8dc}
+/* 7 goal ring */
+.s7{background:linear-gradient(#fff,#f4faf6);display:flex;align-items:center;justify-content:center;gap:16px}
+.ring{width:150px;height:150px;border-radius:50%;background:conic-gradient(#1c7a50 0 72%,#e3efe7 72% 100%);display:grid;place-items:center;position:relative}
+.ring::before{content:"";position:absolute;inset:16px;border-radius:50%;background:#fff}
+.ring div{position:relative;text-align:center}.ring b{font-size:30px;display:block;line-height:1}.ring small{font-size:11px;color:#5f6f63}
+.gl{font-size:12.5px;line-height:1.6}.gl div{display:flex;align-items:center;gap:6px}.gl .ok{color:#1c7a50}.gl .no{color:#b9b2a0}
+.spark{position:absolute;width:10px;height:10px;background:#ffe27a;transform:rotate(45deg);border-radius:2px}
+/* 8 class grid */
+.s8{background:#fff;padding:12px}
+table{border-collapse:separate;border-spacing:3px;font-size:10.5px;width:100%}th{font-weight:700;color:#5f6f63;text-align:center}td.n{font-weight:700;white-space:nowrap;padding-right:4px;font-size:11px}
+td.x{height:24px;border-radius:5px}.d{background:#1c7a50}.h{background:#8fd0ab}.r{background:#f6c445}.z{background:#efeadc}
+.leg{display:flex;gap:10px;margin-top:8px;font-size:10px;color:#5f6f63}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+</style></head><body>
+<h1>More ideas for BULIG</h1><p class="sub">4 new effects and 4 new features. These are mock-ups only; nothing is built yet. Pick any you like.</p>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M15 8l2 2"/></symbol><symbol id="snd" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></symbol><symbol id="chk" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol><symbol id="dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></symbol></defs></svg>
+<div class="grid">
+<div class="c"><div class="st s1"><span class="rays"></span>
+<span class="conf" style="left:30px;top:40px;background:#ffe27a;transform:rotate(20deg)"></span><span class="conf" style="left:70px;top:150px;background:#ff8a7a;transform:rotate(-30deg)"></span><span class="conf" style="right:40px;top:60px;background:#8fd0ff;transform:rotate(45deg)"></span><span class="conf" style="right:60px;top:170px;background:#ffe27a;transform:rotate(-10deg)"></span><span class="conf" style="left:120px;top:20px;background:#b9f0a0"></span><span class="conf" style="right:110px;top:200px;background:#ff8a7a;transform:rotate(60deg)"></span>
+<div class="cov"><img src="level-1.webp"></div><div class="badge">Level 1 complete!</div><div class="nx"><span class="key"><svg class="i"><use href="#key"/></svg></span>Level 2A is now open</div><div class="btn">Start Level 2A →</div></div>
+<div class="tx"><h2><i>1</i>Level-complete celebration</h2><p>When a pupil finishes a whole level: confetti, the level picture, and a key that unlocks the next level.</p><div class="tg"><span class="e">Effect</span><span>Pupils</span></div></div></div>
+
+<div class="c"><div class="st s2"><svg class="path" viewBox="0 0 340 250"><path d="M40 210 C 110 210, 90 130, 170 130 S 250 50, 300 50" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/><path d="M40 210 C 110 210, 90 130, 170 130 S 250 50, 300 50" fill="none" stroke="#e9dcb4" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round"/></svg>
+<div class="node done" style="left:18px;top:188px">1</div><div class="node done" style="left:100px;top:150px">2</div><div class="node now" style="left:148px;top:108px">3</div><div class="node lock" style="left:220px;top:72px">4</div><div class="node lock" style="left:278px;top:28px">5</div>
+<span class="steps" style="left:112px;top:118px">· · ·</span><img class="walker" src="girl.webp" style="left:176px;top:58px"><div class="bub" style="left:220px;top:118px">Lesson 3 is next!</div></div>
+<div class="tx"><h2><i>2</i>Character walks the path</h2><p>On the learning path, the pupil’s character walks from the last finished lesson to the next one when it opens.</p><div class="tg"><span class="e">Effect</span><span>Pupils</span></div></div></div>
+
+<div class="c"><div class="st s3"><div class="pop"><b>happy</b><small>feeling glad</small><br><span class="sp"><svg class="i" style="width:14px;height:14px"><use href="#snd"/></svg>Hear it again</span></div>
+<div class="para" style="margin-top:96px">The <span class="w">little</span> bird was <span class="w hit">happy</span>. It sang a <span class="w">song</span> in the <span class="w">tall</span> tree.</div></div>
+<div class="tx"><h2><i>3</i>Tap any word to hear it</h2><p>In stories and questions, a pupil taps a hard word: BULIG says it aloud, and shows a simple meaning when one is known.</p><div class="tg"><span class="w">Feature</span><span>Pupils</span><span>Works offline</span></div></div></div>
+
+<div class="c"><div class="st s4"><div class="xp">20 XP</div><img class="kid" src="girl-cheer.webp"><svg class="hat" viewBox="0 0 70 34"><path d="M8 30h54l-6-10H14z" fill="#f2b10c"/><path d="M18 20 35 3l17 17z" fill="#e2564a"/><circle cx="35" cy="4" r="4" fill="#ffe27a"/></svg>
+<div class="closet"><div class="it on">Party hat</div><div class="it">Star glasses</div><div class="it lock">Cape<span class="lk">50 XP</span></div><div class="it lock">Crown<span class="lk">100 XP</span></div><div class="it lock">Backpack pin<span class="lk">7-day streak</span></div><div class="it lock">Medal<span class="lk">Finish Level 1</span></div></div></div>
+<div class="tx"><h2><i>4</i>Dress up your character</h2><p>XP, streaks and badges unlock hats, glasses and capes for the pupil’s character. It shows on Home and in activities.</p><div class="tg"><span class="w">Feature</span><span>Pupils</span></div></div></div>
+
+<div class="c"><div class="st s5"><div class="msg"><img src="teacher-female.webp"><div><b>Teacher Gabriela</b><p>Great job this week, Grade 1! Tomorrow we read “The Tall Tree” together. Bring your crayons!</p><div class="hearts"><span>Thank you!</span><span>I’m ready!</span></div><small>On every pupil’s Home · today</small></div></div>
+<div class="tform">Teacher’s side · write a short note<div class="in">Message to Grade 1 · Bonifacio…</div><span class="sb">Post to class</span></div></div>
+<div class="tx"><h2><i>5</i>A message from my teacher</h2><p>Teachers post a short note to a section. Pupils see it on Home with the teacher’s character and can tap a ready reply.</p><div class="tg"><span class="w">Feature</span><span>Teachers + pupils</span><span>Needs SQL</span></div></div></div>
+
+<div class="c"><div class="st s6"><div class="cert"><img src="bulig-logo.png"><h3>CERTIFICATE OF COMPLETION</h3><div class="nm">Maria Pupil</div><p>finished <b>Level 1 · Oral Language</b><br>Grade 1 · Bonifacio · October 2026</p><div class="sig"><span>Teacher Gabriela</span><span>School Head</span></div><div class="seal">BULIG</div></div></div>
+<div class="tx"><h2><i>6</i>Printable certificates</h2><p>When a level is done, the pupil and teacher can print a certificate. Teachers can also print one for a whole section.</p><div class="tg"><span class="w">Feature</span><span>Teachers + pupils</span><span>Earlier idea</span></div></div></div>
+
+<div class="c"><div class="st s7"><span class="spark" style="left:60px;top:40px"></span><span class="spark" style="left:205px;top:30px;background:#8fd0ab"></span><span class="spark" style="left:70px;top:200px;width:7px;height:7px"></span>
+<div class="ring"><div><b>3/4</b><small>activities today</small></div></div><div class="gl"><b style="font-size:13.5px">Today’s goal</b><div class="ok"><svg class="i"><use href="#chk"/></svg>Listen &amp; Move</div><div class="ok"><svg class="i"><use href="#chk"/></svg>My Toys · 1</div><div class="ok"><svg class="i"><use href="#chk"/></svg>My Toys · 2</div><div class="no"><svg class="i"><use href="#dot"/></svg>One more!</div></div></div>
+<div class="tx"><h2><i>7</i>Daily goal ring</h2><p>A ring on Home fills as the pupil finishes today’s activities. When it closes, it sparkles and the streak grows.</p><div class="tg"><span class="e">Effect</span><span class="w">Feature</span><span>Earlier idea</span></div></div></div>
+
+<div class="c"><div class="st s8"><b style="font-size:13px">Grade 1 · Bonifacio · Level 1</b>
+<table><tr><th></th><th>L1</th><th>L2</th><th>L3</th><th>L4</th><th>L5</th><th>L6</th></tr>
+<tr><td class="n">Maria P.</td><td class="x d"></td><td class="x d"></td><td class="x h"></td><td class="x z"></td><td class="x z"></td><td class="x z"></td></tr>
+<tr><td class="n">Ana R.</td><td class="x d"></td><td class="x h"></td><td class="x z"></td><td class="x z"></td><td class="x z"></td><td class="x z"></td></tr>
+<tr><td class="n">Juan D.</td><td class="x d"></td><td class="x d"></td><td class="x d"></td><td class="x d"></td><td class="x h"></td><td class="x z"></td></tr>
+<tr><td class="n">Check P.</td><td class="x r"></td><td class="x z"></td><td class="x z"></td><td class="x z"></td><td class="x z"></td><td class="x z"></td></tr>
+<tr><td class="n">Grid C.</td><td class="x d"></td><td class="x d"></td><td class="x d"></td><td class="x h"></td><td class="x z"></td><td class="x z"></td></tr></table>
+<div class="leg"><span><i class="d"></i>Done</span><span><i class="h"></i>Started</span><span><i class="r"></i>Needs help</span><span><i class="z"></i>Not yet</span></div></div>
+<div class="tx"><h2><i>8</i>Class progress grid</h2><p>One screen for the teacher: every pupil by every lesson, coloured by progress. Tap a square to open that pupil’s answers.</p><div class="tg"><span class="w">Feature</span><span>Teachers</span><span>Earlier idea</span></div></div></div>
+</div></body></html>
