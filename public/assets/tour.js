@@ -25,6 +25,7 @@
  const P={
   dashboard:[
    ['.identity-banner','This is you','Your name and grade are here. Tap your picture to change it.'],
+   ['.level-stat','Your starting level','This is your starting level. Your teacher chose it for you, and your lessons begin here.'],
    ['.xp-stat','Your XP','You earn XP for every activity you finish. Collect XP to get rewards!'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
    ['.badge-stat','Your badges','Badges are prizes for learning. Tap to see the ones you earned.'],
@@ -60,6 +61,7 @@
    [['.native-card:not([hidden]) .lt-keys'],'Letter tiles','Tap a letter to fill in the missing letter. Tap Erase to undo, or abc to use the keyboard.'],
    [['.cd-dots'],'Your cards','Each number is a card. Green cards are answered. Tap a number to jump to that card.'],
    [['.rh-bar'],'Reading helpers','Tap Aa to make the words bigger. Tap Reading ruler to see one line at a time.'],
+   [['.draw-choice'],'Draw or upload','Draw your answer here, or draw on paper and tap Upload a photo to send a picture of it.'],
    [['.draw-kit'],'Drawing tools','Pick a crayon colour and pen size. Undo removes your last line. Full screen gives you more room.'],
    [['.native-card-nav.deck-bar','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, the yellow button sends your activity. Your work saves by itself.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null,
@@ -224,7 +226,9 @@
  function place(){if(!layer)return;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{if(!layer)return;
   const spot=layer.querySelector('.tour-spot'),bub=layer.querySelector('.tour-bub');const el=cur[idx]&&find(cur[idx][0]);
   if(!el){spot.style.cssText='left:50%;top:50%;width:0;height:0';bub.style.left=Math.max(12,(innerWidth-bub.offsetWidth)/2)+'px';bub.style.top=Math.max(12,(innerHeight-bub.offsetHeight)/2)+'px';return;}
-  const r=el.getBoundingClientRect(),pad=8,big=r.height>innerHeight*.7;
+  const r0=el.getBoundingClientRect(),r={left:r0.left,top:r0.top,right:r0.right,bottom:r0.bottom};
+  if(el.querySelectorAll('*').length<40)el.querySelectorAll('*').forEach(c=>{const q=c.getBoundingClientRect();if(!q.width||!q.height)return;r.left=Math.min(r.left,q.left);r.top=Math.min(r.top,q.top);r.right=Math.max(r.right,q.right);r.bottom=Math.max(r.bottom,q.bottom);});
+  r.width=r.right-r.left;r.height=r.bottom-r.top;const pad=8,big=r.height>innerHeight*.7;spot.classList.toggle('tour-pill',el.matches('.tab-play'));
   const t=Math.max(6,r.top-pad),b=Math.min(innerHeight-6,r.bottom+pad);
   spot.style.cssText='left:'+(r.left-pad)+'px;top:'+t+'px;width:'+(r.width+pad*2)+'px;height:'+Math.max(10,b-t)+'px';
   const bw=bub.offsetWidth,bh=bub.offsetHeight,gap=14,bar=find('.pupil-tabbar'),floor=innerHeight-(bar?bar.getBoundingClientRect().height+24:16);let x,y;

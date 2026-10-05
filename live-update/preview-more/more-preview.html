@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>More BULIG Ideas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g900:#0e3b28;--g700:#176444;--g600:#1c7a50;--g100:#e6f4ec;--y400:#ffc629;--y100:#fff4cf;--muted:#5f6f63;--line:#e9e2cc}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:Poppins,system-ui,sans-serif;color:#17331f}
+.wrap{max-width:1280px;margin:auto;padding:26px 16px 60px}
+h1{margin:0;color:var(--g700);font-size:1.8rem}.lead{color:var(--muted);margin:.3rem 0 0;max-width:960px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}
+.idea{background:#fff;border-radius:22px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:10px}
+.idea h2{margin:0;font-size:1.05rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--g700);color:#fff;font-size:.82rem;flex:none}
+.who{font-size:.64rem;font-weight:800;padding:2px 8px;border-radius:99px;background:var(--g100);color:var(--g700);margin-left:auto}
+.rec{font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:99px;background:var(--y400);color:#3d2a00}
+.sql{font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:99px;background:#eef0f2;color:#5b6b7a}
+.idea>p{margin:0;font-size:.82rem;color:var(--muted)}
+.mock{border-radius:16px;background:#fdf8ea;border:1px solid var(--line);padding:12px;min-height:250px;position:relative;overflow:hidden}
+/* 1 certificate */
+.cert{background:#fffdf5;border:6px double #c99a1a;border-radius:12px;padding:14px 70px 16px;text-align:center;position:relative}
+.cert img.logo{height:30px}.cert small{display:block;font-size:.58rem;letter-spacing:.16em;color:#9a7a20;font-weight:800;margin-top:4px}
+.cert h3{margin:4px 0 2px;font-size:1.05rem;color:#0e3b28;font-family:Georgia,serif}
+.cert .nm{font-size:1.3rem;font-weight:800;color:#176444;border-bottom:2px solid #e3d29a;display:inline-block;padding:0 14px;margin:4px 0}
+.cert p{margin:4px 0;font-size:.7rem;color:#5f6f63}
+.cert .kid{position:absolute;right:8px;bottom:6px;height:84px}
+.seal{position:absolute;left:12px;bottom:10px;width:46px;height:46px;border-radius:50%;background:radial-gradient(#ffd966,#e0a400);display:grid;place-items:center;font-size:.5rem;font-weight:800;color:#5a3d00;box-shadow:0 0 0 4px #fff4cf}
+.sig{display:flex;justify-content:center;gap:30px;margin-top:10px;font-size:.6rem;color:#5f6f63}.sig span{border-top:1px solid #9aa79e;padding-top:2px;min-width:90px}
+/* 2 grid */
+.cg{width:auto;border-collapse:separate;border-spacing:3px;font-size:.66rem}
+.cg th{font-weight:700;color:var(--muted);font-size:.58rem}.cg td.n{font-weight:700;white-space:nowrap;padding-right:6px}
+.cg td.c{width:22px;height:22px;border-radius:6px}
+.c0{background:#ece6d2}.c1{background:#ffe08a}.c2{background:#7cc79a}.c3{background:#1c7a50}.cr{background:#f4a396}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.62rem;color:var(--muted);margin-top:8px}.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-2px;margin-right:3px}
+/* 3 word bank */
+.wb{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.w{background:#fff;border:2px solid #f1dc94;border-radius:14px;padding:8px;text-align:center}
+.w .pic{height:44px;border-radius:9px;background:#eaf6ff;display:grid;place-items:center;font-weight:800;color:#2f6fd6;font-size:.8rem}
+.w b{display:block;margin-top:4px;font-size:.85rem}.w small{font-size:.58rem;color:var(--muted)}
+.w .sp{display:inline-flex;align-items:center;gap:3px;margin-top:3px;font-size:.58rem;font-weight:800;color:#7a5200;background:#fff4cf;border-radius:99px;padding:1px 7px}
+.wtabs{display:flex;gap:6px;margin-bottom:8px}.wtabs span{font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:99px;background:#fff;border:1px solid var(--line)}.wtabs span.on{background:#176444;color:#fff;border-color:#176444}
+/* 4 daily goal */
+.goal{display:flex;align-items:center;gap:14px;background:#fff;border-radius:18px;padding:14px;border-top:3px solid var(--y400)}
+.ring{width:96px;height:96px;border-radius:50%;background:conic-gradient(#f2b10c 0 66%,#f1ead4 0);display:grid;place-items:center;flex:none}
+.ring i{width:72px;height:72px;border-radius:50%;background:#fff;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:1.2rem;color:#0e3b28}
+.goal b{display:block;font-size:1rem}.goal small{font-size:.72rem;color:var(--muted)}
+.week{display:flex;gap:6px;margin-top:10px;justify-content:space-between}
+.day{flex:1;text-align:center;font-size:.6rem;color:var(--muted)}.day i{display:block;height:34px;border-radius:9px;background:#f1ead4;margin-bottom:3px;position:relative;overflow:hidden}.day i::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--h);background:#f2b10c}.day.full i::after{background:#1c7a50}
+.pick{display:flex;gap:6px;margin-top:10px;font-size:.66rem}.pick span{padding:4px 10px;border-radius:99px;background:#fff;border:1px solid var(--line);font-weight:700}.pick span.on{background:#176444;color:#fff}
+/* 5 speed chart */
+.chart{background:#fff;border-radius:14px;padding:10px;border:1px solid var(--line)}
+.chart svg{width:100%;height:150px}
+.ch-h{display:flex;justify-content:space-between;align-items:baseline}.ch-h b{font-size:.9rem}.ch-h span{font-size:.66rem;color:#1c7a50;font-weight:800;background:#e6f4ec;border-radius:99px;padding:2px 8px}
+/* 6 parent report */
+.rep{background:#fff;border-radius:10px;border:1px solid #ddd;padding:12px 14px;font-size:.68rem;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.rep .rh{display:flex;align-items:center;gap:8px;border-bottom:2px solid #176444;padding-bottom:6px;margin-bottom:6px}.rep .rh img{height:24px}.rep .rh b{font-size:.82rem}
+.rep table{width:100%;border-collapse:collapse;margin:6px 0}.rep td{padding:3px 4px;border-bottom:1px solid #eee}
+.rep .bar{height:7px;border-radius:9px;background:#eee;overflow:hidden;width:90px;display:inline-block;vertical-align:middle}.rep .bar i{display:block;height:100%;background:#1c7a50}
+.rep .note{background:#fff4cf;border-radius:8px;padding:6px 8px;margin-top:6px}
+.qr{float:right;width:40px;height:40px;background:repeating-conic-gradient(#17331f 0 25%,#fff 0 50%) 0 0/8px 8px;border:2px solid #17331f}
+.summary{margin-top:22px;background:#fff;border-radius:18px;padding:14px 18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.summary table{width:100%;border-collapse:collapse;font-size:.85rem}.summary th,.summary td{padding:7px 8px;border-bottom:1px solid #eee8d3;text-align:left}.summary th{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.note2{background:var(--y100);border-radius:14px;padding:12px 16px;font-size:.86rem;margin-top:14px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<h1>More ideas for BULIG</h1>
+<p class="lead">BULIG already teaches, celebrates and works offline. These 6 ideas help pupils see their growth, help teachers spot who needs help at a glance, and bring parents in. None of them repeat what is already built.</p>
+
+<div class="grid">
+
+<div class="idea"><h2><span class="num">1</span>Level certificates<span class="rec">Recommended</span><span class="who">Pupils · Teachers</span></h2>
+<p>When a pupil finishes a level, BULIG makes a certificate with their name, the level, the date and their character. Pupils see it in My achievements, and teachers can print certificates for the whole class at once for recognition day.</p>
+<div class="mock"><div class="cert"><img class="logo" src="bulig-logo.png" alt=""><small>CERTIFICATE OF ACHIEVEMENT</small><h3>This is proudly given to</h3><div class="nm">Maria Pupil</div><p>for finishing <b>Level 5 · Listening Comprehension and Vocabulary Development</b><br>Grade 1 · Bonifacio · October 4, 2026</p>
+<div class="sig"><span>Teacher Maria Santos</span><span>School Head</span></div><span class="seal">BULIG<br>★★★</span><img class="kid" src="girl-cheer.webp" alt=""></div></div></div>
+
+<div class="idea"><h2><span class="num">2</span>Class progress grid<span class="rec">Recommended</span><span class="who">Teachers</span></h2>
+<p>One table for the whole class: each row is a pupil, each square is a lesson. Colours show not started, in progress, done or "try again". The teacher sees in seconds who is behind and which lesson is hard for many pupils.</p>
+<div class="mock"><table class="cg"><tr><th></th><th>L1</th><th>L2</th><th>L3</th><th>L4</th><th>L5</th><th>L6</th><th>L7</th><th>L8</th></tr>
+<tr><td class="n">Ana Reyes</td><td class="c c3"></td><td class="c c3"></td><td class="c c3"></td><td class="c c2"></td><td class="c c1"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td></tr>
+<tr><td class="n">Juan Dela Cruz</td><td class="c c3"></td><td class="c c1"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td></tr>
+<tr><td class="n">Maria Pupil</td><td class="c c3"></td><td class="c c3"></td><td class="c c3"></td><td class="c c3"></td><td class="c c3"></td><td class="c c2"></td><td class="c c1"></td><td class="c c0"></td></tr>
+<tr><td class="n">Grid Check</td><td class="c c3"></td><td class="c c3"></td><td class="c cr"></td><td class="c c1"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td></tr>
+<tr><td class="n">Check Pupil</td><td class="c c3"></td><td class="c cr"></td><td class="c cr"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td><td class="c c0"></td></tr></table>
+<div class="legend"><span><i class="c0"></i>Not started</span><span><i class="c1"></i>Started</span><span><i class="c2"></i>Almost done</span><span><i class="c3"></i>Done</span><span><i class="cr"></i>Try again</span></div>
+<p style="font-size:.66rem;color:#5f6f63;margin:8px 0 0">Tap a square to open that pupil's answers for the lesson.</p></div></div>
+
+<div class="idea"><h2><span class="num">3</span>My word bank<span class="who">Pupils</span></h2>
+<p>Every new word a pupil meets in a lesson (from the module's vocabulary and sight words) is collected in "My words", with its picture from the module. Tap a word to hear it. Words the pupil has said correctly with Speak Answer get a star.</p>
+<div class="mock"><div class="wtabs"><span class="on">All 48</span><span>Level 3</span><span>Level 5</span><span>&#9733; Said right</span></div><div class="wb">
+<div class="w"><div class="pic">picture</div><b>ball</b><small>Level 5 · My Toys</small><br><span class="sp">&#9654; Hear</span></div>
+<div class="w"><div class="pic">picture</div><b>cat &#9733;</b><small>Level 3 · CVC "a"</small><br><span class="sp">&#9654; Hear</span></div>
+<div class="w"><div class="pic">picture</div><b>kite</b><small>Level 5 · My Toys</small><br><span class="sp">&#9654; Hear</span></div>
+<div class="w"><div class="pic">Aa</div><b>the &#9733;</b><small>Sight word</small><br><span class="sp">&#9654; Hear</span></div>
+<div class="w"><div class="pic">picture</div><b>sail</b><small>Level 5 · My Toys</small><br><span class="sp">&#9654; Hear</span></div>
+<div class="w"><div class="pic">picture</div><b>mat &#9733;</b><small>Level 3 · CVC "a"</small><br><span class="sp">&#9654; Hear</span></div></div></div></div>
+
+<div class="idea"><h2><span class="num">4</span>Daily goal<span class="who">Pupils</span></h2>
+<p>A small ring on the dashboard: "2 of 3 activities today". When it fills, the character cheers. A week view shows which days the goal was met. The teacher (or pupil) can pick 1, 3 or 5 activities a day.</p>
+<div class="mock"><div class="goal"><span class="ring"><i>2/3</i></span><div><b>Almost there, Maria!</b><small>One more activity to reach today's goal.</small><div class="pick"><span>1</span><span class="on">3</span><span>5</span><span style="border:0;background:none;padding-left:0">a day</span></div></div></div>
+<div class="week"><div class="day full"><i style="--h:100%"></i>Mon</div><div class="day full"><i style="--h:100%"></i>Tue</div><div class="day"><i style="--h:33%"></i>Wed</div><div class="day full"><i style="--h:100%"></i>Thu</div><div class="day"><i style="--h:66%"></i>Fri</div><div class="day"><i style="--h:0%"></i>Sat</div><div class="day"><i style="--h:0%"></i>Sun</div></div></div></div>
+
+<div class="idea"><h2><span class="num">5</span>Reading speed chart<span class="who">Teachers · Pupils</span></h2>
+<p>BULIG already times the read-aloud passages (Levels 4, 6, 7). This turns those times into a simple chart of words per minute, from the pre-test to the post-test, so teachers and pupils can see reading getting faster.</p>
+<div class="mock"><div class="chart"><div class="ch-h"><b>Maria · reading speed</b><span>+18 words a minute</span></div>
+<svg viewBox="0 0 300 150" role="img" aria-label="Reading speed rising from 32 to 50 words per minute"><line x1="30" y1="125" x2="290" y2="125" stroke="#e3dcc4"/><line x1="30" y1="85" x2="290" y2="85" stroke="#f1ead4"/><line x1="30" y1="45" x2="290" y2="45" stroke="#f1ead4"/>
+<text x="4" y="128" font-size="9" fill="#9aa79e">20</text><text x="4" y="88" font-size="9" fill="#9aa79e">40</text><text x="4" y="48" font-size="9" fill="#9aa79e">60</text>
+<polyline points="45,101 105,93 165,79 225,71 280,65" fill="none" stroke="#1c7a50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<g fill="#fff" stroke="#1c7a50" stroke-width="2.5"><circle cx="45" cy="101" r="5"/><circle cx="105" cy="93" r="5"/><circle cx="165" cy="79" r="5"/><circle cx="225" cy="71" r="5"/><circle cx="280" cy="65" r="6" fill="#ffc629" stroke="#c98f00"/></g>
+<g font-size="9" fill="#5f6f63" text-anchor="middle"><text x="45" y="143">Pre-test</text><text x="105" y="143">Week 2</text><text x="165" y="143">Week 4</text><text x="225" y="143">Week 6</text><text x="280" y="143">Post-test</text></g>
+<text x="280" y="55" font-size="10" font-weight="800" fill="#0e3b28" text-anchor="middle">50</text><text x="45" y="91" font-size="10" font-weight="800" fill="#0e3b28" text-anchor="middle">32</text></svg></div></div></div>
+
+<div class="idea"><h2><span class="num">6</span>Progress report for parents<span class="who">Teachers</span></h2>
+<p>One printable page per pupil for the parent: current level, lessons done, reading speed, badges, the teacher's short note, and a tip to practise at home. Teachers print the whole class at once, for example for the PTA meeting or card day.</p>
+<div class="mock"><div class="rep"><div class="rh"><img src="bulig-logo.png" alt=""><div><b>Progress report · Maria Pupil</b><br>Grade 1 · Bonifacio · Teacher Maria Santos · 1st Quarter</div></div><span class="qr"></span>
+<table><tr><td>Current level</td><td><b>Level 5</b> · Listening and Vocabulary</td></tr><tr><td>Lessons done</td><td><span class="bar"><i style="width:40%"></i></span> 9 of 23</td></tr><tr><td>Reading speed</td><td>32 &rarr; 50 words a minute</td></tr><tr><td>Badges</td><td>2 · Reading spark, First steps</td></tr></table>
+<div class="note"><b>Teacher's note:</b> Maria listens well and answers in full sentences. Let's practise reading aloud for 10 minutes every night.</div>
+<p style="margin:6px 0 0;color:#5f6f63">Home tip: read one short story together and ask "Who? Where? What happened?"</p></div></div></div>
+
+</div>
+
+<div class="summary"><table>
+<tr><th>Idea</th><th>Who</th><th>Size</th><th>Needs SQL</th></tr>
+<tr><td>1 Level certificates</td><td>Pupils, teachers</td><td>Medium</td><td>No</td></tr>
+<tr><td>2 Class progress grid</td><td>Teachers</td><td>Medium</td><td>No</td></tr>
+<tr><td>3 My word bank</td><td>Pupils</td><td>Large</td><td>Yes, one small table</td></tr>
+<tr><td>4 Daily goal</td><td>Pupils</td><td>Small</td><td>No</td></tr>
+<tr><td>5 Reading speed chart</td><td>Teachers, pupils</td><td>Small</td><td>No</td></tr>
+<tr><td>6 Progress report for parents</td><td>Teachers</td><td>Medium</td><td>No</td></tr>
+</table>
+<div class="note2">My suggestion: 2 and 1 first. The grid saves teachers the most time every day, and certificates are a big motivator for pupils and parents. Ideas 1, 2, 4, 5 and 6 use data BULIG already saves, so they need no SQL.</div></div>
+</div></body></html>

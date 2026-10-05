@@ -37,7 +37,7 @@
   const close=()=>{ov.classList.remove('on');document.removeEventListener('keydown',key,true);setTimeout(()=>ov.remove(),still?0:260);if(last&&last.focus)last.focus({preventScroll:true});if(o.onClose)o.onClose();};
   const btn=(b,cls)=>{const x=b.href?el('a',cls,b.label):el('button',cls,b.label);if(b.href)x.href=b.href;else x.type='button';x.addEventListener('click',e=>{if(b.run){e.preventDefault();b.run(close);}else if(!b.href)close();});return x;};
   if(o.primary)box.append(btn(o.primary,'btn primary qo-b1'));
-  if(o.secondary)box.append(btn(o.secondary,'qo-b2'+(o.secondary.danger?' danger':'')));
+  if(o.secondary){const b2=btn(o.secondary,'qo-b2'+(o.secondary.danger?' danger':''));if(o.secondary.danger){b2.textContent='';const ic=document.createElementNS('http://www.w3.org/2000/svg','svg');ic.setAttribute('viewBox','0 0 24 24');ic.setAttribute('aria-hidden','true');ic.innerHTML='<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>';b2.append(ic,el('span','',o.secondary.label));}box.append(b2);}
   const key=e=>{if(e.key==='Escape'){e.preventDefault();close();}else if(e.key==='Tab'){const f=[...box.querySelectorAll('a,button,input')];if(!f.length)return;const i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus();}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();}}};
   ov.addEventListener('click',e=>{if(e.target===ov)close();});document.addEventListener('keydown',key,true);
   document.body.append(ov);requestAnimationFrame(()=>requestAnimationFrame(()=>ov.classList.add('on')));
@@ -132,7 +132,7 @@
    if(off&&!managing){const n=el('p','qp-offnote','Signing in with an ID and password needs the internet. Saved pupils can learn offline with the levels they saved.');wrap.append(n);}
    else if(!managing){wrap.append(el('div','qp-or','OR'));const o=el('button','qp-other');o.type='button';o.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>';o.append('Sign in with another account');
     o.addEventListener('click',()=>{ss(true);card.classList.remove('qp-on');back.hidden=false;alert.hidden=true;const f=card.querySelector('input[name="public_id"]');if(f)f.focus();});wrap.append(o);}
-   const foot=el('div','qp-foot'),lk=el('span');lk.innerHTML=svgLock;lk.append('Saved only on this device');const m=el('button','linkbutton qp-manage-btn',managing?'Done':'Manage');m.type='button';
+   const foot=el('div','qp-foot'),lk=el('span');lk.innerHTML=svgLock;lk.append('Saved only on this device');const m=el('button','linkbutton qp-manage-btn');m.type='button';m.innerHTML=(managing?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>');m.append(managing?'Done':'Manage');
    m.addEventListener('click',()=>{managing=!managing;render();});foot.append(lk,m);wrap.append(foot);
   }
   function remove(p){store(load().filter(x=>x.token!==p.token));post({action:'forget_login',token:p.token}).catch(()=>{});if(!load().length)managing=false;render();}

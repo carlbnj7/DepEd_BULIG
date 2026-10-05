@@ -1,0 +1,91 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Draw or upload preview</title>
+<style>
+@font-face{font-family:P;src:url(poppins-latin-400-normal.woff2)}@font-face{font-family:P;font-weight:600;src:url(poppins-latin-600-normal.woff2)}@font-face{font-family:P;font-weight:700;src:url(poppins-latin-700-normal.woff2)}
+*{box-sizing:border-box}body{margin:0;background:#f4efe0;font-family:P,sans-serif;color:#0e3b28;padding:28px}
+h1{margin:0 0 4px;font-size:30px}.sub{margin:0 0 22px;color:#5f6f63}
+.row{display:flex;gap:26px;align-items:flex-start}
+.col{width:340px}.cap{min-height:52px;font-weight:700;margin:0 0 8px;color:#176444;font-size:15px}.cap small{display:block;font-weight:400;color:#5f6f63;font-size:12.5px}
+.ph{width:340px;height:720px;border-radius:30px;background:#fbf6e6;border:8px solid #1a2a20;overflow:hidden;position:relative}
+.top{background:#0e5a35;color:#fff;padding:12px 14px 10px;font-size:13px;border-bottom:4px solid #f4b41a}.top b{display:block;font-size:14px}.dots{display:flex;gap:3px;margin-top:6px}.dots i{width:8px;height:4px;border-radius:2px;background:#f4b41a}.dots i.n{background:#ffffff55}
+.card{margin:10px;background:#fff;border-radius:20px;padding:12px 14px;box-shadow:0 6px 16px -10px #0e3b2866}
+.title{text-align:center;font-size:22px;font-weight:700;margin:4px 0 2px}.ins{text-align:center;font-size:12px;color:#5f6f63;margin:0 0 8px}
+.prompt{font-weight:700;font-size:15px;margin:2px 0 8px}
+.tabs{display:flex;background:#eef7f1;border:1.5px solid #cfe3d6;border-radius:999px;padding:3px;margin:6px 0 10px}
+.tabs span{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 0;border-radius:999px;font-weight:700;font-size:13px;color:#176444}
+.tabs span.on{background:#176444;color:#fff;box-shadow:0 3px 8px -3px #0e3b2899}
+svg.i{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.kit{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.kit i{width:24px;height:24px;border-radius:50%;display:block}.kit i.sel{outline:3px solid #0e3b28;outline-offset:2px}
+.kit b{font-size:11px;border:1.5px solid #e4e0d2;border-radius:999px;padding:3px 9px;background:#fff}
+.canvas{height:190px;border:2px dashed #cfe3d6;border-radius:16px;background:#fff;position:relative}
+.drop{border:2.5px dashed #9fcdb0;border-radius:18px;background:#f4faf6;text-align:center;padding:18px 12px}
+.drop .big{width:58px;height:58px;border-radius:18px;background:#dff0e5;display:grid;place-items:center;margin:0 auto 8px;color:#176444}.drop .big svg{width:30px;height:30px}
+.drop p{margin:0 0 12px;font-size:12.5px;color:#3d5a48}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:16px;padding:11px;font-weight:700;font-size:14px;margin-top:8px}
+.pri{background:linear-gradient(#1c7a50,#0e5a35);color:#fff;box-shadow:0 6px 12px -6px #0e5a35}.sec{background:#eef7f1;border:1.5px solid #cfe3d6;color:#176444}
+.photo{border-radius:16px;overflow:hidden;border:3px solid #fff;box-shadow:0 8px 18px -10px #0006;position:relative}
+.photo .ok{position:absolute;left:8px;top:8px;background:#1c7a50;color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+.mini{display:flex;gap:8px;margin-top:8px}.mini .btn{flex:1;margin:0;padding:8px;font-size:12.5px}
+.say{margin-top:10px;border:2px dashed #f2d27a;background:#fffaf0;border-radius:14px;padding:9px 10px;font-size:12.5px;color:#8a7a50;position:relative;height:62px}
+.say .mic{position:absolute;right:8px;bottom:8px;width:32px;height:32px;border-radius:50%;background:#e85d4a;display:grid;place-items:center;color:#fff}
+.say.fill{color:#0e3b28}
+.bar{position:absolute;left:0;right:0;bottom:0;padding:10px 12px 14px;background:#fff;border-top:1px solid #e9e2cc}
+.bud{position:absolute;right:6px;bottom:78px;width:54px}
+.t-h{font-size:11px;letter-spacing:.12em;font-weight:700;color:#176444;margin:6px 0 2px}.t-row{display:flex;gap:10px;align-items:center;margin:8px 0}
+.av{width:34px;height:34px;border-radius:50%;background:#e3f1e7;display:grid;place-items:center;font-weight:700;font-size:12px}
+.chip{font-size:11px;background:#eef7f1;border:1px solid #cfe3d6;border-radius:999px;padding:2px 8px;font-weight:700}
+.note{font-size:12px;color:#5f6f63;margin:6px 0 0}
+.fb{border:2px dashed #e4e0d2;border-radius:12px;height:56px;margin-top:8px;font-size:12px;color:#9a9a8a;padding:8px}
+.how{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1440px}
+.how div{background:#fff;border-radius:16px;padding:14px 16px;border:1px solid #e9e2cc;font-size:13.5px;line-height:1.45}.how b{display:block;margin-bottom:4px;font-size:15px}
+</style></head><body>
+<h1>Drawing activities: draw it, or upload a photo</h1>
+<p class="sub">Only for the 3 real drawing activities in Level 1 · “Describe &amp; Draw” (Quick Draw, Listen and draw, Pair Describe and Draw). All other activities keep typed or spoken answers.</p>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
+<symbol id="cam" viewBox="0 0 24 24"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+<symbol id="img" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 17-5-5-9 8"/></symbol>
+<symbol id="mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol><symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+<symbol id="paper" viewBox="0 0 300 190"><rect width="300" height="190" fill="#f3efe6"/><rect x="18" y="10" width="264" height="172" fill="#fffdf8" transform="rotate(-2 150 95)"/><g transform="rotate(-2 150 95)"><path d="M108 60 L190 57 L193 138 L110 141 Z" fill="#4a8fe0" opacity=".85" stroke="#2a5fae" stroke-width="4" stroke-linejoin="round"/><path d="M118 70l60-2M116 85l66-2M117 100l64-2M118 115l63-2M119 128l60-1" stroke="#7fb2ee" stroke-width="5" opacity=".6"/><text x="40" y="170" font-family="Comic Sans MS,cursive" font-size="15" fill="#555">Maria  •  a small blue square</text></g></symbol>
+</defs></svg>
+<div class="row">
+ <div class="col"><p class="cap">1. Draw in the app<small>Tap “Draw it”: the drawing kit, as before.</small></p>
+ <div class="ph"><div class="top"><b>Level 1 · Describe &amp; Draw</b>Activity 6<div class="dots"><i></i><i></i><i></i><i></i><i></i><i class="n"></i><i class="n"></i><i class="n"></i></div></div>
+ <div class="card"><div class="title">Quick Draw</div><p class="ins">Draw it here, or draw on paper and upload a photo.</p><div class="prompt">a small, blue square</div>
+ <div class="tabs"><span class="on"><svg class="i"><use href="#pen"/></svg>Draw it</span><span><svg class="i"><use href="#cam"/></svg>Upload a photo</span></div>
+ <div class="kit"><i style="background:#26a269"></i><i style="background:#e2564a"></i><i class="sel" style="background:#3f7fd6"></i><i style="background:#f4b41a"></i><i style="background:#9b59d0"></i><b>Eraser</b><b>Undo</b><b>Full screen</b></div>
+ <div class="canvas"><svg viewBox="0 0 300 190" style="width:100%;height:100%"><path d="M105 55 L188 52 L190 135 L108 138 Z" fill="none" stroke="#3f7fd6" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+ <div class="say fill">It is a small blue square.<span class="mic"><svg class="i"><use href="#mic"/></svg></span></div></div>
+ <img class="bud" src="girl.webp" alt=""><div class="bar"><div class="btn pri">Submit Answer <svg class="i"><use href="#arrow"/></svg></div></div></div></div>
+
+ <div class="col"><p class="cap">2. Upload a photo<small>Take a photo of the paper, or choose one from the gallery.</small></p>
+ <div class="ph"><div class="top"><b>Level 1 · Describe &amp; Draw</b>Activity 6<div class="dots"><i></i><i></i><i></i><i></i><i></i><i class="n"></i><i class="n"></i><i class="n"></i></div></div>
+ <div class="card"><div class="title">Quick Draw</div><p class="ins">Draw it here, or draw on paper and upload a photo.</p><div class="prompt">a small, blue square</div>
+ <div class="tabs"><span><svg class="i"><use href="#pen"/></svg>Draw it</span><span class="on"><svg class="i"><use href="#cam"/></svg>Upload a photo</span></div>
+ <div class="drop"><div class="big"><svg class="i"><use href="#img"/></svg></div><p>Draw on paper, then take a clear photo of it. Hold the phone straight above the paper.</p>
+ <div class="btn pri"><svg class="i"><use href="#cam"/></svg>Take a photo</div><div class="btn sec"><svg class="i"><use href="#img"/></svg>Choose from gallery</div></div></div>
+ <img class="bud" src="girl.webp" alt=""><div class="bar"><div class="btn pri" style="opacity:.55">Submit Answer <svg class="i"><use href="#arrow"/></svg></div></div></div></div>
+
+ <div class="col"><p class="cap">3. Photo ready<small>See the photo, change it if needed, then say or type a few words.</small></p>
+ <div class="ph"><div class="top"><b>Level 1 · Describe &amp; Draw</b>Activity 6<div class="dots"><i></i><i></i><i></i><i></i><i></i><i class="n"></i><i class="n"></i><i class="n"></i></div></div>
+ <div class="card"><div class="title">Quick Draw</div><p class="ins">Draw it here, or draw on paper and upload a photo.</p><div class="prompt">a small, blue square</div>
+ <div class="tabs"><span><svg class="i"><use href="#pen"/></svg>Draw it</span><span class="on"><svg class="i"><use href="#cam"/></svg>Upload a photo</span></div>
+ <div class="photo"><svg viewBox="0 0 300 190" style="display:block;width:100%"><use href="#paper"/></svg><span class="ok">✓ Photo added</span></div>
+ <div class="mini"><div class="btn sec"><svg class="i"><use href="#cam"/></svg>Retake</div><div class="btn sec"><svg class="i"><use href="#img"/></svg>Change</div></div>
+ <div class="say fill">My square is small and blue.<span class="mic"><svg class="i"><use href="#mic"/></svg></span></div></div>
+ <img class="bud" src="girl.webp" alt=""><div class="bar"><div class="btn pri">Submit Answer <svg class="i"><use href="#arrow"/></svg></div></div></div></div>
+
+ <div class="col"><p class="cap">4. Teacher sees it<small>Activity history shows the photo or drawing with the pupil’s words.</small></p>
+ <div class="ph" style="background:#fbf6e6"><div class="top" style="border-bottom-color:#f4b41a"><b>Activity history</b>Teacher Gabriela</div>
+ <div class="card"><div class="t-h">NEEDS FEEDBACK</div><div class="t-row"><span class="av">MP</span><div><b style="font-size:14px">Maria Pupil · Quick Draw</b><div style="font-size:11.5px;color:#5f6f63">Level 1 · today, 9:41 AM</div></div></div>
+ <span class="chip">Photo of paper drawing</span>
+ <div class="photo" style="margin-top:8px"><svg viewBox="0 0 300 190" style="display:block;width:100%"><use href="#paper"/></svg></div>
+ <p style="margin:8px 0 0;font-size:13px"><b>Maria said:</b> “My square is small and blue.”</p>
+ <p class="note">Tap the photo to see it bigger.</p>
+ <div class="fb">Write a short note (optional)…</div><div class="btn pri" style="margin-top:8px">Give feedback</div></div></div></div>
+</div>
+<div class="how">
+ <div><b>Works on any phone</b>“Take a photo” opens the camera. “Choose from gallery” picks a saved picture. On PC it opens a file picker.</div>
+ <div><b>Small and fast</b>The photo is made smaller on the phone before sending (about 200 KB), so it uploads quickly even on mobile data.</div>
+ <div><b>Nothing extra on the server</b>No SQL and no upload folder. The photo is saved in the same place as drawings, and works with offline mode too.</div>
+</div>
+</body></html>
