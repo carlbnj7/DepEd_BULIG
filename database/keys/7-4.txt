@@ -1,0 +1,19 @@
+# Level 6 · Grade 4 (checked against the module key, pages 51-52; all agree except where marked)
+7:4:1100:pre:1 | 2=a 3=b 4=a 5=a 6=c 7=a 8=a 9=c 10=b 11=c
+7:4:1100:pre:2 | 2=c 3=b 4=a 5=c 6=c 7=b 8=a
+7:4:1100:pre:3 | 2=b 3=a 4=c 5=c 6=a 7=b 8=c
+7:4:2201:learn:1 | 2=a 3=a 4=a 5=c 6=c 7=b 8=a
+7:4:3202:learn:1 | 2=c 3=a 4=c 5=b 6=c 7=c 8=a 9=b 10=a 11=c
+7:4:4203:learn:1 | 2=a 3=c 4=a 5=c 6=a 7=c 8=c 9=b 10=b 11=b
+7:4:5204:learn:1 | 2=a 3=a 4=b 5=a 6=a 7=b 8=b 9=a 10=a 11=c
+7:4:6205:learn:1 | 2=b 3=b 4=a
+7:4:7206:learn:1 | 2=a 3=c 4=c 5=b 6=c 7=b 8=b
+7:4:8207:learn:1 | 2=c 3=a 4=b 5=c 6=a 7=c 8=c
+7:4:9208:learn:1 | 2=a 3=a 4=b 5=c 6=b
+7:4:10209:learn:1 | 2=b 3=a 4=c 5=a
+7:4:11210:learn:1 | 2=b 3=b 4=a
+7:4:12211:learn:1 | 2=c 3=b 4=c
+7:4:13212:learn:1 | 2=c 3=c! 4=b      # module key 2. A ("to buy food at the canteen"); the bell rang and they lined up to go to their room.
+7:4:22300:post:1 | 2=a 3=b 4=a 5=a 6=c 7=a 8=a 9=c 10=b 11=c
+7:4:22300:post:2 | 2=c 3=b 4=a 5=c 6=c 7=b 8=a
+7:4:22300:post:3 | 2=b 3=a 4=c 5=c 6=a 7=b 8=c

@@ -27,11 +27,10 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
  echo '<span class="l1-tag">'.e(l4_tag($a,$lesson)).'</span>';
  if($reading){
   $say='Read the following passage aloud. Tap the microphone when you start, and tap it again when you finish.';
-  echo '<div class="l1-q sm l4-dir"><p>'.e($say).'</p>'.l1_speaker($say).'</div>'.level4_passage($a);
+  echo '<div class="l1-q sm l4-dir"><p>'.e($say).'</p>'.l1_speaker($say).'</div>';ob_start();echo level4_passage($a);
  }else{
-  echo '<div class="l1-q sm"><p>'.nl2br(e((string)$a['prompt'])).'</p>'.l1_speaker((string)$a['prompt']).'</div>'.l1_pictures($a);
+  echo '<div class="l1-q sm"><p>'.nl2br(e((string)$a['prompt'])).'</p>'.l1_speaker((string)$a['prompt']).'</div>';ob_start();echo l1_pictures($a);
  }
- echo '<div class="l1-end">';
  if($readonly){
   $secs=$c?l4_secs((string)$c['response']):0;
   echo '<div class="l1-done">'.l1_icon('ok').'<b>'.($reading?'Your reading is saved.'.($secs?' Time: '.intdiv($secs,60).':'.sprintf('%02d',$secs%60):''):'You saw this page.').'</b></div>';
@@ -41,7 +40,8 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
    .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my reading">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
    .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button></div>';
  }
- echo '<div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns">';
+ $card=trim((string)ob_get_clean());if($card!=='')echo '<section class="l2-card l1-card l4-card">'.$card.'</section>';
+ echo '<div class="l1-end"><div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns">';
  if(!$readonly){
   if($reading)echo '<button type="button" class="l1-btn2" data-rec-again hidden>'.l1_icon('again').'Try again</button><button id="submit-answer" class="l1-big" type="submit" hidden>Send '.l1_icon('next').'</button>';
   else echo '<button id="submit-answer" class="l1-big" type="submit">Next '.l1_icon('next').'</button>';

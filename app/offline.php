@@ -26,7 +26,9 @@ function offline_manifest(array $u):never{
  if(!level_downloadable($pid,$level)){http_response_code(403);echo json_encode(['error'=>'This level cannot be saved.']);exit;}
  /* A locked level saves only its pictures (the big part). Its lesson pages are added once it opens. */
  if(!level_available($pid,$level)){$files=[level_cover($level)=>1];
-  foreach(rows('SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND a.published=1'.GRADE_SQL,[$level,$g]) as $a)foreach(activity_images($a) as $src){$f=resolved_image_path((string)$src);if($f)$files[$f]=1;}
+  foreach(rows('SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND a.published=1'.GRADE_SQL,[$level,$g]) as $a){foreach(activity_images($a) as $src){$f=resolved_image_path((string)$src);if($f)$files[$f]=1;}
+   /* The pictures on its cards too (matching pictures, story pictures). */
+   $set=level2_card_set($a);foreach($set['cards']??[] as $c){foreach(array_merge(array_column($c['images']??[],'src'),array_values($c['choice_images']??[])) as $src){$f=resolved_image_path((string)$src);if($f)$files[$f]=1;}}}
   echo json_encode(['uid'=>$pid,'level'=>$level,'title'=>level_label($level),'locked'=>true,'lessons'=>[],'pages'=>[],'assets'=>array_keys($files)]);exit;}
  $lessons=[];
  foreach(rows('SELECT l.id,l.position,l.subtitle FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL.' ORDER BY l.position,l.id',[$level,$g]) as $l){
