@@ -17,7 +17,7 @@
  /* ---------- which tour belongs to this page ---------- */
  let key=page;
  if(page==='lessons'&&q.get('level'))key='map';
- if(page==='lesson')key=$('[data-l1-start]')?'l1-start':$('.l1-app')?'l1':$('#activity-form')?'activity':($('.completion-card')?'lesson-done':'');
+ if(page==='lesson')key=$('[data-l1-start]')?'l1-start':$('.l2-app')?'l2':$('.l1-app')?'l1':$('#activity-form')?'activity':($('.completion-card')?'lesson-done':'');
  if(page==='class_demo')key=$('#l1-demo')?'l1-demo':$('#class-demo')?'demo-slide':($('.demo-catalog')?'class_demo':'');
  if(page==='pupil')key='pupil-detail';
 
@@ -81,14 +81,16 @@
    [['.l1-pair'],'With a friend','Do this together with your partner or group, then tap We did it!'],
    [['.l1-dchoice'],'Your drawing','Draw on paper and take a photo, or draw here in BULIG. Check it, then send it.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null],
-  'l1-demo':[
-   ['.l1d-ln','The lesson','The lesson and the part you are on.'],
-   ['[data-d-stage]','The slide','Ask the question. Pupils answer out loud. No typing.'],
-   ['[data-d-listen]','Listen','BULIG reads the slide aloud.'],
-   ['[data-d-next]','Next','Tap Next (or press the right arrow key) to move on.'],
-   ['[data-d-lessons]','Jump to a lesson','Open any of the 12 lessons.'],
-   ['[data-plan-open]','Lesson plan','The goals and the official module pages for this lesson.'],
-   ['[data-cd-open]','Mark as done','Mark an activity or lesson done for the pupils who did it in class.']],
+  l2:[
+   ['.l1-top','Your lesson','Tap X to go back to your map.'],
+   ['.l2-dir','What to do','These are the directions from your book. Tap the yellow speaker to hear them.'],
+   [['.l2-cdots'],'Your cards','Each number is a card. Green cards are answered. Tap a number to jump to it.'],
+   [['.l2-card:not([hidden]) .l2-keys'],'Letter tiles','Tap the letters to write your answer. The red arrow erases.'],
+   [['.l2-card:not([hidden]) .l2-chips'],'Tap a word','Tap the word or sound you choose. It turns green.'],
+   [['.l2-card:not([hidden]) button.l2-pic'],'Tap a picture','Tap the picture you choose. It gets a green check.'],
+   [['.l2-card:not([hidden]) .l2-nums'],'Count','Tap the number of sounds you hear.'],
+   [['.l2-card:not([hidden]) .l1-mic'],'Say it','Tap the red microphone and say your answer. Tap again to stop.'],
+   [['[data-l2-next]','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, tap Submit.']],
   'lesson-done':[
    ['.completion-card','Lesson finished!','Great job! Tap the button to save the lesson and go back to your map.']],
   calendar:[
@@ -138,6 +140,14 @@
   class_demo:[
    ['.pageheading','Class Demo','Present lessons to the whole class on a TV or projector. Nothing is saved for pupils here.'],
    [['.demo-catalog .level-card.available'],'Choose a level','Tap "Start class demo". Levels 4 to 7 ask you to choose a grade first.']],
+  'l1-demo':[
+   ['.l1d-ln','The lesson','The lesson and the part you are on.'],
+   ['[data-d-stage]','The slide','Ask the question. Pupils answer out loud. No typing.'],
+   ['[data-d-listen]','Listen','BULIG reads the slide aloud.'],
+   ['[data-d-next]','Next','Tap Next (or press the right arrow key) to move on.'],
+   ['[data-d-lessons]','Jump to a lesson','Open any of the 12 lessons.'],
+   ['[data-plan-open]','Lesson plan','The goals and the official module pages for this lesson.'],
+   ['[data-cd-open]','Mark as done','Mark an activity or lesson done for the pupils who did it in class.']],
   'demo-slide':[
    ['.demo-header','Demo controls','"Mark as done" saves the lesson for the pupils in class. "Full screen" fills the TV.'],
    ['[data-plan-open]','Lesson plan','Open the goals, the official module pages and the PDF for the lesson on screen.'],
