@@ -91,7 +91,9 @@ function l1_save_audio(string $data,int $pid,int $aid):string{
 
 /** Play a recording: the pupil who made it, or a teacher of that pupil. */
 function l1_recording(array $u):never{
- $c=one('SELECT pupil_id,audio_path FROM activity_completion WHERE id=?',[(int)($_GET['id']??0)]);
+ $c=one('SELECT * FROM activity_completion WHERE id=?',[(int)($_GET['id']??0)]);
+ /* Level 2A keeps one recording per card: ?n=card number. */
+ if($c&&isset($_GET['n'])){$m=json_decode((string)($c['audio_paths']??''),true)?:[];$c['audio_path']=$m[(string)(int)$_GET['n']]??null;}
  if(!$c||!$c['audio_path'])fail('Recording not found.',404);
  if($u['role']==='teacher')own_pupil((int)$c['pupil_id']);elseif((int)$u['id']!==(int)$c['pupil_id'])fail('Recording not found.',404);
  $path=(string)$c['audio_path'];if(!preg_match('~^\d+/[0-9]+-\d{14}-[0-9a-f]{8}\.(webm|ogg|m4a|mp3|aac)$~',$path,$m))fail('Recording not found.',404);
@@ -288,6 +290,11 @@ function l1_audio_supported():bool{static $s;if($s===null){try{$s=(bool)one("SHO
 
 /** The pupil's recording, ready to play. */
 function l1_review_media(array $r):string{
+ $key=array_column(rows("SELECT an.content FROM answers an JOIN questions q ON q.id=an.question_id WHERE q.activity_id=? AND an.correct=1",[(int)$r['activity_id']]),'content');
+ $k=$key?'<p class="rv-l1-key">'.l1_icon('ok').'Module answer: <b>'.e(implode(' / ',$key)).'</b></p>':'';
+ return $k.l1_review_media_only($r);
+}
+function l1_review_media_only(array $r):string{
  if(empty($r['audio_path']))return str_starts_with((string)$r['response'],'Answered out loud')?'<p class="rv-l1-heard">'.l1_icon('ear').'Answered out loud in class (no recording).</p>':'';
  return '<div class="rv-l1-audio"><span>'.l1_icon('mic').'Pupil’s recording</span><audio controls preload="metadata" src="?page=recording&amp;id='.(int)$r['id'].'"></audio></div>';
 }
