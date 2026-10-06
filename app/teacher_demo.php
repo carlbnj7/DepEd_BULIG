@@ -17,6 +17,7 @@ function class_demo_view(array $u):void{
  }
  $info=one('SELECT * FROM bulig_levels WHERE id=? AND published=1',[$level]);
  if(!$info)fail('This level has no published demo content yet.',404);
+ if($level===2||$level===3){l2a_demo_view($u,$level);return;}
  $grade=(int)($_GET['grade']??0);
  if(per_grade_level($level)&&!$grade){
   shell($u,'class_demo');
