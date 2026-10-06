@@ -3120,3 +3120,22 @@ body.l1-page .l1-start .l1-start-top .l1-cover{flex:none;width:clamp(92px,26vw,1
 html.dark body.l1-page .l3-grid span{background:#16231b;color:#e8f0ea;border-color:#5a4a14;box-shadow:0 3px 0 #5a4a14}
 .l3-grid.cols2{grid-template-columns:1fr 1fr}
 .l1-demo .l3-grid.demo{grid-template-columns:repeat(5,1fr)}.l1-demo .l3-grid.demo span{font-size:calc(1.8rem*var(--fit,1))}
+/* v107: Level 4 passage screen and the teacher's module scoring table */
+.l4-page .l4-dir p{font-size:1.1rem}
+.l4-page .fluency-passage{background:#fff;border-radius:22px;box-shadow:0 6px 18px rgba(14,59,40,.10);padding:16px 18px;margin:0}
+.l4-page .fluency-pictures{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.l4-page .fluency-pictures img{max-height:230px;max-width:100%;width:auto;border-radius:16px;object-fit:contain}
+.l4-page .fluency-title{text-align:center;margin:12px 0 2px;font-size:clamp(1.4rem,5.5vw,1.9rem)}
+.l4-page .fluency-author{text-align:center;margin:0 0 8px;color:var(--mu,#5c7266)}
+.l4-page .fluency-text p{font-size:clamp(1.2rem,4.8vw,1.45rem);line-height:1.7;margin:0 0 12px}
+.l4-page .fluency-passage.is-verse .fluency-text p{text-align:center}
+.l4-page .fluency-count{border-top:1px dashed #e3d7b0;padding-top:10px;margin:6px 0 0;color:#5c7266}
+html.dark body.l1-page .fluency-passage{background:#16231b;color:#e8f0ea}
+.l4-score .l4-mis{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin:8px 0}
+.l4-score .l4-mis label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.9rem}
+.l4-score .l4-mis input{font:inherit;font-size:1.1rem;padding:8px;border:2px solid #d9e6dd;border-radius:10px;width:100%;box-sizing:border-box}
+.l4-score .l4-tot output{font-size:1.4rem;font-weight:800;color:#0f4630;padding:6px 0}
+.l4-score .l4-res p{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0;padding:8px 0;border-top:1px solid #eef2ee}
+.l4-score .l4-res p span{flex:1}.l4-score .l4-res b{color:#0f4630;font-size:1.1rem}
+.l4-score .l4-res input{width:110px;font:inherit;padding:6px 8px;border:2px solid #d9e6dd;border-radius:10px}
+.rv-l4-time{display:flex;align-items:center;gap:6px;color:#176444;font-weight:600}

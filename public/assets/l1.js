@@ -39,7 +39,7 @@
  if(rec&&form){
   const go=$('[data-rec-go]',rec),label=$('[data-rec-label]',rec),sub=$('[data-rec-sub]',rec),playBox=$('[data-rec-play]',rec),listenB=$('[data-rec-listen]',rec),bar=$('.l1-bar i',rec),len=$('[data-rec-len]',rec),heardB=$('[data-rec-heard]',rec);
   const again=$('[data-rec-again]'),send=$('#submit-answer'),audioIn=$('#l1-audio'),heardIn=$('#l1-heard'),startLabel=label.textContent;
-  const MAX=60,fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+  const MAX=+rec.dataset.max||60,fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   let mr=null,stream=null,chunks=[],t0=0,tick=null,secs=0,url='',player=null,state='idle';
  /* Microphone: ask with clean-sound settings, then plain audio (some iPhones refuse the first). */
  async function getMic(){const md=navigator.mediaDevices;try{return await md.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}
@@ -55,7 +55,7 @@
   function ui(s){state=s;rec.dataset.state=s;go.classList.toggle('on',s==='rec');go.setAttribute('aria-label',s==='rec'?'Stop recording':'Tap and say your answer');
    go.hidden=s==='done';playBox.hidden=s!=='done';if(again)again.hidden=s!=='done';if(send)send.hidden=s!=='done';
    if(s==='idle'){label.textContent=startLabel;sub.textContent='';}
-   if(s==='rec'){label.textContent='0:00';sub.textContent='Speak now. Tap the button to stop.';}
+   if(s==='rec'){label.textContent='0:00';sub.textContent=rec.classList.contains('l4-rec')?'Read now. Tap the button when you finish.':'Speak now. Tap the button to stop.';}
    if(s==='done'){label.textContent='Listen to your answer';sub.textContent='Happy with it? Tap Send. Or tap Try again.';}}
   function reset(){if(player){player.pause();player=null;}if(url){URL.revokeObjectURL(url);url='';}audioIn.value='';heardIn.value='';bar.style.setProperty('--p','0');}
   async function start(){if(state==='starting'||state==='rec')return;state='starting';rec.dataset.state='starting';go.classList.add('busy');stopSay();reset();
@@ -68,7 +68,7 @@
   function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;if(mr&&mr.state!=='inactive')mr.stop();if(stream)stream.getTracks().forEach(t=>t.stop());}
   function finish(){const kind=((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/'),blob=new Blob(chunks,{type:kind});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Tap the microphone and try again.';return;}
-   url=URL.createObjectURL(blob);len.textContent=fmt(secs);
+   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const sIn=$('#l1-secs');if(sIn)sIn.value=String(Math.round(secs));
    const r=new FileReader();r.onload=()=>{audioIn.value=String(r.result);ui('done');if(send)send.focus({preventScroll:true});};
    r.onerror=()=>{ui('idle');sub.textContent='The recording could not be kept. Please try again.';};r.readAsDataURL(blob);}
   go.addEventListener('click',()=>{if(state==='rec'){if(Date.now()-t0<700)return;stop();}else if(state==='idle')start();});
@@ -117,3 +117,11 @@
 /* Activity history: show the rubric total as boxes are chosen. */
 document.querySelectorAll('.rv-rub [data-rub-total]').forEach(t=>{const f=t.closest('.rv-rub'),max=t.dataset.rubTotal,rows=f.querySelectorAll('.rv-rub-row').length;
  f.addEventListener('change',()=>{const v=[...f.querySelectorAll('input[type=radio]:checked')].map(i=>+i.value);t.textContent=v.length===rows?'Total: '+v.reduce((a,b)=>a+b,0)+' / '+max:'Chosen '+v.length+' of '+rows+' rows.';});});
+/* Teacher review, Level 4: miscue total, Oral Reading Score, Reading Level and Reading Speed as numbers are typed. */
+document.querySelectorAll('.l4-score').forEach(f=>{const words=+f.dataset.words||0,q=s=>f.querySelector(s);
+ const calc=()=>{const mis=[...f.querySelectorAll('.l4-mis input')].reduce((a,i)=>a+Math.max(0,+i.value||0),0),tot=Math.min(words,mis);
+  const score=words?Math.round((words-tot)/words*1000)/10:0,secs=+q('[data-l4-secs]').value||0;
+  q('[data-l4-total]').textContent=tot;q('[data-l4-score]').textContent=score+'%';
+  q('[data-l4-level]').textContent=score>=98?'Independent':(score>=90?'Instructional':'Frustration');
+  q('[data-l4-wpm]').textContent=secs?Math.round((words-tot)/secs*60)+' words per minute':'Type the reading time';};
+ f.addEventListener('input',calc);calc();});

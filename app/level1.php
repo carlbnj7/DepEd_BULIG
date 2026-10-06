@@ -79,7 +79,7 @@ function l1_recordings_dir():string{return __DIR__.'/../storage/recordings';}
 function l1_save_audio(string $data,int $pid,int $aid):string{
  if(!preg_match('~^data:audio/(webm|ogg|mp4|mpeg|aac|x-m4a)(?:;codecs=[a-z0-9.,"\- ]+)?;base64,([A-Za-z0-9+/=]+)$~i',$data,$m))fail('This recording could not be read. Please record again.');
  $bin=base64_decode($m[2],true);if($bin===false||strlen($bin)<200)fail('This recording is empty. Please record again.');
- if(strlen($bin)>3000000)fail('This recording is too long. Please keep it under one minute.');
+ if(strlen($bin)>9000000)fail('This recording is too long. Please record again.');
  $head=substr($bin,0,12);
  if(str_starts_with($head,"\x1A\x45\xDF\xA3"))$ext='webm';elseif(str_starts_with($head,'OggS'))$ext='ogg';elseif(substr($head,4,4)==='ftyp')$ext='m4a';
  elseif(str_starts_with($head,'ID3')||(ord($head[0])===0xFF&&(ord($head[1])&0xE0)===0xE0))$ext=strtolower($m[1])==='aac'?'aac':'mp3';else fail('This recording could not be read. Please record again.');

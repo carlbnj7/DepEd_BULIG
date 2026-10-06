@@ -138,7 +138,7 @@ function action():void{
   $u=require_role('pupil');$pid=(int)$u['id'];$aid=(int)($_POST['activity_id']??0);$answer=trim((string)($_POST['response']??''));$drawing=(string)($_POST['drawing']??'');$transcript=trim((string)($_POST['transcript']??''));
   if(strlen($answer)>12000||strlen($transcript)>12000||strlen($drawing)>1500000)fail('This response is too large.');
   if($drawing!==''&&!preg_match('~^data:image/(png|jpeg);base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
-  $audio=$action==='submit'?(string)($_POST['audio']??''):'';if(isset($_POST['audio_card'])&&!is_array($_POST['audio_card']))fail('Invalid recording.');$heard=($_POST['heard']??'')==='1';if(strlen($audio)>4200000)fail('This recording is too long. Please keep it under one minute.');
+  $audio=$action==='submit'?(string)($_POST['audio']??''):'';if(isset($_POST['audio_card'])&&!is_array($_POST['audio_card']))fail('Invalid recording.');$heard=($_POST['heard']??'')==='1';if(strlen($audio)>12500000)fail('This recording is too long. Please record again.');
   db()->beginTransaction();try{
    q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a))$drawing='';$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
    if(completion_ok($old)){db()->commit();submission_reply($a,true,'Already saved. You can continue.',0);}
@@ -147,8 +147,12 @@ function action():void{
    }
    $question=one('SELECT * FROM questions WHERE activity_id=?',[$aid]);$exact=$question&&$question['grading']==='exact'&&lesson_level((int)$a['lesson_id'])!==1;/* Level 1 answers are spoken: the teacher checks them */$mode=$exact||($a['response_mode']==='drawing'&&!draw_allowed($a))?'answer':$a['response_mode'];
    /* Level 1 is oral: the answer is a voice recording, or the teacher heard it in class. */
-   $oral=$mode==='answer'&&!$exact&&lesson_level((int)$a['lesson_id'])===1;$apath=null;
-   if($oral){if($audio===''&&!$heard)fail('Record your answer first.');if($answer==='')$answer=$audio!==''?'Spoken answer (voice recording)':'Answered out loud. Done.';if($audio!==''&&l1_audio_supported())$apath=l1_save_audio($audio,$pid,$aid);}
+   /* Level 4 is read aloud the same way: the reading is recorded and its time is kept. */
+   $l4read=$mode==='answer'&&lesson_level((int)$a['lesson_id'])===5&&level4_passage_parts($a)!==null;
+   $oral=$mode==='answer'&&!$exact&&(lesson_level((int)$a['lesson_id'])===1||$l4read);$apath=null;
+   if($oral){if($audio===''&&!$heard)fail('Record your answer first.');$secs=max(0,min(3600,(int)($_POST['secs']??0)));
+    if($l4read)$answer=($audio!==''?'Read aloud (voice recording)':'Answered out loud. Done.').($audio!==''&&$secs?' · time '.intdiv($secs,60).':'.sprintf('%02d',$secs%60):'');
+    elseif($answer==='')$answer=$audio!==''?'Spoken answer (voice recording)':'Answered out loud. Done.';if($audio!==''&&l1_audio_supported())$apath=l1_save_audio($audio,$pid,$aid);}
    if(in_array($mode,['answer','drawing'],true)&&$answer===''&&$drawing==='')fail('Draw it, upload a photo, or tell about your drawing before continuing.');
    if($mode==='answer'&&$answer==='')fail('Speak or type an answer first.');
    $ok=true;$score=null;$max=null;$outcome=['none'=>'viewed','perform'=>'performed','drawing'=>'recorded','answer'=>'recorded'][$mode];
@@ -176,8 +180,11 @@ function action():void{
   /* Level 1: the module rubric (or the lesson-plan checklist) for this lesson. */
   $rv=null;$rub=$fa&&isset($_POST['rubric'])&&l1_audio_supported()?l1_rubric(l1_position((int)$fa['lesson_id'])):null;
   if($rub){$rv=l1_rubric_values($rub,(array)$_POST['rubric']);if($rv===null)fail($rub['kind']==='rubric'?'Choose a score for each part of the rubric.':'Choose one rating first.');}
+  /* Level 4: the module's scoring table (miscues, Oral Reading Score, Reading Level, Reading Speed). */
+  $l4v=null;if($fa&&isset($_POST['miscue'])&&lesson_level((int)$fa['lesson_id'])===5){$act=one('SELECT * FROM activities WHERE id=?',[(int)$c['activity_id']]);$l4v=$act?l4_review_values($act,$_POST):null;if($l4v){$rv=$l4v;}}
   if(strlen($feedback)>3000||($feedback===''&&$rv===null))fail('Enter feedback of up to 3,000 characters.');
-  if($rv!==null)q('UPDATE activity_completion SET rubric_scores=? WHERE id=?',[json_encode(['v'=>$rv]),$cid]);
+  if($rv!==null)q('UPDATE activity_completion SET rubric_scores=? WHERE id=?',[json_encode($l4v!==null?['l4'=>$l4v]:['v'=>$rv]),$cid]);
+  if($l4v!==null)q('UPDATE activity_completion SET score=?,max_score=? WHERE id=?',[$l4v['score'],100,$cid]);
   q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback!==''?$feedback:$c['feedback'],$u['id'],$cid]);if($feedback!=='')q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit($rv!==null?'score_response':'feedback_response',(string)$cid);if($fa&&$feedback!=='')push_queue((int)$c['pupil_id'],'teacher','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','Open “'.$fa['title'].'” to read it.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash($rv!==null?($feedback!==''?'Score and feedback saved.':'Score saved.'):'Feedback saved. Pupil progression is unchanged.');go(review_back());
  }
  if($action==='review_assessment'){
