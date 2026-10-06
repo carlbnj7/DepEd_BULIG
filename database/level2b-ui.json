@@ -1,0 +1,4724 @@
+{
+ "version": 1,
+ "lessons": {
+  "35": {
+   "lesson": "Pre-Test",
+   "activity": "Phonological Awareness Pre-Test",
+   "goals": [],
+   "what": null,
+   "model": null,
+   "covers": [
+    "Blending Onsets and Rimes into Words",
+    "Segmenting Words into Onsets and Rimes",
+    "Segmenting Words into Syllables",
+    "Blending Syllables into Words",
+    "Sentence Segmentation",
+    "Rhymes and Rhyming Songs"
+   ]
+  },
+  "58": {
+   "lesson": "Post Test",
+   "activity": "Phonological Awareness Post Test",
+   "goals": [],
+   "what": null,
+   "model": null,
+   "covers": [
+    "Segmenting Onsets and Rimes",
+    "Segmenting Words into Syllables",
+    "Blending Syllables into Words",
+    "Sentence Segmentation",
+    "Rhyming and Rhyming Words"
+   ]
+  },
+  "36": {
+   "lesson": "Blending Onset and Rime",
+   "activity": "Activity 1 · Blending Onset and Rime",
+   "goals": [
+    "Identify the onset and rime in simple CVC (consonant-vowel-consonant) words.",
+    "Blend onset and rime orally to form whole words.",
+    "Produce new words by changing the onset while keeping the rime constant."
+   ],
+   "what": null,
+   "model": "Example: f, p, b + an → pan"
+  },
+  "37": {
+   "lesson": "Blending Onset and Rime",
+   "activity": "Activity 2 · Blending Onset and Rime",
+   "goals": [
+    "Identify the onset and rime in simple CVC (consonant-vowel-consonant) words.",
+    "Blend onset and rime orally to form whole words.",
+    "Produce new words by changing the onset while keeping the rime constant."
+   ],
+   "what": null,
+   "model": "Example: web"
+  },
+  "38": {
+   "lesson": "Blending Onset and Rime",
+   "activity": "Activity 3 · Blending Onset and Rime",
+   "goals": [
+    "Identify the onset and rime in simple CVC (consonant-vowel-consonant) words.",
+    "Blend onset and rime orally to form whole words.",
+    "Produce new words by changing the onset while keeping the rime constant."
+   ],
+   "what": null,
+   "model": "Onset = first sound (e.g., /c/ in cat). Rime = rest of the word (e.g., -at in cat). c + at = cat"
+  },
+  "39": {
+   "lesson": "Blending Onset and Rime",
+   "activity": "Activity 4 · Blending Onset and Rime",
+   "goals": [
+    "Identify the onset and rime in simple CVC (consonant-vowel-consonant) words.",
+    "Blend onset and rime orally to form whole words.",
+    "Produce new words by changing the onset while keeping the rime constant."
+   ],
+   "what": null,
+   "model": "Onset = first sound (e.g., /c/ in cat). Rime = rest of the word (e.g., -at in cat). c + at = cat"
+  },
+  "40": {
+   "lesson": "Segmenting Onsets and Rimes",
+   "activity": "Activity 5 · Segmenting Onsets and Rimes",
+   "goals": [
+    "Orally identify the onset and rime of a given single-syllable word represented by a picture.",
+    "Physically and verbally segment spoken words into onset and rime using hand motions and chants.",
+    "Produce the rime of a word when given the onset, and vice versa, using picture supports."
+   ],
+   "what": null,
+   "model": "Onset = first sound (e.g., /c/ in cat). Rime = rest of the word (e.g., -at in cat)."
+  },
+  "41": {
+   "lesson": "Segmenting Onsets and Rimes",
+   "activity": "Activity 6 · Segmenting Onsets and Rimes",
+   "goals": [
+    "Orally identify the onset and rime of a given single-syllable word represented by a picture.",
+    "Physically and verbally segment spoken words into onset and rime using hand motions and chants.",
+    "Produce the rime of a word when given the onset, and vice versa, using picture supports."
+   ],
+   "what": null,
+   "model": "Example: gap → onset g, rime ap"
+  },
+  "42": {
+   "lesson": "Segmenting Onsets and Rimes",
+   "activity": "Activity 7 · Segmenting Onsets and Rimes",
+   "goals": [
+    "Orally identify the onset and rime of a given single-syllable word represented by a picture.",
+    "Physically and verbally segment spoken words into onset and rime using hand motions and chants.",
+    "Produce the rime of a word when given the onset, and vice versa, using picture supports."
+   ],
+   "what": null,
+   "model": "Onset = first sound (e.g., /c/ in cat). Rime = rest of the word (e.g., -at in cat)."
+  },
+  "43": {
+   "lesson": "Segmenting Words into Syllables",
+   "activity": "Activity 8 · Segmenting Words into Syllables",
+   "goals": [
+    "Orally segment multisyllabic words into syllables by clapping, tapping, or counting.",
+    "Identify and sort picture cards based on the number of syllables in each word.",
+    "Write and represent the syllable breakdown of at least five words using visual markers."
+   ],
+   "what": null,
+   "model": "Example: ok/ra"
+  },
+  "44": {
+   "lesson": "Segmenting Words into Syllables",
+   "activity": "Activity 9 · Segmenting Words into Syllables",
+   "goals": [
+    "Orally segment multisyllabic words into syllables by clapping, tapping, or counting.",
+    "Identify and sort picture cards based on the number of syllables in each word.",
+    "Write and represent the syllable breakdown of at least five words using visual markers."
+   ],
+   "what": null,
+   "model": "Example: parrot = 2"
+  },
+  "45": {
+   "lesson": "Segmenting Words into Syllables",
+   "activity": "Activity 10 · Segmenting Words into Syllables",
+   "goals": [
+    "Orally segment multisyllabic words into syllables by clapping, tapping, or counting.",
+    "Identify and sort picture cards based on the number of syllables in each word.",
+    "Write and represent the syllable breakdown of at least five words using visual markers."
+   ],
+   "what": null,
+   "model": "Example: natural = na/tu/ral 3"
+  },
+  "46": {
+   "lesson": "Blending Syllables into Words",
+   "activity": "Activity 11 · Blending Syllables into Words",
+   "goals": [
+    "Orally blend separately spoken syllables to identify the whole word.",
+    "Connect blended words to their corresponding pictures through matching activities.",
+    "Create and illustrate a new word by blending given syllables."
+   ],
+   "what": null,
+   "model": "Example: c a t → cat"
+  },
+  "47": {
+   "lesson": "Blending Syllables into Words",
+   "activity": "Activity 12 · Blending Syllables into Words",
+   "goals": [
+    "Orally blend separately spoken syllables to identify the whole word.",
+    "Connect blended words to their corresponding pictures through matching activities.",
+    "Create and illustrate a new word by blending given syllables."
+   ],
+   "what": null,
+   "model": null
+  },
+  "48": {
+   "lesson": "Blending Syllables into Words",
+   "activity": "Activity 13 · Blending Syllables into Words",
+   "goals": [
+    "Orally blend separately spoken syllables to identify the whole word.",
+    "Connect blended words to their corresponding pictures through matching activities.",
+    "Create and illustrate a new word by blending given syllables."
+   ],
+   "what": null,
+   "model": null
+  },
+  "49": {
+   "lesson": "Blending Syllables into Words",
+   "activity": "Activity 14 · Blending Syllables into Words",
+   "goals": [
+    "Orally blend separately spoken syllables to identify the whole word.",
+    "Connect blended words to their corresponding pictures through matching activities.",
+    "Create and illustrate a new word by blending given syllables."
+   ],
+   "what": null,
+   "model": null
+  },
+  "50": {
+   "lesson": "Blending Syllables into Words",
+   "activity": "Activity 15 · Blending Syllables into Words",
+   "goals": [
+    "Orally blend separately spoken syllables to identify the whole word.",
+    "Connect blended words to their corresponding pictures through matching activities.",
+    "Create and illustrate a new word by blending given syllables."
+   ],
+   "what": null,
+   "model": null
+  },
+  "51": {
+   "lesson": "Sentence Segmentation",
+   "activity": "Activity 16 · Sentence Segmentation",
+   "goals": [
+    "Orally segment a simple spoken sentence into individual words (e.g., \"The cat runs.\" → \"The / cat / runs.\").",
+    "Identify and count the number of words in a spoken or written sentence.",
+    "Represent a sentence visually using counters, blocks, or written boxes, one per word."
+   ],
+   "what": null,
+   "model": null
+  },
+  "52": {
+   "lesson": "Sentence Segmentation",
+   "activity": "Activity 17 · Sentence Segmentation",
+   "goals": [
+    "Orally segment a simple spoken sentence into individual words (e.g., \"The cat runs.\" → \"The / cat / runs.\").",
+    "Identify and count the number of words in a spoken or written sentence.",
+    "Represent a sentence visually using counters, blocks, or written boxes, one per word."
+   ],
+   "what": null,
+   "model": null
+  },
+  "53": {
+   "lesson": "Sentence Segmentation",
+   "activity": "Activity 18 · Sentence Segmentation",
+   "goals": [
+    "Orally segment a simple spoken sentence into individual words (e.g., \"The cat runs.\" → \"The / cat / runs.\").",
+    "Identify and count the number of words in a spoken or written sentence.",
+    "Represent a sentence visually using counters, blocks, or written boxes, one per word."
+   ],
+   "what": null,
+   "model": "What/ a/ fun/ day!"
+  },
+  "54": {
+   "lesson": "Rhyming and Rhyming Songs",
+   "activity": "Activity 19 · Rhyming and Rhyming Songs",
+   "goals": [
+    "Identify rhyming pairs from given picture cues through matching games.",
+    "Generate at least one rhyming word for a given prompt using word families.",
+    "Participate in and create new verses for rhyming songs and chants."
+   ],
+   "what": null,
+   "model": null
+  },
+  "55": {
+   "lesson": "Rhyming and Rhyming Songs",
+   "activity": "Activity 20 · Rhyming and Rhyming Songs",
+   "goals": [
+    "Identify rhyming pairs from given picture cues through matching games.",
+    "Generate at least one rhyming word for a given prompt using word families.",
+    "Participate in and create new verses for rhyming songs and chants."
+   ],
+   "what": null,
+   "model": null
+  },
+  "56": {
+   "lesson": "Rhyming and Rhyming Songs",
+   "activity": "Activity 21 · Rhyming and Rhyming Songs",
+   "goals": [
+    "Identify rhyming pairs from given picture cues through matching games.",
+    "Generate at least one rhyming word for a given prompt using word families.",
+    "Participate in and create new verses for rhyming songs and chants."
+   ],
+   "what": null,
+   "model": null
+  },
+  "57": {
+   "lesson": "Rhyming and Rhyming Songs",
+   "activity": "Activity 22 · Rhyming and Rhyming Songs",
+   "goals": [
+    "Identify rhyming pairs from given picture cues through matching games.",
+    "Generate at least one rhyming word for a given prompt using word families.",
+    "Participate in and create new verses for rhyming songs and chants."
+   ],
+   "what": null,
+   "model": null
+  }
+ },
+ "pages": {
+  "12": {
+   "title": "Pre-Test · Blending Onset to the Rime",
+   "cards": [
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "f",
+       "p",
+       "b"
+      ],
+      [
+       "esh",
+       "ish",
+       "ich"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "fl",
+       "pl",
+       "bl"
+      ],
+      [
+       "ow",
+       "ower",
+       "ew"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "k",
+       "c",
+       "g"
+      ],
+      [
+       "ot",
+       "ut",
+       "at"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "c",
+       "k",
+       "l"
+      ],
+      [
+       "ow",
+       "at",
+       "ut"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "c",
+       "k",
+       "j"
+      ],
+      [
+       "ite",
+       "ill",
+       "ake"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "b",
+       "v",
+       "p"
+      ],
+      [
+       "all",
+       "oll",
+       "our"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "s",
+       "b",
+       "p"
+      ],
+      [
+       "ee",
+       "et",
+       "ie"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "j",
+       "g",
+       "k"
+      ],
+      [
+       "ift",
+       "ite",
+       "ump"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "gl",
+       "dr",
+       "br"
+      ],
+      [
+       "ess",
+       "ass",
+       "ush"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "gr",
+       "gl",
+       "bl"
+      ],
+      [
+       "ass",
+       "apes",
+       "ade"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "b",
+       "h",
+       "l"
+      ],
+      [
+       "are",
+       "and",
+       "amp"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "j",
+       "hel",
+       "h"
+      ],
+      [
+       "ock",
+       "at",
+       "met"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "g",
+       "l",
+       "j"
+      ],
+      [
+       "ar",
+       "ear",
+       "ard"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "v",
+       "cl",
+       "l"
+      ],
+      [
+       "amp",
+       "ard",
+       "ock"
+      ]
+     ],
+     "text": ""
+    }
+   ]
+  },
+  "13": {
+   "title": "Pre-Test · Blending Onset to the Rime",
+   "cards": [
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "l",
+       "b",
+       "v"
+      ],
+      [
+       "ost",
+       "oot",
+       "ook"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "k",
+       "q",
+       "ch"
+      ],
+      [
+       "ing",
+       "ueen",
+       "ug"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "l",
+       "p",
+       "d"
+      ],
+      [
+       "og",
+       "eel",
+       "oll"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "lad",
+       "sad",
+       "map"
+      ],
+      [
+       "dle",
+       "der",
+       "ple"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "h",
+       "g",
+       "m"
+      ],
+      [
+       "op",
+       "ap",
+       "ot"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "v",
+       "n",
+       "l"
+      ],
+      [
+       "est",
+       "ost",
+       "et"
+      ]
+     ],
+     "text": ""
+    }
+   ]
+  },
+  "14": {
+   "title": "Pre-Test · Blending Onset to the Rime",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "15": {
+   "title": "Pre-Test · Segmenting Onsets and Rimes",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "bat",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "hug",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "sad",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "bag",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "pig",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "cat",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "van",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "mop",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "can",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "pin",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "star",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "lip",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "pan",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "clap",
+     "text": ""
+    }
+   ]
+  },
+  "16": {
+   "title": "Pre-Test · Segmenting Onsets and Rimes",
+   "cards": [
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "net",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "rat",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "wig",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "ham",
+     "text": ""
+    }
+   ]
+  },
+  "17": {
+   "title": "Pre-Test · Segmenting Words into Syllables",
+   "cards": [
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "taxi",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "petal",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "hello",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "busy",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "mortar",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "doing",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "fuel",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "sorry",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "paper",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "Filipino",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "very",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "habit",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "begin",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "many",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "panel",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "solid",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "merit",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "santan",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "deliver",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "camera",
+     "text": ""
+    }
+   ]
+  },
+  "18": {
+   "title": "Pre-Test · Blending Syllables into Words",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "19": {
+   "title": "Pre-Test · Blending Syllables into Words",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "21": {
+   "title": "Pre-Test · Sentence Segmentation · Activity No. 1",
+   "cards": [
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "heart"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "heart"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "heart"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "heart"
+    }
+   ]
+  },
+  "22": {
+   "title": "Pre-Test · Sentence Segmentation · Activity No. 2",
+   "cards": [
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "star"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "star"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "star"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "star"
+    }
+   ]
+  },
+  "23": {
+   "title": "Pre-test · Rhyming and Rhyming Songs",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "31": {
+   "title": "Activity 1 · Blending Onset and Rime",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "32": {
+   "title": "Activity 2 · Blending Onset and Rime",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "l",
+      "s",
+      "k",
+      "w",
+      "b",
+      "r",
+      "d",
+      "f",
+      "p"
+     ]
+    }
+   ]
+  },
+  "33": {
+   "title": "Activity 3 · Blending Onset and Rime",
+   "cards": [
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "m",
+       "r",
+       "t",
+       "b",
+       "d"
+      ],
+      [
+       "at",
+       "am",
+       "ap",
+       "an",
+       "ag"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "m",
+       "r",
+       "t",
+       "b",
+       "d"
+      ],
+      [
+       "at",
+       "am",
+       "ap",
+       "an",
+       "ag"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "m",
+       "r",
+       "t",
+       "b",
+       "d"
+      ],
+      [
+       "at",
+       "am",
+       "ap",
+       "an",
+       "ag"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "m",
+       "r",
+       "t",
+       "b",
+       "d"
+      ],
+      [
+       "at",
+       "am",
+       "ap",
+       "an",
+       "ag"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "m",
+       "r",
+       "t",
+       "b",
+       "d"
+      ],
+      [
+       "at",
+       "am",
+       "ap",
+       "an",
+       "ag"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "r",
+       "s",
+       "f",
+       "j",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "ad"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "r",
+       "s",
+       "f",
+       "j",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "ad"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "r",
+       "s",
+       "f",
+       "j",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "ad"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "r",
+       "s",
+       "f",
+       "j",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "ad"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "r",
+       "s",
+       "f",
+       "j",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "ad"
+      ]
+     ]
+    }
+   ]
+  },
+  "34": {
+   "title": "Activity 4 · Blending Onset and Rime",
+   "cards": [
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "t",
+       "p",
+       "c",
+       "b",
+       "h"
+      ],
+      [
+       "at",
+       "am",
+       "ag",
+       "an"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "t",
+       "p",
+       "c",
+       "b",
+       "h"
+      ],
+      [
+       "at",
+       "am",
+       "ag",
+       "an"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "t",
+       "p",
+       "c",
+       "b",
+       "h"
+      ],
+      [
+       "at",
+       "am",
+       "ag",
+       "an"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "t",
+       "p",
+       "c",
+       "b",
+       "h"
+      ],
+      [
+       "at",
+       "am",
+       "ag",
+       "an"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "t",
+       "p",
+       "c",
+       "b",
+       "h"
+      ],
+      [
+       "at",
+       "am",
+       "ag",
+       "an"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "h",
+       "c",
+       "t",
+       "n",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "an",
+       "ap"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "h",
+       "c",
+       "t",
+       "n",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "an",
+       "ap"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "h",
+       "c",
+       "t",
+       "n",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "an",
+       "ap"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "h",
+       "c",
+       "t",
+       "n",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "an",
+       "ap"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "h",
+       "c",
+       "t",
+       "n",
+       "m"
+      ],
+      [
+       "ag",
+       "am",
+       "at",
+       "an",
+       "ap"
+      ]
+     ]
+    }
+   ]
+  },
+  "35": {
+   "title": "Activity 5 · Segmenting Onsets and Rimes",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "b",
+      "c",
+      "h",
+      "m",
+      "n",
+      "p",
+      "r",
+      "s",
+      "v",
+      "w"
+     ]
+    }
+   ]
+  },
+  "36": {
+   "title": "Activity 6 · Segmenting Onsets and Rimes",
+   "cards": [
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "pet",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "set",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "cap",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "mat",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "lap",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "bin",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "pin",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "rat",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "sit",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "lip",
+     "text": ""
+    }
+   ]
+  },
+  "37": {
+   "title": "Activity 7 · Segmenting Onsets and Rimes",
+   "cards": [
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "p",
+       "d",
+       "v",
+       "l",
+       "r",
+       "h",
+       "st",
+       "m",
+       "w"
+      ],
+      [
+       "ip",
+       "an",
+       "ig",
+       "og",
+       "am",
+       "at",
+       "en",
+       "ar",
+       "op"
+      ]
+     ]
+    }
+   ]
+  },
+  "38": {
+   "title": "Activity 8 · Segmenting Words into Syllables",
+   "cards": [
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "atis",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "melon",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "sili",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "tisa",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "kiwi",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "guyabano",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "banana",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "durian",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "rambutan",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "lanzones",
+     "text": ""
+    }
+   ]
+  },
+  "39": {
+   "title": "Activity 9 · Segmenting Words into Syllables",
+   "cards": [
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    }
+   ]
+  },
+  "40": {
+   "title": "Activity 10 · Segmenting Words into Syllables",
+   "cards": [
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "beautiful",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "principal",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "garden",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "Elementary",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "backyard",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "helicopter",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "teacher",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "ability",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "education",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split",
+      "num"
+     ],
+     "split": "syllable",
+     "word": "mother",
+     "text": ""
+    }
+   ]
+  },
+  "41": {
+   "title": "Activity 11 · Blending Syllables into Words",
+   "cards": [
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "h",
+       "p"
+      ],
+      [
+       "a",
+       "e"
+      ],
+      [
+       "n",
+       "p"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "b",
+       "c"
+      ],
+      [
+       "o",
+       "I"
+      ],
+      [
+       "m",
+       "w"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "g",
+       "b"
+      ],
+      [
+       "i",
+       "o"
+      ],
+      [
+       "y",
+       "l"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "m",
+       "b"
+      ],
+      [
+       "i",
+       "a"
+      ],
+      [
+       "t",
+       "n"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "k",
+       "b"
+      ],
+      [
+       "i",
+       "a"
+      ],
+      [
+       "g",
+       "l"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "c",
+       "m"
+      ],
+      [
+       "o",
+       "a"
+      ],
+      [
+       "y",
+       "p"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "l",
+       "b"
+      ],
+      [
+       "a",
+       "o"
+      ],
+      [
+       "t",
+       "n"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "i",
+       "p"
+      ],
+      [
+       "i",
+       "e"
+      ],
+      [
+       "c",
+       "l"
+      ]
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "g",
+       "r"
+      ],
+      [
+       "i",
+       "a"
+      ],
+      [
+       "y",
+       "t"
+      ]
+     ],
+     "text": ""
+    }
+   ]
+  },
+  "42:continuation": {
+   "title": "Activity 11 · Blending Syllables into Words",
+   "cards": [
+    {
+     "answer": [
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "m",
+       "b"
+      ],
+      [
+       "i",
+       "u"
+      ],
+      [
+       "d",
+       "l"
+      ]
+     ],
+     "text": ""
+    }
+   ]
+  },
+  "42": {
+   "title": "Activity 12 · Blending Syllables into Words · Act. #1",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "dr",
+      "fr",
+      "tr",
+      "br",
+      "cr"
+     ]
+    }
+   ]
+  },
+  "43": {
+   "title": "Activity 13 · Blending Syllables into Words · Act. #2",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "squ",
+      "scr",
+      "str",
+      "thr",
+      "spr"
+     ]
+    }
+   ]
+  },
+  "44": {
+   "title": "Activity 14 · Blending Syllables into Words · Act. #1",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "45": {
+   "title": "Activity 15 · Blending Syllables into Words · Act. #2",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cl",
+      "sm",
+      "bl",
+      "br",
+      "sk",
+      "st",
+      "sc",
+      "sp"
+     ]
+    }
+   ]
+  },
+  "46": {
+   "title": "Activity 16 · Sentence Segmentation",
+   "cards": [
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    },
+    {
+     "answer": [
+      "words"
+     ],
+     "mark": "dot"
+    }
+   ]
+  },
+  "47": {
+   "title": "Activity 17 · Sentence Segmentation",
+   "cards": [
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    },
+    {
+     "answer": [
+      "words",
+      "num"
+     ],
+     "mark": "moon",
+     "max": 10
+    }
+   ]
+  },
+  "48": {
+   "title": "Activity 18 · Sentence Segmentation",
+   "cards": [
+    {
+     "answer": [
+      "num",
+      "words"
+     ],
+     "mark": "dot",
+     "max": 10
+    },
+    {
+     "answer": [
+      "num",
+      "words"
+     ],
+     "mark": "dot",
+     "max": 10
+    },
+    {
+     "answer": [
+      "num",
+      "words"
+     ],
+     "mark": "dot",
+     "max": 10
+    },
+    {
+     "answer": [
+      "num",
+      "words"
+     ],
+     "mark": "dot",
+     "max": 10
+    },
+    {
+     "answer": [
+      "num",
+      "words"
+     ],
+     "mark": "dot",
+     "max": 10
+    }
+   ]
+  },
+  "49": {
+   "title": "Activity 19 · Rhyming and Rhyming Songs",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "50": {
+   "title": "Activity 20 · Rhyming and Rhyming Songs",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "51": {
+   "title": "Activity 21 · Rhyming and Rhyming Songs",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "52": {
+   "title": "Activity 22 · Rhyming and Rhyming Songs",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "van",
+      "bob",
+      "can",
+      "bun"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "fin",
+      "pen",
+      "hot",
+      "pin"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "hot",
+      "pot",
+      "rat",
+      "ball"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "try",
+      "cry",
+      "can",
+      "dry"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "top",
+      "low",
+      "hop",
+      "cop"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "kick",
+      "bed",
+      "pick",
+      "stick"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "red",
+      "yellow",
+      "bed",
+      "led"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "tank",
+      "rank",
+      "bank",
+      "bark"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "bug",
+      "rug",
+      "dust",
+      "hug"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "pink",
+      "link",
+      "steal",
+      "blink"
+     ],
+     "text": ""
+    }
+   ]
+  },
+  "54": {
+   "title": "Post Test · Segmenting Onsets and Rimes",
+   "cards": [
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "sad",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "lip",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "cat",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "bus",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "pig",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "ham",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "fan",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "dog",
+     "text": ""
+    }
+   ]
+  },
+  "55": {
+   "title": "Post Test · Segmenting Onsets and Rimes",
+   "cards": [
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "rat",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "pen",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "kite",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "bin",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "star",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "bed",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "bag",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "mop",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "net",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "van",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "onset",
+     "word": "pan",
+     "text": ""
+    }
+   ]
+  },
+  "56": {
+   "title": "Post Test · Segmenting Words into Syllables",
+   "cards": [
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "pillow",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "elbow",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "chayote",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "umbrella",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "gasul",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "bandana",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "burner",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "sofa",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "flower",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "avocado",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "santol",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "macopa",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "coconut",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "tomato",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "pajama",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "violin",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "mayana",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "water",
+     "text": ""
+    }
+   ]
+  },
+  "57": {
+   "title": "Post Test · Segmenting Words into Syllables · Blending Syllables into Words",
+   "cards": [
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "beggar",
+     "text": ""
+    },
+    {
+     "answer": [
+      "split"
+     ],
+     "split": "syllable",
+     "word": "guitar",
+     "text": ""
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "58": {
+   "title": "Post Test · Blending Syllables into Words",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "59": {
+   "title": "Post Test · Blending Syllables into Words",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "60": {
+   "title": "Post-test · Rhyming and Rhyming Words",
+   "cards": [
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "max": 10
+    }
+   ]
+  },
+  "61": {
+   "title": "Post-test · Rhyming and Rhyming Words",
+   "cards": [
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "bag",
+      "has",
+      "a",
+      "tag"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "I",
+      "saw",
+      "a",
+      "big",
+      "pig"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "There",
+      "was",
+      "a",
+      "bug",
+      "on",
+      "the",
+      "rug"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "pot",
+      "is",
+      "hot"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "net",
+      "is",
+      "wet"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "They",
+      "had",
+      "fun",
+      "under",
+      "the",
+      "sun"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "hen",
+      "is",
+      "in",
+      "the",
+      "pen"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "A",
+      "frog",
+      "hid",
+      "under",
+      "the",
+      "log"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "It",
+      "is",
+      "dark",
+      "in",
+      "the",
+      "park"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "A",
+      "goat",
+      "is",
+      "in",
+      "the",
+      "boat"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "man",
+      "is",
+      "in",
+      "the",
+      "van"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "lad",
+      "is",
+      "mad"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "Tam’s",
+      "top",
+      "is",
+      "on",
+      "the",
+      "mop"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "She",
+      "lost",
+      "the",
+      "pill",
+      "on",
+      "hill"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "well",
+      "has",
+      "a",
+      "bell"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "Puss",
+      "foot",
+      "fits",
+      "in",
+      "the",
+      "boat"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "A",
+      "cock",
+      "stays",
+      "on",
+      "the",
+      "rock"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "mice",
+      "eat",
+      "the",
+      "rice"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "They",
+      "got",
+      "a",
+      "wine",
+      "from",
+      "the",
+      "vine"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "The",
+      "children",
+      "hike",
+      "to",
+      "the",
+      "dike"
+     ]
+    }
+   ]
+  }
+ }
+}

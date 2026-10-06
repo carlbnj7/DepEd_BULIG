@@ -1,0 +1,3505 @@
+{
+ "version": 2,
+ "lessons": {
+  "13": {
+   "lesson": "Pretest",
+   "activity": "Phoneme Pretest",
+   "goals": [],
+   "what": null,
+   "model": null,
+   "covers": [
+    "Phoneme Isolation",
+    "Phoneme Identification",
+    "Phoneme Categorization",
+    "Phoneme Blending",
+    "Phoneme Segmentation",
+    "Phoneme Deletion",
+    "Phoneme Addition",
+    "Phoneme Substitution"
+   ]
+  },
+  "34": {
+   "lesson": "Posttest",
+   "activity": "Phoneme Posttest",
+   "goals": [],
+   "what": null,
+   "model": null,
+   "covers": [
+    "Phoneme Identification",
+    "Phoneme Categorization",
+    "Phoneme Blending",
+    "Phoneme Segmentation",
+    "Phoneme Addition",
+    "Phoneme Substitution"
+   ]
+  },
+  "14": {
+   "lesson": "Phoneme Isolation",
+   "activity": "Activity 1. Recognizing Individual Sounds within a Word · Beginning/Initial Sound",
+   "goals": [
+    "Recognize the beginning/initial sounds within a word.",
+    "Recognize the middle/medial sounds within a word.",
+    "Recognize the ending/final sounds within a word."
+   ],
+   "what": null,
+   "model": "The word ant has three different sounds. /a/ /n/ /t/. The beginning sound of the word ant is /a/."
+  },
+  "15": {
+   "lesson": "Phoneme Isolation",
+   "activity": "Activity 2. Phoneme Isolation · Middle/Medial Sound",
+   "goals": [
+    "Recognize the beginning/initial sounds within a word.",
+    "Recognize the middle/medial sounds within a word.",
+    "Recognize the ending/final sounds within a word."
+   ],
+   "what": null,
+   "model": "The word car has three different sounds. /c/ /a/ /r/. The middle sound of the word car is /a/."
+  },
+  "16": {
+   "lesson": "Phoneme Isolation",
+   "activity": "Activity 3. Phoneme Isolation · Ending/Final Sounds Isolation",
+   "goals": [
+    "Recognize the beginning/initial sounds within a word.",
+    "Recognize the middle/medial sounds within a word.",
+    "Recognize the ending/final sounds within a word."
+   ],
+   "what": null,
+   "model": "The word tap has three different sounds. /t/ /a/ /p/. The ending sound of the word tap is /p/."
+  },
+  "17": {
+   "lesson": "Phoneme Identification",
+   "activity": "Activity 4: Initial Phoneme Identification",
+   "goals": [
+    "Identify the phonemes within each word.",
+    "Recognize the common sound in different words.",
+    "Identify the beginning, middle and final phoneme in the given name of the picture."
+   ],
+   "what": null,
+   "model": "This is a mat. This is a milk. This is a moon. What sound do they all have the same?"
+  },
+  "18": {
+   "lesson": "Phoneme Identification",
+   "activity": "Activity 5: Medial Phoneme Identification",
+   "goals": [
+    "Identify the phonemes within each word.",
+    "Recognize the common sound in different words.",
+    "Identify the beginning, middle and final phoneme in the given name of the picture."
+   ],
+   "what": null,
+   "model": "This is a can. This is a bag. This is a map. What sound do you hear at the middle?"
+  },
+  "19": {
+   "lesson": "Phoneme Identification",
+   "activity": "Activity 6: Final Phoneme Identification",
+   "goals": [
+    "Identify the phonemes within each word.",
+    "Recognize the common sound in different words.",
+    "Identify the beginning, middle and final phoneme in the given name of the picture."
+   ],
+   "what": null,
+   "model": "This is a wax. This is a box. This is a six. Final sound means the last sound you hear."
+  },
+  "20": {
+   "lesson": "Phoneme Categorization",
+   "activity": "Activity 7: Initial Phoneme Categorization",
+   "goals": [
+    "Identify the words and pictures that have the odd or different initial sounds.",
+    "Identify the words and pictures that have the odd or different medial sounds.",
+    "Identify the words and pictures that have the odd or different final sounds."
+   ],
+   "what": null,
+   "model": "Initial Phoneme Categorization is identifying the words and pictures that have the different beginning sound. Example: ball bat can"
+  },
+  "21": {
+   "lesson": "Phoneme Categorization",
+   "activity": "Activity 8: Medial Phoneme Categorization",
+   "goals": [
+    "Identify the words and pictures that have the odd or different initial sounds.",
+    "Identify the words and pictures that have the odd or different medial sounds.",
+    "Identify the words and pictures that have the odd or different final sounds."
+   ],
+   "what": null,
+   "model": "can hen mat. Which word does not belong to the group?"
+  },
+  "22": {
+   "lesson": "Phoneme Categorization",
+   "activity": "Activity 9: Final Phoneme Categorization",
+   "goals": [
+    "Identify the words and pictures that have the odd or different initial sounds.",
+    "Identify the words and pictures that have the odd or different medial sounds.",
+    "Identify the words and pictures that have the odd or different final sounds."
+   ],
+   "what": null,
+   "model": "Final phoneme categorization is identifying words and pictures in the group which have the different final sounds."
+  },
+  "23": {
+   "lesson": "Phoneme Blending",
+   "activity": "Activity 10: You Put Me Together",
+   "goals": [],
+   "what": "Phoneme blending is the ability to hear the individual sounds in a word, put the sounds together, and say the word that is made.",
+   "model": "/c/ /a/ /t/ cat. The word cat is composed of three letters with different sounds. They blend together to form a word."
+  },
+  "24": {
+   "lesson": "Phoneme Blending",
+   "activity": "Activity 11: Beginning Consonant Phoneme Blending",
+   "goals": [],
+   "what": "Phoneme blending is the ability to hear the individual sounds in a word, put the sounds together, and say the word that is made.",
+   "model": "/cl/ /a/ /p/ clap · /st/ /a/ /m/ /p/ stamp"
+  },
+  "25": {
+   "lesson": "Phoneme Blending",
+   "activity": "Activity 12: Ending Consonant Phoneme Blending",
+   "goals": [],
+   "what": "Phoneme blending is the ability to hear the individual sounds in a word, put the sounds together, and say the word that is made.",
+   "model": "/f/ /i/ /sh/ fish"
+  },
+  "26": {
+   "lesson": "Phoneme Segmentation",
+   "activity": "Activity 13: Phoneme Segmenting",
+   "goals": [
+    "Segment words into individual phonemes (sounds).",
+    "Recognize the sound/s in the given word.",
+    "Count the sound in each word."
+   ],
+   "what": null,
+   "model": "Listen and watch. I’ll say the sounds in the word “cat.” /c/ /a/ /t/. “Cat” has three sounds."
+  },
+  "27": {
+   "lesson": "Phoneme Segmentation",
+   "activity": "Activity 14: Phoneme Segmenting",
+   "goals": [
+    "Segment words into individual phonemes (sounds).",
+    "Recognize the sound/s in the given word.",
+    "Count the sound in each word."
+   ],
+   "what": null,
+   "model": "door /d/ /o/ /r/ · work /w/ /o/ /r/ /k/"
+  },
+  "28": {
+   "lesson": "Phoneme Deletion",
+   "activity": "Activity 15. Phoneme Deletion · Beginning Sound Deletion",
+   "goals": [],
+   "what": "Phoneme Deletion is the ability to identify how a word would sound if one sound were omitted.",
+   "model": "meat take away /m/ → eat"
+  },
+  "29": {
+   "lesson": "Phoneme Deletion",
+   "activity": "Activity 16. Phoneme Deletion · Ending/Medial Sound Deletion",
+   "goals": [],
+   "what": "Phoneme Deletion is the ability to identify how a word would sound if one sound were omitted.",
+   "model": "band take away /d/ → ban · cart take away /t/ → car · tent take away /t/ → ten"
+  },
+  "30": {
+   "lesson": "Phoneme Addition",
+   "activity": "Activity 17: Adding Phoneme to the Word",
+   "goals": [
+    "Add phoneme to a word to form a new word.",
+    "Create different words by adding phoneme to the given word."
+   ],
+   "what": null,
+   "model": "/s/ nail → snail · pear /l/ → pearl"
+  },
+  "31": {
+   "lesson": "Phoneme Addition",
+   "activity": "Activity 18: Adding Phoneme at the Beginning",
+   "goals": [
+    "Add phoneme to a word to form a new word.",
+    "Create different words by adding phoneme to the given word."
+   ],
+   "what": null,
+   "model": "/c/ lap → clap · /t/ wig → twig"
+  },
+  "32": {
+   "lesson": "Phoneme Substitution",
+   "activity": "Activity 19: Phoneme Trade and Hunt",
+   "goals": [
+    "Change the different letter sound to form a new word.",
+    "Change consonant phoneme at the beginning in forming new word.",
+    "Change consonant phoneme at the end of a word to form a new word."
+   ],
+   "what": null,
+   "model": "We change the beginning sound /c/ to /r/: cat → rat. We change the beginning sound /m/ to /c/: man → can."
+  },
+  "33": {
+   "lesson": "Phoneme Substitution",
+   "activity": "Activity 20: I Can Change It",
+   "goals": [
+    "Change the different letter sound to form a new word.",
+    "Change consonant phoneme at the beginning in forming new word.",
+    "Change consonant phoneme at the end of a word to form a new word."
+   ],
+   "what": null,
+   "model": "We change the ending or final sound /g/ to /n/: bug → bun."
+  }
+ },
+ "pages": {
+  "6": {
+   "title": "Phoneme Isolation Pretest · A",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "7": {
+   "title": "Phoneme Isolation Pretest · B",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "8": {
+   "title": "Phoneme Isolation Pretest · C",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "9": {
+   "title": "Phoneme Identification Pretest",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "10": {
+   "title": "Phoneme Identification Pretest",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "/a/",
+      "/e/",
+      "/i/",
+      "/o/",
+      "/u/"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "/a/",
+      "/e/",
+      "/i/",
+      "/o/",
+      "/u/"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    }
+   ]
+  },
+  "11": {
+   "title": "Phoneme Categorization Pretest",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "12": {
+   "title": "Phoneme Categorization Pretest",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "13": {
+   "title": "Phoneme Blending Pretest",
+   "cards": [
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "14": {
+   "title": "Phoneme Segmentation Pretest · A",
+   "cards": [
+    {
+     "answer": [
+      "num"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "text": ""
+    },
+    {
+     "answer": [
+      "num"
+     ],
+     "text": ""
+    }
+   ]
+  },
+  "15": {
+   "title": "Phoneme Segmentation Pretest · B",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "16": {
+   "title": "Phoneme Segmentation Pretest · C",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "17": {
+   "title": "Phoneme Deletion Pretest · A",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    },
+    {
+     "answer": [
+      "pick"
+     ],
+     "ref": 0
+    }
+   ]
+  },
+  "18": {
+   "title": "Phoneme Deletion Pretest · B",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "19": {
+   "title": "Phoneme Deletion Pretest · C",
+   "cards": [
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    }
+   ]
+  },
+  "20": {
+   "title": "Phoneme Addition Pretest",
+   "cards": [
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "21": {
+   "title": "Phoneme Substitution Pretest · Test I",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "✓ initial sound",
+      "x ending sound"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "✓ initial sound",
+      "x ending sound"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "✓ initial sound",
+      "x ending sound"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "✓ initial sound",
+      "x ending sound"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "✓ initial sound",
+      "x ending sound"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "✓ initial sound",
+      "x ending sound"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "✓ initial sound",
+      "x ending sound"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "✓ initial sound",
+      "x ending sound"
+     ]
+    }
+   ]
+  },
+  "29": {
+   "title": "Guided Practice: Clear the Board",
+   "cards": [
+    {
+     "answer": [
+      "picks"
+     ]
+    }
+   ]
+  },
+  "30": {
+   "title": "Worksheet · Beginning Sound Isolation · Activity 1",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "31": {
+   "title": "Games: Scavenger Hunt",
+   "cards": [
+    {
+     "answer": [
+      "picks"
+     ]
+    },
+    {
+     "answer": [
+      "paper"
+     ]
+    }
+   ]
+  },
+  "34": {
+   "title": "Middle Sound Isolation · Generalization",
+   "cards": [
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    }
+   ]
+  },
+  "35": {
+   "title": "Worksheet · Middle Sound Isolation · A",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "36": {
+   "title": "Worksheet · Middle Sound Isolation · B",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "37": {
+   "title": "Agreement",
+   "cards": [
+    {
+     "answer": [
+      "paper"
+     ]
+    }
+   ]
+  },
+  "40": {
+   "title": "Guided Practice: Toy Thief",
+   "cards": [
+    {
+     "answer": [
+      "picks"
+     ]
+    },
+    {
+     "answer": [
+      "look"
+     ]
+    }
+   ]
+  },
+  "41": {
+   "title": "Worksheet · Ending Sound Isolation",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "paper"
+     ]
+    }
+   ]
+  },
+  "47": {
+   "title": "Activity 1. Connect Me",
+   "cards": [
+    {
+     "answer": [
+      "pairs"
+     ],
+     "text": ""
+    }
+   ]
+  },
+  "48": {
+   "title": "Activity 2. Identify Me",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "paper"
+     ]
+    }
+   ]
+  },
+  "51": {
+   "title": "Activity 3. Circle Me",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "52": {
+   "title": "Activity 4. Check Me",
+   "cards": [
+    {
+     "answer": [
+      "chips"
+     ]
+    }
+   ]
+  },
+  "53": {
+   "title": "Agreement",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "56": {
+   "title": "Activity 5. Check Me",
+   "cards": [
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "bed",
+      "Ted",
+      "mad",
+      "bib"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "mop",
+      "lip",
+      "pet",
+      "map"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "wed",
+      "yet",
+      "met",
+      "set"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "cab",
+      "ham",
+      "lab",
+      "nab"
+     ]
+    },
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "sip",
+      "hip",
+      "hat",
+      "hop"
+     ]
+    }
+   ]
+  },
+  "57": {
+   "title": "Activity 6. Color Me",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "62": {
+   "title": "Activity 7 · Initial Phoneme Categorization · Activity 1",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "sun",
+      "rain",
+      "seed"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "can",
+      "cat",
+      "ball"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "table",
+      "key",
+      "kite"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "sat",
+      "sag",
+      "rug"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "ham",
+      "hat",
+      "man"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "bell",
+      "rang",
+      "bus"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "van",
+      "tell",
+      "tan"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "milk",
+      "butter",
+      "bug"
+     ]
+    }
+   ]
+  },
+  "63": {
+   "title": "Activity 7 · Activity 2",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "66": {
+   "title": "Activity 8 · Medial Phoneme Categorization · Activity 1",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "67": {
+   "title": "Activity 8 · Activity 2 and Agreement",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "rap",
+      "mut",
+      "cat"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "rig",
+      "fit",
+      "met"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "sale",
+      "seal",
+      "heat"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "wake",
+      "meet",
+      "late"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "shout",
+      "about",
+      "hoot"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "way",
+      "key",
+      "man"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "hut",
+      "sun",
+      "map"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "house",
+      "meat",
+      "seat"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "ball",
+      "mall",
+      "fell"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "can",
+      "hen",
+      "man"
+     ]
+    }
+   ]
+  },
+  "70": {
+   "title": "Activity 9 · Final Phoneme Categorization · Activity 1",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "mate",
+      "wake",
+      "leak"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "eat",
+      "seal",
+      "feel"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "flap",
+      "leap",
+      "heat"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "men",
+      "tag",
+      "fan"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "hot",
+      "cup",
+      "mat"
+     ]
+    }
+   ]
+  },
+  "71": {
+   "title": "Activity 9 · Activity 2",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "72": {
+   "title": "Activity 9 · Agreement",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "sweet",
+      "hit",
+      "ram"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "bag",
+      "rag",
+      "bin"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "pad",
+      "paper",
+      "zipper"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "hay",
+      "toy",
+      "wall"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "lock",
+      "ot",
+      "stick"
+     ]
+    }
+   ]
+  },
+  "77": {
+   "title": "Activity 10: You Put Me Together",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "bag",
+      "pig"
+     ],
+     "text": "/p/ /i/ /g/"
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "lamp",
+      "ham"
+     ],
+     "text": "/l/ /a/ /m/ /p/"
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "bend",
+      "belt"
+     ],
+     "text": "/b/ /e/ /l/ /t/"
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "pan",
+      "peg"
+     ],
+     "text": "/p/ /e/ /g/"
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "dog",
+      "tag"
+     ],
+     "text": "/d/ /o/ /g/"
+    }
+   ]
+  },
+  "78": {
+   "title": "Activity 10: Blend and Read",
+   "cards": [
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    }
+   ]
+  },
+  "79": {
+   "title": "Agreement",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "82": {
+   "title": "Activity 11: Match Me",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "83": {
+   "title": "Activity 11: Blend Hunt",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "cr",
+      "dr",
+      "gl",
+      "sh",
+      "gr",
+      "fr",
+      "sn",
+      "fl",
+      "sp"
+     ]
+    },
+    {
+     "answer": [
+      "paper"
+     ]
+    }
+   ]
+  },
+  "86": {
+   "title": "Activity 12: Help Me Up!",
+   "cards": [
+    {
+     "answer": [
+      "chips"
+     ],
+     "choices": [
+      "blue",
+      "camp",
+      "gift",
+      "desk",
+      "bread",
+      "fish",
+      "golf",
+      "sand",
+      "twin",
+      "wasp",
+      "dice",
+      "corn"
+     ]
+    }
+   ]
+  },
+  "87": {
+   "title": "Conclusion",
+   "cards": [
+    {
+     "answer": [
+      "look"
+     ]
+    }
+   ]
+  },
+  "88": {
+   "title": "Activity 12: You Complete Me",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "ck",
+      "rl",
+      "rd",
+      "lk",
+      "rn",
+      "nd",
+      "sk",
+      "lt",
+      "nt"
+     ]
+    },
+    {
+     "answer": [
+      "paper"
+     ]
+    }
+   ]
+  },
+  "94": {
+   "title": "Activity 13.1: Color Me",
+   "cards": [
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    }
+   ]
+  },
+  "95": {
+   "title": "Activity 13.1: Color Me",
+   "cards": [
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    }
+   ]
+  },
+  "96": {
+   "title": "Activity 13.2: Tell Me",
+   "cards": [
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    }
+   ]
+  },
+  "97": {
+   "title": "Activity 14: Phoneme Jumping",
+   "cards": [
+    {
+     "answer": [
+      "paper"
+     ]
+    },
+    {
+     "answer": [
+      "paper"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    }
+   ]
+  },
+  "100": {
+   "title": "Activity 14.1: Circle Me",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "101": {
+   "title": "Activity 14.1: Circle Me",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "102": {
+   "title": "Activity 14.2: Break Me",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "107": {
+   "title": "Activity 15 · Worksheet · Exercise A",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "108": {
+   "title": "Activity 15 · Exercise B and C",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "111": {
+   "title": "Activity 16 · Guided Practice",
+   "cards": [
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "look"
+     ]
+    }
+   ]
+  },
+  "112": {
+   "title": "Activity 16 · Worksheet · Exercise A",
+   "cards": [
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    },
+    {
+     "answer": [
+      "say"
+     ]
+    }
+   ]
+  },
+  "113": {
+   "title": "Activity 16 · Exercise B",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "114": {
+   "title": "Activity 16 · Exercise C",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "121": {
+   "title": "Activity 17: You Add Me",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "122": {
+   "title": "Conclusion",
+   "cards": [
+    {
+     "answer": [
+      "look"
+     ]
+    }
+   ]
+  },
+  "123": {
+   "title": "Activity 17: You Let Me In",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    }
+   ]
+  },
+  "124": {
+   "title": "Agreement",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "130": {
+   "title": "Activity 18: You Transform Me",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "131": {
+   "title": "Agreement",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "138": {
+   "title": "Activity 19: Phoneme Trade",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "139": {
+   "title": "Activity 19.1: Phoneme Hunt",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "f",
+      "d",
+      "n",
+      "h",
+      "t",
+      "w",
+      "p",
+      "b",
+      "c"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "f",
+      "d",
+      "n",
+      "h",
+      "t",
+      "w",
+      "p",
+      "b",
+      "c"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "f",
+      "d",
+      "n",
+      "h",
+      "t",
+      "w",
+      "p",
+      "b",
+      "c"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "f",
+      "d",
+      "n",
+      "h",
+      "t",
+      "w",
+      "p",
+      "b",
+      "c"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "f",
+      "d",
+      "n",
+      "h",
+      "t",
+      "w",
+      "p",
+      "b",
+      "c"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "142": {
+   "title": "Activity 20: I Can Change It",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "143": {
+   "title": "Activity 2: Phoneme Swap",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "145": {
+   "title": "Phoneme Identification Posttest · A and B",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "146": {
+   "title": "Phoneme Identification Posttest · B and C",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "147": {
+   "title": "Phoneme Categorization Posttest",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "148": {
+   "title": "Phoneme Categorization Posttest",
+   "cards": [
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    },
+    {
+     "answer": [
+      "pick"
+     ]
+    }
+   ]
+  },
+  "149": {
+   "title": "Phoneme Blending Posttest",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "150": {
+   "title": "Phoneme Segmentation Posttest · A",
+   "cards": [
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    },
+    {
+     "answer": [
+      "num"
+     ]
+    }
+   ]
+  },
+  "151": {
+   "title": "Phoneme Segmentation Posttest · B and C",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "/a/",
+      "/i/",
+      "/n/",
+      "/m/",
+      "/k/",
+      "/e/",
+      "/r/",
+      "/p/",
+      "/d/",
+      "/t/",
+      "/j/",
+      "/b/"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "/a/",
+      "/i/",
+      "/n/",
+      "/m/",
+      "/k/",
+      "/e/",
+      "/r/",
+      "/p/",
+      "/d/",
+      "/t/",
+      "/j/",
+      "/b/"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "/a/",
+      "/i/",
+      "/n/",
+      "/m/",
+      "/k/",
+      "/e/",
+      "/r/",
+      "/p/",
+      "/d/",
+      "/t/",
+      "/j/",
+      "/b/"
+     ]
+    }
+   ]
+  },
+  "152": {
+   "title": "Phoneme Segmentation Posttest · C",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "/a/",
+      "/i/",
+      "/n/",
+      "/m/",
+      "/k/",
+      "/e/",
+      "/r/",
+      "/p/",
+      "/d/",
+      "/t/",
+      "/j/",
+      "/b/"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ],
+     "tiles": [
+      "/a/",
+      "/i/",
+      "/n/",
+      "/m/",
+      "/k/",
+      "/e/",
+      "/r/",
+      "/p/",
+      "/d/",
+      "/t/",
+      "/j/",
+      "/b/"
+     ]
+    }
+   ]
+  },
+  "153": {
+   "title": "Phoneme Addition Post Test",
+   "cards": [
+    {
+     "answer": [
+      "look"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "chip",
+      "tiles"
+     ]
+    }
+   ]
+  },
+  "154": {
+   "title": "Post Test: Phoneme Substitution · Test I",
+   "cards": [
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    },
+    {
+     "answer": [
+      "chip"
+     ],
+     "choices": [
+      "B",
+      "E"
+     ]
+    }
+   ]
+  },
+  "155": {
+   "title": "Post Test: Phoneme Substitution · Test II",
+   "cards": [
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    },
+    {
+     "answer": [
+      "tiles"
+     ]
+    }
+   ]
+  }
+ }
+}

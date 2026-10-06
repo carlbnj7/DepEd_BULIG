@@ -5678,5 +5678,51 @@
       222,
       859
     ]
+  },
+  "assets/images/level2a/art-096-bdd6457e7a1a.webp": {
+    "level": "2a",
+    "pdf_page": 96,
+    "kind": "embedded-illustration",
+    "note": "hat"
+  },
+  "assets/images/level2a/art-096-a4bd3d3c03ac.webp": {
+    "level": "2a",
+    "pdf_page": 96,
+    "kind": "embedded-illustration",
+    "note": "car"
+  },
+  "assets/images/level2a/art-098-45f9b84a9b59.webp": {
+    "level": "2a",
+    "pdf_page": 98,
+    "kind": "embedded-illustration",
+    "note": "wig"
+  },
+  "assets/images/level2a/art-098-39bf0bf03884.webp": {
+    "level": "2a",
+    "pdf_page": 98,
+    "kind": "embedded-illustration",
+    "note": "jar"
+  },
+  "assets/images/level2a/art-098-00acad82c887.webp": {
+    "level": "2a",
+    "pdf_page": 98,
+    "kind": "embedded-illustration",
+    "note": "dog"
+  },
+  "assets/images/level2a/art-130-c6492871c9fa.webp": {
+    "level": "2a",
+    "pdf_page": 130,
+    "kind": "embedded-illustration",
+    "note": "mask"
+  },
+  "assets/images/level2b/art-018-ffb95023d24e.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "kind": "embedded-illustration"
+  },
+  "assets/images/level2b/art-018-8f1973f2e2b6.webp": {
+    "level": "2b",
+    "pdf_page": 18,
+    "kind": "embedded-illustration"
   }
 }
