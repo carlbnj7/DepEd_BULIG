@@ -1,0 +1,30 @@
+# Level 5 · Grade 5. Checked against the module key (pages 59-61); the lessons agree with it.
+6:5:1100:pre:1 | 1=b 2=c 3=c 4=c 5=c 6=c 7=c 8=b 9=b 10=b
+6:5:1100:pre:2 | 1=c 2=b 3=b 4=b 5=b 6=b 7=b 8=a 9=b 10=b
+6:5:1100:pre:3 | 1=b 2=a 3=a 4=b 5=a 7=b 8=a 9=b 10=b 11=a 12=a 13=a 14=a
+6:5:1100:pre:4 | 1=b 2=b
+6:5:2201:learn:1 | 2=crash 3=pretty 4=reply 5=wash 6=supper 7=twin 8=world 9=down 10=postman 11=fix 12=brain 13=incorrect 14=cover 15=glue 16=little
+6:5:3202:learn:1 | 2=go 3=sea 4=time 5=disagree 6=alone 7=start 8=leader 9=select 10=round 11=audience 12=risk 13=day 14=eating 15=dirt 16=end      # 13: the module leaves the word out; its key has "day".
+6:5:4203:learn:1 | 2=do 3=doubt 4=careful 5=free 6=blurry 7=laugh 8=start 9=morning 10=remember 11=sad 12=outdoors 13=lad 14=truth 15=south 16=sometimes
+6:5:5204:learn:1 | 2=hen 3=plenty 4=gather 5=fork 6=#11 7=healthy 8=winter 9=thin 10=yesterday 11=beautiful 12=men 13=rejoice 14=calm 15=mountain 16=weak
+6:5:10209:learn:1 | 1=waist 2=waste 3=war 4=wore 5=body 6=buddy 7=cost 8=coast 9=dye 10=die 11=each 12=itch 13=forth 14=fourth 15=ice
+6:5:11210:learn:1 | 1=sail 2=wait 3=whole 4=road 5=cent 6=Our 7=fare 8=heard 9=sale 10=hour 11=rode 12=herd 13=hole 14=sent 15=weight
+6:5:12211:learn:1 | 1=1d,2e,3n,4f,5m,6g,7l,8o,9c,10j,11b,12k,13h,14i,15a
+6:5:13212:learn:1 | 1=1o,2h,3f,4e,5j,6l,7d,8b,9k,10g,11m,12c,13n,14a,15i
+6:5:14213:learn:1 | 1=b 2=b 3=d 4=c 5=d 6=a 7=d
+6:5:14213:learn:2 | 1=b 2=a 3=a
+6:5:15214:learn:1 | 1=b 2=a 3=b 4=a 5=a 6=d 7=d 8=c 9=c
+6:5:15214:learn:2 | 1=d
+6:5:22300:post:1 | 1=b 2=a 3=a 4=b 5=a 6=a 7=a 8=c 9=b 10=b
+6:5:22300:post:2 | 1=c 2=c 3=c 4=c 5=b 6=b 7=b 8=b 9=c 10=c
+6:5:22300:post:3 | 1=b 2=b 3=b 4=a 5=a 6=a 7=b 8=a 9=b 10=b
+6:5:22300:post:4 | 1=a 2=b 3=b 4=a 5=b      # cards 6-10 ask for a written word but only show N / V, so the teacher marks them.
+6:5:23401:learn:1 | 1=b 2=c 3=c 4=b 5=c 6=b 7=c 8=c
+6:5:23401:learn:2 | 1=b 2=c
+6:5:26404:learn:1 | 1=1a,2b,3c,4d,5e
+6:5:27405:learn:1 | 1=1d,2a,3h,4c,5b,6e,7f,8g,9i,10j
+6:5:29407:learn:1 | 1=a 2=b 3=a 4=a 5=a 6=a 7=a 9=a 10=a      # card 8 (a substance that adds flavor) fits sugar, salt and pepper, so the teacher marks it.
+6:5:30408:learn:1 | 1=1d,2c,3a,4b,5e
+6:5:32410:learn:1 | 1=True 2=False 3=True 4=False 5=False
+6:5:42420:learn:1 | 1=b 2=b 3=b
+6:5:42420:learn:2 | 1=b 2=b

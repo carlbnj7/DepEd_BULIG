@@ -1,0 +1,41 @@
+# Level 5 · Grade 2. Pre-tests and post-tests checked against the module keys (pages 7, 10, 14-15, 67-68, 73); they agree.
+# The lessons have no module key: answers come from the teacher's passage, the picture legend on the page, or the meaning of the word.
+6:2:1100:pre:1 | 1=b 2=a 3=c 4=b 5=c 6=a 7=a
+6:2:1100:pre:2 | 1=a 2=c 3=a 4=a 5=b 6=b 7=b 8=c
+6:2:1100:pre:3 | 2=b 3=a
+6:2:1100:pre:4 | 2=b 3=b 4=a 5=a 6=b 7=a 8=b
+6:2:1100:pre:5 | 1=a 2=a 3=b 4=a 5=b 6=b
+6:2:2100:pre:1 | 1=b 2=b 3=a
+6:2:2100:pre:2 | 1=a 2=b 3=a 4=a 5=b 6=b 7=b 8=a 9=a 10=a
+6:2:2100:pre:3 | 1=a 2=b 4=b 5=b 7=b
+6:2:2100:pre:4 | 1=b 2=a 4=b 5=b 7=b 8=a 10=a
+6:2:2100:pre:5 | 1=b 3=b 4=b 6=b 7=b
+6:2:3201:learn:3 | 1=1b,2c,3d,4a,5e 3=b 4=b 5=a 6=a 7=b
+6:2:4202:learn:2 | 1=1b,2c,3d,4e,5a 3=a 4=b 5=b 6=a 7=a
+6:2:5203:learn:2 | 1=1d,2e,3c,4a,5b 3=b 4=b 5=a 6=a 7=b
+6:2:6204:learn:2 | 1=1c,2e,3d,4b,5a 3=b 4=b 5=b 6=a 7=b
+6:2:7205:learn:2 | 1=b 2=a 3=a 4=a 5=a 6=#1 9=b 10=a 11=b
+6:2:8206:learn:3 | 1=b 2=a 3=a 4=b 5=a 7=b 8=b 9=b 10=b 11=c
+6:2:9207:learn:2 | 1=tarsier 2=woodpecker 3=squirrel 4=beetle 6=b 7=a 8=a
+6:2:10208:learn:2 | 1=butterfly 2=grasshopper 3=ladybug 4=bee 5=mosquito 7=a 8=b
+6:2:11209:learn:2 | 1=monkey 2=deer 3=kangaroo 4=snake 5=bat 6=eagle 7=lion 8=fox 10=a 11=a
+6:2:12210:learn:2 | 1=dolphin 2=whale 3=shark 4=lobster 5=squid 6=crab 7=starfish 8=shrimps 9=shells 11=b 12=c
+6:2:13211:learn:3 | 1=b 2=a 3=a 4=a 5=a 7=b 8=b 9=b 10=a 11=a
+6:2:14212:learn:2 | 1=b 2=a 3=a 4=b 5=a 7=b 8=a 9=a 10=b 11=b
+6:2:15213:learn:2 | 1=b 2=a 3=c 4=a 5=b 7=a 8=b 9=b 10=c 11=b
+6:2:16214:learn:2 | 1=a 2=b 3=a 4=b 5=a 7=b 8=a 9=b 10=c 11=a
+6:2:17215:learn:2 | 1=b 2=a 3=a 4=a 5=b 7=a 8=b 9=b 10=b 11=b
+6:2:18216:learn:3 | 1=a 2=b 3=a 4=b 5=a 7=b 8=a 9=b 10=b 11=a
+6:2:19217:learn:2 | 1=a 2=b 3=b 4=a 5=a 7=b 8=b 9=a 10=a 11=b
+6:2:20218:learn:2 | 1=1f,2b,3i,4a,5g,6d,7h,8e,9c 3=b 4=c 5=a 6=a 7=a
+6:2:21219:learn:2 | 2=a 3=b 4=b 5=a 6=a 8=1a,2b,3c,4d,5e,6f,7g,8h,9i
+6:2:22220:learn:2 | 1=2b,3a,4i,5h,6c,7d,8e,9f,10g 3=a 4=a 5=a 6=a 7=a
+6:2:23300:post:1 | 1=b 2=b 3=b 4=a 5=a 6=b 7=a 8=a
+6:2:23300:post:2 | 1=a 2=a 3=a 4=a 5=a 6=b 7=a
+6:2:23300:post:3 | 1=b 2=b 3=b 4=c 5=c 6=a 7=b 8=a 9=b 10=a
+6:2:23300:post:4 | 1=c 2=a 3=a 4=a 5=b
+6:2:24300:post:1 | 1=c 2=b 3=b
+6:2:24300:post:2 | 1=c 2=b 3=c 4=c 5=a 6=c 7=b 8=b 9=b 10=b
+6:2:24300:post:3 | 1=b 2=c 4=a 5=c 6=a
+6:2:24300:post:4 | 1=c 2=b 4=b 5=c 7=c 8=b
+6:2:24300:post:5 | 2=c 3=b 5=c 6=b 8=a 9=b

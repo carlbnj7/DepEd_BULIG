@@ -166,7 +166,7 @@ function action():void{
    if(!empty($_POST['audio_card'])&&is_array($_POST['audio_card'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,7],true)&&l2a_audio_supported()&&($ap=l2a_save_audios($_POST['audio_card'],$pid,$aid)))q('UPDATE activity_completion SET audio_paths=? WHERE pupil_id=? AND activity_id=?',[json_encode($ap),$pid,$aid]);
    if($apath)q('UPDATE activity_completion SET audio_path=? WHERE pupil_id=? AND activity_id=?',[$apath,$pid,$aid]);
    if(offline_answer_time())q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$pid,'offline_answer','activity '.$aid.' at '.$when]);
-   $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
+   $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);key_save_score($cid);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
    q('INSERT INTO pupil_progress(pupil_id,lesson_id,last_activity_id) VALUES(?,?,?) ON DUPLICATE KEY UPDATE last_activity_id=VALUES(last_activity_id)',[$pid,$a['lesson_id'],$aid]);
    if($a['expected_text']&&$transcript!==''){$match=word_match($a['expected_text'],$transcript);q('INSERT INTO reading_assessments(pupil_id,activity_id,transcript,expected_text,word_match_percent,detail) VALUES(?,?,?,?,?,?)',[$pid,$aid,$transcript,$a['expected_text'],$match['percent'],json_encode($match['words'])]);}
    if($ok){q('DELETE FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);update_learning($pid,$aid);}
@@ -182,7 +182,10 @@ function action():void{
   if($rub){$rv=l1_rubric_values($rub,(array)$_POST['rubric']);if($rv===null)fail($rub['kind']==='rubric'?'Choose a score for each part of the rubric.':'Choose one rating first.');}
   /* Level 4: the module's scoring table (miscues, Oral Reading Score, Reading Level, Reading Speed). */
   $l4v=null;if($fa&&isset($_POST['miscue'])&&lesson_level((int)$fa['lesson_id'])===5){$act=one('SELECT * FROM activities WHERE id=?',[(int)$c['activity_id']]);$l4v=$act?l4_review_values($act,$_POST):null;if($l4v){$rv=$l4v;}}
-  if(strlen($feedback)>3000||($feedback===''&&$rv===null))fail('Enter feedback of up to 3,000 characters.');
+  /* Levels 5-7: the auto score can be changed by the teacher (for example after reading a written answer). */
+  $ks=null;if(isset($_POST['key_score'])&&$c['max_score']!==null&&activity_key_id(['id'=>(int)$c['activity_id']])){$ks=max(0,min((float)$c['max_score'],round((float)$_POST['key_score'],2)));}
+  if(strlen($feedback)>3000||($feedback===''&&$rv===null&&$ks===null))fail('Enter feedback of up to 3,000 characters.');
+  if($ks!==null&&abs($ks-(float)$c['score'])>0.001){$j=json_decode((string)($c['rubric_scores']??''),true);$j=is_array($j)?$j:[];$j['teacher_score']=$ks;q('UPDATE activity_completion SET score=?,rubric_scores=? WHERE id=?',[$ks,json_encode($j),$cid]);}
   if($rv!==null)q('UPDATE activity_completion SET rubric_scores=? WHERE id=?',[json_encode($l4v!==null?['l4'=>$l4v]:['v'=>$rv]),$cid]);
   if($l4v!==null)q('UPDATE activity_completion SET score=?,max_score=? WHERE id=?',[$l4v['score'],100,$cid]);
   q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback!==''?$feedback:$c['feedback'],$u['id'],$cid]);if($feedback!=='')q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit($rv!==null?'score_response':'feedback_response',(string)$cid);if($fa&&$feedback!=='')push_queue((int)$c['pupil_id'],'teacher','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','Open “'.$fa['title'].'” to read it.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash($rv!==null?($feedback!==''?'Score and feedback saved.':'Score saved.'):'Feedback saved. Pupil progression is unchanged.');go(review_back());
