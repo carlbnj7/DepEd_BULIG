@@ -148,7 +148,7 @@ function action():void{
    $question=one('SELECT * FROM questions WHERE activity_id=?',[$aid]);$exact=$question&&$question['grading']==='exact'&&lesson_level((int)$a['lesson_id'])!==1;/* Level 1 answers are spoken: the teacher checks them */$mode=$exact||($a['response_mode']==='drawing'&&!draw_allowed($a))?'answer':$a['response_mode'];
    /* Level 1 is oral: the answer is a voice recording, or the teacher heard it in class. */
    $oral=$mode==='answer'&&!$exact&&lesson_level((int)$a['lesson_id'])===1;$apath=null;
-   if($oral){if($audio===''&&!$heard)fail('Record your answer first.');if($answer==='')$answer=$audio!==''?'Spoken answer (voice recording)':'Answered out loud. My teacher heard me.';if($audio!==''&&l1_audio_supported())$apath=l1_save_audio($audio,$pid,$aid);}
+   if($oral){if($audio===''&&!$heard)fail('Record your answer first.');if($answer==='')$answer=$audio!==''?'Spoken answer (voice recording)':'Answered out loud. Done.';if($audio!==''&&l1_audio_supported())$apath=l1_save_audio($audio,$pid,$aid);}
    if(in_array($mode,['answer','drawing'],true)&&$answer===''&&$drawing==='')fail('Draw it, upload a photo, or tell about your drawing before continuing.');
    if($mode==='answer'&&$answer==='')fail('Speak or type an answer first.');
    $ok=true;$score=null;$max=null;$outcome=['none'=>'viewed','perform'=>'performed','drawing'=>'recorded','answer'=>'recorded'][$mode];
@@ -159,7 +159,7 @@ function action():void{
    }
    $status=$ok?'completed':'retry';$when=offline_answer_time()??date('Y-m-d H:i:s');
    q('INSERT INTO activity_completion(pupil_id,activity_id,response,drawing,transcript,prompt_snapshot,activity_revision,status,submitted_at,outcome,score,max_score) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript),prompt_snapshot=VALUES(prompt_snapshot),activity_revision=VALUES(activity_revision),status=VALUES(status),submitted_at=VALUES(submitted_at),outcome=VALUES(outcome),score=VALUES(score),max_score=VALUES(max_score)',[$pid,$aid,$answer,$drawing?:null,$transcript?:null,level2_prompt_snapshot($a),$a['revision'],$status,$when,$outcome,$score,$max]);
-   if(!empty($_POST['audio_card'])&&is_array($_POST['audio_card'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3],true)&&l2a_audio_supported()&&($ap=l2a_save_audios($_POST['audio_card'],$pid,$aid)))q('UPDATE activity_completion SET audio_paths=? WHERE pupil_id=? AND activity_id=?',[json_encode($ap),$pid,$aid]);
+   if(!empty($_POST['audio_card'])&&is_array($_POST['audio_card'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4],true)&&l2a_audio_supported()&&($ap=l2a_save_audios($_POST['audio_card'],$pid,$aid)))q('UPDATE activity_completion SET audio_paths=? WHERE pupil_id=? AND activity_id=?',[json_encode($ap),$pid,$aid]);
    if($apath)q('UPDATE activity_completion SET audio_path=? WHERE pupil_id=? AND activity_id=?',[$apath,$pid,$aid]);
    if(offline_answer_time())q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$pid,'offline_answer','activity '.$aid.' at '.$when]);
    $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
