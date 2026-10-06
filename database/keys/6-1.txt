@@ -1,0 +1,69 @@
+# Level 5 · Grade 1. The module has no answer key; every answer comes from the passage, the pictures on the page, or the meaning of the word.
+# Picture boards: the letters follow the pictures in the module's order (checked picture by picture).
+6:1:1100:pre:1 | 1=1c,2b,3d,4e,5a
+6:1:1100:pre:2 | 1=1c,2a,3d,4e,5b
+6:1:1100:pre:3 | 2=b 3=c
+6:1:1100:pre:4 | 2=b 3=c 4=b
+6:1:1100:pre:5 | 2=b
+6:1:1100:pre:6 | 1=1c,2a,3e,4b,5d,6h,7f,8g,9j,10i
+6:1:2201:learn:3 | 1=1c,2d,3a,4e,5b
+6:1:3202:learn:2 | 1=1b,2c,3d,4a,5e
+6:1:3202:learn:3 | 1=b 2=c 3=b 4=c
+6:1:3202:learn:4 | 1=c
+6:1:4203:learn:2 | 1=1b,2e,3d,4c,5a
+6:1:5204:learn:2 | 1=1b,2e,3d,4a,5c 3=b 4=b
+6:1:5204:learn:3 | 1=c 2=b 3=b
+6:1:6205:learn:2 | 1=1d,2c,3a,4e,5b 3=b
+6:1:6205:learn:3 | 1=b 2=b 3=b 4=b
+6:1:7206:learn:3 | 1=1c,2d,3a,4b,5e
+6:1:7206:learn:4 | 2=c 3=b 4=b 5=c 6=b
+6:1:8207:learn:2 | 1=1d,2e,3a,4b,5c 3=c
+6:1:8207:learn:3 | 1=b 2=a 3=b 4=c
+6:1:9208:learn:2 | 1=1c,2d,3e,4a,5b
+6:1:9208:learn:3 | 2=b 3=c 4=a 5=a 6=c
+6:1:10209:learn:2 | 1=1a,2b,3c        # card 3 is left for the teacher: the module prints "a. Our toys b).Our tools" as one choice.
+6:1:10209:learn:3 | 1=c 2=b 3=b 4=b
+6:1:11210:learn:2 | 1=1d,2c,3e,4b,5a
+6:1:11210:learn:3 | 1=b 2=b 3=c 4=a
+6:1:11210:learn:4 | 1=c
+6:1:12211:learn:2 | 1=1d,2c,3a,4b,5e
+6:1:12211:learn:3 | 1=b 2=b 3=c 4=a
+6:1:12211:learn:4 | 1=c
+6:1:13212:learn:2 | 1=1c,2d,3e,4b,5a
+6:1:13212:learn:3 | 1=b 2=c 3=b
+6:1:13212:learn:4 | 1=c 2=b
+6:1:14213:learn:2 | 1=1c,2d,3a,4b,5e
+6:1:14213:learn:3 | 3=b 4=b
+6:1:14213:learn:4 | 1=b 2=c 3=b
+6:1:15214:learn:2 | 1=b 2=c 3=b 4=a
+6:1:15214:learn:3 | 1=b 3=b 4=b 5=b
+6:1:15214:learn:4 | 1=c 2=b
+6:1:16215:learn:2 | 1=1c,2e,3b,4a,5d
+6:1:16215:learn:3 | 3=b
+6:1:16215:learn:4 | 1=a 2=b 3=d 4=c
+6:1:17216:learn:2 | 1=1d,2e,3a,4c,5b
+6:1:17216:learn:3 | 3=b
+6:1:17216:learn:4 | 1=b 2=c 3=b 4=b
+6:1:18217:learn:3 | 1=1b,2e,3d,4a,5c
+6:1:18217:learn:4 | 2=b
+6:1:18217:learn:5 | 1=b 2=b 3=b 4=c
+6:1:19218:learn:2 | 1=1b,2e,3d,4a,5c
+6:1:19218:learn:3 | 2=b
+6:1:19218:learn:4 | 1=b 2=b 3=c 4=b
+6:1:20219:learn:2 | 1=1b,2a,3d,4e,5c
+6:1:20219:learn:3 | 1=b 2=c 3=d
+6:1:20219:learn:4 | 1=b 2=c
+6:1:21220:learn:2 | 1=c 2=b 3=c 4=c
+6:1:21220:learn:3 | 1=d 3=c 4=c
+6:1:21220:learn:4 | 1=b 2=b 3=c
+6:1:22221:learn:2 | 1=c 2=b 3=b 4=a
+6:1:22221:learn:3 | 1=c 3=a 4=c
+6:1:22221:learn:4 | 1=c 2=c 3=a
+6:1:23300:post:1 | 1=1e,2c,3a,4b,5d
+6:1:23300:post:2 | 1=1c,2e,3d,4a,5b
+6:1:23300:post:3 | 1=b 2=b
+6:1:23300:post:4 | 1=b        # card 3 is left for the teacher: the module prints two questions with one set of choices.
+6:1:23300:post:5 | 1=c 2=b 3=c
+6:1:23300:post:6 | 1=1j,2d,3b,4c,5f,6e,7i,8g,9a,10h
+6:1:23300:post:8 | 2=b 3=b
+6:1:23300:post:9 | 1=b 3=b       # card 2 is left for the teacher: the module prints "a. Father b, Mother" as one choice.

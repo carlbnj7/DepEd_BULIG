@@ -9,7 +9,7 @@
 function l2a_ui():array{static $u=null;if($u===null){$u=['lessons'=>[],'pages'=>[]];foreach(['2a','2b'] as $k){$f=__DIR__.'/../database/level'.$k.'-ui.json';$j=is_file($f)?(json_decode((string)file_get_contents($f),true)?:[]):[];$u['lessons']+=$j['lessons']??[];foreach($j['pages']??[] as $pk=>$pv)$u['pages'][$k.':'.$pk]=$pv;}}return $u;}
 function l2a_is(int $lid):bool{return in_array(lesson_level($lid),[2,3,4],true);}
 function l2a_lesson_info(int $lid):?array{return l2a_ui()['lessons'][(string)$lid]??null;}
-function l2a_code(int $level):string{return $level===8?'7':($level===7?'6':($level===6?'5':($level===4?'3':($level===3?'2B':'2A'))));}
+function l2a_code(int $level):string{return $level===8?'7':($level===7?'6':($level===6?'5':($level===5?'4':($level===4?'3':($level===3?'2B':'2A')))));}
 function l2a_key(array $a):string{$k=(lesson_level((int)$a['lesson_id'])===3?'2b':'2a').':'.(int)$a['source_page'];if($k==='2b:42'&&level2_activity_context($a)&&(int)level2_activity_context($a)['position']===12)$k.=':continuation';return $k;}
 function l2a_set(array $a):?array{if(lesson_level((int)$a['lesson_id'])===4)return l3_set($a);if(lesson_level((int)$a['lesson_id'])===6)return l5_set($a);if(in_array(lesson_level((int)$a['lesson_id']),[7,8],true))return l6_set($a);$s=level2_card_set($a);if(!$s)return null;$u=l2a_ui()['pages'][l2a_key($a)]??['title'=>$s['title'],'cards'=>[]];$s['module_title']=$u['title'];foreach($s['cards'] as $i=>&$c){$c['ui']=($u['cards'][$i]??[])+['answer'=>['tiles']];if(isset($c['ui']['text']))$c['text']=$c['ui']['text'];if(isset($c['ui']['choices']))$c['choices']=$c['ui']['choices'];}unset($c);return $s;}
 /* ---------------- Level 3 (Word Recognition, level id 4): the same card screens ----------------
@@ -206,33 +206,76 @@ function l2a_save_audios(array $in,int $pid,int $aid):array{
 }
 
 /* ---------------- Class Demo ---------------- */
-function l2a_demo_view(array $u,int $level=2):void{$code=l2a_code($level);
- $acts=rows("SELECT a.*,l.position lesson_position,l.subtitle,l.title lesson_title,l.objectives lesson_objectives FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=".$level." AND l.published=1 AND a.published=1 ORDER BY l.position,l.id,FIELD(a.phase,'pre','learn','post'),a.position,a.id");
- $deck=[];$seen=[];foreach($acts as $a){$lid=(int)$a['lesson_id'];if(!isset($seen[$lid])){$seen[$lid]=1;$deck[]=['start'=>true,'a'=>$a];}$set=l2a_set($a);if(!$set)continue;foreach($set['cards'] as $i=>$c)$deck[]=['start'=>false,'a'=>$a,'set'=>$set,'c'=>$c,'i'=>$i];}
+function l2a_demo_view(array $u,int $level=2,int $grade=0):void{$code=l2a_code($level);$per=per_grade_level($level);$label=$per?module_label($level,$grade):'Level '.$code;
+ $acts=rows("SELECT a.*,l.position lesson_position,l.subtitle,l.title lesson_title,l.objectives lesson_objectives FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND a.published=1".($per?GRADE_SQL:'')." ORDER BY l.position,l.id,FIELD(a.phase,'pre','learn','post'),a.position,a.id",$per?[$level,$grade]:[$level]);
+ if(!$acts)fail('This level has no published demo content yet.',404);
+ $deck=[];$seen=[];foreach($acts as $a){$lid=(int)$a['lesson_id'];if(!isset($seen[$lid])){$seen[$lid]=1;$deck[]=['start'=>true,'a'=>$a];}
+  $set=$level===5?null:l2a_set($a);
+  if(!$set){if($level>=5)$deck[]=['start'=>false,'a'=>$a,'set'=>null,'c'=>null,'i'=>0];continue;}
+  foreach($set['cards'] as $i=>$c)$deck[]=['start'=>false,'a'=>$a,'set'=>$set,'c'=>$c,'i'=>$i];}
  $index=0;$want=(int)($_GET['activity']??0);$wc=(int)($_GET['card']??0);if($want){foreach($deck as $i=>$d)if(!$d['start']&&(int)$d['a']['id']===$want&&$d['i']===$wc){$index=$i;break;}}elseif(isset($_GET['lesson'])){foreach($deck as $i=>$d)if($d['start']&&(int)$d['a']['lesson_id']===(int)$_GET['lesson']){$index=$i;break;}}
- head('Class Demo · Level '.$code,'demo-page l1-demo-page');
- echo '<div id="l1-demo" class="l1-demo l2-demo" data-start="'.$index.'"><header class="l1d-top"><a class="l1d-logo" href="?page=class_demo"><img src="assets/bulig-logo.png" alt="BULIG"></a><div class="l1d-ln"><b data-d-lesson></b><small data-d-part></small></div><div class="l1d-prog" aria-hidden="true"><i data-d-prog></i></div>';
- echo '<label class="l1d-sel"><span class="sr-only">Go to a lesson</span><select id="demo-lesson" data-d-lessons>';foreach($deck as $i=>$d)if($d['start']){$li=l2a_lesson_info((int)$d['a']['lesson_id']);echo '<option value="'.$i.'">'.e($li?(!empty($li['covers'])?$li['activity']:preg_replace('~\s*[·:.].*$~u','',$li['activity']).' · '.$li['lesson']):$d['a']['subtitle']).'</option>';}echo '</select></label><select id="demo-jump" hidden aria-hidden="true" tabindex="-1">';foreach($deck as $i=>$d)echo '<option value="'.$i.'"></option>';echo '</select>';
- echo '<button type="button" class="l1d-tb" data-plan-open aria-haspopup="dialog" aria-label="Lesson plan">'.l1_icon('book').'Lesson plan</button><button type="button" class="l1d-tb" data-cd-open aria-label="Mark as done">'.l1_icon('ok').'Mark as done</button><button type="button" class="l1d-tb" data-d-full aria-label="Full screen">'.l1_icon('full').'<span>Full screen</span></button><a class="l1d-tb" href="?page=class_demo" aria-label="Exit">'.l1_icon('x').'Exit</a></header>';
+ $info=function(array $a)use($per):array{$li=l2a_lesson_info((int)$a['lesson_id']);if($li)return $li;return $per?['lesson'=>$a['lesson_title'],'activity'=>$a['subtitle'],'goals'=>l1_goals((string)$a['lesson_objectives']),'what'=>null,'model'=>null]:['lesson'=>$a['subtitle'],'activity'=>$a['lesson_title'],'goals'=>l1_goals((string)$a['lesson_objectives']),'what'=>null,'model'=>null];};
+ $titleOf=function(array $li)use($per):string{return !empty($li['covers'])?$li['activity']:($per?$li['lesson'].' · '.$li['activity']:$li['lesson'].' · '.preg_replace('~\s*[·].*$~u','',$li['activity']));};
+ head('Class Demo · '.$label,'demo-page l1-demo-page');
+ echo '<div id="l1-demo" class="l1-demo l2-demo'.($level>=5?' l5-demo':'').'" data-start="'.$index.'"><header class="l1d-top"><a class="l1d-logo" href="?page=class_demo"><img src="assets/bulig-logo.png" alt="BULIG"></a><div class="l1d-ln"><b data-d-lesson></b><small data-d-part></small></div><div class="l1d-prog" aria-hidden="true"><i data-d-prog></i></div>';
+ echo '<label class="l1d-sel"><span class="sr-only">Go to a lesson</span><select id="demo-lesson" data-d-lessons>';foreach($deck as $i=>$d)if($d['start']){$li=l2a_lesson_info((int)$d['a']['lesson_id']);echo '<option value="'.$i.'">'.e($li?(!empty($li['covers'])?$li['activity']:preg_replace('~\s*[·:.].*$~u','',$li['activity']).' · '.$li['lesson']):($per?$d['a']['lesson_title'].' · '.$d['a']['subtitle']:$d['a']['subtitle'])).'</option>';}echo '</select></label><select id="demo-jump" hidden aria-hidden="true" tabindex="-1">';foreach($deck as $i=>$d)echo '<option value="'.$i.'"></option>';echo '</select>';
+ echo '<button type="button" class="l1d-tb" data-plan-open aria-haspopup="dialog" aria-label="Lesson plan">'.l1_icon('book').'Lesson plan</button><button type="button" class="l1d-tb" data-cd-open aria-label="Mark as done">'.l1_icon('ok').'Mark as done</button><button type="button" class="l1d-tb" data-d-full aria-label="Full screen">'.l1_icon('full').'<span>Full screen</span></button><a class="l1d-tb" href="?page=class_demo'.($per?'&amp;level='.$level:'').'" aria-label="Exit">'.l1_icon('x').'Exit</a></header>';
  if(isset($_SESSION['flash'])){echo '<div class="notice demo-notice" role="status">'.icon('check').'<span>'.e($_SESSION['flash']).'</span></div>';unset($_SESSION['flash']);}
- echo class_done_demo_panel($u,$level,0,'Level '.$code).demo_lesson_plans($acts,$level,0,'Level '.$code);
+ echo class_done_demo_panel($u,$level,$per?$grade:0,$label).demo_lesson_plans($acts,$level,$per?$grade:0,$label);
  echo '<main class="l1d-stage" data-d-stage tabindex="-1" aria-live="polite" aria-label="Class slide"></main><footer class="l1d-bot"><button type="button" class="l1d-nb" data-d-prev>'.l1_icon('prev').'Previous</button><span class="l1d-cnt" data-d-count role="status"></span><button type="button" class="l1d-lis" data-d-listen aria-pressed="false">'.l1_icon('spk').'<span>Listen</span></button><button type="button" class="l1d-nb g" data-d-next>Next '.l1_icon('next').'</button></footer>';
  $firstOf=[];foreach($deck as $d)if(!$d['start']&&!isset($firstOf[(int)$d['a']['lesson_id']]))$firstOf[(int)$d['a']['lesson_id']]=(int)$d['a']['id'];
- foreach($deck as $d){$a=$d['a'];$lid=(int)$a['lesson_id'];$li=l2a_lesson_info($lid)??['lesson'=>$a['subtitle'],'activity'=>$a['lesson_title'],'goals'=>l1_goals((string)$a['lesson_objectives']),'what'=>null,'model'=>null];$title=!empty($li['covers'])?$li['activity']:$li['lesson'].' · '.preg_replace('~\s*[·].*$~u','',$li['activity']);
+ foreach($deck as $d){$a=$d['a'];$lid=(int)$a['lesson_id'];$li=$info($a);$title=$titleOf($li);
   if($d['start']){echo '<template class="l1d-t demo-template" data-lesson="'.$lid.'" data-id="'.($firstOf[$lid]??0).'" data-card="0" data-title="'.e($title).'" data-part="Lesson start" data-say="'.e($li['activity'].'. '.implode(' ',$li['goals']).' '.($li['what']??'').' '.($li['model']??'')).'"><span class="demo-slide-meta" hidden>'.e($title).' · Lesson start</span><div class="l1d-two l1d-start"><img class="l1d-cover" data-src="assets/images/covers/level-'.$level.'.webp" alt=""><div><span class="l1-tag">'.e(mb_strtoupper($li['lesson'])).'</span><h1>'.e($li['activity']).'</h1>';
    if($li['goals'])echo '<p class="l1-lab">TODAY WE WILL…</p><ul>'.implode('',array_map(fn($g)=>'<li>'.e($g).'</li>',$li['goals'])).'</ul>';
    if(!empty($li['covers']))echo '<p class="l1-lab">THIS TEST HAS…</p><ul>'.implode('',array_map(fn($g)=>'<li>'.e($g).'</li>',$li['covers'])).'</ul>';
    if($li['what'])echo '<p class="l1-lab">WHAT IS '.e(mb_strtoupper($li['lesson'])).'?</p><p class="l2d-p">'.e($li['what']).'</p>';
    if($li['model'])echo '<p class="l1-lab">MY TURN</p><p class="l2d-p">'.e($li['model']).'</p>';
    echo '</div></div></template>';continue;}
+  if($d['set']===null){echo l5_demo_page($a,$title);continue;}
   $set=$d['set'];$c=$d['c'];$N=count($set['cards']);$pics=l2a_pictures($c,$d['i']+1,true);$txt=(string)$c['text'];
-  echo '<template class="l1d-t demo-template" data-lesson="'.$lid.'" data-id="'.(int)$a['id'].'" data-card="'.$d['i'].'" data-title="'.e($title).'" data-part="'.e($set['module_title'].($N>1?' · Card '.($d['i']+1).' of '.$N:'')).'" data-say="'.e(trim($set['instruction'].' '.$txt)).'"><span class="demo-slide-meta" hidden>'.e($title).' · '.e(l1_phase_label($a['phase'])).'</span><h1 class="sr-only">'.e($set['module_title']).'</h1><div class="l1d-'.($pics?'two':'one').' l2d">';
+  echo '<template class="l1d-t demo-template" data-lesson="'.$lid.'" data-id="'.(int)$a['id'].'" data-card="'.$d['i'].'" data-title="'.e($title).'" data-part="'.e($set['module_title'].($N>1?' · Card '.($d['i']+1).' of '.$N:'')).'" data-say="'.e(trim(($d['i']?'':$set['instruction'].' ').($c['story']??'').' '.($c['speak']??$txt))).'"><span class="demo-slide-meta" hidden>'.e($title).' · '.e(l1_phase_label($a['phase'])).'</span><h1 class="sr-only">'.e($set['module_title']).'</h1>';
+  if($level>=6){echo l5_demo_card($a,$set,$c,$d['i']+1,$pics).'</template>';continue;}
+  echo '<div class="l1d-'.($pics?'two':'one').' l2d">';
   echo '<div class="l1d-txt"><span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span><p class="l2d-dir">'.nl2br(e($set['instruction'])).'</p>'.(!empty($c['ui']['grid'])?'<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>':'').($txt!==''&&empty($c['ui']['grid'])?'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.nl2br(e($txt)).'</p>':'');
   if($txt===''&&!empty($c['ui']['word']))echo '<p class="l1d-q">'.e($c['ui']['word']).'</p>';
   if(!empty($c['ui']['opts'])){foreach($c['ui']['opts'] as $row)echo '<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$row)).'</div>';}
   else{$bank=$c['choices']?:($c['words']??($c['ui']['tiles']??[]));if($bank)echo '<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$bank)).'</div>';}
   echo '</div>'.$pics.'</div></template>';}
  echo '</div>';foot();
+}
+
+/* Class Demo slides for Levels 4-7 (level ids 5-8): the same big slides as Levels 1-3. */
+/** Level 4 (Fluency): the passage to read aloud with the Phil-IRI scoring helper, or the module's page. */
+function l5_demo_page(array $a,string $title):string{
+ $lid=(int)$a['lesson_id'];$h='<template class="l1d-t demo-template" data-lesson="'.$lid.'" data-id="'.(int)$a['id'].'" data-card="0" data-title="'.e($title).'" data-part="'.e(l1_phase_label($a['phase'])).'"';
+ $parts=$a['type']==='reading'?level4_passage_parts($a):null;
+ if($parts){$say='Read the following passage aloud.';$h.=' data-say="'.e($say.' '.(string)$a['narration']).'"><span class="demo-slide-meta" hidden>'.e($title).' · '.e(l1_phase_label($a['phase'])).'</span>';
+  $w=(int)$parts['words'];
+  $h.='<div class="l1d-one l5d"><div class="l1d-txt"><span class="l1-tag">'.e(l4_tag($a,['position'=>(int)$a['lesson_position']])).'</span><p class="l2d-dir">'.e($say).' Read it together, or listen as one pupil reads.</p><div class="l5d-read l4d">'.str_replace('<img src=','<img data-src=',(string)level4_passage($a)).'</div>';
+  $h.='<details class="fluency-score l5d-score" data-words="'.$w.'"><summary>Teacher’s scoring helper (Phil-IRI) · not saved</summary><div class="score-grid"><label>Number of miscues<input type="number" min="0" max="'.$w.'" inputmode="numeric" data-score="miscues"></label><label>Reading time (seconds)<input type="number" min="1" inputmode="numeric" data-score="seconds"></label><div>Oral Reading Score<output data-score="percent">—</output></div><div>Reading level<output data-score="level">—</output></div><div>Reading speed<output data-score="wpm">—</output></div></div><p><small>Score = ('.$w.' − miscues) ÷ '.$w.' × 100 · Independent 97–100%, Instructional 90–96%, Frustration 89% and below · Speed = '.$w.' ÷ seconds × 60.</small></p></details></div></div></template>';
+  return $h;}
+ $pics=l1_pictures($a,true);
+ $h.=' data-say="'.e((string)$a['prompt']).'"><span class="demo-slide-meta" hidden>'.e($title).' · '.e(l1_phase_label($a['phase'])).'</span><div class="l1d-'.($pics?'two':'one').' l2d"><div class="l1d-txt"><span class="l1-tag">'.e(mb_strtoupper($a['title'])).'</span><p class="l1d-q'.(mb_strlen((string)$a['prompt'])>60?' l':'').'">'.nl2br(e((string)$a['prompt'])).'</p></div>'.$pics.'</div></template>';
+ return $h;
+}
+/** Levels 5-7: one card as a slide. The story, the question, its choices, the matching board or puzzle, and the answer the teacher can show. */
+function l5_demo_card(array $a,array $set,array $c,int $n,string $pics):string{
+ $kinds=$c['ui']['answer']??[];$txt=(string)$c['text'];$h='<div class="l1d-txt l5d-txt"><span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span>';
+ if($n===1&&trim((string)$set['instruction'])!=='')$h.='<p class="l2d-dir">'.nl2br(e($set['instruction'])).'</p>';
+ if(!empty($c['story']))$h.='<h2 class="l5d-story">'.e($c['story']).'</h2>';
+ if(in_array('lgrid',$kinds,true)){$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll"><table class="letter-grid l5d-grid" aria-label="Letter puzzle">';foreach($c['grid'] as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.=$ch===' '||$ch==='.'?'<td class="blank"></td>':'<td>'.e($ch).'</td>';$h.='</tr>';}$h.='</table></div>';}
+ elseif(in_array('match',$kinds,true))$h.=($txt!==''?'<p class="l5d-lead">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll">'.str_replace('<img src=','<img data-src=',l2a_match_board($c,true)).'</div>';
+ elseif(!empty($c['ui']['grid']))$h.='<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>';
+ elseif($txt!=='')$h.=mb_strlen($txt)>170?'<div class="l5d-read">'.nl2br(e($txt)).'</div>':'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.nl2br(e($txt)).'</p>';
+ if(!empty($c['words']))$h.='<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
+ if(!empty($c['ui']['labels'])&&count($kinds)>1){$h.='<ol class="l5d-order">';foreach($c['ui']['labels'] as $lab)$h.='<li><span class="l5d-box" aria-hidden="true"></span>'.e($lab).'</li>';$h.='</ol>';}
+ elseif($c['choices']){$long=max(array_map('mb_strlen',array_map('strval',$c['choices'])))>24;$h.=$long?'<ul class="l5d-ch">'.implode('',array_map(fn($w)=>'<li>'.e($w).'</li>',$c['choices'])).'</ul>':'<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['choices'])).'</div>';}
+ $how=['write'=>'Pupils write their answers.','paper'=>'Pupils do this with you or on paper.','say'=>'Pupils read this aloud.','speed'=>'Reading for speed: time the reading together.','lgrid'=>'Find the words in the puzzle together.'];
+ foreach($kinds as $k)if(isset($how[$k])){$h.='<p class="l5d-how">'.e($how[$k]).'</p>';break;}
+ $key=activity_key($a)[$n]??null;
+ if($key){$ans=$key['t']==='choice'?implode(' or ',array_merge([$key['a']],$key['alt']??[])):($key['t']==='match'?implode(', ',array_map(fn($i,$l)=>$i.' – '.strtoupper($l),array_keys($key['a']),$key['a'])):implode(' · ',array_map(fn($l,$v)=>$l.' = '.$v,array_keys($key['a']),$key['a'])));
+  $h.='<details class="l5d-key"><summary>'.l1_icon('ok').'Show the answer</summary><p>'.e($ans).'</p></details>';}
+ return '<div class="l1d-'.($pics?'two':'one').' l2d l5d">'.$h.'</div>'.$pics.'</div>';
 }
 
 /** Activity history: the pupil's recordings, one per card. */
