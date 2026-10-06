@@ -45,6 +45,13 @@
  $$('[data-kind="words"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,ws=$$('.l2-wd',g);
   ws.forEach(b=>b.addEventListener('click',()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');const n=ws.filter(x=>x.getAttribute('aria-pressed')==='true').length;set(c,p,n?'read '+n+' of '+ws.length+' words':'');}));});
  /* done on paper */
+ /* reading for speed: Start / Done, then words per minute (the module's speed rate) */
+ const mmss=x=>Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0');
+ $$('[data-kind="speed"]',deck).forEach(g=>{const c=g.closest('.l2-card'),w=+g.dataset.words||0,go=$('[data-sp-start]',g),dn=$('[data-sp-done]',g),clk=$('[data-sp-clock]',g),res=$('[data-sp-res]',g);let t0=0,tk=null;
+  go.addEventListener('click',()=>{t0=Date.now();clearInterval(tk);tk=setInterval(()=>{clk.textContent=mmss((Date.now()-t0)/1000);},250);go.hidden=true;dn.hidden=false;res.textContent='';set(c,g.dataset.part,'');});
+  dn.addEventListener('click',()=>{clearInterval(tk);const sec=Math.max(1,(Date.now()-t0)/1000),wpm=Math.round(w*60/sec);clk.textContent=mmss(sec);dn.hidden=true;go.hidden=false;go.lastChild.textContent='Again';res.textContent='Time '+mmss(sec)+' · '+wpm+' words per minute';set(c,g.dataset.part,'reading time '+mmss(sec)+' · '+wpm+' words per minute');});});
+ /* letter puzzle (app.js marks the letters): the marked letters, row by row */
+ $$('[data-kind="lgrid"]',deck).forEach(g=>{const c=g.closest('.l2-card');g.addEventListener('click',()=>setTimeout(()=>{const v=$$('tr',g).map((tr,i)=>{const m=$$('.grid-cell.found',tr).map(b=>b.textContent).join('');return m?'Row '+(i+1)+': '+m:'';}).filter(Boolean).join('; ');set(c,g.dataset.part,v);},0));});
  /* typed answer (Level 6: "write the name...", "copy the word...") */
  $$('[data-kind="write"]',deck).forEach(g=>{const c=g.closest('.l2-card'),t=$('textarea',g);t.addEventListener('input',()=>set(c,g.dataset.part,t.value.replace(/\s+/g,' ').trim()));});
  /* matching board (app.js draws the lines and writes "1-c, 2-a" in the box) */
@@ -73,7 +80,7 @@
   function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;if(mr&&mr.state!=='inactive')mr.stop();if(st)st.getTracks().forEach(t=>t.stop());}
   function fin(){const blob=new Blob(ch,{type:((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/')});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
-   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');set(c,p,rd?'(voice recording · time '+fmt(secs)+')':'(voice recording)');};fr.readAsDataURL(blob);}
+   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');set(c,p,rd?'(voice recording · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(voice recording)');};fr.readAsDataURL(blob);}
   go.addEventListener('click',()=>{if(r.dataset.state==='rec'){if(Date.now()-t0<700)return;stop();}else if(r.dataset.state!=='starting')start();});
   again.addEventListener('click',()=>{if(pl){pl.pause();pl=null;}set(c,p,'');start();});
   lis.addEventListener('click',()=>{if(!url)return;if(pl&&!pl.paused){pl.pause();return;}if(!pl){pl=new Audio(url);pl.addEventListener('timeupdate',()=>bar.style.setProperty('--p',String(Math.min(1,pl.currentTime/(secs||1)))));pl.addEventListener('ended',()=>lis.classList.remove('on'));}pl.currentTime=0;pl.play().then(()=>lis.classList.add('on')).catch(()=>{});});
