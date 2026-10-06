@@ -26,7 +26,7 @@
  $$('[data-kind="chip"],[data-kind="chips"],[data-kind="num"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,multi=g.dataset.kind==='chips';
   g.addEventListener('click',e=>{const b=e.target.closest('button[data-val]');if(!b)return;const on=b.getAttribute('aria-pressed')!=='true';
    if(!multi)$$('button[data-val]',g).forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed',on?'true':'false');
-   set(c,p,$$('button[aria-pressed="true"]',g).map(x=>x.dataset.val).join(', '));});});
+   const v=$$('button[aria-pressed="true"]',g).map(x=>x.dataset.val).join(', ');set(c,p,v&&g.dataset.lab?g.dataset.lab+' = '+v:v);});});
  /* pictures: one, several, or pairs */
  $$('[data-kind="pick"],[data-kind="picks"],[data-kind="pairs"]',deck).forEach(h=>{const c=h.closest('.l2-card'),p=h.dataset.part,kind=h.dataset.kind,pics=$$('.l2-pic[data-pick]',c);let open=null,pairNo=0;
   const name=b=>'Picture '+b.dataset.pick+(b.querySelector('.l2-lab')?' ('+b.querySelector('.l2-lab').textContent+')':'');
@@ -45,6 +45,8 @@
  $$('[data-kind="words"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,ws=$$('.l2-wd',g);
   ws.forEach(b=>b.addEventListener('click',()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');const n=ws.filter(x=>x.getAttribute('aria-pressed')==='true').length;set(c,p,n?'read '+n+' of '+ws.length+' words':'');}));});
  /* done on paper */
+ /* typed answer (Level 6: "write the name...", "copy the word...") */
+ $$('[data-kind="write"]',deck).forEach(g=>{const c=g.closest('.l2-card'),t=$('textarea',g);t.addEventListener('input',()=>set(c,g.dataset.part,t.value.replace(/\s+/g,' ').trim()));});
  /* matching board (app.js draws the lines and writes "1-c, 2-a" in the box) */
  $$('[data-kind="match"]',deck).forEach(g=>{const c=g.closest('.l2-card'),box=$('.native-answer',g);box.addEventListener('input',()=>set(c,g.dataset.part,box.value));});
  $$('[data-kind="paper"]',deck).forEach(b=>{const c=b.closest('.l2-card');b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on?'true':'false');set(c,b.dataset.part,on?'done with my teacher or on paper':'');});});
@@ -59,19 +61,19 @@
   return 'The microphone could not start. Tap it to try again.';}
  const canRec=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
  $$('[data-l2-rec]',deck).forEach(r=>{const c=r.closest('.l2-card'),p=r.dataset.part,go=$('[data-rec-go]',r),label=$('[data-rec-label]',r),sub=$('[data-rec-sub]',r),play=$('[data-rec-play]',r),lis=$('[data-rec-listen]',r),bar=$('.l1-bar i',r),len=$('[data-rec-len]',r),again=$('[data-rec-again]',r),heard=$('[data-rec-heard]',r),inp=$('[data-audio]',r);
-  let mr=null,st=null,ch=[],t0=0,tick=null,secs=0,url='',pl=null;const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+  let mr=null,st=null,ch=[],t0=0,tick=null,secs=0,url='',pl=null;const rd=!!r.dataset.max;const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   const ui=s=>{r.dataset.state=s;go.classList.toggle('on',s==='rec');go.hidden=s==='done';play.hidden=s!=='done';
-   label.textContent=s==='rec'?'0:00':s==='done'?'Your answer':'Tap and say it';sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
+   label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(rd?'Tap and read the story aloud':'Tap and say it');sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
   if(!canRec){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
   async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
    try{st=await getMic();}catch(e){r.dataset.state='idle';label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(e);if(heard)heard.hidden=false;return;}
    const type=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
    try{mr=new MediaRecorder(st,type?{mimeType:type,audioBitsPerSecond:32000}:undefined);}catch(e){mr=new MediaRecorder(st);}
-   ch=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data);};mr.onstop=fin;mr.start(500);t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=45)stop();},250);}
+   ch=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data);};mr.onstop=fin;mr.start(500);t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();},250);}
   function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;if(mr&&mr.state!=='inactive')mr.stop();if(st)st.getTracks().forEach(t=>t.stop());}
   function fin(){const blob=new Blob(ch,{type:((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/')});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
-   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');set(c,p,'(voice recording)');};fr.readAsDataURL(blob);}
+   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');set(c,p,rd?'(voice recording · time '+fmt(secs)+')':'(voice recording)');};fr.readAsDataURL(blob);}
   go.addEventListener('click',()=>{if(r.dataset.state==='rec'){if(Date.now()-t0<700)return;stop();}else if(r.dataset.state!=='starting')start();});
   again.addEventListener('click',()=>{if(pl){pl.pause();pl=null;}set(c,p,'');start();});
   lis.addEventListener('click',()=>{if(!url)return;if(pl&&!pl.paused){pl.pause();return;}if(!pl){pl=new Audio(url);pl.addEventListener('timeupdate',()=>bar.style.setProperty('--p',String(Math.min(1,pl.currentTime/(secs||1)))));pl.addEventListener('ended',()=>lis.classList.remove('on'));}pl.currentTime=0;pl.play().then(()=>lis.classList.add('on')).catch(()=>{});});
