@@ -112,7 +112,7 @@ function lesson_view(array $u):void{
 /* Level 4: the passage, read aloud into the microphone (the teacher scores it with the module's table). */
  if($chosen&&lesson_level($lid)===5){l4_activity_page($u,$lesson,$all,$chosen);return;}
  /* Level 5: the same card screens (tap a), b), c); match rows; letter tiles for blanks). */
- if($chosen&&lesson_level($lid)===6&&($l5=l2a_set($chosen))){l2a_activity_page($u,$lesson,$all,$chosen,$l5);return;}
+ if($chosen&&in_array(lesson_level($lid),[6,7],true)&&($l5=l2a_set($chosen))){l2a_activity_page($u,$lesson,$all,$chosen,$l5);return;}
  /* Level 3: the same card screens as Level 2 (module directions, tap / write / say on each card). */
  if($chosen&&lesson_level($lid)===4&&($l3=l2a_set($chosen))){l2a_activity_page($u,$lesson,$all,$chosen,$l3);return;}
  head(level_label(lesson_level($lid)).' · '.$lesson['subtitle'],'activity-page');echo '<header class="activity-header"><a class="iconbutton" href="?page=lessons&amp;level='.lesson_level($lid).'#level'.lesson_level($lid).'-path" aria-label="Back to my lessons">'.icon('close').'</a><div><strong>'.e(level_label(lesson_level($lid)).' · '.$lesson['subtitle']).'</strong><span>'.e($lesson['title']).'</span></div><div class="activity-progress"><span>'.$done.' / '.count($all).' complete</span><progress max="'.count($all).'" value="'.$done.'"></progress></div></header><main class="activity-main">';notice();
