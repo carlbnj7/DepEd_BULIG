@@ -68,13 +68,13 @@
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null,
    ['.lesson-outline','All activities','Open this to see every activity in this lesson and what you already finished.']],
   'l1-start':[
+   ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
    ['.l1-start h1','Your lesson','This is the lesson you will learn today.'],
    ['.l1-goals','Today you will…','These are the things you will learn. Tap the yellow speaker to hear them.'],
    ['.l1-steps','Three parts','First a few questions, then practice, then show what you learned.'],
    ['.l1-go','Start','Tap Let’s start! when you are ready.']],
   l1:[
-   ['.l1-top','Your lesson','Tap X to go back to your map. The number shows how many you finished.'],
-   ['.l1-dots','Your progress','Each line is one activity. Yellow ones are done.'],
+   ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
    [['.l1-q .l1-spk','.l1-mission .l1-spk','.l1-listen .l1-spk','.l1-speed'],'Listen','Tap the yellow speaker to hear it again.'],
    [['.l1-mic'],'Say your answer','Tap the red microphone and say your answer. Tap it again to stop. Then listen to it, and tap Send.'],
    [['.l1-howto'],'Do it!','Listen, do the action, then tap I did it!'],
@@ -82,7 +82,7 @@
    [['.l1-dchoice'],'Your drawing','Draw on paper and take a photo, or draw here in BULIG. Check it, then send it.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null],
   l2:[
-   ['.l1-top','Your lesson','Tap X to go back to your map.'],
+   ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
    ['.l2-dir','What to do','These are the directions from your book. Tap the yellow speaker to hear them.'],
    [['.l2-cdots'],'Your cards','Each number is a card. Green cards are answered. Tap a number to jump to it.'],
    [['.l2-card:not([hidden]) .l2-keys'],'Letter tiles','Tap the letters to write your answer. The red arrow erases.'],
