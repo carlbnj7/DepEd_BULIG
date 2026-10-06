@@ -60,7 +60,8 @@ function level4_passage(array $a,bool $pictures=true):?string{
  $h='<article class="fluency-passage'.($verse?' is-verse':'').'" data-words="'.$p['words'].'">';
  if($pictures){$imgs=activity_images($a);if($imgs){$h.='<div class="fluency-pictures">';foreach($imgs as $i)$h.='<img src="'.e($i).'" alt="Picture from the module for this passage" loading="lazy">';$h.='</div>';}}
  $h.='<h2 class="fluency-title">'.e($p['title']).'</h2>'.($p['author']!==''?'<p class="fluency-author">'.e($p['author']).'</p>':'').'<div class="fluency-text">';
- foreach($p['blocks'] as $b)$h.='<p>'.nl2br(e($b),false).'</p>';
+ /* A play (Pygmalion): the speaker at the start of a part is in italics, as in the module. */
+ foreach($p['blocks'] as $b)$h.='<p>'.preg_replace('~^(The (?:Flower Girl|Gentleman|Note Taker):)~u','<i>$1</i>',nl2br(e($b),false)).'</p>';
  return $h.'</div><p class="fluency-count">Number of words in the passage: <strong>'.$p['words'].'</strong></p></article>';
 }
 /** Level 5 module page as native content: text lines and separately cut pictures in the page's rows. */

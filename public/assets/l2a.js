@@ -26,7 +26,7 @@
  $$('[data-kind="chip"],[data-kind="chips"],[data-kind="num"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,multi=g.dataset.kind==='chips';
   g.addEventListener('click',e=>{const b=e.target.closest('button[data-val]');if(!b)return;const on=b.getAttribute('aria-pressed')!=='true';
    if(!multi)$$('button[data-val]',g).forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed',on?'true':'false');
-   set(c,p,$$('button[aria-pressed="true"]',g).map(x=>x.dataset.val).join(', '));});});
+   const v=$$('button[aria-pressed="true"]',g).map(x=>x.dataset.val).join(', ');set(c,p,v&&g.dataset.lab?g.dataset.lab+' = '+v:v);});});
  /* pictures: one, several, or pairs */
  $$('[data-kind="pick"],[data-kind="picks"],[data-kind="pairs"]',deck).forEach(h=>{const c=h.closest('.l2-card'),p=h.dataset.part,kind=h.dataset.kind,pics=$$('.l2-pic[data-pick]',c);let open=null,pairNo=0;
   const name=b=>'Picture '+b.dataset.pick+(b.querySelector('.l2-lab')?' ('+b.querySelector('.l2-lab').textContent+')':'');
@@ -45,27 +45,46 @@
  $$('[data-kind="words"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,ws=$$('.l2-wd',g);
   ws.forEach(b=>b.addEventListener('click',()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');const n=ws.filter(x=>x.getAttribute('aria-pressed')==='true').length;set(c,p,n?'read '+n+' of '+ws.length+' words':'');}));});
  /* done on paper */
+ /* reading for speed: Start / Done, then words per minute (the module's speed rate) */
+ const mmss=x=>Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0');
+ $$('[data-kind="speed"]',deck).forEach(g=>{const c=g.closest('.l2-card'),w=+g.dataset.words||0,go=$('[data-sp-start]',g),dn=$('[data-sp-done]',g),clk=$('[data-sp-clock]',g),res=$('[data-sp-res]',g);let t0=0,tk=null;
+  go.addEventListener('click',()=>{t0=Date.now();clearInterval(tk);tk=setInterval(()=>{clk.textContent=mmss((Date.now()-t0)/1000);},250);go.hidden=true;dn.hidden=false;res.textContent='';set(c,g.dataset.part,'');});
+  dn.addEventListener('click',()=>{clearInterval(tk);const sec=Math.max(1,(Date.now()-t0)/1000),wpm=Math.round(w*60/sec);clk.textContent=mmss(sec);dn.hidden=true;go.hidden=false;go.lastChild.textContent='Again';res.textContent='Time '+mmss(sec)+' · '+wpm+' words per minute';set(c,g.dataset.part,'reading time '+mmss(sec)+' · '+wpm+' words per minute');});});
+ /* letter puzzle (app.js marks the letters): the marked letters, row by row */
+ $$('[data-kind="lgrid"]',deck).forEach(g=>{const c=g.closest('.l2-card');g.addEventListener('click',()=>setTimeout(()=>{const v=$$('tr',g).map((tr,i)=>{const m=$$('.grid-cell.found',tr).map(b=>b.textContent).join('');return m?'Row '+(i+1)+': '+m:'';}).filter(Boolean).join('; ');set(c,g.dataset.part,v);},0));});
+ /* typed answer (Level 6: "write the name...", "copy the word...") */
+ $$('[data-kind="write"]',deck).forEach(g=>{const c=g.closest('.l2-card'),t=$('textarea',g);t.addEventListener('input',()=>set(c,g.dataset.part,t.value.replace(/\s+/g,' ').trim()));});
+ /* matching board (app.js draws the lines and writes "1-c, 2-a" in the box) */
+ $$('[data-kind="match"]',deck).forEach(g=>{const c=g.closest('.l2-card'),box=$('.native-answer',g);box.addEventListener('input',()=>set(c,g.dataset.part,box.value));});
  $$('[data-kind="paper"]',deck).forEach(b=>{const c=b.closest('.l2-card');b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on?'true':'false');set(c,b.dataset.part,on?'done with my teacher or on paper':'');});});
  /* microphone (one recording per card) */
+/* Microphone: ask with clean-sound settings, then plain audio (some iPhones refuse the first). */
+ async function getMic(){const md=navigator.mediaDevices;try{return await md.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}
+  catch(e){if(e&&(e.name==='NotAllowedError'||e.name==='SecurityError'))throw e;await new Promise(r=>setTimeout(r,350));return await md.getUserMedia({audio:true});}}
+ function micMsg(e){const n=e&&e.name||'';
+  if(n==='NotAllowedError'||n==='SecurityError')return 'The microphone is blocked. Allow it in the browser settings (iPhone: tap aA, then Website Settings, then Microphone: Allow), then tap the microphone again.';
+  if(n==='NotReadableError'||n==='AbortError'||n==='TrackStartError')return 'The microphone is busy. Close other apps using it (calls, video, voice notes), then tap the microphone again.';
+  if(n==='NotFoundError'||n==='DevicesNotFoundError')return 'No microphone was found. Tap the microphone to try again.';
+  return 'The microphone could not start. Tap it to try again.';}
  const canRec=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
  $$('[data-l2-rec]',deck).forEach(r=>{const c=r.closest('.l2-card'),p=r.dataset.part,go=$('[data-rec-go]',r),label=$('[data-rec-label]',r),sub=$('[data-rec-sub]',r),play=$('[data-rec-play]',r),lis=$('[data-rec-listen]',r),bar=$('.l1-bar i',r),len=$('[data-rec-len]',r),again=$('[data-rec-again]',r),heard=$('[data-rec-heard]',r),inp=$('[data-audio]',r);
-  let mr=null,st=null,ch=[],t0=0,tick=null,secs=0,url='',pl=null;const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+  let mr=null,st=null,ch=[],t0=0,tick=null,secs=0,url='',pl=null;const rd=!!r.dataset.max;const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   const ui=s=>{r.dataset.state=s;go.classList.toggle('on',s==='rec');go.hidden=s==='done';play.hidden=s!=='done';
-   label.textContent=s==='rec'?'0:00':s==='done'?'Your answer':'Tap and say it';sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
+   label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(rd?'Tap and read the story aloud':'Tap and say it');sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
   if(!canRec){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
   async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
-   try{st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}catch(e){r.dataset.state='idle';go.hidden=true;label.textContent='Say it out loud to your teacher.';sub.textContent=e&&e.name==='NotAllowedError'?'The microphone is not allowed on this device.':'No microphone was found.';return;}
+   try{st=await getMic();}catch(e){r.dataset.state='idle';label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(e);if(heard)heard.hidden=false;return;}
    const type=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
    try{mr=new MediaRecorder(st,type?{mimeType:type,audioBitsPerSecond:32000}:undefined);}catch(e){mr=new MediaRecorder(st);}
-   ch=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data);};mr.onstop=fin;mr.start(500);t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=45)stop();},250);}
+   ch=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data);};mr.onstop=fin;mr.start(500);t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();},250);}
   function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;if(mr&&mr.state!=='inactive')mr.stop();if(st)st.getTracks().forEach(t=>t.stop());}
   function fin(){const blob=new Blob(ch,{type:((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/')});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
-   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');set(c,p,'(voice recording)');};fr.readAsDataURL(blob);}
+   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');set(c,p,rd?'(voice recording · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(voice recording)');};fr.readAsDataURL(blob);}
   go.addEventListener('click',()=>{if(r.dataset.state==='rec'){if(Date.now()-t0<700)return;stop();}else if(r.dataset.state!=='starting')start();});
   again.addEventListener('click',()=>{if(pl){pl.pause();pl=null;}set(c,p,'');start();});
   lis.addEventListener('click',()=>{if(!url)return;if(pl&&!pl.paused){pl.pause();return;}if(!pl){pl=new Audio(url);pl.addEventListener('timeupdate',()=>bar.style.setProperty('--p',String(Math.min(1,pl.currentTime/(secs||1)))));pl.addEventListener('ended',()=>lis.classList.remove('on'));}pl.currentTime=0;pl.play().then(()=>lis.classList.add('on')).catch(()=>{});});
-  heard.addEventListener('click',()=>{const on=heard.getAttribute('aria-pressed')!=='true';heard.setAttribute('aria-pressed',on?'true':'false');if(on){inp.value='';if(url){URL.revokeObjectURL(url);url='';}ui('idle');}set(c,p,on?'(my teacher heard me)':'');});});
+  heard.addEventListener('click',()=>{const on=heard.getAttribute('aria-pressed')!=='true';heard.setAttribute('aria-pressed',on?'true':'false');if(on){inp.value='';if(url){URL.revokeObjectURL(url);url='';}ui('idle');}set(c,p,on?'(done)':'');});});
  /* ---------- moving between cards ---------- */
  const dots=document.createElement('div');dots.className='l2-cdots';
  if(cards.length>1){cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.textContent=String(i+1);b.setAttribute('aria-label','Card '+(i+1));b.addEventListener('click',()=>show(i));dots.append(b);});deck.before(dots);}

@@ -79,7 +79,7 @@ function l1_recordings_dir():string{return __DIR__.'/../storage/recordings';}
 function l1_save_audio(string $data,int $pid,int $aid):string{
  if(!preg_match('~^data:audio/(webm|ogg|mp4|mpeg|aac|x-m4a)(?:;codecs=[a-z0-9.,"\- ]+)?;base64,([A-Za-z0-9+/=]+)$~i',$data,$m))fail('This recording could not be read. Please record again.');
  $bin=base64_decode($m[2],true);if($bin===false||strlen($bin)<200)fail('This recording is empty. Please record again.');
- if(strlen($bin)>3000000)fail('This recording is too long. Please keep it under one minute.');
+ if(strlen($bin)>9000000)fail('This recording is too long. Please record again.');
  $head=substr($bin,0,12);
  if(str_starts_with($head,"\x1A\x45\xDF\xA3"))$ext='webm';elseif(str_starts_with($head,'OggS'))$ext='ogg';elseif(substr($head,4,4)==='ftyp')$ext='m4a';
  elseif(str_starts_with($head,'ID3')||(ord($head[0])===0xFF&&(ord($head[1])&0xE0)===0xE0))$ext=strtolower($m[1])==='aac'?'aac':'mp3';else fail('This recording could not be read. Please record again.');
@@ -133,6 +133,12 @@ function l1_goals(string $obj):array{
  return [$obj];
 }
 
+/** Lesson header: level and lesson name, "n / N complete" and one dot per activity. */
+function lesson_head(array $lesson,array $all,array $a,string $back):string{
+ $lv=lesson_level((int)$lesson['id']);$n=count($all);$done=count(array_filter($all,'completion_ok'));
+ $bar='';if($n<=30){$bar='<div class="ap-seg" aria-hidden="true">';foreach($all as $x)$bar.='<i class="'.((int)$x['id']===(int)$a['id']?'c':(completion_ok($x)?'d':'')).'"></i>';$bar.='</div>';}else $bar='<progress max="'.$n.'" value="'.$done.'"></progress>';
+ return '<header class="activity-header'.($n<=30?' has-seg':'').'"><a class="iconbutton" href="'.e($back).'" aria-label="Back to my lessons">'.icon('close').'</a><div><strong>'.e(level_label($lv).' · '.$lesson['subtitle']).'</strong><span>'.e($lesson['title']).'</span></div><div class="activity-progress"><span>'.$done.' / '.$n.' complete</span>'.$bar.'</div></header>';
+}
 function l1_icon(string $n):string{
  $p=['spk'=>'<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/>','mic'=>'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
   'play'=>'<path d="M8 5v14l11-7z"/>','stop'=>'<rect x="7" y="7" width="10" height="10" rx="2"/>','x'=>'<path d="M6 6l12 12M18 6 6 18"/>','next'=>'<path d="M5 12h14M13 6l6 6-6 6"/>','prev'=>'<path d="M19 12H5M11 6l-6 6 6 6"/>',
@@ -180,11 +186,22 @@ function l1_tag(array $a,string $kind):string{
 /* ---------------- pupil screens ---------------- */
 
 /** Lesson start: what we will learn today, the number of activities in each part, then one big Start button. */
+/** The same opening screen for Levels 3 to 7: picture, lesson name, goals, parts and Let's start. */
+function lesson_start_page(array $lesson,array $all,array $first):void{
+ $lid=(int)$lesson['id'];$lv=lesson_level($lid);$count=['pre'=>0,'learn'=>0,'post'=>0];foreach($all as $x)if(isset($count[$x['phase']]))$count[$x['phase']]++;
+ head(level_label($lv).' · '.$lesson['subtitle'],'activity-page l1-page');
+ echo '<div class="l1-app l1-start-app" data-l1-start>'.lesson_head($lesson,$all,$first,'?page=lessons&level='.$lv.'#level'.$lv.'-path').'<main class="l1-main l1-start activity-main">';
+ echo '<div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-'.min(8,max(1,$lv)).'.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
+ $goals=l1_goals((string)$lesson['objectives']);
+ if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
+ echo '<div class="l1-steps">';foreach($count as $p=>$n)if($n)echo '<span><b>'.$n.'</b>'.e(l1_phase_label($p)).'</span>';echo '</div>';
+ echo '<a class="l1-big l1-go" href="?page=lesson&amp;id='.$lid.'&amp;activity='.(int)$first['id'].'">Let’s start! '.l1_icon('next').'</a></div></main></div>';foot();
+}
 function l1_start_page(array $lesson,array $all,array $first):void{
  $lid=(int)$lesson['id'];$count=['pre'=>0,'learn'=>0,'post'=>0];foreach($all as $x)$count[$x['phase']]++;
  head('Level 1 · '.$lesson['subtitle'],'activity-page l1-page');
- echo '<div class="l1-app l1-start-app" data-l1-start><main class="l1-main l1-start activity-main"><a class="l1-x l1-x-float" href="?page=lessons&amp;level=1#level1-path" aria-label="Back to my lessons">'.l1_icon('x').'</a>';
- echo '<img class="l1-cover" src="assets/images/covers/level-1.webp" alt=""><div class="l1-start-in"><span class="l1-tag">LESSON '.(int)$lesson['position'].' · '.e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1>';
+ echo '<div class="l1-app l1-start-app" data-l1-start>'.lesson_head($lesson,$all,$first,'?page=lessons&level=1#level1-path').'<main class="l1-main l1-start activity-main">';
+ echo '<div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
  $goals=l1_goals((string)$lesson['objectives']);
  if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
  echo '<div class="l1-steps">';foreach($count as $p=>$n)if($n)echo '<span><b>'.$n.'</b>'.e(l1_phase_label($p)).'</span>';echo '</div>';
@@ -198,8 +215,7 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  $phase=array_values(array_filter($all,fn($x)=>$x['phase']===$a['phase']));$at=0;foreach($phase as $i=>$x)if((int)$x['id']===(int)$a['id'])$at=$i+1;
  $doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));$say=trim((string)($a['narration']?:$a['prompt']));$tag=l1_tag($a,$kind);$pics=l1_pictures($a);
  head('Level 1 · '.$lesson['subtitle'],'activity-page l1-page');
- echo '<div class="l1-app l1-k-'.$kind.'"><header class="l1-top"><a class="l1-x" href="?page=lessons&amp;level=1#level1-path" aria-label="Back to my lessons">'.l1_icon('x').'</a><div class="l1-tt"><b>'.e($lesson['subtitle']).'</b><small>'.e(l1_phase_label($a['phase']).' · '.$at.' of '.count($phase)).'</small></div><span class="l1-count">'.$doneAll.' / '.count($all).'</span></header>';
- echo '<div class="l1-dots" aria-hidden="true">';foreach($all as $x)echo '<i class="'.((int)$x['id']===(int)$a['id']?'c':(completion_ok($x)?'d':'')).'"></i>';echo '</div>';
+ echo '<div class="l1-app l1-k-'.$kind.'">'.lesson_head($lesson,$all,$a,'?page=lessons&level=1#level1-path');
  echo '<main class="l1-main activity-main">';notice();
  echo '<form method="post" id="activity-form" class="activity-form l1-form" data-mode="'.e($mode).'" data-kind="'.$kind.'" data-draft="'.(!$readonly&&$kind==='draw'?'on':'off').'">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value="'.e($kind==='draw'?(string)($a['drawing']??''):'').'"><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><span id="draft-status" hidden></span>';
  if($a['feedback'])echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
@@ -236,7 +252,7 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  }elseif($speakHere){
   echo '<div class="l1-rec" data-l1-rec><button type="button" class="l1-mic" data-rec-go aria-label="Tap and say your answer">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>'.($kind==='read'?'Now you say it!':'Tap and say your answer').'</b><small class="l1-rs" data-rec-sub role="status"></small>'
    .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my answer">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
-   .'<button type="button" class="l1-heard" data-rec-heard hidden>'.l1_icon('ear').'My teacher heard me</button></div>';
+   .'<button type="button" class="l1-heard" data-rec-heard hidden>'.l1_icon('ok').'Done</button></div>';
  }
  echo '<div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns">';
  if(!$readonly){
@@ -267,7 +283,7 @@ function l1_demo_view(array $u,array $slides):void{
  echo '<footer class="l1d-bot"><button type="button" class="l1d-nb" data-d-prev>'.l1_icon('prev').'Previous</button><span class="l1d-cnt" data-d-count role="status"></span><button type="button" class="l1d-lis" data-d-listen aria-pressed="false">'.l1_icon('spk').'<span>Listen</span></button><button type="button" class="l1d-nb g" data-d-next>Next '.l1_icon('next').'</button></footer>';
  foreach($deck as $i=>$d){$l=$d['lesson'];
   if($d['start']){$goals=l1_goals((string)$l['objectives']);
-   echo '<template class="l1d-t demo-template" data-lesson="'.(int)$l['id'].'" data-id="'.(int)$by[(int)$l['id']][0]['id'].'" data-title="Lesson '.(int)$l['position'].' · '.e($l['subtitle']).'" data-part="Lesson start" data-say="'.e($l['title'].'. Today we will: '.implode('. ',$goals)).'"><span class="demo-slide-meta" hidden>Lesson '.(int)$l['position'].' · '.e($l['subtitle']).' · Lesson start</span><div class="l1d-two l1d-start"><img class="l1d-cover" data-src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">LESSON '.(int)$l['position'].' · '.e(mb_strtoupper((string)$l['subtitle'])).'</span><h1>'.e($l['title']).'</h1>';
+   echo '<template class="l1d-t demo-template" data-lesson="'.(int)$l['id'].'" data-id="'.(int)$by[(int)$l['id']][0]['id'].'" data-title="Lesson '.(int)$l['position'].' · '.e($l['subtitle']).'" data-part="Lesson start" data-say="'.e($l['title'].'. Today we will: '.implode('. ',$goals)).'"><span class="demo-slide-meta" hidden>Lesson '.(int)$l['position'].' · '.e($l['subtitle']).' · Lesson start</span><div class="l1d-two l1d-start"><img class="l1d-cover" data-src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$l['id'])>=7||(int)$l['position']>=100?'':'LESSON '.(int)$l['position'].' · ').e(mb_strtoupper((string)$l['subtitle'])).'</span><h1>'.e($l['title']).'</h1>';
    if($goals){echo '<p class="l1-lab">TODAY WE WILL…</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul>';}
    echo '</div></div></template>';continue;}
   $a=$d['a'];$kind=l1_kind($a);$pics=l1_pictures($a,true);$tag=l1_tag($a,$kind);$say=trim((string)($a['narration']?:$a['prompt']));
@@ -295,7 +311,7 @@ function l1_review_media(array $r):string{
  return $k.l1_review_media_only($r);
 }
 function l1_review_media_only(array $r):string{
- if(empty($r['audio_path']))return str_starts_with((string)$r['response'],'Answered out loud')?'<p class="rv-l1-heard">'.l1_icon('ear').'Answered out loud in class (no recording).</p>':'';
+ if(empty($r['audio_path']))return str_starts_with((string)$r['response'],'Answered out loud')?'<p class="rv-l1-heard">'.l1_icon('ear').'Answered out loud, marked Done (no recording).</p>':'';
  return '<div class="rv-l1-audio"><span>'.l1_icon('mic').'Pupil’s recording</span><audio controls preload="metadata" src="?page=recording&amp;id='.(int)$r['id'].'"></audio></div>';
 }
 
