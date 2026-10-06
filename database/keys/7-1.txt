@@ -1,0 +1,30 @@
+# Level 6 · Grade 1. Format: activity | card=answer ...  (letter = that choice; #n = n-th choice; order = numbers in the card's order; match = item+letter)
+# "!" after an answer = the module's own key differs (see the note).
+7:1:1100:pre:1 | 2=a! 3=a 4=a 5=b 6=b        # module key 1. B ("dog"); the story says "Tito is a smart cat".
+7:1:1100:pre:2 | 1=R 2=R 3=F 4=R 5=R
+7:1:1100:pre:3 | 1=3,2,5,4,1!                 # module key 11.3 12.1 13.5 14.4 15.2; the story order (and the module key for "A Cold Bear") is 3,2,5,4,1.
+7:1:1100:pre:4 | 1=16d,17c,18e,19b,20a
+7:1:2201:learn:1 | 2=b 3=c 4=a 5=a 6=c!      # module key 5. B ("Tito and you"); the story says "Tito and I play together".
+7:1:3202:learn:1 | 2=b 3=c 4=a 5=b 6=b        # 5: the story does not name the animals; the module key's B is kept.
+7:1:4203:learn:1 | 2=b 3=a 4=b 5=b 6=b
+7:1:5204:learn:1 | 2=c 3=a 4=a 5=b 6=b
+7:1:6205:learn:1 | 2=R 3=F 4=F 5=R 6=R
+7:1:7206:learn:1 | 2=F! 3=F 4=R 5=F 6=R      # module key 1. R; "Rosa is a goat" is not real (Rosa has a goat).
+7:1:8207:learn:1 | 2=R 3=F 4=F 5=R 6=R
+7:1:9208:learn:1 | 2=R 3=R 4=F! 5=R! 6=F    # module key 3. R, 4. F; playing in a magical garden happened only in her dream (fantasy), and she really did dream it (reality).
+7:1:10209:learn:1 | 2=3,2,5,4,1
+7:1:11210:learn:1 | 2=3,2,4,1,5
+7:1:12211:learn:1 | 2=2,3,1,4,5
+7:1:13212:learn:1 | 2=5,3,1,2,4
+7:1:14213:learn:1 | 2=1d,2c,3e,4b,5a
+7:1:15214:learn:1 | 2=1e,2d,3b,4c,5a
+7:1:16215:learn:1 | 2=1e,2c,3a,4b,5d
+7:1:17216:learn:1 | 2=1c,2a,3e,4d,5b
+7:1:18217:learn:1 | 2=#2 3=#1 4=#1 5=#2 6=#1
+7:1:19218:learn:1 | 2=#2 3=#2 4=#1 5=#1 6=#1
+7:1:20219:learn:1 | 2=#2 3=#2 4=#1 5=#1 6=#1
+7:1:21220:learn:1 | 2=#2 3=#1 4=#1 5=#1 6=#2
+7:1:22300:post:1 | 1=a! 2=a 3=a 4=b 5=b       # same as the pre-test.
+7:1:22300:post:2 | 1=R 2=R 3=F 4=R 5=R
+7:1:22300:post:3 | 1=3,2,5,4,1!
+7:1:22300:post:4 | 1=16d,17c,18e,19b,20a

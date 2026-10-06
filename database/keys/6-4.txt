@@ -1,0 +1,18 @@
+# Level 5 · Grade 4. The module key (pages 58-61) only covers the puzzles, so the answers here come from the sentences and passages.
+6:4:1100:pre:1 | 2=Huge 3=Clean 4=Country 5=friend 6=desk 7=pie 8=gift 9=learn 10=dead 11=above 13=c
+6:4:1100:pre:2 | 2=b 3=b 4=c 5=c 6=b 7=c 8=b 9=c
+6:4:1100:pre:3 | 1=c
+6:4:2100:pre:3 | 8=b 9=c      # the module asks these after a camping passage; the answers come from its vocabulary sentences ("The book is on the left side of the table", "The page is full of words").
+6:4:2100:pre:4 | 1=c 2=c      # "The bag feels heavy", "The room is clean now". Card 3 ("What must each student do carefully?") has no source in the module, so the teacher marks it.
+6:4:2100:pre:5 | 2=c 3=b 4=c 5=c
+6:4:2100:pre:6 | 1=#2      # the module prints two "A." choices; the second one ("A better future") is right.
+6:4:12210:learn:1 | 7=front 8=east
+6:4:13300:post:1 | 2=Country 3=desk 4=gift 5=Huge 6=pie 7=friend 8=dead 9=above 10=Clean 11=learn
+6:4:13300:post:2 | 2=b 3=c 4=c 5=c 6=b 7=b 8=c 9=c 10=c 11=b
+6:4:14211:learn:1 | 2=body 3=bill 4=feather 5=Finger 6=hair 7=skin 8=Lap 9=eye 11=foot 12=mouth 13=meat 14=chin      # card 10 ("My two feet have long ___") has no fitting word in the word bank, so the teacher marks it.
+6:4:15212:learn:1 | 1=1d,2c,3a,4i,5b,6k,7j,8f,9g,10e,11h,12l
+6:4:23220:learn:1 | 2=favorite 3=notice 4=necessary 5=pleasure 6=since 7=better 8=general 10=written 11=suppose/thought 12=thought 13=beautiful      # card 9 ("Farmers ___ not interested") fits no word well, so the teacher marks it.
+6:4:24300:post:3 | 8=b
+6:4:24300:post:4 | 1=a 2=c 3=c 5=c 6=d
+6:4:24300:post:5 | 1=b      # card 2 is left for the teacher: the module prints two questions with both sets of choices.
+# Not keyed: "Antonym" (Activity 11 matching; five words have no clear opposite in Column B) and "Antonyms" (Activity 13; "morning" is printed twice).
