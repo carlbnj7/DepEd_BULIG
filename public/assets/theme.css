@@ -3158,3 +3158,17 @@ body.l1-page .tour-help{top:auto!important;bottom:20px;right:20px}
 .l2-write textarea:focus{outline:none;border-color:#1b7a3a;box-shadow:0 0 0 3px rgba(27,122,58,.18)}
 /* v111: phones: the help button sits above the bottom buttons (it covered Next / Submit) */
 @media(max-width:820px){body.l1-page .tour-help{bottom:92px!important;right:10px!important;width:40px;height:40px}}
+/* v112: Level 7 writing tasks (news, editorial, feature): a big writing box */
+.l2-write.long textarea{min-height:220px;font-size:1.05rem;line-height:1.5}
+/* v113: reading for speed (Level 6), letter puzzle and long matching items (Level 7) */
+.l2-speed{margin-top:10px;padding:12px;border:2px dashed #cfe3d2;border-radius:16px;background:#fbfff9;text-align:center}
+.l2-speed-row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+.l2-speed-clock{font:800 1.6rem/1 inherit;min-width:3.2em;color:#0e3b28}
+.l2-speed-res{margin:8px 0 0;font-weight:800;color:#1b7a3a}
+.l2-lgrid .grid-cell.found{background:#f7c127;color:#0e3b28}
+.l2-match .match-board{column-gap:30px!important}
+.l2-match .match-word{overflow-wrap:break-word;word-break:normal;hyphens:auto}
+.l2-lgrid{overflow-x:visible}
+.l2-lgrid .letter-grid{width:100%;table-layout:fixed}
+.l2-lgrid .letter-grid td{width:auto;height:auto}
+.l2-lgrid .letter-grid .grid-cell{min-width:0;min-height:30px;font-size:clamp(12px,3.6vw,20px);font-weight:800}
