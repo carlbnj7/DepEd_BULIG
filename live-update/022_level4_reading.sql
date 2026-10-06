@@ -16,6 +16,29 @@ FROM activities WHERE id=@l4g4src AND @l4g4pre IS NOT NULL AND NOT EXISTS(SELECT
 SET @l4g4new=(SELECT id FROM activities WHERE lesson_id=@l4g4pre AND phase='pre' AND source_page=10 LIMIT 1);
 INSERT INTO questions(activity_id,content,grading) SELECT @l4g4new,REPLACE(q.content,'Title: My First Baseball Game II','Title: My First Baseball Game'),q.grading FROM questions q WHERE q.activity_id=@l4g4src AND @l4g4new IS NOT NULL AND NOT EXISTS(SELECT 1 FROM questions x WHERE x.activity_id=@l4g4new);
 
+-- Grade 3 "Verb To Be": the module prints "You'll show the" between "Here today" and "Whole world" (over the scoring table).
+UPDATE activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id
+ SET a.prompt=REPLACE(a.prompt,'Here today\nWhole world','Here today\nYou\'ll show the\nWhole world'),
+     a.narration=REPLACE(a.narration,'Here today Whole world','Here today You\'ll show the Whole world'),
+     a.expected_text=REPLACE(a.expected_text,'Here today Whole world','Here today You\'ll show the Whole world')
+ WHERE m.level_id=5 AND m.grade_level=3 AND a.title='Read aloud: Verb To Be';
+UPDATE questions q JOIN activities a ON a.id=q.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id
+ SET q.content=REPLACE(q.content,'Here today\nWhole world','Here today\nYou\'ll show the\nWhole world')
+ WHERE m.level_id=5 AND m.grade_level=3 AND a.title='Read aloud: Verb To Be';
+
+-- Grade 4 "Songs of the Witches": "Boil thou first i' the charmed pot." (the module has the period).
+UPDATE activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id
+ SET a.prompt=REPLACE(a.prompt,'charmed pot\n','charmed pot.\n'),a.narration=REPLACE(a.narration,'charmed pot Double','charmed pot. Double'),a.expected_text=REPLACE(a.expected_text,'charmed pot Double','charmed pot. Double')
+ WHERE m.level_id=5 AND m.grade_level=4 AND a.title='Read aloud: Songs of the Witches';
+UPDATE questions q JOIN activities a ON a.id=q.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id
+ SET q.content=REPLACE(q.content,'charmed pot\n','charmed pot.\n')
+ WHERE m.level_id=5 AND m.grade_level=4 AND a.title='Read aloud: Songs of the Witches';
+
+-- Grade 2: the "Official module" link opens the page with the passage's title (these three were one page early, on a blank page).
+UPDATE activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id
+ SET a.source_page=CASE a.title WHEN 'Read aloud: The Farm' THEN 12 WHEN 'Read aloud: The Raincoat' THEN 23 WHEN 'Read aloud: The Bakery' THEN 26 END
+ WHERE m.level_id=5 AND m.grade_level=2 AND ((a.title='Read aloud: The Farm' AND a.source_page=11) OR (a.title='Read aloud: The Raincoat' AND a.source_page=22) OR (a.title='Read aloud: The Bakery' AND a.source_page=25));
+
 -- "Let's get ready" pages (text written by the app, not the module): the lesson opening screen replaces them.
 UPDATE activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id SET a.published=0 WHERE m.level_id=5 AND a.type='reference' AND a.title LIKE 'Let%s get ready';
 

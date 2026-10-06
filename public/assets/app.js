@@ -214,7 +214,7 @@ document.addEventListener('change',event=>{const sel=event.target.closest('selec
 // Matching boards: tap (or drag) from a Column A item to a Column B choice to draw a connecting line.
 (()=>{const NS='http://www.w3.org/2000/svg',COLORS=['#1b7a3a','#d80006','#001db5','#c77700','#7b2cbf','#0b8a8a','#b5179e','#5a5a00','#e85d04','#3a5a40','#9d0208','#023e8a','#6a4c93','#2b9348','#bc6c25'];
 function setup(board){if(board.dataset.ready)return;board.dataset.ready='1';const svg=board.querySelector('.match-lines'),pairs=new Map();let pick=null,drag=null;
- const card=board.closest('.native-card'),box=card&&card.querySelector('.native-answer'),readonly=board.dataset.answer!=='on'&&!!box;
+ const card=board.closest('.native-card,.l2-match'),box=card&&card.querySelector('.native-answer'),readonly=board.dataset.answer!=='on'&&!!box;
  const item=n=>board.querySelector('.match-item[data-num="'+n+'"]'),choice=l=>board.querySelector('.match-choice[data-letter="'+l+'"]');
  function pt(el,side){const b=board.getBoundingClientRect(),r=el.getBoundingClientRect();return side==='r'?[r.right-b.left,r.top+r.height/2-b.top]:[r.left-b.left,r.top+r.height/2-b.top];}
  function draw(){const b=board.getBoundingClientRect();svg.setAttribute('width',b.width);svg.setAttribute('height',b.height);svg.replaceChildren();let i=0;

@@ -45,6 +45,8 @@
  $$('[data-kind="words"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,ws=$$('.l2-wd',g);
   ws.forEach(b=>b.addEventListener('click',()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');const n=ws.filter(x=>x.getAttribute('aria-pressed')==='true').length;set(c,p,n?'read '+n+' of '+ws.length+' words':'');}));});
  /* done on paper */
+ /* matching board (app.js draws the lines and writes "1-c, 2-a" in the box) */
+ $$('[data-kind="match"]',deck).forEach(g=>{const c=g.closest('.l2-card'),box=$('.native-answer',g);box.addEventListener('input',()=>set(c,g.dataset.part,box.value));});
  $$('[data-kind="paper"]',deck).forEach(b=>{const c=b.closest('.l2-card');b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on?'true':'false');set(c,b.dataset.part,on?'done with my teacher or on paper':'');});});
  /* microphone (one recording per card) */
 /* Microphone: ask with clean-sound settings, then plain audio (some iPhones refuse the first). */

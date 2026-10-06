@@ -3139,3 +3139,13 @@ html.dark body.l1-page .fluency-passage{background:#16231b;color:#e8f0ea}
 .l4-score .l4-res p span{flex:1}.l4-score .l4-res b{color:#0f4630;font-size:1.1rem}
 .l4-score .l4-res input{width:110px;font:inherit;padding:6px 8px;border:2px solid #d9e6dd;border-radius:10px}
 .rv-l4-time{display:flex;align-items:center;gap:6px;color:#176444;font-weight:600}
+/* v108: the lesson header inside the Level 1-5 lesson panel (PC): normal side padding, title on one line */
+.l1-app .activity-header{padding:14px 20px;gap:14px}
+.l1-app .activity-header>div:not(.activity-progress){flex:1;min-width:0}
+.l1-app .activity-header>div:not(.activity-progress) strong{display:block;white-space:normal}
+@media(min-width:760px){.l1-app .activity-header{border-radius:28px 28px 0 0}}
+body.l1-page .tour-help{top:auto!important;bottom:20px;right:20px}
+/* v109: Level 5 matching rows: the Column A item, then its letters */
+.l2-plab{margin:10px 0 4px;font-weight:700;font-size:1.1rem}
+.l2-chips.row{justify-content:flex-start;margin-bottom:4px}
+.l2-chips.row .l2-chip{min-width:52px}
