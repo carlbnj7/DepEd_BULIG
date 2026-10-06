@@ -1,0 +1,722 @@
+{
+ "version": 1,
+ "pages": {
+  "1:pre:1": {
+   "title": "Pre-Assessment",
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "1:pre:2": {
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "1:pre:3": {
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "1:pre:4": {
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "1:pre:5": {
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "2:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with short “a” name.\n2. Ask learner/s to name the picture.\n3. Teacher sound out or blend the sample word/s.\nb + a + t= bat c + a + t= cat",
+   "say": true
+  },
+  "2:learn:2": {
+   "instruction": "The teacher will present and read the following words, then ask the learners to sound out the given sample words with the short ‘a’ sound. (This can be done individually, in pairs, by row, or in groups.)"
+  },
+  "2:learn:3": {
+   "instruction": "Build a word out from the picture. Say it. Connect it. Write it on the blank.",
+   "kind": "tiles"
+  },
+  "2:learn:4": {
+   "instruction": "Teacher read the words and let learners identify the word that doesn’t belong."
+  },
+  "2:learn:5": {
+   "title": "Activity 3: Tell me the Word",
+   "instruction": "The teacher shows a picture. The learner says the CVC word that matches the picture.",
+   "kind": "say"
+  },
+  "2:learn:6": {
+   "instruction": "The teacher flashes word cards, and the learners read them quickly. The teacher may include variation activities."
+  },
+  "2:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "3:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with short “e” name.\n2. Ask learner/s to name the picture.\n3. Teacher sound out or blend the sample word/s.\nn + e + t= net t + e + n= ten",
+   "say": true
+  },
+  "3:learn:2": {
+   "instruction": "The teacher will present and read the following words, then ask the learners to sound out the given sample words with the short ‘e’ sound. (This can be done individually, in pairs, by row, or in groups.)"
+  },
+  "3:learn:3": {
+   "instruction": "Build a word out from the picture. Say it. Connect it. Write it on the blank.",
+   "kind": "tiles"
+  },
+  "3:learn:4": {
+   "instruction": "Teacher read the words and let learners identify the word that doesn’t belong."
+  },
+  "3:learn:5": {
+   "title": "Activity 3: Tell me the Word",
+   "instruction": "The teacher shows a picture. The learner says the CVC word that matches the picture.",
+   "kind": "say"
+  },
+  "3:learn:6": {
+   "instruction": "The teacher flashes word cards, and the learners read them quickly. The teacher may include variation activities."
+  },
+  "3:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "4:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with short “i” name.\n2. Ask learner/s to name the picture.\n3. Teacher sound out or blend the sample word/s.\nz + i + p= zip b + i + n= bin",
+   "say": true
+  },
+  "4:learn:2": {
+   "instruction": "The teacher will present and read the following words, then ask the learners to sound out the given sample words with the short ‘i’ sound. (This can be done individually, in pairs, by row, or in groups.)"
+  },
+  "4:learn:3": {
+   "instruction": "Build a word out from the picture. Say it. Connect it. Write it on the blank.",
+   "kind": "tiles"
+  },
+  "4:learn:4": {
+   "instruction": "Teacher read the words and let learners identify the word that doesn’t belong."
+  },
+  "4:learn:5": {
+   "title": "Activity 3: Tell me the Word",
+   "instruction": "The teacher shows a picture. The learner says the CVC word that matches the picture.",
+   "kind": "say"
+  },
+  "4:learn:6": {
+   "instruction": "The teacher flashes word cards, and the learners read them quickly. The teacher may include variation activities."
+  },
+  "4:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "5:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with short “o” name.\n2. Ask learner/s to name the picture.\n3. Teacher sound out or blend the sample word/s.\nd + o + g= dog j + o + g= jog",
+   "say": true
+  },
+  "5:learn:2": {
+   "instruction": "The teacher will present and read the following words, then ask the learners to sound out the given sample words with the short ‘o’ sound. (This can be done individually, in pairs, by row, or in groups.)"
+  },
+  "5:learn:3": {
+   "instruction": "Build a word out from the picture. Say it. Connect it. Write it on the blank.",
+   "kind": "tiles"
+  },
+  "5:learn:4": {
+   "instruction": "Teacher read the words and let learners identify the word that doesn’t belong."
+  },
+  "5:learn:5": {
+   "title": "Activity 3: Tell me the Word",
+   "instruction": "The teacher shows a picture. The learner says the CVC word that matches the picture.",
+   "kind": "say"
+  },
+  "5:learn:6": {
+   "instruction": "The teacher flashes word cards, and the learners read them quickly. The teacher may include variation activities."
+  },
+  "5:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "6:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with short “u” name.\n2. Ask learner/s to name the picture.\n3. Teacher sound out or blend the sample word/s.\nm + u + g= mug b + u + n= bun",
+   "say": true
+  },
+  "6:learn:2": {
+   "instruction": "The teacher will present and read the following words, then ask the learners to sound out the given sample words with the short ‘u’ sound. (This can be done individually, in pairs, by row, or in groups.)"
+  },
+  "6:learn:3": {
+   "instruction": "Build a word out from the picture. Say it. Connect it. Write it on the blank.",
+   "kind": "tiles"
+  },
+  "6:learn:4": {
+   "instruction": "Teacher read the words and let learners identify the word that doesn’t belong."
+  },
+  "6:learn:5": {
+   "title": "Activity 3: Tell me the Word",
+   "instruction": "The teacher shows a picture. The learner says the CVC word that matches the picture.",
+   "kind": "say"
+  },
+  "6:learn:6": {
+   "instruction": "The teacher flashes word cards, and the learners read them quickly. The teacher may include variation activities."
+  },
+  "6:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "7:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Teacher will introduce the words and show picture.\nmeal pail\n2. Ask the learners to read the names of the pictures\nthat contain the vowel teams “ea” and “ai.”",
+   "say": true
+  },
+  "7:learn:2": {
+   "instruction": "Present the words. Read each word aloud and let the learners repeat after you. Provide guidance and correct their pronunciation when necessary. meal hear meat seat peak bait nail pail tail rain"
+  },
+  "7:learn:3": {
+   "title": "Station 1: Word Sorting Worksheet",
+   "instruction": "Sort the words into the correct word family columns.",
+   "sort": {
+    "words": [
+     "meal",
+     "rain",
+     "bait",
+     "pail",
+     "tail",
+     "hear",
+     "nail",
+     "meat",
+     "peak",
+     "seat"
+    ],
+    "cols": [
+     "/ai/",
+     "/ea/"
+    ]
+   }
+  },
+  "7:learn:4": {
+   "title": "Station 2: Listen & Match Worksheet",
+   "instruction": "Teacher: Read each word aloud twice. Learner: Write the number under each picture that matches the word. Words: 1. nail   2. rain   3. tail   4. pail   5. hair   6. meal   7. meat   8. seat   9. peak   10. hear"
+  },
+  "7:learn:5": {
+   "title": "Station 3: Blend & Say Worksheet",
+   "instruction": "Build, blend, and say each word aloud. Complete the word: Example: m + aid = maid"
+  },
+  "7:learn:6": {
+   "title": "Station 4: Spell & Complete Worksheet",
+   "instruction": "Write the missing letters."
+  },
+  "7:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "8:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Teacher will introduce the words and show picture.\ngoat book\n2. Ask the learners to read the names of the pictures that contain the\nvowel teams “oa” and “oo”.",
+   "say": true
+  },
+  "8:learn:2": {
+   "instruction": "Present the words. Read each word aloud and let the learners repeat after you. Provide guidance and correct their pronunciation when necessary. goat coat boat road foam food moon roof pool spoon"
+  },
+  "8:learn:3": {
+   "title": "Station 1: Word Sorting Worksheet",
+   "instruction": "Sort the words into the correct word family columns.",
+   "sort": {
+    "words": [
+     "goat",
+     "food",
+     "moon",
+     "coat",
+     "foam",
+     "boat",
+     "road",
+     "roof",
+     "pool",
+     "spoon"
+    ],
+    "cols": [
+     "/oa/",
+     "/oo/"
+    ]
+   }
+  },
+  "8:learn:4": {
+   "title": "Station 2: Listen & Match Worksheet",
+   "instruction": "Teacher: Read each word aloud twice. Learner: Write the number under each picture that matches the word. Words: 1. boat   2. book   3. goat   4. road   5. pool   6. roof   7. moon   8. soap   9. coat   10. boot"
+  },
+  "8:learn:5": {
+   "title": "Station 3: Blend & Say Worksheet",
+   "instruction": "Build, blend, and say each word aloud. Complete the word: Example: b + ook = book"
+  },
+  "8:learn:6": {
+   "title": "Station 4: Spell & Complete Worksheet",
+   "instruction": "Write the missing letters."
+  },
+  "8:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "9:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Teacher will introduce the words and show picture.\nsack neck\n2. Ask the learners to read the names of the pictures with “ack” and “eck”.",
+   "say": true
+  },
+  "9:learn:2": {
+   "instruction": "Present the words. Read each word aloud and let the learners repeat after you. Provide guidance and correct pronunciation when necessary. pack back sack hack black beck deck heck neck peck"
+  },
+  "9:learn:3": {
+   "title": "Station 1: Word Sorting Worksheet",
+   "instruction": "Sort the words into the correct word family columns.",
+   "sort": {
+    "words": [
+     "pack",
+     "back",
+     "beck",
+     "deck",
+     "peck",
+     "sack",
+     "hack",
+     "heck",
+     "neck",
+     "black"
+    ],
+    "cols": [
+     "/ack/",
+     "/eck/"
+    ]
+   }
+  },
+  "9:learn:4": {
+   "title": "Station 2: Listen & Match Worksheet",
+   "instruction": "Teacher: Read each word aloud twice. Learner: Circle the words that matches the words teacher reads."
+  },
+  "9:learn:5": {
+   "title": "Station 3: Blend & Say Worksheet",
+   "instruction": "Build, blend, and say each word aloud. Complete the word: Example: l + ack = lack"
+  },
+  "9:learn:6": {
+   "title": "Station 4: Spell & Complete Worksheet",
+   "instruction": "Write the missing letters."
+  },
+  "9:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "10:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Teacher will introduce the words and show picture.\nball bell\n2. Ask the learners to read the names of the pictures with “all” and “ell”.",
+   "say": true
+  },
+  "10:learn:2": {
+   "instruction": "Present the words. Read each word aloud and let the learners repeat after you. Provide guidance and correct their pronunciation when necessary. ball call fall tall wall bell sell tell well shell"
+  },
+  "10:learn:3": {
+   "title": "Station 1: Word Sorting Worksheet",
+   "instruction": "Sort the words into the correct word family columns.",
+   "sort": {
+    "words": [
+     "ball",
+     "bell",
+     "fall",
+     "sell",
+     "shell",
+     "call",
+     "sell",
+     "tall",
+     "wall",
+     "tell"
+    ],
+    "cols": [
+     "/all/",
+     "/ell/"
+    ]
+   }
+  },
+  "10:learn:4": {
+   "title": "Station 2: Listen & Match Worksheet",
+   "instruction": "Teacher: Read each word aloud twice. Learner: Write the number under each picture that matches the word. Words: 1. ball   2. call   3. wall   4. tall   5. small   6. bell   7. well   8. sell   9. shell   10. smell"
+  },
+  "10:learn:5": {
+   "title": "Station 3: Blend & Say Worksheet",
+   "instruction": "Build, blend, and say each word aloud. Complete the word: Example: h + all = hall"
+  },
+  "10:learn:6": {
+   "title": "Station 4: Spell & Complete Worksheet",
+   "instruction": "Write the missing letters."
+  },
+  "10:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "11:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Teacher will introduce the words and show pictures.\ntank mask\n2. Ask the learners to read the names of the pictures with “all” and “ell”.",
+   "say": true
+  },
+  "11:learn:2": {
+   "instruction": "Present the words. Read each word aloud and let the learners repeat after you. Provide guidance and correct their pronunciation when necessary. tank trunk plank wink link mask desk tusk flask whisk"
+  },
+  "11:learn:3": {
+   "title": "Station 1: Word Sorting Worksheet",
+   "instruction": "Sort the words into the correct word family columns.",
+   "sort": {
+    "words": [
+     "link",
+     "flask",
+     "tusk",
+     "tank",
+     "trunk",
+     "mask",
+     "wink",
+     "plank",
+     "desk",
+     "whisk"
+    ],
+    "cols": [
+     "-nk",
+     "-sk"
+    ]
+   }
+  },
+  "11:learn:4": {
+   "title": "Station 2: Listen & Match Worksheet",
+   "instruction": "Teacher: Read each word aloud twice. Learner: Write the number under each picture that matches the word. Words: 1. mask   2. pink   3. tank   4. wink   5. flask   6. ask   7. drink   8. desk   9. bank   10. whisk"
+  },
+  "11:learn:5": {
+   "title": "Station 3: Blend & Say Worksheet",
+   "instruction": "Build, blend, and say each word aloud. Complete the word: Example: m + ask = mask"
+  },
+  "11:learn:6": {
+   "title": "Station 4: Spell & Complete Worksheet",
+   "instruction": "Write the missing letters."
+  },
+  "11:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "12:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant bl- and br-.\n2. Ask any learner/s who can blend the |bl-| and\n|br-|. If none, the teacher will demonstrate\nthe blending.\nb + l = bl b + r = br\n3. Ask another learner/s who can blend the\n|bl-| and |br| sounds. If no volunteer,\nthe teacher will demonstrate the activity.\nbl + ue = blue br + ead = bread",
+   "say": true
+  },
+  "12:learn:2": {
+   "instruction": "Fill in the blanks with the missing blend (bl-, br-).",
+   "notext": true
+  },
+  "12:learn:3": {
+   "instruction": "Each learner will take turns throwing a pin at the dart board and read aloud the word where the pin lands."
+  },
+  "12:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "12:post:2": {},
+  "12:post:3": {},
+  "13:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant cl- and cr-.\n2. Ask any learner/s who can blend the |cl-| and |cr-|. If\nnone, the teacher will demonstrate the blending.\nc + l = cl c + r = cr\n3. Ask any learner/s who can blend the |cl-| and |cr-|\nsounds. If no volunteer, the teacher will\ndemonstrate the activity.\ncl + ip = clip cr + y = cry",
+   "say": true
+  },
+  "13:learn:2": {
+   "instruction": "Teacher will let the learners read more words with |cl- | and |cr-| blends."
+  },
+  "13:learn:3": {
+   "instruction": "Throw a pin at the dart board, name the picture you hit, and tell whether it begins with the consonant blend cl- or cr-."
+  },
+  "13:learn:4": {
+   "instruction": "Match each picture with the correct word by drawing a line connecting them."
+  },
+  "13:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "13:post:2": {},
+  "13:post:3": {},
+  "13:post:4": {
+   "instruction": "Fill in the blanks with the missing blends."
+  },
+  "13:post:5": {
+   "instruction": "Match the pictures with the correct cl- and cr- blend. The first one has been done as an example."
+  },
+  "13:post:6": {},
+  "14:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant dr-.\n2. Ask any learner/s who can blend the |dr-|.\nIf none, the teacher will demonstrate the\nblending.\nd + r = dr\n3. Ask any learner/s who can blend the |dr-| sounds.\nIf no volunteer, the teacher will demonstrate the\nactivity.\ndr + one = drone",
+   "say": true
+  },
+  "14:learn:2": {
+   "instruction": "Teacher will let the learners read more words with |dr-| blends."
+  },
+  "14:learn:3": {
+   "instruction": "Students will act as tourist guides by identifying and leading the teacher to specific 'dr-' blend 'countries' illustrated on the large floor word map."
+  },
+  "14:learn:4": {
+   "instruction": "Match each picture with the correct word by drawing a line connecting them."
+  },
+  "14:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "14:post:2": {
+   "instruction": "Match the dr words to the correct picture."
+  },
+  "14:post:3": {},
+  "15:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1.Show pictures with consonant fl- and fr-.\n2. Ask any learner/s who can blend the |fl-| and |fr-|.\nIf none, the teacher will demonstrate the blending.\nf + l = fl f + r = fr\n3. Ask any\nlearner/s who can blend the |fl-| and |fr-| sounds. If\nno volunteer, the teacher will demonstrate the\nactivity.\nfl + ag = flag fr + og = frog",
+   "say": true
+  },
+  "15:learn:2": {
+   "instruction": "Teacher will let the learners read more words with |fl-| and |fr-| blends."
+  },
+  "15:learn:3": {
+   "instruction": "Color the word/s in each row that begins with fl- or fr- sound and read them.",
+   "kind": "chips"
+  },
+  "15:learn:4": {
+   "instruction": "Fill in the correct beginning blend (fl- or fr-) of the picture.",
+   "notext": true
+  },
+  "15:learn:5": {
+   "instruction": "Pick a word from the basket, sound out the beginning blend (fl- or fr-), and read the whole word aloud."
+  },
+  "15:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "15:post:2": {},
+  "15:post:3": {},
+  "15:post:4": {},
+  "15:post:5": {},
+  "16:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant gl- and gr-.\n2. Ask any learner/s who can blend the |gl-| and |gr-|.\nIf none, the teacher will demonstrate the blending.\ng + l = gl g + r = gr\n3. Ask any learner/s who can blend the |gl-| and |gr-|\nsounds. If no volunteer, the teacher will demonstrate\nthe activity.\ngl + ue = glue gr + ass = grass",
+   "say": true
+  },
+  "16:learn:2": {
+   "instruction": "Teacher will let the learners read more words with |gl-| and |gr-| blends."
+  },
+  "16:learn:3": {
+   "instruction": "Color the word that is correctly associated with the image."
+  },
+  "16:learn:4": {
+   "instruction": "Choose your favorite shirt from the clothesline, say 'I love this shirt,' and read the word on it loudly for the class to hear."
+  },
+  "16:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "16:post:2": {},
+  "16:post:3": {},
+  "16:post:4": {
+   "instruction": "Match the pictures with the correct cl- and cr- blend. The first one has been done as an example."
+  },
+  "16:post:5": {},
+  "17:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant pl- and pr-.\n2.Ask any learner/s who can blend the |pl-| and\n|pr-|.If none, the teacher will demonstrate the\nblending.\np + l = pl p + r = pr\n3.Ask any learner/s who can blend the |pl-| and |pr-|\nsounds. If no volunteer, the teacher will demonstrate\nthe activity.\npl + ane = plane pr + ay = pray",
+   "say": true
+  },
+  "17:learn:2": {
+   "instruction": "Fill in the blanks with the missing blend (pl-, pr-).",
+   "notext": true
+  },
+  "17:learn:3": {
+   "instruction": "Throw a dart at the board, read the word it lands on, and say it clearly."
+  },
+  "17:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "17:post:2": {},
+  "17:post:3": {},
+  "18:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant st- and str-.\n2. Ask any learner/s who can blend the |st-| and\n|str-|.If none, the teacher will demonstrate the blending.\ns + t = st st + r = str\n3. Ask any learner/s who can blend the |st-| and |str-|\nsounds. If no volunteer, the teacher will demonstrate\nthe activity.\nst + ar = star str + aw = straw",
+   "say": true
+  },
+  "18:learn:2": {
+   "instruction": "Throw a dart, name the picture, and say if it starts with st- or str-."
+  },
+  "18:learn:3": {
+   "instruction": "Match each picture with the correct word by drawing a line connecting them."
+  },
+  "18:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "19:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant sh- and sl.\n2. Ask any learner/s who can blend the |sh-| and\n|sl-|. If none, the teacher will demonstrate the\nblending.\ns + h = sh s + l = sl\n3. Ask any learner/s who can blend the |sh-| and |sl-|\nsounds. If no volunteer, the teacher will demonstrate\nthe activity.\nsh + ip = ship sl + eep = sleep",
+   "say": true
+  },
+  "19:learn:2": {
+   "instruction": "Act as a local scout and lead the curious traveler to the correct 'country' on the Word Map based on the clues they give you about each sh- or sl- destination."
+  },
+  "19:learn:3": {
+   "instruction": "Match each picture with the correct word by drawing a line connecting them."
+  },
+  "19:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "19:post:2": {},
+  "19:post:3": {},
+  "20:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant sp-, spr- and spl-.\n\\\n2. Ask any learner/s who can blend the |sp-|, |spr-| and\n|spl-|. If none, the teacher will demonstrate the\nblending.\ns + p = sp s + p + r = spr s + p + l = spl\n3. Ask any learner/s who can blend the |sp-|, |spr-|\nand |spl-| sounds. If no volunteer, the teacher will\ndemonstrate the activity.\nsp + ider = spider spr + ay = spray spl + ash = splash",
+   "say": true
+  },
+  "20:learn:2": {
+   "instruction": "Fill in the blanks with the missing blend (sp-, spr- or spl-).",
+   "notext": true
+  },
+  "20:learn:3": {
+   "instruction": "Pick a word, say the beginning blend, and read the whole word."
+  },
+  "20:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "21:learn:1": {
+   "title": "Teacher’s Activity",
+   "instruction": "1. Show pictures with consonant tr-.\n2. Ask any learner/s who can blend the |tr-|.\nIf none, the teacher will demonstrate the blending.\nt + r = tr\n3. Ask any learner/s who can blend the |tr-| sounds. If\nno volunteer, the teacher will demonstrate the\nactivity.\ntr + ain = train",
+   "say": true
+  },
+  "21:learn:2": {
+   "instruction": "Color the word that is correctly associated with the image."
+  },
+  "21:learn:3": {
+   "instruction": "Pick a shirt, say “I love this shirt,” and read the word on it aloud."
+  },
+  "21:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "22:learn:1": {
+   "title": "List of words",
+   "instruction": "Preliminaries: Review the words previously learned.",
+   "grid": [
+    "said",
+    "were",
+    "one",
+    "come",
+    "does",
+    "two",
+    "they",
+    "their",
+    "what",
+    "where"
+   ]
+  },
+  "22:learn:2": {
+   "instruction": "Pick a fish from the basin and read the word on it aloud."
+  },
+  "22:learn:3": {
+   "instruction": ""
+  },
+  "22:learn:4": {
+   "instruction": ""
+  },
+  "22:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "23:learn:1": {
+   "title": "List of words",
+   "instruction": "Preliminaries: Review the words previously learned.",
+   "grid": [
+    "again",
+    "because",
+    "around",
+    "every",
+    "know",
+    "only",
+    "people",
+    "right",
+    "their",
+    "would"
+   ]
+  },
+  "23:learn:2": {
+   "instruction": "Roll the dice, move to the number, and read the word on that space aloud."
+  },
+  "23:learn:3": {
+   "instruction": ""
+  },
+  "23:learn:4": {
+   "instruction": ""
+  },
+  "23:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "24:learn:1": {
+   "title": "List of words",
+   "instruction": "Preliminaries: Review the words previously learned.",
+   "grid": [
+    "above",
+    "enough",
+    "through",
+    "though",
+    "young",
+    "laugh",
+    "once",
+    "both",
+    "always",
+    "together"
+   ]
+  },
+  "24:learn:2": {
+   "instruction": "Spin the wheel and read the word it points to aloud."
+  },
+  "24:learn:3": {
+   "instruction": ""
+  },
+  "24:learn:4": {
+   "instruction": ""
+  },
+  "24:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "25:learn:1": {
+   "title": "List of words",
+   "instruction": "Preliminaries: Review the words previously learned.",
+   "grid": [
+    "beautiful",
+    "country",
+    "different",
+    "important",
+    "against",
+    "enough",
+    "write",
+    "without",
+    "second",
+    "water"
+   ]
+  },
+  "25:learn:2": {
+   "instruction": "Learners line up to take turns drawing a word card from the decorated Mystery Box and read it aloud as part of the sight word practice."
+  },
+  "25:learn:3": {
+   "instruction": ""
+  },
+  "25:learn:4": {
+   "instruction": ""
+  },
+  "25:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "26:learn:1": {
+   "title": "List of words",
+   "instruction": "Preliminaries: Review the words previously learned.",
+   "grid": [
+    "already",
+    "certain",
+    "early",
+    "family",
+    "mountain",
+    "sentence",
+    "special",
+    "sure",
+    "toward",
+    "usually"
+   ]
+  },
+  "26:learn:2": {},
+  "26:learn:3": {
+   "instruction": ""
+  },
+  "26:learn:4": {
+   "instruction": ""
+  },
+  "26:learn:5": {
+   "instruction": ""
+  },
+  "26:post:1": {
+   "instruction": "Read the following words correctly."
+  },
+  "27:post:1": {
+   "title": "Post-Assessment",
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "27:post:2": {
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "27:post:3": {
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "27:post:4": {
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  },
+  "27:post:5": {
+   "instruction": "Here are some words I would like you to read. (Do not spell the words, just read them)."
+  }
+ }
+}

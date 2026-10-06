@@ -2,7 +2,7 @@
    - Speaker buttons read the question aloud; poem and tongue-twister words light up while they are read (Slow / Fast).
    - Speaking answers: tap the big microphone, speak, tap again to stop, listen to it, then Try again or Send.
      The recording goes into the form, so it is saved like any answer (and kept on the device when offline).
-     No microphone, or not allowed: "My teacher heard me".
+     No microphone, or not allowed: "Done".
    - Class Demo (Level 1): projector slides with Previous / Next, arrow keys, Listen, Full screen and lesson jump. */
 (function(){
  'use strict';
@@ -41,6 +41,14 @@
   const again=$('[data-rec-again]'),send=$('#submit-answer'),audioIn=$('#l1-audio'),heardIn=$('#l1-heard'),startLabel=label.textContent;
   const MAX=60,fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   let mr=null,stream=null,chunks=[],t0=0,tick=null,secs=0,url='',player=null,state='idle';
+ /* Microphone: ask with clean-sound settings, then plain audio (some iPhones refuse the first). */
+ async function getMic(){const md=navigator.mediaDevices;try{return await md.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}
+  catch(e){if(e&&(e.name==='NotAllowedError'||e.name==='SecurityError'))throw e;await new Promise(r=>setTimeout(r,350));return await md.getUserMedia({audio:true});}}
+ function micMsg(e){const n=e&&e.name||'';
+  if(n==='NotAllowedError'||n==='SecurityError')return 'The microphone is blocked. Allow it in the browser settings (iPhone: tap aA, then Website Settings, then Microphone: Allow), then tap the microphone again.';
+  if(n==='NotReadableError'||n==='AbortError'||n==='TrackStartError')return 'The microphone is busy. Close other apps using it (calls, video, voice notes), then tap the microphone again.';
+  if(n==='NotFoundError'||n==='DevicesNotFoundError')return 'No microphone was found. Tap the microphone to try again.';
+  return 'The microphone could not start. Tap it to try again.';}
   const can=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
   function fallback(msg){state='off';go.hidden=true;label.textContent='Say your answer out loud to your teacher.';sub.textContent=msg;heardB.hidden=false;}
   if(!can)fallback('This device cannot record here.');
@@ -51,8 +59,8 @@
    if(s==='done'){label.textContent='Listen to your answer';sub.textContent='Happy with it? Tap Send. Or tap Try again.';}}
   function reset(){if(player){player.pause();player=null;}if(url){URL.revokeObjectURL(url);url='';}audioIn.value='';heardIn.value='';bar.style.setProperty('--p','0');}
   async function start(){if(state==='starting'||state==='rec')return;state='starting';rec.dataset.state='starting';go.classList.add('busy');stopSay();reset();
-   try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}
-   catch(err){go.classList.remove('busy');fallback(err&&err.name==='NotAllowedError'?'The microphone is not allowed on this device.':'No microphone was found.');return;}
+   try{stream=await getMic();}
+   catch(err){go.classList.remove('busy');ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(err);heardB.hidden=false;return;}
    const type=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
    try{mr=new MediaRecorder(stream,type?{mimeType:type,audioBitsPerSecond:32000}:undefined);}catch(e){mr=new MediaRecorder(stream);}
    chunks=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};mr.onstop=finish;mr.start(500);
