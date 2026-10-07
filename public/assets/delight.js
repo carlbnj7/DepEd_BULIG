@@ -61,7 +61,7 @@
   const fb=$('#answer-feedback'),HINTS=['Almost! Listen to it again, then try once more.','Good try! Look at the picture carefully.','So close! Read the question again slowly.','Nice effort! Try a different answer.'];let tries=0;
   let last='';if(fb)new MutationObserver(()=>{const now=fb.className.replace(/\s*gentle/,'')+'|'+fb.textContent.trim();if(now===last)return;last=now;if(fb.classList.contains('tryagain')&&fb.textContent.trim()){fb.classList.add('gentle');const box=$('.native-card:not([hidden]) .native-answer')||$('#response')||$('.answer-card');
      if(box&&!still){box.classList.remove('wig');void box.offsetWidth;box.classList.add('wig');}say(HINTS[tries++%HINTS.length],'hint',8000,'cheer');}
-    else if(fb.classList.contains('success')&&fb.textContent.trim()){clearTimeout(idle);say(['Great answer!','Well done!','You did it!','Super reading!'][Math.floor(Math.random()*4)],'yay',4500,'cheer');}}).observe(fb,{attributes:true,attributeFilter:['class'],childList:true});}
+    else if(fb.classList.contains('success')&&fb.textContent.trim()){clearTimeout(idle);say(['Great answer!','Well done!','You did it!','Super reading!'][Math.floor(Math.random()*4)],'yay',4500,'cheer');wrap.classList.add('show');setTimeout(()=>wrap.classList.remove('show'),4500);}}).observe(fb,{attributes:true,attributeFilter:['class'],childList:true});}
 
  /* ---------- small helpers: print buttons and filters that apply on change ---------- */
  $$('[data-print]').forEach(b=>b.addEventListener('click',()=>window.print()));

@@ -242,7 +242,7 @@ function admin_log_csv():never{
 }
 
 /* ---------------------------------------------------------------- System health + backup */
-const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools','016_saved_logins'];
+const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools','016_saved_logins','024_notifications'];
 function admin_backup_note():string{$b=admin_setting('last_backup_at','');if(!$b)return 'No backup downloaded yet';$d=admin_days_since($b);return 'Last backup '.($d===0?'today':($d===1?'yesterday':$d.' days ago'));}
 function admin_count_files(string $dir,string $pattern):int{
  if(!is_dir($dir))return 0;$n=0;$it=new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir,FilesystemIterator::SKIP_DOTS));foreach($it as $f)if(preg_match($pattern,$f->getFilename()))$n++;return $n;
