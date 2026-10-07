@@ -514,3 +514,19 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  addEventListener('resize',()=>{if(!pop.hidden){const vis=[...document.querySelectorAll('[data-notif]')].find(b=>b.offsetParent);if(vis){bell=vis;place();}else close();}});
  addEventListener('scroll',()=>{if(!pop.hidden)place();},{passive:true});
 })();
+
+/* "I need help" sheet on lesson screens. My month card: the X hides it until next month on this device. */
+(()=>{const rc=document.querySelector('[data-recap]');if(rc){const k='bulig-recap-'+rc.dataset.recap;let off=false;try{off=localStorage.getItem(k)==='1';}catch(e){}
+  if(off)rc.remove();else rc.querySelector('[data-recap-close]')?.addEventListener('click',()=>{try{localStorage.setItem(k,'1');}catch(e){}rc.classList.add('mr-out');setTimeout(()=>rc.remove(),300);});}
+ const dlg=document.querySelector('.hp-sheet');if(!dlg)return;
+ document.querySelector('[data-help-open]')?.addEventListener('click',()=>{const off=!navigator.onLine;dlg.querySelector('[data-help-off]').hidden=!off;dlg.querySelector('.hp-send').disabled=off;if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');});
+ dlg.querySelector('[data-help-close]')?.addEventListener('click',()=>dlg.close?dlg.close():dlg.removeAttribute('open'));
+ dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
+ const t=document.querySelector('.hp-toast');if(t)setTimeout(()=>t.classList.add('hp-gone'),4200);
+})();
+
+/* Level schedule (admin Settings): fill each level's opening date from Week 1, one level after another. */
+(()=>{const f=document.querySelector('[data-sch-form]');if(!f)return;
+ f.querySelector('[data-sch-fillbtn]')?.addEventListener('click',()=>{const s=f.querySelector('[data-sch-start]').value;if(!s)return;const w=+f.querySelector('[data-sch-weeks]').value||1;
+  const d=new Date(s+'T00:00:00');f.querySelectorAll('[data-sch-date]').forEach((inp,i)=>{const x=new Date(d);x.setDate(d.getDate()+i*7*w);inp.value=x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');inp.classList.add('sch-flash');setTimeout(()=>inp.classList.remove('sch-flash'),900);});});
+})();

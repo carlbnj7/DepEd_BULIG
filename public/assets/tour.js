@@ -23,6 +23,11 @@
 
  /* Steps: [target selector(s) or null for a centred card, title, text] */
  const P={
+  credits:[
+   ['.cr-hero','Credits','BULIG is made from the official DepEd modules of the Schools Division of Bukidnon.'],
+   [['.cr-cols .cr-card'],'The BULIG module','The writers, designers and checkers who made the Reading Toolkit.'],
+   [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
+   [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
    ['.identity-banner','This is you','Your name and grade are here. Tap your picture to change it.'],
    ['.level-stat','Your starting level','This is your starting level. Your teacher chose it for you, and your lessons begin here.'],
@@ -34,6 +39,8 @@
    [['.pupil-tabbar .tab-play','.sidebar nav a[href="?page=lessons"]'],'All your lessons','Here you find all your levels and the road map of each level.'],
    [['.pupil-tabbar a[href="?page=calendar"]','.sidebar nav a[href="?page=calendar"]'],'Your calendar','See every day you learned.'],
    [['.pupil-tabbar a[href="?page=profile"]','.sidebar nav a[href="?page=profile"]'],'Your profile','Change your picture and see this week. Settings are there too.'],
+   [['#schedule-wait'],'Next level date','You finished early! The next level opens on this date for your whole class. Practise while you wait.'],
+   [['#month-recap'],'Your month','At the start of each month, see how much you did last month. Tap X to hide it.'],
    [['.notif-m','.notif-top'],'Your notifications','Tap the bell to see notes from your teacher, new badges and certificates. The yellow number shows how many are new.'],
    [['.mode-mobile','.mode-top'],'Light or dark','Tap the moon to make BULIG dark, easy on your eyes at night. Tap the sun to make it bright again.'],
    [['.mobile-signout button','.sidebar .signout'],'Signing out','Tap here when you are done. BULIG asks first, so you never leave by accident.'],
@@ -50,6 +57,7 @@
    offline?[['.level-card.pf-current .off-slot','.off-slot'],'Save for offline','No internet at home? Tap "Save for offline" while you have internet. The level is kept on this device so you can learn without internet.']:null,
    offline?[null,'Learning offline','When there is no internet, open a saved level and answer as usual. Your answers wait on this device and upload by themselves when the internet comes back.']:null],
   map:[
+   [['.sk-note'],'Free practice','Your teacher chose a later starting level. Every lesson here is open, so start with any lesson you like.'],
    ['.back-levels','Back to all levels','Tap here to go back to the list of levels.'],
    ['.level-banner','This level','The name of the level and how many activities you finished.'],
    [['.pfm-node.pfm-cur','.pf-mapcard'],'You are here','The big yellow stop is your next lesson. Tap it to start.'],
@@ -71,15 +79,21 @@
    [['.draw-kit'],'Drawing tools','Pick a crayon colour and pen size. Undo removes your last line. Full screen gives you more room.'],
    [['.native-card-nav.deck-bar','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, the yellow button sends your activity. Your work saves by itself.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null,
-   ['.lesson-outline','All activities','Open this to see every activity in this lesson and what you already finished.']],
+   ['.lesson-outline','All activities','Open this to see every activity in this lesson and what you already finished.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
+   [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.']],
   'l1-start':[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
    ['.l1-start h1','Your lesson','This is the lesson you will learn today.'],
    ['.l1-goals','Today you will…','These are the things you will learn. Tap the yellow speaker to hear them.'],
    ['.l1-steps','Three parts','First a few questions, then practice, then show what you learned.'],
-   ['.l1-go','Start','Tap Let’s start! when you are ready.']],
+   ['.l1-go','Start','Tap Let’s start! when you are ready.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
+   [['.sk-pick'],'Start anywhere','This level was skipped for you, so everything is open. Tap a part to start there, or open Pick any activity.']],
   l1:[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
+   [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.'],
    [['.l1-q .l1-spk','.l1-mission .l1-spk','.l1-listen .l1-spk','.l1-speed'],'Listen','Tap the yellow speaker to hear it again.'],
    [['.l1-mic'],'Say your answer','Tap the red microphone and say your answer. Tap it again to stop. Then listen to it, and tap Send.'],
    [['.l1-howto'],'Do it!','Listen, do the action, then tap I did it!'],
@@ -95,7 +109,9 @@
    [['.l2-card:not([hidden]) button.l2-pic'],'Tap a picture','Tap the picture you choose. It gets a green check.'],
    [['.l2-card:not([hidden]) .l2-nums'],'Count','Tap the number of sounds you hear.'],
    [['.l2-card:not([hidden]) .l1-mic'],'Say it','Tap the red microphone and say your answer. Tap again to stop.'],
-   [['[data-l2-next]','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, tap Submit.']],
+   [['[data-l2-next]','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, tap Submit.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
+   [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.']],
   'lesson-done':[
    ['.completion-card','Lesson finished!','Great job! Tap the button to save the lesson and go back to your map.']],
   calendar:[
@@ -129,6 +145,11 @@
    ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']]
  };
  const T={
+  credits:[
+   ['.cr-hero','Credits','BULIG is made from the official DepEd modules of the Schools Division of Bukidnon.'],
+   [['.cr-cols .cr-card'],'The BULIG module','The writers, designers and checkers who made the Reading Toolkit.'],
+   [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
+   [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
    ['.sidebar nav a[href="?page=dashboard"]','Overview','Your class at a glance: pupils, activity this week, and who needs help.'],
    ['.class-tabs','Grades and sections','Choose a grade or section to see only those pupils.'],
@@ -212,6 +233,11 @@
   profile:P.profile
  };
  const A={
+  credits:[
+   ['.cr-hero','Credits','BULIG is made from the official DepEd modules of the Schools Division of Bukidnon.'],
+   [['.cr-cols .cr-card'],'The BULIG module','The writers, designers and checkers who made the Reading Toolkit.'],
+   [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
+   [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
    ['.ws-kpis','The school at a glance','Pupils, teachers, grades and learning this week, for the whole school.'],
    [['.ws-g2 section.card'],'Pupils at each level','How many pupils are working in each BULIG level.'],
@@ -257,6 +283,7 @@
    ['.ws-btns','Run all checks','Check everything again after you upload an update.'],
    ['#backup','Backup','Download a copy of the database. Keep it somewhere safe.']],
   settings:[
+   [['.sch-card'],'Level schedule','Choose the date each level opens. Pupils who finish early wait for that date, so the class moves together. Fill the dates for me sets one level per week.'],
    ['nav.ws-tabs','Settings sections','Security, school details, announcements, badges and rewards, and the school year.'],
    ['#admin-pin','Admin PIN','Change the 4-digit PIN you enter after your password.'],
    [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG protects accounts from wrong passwords.']],

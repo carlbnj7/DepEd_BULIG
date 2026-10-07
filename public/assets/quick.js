@@ -56,7 +56,8 @@
   overlay({cls:'qo-lock',art,title:o.title,text:o.text,extra,primary:o.go?{label:o.go.label,href:o.go.href}:{label:'Okay'},secondary:o.go?{label:'Okay'}:null});
  };
  document.addEventListener('click',e=>{const c=e.target.closest&&e.target.closest('[data-lock]');if(!c||e.target.closest('a'))return;const d=c.dataset;
-  if(d.lockSoon)window.buligLockOverlay({title:d.lockTitle+' is coming soon',text:'Your teacher is getting it ready. Check back soon!'});
+  if(d.lockOpens)window.buligLockOverlay({title:d.lockTitle+' opens '+d.lockOpens,text:'Your class starts it together. You can practise the levels you finished while you wait.'});
+  else if(d.lockSoon)window.buligLockOverlay({title:d.lockTitle+' is coming soon',text:'Your teacher is getting it ready. Check back soon!'});
   else window.buligLockOverlay({title:d.lockTitle+' is still locked',text:'Finish '+d.lockNeed+' first to unlock it. You can do it!',need:d.lockNeed,pct:d.lockPct,go:{label:'Go to '+d.lockNeed,href:d.lockHref}});});
  document.addEventListener('keydown',e=>{if(e.key==='Enter'){const c=e.target.closest&&e.target.closest('[data-lock]');if(c&&e.target===c)c.click();}});
  document.querySelectorAll('[data-lock]').forEach(c=>{c.tabIndex=0;c.setAttribute('role','button');c.setAttribute('aria-label',c.dataset.lockTitle+' is locked. Tap to see how to unlock it.');});

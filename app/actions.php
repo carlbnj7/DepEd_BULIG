@@ -174,6 +174,7 @@ function action():void{
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   submission_reply($a,$ok,$message,$ok?(int)$a['xp_reward']:0);
  }
+ if($action==='help_request'){help_request(require_role('pupil'));}
  if($action==='notif_read_all'){$u=current_user();if(!$u)fail('Please sign in.',403);if(notif_ready())q('UPDATE notifications SET read_at=NOW() WHERE user_id=? AND read_at IS NULL',[(int)$u['id']]);$b=(string)($_POST['back']??'');go(preg_match('/^\?page=[a-z_]+(&[A-Za-z0-9_=%&.-]*)?$/',$b)?$b:'?page=notifications');}
  /* Teacher review: approve every answer the answer key marked fully right (nothing written, drawn or recorded to read). */
  if($action==='review_approve_all'){
