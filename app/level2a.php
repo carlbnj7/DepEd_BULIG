@@ -164,7 +164,7 @@ function l2a_start_page(array $lesson,array $all,array $first):void{
  if(!empty($i['covers']))echo '<div class="l1-goals"><p class="l1-lab">THIS TEST HAS…</p><ul>'.implode('',array_map(fn($g)=>'<li>'.e($g).'</li>',$i['covers'])).'</ul></div>';
  if($i['what'])echo '<div class="l2-model"><b>WHAT IS '.e(mb_strtoupper($i['lesson'])).'?</b><p>'.e($i['what']).'</p></div>';
  if($i['model'])echo '<div class="l2-model"><b>MY TURN'.l1_speaker($i['model'],'Hear the example','sm').'</b><p>'.e($i['model']).'</p></div>';
- echo '<div class="l1-steps">';foreach($count as $p=>$n)if($n)echo '<span><b>'.$n.'</b>'.e(l1_phase_label($p)).'</span>';echo '</div><a class="l1-big l1-go" href="?page=lesson&amp;id='.$lid.'&amp;activity='.(int)$first['id'].'">Let’s start! '.l1_icon('next').'</a></div></main></div>';foot();
+ echo lesson_parts($lesson,$all,$count).'<a class="l1-big l1-go" href="?page=lesson&amp;id='.$lid.'&amp;activity='.(int)$first['id'].'">Let’s start! '.l1_icon('next').'</a></div></main></div>';foot();
 }
 
 /** One Level 2A activity: its cards one at a time, answered on the card; Submit on the last card. */
