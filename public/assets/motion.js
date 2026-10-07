@@ -12,7 +12,7 @@
   b.classList.add('rp-host');b.append(w);setTimeout(()=>w.remove(),650);},{passive:true});
  /* ---------- feedback flies off to the pupil ---------- */
  document.addEventListener('submit',e=>{const f=e.target;if(!f.closest||!f.closest('.rv-item')||f.dataset.flown)return;const t=f.querySelector('textarea[name=feedback]');if(!t||!t.value.trim())return;
-  e.preventDefault();f.dataset.flown='1';const item=f.closest('.rv-item'),btn=f.querySelector('button.btn.primary');
+  e.preventDefault();f.dataset.flown='1';const sb=e.submitter;if(sb&&sb.name){const h=document.createElement('input');h.type='hidden';h.name=sb.name;h.value=sb.value;f.append(h);}const item=f.closest('.rv-item'),btn=sb&&sb.classList.contains('rv-redo')?sb:f.querySelector('button.btn.primary');
   if(btn){const r=btn.getBoundingClientRect(),p=document.createElement('span');p.className='fb-plane';p.setAttribute('aria-hidden','true');p.innerHTML='<svg viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>';p.style.setProperty('--x',(r.left+r.width/2-14)+'px');p.style.setProperty('--y',(r.top-10)+'px');document.body.append(p);setTimeout(()=>p.remove(),1100);}
   const c=document.querySelector('.rv-tab.on .rv-count');if(c&&!item.classList.contains('rv-done')&&/^\d+$/.test(c.textContent))c.textContent=Math.max(0,+c.textContent-1);
   item.classList.add('rv-fly');setTimeout(()=>f.submit(),650);},true);

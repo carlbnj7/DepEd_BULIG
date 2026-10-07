@@ -34,9 +34,14 @@
    [['.pupil-tabbar .tab-play','.sidebar nav a[href="?page=lessons"]'],'All your lessons','Here you find all your levels and the road map of each level.'],
    [['.pupil-tabbar a[href="?page=calendar"]','.sidebar nav a[href="?page=calendar"]'],'Your calendar','See every day you learned.'],
    [['.pupil-tabbar a[href="?page=profile"]','.sidebar nav a[href="?page=profile"]'],'Your profile','Change your picture and see this week. Settings are there too.'],
+   [['.notif-m','.notif-top'],'Your notifications','Tap the bell to see notes from your teacher, new badges and certificates. The yellow number shows how many are new.'],
    [['.mode-mobile','.mode-top'],'Light or dark','Tap the moon to make BULIG dark, easy on your eyes at night. Tap the sun to make it bright again.'],
    [['.mobile-signout button','.sidebar .signout'],'Signing out','Tap here when you are done. BULIG asks first, so you never leave by accident.'],
    [null,'Need help again?','Tap the yellow ? button on any page and I will show you how it works. Have fun learning!']],
+  notifications:[
+   ['.pageheading','Notifications','Everything new for you, newest first: notes from your teacher, badges and certificates.'],
+   [['.nt-row'],'Open one','Tap a notification to go straight to it. A yellow dot means it is new.'],
+   [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
   lessons:[
    ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
    [['.level-card.pf-current','.level-card.available'],'Your level','Your level is always at the top. Tap "Continue learning" to open your next lesson, or "See my learning path" for the road map.'],
@@ -134,9 +139,14 @@
    ['.sidebar nav a[href="?page=manage"]','My pupils','Three tabs: Learning (starting levels, lessons done in class), Accounts (add, import, edit, sign-in tickets) and Progress (the whole class at a glance).'],
    ['.sidebar nav a[href="?page=sections"]','My sections','Add the sections you handle.'],
    ['.sidebar nav a[href="?page=review"]','Activity history','Read your pupils’ answers and leave short feedback.'],
+   [['.notif-top','.notif-m'],'Notifications','Tap the bell for answers waiting for your feedback, pupils who finished a level, and pupils who need a check-in. The yellow number shows what is new.'],
    [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
    [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. On a shared computer, untick "Keep me saved" when BULIG asks.'],
    [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
+  notifications:[
+   ['.pageheading','Notifications','Work that needs you now is at the top. Notes about finished levels and new accounts come after.'],
+   [['.nt-row'],'Open one','Tap one to go straight to the right page. Items under Needs you now go away by themselves once the work is done.'],
+   [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
   class_demo:[
    ['.pageheading','Class Demo','Present lessons to the whole class on a TV or projector. Nothing is saved for pupils here.'],
    [['.demo-catalog .level-card.available'],'Choose a level','Tap "Start class demo". Levels 4 to 7 ask you to choose a grade first.']],
@@ -214,9 +224,14 @@
    ['.sidebar nav a[href="?page=health"]','System health','Install checks, pictures, database updates and backups.'],
    ['.sidebar nav a[href="?page=settings"]','Settings','Your PIN, school details, announcements, badges and the school year.'],
    ['.mobile-menu-toggle','Menu','Tap here to open the menu: Teachers, Reports, Lesson studio, Activity log, System health and Settings. Each page has its own short tour.'],
+   [['.notif-top','.notif-m'],'Notifications','Tap the bell for System health alerts and new pupil accounts. The yellow number shows what is new.'],
    [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
    [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. Admin accounts are never saved on a device.'],
    [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
+  notifications:[
+   ['.pageheading','Notifications','System health alerts and new pupil accounts, newest first.'],
+   [['.nt-row'],'Open one','Tap one to open the page where you can fix it.'],
+   [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
   accounts:[
    [['#add-teacher','.ws-btns'],'Add a teacher','Enter the name and sex. BULIG makes the teacher ID and a first password.'],
    ['.ws-filters','Find a teacher','Search by name, or filter by grade and status.'],
