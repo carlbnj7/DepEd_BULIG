@@ -4,7 +4,7 @@
 function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing'&&lesson_level((int)$a['lesson_id'])===1;}
 function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=review&tab=(todo|done|all)(&pupil=[0-9]+)?$~',$b)?$b:'?page=review';}
 function action():void{
- check_csrf();$action=(string)($_POST['action']??'');
+ check_csrf();$action=(string)($_POST['action']??'');unset($_SESSION['notif_live']);
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if($action==='login'){
   $id=trim((string)($_POST['public_id']??''));$role=(string)($_POST['role']??'pupil');$key=hash('sha256',strtolower($id));
@@ -61,7 +61,7 @@ function action():void{
   db()->beginTransaction();try{
    $next=(int)val('SELECT next_value FROM id_sequences WHERE kind=? FOR UPDATE',[$role]);q('UPDATE id_sequences SET next_value=next_value+1 WHERE kind=?',[$role]);$public=($role==='teacher'?'T':'').$next;
    q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
-   if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);}else{
+   if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');}else{
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level();$details=pupil_details_input();
     q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);$password=new_pupil_password($id);
    }audit('create_'.$role,$public);db()->commit();if($role==='pupil')$_SESSION['new_pupil']=$id;else flash('Account created. '.$role.' ID: '.$public.'. Share the password you set privately.');
@@ -174,6 +174,24 @@ function action():void{
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   submission_reply($a,$ok,$message,$ok?(int)$a['xp_reward']:0);
  }
+ if($action==='notif_read_all'){$u=current_user();if(!$u)fail('Please sign in.',403);if(notif_ready())q('UPDATE notifications SET read_at=NOW() WHERE user_id=? AND read_at IS NULL',[(int)$u['id']]);$b=(string)($_POST['back']??'');go(preg_match('/^\?page=[a-z_]+(&[A-Za-z0-9_=%&.-]*)?$/',$b)?$b:'?page=notifications');}
+ /* Teacher review: approve every answer the answer key marked fully right (nothing written, drawn or recorded to read). */
+ if($action==='review_approve_all'){
+  $u=require_role('teacher');$fp=(int)($_POST['pupil']??0);if($fp)own_pupil($fp);$ids=key_perfect_ids((int)$u['id'],$fp);
+  foreach($ids as $id)q('UPDATE activity_completion SET reviewed_by=?,reviewed_at=NOW() WHERE id=? AND reviewed_at IS NULL',[$u['id'],$id]);
+  audit('approve_all_correct',(string)count($ids));flash(count($ids)===1?'1 fully correct answer approved.':count($ids).' fully correct answers approved.');go(review_back());
+ }
+ /* Teacher review: let the pupil do an activity again. Its answer stays in the history; the lesson opens again at that activity. */
+ if($action==='review_redo'){
+  $u=require_role('teacher');$cid=(int)($_POST['completion_id']??0);$c=one('SELECT * FROM activity_completion WHERE id=?',[$cid]);if(!$c)fail('Response not found.',404);own_pupil((int)$c['pupil_id']);
+  $note=trim((string)($_POST['feedback']??''));if(strlen($note)>3000)fail('Enter feedback of up to 3,000 characters.');$fa=one('SELECT title,lesson_id FROM activities WHERE id=?',[(int)$c['activity_id']]);
+  $j=json_decode((string)($c['rubric_scores']??''),true);if(is_array($j))unset($j['teacher_score']);
+  q("UPDATE activity_completion SET status='retry',feedback=?,reviewed_by=?,reviewed_at=NULL,rubric_scores=? WHERE id=?",[$note!==''?$note:'Your teacher asked you to do this activity again.',$u['id'],is_array($j)&&$j?json_encode($j):null,$cid]);
+  q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$note!==''?$note:'Do it again','redo',$u['id']]);if($fa)notify((int)$c['pupil_id'],'again','Try “'.$fa['title'].'” again',$note!==''?'Your teacher says: “'.$note.'”':'Your teacher asked you to do it one more time.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);
+  if($fa)q('UPDATE pupil_progress SET completed_at=NULL WHERE pupil_id=? AND lesson_id=?',[(int)$c['pupil_id'],(int)$fa['lesson_id']]);
+  if($fa)push_queue((int)$c['pupil_id'],'teacher','Try “'.$fa['title'].'” again','Your teacher asked you to do it one more time.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);
+  audit('redo_activity',(string)$cid);flash('The pupil can do this activity again. It is back on their lesson path.');go(review_back());
+ }
  if($action==='review'){
   $u=require_role('teacher');$cid=(int)($_POST['completion_id']??0);$c=one('SELECT * FROM activity_completion WHERE id=?',[$cid]);if(!$c)fail('Response not found.',404);own_pupil((int)$c['pupil_id']);
   $feedback=trim((string)($_POST['feedback']??''));$fa=one('SELECT title,lesson_id FROM activities WHERE id=?',[(int)$c['activity_id']]);
@@ -188,7 +206,7 @@ function action():void{
   if($ks!==null&&abs($ks-(float)$c['score'])>0.001){$j=json_decode((string)($c['rubric_scores']??''),true);$j=is_array($j)?$j:[];$j['teacher_score']=$ks;q('UPDATE activity_completion SET score=?,rubric_scores=? WHERE id=?',[$ks,json_encode($j),$cid]);}
   if($rv!==null)q('UPDATE activity_completion SET rubric_scores=? WHERE id=?',[json_encode($l4v!==null?['l4'=>$l4v]:['v'=>$rv]),$cid]);
   if($l4v!==null)q('UPDATE activity_completion SET score=?,max_score=? WHERE id=?',[$l4v['score'],100,$cid]);
-  q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback!==''?$feedback:$c['feedback'],$u['id'],$cid]);if($feedback!=='')q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit($rv!==null?'score_response':'feedback_response',(string)$cid);if($fa&&$feedback!=='')push_queue((int)$c['pupil_id'],'teacher','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','Open “'.$fa['title'].'” to read it.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];flash($rv!==null?($feedback!==''?'Score and feedback saved.':'Score saved.'):'Feedback saved. Pupil progression is unchanged.');go(review_back());
+  q('UPDATE activity_completion SET feedback=?,reviewed_by=?,reviewed_at=NOW() WHERE id=?',[$feedback!==''?$feedback:$c['feedback'],$u['id'],$cid]);if($feedback!=='')q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$feedback,'feedback',$u['id']]);audit($rv!==null?'score_response':'feedback_response',(string)$cid);if($fa&&$feedback!=='')push_queue((int)$c['pupil_id'],'teacher','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','Open “'.$fa['title'].'” to read it.','?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);if($fa&&$feedback!=='')notify((int)$c['pupil_id'],'note','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','“'.mb_strimwidth($feedback,0,160,'…').'” · '.$fa['title'],'?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);$_SESSION['tf_feedback']=explode(' ',trim((string)val('SELECT name FROM users WHERE id=?',[$c['pupil_id']])))[0];if($fa&&$feedback!=='')notify((int)$c['pupil_id'],'note','Teacher '.explode(' ',trim((string)$u['name']))[0].' left you a note','“'.mb_strimwidth($feedback,0,120,'…').'” · '.$fa['title'],'?page=lesson&id='.(int)$fa['lesson_id'].'&activity='.(int)$c['activity_id']);flash($rv!==null?($feedback!==''?'Score and feedback saved.':'Score saved.'):'Feedback saved. Pupil progression is unchanged.');go(review_back());
  }
  if($action==='review_assessment'){
   $u=require_role('teacher');$pid=(int)($_POST['pupil_id']??0);own_pupil($pid);$aid=(int)($_POST['assessment_id']??0);

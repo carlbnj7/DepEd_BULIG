@@ -68,7 +68,7 @@ function teacher_sections(int $teacher):array{return rows('SELECT * FROM section
 function finish_lesson(int $pid,int $lid):void{
  if(!lesson_available($pid,$lid))fail('Lesson not available.',403);
  if(next_activity($pid,$lid))fail('Complete every activity before finishing this lesson.');
- q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=COALESCE(completed_at,NOW())',[$pid,$lid]);award_badges($pid);
+ q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=COALESCE(completed_at,NOW())',[$pid,$lid]);award_badges($pid);if(function_exists('notify_level_done'))notify_level_done($pid,$lid);
 }
 function update_learning(int $pid,int $aid):void{
  $a=one('SELECT * FROM activities WHERE id=?',[$aid]);
@@ -95,7 +95,7 @@ function sync_assessments(int $pid,int $lid):void{
 function refresh_progress(int $pid,int $lid):void{sync_assessments($pid,$lid);}
 function award_badges(int $pid):void{
  $v=['activity'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'lesson'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'streak'=>(int)val('SELECT longest_streak FROM pupil_streaks WHERE pupil_id=?',[$pid]),'reading'=>(int)val("SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.status IN ('approved','completed') AND a.type='reading'",[$pid]),'perfect'=>(int)val("SELECT COUNT(*) FROM assessment_attempts WHERE pupil_id=? AND status IN ('reviewed','submitted') AND score=max_score AND max_score>0",[$pid])];$v['level']=(int)val('SELECT COUNT(*) FROM pupil_progress p JOIN lessons l ON l.id=p.lesson_id JOIN modules m ON m.id=l.module_id WHERE p.pupil_id=? AND p.completed_at IS NOT NULL AND m.level_id=1',[$pid]);
- foreach(rows('SELECT * FROM badges WHERE active=1') as $b)if(($v[$b['rule_type']]??0)>=$b['threshold_value'])q('INSERT IGNORE INTO pupil_badges(pupil_id,badge_id) VALUES(?,?)',[$pid,$b['id']]);
+ foreach(rows('SELECT * FROM badges WHERE active=1') as $b)if(($v[$b['rule_type']]??0)>=$b['threshold_value']&&q('INSERT IGNORE INTO pupil_badges(pupil_id,badge_id) VALUES(?,?)',[$pid,$b['id']])->rowCount()&&function_exists('notify'))notify($pid,'badge','New badge: '.$b['title'],(string)$b['description'],'?page=achievements');
  q('INSERT IGNORE INTO pupil_rewards(pupil_id,reward_id) SELECT ?,id FROM rewards WHERE active=1 AND required_xp<=?',[$pid,$v['xp']]);
 }
 function progress_stats(int $pid):array{
@@ -220,4 +220,4 @@ require_once __DIR__.'/offline.php';
 require_once __DIR__.'/saved_login.php';
 require_once __DIR__.'/level1.php';
 require_once __DIR__.'/level2a.php';
-require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';
+require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';require_once __DIR__.'/insights.php';require_once __DIR__.'/notify.php';

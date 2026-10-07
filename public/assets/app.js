@@ -499,3 +499,18 @@ document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600
 document.addEventListener('click',e=>{const b=e.target.closest('[data-phrase]');if(!b)return;const f=b.closest('form'),t=f&&f.querySelector('textarea[name=feedback]');if(!t)return;
  const p=b.dataset.phrase,v=t.value.trim();if(v.includes(p)){t.value=v.replace(p,'').replace(/\s{2,}/g,' ').trim();b.classList.remove('on');}else{t.value=(v?v+' ':'')+p;b.classList.add('on');}t.dispatchEvent(new Event('input',{bubbles:true}));t.focus();});
 document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('textarea[name=feedback]');if(!t)return;f.querySelectorAll('[data-phrase]').forEach(b=>b.classList.toggle('on',t.value.includes(b.dataset.phrase)));});
+
+/* Notifications: the bell opens a small panel right under it (the full page is still at ?page=notifications). */
+(()=>{const pop=document.getElementById('notif-pop');if(!pop)return;let bell=null;
+ const place=()=>{if(!bell)return;const r=bell.getBoundingClientRect();
+  if(innerWidth<=740){pop.style.top=(r.bottom+10)+'px';pop.style.left='12px';pop.style.right='12px';pop.style.setProperty('--np-tip',(r.left+r.width/2-12)+'px');}
+  else{pop.style.top=(r.bottom+12)+'px';pop.style.left='auto';pop.style.right=Math.max(12,innerWidth-r.right-8)+'px';pop.style.setProperty('--np-tip',(Math.min(innerWidth-12,r.right+8)-r.left-r.width/2)+'px');}};
+ const close=()=>{if(pop.hidden)return;pop.classList.remove('open');setTimeout(()=>{if(!pop.classList.contains('open'))pop.hidden=true;},160);document.querySelectorAll('[data-notif]').forEach(b=>b.setAttribute('aria-expanded','false'));};
+ const open=b=>{bell=b;pop.hidden=false;place();requestAnimationFrame(()=>pop.classList.add('open'));b.setAttribute('aria-expanded','true');};
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-notif]');
+  if(b){e.preventDefault();if(!pop.hidden&&bell===b)close();else open(b);return;}
+  if(!pop.hidden&&!pop.contains(e.target))close();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden){close();bell&&bell.focus();}});
+ addEventListener('resize',()=>{if(!pop.hidden){const vis=[...document.querySelectorAll('[data-notif]')].find(b=>b.offsetParent);if(vis){bell=vis;place();}else close();}});
+ addEventListener('scroll',()=>{if(!pop.hidden)place();},{passive:true});
+})();
