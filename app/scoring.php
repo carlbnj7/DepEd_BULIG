@@ -54,3 +54,15 @@ function key_review(array $r):string{
  return $h.'</ol></div>';
 }
 function key_score_text(array $r):string{if($r['max_score']===null||(float)$r['max_score']<=0||!activity_key_id(['id'=>(int)$r['activity_id']]))return '';return rtrim(rtrim(number_format((float)$r['score'],2),'0'),'.').' / '.rtrim(rtrim(number_format((float)$r['max_score'],2),'0'),'.');}
+
+/** True when every card a pupil answers is marked by the answer key: nothing written, drawn or recorded for the teacher to read. */
+function key_fully_auto(int $aid):bool{
+ static $c=[];if(isset($c[$aid]))return $c[$aid];$a=one('SELECT * FROM activities WHERE id=?',[$aid]);$key=$a?activity_key($a):null;$set=$key?l2a_set($a):null;if(!$set)return $c[$aid]=false;
+ foreach($set['cards'] as $i=>$card){if(!array_diff($card['ui']['answer']??[],['look']))continue;if(!isset($key[$i+1]))return $c[$aid]=false;}
+ return $c[$aid]=true;
+}
+/** Answers waiting for review that the answer key marked fully right, with nothing else to read. */
+function key_perfect_ids(int $tid,int $pupil=0):array{
+ $out=[];foreach(rows("SELECT c.id,c.activity_id FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE t.teacher_id=? AND m.level_id IN (6,7,8) AND c.status IN ('completed','approved') AND c.reviewed_at IS NULL AND c.max_score>0 AND c.score>=c.max_score AND c.drawing IS NULL".($pupil?' AND c.pupil_id=?':''),$pupil?[$tid,$pupil]:[$tid]) as $r)if(key_fully_auto((int)$r['activity_id']))$out[]=(int)$r['id'];
+ return $out;
+}
