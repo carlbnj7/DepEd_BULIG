@@ -242,7 +242,7 @@ function admin_log_csv():never{
 }
 
 /* ---------------------------------------------------------------- System health + backup */
-const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools','016_saved_logins','024_notifications'];
+const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools','016_saved_logins','024_notifications','025_help_requests'];
 function admin_backup_note():string{$b=admin_setting('last_backup_at','');if(!$b)return 'No backup downloaded yet';$d=admin_days_since($b);return 'Last backup '.($d===0?'today':($d===1?'yesterday':$d.' days ago'));}
 function admin_count_files(string $dir,string $pattern):int{
  if(!is_dir($dir))return 0;$n=0;$it=new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir,FilesystemIterator::SKIP_DOTS));foreach($it as $f)if(preg_match($pattern,$f->getFilename()))$n++;return $n;
@@ -300,7 +300,7 @@ function admin_backup_sql():never{
 
 /* ---------------------------------------------------------------- Settings */
 function admin_settings_view(array $u):void{
- $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','badges'=>'Badges & rewards','year'=>'School year'];if(!isset($tabs[$tab]))$tab='security';
+ $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','badges'=>'Badges & rewards','year'=>'School year','schedule'=>'Level schedule'];if(!isset($tabs[$tab]))$tab='security';
  admin_heading('SETTINGS','Your BULIG workspace.','Security, school details, announcements, badges and the end of the school year.');
  echo '<nav class="ws-tabs">';foreach($tabs as $k=>$v)echo '<a class="'.($tab===$k?'on':'').'" href="?page=settings&amp;tab='.$k.'">'.e($v).'</a>';echo '</nav>';
  if($tab==='security'){echo '<div class="ws-g2">';admin_pin_settings($u);
@@ -313,6 +313,7 @@ function admin_settings_view(array $u):void{
   foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
   echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
  if($tab==='badges')settings_view();
+ if($tab==='schedule')schedule_admin_view();
  if($tab==='year'){$b=admin_setting('last_backup_at','');$fresh=$b!==''&&admin_days_since($b)<1;
   $counts=[];foreach(rows("SELECT pu.grade_level g,COUNT(*) n FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 GROUP BY pu.grade_level") as $r)$counts[(int)$r['g']]=(int)$r['n'];
   echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('cal').' End of school year</h2><small class="muted">Current: '.e(admin_school_year()).'</small></div><div class="ws-steps">';
@@ -327,6 +328,7 @@ function admin_next_year():string{$cur=admin_school_year();if(preg_match('/(\d{4
 /* ---------------------------------------------------------------- actions */
 function admin_actions(string $action):void{
  $u=require_role('admin');
+ if($action==='admin_level_schedule')schedule_admin_save();
  if($action==='admin_reset_password'){$t=admin_teacher((int)($_POST['id']??0));$p=admin_new_password();q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($p,PASSWORD_DEFAULT),$t['id']]);saved_login_clear((int)$t['id']);try{q("DELETE FROM remember_tokens WHERE user_id=?",[$t['id']]);}catch(Throwable $e){}
   audit('admin_reset_password',(string)$t['id']);flash('New password for '.$t['name'].' ('.$t['public_id'].'): '.$p.' — give it to the teacher privately. They can change it in My profile.');go('?page=accounts');}
  if($action==='admin_toggle_teacher'){$t=admin_teacher((int)($_POST['id']??0));q('UPDATE users SET active=1-active WHERE id=?',[$t['id']]);audit('admin_toggle_teacher',(string)$t['id']);flash($t['name'].' is now '.($t['active']?'turned off. They cannot sign in.':'turned on.'));go('?page=accounts');}
@@ -364,4 +366,4 @@ function admin_actions(string $action):void{
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   flash('School year '.$year.' started. '.$up.' pupils moved up a grade and '.$done.' Grade 6 pupils finished BULIG. Teachers can now make new sections.');go('?page=settings&tab=year');}
 }
-const ADMIN_ACTIONS=['admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_toggle_activity','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year'];
+const ADMIN_ACTIONS=['admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_toggle_activity','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule'];

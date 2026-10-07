@@ -136,8 +136,8 @@ function l1_goals(string $obj):array{
 /** Lesson header: level and lesson name, "n / N complete" and one dot per activity. */
 function lesson_head(array $lesson,array $all,array $a,string $back):string{
  $lv=lesson_level((int)$lesson['id']);$n=count($all);$done=count(array_filter($all,'completion_ok'));
- $bar='';if($n<=30){$bar='<div class="ap-seg" aria-hidden="true">';foreach($all as $x)$bar.='<i class="'.((int)$x['id']===(int)$a['id']?'c':(completion_ok($x)?'d':'')).'"></i>';$bar.='</div>';}else $bar='<progress max="'.$n.'" value="'.$done.'"></progress>';
- return '<header class="activity-header'.($n<=30?' has-seg':'').'"><a class="iconbutton" href="'.e($back).'" aria-label="Back to my lessons">'.icon('close').'</a><div><strong>'.e(level_label($lv).' · '.$lesson['subtitle']).'</strong><span>'.e($lesson['title']).'</span></div><div class="activity-progress"><span>'.$done.' / '.$n.' complete</span>'.$bar.'</div></header>';
+ $u=current_user();$free=$u&&$u['role']==='pupil'&&lesson_is_skipped((int)$u['id'],(int)$lesson['id']);$bar='';if($n<=30){$bar='<div class="ap-seg'.($free?' sk-seg':'').'"'.($free?'':' aria-hidden="true"').'>';foreach($all as $k=>$x){$cl=(int)$x['id']===(int)$a['id']?'c':(completion_ok($x)?'d':'');$bar.=$free?'<a class="'.$cl.'" href="?page=lesson&amp;id='.(int)$lesson['id'].'&amp;activity='.(int)$x['id'].'" aria-label="Activity '.($k+1).': '.e((string)$x['title']).'"><i></i></a>':'<i class="'.$cl.'"></i>';}$bar.='</div>';}else $bar='<progress max="'.$n.'" value="'.$done.'"></progress>';
+ return '<header class="activity-header'.($n<=30?' has-seg':'').'"><a class="iconbutton" href="'.e($back).'" aria-label="Back to my lessons">'.icon('close').'</a><div><strong>'.e(level_label($lv).' · '.$lesson['subtitle']).'</strong><span>'.e($lesson['title']).'</span></div><div class="activity-progress"><span>'.$done.' / '.$n.' complete'.($free?' <a class="sk-all" href="?page=lesson&amp;id='.(int)$lesson['id'].'&amp;pick=1#sk-pick">'.icon('menu').'All</a>':'').'</span>'.$bar.'</div></header>';
 }
 function l1_icon(string $n):string{
  $p=['spk'=>'<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/>','mic'=>'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
@@ -194,7 +194,7 @@ function lesson_start_page(array $lesson,array $all,array $first):void{
  echo '<div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-'.min(8,max(1,$lv)).'.webp" alt=""><div><span class="l1-tag">'.(per_grade_level($lv)?e(mb_strtoupper(lesson_display_label($lv,(int)$lesson['position']))).'</span><h1>'.e($lesson['subtitle']):(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title'])).'</h1></div></div>';
  $goals=l1_goals((string)$lesson['objectives']);
  if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
- echo '<div class="l1-steps">';foreach($count as $p=>$n)if($n)echo '<span><b>'.$n.'</b>'.e(l1_phase_label($p)).'</span>';echo '</div>';
+ echo lesson_parts($lesson,$all,$count);
  echo '<a class="l1-big l1-go" href="?page=lesson&amp;id='.$lid.'&amp;activity='.(int)$first['id'].'">Let’s start! '.l1_icon('next').'</a></div></main></div>';foot();
 }
 function l1_start_page(array $lesson,array $all,array $first):void{
@@ -204,7 +204,7 @@ function l1_start_page(array $lesson,array $all,array $first):void{
  echo '<div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
  $goals=l1_goals((string)$lesson['objectives']);
  if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
- echo '<div class="l1-steps">';foreach($count as $p=>$n)if($n)echo '<span><b>'.$n.'</b>'.e(l1_phase_label($p)).'</span>';echo '</div>';
+ echo lesson_parts($lesson,$all,$count);
  echo '<a class="l1-big l1-go" href="?page=lesson&amp;id='.$lid.'&amp;activity='.(int)$first['id'].'">Let’s start! '.l1_icon('next').'</a></div></main></div>';foot();
 }
 
