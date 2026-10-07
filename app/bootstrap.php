@@ -50,6 +50,7 @@ function lesson_available(int $pid,int $lid):bool{
 function completion_ok(?array $row):bool{return $row&&in_array($row['status'],['approved','completed'],true);}
 function phase_available(int $pid,int $lid,string $phase):bool{
  $order=['pre'=>0,'learn'=>1,'post'=>2];if(!isset($order[$phase]))return false;
+ if(function_exists('lesson_is_skipped')&&lesson_is_skipped($pid,$lid))return true;
  $earlier=array_slice(array_keys($order),0,$order[$phase]);
  foreach($earlier as $stage)if(val("SELECT COUNT(*) FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.phase=? AND a.published=1 AND (c.status IS NULL OR c.status NOT IN ('approved','completed'))",[$pid,$lid,$stage]))return false;
  return true;
@@ -58,7 +59,7 @@ function allowed_activity(int $pid,int $aid):array{
  $a=one('SELECT * FROM activities WHERE id=? AND published=1',[$aid]);if(!$a)fail('Activity not found.',404);
  if(!lesson_available($pid,(int)$a['lesson_id'])||!phase_available($pid,(int)$a['lesson_id'],$a['phase']))fail('Complete the earlier learning steps first.',403);
  $before=val("SELECT COUNT(*) FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.phase=? AND a.position<? AND a.published=1 AND (c.status IS NULL OR c.status NOT IN ('approved','completed'))",[$pid,$a['lesson_id'],$a['phase'],$a['position']]);
- if($before)fail('Please finish the earlier activity first.',403);return $a;
+ if($before&&!(function_exists('lesson_is_skipped')&&lesson_is_skipped($pid,(int)$a['lesson_id'])))fail('Please finish the earlier activity first.',403);return $a;
 }
 function next_activity(int $pid,int $lid):?array{foreach(activities($lid,$pid) as $a)if(!completion_ok($a))return $a;return null;}
 /** Sections can be archived at the end of a school year (015_admin_tools.sql); older databases have no such column. */
@@ -68,7 +69,7 @@ function teacher_sections(int $teacher):array{return rows('SELECT * FROM section
 function finish_lesson(int $pid,int $lid):void{
  if(!lesson_available($pid,$lid))fail('Lesson not available.',403);
  if(next_activity($pid,$lid))fail('Complete every activity before finishing this lesson.');
- q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=COALESCE(completed_at,NOW())',[$pid,$lid]);award_badges($pid);if(function_exists('notify_level_done'))notify_level_done($pid,$lid);
+ q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=COALESCE(completed_at,NOW())',[$pid,$lid]);award_badges($pid);if(function_exists('notify_level_done'))notify_level_done($pid,$lid);if(function_exists('schedule_after_finish'))schedule_after_finish($pid);
 }
 function update_learning(int $pid,int $aid):void{
  $a=one('SELECT * FROM activities WHERE id=?',[$aid]);
@@ -164,7 +165,9 @@ function profile_avatar_choices():array{
  return ['boy-1'=>['Boy 1 · Side-part hair','male'],'boy-2'=>['Boy 2 · Curly hair','male'],'boy-3'=>['Boy 3 · Glasses','male'],'girl-1'=>['Girl 1 · Bob haircut','female'],'girl-2'=>['Girl 2 · Braids','female'],'girl-3'=>['Girl 3 · Ponytail and glasses','female']];
 }
 
-function level_available(int $pid,int $level):bool{
+function level_available(int $pid,int $level):bool{return level_progress_ready($pid,$level)&&!(function_exists('level_date_locked')&&level_date_locked($pid,$level));}
+/** Open by progress: every earlier level from the starting level is finished (the level schedule is checked separately). */
+function level_progress_ready(int $pid,int $level):bool{
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))return false;
  $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);
  if(!$start)return false;
@@ -220,4 +223,4 @@ require_once __DIR__.'/offline.php';
 require_once __DIR__.'/saved_login.php';
 require_once __DIR__.'/level1.php';
 require_once __DIR__.'/level2a.php';
-require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';require_once __DIR__.'/insights.php';require_once __DIR__.'/notify.php';
+require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';require_once __DIR__.'/insights.php';require_once __DIR__.'/notify.php';require_once __DIR__.'/help.php';require_once __DIR__.'/month_recap.php';require_once __DIR__.'/schedule.php';require_once __DIR__.'/skipped.php';
