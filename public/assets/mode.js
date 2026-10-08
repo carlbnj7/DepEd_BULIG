@@ -29,3 +29,11 @@
    if(t.hasAttribute('data-mode-toggle'))set(isDark()?'light':'dark',t);else set(t.getAttribute('data-mode-set'),t);});});
  window.buligMode={get:function(){return mode;},set:set};
 })();
+/* Liquid Glass (v130): see-through menus and buttons. "lg-lite" keeps the solid look on slow phones (2 GB memory or less),
+   when the device asks for less transparency, or when the pupil turns Glass look off in Settings. */
+(function(){
+ var d=document.documentElement,g=null;try{g=localStorage.getItem('bulig-glass');}catch(e){}
+ var slow=(navigator.deviceMemory&&navigator.deviceMemory<=2)||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=2);
+ var less=window.matchMedia&&matchMedia('(prefers-reduced-transparency: reduce)').matches;
+ if(g==='off'||(g!=='on'&&(slow||less)))d.classList.add('lg-lite');
+})();

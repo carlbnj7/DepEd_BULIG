@@ -31,7 +31,7 @@
   dashboard:[
    ['.identity-banner','This is you','Your name and grade are here. Tap your picture to change it.'],
    ['.level-stat','Your starting level','This is your starting level. Your teacher chose it for you, and your lessons begin here.'],
-   ['.xp-stat','Your XP','You earn XP for every activity you finish. Collect XP to get rewards!'],
+   [['.rl-stat','.xp-stat'],'Your reader level','You earn XP for every activity you finish. XP makes your reader level go up, all the way to Level 100! Tap to see your level road.'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
    ['.badge-stat','Your badges','Badges are prizes for learning. Tap to see the ones you earned.'],
    ['.goal-card','Today’s goal','Finish 3 activities a day. The ring fills up as you go!'],
@@ -119,6 +119,9 @@
    ['.pf-cal-grid','Your learning days','Days with a flame are days you learned. Try to learn a little every day!'],
    ['.pf-cal-mon','Other months','Use the arrows to look at other months.']],
   achievements:[
+   ['.rl-road','My reader level','Your level goes up when you earn XP. The highest level is 100.'],
+   [['.rl-now'],'Your title','You get a new title every 10 levels. This is your title now.'],
+   [['.rl-how'],'How to level up','Finish activities to earn XP. If your teacher moved you to a higher level, you got XP for the levels you skipped.'],
    ['.pf-shelf','Your badge shelf','All the badges you can earn in BULIG.'],
    [['.pf-shelf-item.pf-got'],'Badges you earned','Shiny badges are yours! The date shows when you earned it.'],
    [['.pf-shelf-item.pf-locked'],'Badges to earn','Read what to do to unlock each badge.'],
@@ -131,6 +134,7 @@
   settings:[
    ['.st-sfx','Sound effects','Turn the little sounds on or off on this device.'],
    [['.st-seg'],'How BULIG looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.'],
+   ['.st-glass','Glass look','Menus and buttons look like clear glass. Turn it off if this phone feels slow.'],
    [['a.st-row[href="?page=offline"]'],'Offline lessons','Save lessons on this device so they open even without internet.'],
    ['.st-pw','Your password','Tap here when you want to change your password.'],
    ['.st-about','About BULIG','See who made BULIG.']],
@@ -303,16 +307,42 @@
  /* ---------- UI ---------- */
  const charImg=()=>{const i=document.createElement('img');i.src=me.char;i.alt='';i.width=62;i.height=84;return i;};
  let layer=null,idx=-1,cur=[],raf=0;
- function close(markSeen){if(markSeen)markDone();if(layer){layer.remove();layer=null;}document.removeEventListener('keydown',keys,true);removeEventListener('resize',place);removeEventListener('scroll',place,true);document.body.classList.remove('tour-on');}
+ /* Voice narration: each step is read aloud in a calm, natural voice (the pupil's chosen voice when there is one). */
+ const synth=window.speechSynthesis||null;let talkOn=true;try{talkOn=localStorage.getItem('bulig-tour-voice')!=='off';}catch(e){}
+ /* The most natural-sounding English voice on this device. Robotic voices (eSpeak, old Microsoft David/Mark) are used only as a last resort. */
+ function voiceScore(v){const n=v.name;let sc=0;
+  if(/natural|neural|premium|enhanced|wavenet|studio/i.test(n))sc+=100;
+  if(/aria|jenny|ava|emma|michelle|libby|sonia|ana\b|clara|natasha/i.test(n))sc+=40;
+  if(/google (us|uk) english/i.test(n))sc+=60;if(/google/i.test(n))sc+=10;
+  if(/samantha|karen|moira|tessa|serena|fiona|allison|susan|zira|hazel/i.test(n))sc+=30;
+  if(/female/i.test(n))sc+=15;
+  if(/en[-_]ph/i.test(v.lang))sc+=8;else if(/en[-_](us|gb|au)/i.test(v.lang))sc+=5;
+  if(/espeak|david|mark|george|fred|albert|zarvox|whisper|bad news|bells|boing|bubbles|cellos|jester|organ|trinoids|robot|superstar|wobble|junior|ralph|kathy|bahh/i.test(n))sc-=200;
+  return sc;}
+ function niceVoice(){if(!synth)return null;let vs=synth.getVoices().filter(v=>/^en/i.test(v.lang));
+  /* Offline: only voices stored on the device can speak (online voices such as Google or Edge Natural need internet). */
+  if(!navigator.onLine){const local=vs.filter(v=>v.localService);if(local.length)vs=local;}
+  if(!vs.length)return null;let pref=null;try{pref=localStorage.getItem('bulig-tour-voice-name')||localStorage.getItem('bulig-voice');}catch(e){}
+  const chosen=vs.find(v=>v.voiceURI===pref);if(chosen)return chosen;
+  return vs.slice().sort((x,y)=>voiceScore(y)-voiceScore(x))[0];}
+ function hush(){if(synth)synth.cancel();if(layer)layer.classList.remove('tour-talking');}
+ function say(title,text){hush();if(!talkOn||!synth||!layer)return;const t=(title+'. '+text).replace(/\s+/g,' ').trim();
+  const run=()=>{if(!layer)return;const u=new SpeechSynthesisUtterance(t);const v=niceVoice();if(v){u.voice=v;u.lang=v.lang;}else u.lang='en-US';u.rate=.92;u.pitch=1.08;
+   u.onstart=()=>layer&&layer.classList.add('tour-talking');u.onend=u.onerror=()=>layer&&layer.classList.remove('tour-talking');synth.speak(u);};
+  if(synth.getVoices().length)setTimeout(run,120);else{let done=false;const go2=()=>{if(done)return;done=true;run();};synth.addEventListener('voiceschanged',go2,{once:true});setTimeout(go2,700);}}
+ function voiceBtn(){const b=document.createElement('button');b.type='button';b.className='tour-voice';const paint=()=>{b.classList.toggle('off',!talkOn);b.setAttribute('aria-pressed',talkOn?'true':'false');b.setAttribute('aria-label',talkOn?'Voice on. Tap to turn it off':'Voice off. Tap to turn it on');b.title=talkOn?'Voice on':'Voice off';
+   b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 4-5 4H3v8h3l5 4z"/>'+(talkOn?'<path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>':'<path d="m16 9 6 6m0-6-6 6"/>')+'</svg>';};
+  paint();b.onclick=()=>{talkOn=!talkOn;try{localStorage.setItem('bulig-tour-voice',talkOn?'on':'off');}catch(e){}paint();if(talkOn&&cur[idx])say(cur[idx][1],cur[idx][2]);else hush();};return b;}
+ function close(markSeen){if(markSeen)markDone();hush();if(layer){layer.remove();layer=null;}document.removeEventListener('keydown',keys,true);removeEventListener('resize',place);removeEventListener('scroll',place,true);document.body.classList.remove('tour-on');}
  function keys(e){if(!layer)return;if(e.key==='Escape'){e.preventDefault();e.stopPropagation();close(true);}else if(e.key==='ArrowRight'){e.preventDefault();e.stopPropagation();go(idx+1);}else if(e.key==='ArrowLeft'){e.preventDefault();e.stopPropagation();if(idx>0)go(idx-1);}}
  function start(){close(false);cur=steps.filter(s=>!s[0]||find(s[0]));if(!cur.length)return;
   layer=document.createElement('div');layer.className='tour-layer';layer.setAttribute('role','dialog');layer.setAttribute('aria-modal','true');layer.setAttribute('aria-label','Guided tour');
   layer.innerHTML='<div class="tour-block"></div><div class="tour-spot" aria-hidden="true"></div><div class="tour-bub"><div class="tour-bub-in"><div class="tour-txt"><h3></h3><p></p></div></div><div class="tour-nav"><span class="tour-dots" aria-hidden="true"></span><button type="button" class="tour-skip">Skip</button><button type="button" class="tour-back">Back</button><button type="button" class="tour-next">Next</button></div></div>';
-  layer.querySelector('.tour-bub-in').prepend(charImg());
+  layer.querySelector('.tour-bub-in').prepend(charImg());layer.querySelector('.tour-nav').prepend(voiceBtn());
   layer.querySelector('.tour-skip').onclick=()=>close(true);layer.querySelector('.tour-back').onclick=()=>{if(idx>0)go(idx-1);};layer.querySelector('.tour-next').onclick=()=>go(idx+1);
   document.body.append(layer);document.body.classList.add('tour-on');document.addEventListener('keydown',keys,true);addEventListener('resize',place);addEventListener('scroll',place,true);go(0);}
  function go(n){if(!layer)return;if(n>=cur.length){close(true);return;}idx=n;const [sel,title,text]=cur[n];
-  layer.querySelector('h3').textContent=title;layer.querySelector('.tour-txt p').textContent=text;
+  layer.querySelector('h3').textContent=title;layer.querySelector('.tour-txt p').textContent=text;say(title,text);
   layer.querySelector('.tour-dots').innerHTML=cur.map((_,k)=>'<i'+(k===n?' class="on"':'')+'></i>').join('');
   layer.querySelector('.tour-back').style.visibility=n?'visible':'hidden';const nx=layer.querySelector('.tour-next');nx.textContent=n===cur.length-1?'Finish':'Next';
   const el=find(sel);layer.classList.toggle('tour-center',!el);
