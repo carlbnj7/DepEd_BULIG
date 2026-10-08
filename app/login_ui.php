@@ -42,12 +42,14 @@ function login_scan_block():string{
 function login_eye_button():string{
  return '<button type="button" class="show-password lgn-eye" data-password="password" aria-label="Show password" aria-pressed="false" title="Show password"><svg class="lgn-eye-on" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="lgn-eye-off" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button>';
 }
-/** "Forgot your password?" link, the Credits link, and the sheet that the link opens. */
+/** "Forgot your password?", right under the password box. */
+function login_forgot_link():string{return '<button type="button" class="lgn-forgot-link lgn-under-pw" data-lgn-forgot>'.icon('key').'Forgot your password?</button>';}
+/** The Credits link, and the sheet that "Forgot your password?" opens. */
 function login_foot(string $role):string{
  $pupil=$role==='pupil';
  $steps=$pupil?['Tell your teacher.','Your teacher prints a new Reading Pass with a new password.','Scan the pass with a phone, or type your Pupil ID and the new password.']:['Tell your BULIG administrator.','The administrator makes a new password for you.','Sign in, then change it in My profile.'];
  $li='';foreach($steps as $i=>$t)$li.='<li><b>'.($i+1).'</b><span>'.e($t).'</span></li>';
- return '<div class="lgn-foot"><button type="button" class="lgn-forgot-link" data-lgn-forgot>'.icon('key').'Forgot your password?</button><a class="login-credits" href="?page=credits">'.icon('star').'Credits</a></div>'
+ return '<div class="lgn-foot"><a class="login-credits" href="?page=credits">'.icon('star').'Credits</a></div>'
   .'<dialog class="lgn-sheet" data-lgn-sheet aria-labelledby="lgn-sheet-t"><form method="dialog"><span class="lgn-grab" aria-hidden="true"></span><div class="lgn-sheet-hd"><img src="'.e(char_src($pupil?'teacher-female':'admin-female','hello')).'" alt=""><div><h3 id="lgn-sheet-t">Forgot your password?</h3><p>'.($pupil?'That’s okay! Your teacher can help.':'That’s okay! Your administrator can help.').'</p></div></div><ol class="lgn-steps">'.$li.'</ol><button class="btn primary full lgn-ok">Okay!</button></form></dialog>';
 }
 
