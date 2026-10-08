@@ -530,3 +530,13 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  f.querySelector('[data-sch-fillbtn]')?.addEventListener('click',()=>{const s=f.querySelector('[data-sch-start]').value;if(!s)return;const w=+f.querySelector('[data-sch-weeks]').value||1;
   const d=new Date(s+'T00:00:00');f.querySelectorAll('[data-sch-date]').forEach((inp,i)=>{const x=new Date(d);x.setDate(d.getDate()+i*7*w);inp.value=x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');inp.classList.add('sch-flash');setTimeout(()=>inp.classList.remove('sch-flash'),900);});});
 })();
+
+/* Liquid Glass (v130): the pupil tab bar shrinks to icons while scrolling down and grows back when scrolling up. */
+(function(){const bar=document.querySelector('.pupil-tabbar');if(!bar||!window.matchMedia)return;const mq=matchMedia('(max-width:740px)'),d=document.documentElement;let last=scrollY,busy=false;
+ const tick=()=>{busy=false;const y=scrollY,dy=y-last;if(!mq.matches||d.classList.contains('lg-lite')){bar.classList.remove('lg-mini');last=y;return;}
+  if(y<80||dy<-8)bar.classList.remove('lg-mini');else if(dy>8&&y>140)bar.classList.add('lg-mini');if(Math.abs(dy)>8)last=y;};
+ addEventListener('scroll',()=>{if(!busy){busy=true;requestAnimationFrame(tick);}},{passive:true});
+ bar.addEventListener('focusin',()=>bar.classList.remove('lg-mini'));})();
+/* Settings: Glass look switch (v130). Saved on this device. */
+(function(){const sw=document.querySelector('[data-glass-switch]');if(!sw)return;const d=document.documentElement;sw.checked=!d.classList.contains('lg-lite');
+ sw.addEventListener('change',()=>{d.classList.toggle('lg-lite',!sw.checked);try{localStorage.setItem('bulig-glass',sw.checked?'on':'off');}catch(e){}});})();
