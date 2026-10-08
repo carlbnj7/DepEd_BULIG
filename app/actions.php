@@ -8,9 +8,9 @@ function action():void{
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if($action==='login'){
   $id=trim((string)($_POST['public_id']??''));$role=(string)($_POST['role']??'pupil');$key=hash('sha256',strtolower($id));
-  if(val('SELECT COUNT(*) FROM login_attempts WHERE identifier_hash=? AND attempted_at>DATE_SUB(NOW(),INTERVAL 15 MINUTE)',[$key])>=8){audit('login_locked',mb_substr($role.' · '.$id,0,60));fail('Too many attempts. Please wait 15 minutes.',429);}
+  if(login_tries_used($key)>=LOGIN_MAX_TRIES){audit('login_locked',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
   $u=one('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
-  if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));fail('The ID or password is incorrect.');}
+  if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
   q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil'){$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;}if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin'){$_SESSION['offer_save']=1;$_SESSION['hello']=1;}audit('login',$role);go('?page=dashboard');
  }
  if($action==='key_login'){

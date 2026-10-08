@@ -23,3 +23,33 @@
    const step=t=>{const k=Math.min(1,(t-t0)/dur),v=Math.round(to*(1-Math.pow(1-k,3)));n.textContent=fmt(v);if(k<1)requestAnimationFrame(step);};requestAnimationFrame(step);});
   document.documentElement.classList.add('cu-grow');}
 })();
+
+/* Click effects (v132). A soft ring where the finger or mouse touches, on everything that can be tapped.
+   Pupils (and the pupil sign-in page) also get a small burst of stars and dots on big buttons, tabs and cards.
+   The icon on a tapped button, tab or menu item gives a little bounce. Teachers and admins get only the ring and the bounce.
+   No stars inside lessons, so an effect never looks like a "correct" answer. Off when the device asks for less motion. */
+(function(){
+ 'use strict';
+ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const b=document.body;if(!b)return;
+ const kid=b.classList.contains('role-pupil')||b.classList.contains('key-page')||(b.classList.contains('login-page')&&!b.classList.contains('admin-mode'));
+ const lesson=b.matches('.view-lesson,.l1-page,.demo-page');
+ const TAP='a[href],button,[role=button],summary,label,input[type=checkbox],input[type=radio],select,.tap-choices li';
+ const BIG='.btn.primary,.btn.secondary,.pupil-tabbar>a,.lf-go,.level-card a,.navitem,a.st-row,label.st-row,a.pupil-stat,.pupil-stat[role=button],.tour-help,.role-tabs a,.lgn-role,.lgn-scan,.key-go,.notif-bell,.mode-btn,.mobile-signout button,.ql-acct,.np-row';
+ const BOUNCE='.btn,.pupil-tabbar>a,.navitem,.st-row,.notif-bell,.mode-btn,.mobile-signout button,.mobile-menu-toggle,.role-tabs a,.lgn-role,.lgn-forgot-link,.ws-tabs a,.rv-tab,.np-row,.admin-pill,.show-password';
+ const COLORS=['#ffc629','#1c7a50','#ff8a7a','#7cc4ff','#ffd966','#5db585'];
+ const at=(cls,x,y)=>{const e=document.createElement('span');e.className=cls;e.setAttribute('aria-hidden','true');e.style.setProperty('--x',x+'px');e.style.setProperty('--y',y+'px');b.appendChild(e);return e;};
+ document.addEventListener('pointerdown',e=>{
+  if(e.button>0||!e.target.closest)return;const t=e.target.closest(TAP);if(!t||t.disabled||t.closest('[aria-disabled=true],.tour-layer'))return;
+  const r=t.getBoundingClientRect(),x=e.clientX,y=e.clientY;
+  /* 1. Ring */
+  const ring=at('ck-ring'+(kid?'':' ck-soft'),x,y);ring.style.setProperty('--s',Math.round(Math.min(150,Math.max(54,Math.max(r.width,r.height)*.9)))+'px');setTimeout(()=>ring.remove(),600);
+  /* 2. Stars and dots for pupils */
+  if(kid&&!lesson&&t.matches(BIG)){const box=at('ck-burst',x,y),n=8;
+   for(let i=0;i<n;i++){const p=document.createElement('i'),a=(i/n)*Math.PI*2+Math.random()*.5,d=38+Math.random()*30;p.className=i%2?'dt':'st';
+    p.style.setProperty('--dx',(Math.cos(a)*d).toFixed(1)+'px');p.style.setProperty('--dy',(Math.sin(a)*d-8).toFixed(1)+'px');p.style.setProperty('--r',Math.round(Math.random()*240-120)+'deg');p.style.setProperty('--c',COLORS[i%COLORS.length]);box.appendChild(p);}
+   setTimeout(()=>box.remove(),750);}
+  /* 3. Icon bounce */
+  const host=t.closest(BOUNCE);if(host){const ic=host.querySelector('.icon:not(.flip)');if(ic){ic.classList.remove('ck-bounce');void ic.getBoundingClientRect();ic.classList.add('ck-bounce');setTimeout(()=>ic.classList.remove('ck-bounce'),560);}}
+ },{passive:true});
+})();
