@@ -1,6 +1,6 @@
 'use strict';
 const $=(s)=>document.querySelector(s);
-for(const button of document.querySelectorAll('[data-password]'))button.addEventListener('click',()=>{const input=document.getElementById(button.dataset.password);input.type=input.type==='password'?'text':'password';button.textContent=input.type==='password'?'Show':'Hide';});
+for(const button of document.querySelectorAll('[data-password]'))button.addEventListener('click',()=>{const input=document.getElementById(button.dataset.password);input.type=input.type==='password'?'text':'password';const shown=input.type==='text';if(button.classList.contains('lgn-eye')){button.setAttribute('aria-pressed',shown?'true':'false');button.setAttribute('aria-label',shown?'Hide password':'Show password');button.title=shown?'Hide password':'Show password';}else button.textContent=shown?'Hide':'Show';});
 const narration=$('.narration');let muted=false;
 if(narration){
  const synth=window.speechSynthesis,select=$('#voice-select'),info=$('#voice-info');
@@ -539,4 +539,60 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  bar.addEventListener('focusin',()=>bar.classList.remove('lg-mini'));})();
 /* Settings: Glass look switch (v130). Saved on this device. */
 (function(){const sw=document.querySelector('[data-glass-switch]');if(!sw)return;const d=document.documentElement;sw.checked=!d.classList.contains('lg-lite');
- sw.addEventListener('change',()=>{d.classList.toggle('lg-lite',!sw.checked);try{localStorage.setItem('bulig-glass',sw.checked?'on':'off');}catch(e){}});})();
+ sw.addEventListener('change',()=>{d.classList.toggle('lg-lite',!sw.checked);try{localStorage.setItem('bulig-glass',sw.checked?'on':'off');}catch(e){}document.dispatchEvent(new Event('lg:change'));});})();
+
+/* Liquid Glass, more like the real thing (v131). Nothing here runs on Class Demo pages or when the solid look is on.
+   1. Shine that follows the mouse (computer) or the tilt of an Android phone.  2. Glow where a finger taps.
+   3. Glass bubble that slides from the last tab or menu item to the new one.  4. Soft blur at the top of the phone screen.
+   5. Lens: in Chrome-based browsers the glass edges bend what is behind them (an SVG displacement map per size). */
+(function(){const d=document.documentElement,b=document.body;if(!b||!b.classList.contains('workspace')||b.classList.contains('demo-page'))return;
+ const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,lite=()=>d.classList.contains('lg-lite'),phone=()=>innerWidth<=740;
+ /* Glass parts: [selector, blur used with the lens, phone only / computer only] */
+ const PARTS=[['.pupil-tabbar','blur(7px) saturate(180%)','p'],['.notif-m,.mode-mobile,.mobile-signout button,.mobile-menu-toggle','blur(3px) saturate(185%)','p'],
+  ['.mainwrap>.topbar','blur(12px) saturate(185%)','c'],['.topbar .notif-bell,.topbar .mode-btn,.topbar .rolepill','blur(3px) saturate(185%)','c'],['.sidebar','blur(16px) saturate(170%)','c'],
+  ['.tour-help','blur(3px) saturate(180%)',''],['.pupil-tabbar .tab-play-btn','',''],['.notif-pop','blur(20px) saturate(190%)',''],['.pw-panel','blur(22px) saturate(190%)','']];
+ const all=[];PARTS.forEach(([sel,blur,where])=>document.querySelectorAll(sel).forEach(el=>{el.classList.add('lg-g');all.push({el,blur,where});}));
+ /* 1. Shine */
+ let sx=26,sy=0,queued=false;const paint=()=>{queued=false;all.forEach(({el})=>{el.style.setProperty('--lg-sx',sx.toFixed(1)+'%');el.style.setProperty('--lg-sy',sy.toFixed(1)+'%');});};
+ const move=(x,y)=>{x=Math.max(0,Math.min(100,x));y=Math.max(-10,Math.min(100,y));if(Math.abs(x-sx)<.8&&Math.abs(y-sy)<.8)return;sx=x;sy=y;if(!queued){queued=true;requestAnimationFrame(paint);}};
+ if(!still){addEventListener('pointermove',e=>{if(e.pointerType==='mouse'&&!lite())move(e.clientX/innerWidth*100,e.clientY/innerHeight*100);},{passive:true});
+  const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  if(!ios&&'DeviceOrientationEvent' in window)addEventListener('deviceorientation',e=>{if(e.gamma==null||lite())return;move(50+e.gamma*1.5,(e.beta-20)*1.2);},{passive:true});}
+ /* 2. Tap glow */
+ addEventListener('pointerdown',e=>{if(lite())return;const g=e.target.closest&&e.target.closest('.lg-g');if(!g)return;const r=g.getBoundingClientRect();
+  g.style.setProperty('--lg-tx',Math.round(e.clientX-r.left)+'px');g.style.setProperty('--lg-ty',Math.round(e.clientY-r.top)+'px');g.classList.remove('lg-tap');void g.offsetWidth;g.classList.add('lg-tap');},{passive:true});
+ /* 3. Sliding bubble */
+ const bubble=(wrap,items,v,key,isOn)=>{const on=items.findIndex(isOn);if(on<0)return;const bb=document.createElement('span');bb.className='lg-bubble lg-g'+(v?' lg-v':'');bb.setAttribute('aria-hidden','true');wrap.prepend(bb);wrap.classList.add('lg-has-bubble');all.push({el:bb,blur:'',where:''});
+  const place=(i,anim)=>{const a=items[i];if(!a)return;if(!anim)bb.style.transition='none';
+   if(v){bb.style.setProperty('--lg-by',a.offsetTop+'px');bb.style.height=a.offsetHeight+'px';}else{bb.style.setProperty('--lg-bx',a.offsetLeft+'px');bb.style.width=a.offsetWidth+'px';}
+   bb.classList.toggle('lg-play',!v&&a.classList.contains('tab-play'));if(!anim){void bb.offsetWidth;bb.style.removeProperty('transition');}};
+  let from=-1;try{const s=JSON.parse(sessionStorage.getItem(key)||'null');if(s&&Date.now()-s.t<8000)from=s.i;sessionStorage.removeItem(key);}catch(e){}
+  if(from>=0&&from!==on&&from<items.length&&!still&&!lite()){place(from,false);requestAnimationFrame(()=>requestAnimationFrame(()=>{bb.classList.add('lg-stretch');place(on,true);setTimeout(()=>bb.classList.remove('lg-stretch'),280);}));}else place(on,false);
+  items.forEach(a=>a.addEventListener('click',()=>{try{sessionStorage.setItem(key,JSON.stringify({i:on,t:Date.now()}));}catch(e){}}));
+  setTimeout(()=>{if(window.ResizeObserver)new ResizeObserver(()=>place(on,false)).observe(wrap);},800);};
+ const tb=document.querySelector('.pupil-tabbar');if(tb){const it=[...tb.querySelectorAll(':scope>a')];bubble(tb,it,false,'lg-tab',a=>a.classList.contains('on'));}
+ const nav=document.querySelector('.sidebar nav');if(nav){const it=[...nav.querySelectorAll(':scope>a.navitem')];bubble(nav,it,true,'lg-nav',a=>a.classList.contains('selected'));}
+ /* 4. Top blur while scrolling (not on lesson or certificate pages) */
+ if(!b.matches('.view-lesson,.view-certificate,.l1-page')){const edge=document.createElement('div');edge.className='lg-edge';edge.setAttribute('aria-hidden','true');b.appendChild(edge);
+  let on=false;const chk=()=>{const s=scrollY>24;if(s!==on){on=s;d.classList.toggle('lg-scrolled',s);}};addEventListener('scroll',chk,{passive:true});chk();}
+ /* 5. Lens */
+ const ua=navigator.userAgent,lensOK=/\bChrome\/\d+/.test(ua)&&!/CriOS|EdgiOS|FxiOS|iPhone|iPad/.test(ua)&&window.CSS&&CSS.supports('backdrop-filter','url(#a) blur(1px)')&&!!document.createElement('canvas').getContext;
+ if(!lensOK)return;const NS='http://www.w3.org/2000/svg';let svg=null;const made=new Map();
+ const lens=(w,h,r)=>{w=Math.round(w);h=Math.round(h);if(w<12||h<12||w*h>700000)return null;r=Math.round(Math.min(r,h/2,w/2));const band=Math.max(6,Math.min(18,r,Math.floor(h/2)-1)),k=w+'x'+h+'x'+r;
+  if(!made.has(k)){if(made.size>40){made.clear();if(svg)svg.textContent='';}
+   if(!svg){svg=document.createElementNS(NS,'svg');svg.setAttribute('width','0');svg.setAttribute('height','0');svg.setAttribute('aria-hidden','true');svg.style.position='absolute';svg.style.pointerEvents='none';b.appendChild(svg);}
+   const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d'),im=x.createImageData(w,h),p=im.data;
+   for(let j=0;j<h;j++)for(let i=0;i<w;i++){const px=i+.5,py=j+.5,dx=px<r?px-r:px>w-r?px-(w-r):0,dy=py<r?py-r:py>h-r?py-(h-r):0,L=Math.hypot(dx,dy),o=(j*w+i)*4;let R=128,G=128;
+    if(L>0){const dist=r-L;if(dist>=0&&dist<band){const t=1-dist/band,m=t*t*(3-2*t);R=128-dx/L*m*127;G=128-dy/L*m*127;}}p[o]=R;p[o+1]=G;p[o+2]=128;p[o+3]=255;}
+   x.putImageData(im,0,0);const id='lg-lens-'+k,f=document.createElementNS(NS,'filter');
+   [['id',id],['x','0'],['y','0'],['width',w],['height',h],['filterUnits','userSpaceOnUse'],['color-interpolation-filters','sRGB']].forEach(([a,v])=>f.setAttribute(a,v));
+   const fi=document.createElementNS(NS,'feImage');[['href',c.toDataURL()],['x','0'],['y','0'],['width',w],['height',h],['preserveAspectRatio','none'],['result','m']].forEach(([a,v])=>fi.setAttribute(a,v));
+   const dm=document.createElementNS(NS,'feDisplacementMap');[['in','SourceGraphic'],['in2','m'],['scale',String(Math.min(36,band*2))],['xChannelSelector','R'],['yChannelSelector','G']].forEach(([a,v])=>dm.setAttribute(a,v));
+   f.append(fi,dm);svg.appendChild(f);made.set(k,id);}
+  return 'url(#'+made.get(k)+')';};
+ const apply=part=>{const el=part.el;if(!part.blur)return;const off=lite()||(part.where==='p'&&!phone())||(part.where==='c'&&phone());
+  if(off||!el.offsetWidth){el.style.removeProperty('backdrop-filter');return;}const u=lens(el.offsetWidth,el.offsetHeight,parseFloat(getComputedStyle(el).borderTopLeftRadius)||0);
+  if(u)el.style.setProperty('backdrop-filter',u+' '+part.blur,'important');else el.style.removeProperty('backdrop-filter');};
+ const timers=new Map();const later=part=>{part.el.style.removeProperty('backdrop-filter');clearTimeout(timers.get(part.el));timers.set(part.el,setTimeout(()=>apply(part),180));};
+ all.forEach(part=>{if(!part.blur)return;apply(part);if(window.ResizeObserver)new ResizeObserver(()=>later(part)).observe(part.el);});
+ document.addEventListener('lg:change',()=>all.forEach(apply));})();
