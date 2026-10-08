@@ -3535,3 +3535,149 @@ html.dark .sk-lab{background:#2a2f1e;color:#e8f0ea}html.dark .sk-list{background
 .sk-parts a small{white-space:nowrap;font-size:11px;padding:2px 8px}
 .sk-note{display:flex;flex-direction:column;align-items:flex-start;gap:4px}.sk-note p{margin:0}
 html.dark .sk-parts a{background:#16231b;color:#e8f0ea}
+/* v128: voice narration in guided tours */
+.tour-voice{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--ivory-line,#e9e2cc);background:#fff8e1;color:var(--g700,#176444);display:grid;place-items:center;cursor:pointer;padding:0;margin-right:auto;transition:transform .15s}
+.tour-voice.off{background:#f7f5ee;color:var(--muted,#5f6f63)}
+.tour-voice:hover{transform:scale(1.06)}.tour-voice:focus-visible{outline:3px solid var(--y400,#ffc629);outline-offset:2px}
+.tour-talking .tour-voice{animation:tourPulse 1.1s ease-in-out infinite}
+@keyframes tourPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,198,41,.55)}50%{box-shadow:0 0 0 7px rgba(255,198,41,0)}}
+.tour-talking .tour-bub-in>img{animation:tourTalk .5s ease-in-out infinite alternate;transform-origin:50% 100%}
+@keyframes tourTalk{from{transform:translateY(0) rotate(0)}to{transform:translateY(-3px) rotate(-1.5deg)}}
+.tour-nav .tour-dots{margin-right:auto}
+@media(prefers-reduced-motion:reduce){.tour-talking .tour-voice,.tour-talking .tour-bub-in>img{animation:none}}
+html.dark .tour-voice{background:#2a2f1e;border-color:#3a4a40;color:#ffd966}html.dark .tour-voice.off{background:rgba(255,255,255,.06);color:#c9d6cd}
+.tour-nav .tour-voice{border-radius:50%!important;width:38px!important;height:38px!important;min-width:0!important;padding:0!important;flex:none}
+/* v129: reader level (Level 1 to 100), head start and more badges */
+.pupil-stats a.rl-stat{color:inherit;text-decoration:none!important}.pupil-stats a.rl-stat *{text-decoration:none!important}
+.rl-row{display:flex;align-items:center;gap:12px;margin:6px 0 10px}
+.rl-ring{position:relative;flex:none;display:grid;place-items:center;width:62px;height:62px}
+.rl-ring svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.rl-ring-bg{stroke:#f3ecd6;stroke-width:4.6}
+.rl-ring-fill{stroke:var(--y400,#ffc629);stroke-width:4.6;stroke-linecap:round}
+.rl-ring b{position:relative;display:grid;place-content:center;width:76%;height:76%;border-radius:50%;background:linear-gradient(160deg,#1c7a50,#0e5a35);color:#fff;font-family:var(--font-fun);font-weight:800;font-size:20px;line-height:1;text-align:center}
+.rl-ring b small{display:block;font-size:9px;letter-spacing:.08em;color:#ffd966;margin-bottom:1px}
+.rl-ring-md{width:84px;height:84px}.rl-ring-md b{font-size:28px}.rl-ring-md b small{font-size:11px}
+.rl-ring-lg{width:128px;height:128px}.rl-ring-lg b{font-size:46px}.rl-ring-lg b small{font-size:16px;margin-bottom:2px}
+.rl-name{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rl-name b{display:flex;align-items:center;gap:6px;font-family:var(--font-fun);font-weight:800;font-size:15px;line-height:1.2;color:var(--g800,#0e3b28)}
+.rl-name b .rl-ic{flex:none;width:18px;height:18px;color:var(--y600,#b88900)}
+.rl-name small{font-size:12.5px;color:var(--muted,#5b6b60)}
+.rl-stat .stat-foot{margin-top:6px}
+@media(max-width:700px){.rl-row{flex-direction:column;align-items:flex-start;gap:8px}}
+/* My achievements: level road */
+.rl-road{border-top:5px solid var(--y400,#ffc629);scroll-margin-top:90px}
+.rl-rhead{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.rl-rtext{flex:1;min-width:210px}.rl-rtext h2{margin:0}.rl-rtext p{margin:2px 0 8px}
+.rl-rtext small{display:block;margin-top:6px;color:var(--muted,#5b6b60);font-size:13px}
+.rl-bar{display:block;width:100%;height:12px;border:0;border-radius:99px;overflow:hidden;background:#f3ecd6;accent-color:var(--y400,#ffc629)}
+.rl-bar::-webkit-progress-bar{background:#f3ecd6;border-radius:99px}.rl-bar::-webkit-progress-value{background:var(--sun);border-radius:99px}.rl-bar::-moz-progress-bar{background:var(--sun);border-radius:99px}
+.rl-top{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--g700,#176444)}.rl-top .rl-ic{color:var(--y600,#b88900)}
+.rl-stops{list-style:none;margin:0;padding:12px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:1000px){.rl-stops{grid-template-columns:repeat(11,1fr);gap:8px}}
+.rl-stop{position:relative;border-radius:18px;padding:12px 6px 10px;text-align:center;background:#fdf8ea;border:1px solid #efe7cf}
+.rl-sic{display:grid;place-items:center;width:44px;height:44px;margin:0 auto 6px;border-radius:50%;background:#efe8d2;color:#a99d7c}
+.rl-sic .rl-ic{width:20px;height:20px}
+.rl-stop small{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#8a8066}
+.rl-stop b{display:block;margin-top:2px;font-size:13px;line-height:1.2;color:#8a8066}
+.rl-stop.rl-done{background:#e6f4ec;border-color:#9ed2b3}.rl-done .rl-sic{background:var(--g700,#176444);color:#fff}.rl-done b,.rl-done small{color:var(--g700,#176444)}
+.rl-stop.rl-now{background:#fff8e1;border:2px solid var(--y400,#ffc629);box-shadow:0 8px 18px -10px rgba(184,137,0,.6)}.rl-now .rl-sic{background:linear-gradient(#ffd966,#f0b400);color:#0e3b28}.rl-now b{color:#0e3b28}.rl-now small{color:var(--y700,#7d5a00)}
+.rl-here{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#0e5a35;color:#ffc629;font-size:10px;font-weight:800;letter-spacing:.06em;border-radius:99px;padding:2px 8px;white-space:nowrap}
+.rl-how{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.rl-how span{display:inline-flex;align-items:center;gap:6px;background:#fdf8ea;border:1px solid #efe7cf;border-radius:99px;padding:6px 12px;font-size:13px;font-weight:700;color:#3d5446}
+.rl-how .icon{width:16px;height:16px;color:var(--y600,#b88900)}
+/* Popups: head start and level up */
+.rl-cel .pf-cel-panel{max-height:calc(100vh - 24px);overflow:auto}
+.rl-stage{position:relative;display:grid;place-items:center;height:150px;margin:8px 0 2px}
+.rl-stage .rl-ring{animation:rl-pop .7s cubic-bezier(.2,1.5,.4,1) .2s both}
+@keyframes rl-pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.rl-cel .pf-ribbon{margin:6px auto 2px;display:block}
+.rl-title-chip{display:inline-flex;align-items:center;gap:8px;margin:2px 0 12px;background:#e6f4ec;border:1px solid #9ed2b3;color:var(--g700,#176444);border-radius:16px;padding:8px 14px;font-weight:700}
+.rl-title-chip b{color:#0e3b28}.rl-title-chip .rl-ic{width:18px;height:18px}
+.rl-hs-list{list-style:none;margin:4px 0 12px;padding:0;text-align:left;border:1px solid #e9e2cc;border-radius:16px;background:#fff;overflow:hidden}
+.rl-hs-list li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;border-top:1px dashed #e9e2cc;font-size:14px}
+.rl-hs-list li:first-child{border-top:0}.rl-hs-list span{color:#3d5446}.rl-hs-list b{color:var(--g700,#176444);white-space:nowrap}
+.rl-hs-list .rl-hs-total{background:#fff8e1;border-top:1px solid #f1d98a;font-weight:800}.rl-hs-total span{color:#0e3b28}.rl-hs-total b{color:var(--y700,#7d5a00);font-size:16px}
+.rl-jump{display:flex;align-items:center;justify-content:center;gap:14px;margin:4px 0 10px}
+.rl-arrow{color:var(--y600,#b88900)}.rl-arrow .rl-ic{width:30px;height:30px}
+@media(prefers-reduced-motion:reduce){.rl-stage .rl-ring{animation:none}}
+/* Dark mode */
+html.dark .rl-ring-bg{stroke:#2e4234}
+html.dark .rl-name b,html.dark .rl-now b,html.dark .rl-title-chip b,html.dark .rl-hs-total span{color:#e8f0ea}
+html.dark .rl-name small,html.dark .rl-rtext small,html.dark .rl-hs-list span{color:#a9bcb0}
+html.dark .rl-bar,html.dark .rl-bar::-webkit-progress-bar{background:#2e4234}
+html.dark .rl-stop,html.dark .rl-how span{background:#16231b;border-color:#2e4234;color:#c9d6cd}
+html.dark .rl-sic{background:#1d2d23;color:#6f8577}html.dark .rl-stop small,html.dark .rl-stop b{color:#8fa597}
+html.dark .rl-stop.rl-done{background:#173326;border-color:#2f6b47}html.dark .rl-done b,html.dark .rl-done small{color:#9be0b4}html.dark .rl-done .rl-sic{background:#2f8a5b;color:#fff}html.dark .rl-now .rl-sic{background:linear-gradient(#ffd966,#f0b400);color:#0e3b28}
+html.dark .rl-stop.rl-now{background:#2a2616}html.dark .rl-now small{color:#ffd966}
+html.dark .rl-title-chip{background:#173326;border-color:#2f6b47;color:#9be0b4}
+html.dark .rl-hs-list{background:#16231b;border-color:#2e4234}html.dark .rl-hs-list li{border-color:#2e4234}html.dark .rl-hs-list b{color:#9be0b4}
+html.dark .rl-hs-list .rl-hs-total{background:#2a2616;border-color:#5a4a1a}html.dark .rl-hs-total b{color:#ffd966}
+/* v130: Liquid Glass. Menus, buttons, popups and the tour bubble look like see-through glass with a bright rim.
+   Cards with words stay solid so children can read easily. html.lg-lite (slow phones, "Reduce transparency",
+   or Settings › Glass look off) keeps the solid look. Browsers without backdrop-filter keep the solid look too. */
+:root{--lg-edge:inset 1.5px 1.5px 0 rgba(255,255,255,.9),inset -1px -1px 0 rgba(255,255,255,.35),inset 0 0 20px rgba(255,255,255,.22);
+ --lg-drop:0 10px 28px -8px rgba(14,59,40,.38),0 2px 6px rgba(14,59,40,.12);
+ --lg-clear:linear-gradient(135deg,rgba(255,255,255,.6),rgba(255,255,255,.2) 50%,rgba(255,255,255,.38));
+ --lg-frost:linear-gradient(160deg,rgba(255,255,255,.84),rgba(255,253,246,.64) 55%,rgba(255,255,255,.76));
+ --lg-gold:radial-gradient(120% 90% at 30% 20%,rgba(255,240,170,.97),rgba(255,198,41,.86) 45%,rgba(240,180,0,.84));
+ --lg-gold-edge:inset 2px 2px 0 rgba(255,255,255,.85),inset -2px -2px 3px rgba(184,137,0,.35),0 10px 24px -6px rgba(184,137,0,.6);
+ --lg-dark:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.04) 50%,rgba(255,255,255,.1));
+ --lg-dark-edge:inset 1.5px 1.5px 0 rgba(255,255,255,.3),inset -1px -1px 0 rgba(255,255,255,.08),0 10px 26px -8px rgba(0,0,0,.6)}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+/* Soft green and gold light behind the page, so the glass has something to show */
+html:not(.lg-lite):not(.dark) body.workspace:not(.demo-page)::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(600px 420px at 8% 12%,rgba(46,140,90,.24),transparent 70%),radial-gradient(520px 380px at 92% 8%,rgba(255,198,41,.26),transparent 70%),radial-gradient(700px 500px at 70% 85%,rgba(46,140,90,.16),transparent 70%),radial-gradient(500px 400px at 20% 90%,rgba(255,198,41,.18),transparent 70%)}
+/* Round glass buttons: bell, light/dark, sign out, role pill */
+html:not(.lg-lite) body.workspace .notif-bell,html:not(.lg-lite) body.workspace .mode-btn,html:not(.lg-lite) body.workspace:not(.demo-page) .mobile-signout button,html:not(.lg-lite) body.workspace:not(.demo-page) .mobile-menu-toggle,html:not(.lg-lite) body.workspace .topbar .rolepill{background:var(--lg-clear)!important;-webkit-backdrop-filter:blur(10px) saturate(185%);backdrop-filter:blur(10px) saturate(185%);border:1px solid rgba(255,255,255,.72)!important;box-shadow:var(--lg-edge),var(--lg-drop)!important}
+html.dark:not(.lg-lite) body.workspace .notif-bell,html.dark:not(.lg-lite) body.workspace .mode-btn,html.dark:not(.lg-lite) body.workspace:not(.demo-page) .mobile-signout button,html.dark:not(.lg-lite) body.workspace:not(.demo-page) .mobile-menu-toggle,html.dark:not(.lg-lite) body.workspace .topbar .rolepill{background:var(--lg-dark)!important;border-color:rgba(255,255,255,.26)!important;box-shadow:var(--lg-dark-edge)!important}
+/* Gold glass: the "?" tour button */
+html:not(.lg-lite) body.workspace .tour-help{background:var(--lg-gold);-webkit-backdrop-filter:blur(8px) saturate(180%);backdrop-filter:blur(8px) saturate(180%);border:1px solid rgba(255,255,255,.78);box-shadow:var(--lg-gold-edge)}
+/* Popups: level up, badges, welcome */
+html:not(.lg-lite) .pw-overlay{background:rgba(14,59,40,.3);-webkit-backdrop-filter:blur(6px) saturate(140%);backdrop-filter:blur(6px) saturate(140%)}
+html:not(.lg-lite) .pw-panel{background:var(--lg-frost);-webkit-backdrop-filter:blur(26px) saturate(190%);backdrop-filter:blur(26px) saturate(190%);border:1px solid rgba(255,255,255,.85);border-top:6px solid rgba(255,198,41,.95);box-shadow:inset 2px 2px 0 rgba(255,255,255,.95),inset -1.5px -1.5px 0 rgba(255,255,255,.4),inset 0 0 40px rgba(255,255,255,.35),0 30px 70px -10px rgba(14,59,40,.5)}
+html:not(.lg-lite) .pw-panel::before{opacity:.55}
+html.dark:not(.lg-lite) .pw-panel{background:linear-gradient(160deg,rgba(255,255,255,.93),rgba(255,253,246,.86) 55%,rgba(255,255,255,.9))}
+/* Notifications drop-down */
+html:not(.lg-lite) .notif-pop,html:not(.lg-lite) .notif-pop::before{background:var(--lg-frost);-webkit-backdrop-filter:blur(24px) saturate(190%);backdrop-filter:blur(24px) saturate(190%);border-color:rgba(255,255,255,.85)}
+html:not(.lg-lite) .notif-pop{box-shadow:inset 2px 2px 0 rgba(255,255,255,.95),inset -1px -1px 0 rgba(255,255,255,.4),0 26px 60px -14px rgba(14,59,40,.5)}
+html:not(.lg-lite) .notif-pop .np-row.new{background:rgba(255,248,225,.62)}
+html.dark:not(.lg-lite) .notif-pop,html.dark:not(.lg-lite) .notif-pop::before{background:linear-gradient(160deg,rgba(36,56,43,.86),rgba(22,35,27,.78) 60%,rgba(36,56,43,.84));border-color:rgba(255,255,255,.16)}
+html.dark:not(.lg-lite) .notif-pop{box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,.22),0 26px 60px -14px rgba(0,0,0,.7)}
+html.dark:not(.lg-lite) .notif-pop .np-row.new{background:rgba(42,47,30,.7)}
+/* Guided tour bubble */
+html:not(.lg-lite) .tour-bub{background:var(--lg-frost);-webkit-backdrop-filter:blur(22px) saturate(190%);backdrop-filter:blur(22px) saturate(190%);border:1px solid rgba(255,255,255,.85);box-shadow:inset 2px 2px 0 rgba(255,255,255,.95),inset -1px -1px 0 rgba(255,255,255,.4),0 24px 60px -12px rgba(14,59,40,.5)}
+html.dark:not(.lg-lite) .tour-bub{background:linear-gradient(160deg,rgba(255,255,255,.94),rgba(255,253,246,.88) 60%,rgba(255,255,255,.92))}
+/* Cards keep their solid colour and get a thin bright rim */
+html:not(.lg-lite):not(.dark) body.workspace .pupil-stat,html:not(.lg-lite):not(.dark) body.workspace .goal-card,html:not(.lg-lite):not(.dark) body.workspace .next-adventure{box-shadow:inset 1px 1px 0 rgba(255,255,255,.9),0 12px 30px -16px rgba(14,59,40,.35)}
+@media(hover:hover){html:not(.lg-lite):not(.dark) body.role-pupil .pupil-stat:hover{box-shadow:inset 1px 1px 0 rgba(255,255,255,.9),0 14px 26px -12px rgba(20,70,40,.35)}}
+/* Phone */
+@media(max-width:740px){
+ /* Pupil tab bar: green glass that floats. It shrinks to icons while scrolling down (app.js adds .lg-mini). */
+ html:not(.lg-lite) body.workspace:not(.demo-page) .pupil-tabbar{background:linear-gradient(135deg,rgba(28,122,80,.76),rgba(14,90,53,.64) 55%,rgba(28,122,80,.72))!important;-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,.38);box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,.55),inset -1px -1px 0 rgba(255,255,255,.18),inset 0 0 24px rgba(255,255,255,.12),0 14px 34px -10px rgba(14,59,40,.55)!important;transition:left .45s cubic-bezier(.2,1.2,.4,1),right .45s cubic-bezier(.2,1.2,.4,1),bottom .3s ease}
+ html.dark:not(.lg-lite) body.workspace:not(.demo-page) .pupil-tabbar{background:linear-gradient(135deg,rgba(30,60,42,.62),rgba(14,30,20,.5) 55%,rgba(30,60,42,.58))!important;border-color:rgba(255,255,255,.18);box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,.22),inset -1px -1px 0 rgba(255,255,255,.06),0 14px 34px -10px rgba(0,0,0,.7)!important}
+ html:not(.lg-lite) body.workspace .pupil-tabbar a{text-shadow:0 1px 2px rgba(0,0,0,.25)}
+ html:not(.lg-lite) body.workspace .pupil-tabbar a.on:not(.tab-play){background:linear-gradient(135deg,rgba(255,255,255,.34),rgba(255,255,255,.08));box-shadow:inset 1px 1px 0 rgba(255,255,255,.7),inset -1px -1px 0 rgba(255,255,255,.2);border-radius:20px}
+ html:not(.lg-lite) body.workspace .pupil-tabbar .tab-play-btn{background:var(--lg-gold);border:1px solid rgba(255,255,255,.78);box-shadow:var(--lg-gold-edge)}
+ html:not(.lg-lite) body.workspace .pupil-tabbar.lg-mini{left:calc(50% - 122px);right:calc(50% - 122px);bottom:calc(14px + env(safe-area-inset-bottom))}
+ html:not(.lg-lite) body.workspace .pupil-tabbar.lg-mini a>span:not(.tab-play-btn){position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ html:not(.lg-lite) body.workspace .pupil-tabbar.lg-mini a{padding:7px 0 5px}
+ /* Pupil pages: the bell, light/dark and sign-out buttons float over the page (not on a lesson or certificate) */
+ html:not(.lg-lite) body.role-pupil:not(.view-lesson):not(.view-certificate) .notif-m.pupil{position:fixed;top:12px;left:14px;z-index:70}
+ html:not(.lg-lite) body.role-pupil:not(.view-lesson):not(.view-certificate) .mode-mobile.mode-pupil{position:fixed;top:14px;right:66px;z-index:70}
+ html:not(.lg-lite) body.role-pupil:not(.view-lesson):not(.view-certificate) .mobile-signout{position:fixed;top:12px;right:12px;z-index:70}
+ html:not(.lg-lite) body.workspace .notif-m,html:not(.lg-lite) body.workspace .mode-mobile,html:not(.lg-lite) body.workspace .mobile-signout button{color:#0e3b28}
+ html.dark:not(.lg-lite) body.workspace .notif-m,html.dark:not(.lg-lite) body.workspace .mode-mobile,html.dark:not(.lg-lite) body.workspace .mobile-signout button{color:#ffd966!important}
+}
+/* Computer: the sidebar is a floating green glass panel and the top bar is a glass strip that stays at the top */
+@media(min-width:741px){
+ html:not(.lg-lite) body.workspace:not(.demo-page) .sidebar{top:12px;left:12px;bottom:12px;height:auto;border-radius:28px;overflow:hidden auto;scrollbar-width:thin;background:linear-gradient(165deg,rgba(18,104,60,.84),rgba(10,72,40,.76) 60%,rgba(18,104,60,.8));-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);border:1px solid rgba(255,255,255,.32);box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,.45),inset -1px -1px 0 rgba(255,255,255,.12),inset 0 0 40px rgba(255,255,255,.08),0 24px 50px -18px rgba(14,59,40,.6)}
+ html:not(.lg-lite) body.workspace:not(.demo-page) .mainwrap{margin-left:274px}
+ html:not(.lg-lite) body.workspace:not(.l1-page):has(.sidebar) .tour-help,html:not(.lg-lite) body.workspace:not(.l1-page):has(.sidebar) .tour-help.tour-help-pupil{left:282px}
+ html:not(.lg-lite) body.workspace .sidebar .navitem.selected{background:var(--lg-gold);border:1px solid rgba(255,255,255,.7);box-shadow:var(--lg-gold-edge)}
+ html:not(.lg-lite) body.workspace .sidebar .person{background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.28);box-shadow:inset 1px 1px 0 rgba(255,255,255,.38)}
+ html:not(.lg-lite) body.workspace:not(.demo-page) .mainwrap>.topbar{position:sticky;top:12px;z-index:50;height:58px;margin:12px 16px 14px 0;padding:0 10px 0 22px;border-radius:999px;background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,255,255,.4) 50%,rgba(255,255,255,.56));-webkit-backdrop-filter:blur(22px) saturate(185%);backdrop-filter:blur(22px) saturate(185%);border:1px solid rgba(255,255,255,.75);box-shadow:var(--lg-edge),var(--lg-drop)}
+ html.dark:not(.lg-lite) body.workspace:not(.demo-page) .mainwrap>.topbar{background:linear-gradient(135deg,rgba(40,62,48,.66),rgba(20,32,26,.52) 50%,rgba(40,62,48,.6));border-color:rgba(255,255,255,.14);box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,.18),0 10px 26px -10px rgba(0,0,0,.6)}
+}
+@media(min-width:741px) and (max-width:960px){html:not(.lg-lite) body.workspace:not(.demo-page) .mainwrap{margin-left:234px}html:not(.lg-lite) body.workspace:not(.l1-page):has(.sidebar) .tour-help,html:not(.lg-lite) body.workspace:not(.l1-page):has(.sidebar) .tour-help.tour-help-pupil{left:242px}}
+@media(prefers-reduced-motion:reduce){html body.workspace .pupil-tabbar{transition:none!important}}
+}
+@media print{body.workspace::before{display:none!important}.mainwrap{margin-left:0!important}}

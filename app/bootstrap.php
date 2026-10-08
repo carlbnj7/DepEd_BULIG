@@ -72,12 +72,13 @@ function finish_lesson(int $pid,int $lid):void{
  q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=COALESCE(completed_at,NOW())',[$pid,$lid]);award_badges($pid);if(function_exists('notify_level_done'))notify_level_done($pid,$lid);if(function_exists('schedule_after_finish'))schedule_after_finish($pid);
 }
 function update_learning(int $pid,int $aid):void{
- $a=one('SELECT * FROM activities WHERE id=?',[$aid]);
+ $a=one('SELECT * FROM activities WHERE id=?',[$aid]);$rlb=function_exists('rl_info')?rl_info($pid,true)['level']:0;
  $insert=q('INSERT IGNORE INTO xp_transactions(pupil_id,activity_id,amount) VALUES(?,?,?)',[$pid,$aid,$a['xp_reward']]);
  if($insert->rowCount()){
   q('INSERT INTO pupil_xp(pupil_id,total) VALUES(?,?) ON DUPLICATE KEY UPDATE total=total+VALUES(total)',[$pid,$a['xp_reward']]);
   $date=substr((string)val('SELECT submitted_at FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]),0,10);
   if($a['response_mode']!=='none')q('INSERT IGNORE INTO learning_days VALUES(?,?)',[$pid,$date]);
+  if($rlb)rl_after_xp($pid,$rlb);
  }
  $days=rows('SELECT day FROM learning_days WHERE pupil_id=? ORDER BY day',[$pid]);$run=0;$long=0;$prev=null;
  foreach($days as $day){$d=$day['day'];$run=$prev&&date('Y-m-d',strtotime($prev.' +1 day'))===$d?$run+1:1;$long=max($long,$run);$prev=$d;}
@@ -96,6 +97,11 @@ function sync_assessments(int $pid,int $lid):void{
 function refresh_progress(int $pid,int $lid):void{sync_assessments($pid,$lid);}
 function award_badges(int $pid):void{
  $v=['activity'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'lesson'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'streak'=>(int)val('SELECT longest_streak FROM pupil_streaks WHERE pupil_id=?',[$pid]),'reading'=>(int)val("SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.status IN ('approved','completed') AND a.type='reading'",[$pid]),'perfect'=>(int)val("SELECT COUNT(*) FROM assessment_attempts WHERE pupil_id=? AND status IN ('reviewed','submitted') AND score=max_score AND max_score>0",[$pid])];$v['level']=(int)val('SELECT COUNT(*) FROM pupil_progress p JOIN lessons l ON l.id=p.lesson_id JOIN modules m ON m.id=l.module_id WHERE p.pupil_id=? AND p.completed_at IS NOT NULL AND m.level_id=1',[$pid]);
+ $v['drawing']=(int)val("SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.status IN ('submitted','approved','completed') AND (a.type='drawing' OR COALESCE(c.drawing,'')<>'')",[$pid]);
+ $v['voice']=(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('submitted','approved','completed') AND (COALESCE(audio_path,'')<>'' OR COALESCE(audio_paths,'') NOT IN ('','[]','null'))",[$pid]);
+ $v['weekend']=(int)val('SELECT COUNT(*) FROM learning_days WHERE pupil_id=? AND DAYOFWEEK(day) IN (1,7)',[$pid]);
+ if(function_exists('finished_levels'))$v['levels']=count(finished_levels($pid));
+ if(function_exists('rl_info')){$v['rlevel']=rl_info($pid,true)['level'];$v['headstart']=rl_headstart($pid)?1:0;}
  foreach(rows('SELECT * FROM badges WHERE active=1') as $b)if(($v[$b['rule_type']]??0)>=$b['threshold_value']&&q('INSERT IGNORE INTO pupil_badges(pupil_id,badge_id) VALUES(?,?)',[$pid,$b['id']])->rowCount()&&function_exists('notify'))notify($pid,'badge','New badge: '.$b['title'],(string)$b['description'],'?page=achievements');
  q('INSERT IGNORE INTO pupil_rewards(pupil_id,reward_id) SELECT ?,id FROM rewards WHERE active=1 AND required_xp<=?',[$pid,$v['xp']]);
 }
@@ -223,4 +229,4 @@ require_once __DIR__.'/offline.php';
 require_once __DIR__.'/saved_login.php';
 require_once __DIR__.'/level1.php';
 require_once __DIR__.'/level2a.php';
-require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';require_once __DIR__.'/insights.php';require_once __DIR__.'/notify.php';require_once __DIR__.'/help.php';require_once __DIR__.'/month_recap.php';require_once __DIR__.'/schedule.php';require_once __DIR__.'/skipped.php';
+require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';require_once __DIR__.'/insights.php';require_once __DIR__.'/notify.php';require_once __DIR__.'/help.php';require_once __DIR__.'/month_recap.php';require_once __DIR__.'/schedule.php';require_once __DIR__.'/skipped.php';require_once __DIR__.'/reader_level.php';

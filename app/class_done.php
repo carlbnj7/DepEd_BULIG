@@ -12,7 +12,7 @@ function class_done_activities(int $pid,string $scope,int $id):array{
 
 /** Marks the activities as done for one pupil. Work the pupil already finished is kept. Returns how many were newly marked. */
 function class_done_apply(int $tid,int $pid,array $aids):int{
- if(!$aids)return 0;$n=0;$lessons=[];
+ if(!$aids)return 0;$n=0;$lessons=[];$rlb=function_exists('rl_info')?rl_info($pid,true)['level']:0;
  foreach(array_unique($aids) as $aid){
   $a=one('SELECT id,lesson_id,revision,xp_reward FROM activities WHERE id=? AND published=1',[$aid]);if(!$a)continue;$lessons[(int)$a['lesson_id']]=true;
   $row=one('SELECT id,status FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
@@ -27,7 +27,7 @@ function class_done_apply(int $tid,int $pid,array $aids):int{
    q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=COALESCE(completed_at,NOW())',[$pid,$lid]);
   sync_assessments($pid,$lid);
  }
- award_badges($pid);return $n;
+ award_badges($pid);if($rlb&&$n)rl_after_xp($pid,$rlb);return $n;
 }
 
 /** Removes "Done in class" marks from one lesson (answers the pupil gave themselves stay). */
