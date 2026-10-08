@@ -4,3 +4,8 @@ Options -Indexes
 Header set X-Content-Type-Options "nosniff"
 </IfModule>
 </FilesMatch>
+# The app settings file and icons must be sent with the right type, or newer iPhones (iOS 26) show a letter instead of the BULIG icon.
+<IfModule mod_mime.c>
+AddType application/manifest+json .webmanifest
+AddType image/png .png
+</IfModule>
