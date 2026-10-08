@@ -229,4 +229,4 @@ require_once __DIR__.'/offline.php';
 require_once __DIR__.'/saved_login.php';
 require_once __DIR__.'/level1.php';
 require_once __DIR__.'/level2a.php';
-require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';require_once __DIR__.'/insights.php';require_once __DIR__.'/notify.php';require_once __DIR__.'/help.php';require_once __DIR__.'/month_recap.php';require_once __DIR__.'/schedule.php';require_once __DIR__.'/skipped.php';require_once __DIR__.'/reader_level.php';
+require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';require_once __DIR__.'/insights.php';require_once __DIR__.'/notify.php';require_once __DIR__.'/help.php';require_once __DIR__.'/month_recap.php';require_once __DIR__.'/schedule.php';require_once __DIR__.'/skipped.php';require_once __DIR__.'/reader_level.php';require_once __DIR__.'/login_ui.php';
