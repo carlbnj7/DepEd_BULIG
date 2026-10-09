@@ -4024,3 +4024,29 @@ html.dark .ck-chips span,html.dark .ck-acc,html.dark .ck-place-row,html.dark .ck
 html.dark .ck-dupe{background:#16231b;border-color:#2e4234}
 html.dark .ck-body>b,html.dark .ck-acc dd,html.dark .ck-good>div,html.dark .ck-place-row>span b,html.dark .ck-dupe-hd>b,html.dark .ck-clear b{color:#e8f0ea}
 html.dark .ck-clear{background:#16231b;border-color:#2e4234}
+
+/* v136: teacher accounts. Teacher Pass note, the "make your own password" screen and the admin helpers. */
+.tk-must{display:block;max-width:100%;margin:calc(.8mm*var(--u,1)) 0 0;text-align:center;font-size:calc(4.6pt*var(--u,1));font-weight:800;line-height:1.25;color:#7a5600;background:#fff3c8;border-radius:calc(1mm*var(--u,1));padding:calc(.4mm*var(--u,1)) calc(.8mm*var(--u,1))}
+.tp-lock{display:inline-flex;align-items:center;gap:6px;background:#fff3c8;color:#7a5600;border:1px solid #f1d98a;border-radius:999px;padding:5px 12px;font-weight:800;font-size:.74rem;letter-spacing:.5px}
+.tp-lock .icon{width:15px;height:15px}
+.tp-out{margin:0}
+.tp-out .admin-pill{cursor:pointer;font:inherit}
+.tp-who{display:block;height:96px;width:auto;margin:6px auto 2px}
+.tp-rules{list-style:none;margin:2px 0 4px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:.84rem;font-weight:700}
+.tp-rules li{display:flex;align-items:center;gap:7px;color:var(--muted)}
+.tp-rules li .icon{width:18px;height:18px;flex:none;border-radius:50%;padding:3px;background:#e3e7e0;color:#fff;transition:background .2s}
+.tp-rules li.ok{color:var(--g800)}
+.tp-rules li.ok .icon{background:#2f8a4b}
+.tp-note{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;color:var(--muted);margin:12px 0 0;line-height:1.45}
+.tp-note .icon{width:18px;height:18px;flex:none;color:var(--g700);margin-top:1px}
+.tc-info{display:flex;gap:10px;align-items:flex-start;background:var(--g50);border:1px solid #d6e8cf;border-radius:14px;padding:10px 14px;margin:10px 0 0;font-size:.88rem;line-height:1.5}
+.tc-info .icon{width:20px;height:20px;flex:none;color:var(--g700);margin-top:1px}
+.tc-st{margin-left:6px}
+.tc-sample th small{font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0}
+.tc-pw{margin-top:18px}
+@media(max-width:740px){.tp-rules{grid-template-columns:1fr}.tp-who{height:78px}.tc-st{margin:4px 0 0}}
+html.dark .tp-lock{background:#3a3216;color:#ffd966;border-color:#5a4a1c}
+html.dark .tc-info{background:#16231b;border-color:#2e4234}
+html.dark .tp-rules li.ok{color:#e8f0ea}
+html.dark .tp-rules li .icon{background:#2e4234}
+html.dark .tp-rules li.ok .icon{background:#2f8a4b}

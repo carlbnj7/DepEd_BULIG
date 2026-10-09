@@ -5,6 +5,7 @@ function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing
 function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=review&tab=(todo|done|all)(&pupil=[0-9]+)?$~',$b)?$b:'?page=review';}
 function action():void{
  check_csrf();$action=(string)($_POST['action']??'');unset($_SESSION['notif_live']);
+ if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if($action==='login'){
   $id=trim((string)($_POST['public_id']??''));$role=(string)($_POST['role']??'pupil');$key=hash('sha256',strtolower($id));
@@ -15,8 +16,11 @@ function action():void{
  }
  if($action==='key_login'){
   /* One scan of a sign-in ticket: the QR code opens a "Hi, NAME!" page, and this button signs the pupil in. */
-  $u=card_user((string)($_POST['key']??''));if(!$u){audit('login_failed','ticket');fail('This sign-in ticket no longer works. Ask your teacher for a new ticket, or sign in with your Pupil ID and password.');}
-  session_regenerate_id(true);$_SESSION=[];$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;$_SESSION['offer_save']=1;$_SESSION['hello']=1;audit('login','pupil · ticket');go('?page=dashboard');
+  $u=card_user_any((string)($_POST['key']??''));if(!$u){audit('login_failed','ticket');fail('This sign-in ticket no longer works. Ask for a new one, or sign in with your ID and password.');}
+  if($u['role']==='teacher'&&!card_has_starter((int)$u['id'])){flash('Welcome back! Type your own password to sign in.');go(teacher_login_url($u));}   // after the first sign-in, a Teacher Pass only fills in the ID
+  session_regenerate_id(true);$_SESSION=[];$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));
+  if($u['role']==='pupil'){$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;$_SESSION['offer_save']=1;}else $_SESSION['teacher_welcome']=1;
+  $_SESSION['hello']=1;audit('login',$u['role']==='pupil'?'pupil · ticket':'teacher · pass');go('?page=dashboard');
  }
  if($action==='card_new'||$action==='cards_starter'){
   $u=require_role('teacher');if(!cards_ready())fail('Ask the administrator to import 018_pupil_cards.sql first.');$sec=(int)($_POST['section']??0);$back='?page=cards'.($sec?'&section='.$sec:'');
@@ -54,10 +58,16 @@ function action():void{
  }
  if(str_starts_with($action,'import_')){import_actions($action);return;}
  if(in_array($action,CHECKUP_ACTIONS,true))checkup_action($action);
+ if(in_array($action,TEACHER_ACCOUNT_ACTIONS,true))teacher_account_action($action);
  if(in_array($action,ADMIN_ACTIONS,true)){admin_actions($action);return;}
  if(in_array($action,['admin_pin','admin_pin_create','admin_pin_cancel','change_admin_pin'],true)){admin_pin_actions($action);return;}
  if($action==='create_account'){
   $u=require_role('admin','teacher');$role=$u['role']==='admin'?'teacher':'pupil';$name=trim((string)($_POST['name']??''));$password=$role==='pupil'?'12345678':(string)($_POST['password']??'');
+  if($role==='teacher'&&cards_ready()){
+   $sx=(string)($_POST['teacher_sex']??'');if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Use a name of 2–150 characters.');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');
+   db()->beginTransaction();try{$c=teacher_create($name,$sx);audit('create_teacher',$c['public']);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+   $_SESSION['new_teacher']=$c['id'];go('?page=accounts&add=1#add-teacher');
+  }
   if(strlen($name)<2||strlen($name)>150||strlen($password)<8||strlen($password)>72)fail('Use a name of 2–150 characters and a password of 8–72 characters.');
   db()->beginTransaction();try{
    $next=(int)val('SELECT next_value FROM id_sequences WHERE kind=? FOR UPDATE',[$role]);q('UPDATE id_sequences SET next_value=next_value+1 WHERE kind=?',[$role]);$public=($role==='teacher'?'T':'').$next;
