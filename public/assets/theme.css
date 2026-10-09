@@ -3962,3 +3962,107 @@ html.lgn-cam-on,html.lgn-cam-on body{overflow:hidden}
  body.login-page:not(.admin-mode):not(.key-page) .login-story{padding:clamp(10px,1.8vh,18px) 14px}
  body.login-page:not(.admin-mode):not(.key-page) .lfx-kid{height:clamp(70px,10vh,96px)}
 }
+
+/* v135: Account check-up (admin). Problems with a one-tap fix, red for "act now", yellow for "worth a look". */
+.ck-grid{align-items:start}
+.ck-issue{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid #efeadb}
+.ck-issue:last-child{border-bottom:0}
+.ck-ic{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:var(--g50);color:var(--g700)}
+.ck-ic .icon{width:21px;height:21px}
+.ck-bad .ck-ic{background:#fde8e4;color:#a2321e}
+.ck-warn .ck-ic{background:#fff3c8;color:#8a6100}
+.ck-body{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ck-body>b{color:var(--g800);font-size:1rem;line-height:1.35}
+.ck-body>span{color:var(--muted);font-size:.86rem;line-height:1.45}
+.ck-act{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.ck-act .btn,.ck-details>summary.btn,.ck-dupe .btn,.ck-acc .btn{min-height:40px;padding:8px 14px;font-size:.84rem;white-space:nowrap}
+.ck-form{margin:0}
+.ck-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.ck-chips span{font-size:.78rem;font-weight:700;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--g800)}
+.ck-chips .ck-more-n{background:transparent;border-style:dashed;color:var(--muted)}
+.ck-details{margin-top:8px}
+.ck-details>summary{list-style:none;cursor:pointer;display:inline-flex}
+.ck-details>summary::-webkit-details-marker{display:none}
+.ck-details[open]>summary{margin-bottom:10px}
+.ck-dupes{display:flex;flex-direction:column;gap:12px}
+.ck-dupe{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fbfaf4}
+.ck-dupe-hd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.ck-dupe-hd>b{color:var(--g800)}
+.ck-dupe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.ck-acc{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.ck-acc dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.82rem}
+.ck-acc dt{color:var(--muted);font-weight:600}
+.ck-acc dd{margin:0;color:var(--g800);font-weight:700;text-align:right;word-break:break-word}
+.ck-place{display:flex;flex-direction:column;gap:8px}
+.ck-place-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:var(--white)}
+.ck-place-row>span b{display:block;color:var(--g800);font-size:.9rem}
+.ck-place-row>span small{color:var(--muted);font-size:.76rem}
+.ck-place-row select{min-height:40px;border-radius:11px;border:1.5px solid var(--line);padding:6px 10px;font:inherit;font-size:.86rem;background:var(--white);color:inherit;min-width:0;width:100%}
+.ck-place-row .btn{min-height:40px;padding:8px 14px;font-size:.84rem}
+.ck-good{display:flex;flex-direction:column;gap:9px}
+.ck-good>div{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--g800);font-size:.92rem}
+.ck-good .icon{width:18px;height:18px;color:#2f8a4b;flex:none}
+.ck-note{display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:.82rem;margin:14px 0 0;line-height:1.45}
+.ck-note .icon{width:16px;height:16px;flex:none;margin-top:2px}
+.ck-clear{display:flex;gap:14px;align-items:center;padding:16px;border-radius:16px;background:var(--g50);border:1px dashed var(--g300,#9bcf9f)}
+.ck-clear>.icon{width:34px;height:34px;color:#2f8a4b;flex:none}
+.ck-clear b{display:block;color:var(--g800)}
+.ck-off{margin-top:12px}
+.ck-off-row{grid-template-columns:minmax(0,1fr) auto}
+.ck-clear span{color:var(--muted);font-size:.88rem}
+@media(max-width:740px){
+ .ck-issue{grid-template-columns:38px minmax(0,1fr)}
+ .ck-ic{width:38px;height:38px}
+ .ck-act{grid-column:2;justify-content:flex-start}
+ .ck-place-row{grid-template-columns:1fr}
+ .ck-place-row .btn{justify-self:start}
+}
+html.dark .ck-issue{border-color:#2e4234}
+html.dark .ck-bad .ck-ic{background:#3a1f1a;color:#ffb3a8}
+html.dark .ck-warn .ck-ic{background:#3a3216;color:#ffd966}
+html.dark .ck-chips span,html.dark .ck-acc,html.dark .ck-place-row,html.dark .ck-place-row select{background:#1d2d23;border-color:#2e4234;color:#e8f0ea}
+html.dark .ck-dupe{background:#16231b;border-color:#2e4234}
+html.dark .ck-body>b,html.dark .ck-acc dd,html.dark .ck-good>div,html.dark .ck-place-row>span b,html.dark .ck-dupe-hd>b,html.dark .ck-clear b{color:#e8f0ea}
+html.dark .ck-clear{background:#16231b;border-color:#2e4234}
+
+/* v136: teacher accounts. Teacher Pass note, the "make your own password" screen and the admin helpers. */
+.tk-must{display:block;max-width:100%;margin:calc(.8mm*var(--u,1)) 0 0;text-align:center;font-size:calc(4.6pt*var(--u,1));font-weight:800;line-height:1.25;color:#7a5600;background:#fff3c8;border-radius:calc(1mm*var(--u,1));padding:calc(.4mm*var(--u,1)) calc(.8mm*var(--u,1))}
+.tp-lock{display:inline-flex;align-items:center;gap:6px;background:#fff3c8;color:#7a5600;border:1px solid #f1d98a;border-radius:999px;padding:5px 12px;font-weight:800;font-size:.74rem;letter-spacing:.5px}
+.tp-lock .icon{width:15px;height:15px}
+.tp-out{margin:0}
+.tp-out .admin-pill{cursor:pointer;font:inherit}
+.tp-who{display:block;height:96px;width:auto;margin:6px auto 2px}
+.tp-rules{list-style:none;margin:2px 0 4px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:.84rem;font-weight:700}
+.tp-rules li{display:flex;align-items:center;gap:7px;color:var(--muted)}
+.tp-rules li .icon{width:18px;height:18px;flex:none;border-radius:50%;padding:3px;background:#e3e7e0;color:#fff;transition:background .2s}
+.tp-rules li.ok{color:var(--g800)}
+.tp-rules li.ok .icon{background:#2f8a4b}
+.tp-note{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;color:var(--muted);margin:12px 0 0;line-height:1.45}
+.tp-note .icon{width:18px;height:18px;flex:none;color:var(--g700);margin-top:1px}
+.tc-info{display:flex;gap:10px;align-items:flex-start;background:var(--g50);border:1px solid #d6e8cf;border-radius:14px;padding:10px 14px;margin:10px 0 0;font-size:.88rem;line-height:1.5}
+.tc-info .icon{width:20px;height:20px;flex:none;color:var(--g700);margin-top:1px}
+.tc-st{margin-left:6px}
+.tc-sample th small{font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0}
+.tc-pw{margin-top:18px}
+@media(max-width:740px){.tp-rules{grid-template-columns:1fr}.tp-who{height:78px}.tc-st{margin:4px 0 0}}
+html.dark .tp-lock{background:#3a3216;color:#ffd966;border-color:#5a4a1c}
+html.dark .tc-info{background:#16231b;border-color:#2e4234}
+html.dark .tp-rules li.ok{color:#e8f0ea}
+html.dark .tp-rules li .icon{background:#2e4234}
+html.dark .tp-rules li.ok .icon{background:#2f8a4b}
+/* v137: on PC every lesson page (Levels 1-7) has the same wide look as the "Lesson complete" page:
+   a full-width green header and one wide white card under it. Phones keep their own layout. */
+@media(min-width:760px){
+ html:not(.dark):has(body.l1-page){background:radial-gradient(ellipse at 0% 0%,rgba(254,228,147,.55),transparent 45%),radial-gradient(ellipse at 100% 100%,rgba(232,243,223,.9),transparent 50%),var(--ivory);background-attachment:fixed}
+ html:not(.dark) body.l1-page{background:transparent}
+ .l1-app{max-width:none;margin:0;min-height:100vh;min-height:100dvh;border-radius:0;overflow:visible;box-shadow:none;background:transparent}
+ .l1-app .activity-header{border-radius:0;padding:18px max(24px,calc((100vw - 1100px)/2));gap:20px}
+ body.l1-page .l1-main.activity-main,body.l1-page .l1-main.l1-start.activity-main{flex:none;width:calc(100% - 40px);max-width:1050px;margin:30px auto 50px;background:var(--white);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow-lg);padding:34px 48px 42px;gap:16px}
+ body.l1-page .l1-main.activity-main::before{display:block}
+ body.l1-page .l1-start>.l1-start-in{background:transparent;box-shadow:none;border-radius:0;padding:0;gap:14px}
+ body.l1-page .l1-main :is(.l1-q,.l2-card,.l2-dir,.l1-mission,.l1-pic,.l1-play,.l1-listen,.l1-tw,.l1-prev,.l1-pair>div,.l1-howto span,.l1-steps span,.fluency-passage){border:1px solid var(--line)}
+ body.l1-page .l1-end{margin-top:6px}
+ body:has(.hp-open) .activity-header{padding-right:max(190px,calc((100vw - 1100px)/2))}
+ html.dark body.l1-page .l1-main :is(.l1-q,.l2-card,.l2-dir,.l1-mission,.l1-pic,.l1-play,.l1-listen,.l1-tw,.l1-prev,.l1-pair>div,.l1-howto span,.l1-steps span,.fluency-passage){border-color:var(--ln,#2e4234)}
+}
+@media(min-width:760px) and (max-width:960px){body.l1-page .l1-main.activity-main,body.l1-page .l1-main.l1-start.activity-main{width:calc(100% - 40px);margin:20px auto 40px;border-radius:26px;padding:30px}}
