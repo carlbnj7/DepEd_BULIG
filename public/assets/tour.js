@@ -282,6 +282,10 @@
    ['.ws-filters','Search','Search for a name or ID and pick the dates.'],
    ['table.ws-table','What happened','When, who, what happened and the details.'],
    ['.ws-btns','Download','Download the log as a CSV file.']],
+  checkup:[
+   ['.ws-kpis','At a glance','Red needs action now. Yellow is worth a look. Green is all good.'],
+   [['.ck-card'],'Things to fix','Each problem has its fix next to it: unlock, compare, place in a section or tell the teacher.'],
+   ['.ws-btns','Check again','Run the check again after you fix something.']],
   health:[
    [['.ws-g2 section.card'],'Checks','Green means fine. Red shows what needs attention, with the fix next to it.'],
    ['.ws-btns','Run all checks','Check everything again after you upload an update.'],
