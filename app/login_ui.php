@@ -36,8 +36,9 @@ function login_role_cards(string $role):string{
  return '<nav class="lgn-roles" aria-label="Who is signing in?">'.$card('pupil',char_src('boy','hello'),char_src('girl','hello'),'I am a pupil','I learn with BULIG').$card('teacher',char_src('teacher-female','hello'),char_src('teacher-male','hello'),'I am a teacher','I guide my class').'</nav>';
 }
 /** Phones with a camera only: login.js shows it. */
-function login_scan_block():string{
- return '<div class="lgn-scan-wrap" data-lgn-scan-wrap hidden><button type="button" class="lgn-scan" data-lgn-scan data-jsqr="'.e(asset_url('jsqr.js')).'"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.5M14 21h3M21 18v3h-1"/></svg>Scan my Reading Pass</button><div class="lgn-or">or type your Pupil ID</div></div>';
+function login_scan_block(string $role='pupil'):string{
+ if($role!=='pupil'&&$role!=='teacher')return '';$t=$role==='teacher';
+ return '<div class="lgn-scan-wrap" data-lgn-scan-wrap hidden><button type="button" class="lgn-scan" data-lgn-scan data-pass="'.($t?'Teacher Pass':'Reading Pass').'" data-jsqr="'.e(asset_url('jsqr.js')).'"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.5M14 21h3M21 18v3h-1"/></svg>Scan my '.($t?'Teacher Pass':'Reading Pass').'</button><div class="lgn-or">or type your '.($t?'Teacher':'Pupil').' ID</div></div>';
 }
 function login_eye_button():string{
  return '<button type="button" class="show-password lgn-eye" data-password="password" aria-label="Show password" aria-pressed="false" title="Show password"><svg class="lgn-eye-on" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="lgn-eye-off" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button>';
@@ -76,8 +77,10 @@ function login_fail_popup(?array $f,string $role):string{
 
 /** login.js asks who a scanned Reading Pass belongs to, to say "Found you, NAME!" before signing in. */
 function key_peek(string $key):void{
- $p=card_user($key);header('Content-Type: application/json; charset=utf-8');header('Cache-Control: no-store');
+ $p=card_user_any($key);header('Content-Type: application/json; charset=utf-8');header('Cache-Control: no-store');
  if(!$p){echo json_encode(['ok'=>false]);exit;}
+ /* A teacher who already made their own password: the pass only fills in the Teacher ID. */
+ if($p['role']==='teacher'){echo json_encode(['ok'=>true,'role'=>'teacher','first'=>explode(' ',trim((string)$p['name']))[0],'img'=>$p['avatar_path']?:teacher_char((int)$p['id'])]+(card_has_starter((int)$p['id'])?[]:['fill'=>$p['public_id']]));exit;}
  $sex=(string)(val('SELECT sex FROM pupil_details WHERE pupil_id=?',[$p['id']])?:'');
- echo json_encode(['ok'=>true,'first'=>explode(' ',trim((string)$p['name']))[0],'img'=>$p['avatar_path']?:char_src($sex==='female'?'girl':'boy','hello')]);exit;
+ echo json_encode(['ok'=>true,'role'=>'pupil','first'=>explode(' ',trim((string)$p['name']))[0],'img'=>$p['avatar_path']?:char_src($sex==='female'?'girl':'boy','hello')]);exit;
 }
