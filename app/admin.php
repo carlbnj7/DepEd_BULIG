@@ -58,6 +58,7 @@ function admin_overview():void{
  echo $idle?$item('warn','user','<b>'.count($idle).' teacher'.(count($idle)===1?'':'s').'</b> haven’t signed in for 14+ days<small>'.e(implode(' · ',array_slice(array_column($idle,'name'),0,3))).(count($idle)>3?' …':'').'</small>','View','?page=accounts&amp;status=idle'):$item('','check','<b>All teachers</b> signed in within 14 days','View','?page=accounts');
  echo $inactive?$item('warn','people','<b>'.$inactive.' pupil'.($inactive===1?'':'s').'</b> inactive for 7+ days'.($top?'<small>Most in '.e($top['n']).'</small>':''),'View','?page=reports'):$item('','check','<b>All pupils</b> learned in the last 7 days','View','?page=reports');
  echo $item($failed?'bad':'','lock','<b>'.$failed.' wrong password'.($failed===1?'':'s').'</b> today'.($failedPin?'<small>'.$failedPin.' on admin PIN</small>':''),'Log','?page=activity_log&amp;tab=security&amp;days=1');
+ echo checkup_overview_item();
  echo $item($bad?'warn':'','heart','<b>System health: '.($bad?count($bad).' to check':'all good').'</b><small>'.e(admin_backup_note()).'</small>','Open','?page=health');
  echo '</div></section></div><div class="ws-g3">';
  echo '<section class="card"><div class="ws-hd"><h2>Most active sections</h2><small class="muted">last 30 days</small></div><div class="ws-list">';

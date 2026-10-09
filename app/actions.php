@@ -53,6 +53,7 @@ function action():void{
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=sections');
  }
  if(str_starts_with($action,'import_')){import_actions($action);return;}
+ if(in_array($action,CHECKUP_ACTIONS,true))checkup_action($action);
  if(in_array($action,ADMIN_ACTIONS,true)){admin_actions($action);return;}
  if(in_array($action,['admin_pin','admin_pin_create','admin_pin_cancel','change_admin_pin'],true)){admin_pin_actions($action);return;}
  if($action==='create_account'){
