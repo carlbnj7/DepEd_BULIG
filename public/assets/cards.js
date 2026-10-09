@@ -25,11 +25,12 @@
    t.addEventListener('change',apply);apply();
   });
   /* Choose which pupils to print. */
+  var W1=sheet.getAttribute('data-tk-word')||'ticket',W2=W1==='pass'?'passes':W1+'s';
   var wraps=[].slice.call(sheet.querySelectorAll('[data-tk]')),count=document.querySelector('[data-tk-count]'),label=document.querySelector('[data-lc-print-label]'),pr=document.querySelector('[data-lc-print]');
   function picked(){return wraps.filter(function(w){var c=w.querySelector('[data-tk-pick]');return !c||c.checked;});}
   function sync(){var n=picked().length;wraps.forEach(function(w){var c=w.querySelector('[data-tk-pick]');w.classList.toggle('off',!!c&&!c.checked);});
-   if(count)count.textContent=n+' of '+wraps.length+' '+(wraps.length===1?'ticket':'tickets')+' selected';
-   if(label)label.textContent=n?'Print '+n+' '+(n===1?'ticket':'tickets'):'Choose tickets to print';if(pr)pr.disabled=!n;}
+   if(count)count.textContent=n+' of '+wraps.length+' '+(wraps.length===1?W1:W2)+' selected';
+   if(label)label.textContent=n?'Print '+n+' '+(n===1?W1:W2):'Choose '+W2+' to print';if(pr)pr.disabled=!n;}
   wraps.forEach(function(w){var c=w.querySelector('[data-tk-pick]');if(c)c.addEventListener('change',sync);});
   function all(on){wraps.forEach(function(w){var c=w.querySelector('[data-tk-pick]');if(c)c.checked=on;});sync();}
   var ba=document.querySelector('[data-tk-all]'),bn=document.querySelector('[data-tk-none]');if(ba)ba.addEventListener('click',function(){all(true);});if(bn)bn.addEventListener('click',function(){all(false);});

@@ -282,6 +282,15 @@
    ['.ws-filters','Search','Search for a name or ID and pick the dates.'],
    ['table.ws-table','What happened','When, who, what happened and the details.'],
    ['.ws-btns','Download','Download the log as a CSV file.']],
+  teacher_cards:[
+   [['.lc-tools'],'Print passes','Choose who to print, then press Print. Each pass has the Teacher ID, the starter password and a QR code.'],
+   [['.tc-pw'],'Passwords','Who still uses a starter password. A teacher makes their own password the first time they sign in.']],
+  teacher_import:[
+   [['.import-card'],'Add many teachers','Download the template, fill it in, upload it and check every row before the accounts are made.']],
+  checkup:[
+   ['.ws-kpis','At a glance','Red needs action now. Yellow is worth a look. Green is all good.'],
+   [['.ck-card'],'Things to fix','Each problem has its fix next to it: unlock, compare, place in a section or tell the teacher.'],
+   ['.ws-btns','Check again','Run the check again after you fix something.']],
   health:[
    [['.ws-g2 section.card'],'Checks','Green means fine. Red shows what needs attention, with the fix next to it.'],
    ['.ws-btns','Run all checks','Check everything again after you upload an update.'],

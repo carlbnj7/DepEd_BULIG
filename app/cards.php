@@ -1,5 +1,5 @@
 <?php
-/* Pupil sign-in tickets: an easy starter password for each pupil, and a one-scan sign-in key for the QR code.
+/* Sign-in tickets (pupils' Reading Pass, teachers' Teacher Pass): an easy starter password, and a one-scan sign-in key for the QR code.
    Both are kept encrypted so the ticket can be printed again; the starter password is removed once the pupil
    makes their own. The key never contains the password, and "New ticket" cancels the old QR code at once. */
 
@@ -21,7 +21,7 @@ function cards_dec(?string $s):?string{if(!$s)return null;$b=base64_decode($s,tr
 /** Make a new ticket for a pupil: a new QR key, and (when asked) a new starter password that replaces the old password. */
 function card_issue(int $pid,bool $newPassword):array{
  $key=rtrim(strtr(base64_encode(random_bytes(18)),'+/','-_'),'=');$pw=$newPassword?starter_password():null;
- if($pw!==null){q('UPDATE users SET password_hash=? WHERE id=? AND role=?',[password_hash($pw,PASSWORD_DEFAULT),$pid,'pupil']);saved_login_clear($pid);}
+ if($pw!==null){q("UPDATE users SET password_hash=? WHERE id=? AND role IN ('pupil','teacher')",[password_hash($pw,PASSWORD_DEFAULT),$pid]);saved_login_clear($pid);}
  $old=one('SELECT starter_enc FROM pupil_cards WHERE user_id=?',[$pid]);$starter=$pw!==null?cards_enc($pw):($old['starter_enc']??null);
  q('INSERT INTO pupil_cards(user_id,key_hash,key_enc,starter_enc,issued_at) VALUES(?,?,?,?,NOW()) ON DUPLICATE KEY UPDATE key_hash=VALUES(key_hash),key_enc=VALUES(key_enc),starter_enc=VALUES(starter_enc),issued_at=NOW()',[$pid,hash('sha256',$key),cards_enc($key),$starter]);
  return ['key'=>$key,'pw'=>$pw];
