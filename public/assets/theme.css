@@ -4050,3 +4050,19 @@ html.dark .tc-info{background:#16231b;border-color:#2e4234}
 html.dark .tp-rules li.ok{color:#e8f0ea}
 html.dark .tp-rules li .icon{background:#2e4234}
 html.dark .tp-rules li.ok .icon{background:#2f8a4b}
+/* v137: on PC every lesson page (Levels 1-7) has the same wide look as the "Lesson complete" page:
+   a full-width green header and one wide white card under it. Phones keep their own layout. */
+@media(min-width:760px){
+ html:not(.dark):has(body.l1-page){background:radial-gradient(ellipse at 0% 0%,rgba(254,228,147,.55),transparent 45%),radial-gradient(ellipse at 100% 100%,rgba(232,243,223,.9),transparent 50%),var(--ivory);background-attachment:fixed}
+ html:not(.dark) body.l1-page{background:transparent}
+ .l1-app{max-width:none;margin:0;min-height:100vh;min-height:100dvh;border-radius:0;overflow:visible;box-shadow:none;background:transparent}
+ .l1-app .activity-header{border-radius:0;padding:18px max(24px,calc((100vw - 1100px)/2));gap:20px}
+ body.l1-page .l1-main.activity-main,body.l1-page .l1-main.l1-start.activity-main{flex:none;width:calc(100% - 40px);max-width:1050px;margin:30px auto 50px;background:var(--white);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow-lg);padding:34px 48px 42px;gap:16px}
+ body.l1-page .l1-main.activity-main::before{display:block}
+ body.l1-page .l1-start>.l1-start-in{background:transparent;box-shadow:none;border-radius:0;padding:0;gap:14px}
+ body.l1-page .l1-main :is(.l1-q,.l2-card,.l2-dir,.l1-mission,.l1-pic,.l1-play,.l1-listen,.l1-tw,.l1-prev,.l1-pair>div,.l1-howto span,.l1-steps span,.fluency-passage){border:1px solid var(--line)}
+ body.l1-page .l1-end{margin-top:6px}
+ body:has(.hp-open) .activity-header{padding-right:max(190px,calc((100vw - 1100px)/2))}
+ html.dark body.l1-page .l1-main :is(.l1-q,.l2-card,.l2-dir,.l1-mission,.l1-pic,.l1-play,.l1-listen,.l1-tw,.l1-prev,.l1-pair>div,.l1-howto span,.l1-steps span,.fluency-passage){border-color:var(--ln,#2e4234)}
+}
+@media(min-width:760px) and (max-width:960px){body.l1-page .l1-main.activity-main,body.l1-page .l1-main.l1-start.activity-main{width:calc(100% - 40px);margin:20px auto 40px;border-radius:26px;padding:30px}}
