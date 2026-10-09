@@ -3,10 +3,14 @@
    more XP (Level 2 needs 20 XP, Level 100 needs 5,473 XP). Every grade can reach Level 100 by finishing BULIG.
    Head start: a pupil whose teacher started them at a higher BULIG level gets the XP of every published activity in the
    levels they skipped (for their grade). Activities they already did there are left out, so no XP is counted twice.
+   A quarter of it comes right away; the rest comes a little at a time as they finish the activities of their own levels,
+   all of it by the time they finish. (Giving it all at once put a Level 6 starter straight at reader Level 100.)
    No new table: the head start is worked out from the starting level, and the level-up popups use the pupil's "seen"
    record (settings key pupil_seen_<id>, see pupil_celebrations()). */
 
 const RL_MAX=100;
+/* Share of the head-start XP given right away. */
+const RL_HS_NOW=.25;
 /* A new title every 10 levels: [first level, title, icon]. */
 const RL_TIERS=[[1,'Little Reader','sprout'],[10,'Word Finder','find'],[20,'Sound Explorer','sound'],[30,'Story Seeker','map'],[40,'Page Turner','page'],[50,'Book Buddy','book'],[60,'Bright Reader','sun'],[70,'Story Star','star'],[80,'Reading Hero','shield'],[90,'Reading Champion','trophy'],[100,'Master Reader','crown']];
 
@@ -26,8 +30,21 @@ function rl_headstart(int $pid,bool $fresh=false):array{
  if($start>1)foreach(rows('SELECT m.level_id,COALESCE(SUM(a.xp_reward),0) xp FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN xp_transactions x ON x.activity_id=a.id AND x.pupil_id=? WHERE a.published=1 AND l.published=1 AND m.level_id<? AND x.activity_id IS NULL'.GRADE_SQL.' GROUP BY m.level_id ORDER BY m.level_id',[$pid,$start,pupil_grade($pid)]) as $r)if((int)$r['xp']>0)$out[(int)$r['level_id']]=(int)$r['xp'];
  return $c[$pid]=$out;
 }
-/** All the pupil's XP for the reader level: earned XP plus head-start XP. */
-function rl_xp(int $pid,bool $fresh=false):int{return (int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid])+array_sum(rl_headstart($pid,$fresh));}
+/** How far the pupil is through their own levels (the starting level and up), from 0 to 1: the XP of the activities they
+    finished there, out of the XP of all of them. */
+function rl_path_share(int $pid,bool $fresh=false):float{
+ static $c=[];if(!$fresh&&isset($c[$pid]))return $c[$pid];
+ $start=max(1,(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]));
+ $r=one('SELECT COALESCE(SUM(a.xp_reward),0) total,COALESCE(SUM(IF(x.activity_id IS NULL,0,a.xp_reward)),0) done FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN xp_transactions x ON x.activity_id=a.id AND x.pupil_id=? WHERE a.published=1 AND l.published=1 AND m.level_id>=?'.GRADE_SQL,[$pid,$start,pupil_grade($pid)]);
+ return $c[$pid]=(int)$r['total']>0?min(1.0,(int)$r['done']/(int)$r['total']):1.0;
+}
+/** Head-start XP the pupil has so far: a quarter right away, the rest bit by bit as they finish their own activities. */
+function rl_headstart_now(int $pid,bool $fresh=false):int{
+ $all=array_sum(rl_headstart($pid,$fresh));
+ return $all?(int)floor($all*(RL_HS_NOW+(1-RL_HS_NOW)*rl_path_share($pid,$fresh))):0;
+}
+/** All the pupil's XP for the reader level: earned XP plus the head-start XP they have so far. */
+function rl_xp(int $pid,bool $fresh=false):int{return (int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid])+rl_headstart_now($pid,$fresh);}
 function rl_info(int $pid,bool $fresh=false):array{return rl_from_xp(rl_xp($pid,$fresh));}
 
 /** After XP is added: tell the pupil (bell) when they reach a new reader level. */
@@ -38,6 +55,10 @@ function rl_after_xp(int $pid,int $before):void{
 
 /** For the teacher's pupil page: "Reader level 93 (Reading Champion)". */
 function rl_pupil_line(int $pid):string{$r=rl_info($pid);return 'Reader level '.$r['level'].' ('.rl_tier($r['level'])[1].')';}
+
+/** Reader-level badges above the pupil's level are taken back (the old head start gave them all at once). Called by
+    award_badges(); rl_celebration() also forgets them in the "seen" record so each pops up again when really reached. */
+function rl_fix_badges(int $pid,int $level):void{q("DELETE pb FROM pupil_badges pb JOIN badges b ON b.id=pb.badge_id WHERE pb.pupil_id=? AND b.rule_type='rlevel' AND b.threshold_value>?",[$pid,$level]);}
 
 /* ---------- Pictures ---------- */
 function rl_icon(string $k):string{
@@ -60,8 +81,8 @@ function rl_card(int $pid):string{
 
 /* ---------- My achievements: the level road from Level 1 to 100 ---------- */
 function rl_road(int $pid):string{
- $r=rl_info($pid);$t=rl_tier($r['level']);$hs=array_sum(rl_headstart($pid));
- $h='<section class="card rl-road" id="reader-level" aria-label="My reader level"><div class="rl-rhead">'.rl_ring($r['level'],rl_pct($r),'rl-ring-md').'<div class="rl-rtext"><h2>My reader level</h2><p class="muted">Level '.$r['level'].' · '.e($t[1]).' · '.number_format($r['xp']).' XP in all'.($hs?' (with '.number_format($hs).' head-start XP)':'').'</p>';
+ $r=rl_info($pid);$t=rl_tier($r['level']);$hs=rl_headstart_now($pid);$later=array_sum(rl_headstart($pid))-$hs;
+ $h='<section class="card rl-road" id="reader-level" aria-label="My reader level"><div class="rl-rhead">'.rl_ring($r['level'],rl_pct($r),'rl-ring-md').'<div class="rl-rtext"><h2>My reader level</h2><p class="muted">Level '.$r['level'].' · '.e($t[1]).' · '.number_format($r['xp']).' XP in all'.($hs?' (with '.number_format($hs).' head-start XP)':'').'</p>'.($later>0?'<p class="rl-hs-more">'.rl_icon('up').number_format($later).' more head-start XP comes as you finish your activities.</p>':'');
  $h.=$r['max']?'<p class="rl-top">'.rl_icon('crown').'You reached Level 100, the highest level. You are a Master Reader!</p>':'<progress class="rl-bar" value="'.$r['cur'].'" max="'.$r['need'].'" aria-label="XP toward Level '.($r['level']+1).'"></progress><small>'.$r['cur'].' / '.$r['need'].' XP to Level '.($r['level']+1).'. A new title every 10 levels!</small>';
  $h.='</div></div><ol class="rl-stops">';
  foreach(RL_TIERS as $x){$st=$x[0]===$t[0]?'now':($x[0]<$t[0]?'done':'');$h.='<li class="rl-stop'.($st?' rl-'.$st:'').'">'.($st==='now'?'<span class="rl-here">YOU ARE HERE</span>':'').'<span class="rl-sic">'.rl_icon($st===''?'lock':$x[2]).'</span><small>LV '.$x[0].'</small><b>'.e($x[1]).'</b></li>';}
@@ -75,14 +96,15 @@ function rl_level_name(int $level,int $pid):string{
  return level_label($level).($title!==''?' · '.$title:'').($graded?' (Grade '.pupil_grade($pid).')':'');
 }
 function rl_celebration(array $u,array &$seen,int &$shown):string{
- $pid=(int)$u['id'];$r=rl_info($pid);$t=rl_tier($r['level']);$hs=rl_headstart($pid);$sum=array_sum($hs);
- $h0=(int)($seen['h']??0);$r0=(int)($seen['r']??0);$first=explode(' ',trim((string)$u['name']))[0];$out='';
+ $pid=(int)$u['id'];$r=rl_info($pid);$t=rl_tier($r['level']);$hs=rl_headstart($pid);$sum=array_sum($hs);$now=rl_headstart_now($pid);
+ $h0=(int)($seen['h']??0);$r0=(int)($seen['r']??0);if($r0>$r['level'])$seen['b']=array_values(array_diff(array_map('intval',$seen['b']??[]),array_map('intval',array_column(rows("SELECT id FROM badges WHERE rule_type='rlevel' AND threshold_value>?",[$r['level']]),'id'))));$first=explode(' ',trim((string)$u['name']))[0];$out='';
  $conf='<div class="lc-confetti" aria-hidden="true">'.str_repeat('<i></i>',18).'</div>';$close='<button type="button" class="pw-close" data-welcome-close aria-label="Close">'.icon('close').'</button>';
  if($sum>$h0&&$shown<3){$shown++;
-  $from=rl_from_xp(max(0,$r['xp']-($sum-$h0)))['level'];$start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);$li='';
+  $from=rl_from_xp(max(0,$r['xp']-$now))['level'];$start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);$li='';
   foreach($hs as $lv=>$xp)$li.='<li><span>'.e(rl_level_name($lv,$pid)).'</span><b>+'.number_format($xp).' XP</b></li>';
   $out.='<div class="pw-overlay pf-cel rl-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rl-hs"><div class="pw-panel pf-cel-panel">'.$close.$conf.pf_ribbon('HEAD START!',200,'pf-green').'<h2 id="rl-hs">You skipped ahead, '.e($first).'!</h2><p class="pw-msg">Your teacher started you at '.e(level_label($start)).'. You still get the XP for the levels you skipped.</p>'
-   .'<ul class="rl-hs-list">'.$li.'<li class="rl-hs-total"><span>Head-start XP</span><b>+'.number_format($sum).' XP</b></li></ul>'
+   .'<ul class="rl-hs-list">'.$li.'<li class="rl-hs-total"><span>Head-start XP</span><b>+'.number_format($sum).' XP</b></li>'
+   .'<li class="rl-hs-now"><span>You get now</span><b>+'.number_format($now).' XP</b></li>'.($sum>$now?'<li class="rl-hs-later"><span>Comes as you finish your activities</span><b>+'.number_format($sum-$now).' XP</b></li>':'').'</ul>'
    .'<div class="rl-jump">'.rl_ring($from,0).'<span class="rl-arrow">'.rl_icon('next').'</span>'.rl_ring($r['level'],rl_pct($r),'rl-ring-md').'</div><p class="rl-title-chip">'.rl_icon($t[2]).'Your title: <b>'.e($t[1]).'</b></p>'
    .'<div class="pw-actions"><button type="button" class="btn primary" data-welcome-close>Let’s go!</button><a class="btn secondary" href="?page=achievements#reader-level">See my level road</a></div></div></div>';
  }elseif($r0>0&&$r['level']>$r0&&$shown<3){$shown++;

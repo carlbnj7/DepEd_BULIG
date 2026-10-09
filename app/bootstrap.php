@@ -101,7 +101,7 @@ function award_badges(int $pid):void{
  $v['voice']=(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('submitted','approved','completed') AND (COALESCE(audio_path,'')<>'' OR COALESCE(audio_paths,'') NOT IN ('','[]','null'))",[$pid]);
  $v['weekend']=(int)val('SELECT COUNT(*) FROM learning_days WHERE pupil_id=? AND DAYOFWEEK(day) IN (1,7)',[$pid]);
  if(function_exists('finished_levels'))$v['levels']=count(finished_levels($pid));
- if(function_exists('rl_info')){$v['rlevel']=rl_info($pid,true)['level'];$v['headstart']=rl_headstart($pid)?1:0;}
+ if(function_exists('rl_info')){$v['rlevel']=rl_info($pid,true)['level'];$v['headstart']=rl_headstart($pid)?1:0;rl_fix_badges($pid,$v['rlevel']);}
  foreach(rows('SELECT * FROM badges WHERE active=1') as $b)if(($v[$b['rule_type']]??0)>=$b['threshold_value']&&q('INSERT IGNORE INTO pupil_badges(pupil_id,badge_id) VALUES(?,?)',[$pid,$b['id']])->rowCount()&&function_exists('notify'))notify($pid,'badge','New badge: '.$b['title'],(string)$b['description'],'?page=achievements');
  q('INSERT IGNORE INTO pupil_rewards(pupil_id,reward_id) SELECT ?,id FROM rewards WHERE active=1 AND required_xp<=?',[$pid,$v['xp']]);
 }
