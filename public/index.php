@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require __DIR__.'/../app/bootstrap.php';require __DIR__.'/../app/actions.php';require __DIR__.'/../app/views.php';require __DIR__.'/../app/teacher_demo.php';
+require __DIR__.'/../app/bootstrap.php';if($__missing=array_values(array_filter(['actions','views','teacher_demo'],fn($f)=>!is_file(__DIR__.'/../app/'.$f.'.php'))))bulig_missing_files($__missing);require __DIR__.'/../app/actions.php';require __DIR__.'/../app/views.php';require __DIR__.'/../app/teacher_demo.php';
 ob_start();
 try{
  if($_SERVER['REQUEST_METHOD']==='POST')action();

@@ -26,7 +26,7 @@ function rl_pct(array $r):int{return $r['max']?100:(int)floor(100*$r['cur']/max(
 /** Head-start XP for each BULIG level below the pupil's starting level: [level id => XP]. */
 function rl_headstart(int $pid,bool $fresh=false):array{
  static $c=[];if(!$fresh&&isset($c[$pid]))return $c[$pid];$out=[];
- $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);
+ $start=pupil_start_level($pid);
  if($start>1)foreach(rows('SELECT m.level_id,COALESCE(SUM(a.xp_reward),0) xp FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN xp_transactions x ON x.activity_id=a.id AND x.pupil_id=? WHERE a.published=1 AND l.published=1 AND m.level_id<? AND x.activity_id IS NULL'.GRADE_SQL.' GROUP BY m.level_id ORDER BY m.level_id',[$pid,$start,pupil_grade($pid)]) as $r)if((int)$r['xp']>0)$out[(int)$r['level_id']]=(int)$r['xp'];
  return $c[$pid]=$out;
 }
@@ -34,7 +34,7 @@ function rl_headstart(int $pid,bool $fresh=false):array{
     finished there, out of the XP of all of them. */
 function rl_path_share(int $pid,bool $fresh=false):float{
  static $c=[];if(!$fresh&&isset($c[$pid]))return $c[$pid];
- $start=max(1,(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]));
+ $start=max(1,pupil_start_level($pid));
  $r=one('SELECT COALESCE(SUM(a.xp_reward),0) total,COALESCE(SUM(IF(x.activity_id IS NULL,0,a.xp_reward)),0) done FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN xp_transactions x ON x.activity_id=a.id AND x.pupil_id=? WHERE a.published=1 AND l.published=1 AND m.level_id>=?'.GRADE_SQL,[$pid,$start,pupil_grade($pid)]);
  return $c[$pid]=(int)$r['total']>0?min(1.0,(int)$r['done']/(int)$r['total']):1.0;
 }
@@ -100,7 +100,7 @@ function rl_celebration(array $u,array &$seen,int &$shown):string{
  $h0=(int)($seen['h']??0);$r0=(int)($seen['r']??0);if($r0>$r['level'])$seen['b']=array_values(array_diff(array_map('intval',$seen['b']??[]),array_map('intval',array_column(rows("SELECT id FROM badges WHERE rule_type='rlevel' AND threshold_value>?",[$r['level']]),'id'))));$first=explode(' ',trim((string)$u['name']))[0];$out='';
  $conf='<div class="lc-confetti" aria-hidden="true">'.str_repeat('<i></i>',18).'</div>';$close='<button type="button" class="pw-close" data-welcome-close aria-label="Close">'.icon('close').'</button>';
  if($sum>$h0&&$shown<3){$shown++;
-  $from=rl_from_xp(max(0,$r['xp']-$now))['level'];$start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);$li='';
+  $from=rl_from_xp(max(0,$r['xp']-$now))['level'];$start=pupil_start_level($pid);$li='';
   foreach($hs as $lv=>$xp)$li.='<li><span>'.e(rl_level_name($lv,$pid)).'</span><b>+'.number_format($xp).' XP</b></li>';
   $out.='<div class="pw-overlay pf-cel rl-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rl-hs"><div class="pw-panel pf-cel-panel">'.$close.$conf.pf_ribbon('HEAD START!',200,'pf-green').'<h2 id="rl-hs">You skipped ahead, '.e($first).'!</h2><p class="pw-msg">Your teacher started you at '.e(level_label($start)).'. You still get the XP for the levels you skipped.</p>'
    .'<ul class="rl-hs-list">'.$li.'<li class="rl-hs-total"><span>Head-start XP</span><b>+'.number_format($sum).' XP</b></li>'
