@@ -9,3 +9,25 @@ Header set X-Content-Type-Options "nosniff"
 AddType application/manifest+json .webmanifest
 AddType image/png .png
 </IfModule>
+
+# Speed: browsers keep saved copies of files that rarely change, so a page opened again downloads almost nothing.
+# Style and script files get a new name (name-0123456789.css) whenever they change, so they can be kept for a year.
+<IfModule mod_headers.c>
+<FilesMatch "-[0-9a-f]{10}\.(css|js)$">
+Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+<FilesMatch "\.(webp|png|jpe?g|gif|svg|ico|mp3|m4a|ogg)$">
+Header set Cache-Control "public, max-age=604800"
+</FilesMatch>
+<FilesMatch "\.(woff2?|ttf)$">
+Header set Cache-Control "public, max-age=31536000"
+</FilesMatch>
+# The offline helper and the app settings file must always be checked for a newer copy.
+<FilesMatch "^(sw\.js|manifest\.webmanifest)$">
+Header set Cache-Control "no-cache"
+</FilesMatch>
+</IfModule>
+# Speed: send text files compressed (most servers, Hostinger's included, already do this; this makes sure).
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript text/javascript application/json application/manifest+json image/svg+xml
+</IfModule>

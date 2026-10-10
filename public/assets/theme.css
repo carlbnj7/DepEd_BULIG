@@ -4066,3 +4066,8 @@ html.dark .tp-rules li.ok .icon{background:#2f8a4b}
  html.dark body.l1-page .l1-main :is(.l1-q,.l2-card,.l2-dir,.l1-mission,.l1-pic,.l1-play,.l1-listen,.l1-tw,.l1-prev,.l1-pair>div,.l1-howto span,.l1-steps span,.fluency-passage){border-color:var(--ln,#2e4234)}
 }
 @media(min-width:760px) and (max-width:960px){body.l1-page .l1-main.activity-main,body.l1-page .l1-main.l1-start.activity-main{width:calc(100% - 40px);margin:20px auto 40px;border-radius:26px;padding:30px}}
+/* v138: head start comes in two parts: some XP now, the rest as the pupil finishes their own activities */
+.rl-hs-list .rl-hs-now{background:#e9f6ee;border-top:1px solid #b9dcc6;font-weight:800}.rl-hs-now span{color:#0e3b28}.rl-hs-now b{font-size:16px}
+.rl-hs-list .rl-hs-later span,.rl-hs-list .rl-hs-later b{color:#5b6b4f;font-weight:600}
+.rl-hs-more{display:flex;align-items:center;gap:6px;margin:2px 0 8px;font-size:.88rem;font-weight:600;color:var(--g700,#176444)}.rl-hs-more .rl-ic{width:16px;height:16px;flex:none}
+html.dark .rl-hs-list .rl-hs-now{background:#173326;border-color:#2f6b47}html.dark .rl-hs-now span{color:#e8f0ea}html.dark .rl-hs-list .rl-hs-later span,html.dark .rl-hs-list .rl-hs-later b{color:#a9bcb0}html.dark .rl-hs-more{color:#9be0b4}

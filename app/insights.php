@@ -52,7 +52,7 @@ function qcheck_view(array $u):void{
 function pupil_report_view(array $u):void{
  $pid=(int)($_GET['id']??0);own_pupil($pid);$p=one('SELECT u.*,pp.grade_level FROM users u JOIN pupils pp ON pp.user_id=u.id WHERE u.id=?',[$pid]);if(!$p)fail('Pupil not found.',404);
  $sec=one('SELECT s.name FROM pupil_sections ps JOIN sections s ON s.id=ps.section_id WHERE ps.pupil_id=? LIMIT 1',[$pid]);$grade=(int)$p['grade_level'];
- $s=progress_stats($pid);$assigned=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);$next=next_learning_lesson($pid);$now=$next?(int)$next['level_id']:$assigned;
+ $s=progress_stats($pid);$assigned=pupil_start_level($pid);$next=next_learning_lesson($pid);$now=$next?(int)$next['level_id']:$assigned;
  $auto=one("SELECT SUM(c.score) s,SUM(c.max_score) m,COUNT(*) n FROM activity_completion c JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=? AND m.level_id IN (6,7,8) AND c.max_score>0 AND c.status IN ('completed','approved')",[$pid]);
  $avg=$auto&&(float)$auto['m']>0?(int)round(100*(float)$auto['s']/(float)$auto['m']):null;
  echo '<div class="no-print rp-actions"><a class="btn quiet" href="?page=pupil&amp;id='.$pid.'">'.'Back to '.e(explode(' ',trim((string)$p['name']))[0]).'</a><button type="button" class="btn primary" data-print>'.icon('download').'Print or save as PDF</button></div>';

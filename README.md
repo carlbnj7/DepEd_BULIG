@@ -1,3 +1,5 @@
+> **Start here:** `docs/DEVELOPER-GUIDE.md` explains the project, the automatic tests (`tests/run_tests.py`) and how to build and test an update for the live site (`tools/make_update.py`). The notes below are from the first version.
+
 # BULIG Level 1 · Version 2
 
 This updates the PHP/MySQL BULIG project built in this conversation. It keeps the official logo and original module, removes teacher-approval barriers, separates content pages from answer activities, fixes image mappings, and adds teacher-owned sections.

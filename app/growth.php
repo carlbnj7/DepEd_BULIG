@@ -15,7 +15,9 @@ function level_finished_at(int $pid,int $level):?string{
 }
 /** Every level the pupil has finished: [level id => finish date]. */
 function finished_levels(int $pid):array{
- $out=[];foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $l){$d=level_finished_at($pid,(int)$l['id']);if($d)$out[(int)$l['id']]=$d;}return $out;
+ /* One query for all levels (it was one per level, for every pupil on the teacher's pages). */
+ $out=[];foreach(rows('SELECT m.level_id,COUNT(*) total,COUNT(p.completed_at) done,MAX(p.completed_at) last FROM lessons l JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.published=1'.GRADE_SQL.' GROUP BY m.level_id ORDER BY m.level_id',[$pid,pupil_grade($pid)]) as $r)if((int)$r['total']>0&&(int)$r['total']===(int)$r['done'])$out[(int)$r['level_id']]=(string)$r['last'];
+ return $out;
 }
 function level_cover(int $level):string{$f='assets/images/covers/level-'.$level.'.webp';return is_file(__DIR__.'/../public/'.$f)?$f:'assets/bulig-logo.png';}
 

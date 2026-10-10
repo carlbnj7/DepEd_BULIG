@@ -3,3 +3,6 @@ public/assets/*-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]
 public/assets/*-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].js
 # Pupil voice recordings (Level 1) stay on the server only
 storage/recordings/
+
+# Server log from the last test run (tests/run_tests.py)
+tests/last-run-server.log
