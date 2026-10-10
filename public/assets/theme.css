@@ -4071,3 +4071,67 @@ html.dark .tp-rules li.ok .icon{background:#2f8a4b}
 .rl-hs-list .rl-hs-later span,.rl-hs-list .rl-hs-later b{color:#5b6b4f;font-weight:600}
 .rl-hs-more{display:flex;align-items:center;gap:6px;margin:2px 0 8px;font-size:.88rem;font-weight:600;color:var(--g700,#176444)}.rl-hs-more .rl-ic{width:16px;height:16px;flex:none}
 html.dark .rl-hs-list .rl-hs-now{background:#173326;border-color:#2f6b47}html.dark .rl-hs-now span{color:#e8f0ea}html.dark .rl-hs-list .rl-hs-later span,html.dark .rl-hs-list .rl-hs-later b{color:#a9bcb0}html.dark .rl-hs-more{color:#9be0b4}
+
+/* v139 Level 3 Build a Word: the module's letter boxes are tapped in order; each letter flies onto the next blank line.
+   Tapped box: yellow. Right word: green with stars. Wrong word: the lines shake, then clear. */
+.l3-build{position:relative;display:grid;justify-items:center;gap:8px;margin:6px auto 0}
+.l2-card:has(.l3-build) .l2-pics img{max-height:190px;width:auto;max-width:100%;margin:0 auto}
+.l3-bgrid{display:grid;grid-template-columns:repeat(3,86px);gap:4px}
+.l3-build.n4 .l3-bgrid,.l3-build.n4 .l3-blines{grid-template-columns:repeat(4,72px)}
+.l3-bt{height:70px;border:2px solid #4a4a4a;border-radius:2px;background:#fff;font:700 2.1rem/1 Arial,Helvetica,sans-serif;color:#111;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .2s,border-color .2s,color .2s}
+.l3-bt.on{background:#ffd84d;border-color:#c98200;color:#0e3b28;box-shadow:inset 0 -5px 0 #f2b10c}
+.l3-bt.press{animation:l3press .32s ease-out}
+@keyframes l3press{0%{transform:scale(1)}35%{transform:scale(.88)}70%{transform:scale(1.06)}100%{transform:scale(1)}}
+.l3-blines{display:grid;grid-template-columns:repeat(3,86px);gap:4px;margin-top:8px}
+.l3-bl{height:62px;padding:0 0 2px;border:0;border-bottom:4px solid #111;border-radius:0;background:none;box-shadow:none;display:flex;align-items:flex-end;justify-content:center;font:700 2.5rem/1 Poppins,Arial,sans-serif;color:#c98200;cursor:pointer}
+.l3-bl.nx{border-bottom-color:#f2b10c}
+.l3-bl.f{animation:l3pop .3s ease-out}
+@keyframes l3pop{0%{transform:scale(.5)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.l3-fly{position:absolute;z-index:5;font:700 2.1rem/1 Arial,Helvetica,sans-serif;color:#c98200;pointer-events:none;transform:translate(-50%,-50%)}
+.l3-build.ok .l3-bt.on{background:#17633a;border-color:#0e3b28;color:#fff;box-shadow:inset 0 -5px 0 #0e3b28}
+.l3-build.ok .l3-bl{color:#17633a;border-bottom-color:#17633a}
+.l3-build.no .l3-blines{animation:l3shake .45s ease-in-out}
+@keyframes l3shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+.l3-bmsg{min-height:44px;margin:4px 0 0;display:flex;align-items:center}
+.l3-bmsg.ok,.l3-bmsg.no{padding:9px 16px;border-radius:14px;font-weight:700;font-size:1rem;animation:l3pop .3s ease-out}
+.l3-bmsg.ok{background:#e3f1df;color:#17633a;border:2px solid #17633a;gap:8px}.l3-bmsg svg{width:20px;height:20px;flex:none}
+.l3-bmsg.no{background:var(--y50);border:2px solid var(--y300);color:var(--y700)}
+.l3-star{position:absolute;width:14px;height:14px;pointer-events:none;animation:l3star .9s ease-out forwards}
+.l3-star svg{width:100%;height:100%;fill:#f2b10c}
+@keyframes l3star{from{transform:translate(-50%,-50%) scale(.3);opacity:1}to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2) rotate(140deg);opacity:0}}
+@media(min-width:760px){.l2-card:has(.l3-build){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;column-gap:28px}
+ .l2-card:has(.l3-build)>.l2-cardtop{grid-column:1/-1}.l2-card:has(.l3-build) .l2-pics img{max-height:320px}}
+@media(prefers-reduced-motion:reduce){.l3-bt.press,.l3-bl.f,.l3-build.no .l3-blines,.l3-bmsg.ok,.l3-bmsg.no{animation:none}}
+html.dark .l3-bt{background:#1d2d23;border-color:#a9bcb0;color:#e8f0ea}
+html.dark .l3-bt.on{background:#ffd84d;border-color:#c98200;color:#0e3b28}
+html.dark .l3-build.ok .l3-bt.on{background:#17633a;border-color:#9be0b4;color:#fff}
+html.dark .l3-bl{border-bottom-color:#e8f0ea;color:#ffd84d}
+html.dark .l3-bl.nx{border-bottom-color:#f2b10c}
+html.dark .l3-build.ok .l3-bl{color:#9be0b4;border-bottom-color:#9be0b4}
+/* Class Demo: the same boxes and lines, bigger; the teacher (or a pupil at the board) taps them */
+.l1d-txt .l3-build{justify-items:start;margin:10px 0 6px}
+.l1d-txt .l3-bgrid,.l1d-txt .l3-blines{grid-template-columns:repeat(3,calc(96px*var(--fit,1)))}
+.l1d-txt .l3-bt{height:calc(78px*var(--fit,1));font-size:calc(2.4rem*var(--fit,1))}
+.l1d-txt .l3-bl{height:calc(70px*var(--fit,1));font-size:calc(2.7rem*var(--fit,1))}
+.l1d-txt .l3-bmsg{min-height:calc(44px*var(--fit,1))}
+
+/* v140 Class Demo (every level) uses the lesson page design: the green header with the yellow edge and glow,
+   one white panel with the green-yellow stripe, the direction box, pictures in an inner card,
+   and the lesson page's Back / Next card buttons. The logo has no white box. Phones keep their own layout. */
+.l1d-logo img{height:40px;background:transparent;padding:0;border-radius:0}
+@media(min-width:760px){
+ .l1-demo{background:radial-gradient(ellipse at 0% 0%,rgba(254,228,147,.55),transparent 45%),radial-gradient(ellipse at 100% 100%,rgba(232,243,223,.9),transparent 50%),var(--ivory,#fdf8ea)}
+ .l1d-top{height:62px;padding-bottom:5px;position:relative;z-index:2;isolation:isolate;overflow:hidden;background:var(--hero);box-shadow:inset 0 -5px 0 var(--y400),var(--shadow-lg)}
+ .l1d-top::after{content:"";position:absolute;z-index:-1;right:14%;top:-190px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,77,.40),rgba(255,226,77,.08) 42%,transparent 64%);pointer-events:none}
+ .l1d-stage{padding:22px 34px 18px}
+ .l1d-stage>.l1d-one,.l1d-stage>.l1d-two{position:relative;width:100%;max-width:1180px;margin:0 auto;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow-lg);padding:30px 44px 26px}
+ .l1d-stage>.l1d-one::before,.l1d-stage>.l1d-two::before{content:'';position:absolute;left:44px;right:44px;top:0;height:6px;border-radius:0 0 8px 8px;background:linear-gradient(90deg,var(--g700),var(--y400) 45%,var(--y400) 55%,var(--g700))}
+ .l1d-stage .l2d-dir{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 12px rgba(14,59,40,.07);padding:12px 16px}
+ .l1d-stage .l2-pics .l2-pic,.l1d-stage .l1d-pic{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 6px 18px rgba(14,59,40,.08)}
+ .l1d-bot{background:transparent;border-top:0;height:84px;padding:0 34px 10px}
+ .l1d-nb{background:#fff;color:#0f4630;border:2px solid #9bcf9f;border-radius:18px;min-height:54px;padding:12px 26px;font-size:1.1rem;font-weight:700}
+ .l1d-nb.g{position:relative;overflow:hidden;isolation:isolate;background:var(--hero);color:#fff;border:0;border-bottom:4px solid var(--y400);border-radius:18px;box-shadow:0 8px 20px -10px rgba(14,59,40,.6);padding:14px 44px;font-size:1.2rem}
+ .l1d-nb.g::after{content:'';position:absolute;z-index:-1;right:8%;top:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,77,.32),transparent 65%);pointer-events:none}
+ .l1d-lis{border-radius:18px;min-height:54px;background:#ffd84d;border:0;box-shadow:0 3px 0 #e0b21f;color:var(--ink,#0e3b28)}
+ .l1d-cnt{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px}
+}

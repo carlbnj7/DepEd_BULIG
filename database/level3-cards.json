@@ -676,130 +676,200 @@
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-01.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-01-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "car",
+       "rat"
+      ],
+      "word": "car"
+     }
     },
     {
      "title": "2",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-02.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-02-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "cad",
+       "sat"
+      ],
+      "word": "sad"
+     }
     },
     {
      "title": "3",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-03.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-03-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "bad",
+       "mag"
+      ],
+      "word": "bag"
+     }
     },
     {
      "title": "4",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-04.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-04-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "fam",
+       "ban"
+      ],
+      "word": "fan"
+     }
     },
     {
      "title": "5",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-05.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-05-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "map",
+       "can"
+      ],
+      "word": "man"
+     }
     },
     {
      "title": "6",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-06.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-06-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "cat",
+       "bap"
+      ],
+      "word": "cap"
+     }
     },
     {
      "title": "7",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-07.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-07-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "lap",
+       "mat"
+      ],
+      "word": "map"
+     }
     },
     {
      "title": "8",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-08.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-08-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "can",
+       "bat"
+      ],
+      "word": "bat"
+     }
     },
     {
      "title": "9",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-09.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-09-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "cat",
+       "bad"
+      ],
+      "word": "cat"
+     }
     },
     {
      "title": "10",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l01-build-10.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l01-build-10-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "far",
+       "sat"
+      ],
+      "word": "fat"
+     }
     }
    ]
   },
@@ -1074,130 +1144,200 @@
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-01.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-01-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "ber",
+       "bad"
+      ],
+      "word": "bed"
+     }
     },
     {
      "title": "2",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-02.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-02-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "nap",
+       "met"
+      ],
+      "word": "net"
+     }
     },
     {
      "title": "3",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-03.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-03-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "wed",
+       "lab"
+      ],
+      "word": "web"
+     }
     },
     {
      "title": "4",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-04.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-04-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "den",
+       "pat"
+      ],
+      "word": "pen"
+     }
     },
     {
      "title": "5",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-05.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-05-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "len",
+       "tan"
+      ],
+      "word": "ten"
+     }
     },
     {
      "title": "6",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-06.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-06-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "jan",
+       "bet"
+      ],
+      "word": "jet"
+     }
     },
     {
      "title": "7",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-07.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-07-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "rep",
+       "cad"
+      ],
+      "word": "red"
+     }
     },
     {
      "title": "8",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-08.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-08-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "wep",
+       "bat"
+      ],
+      "word": "wet"
+     }
     },
     {
      "title": "9",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-09.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-09-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "vat",
+       "ten"
+      ],
+      "word": "vet"
+     }
     },
     {
      "title": "10",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l02-build-10.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l02-build-10-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "lad",
+       "beg"
+      ],
+      "word": "leg"
+     }
     }
    ]
   },
@@ -1472,130 +1612,200 @@
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-01.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-01-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "cin",
+       "bab"
+      ],
+      "word": "bib"
+     }
     },
     {
      "title": "2",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-02.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-02-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "cap",
+       "zit"
+      ],
+      "word": "zip"
+     }
     },
     {
      "title": "3",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-03.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-03-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "sin",
+       "bmt"
+      ],
+      "word": "bin"
+     }
     },
     {
      "title": "4",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-04.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-04-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "sin",
+       "pat"
+      ],
+      "word": "pin"
+     }
     },
     {
      "title": "5",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-05.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-05-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "len",
+       "tip"
+      ],
+      "word": "lip"
+     }
     },
     {
      "title": "6",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-06.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-06-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "cin",
+       "sat"
+      ],
+      "word": "sit"
+     }
     },
     {
      "title": "7",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-07.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-07-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "ten",
+       "bip"
+      ],
+      "word": "tip"
+     }
     },
     {
      "title": "8",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-08.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-08-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "dip",
+       "bag"
+      ],
+      "word": "dig"
+     }
     },
     {
      "title": "9",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-09.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-09-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "sap",
+       "bit"
+      ],
+      "word": "sip"
+     }
     },
     {
      "title": "10",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l03-build-10.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l03-build-10-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "sin",
+       "bam"
+      ],
+      "word": "sim"
+     }
     }
    ]
   },
@@ -1870,130 +2080,200 @@
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-01.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-01-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "fex",
+       "lot"
+      ],
+      "word": "fox"
+     }
     },
     {
      "title": "2",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-02.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-02-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "dig",
+       "hog"
+      ],
+      "word": "dog"
+     }
     },
     {
      "title": "3",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-03.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-03-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "jon",
+       "mag"
+      ],
+      "word": "jog"
+     }
     },
     {
      "title": "4",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-04.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-04-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "pon",
+       "lig"
+      ],
+      "word": "log"
+     }
     },
     {
      "title": "5",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-05.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-05-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "com",
+       "man"
+      ],
+      "word": "mom"
+     }
     },
     {
      "title": "6",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-06.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-06-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "not",
+       "bix"
+      ],
+      "word": "box"
+     }
     },
     {
      "title": "7",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-07.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-07-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "con",
+       "map"
+      ],
+      "word": "mop"
+     }
     },
     {
      "title": "8",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-08.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-08-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "bot",
+       "hip"
+      ],
+      "word": "hop"
+     }
     },
     {
      "title": "9",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-09.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-09-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "con",
+       "pat"
+      ],
+      "word": "pot"
+     }
     },
     {
      "title": "10",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l04-build-10.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l04-build-10-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "lot",
+       "hab"
+      ],
+      "word": "hot"
+     }
     }
    ]
   },
@@ -2268,130 +2548,200 @@
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-01.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-01-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "tug",
+       "hat"
+      ],
+      "word": "hug"
+     }
     },
     {
      "title": "2",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-02.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-02-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "gut",
+       "hog"
+      ],
+      "word": "hut"
+     }
     },
     {
      "title": "3",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-03.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-03-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "got",
+       "bum"
+      ],
+      "word": "gum"
+     }
     },
     {
      "title": "4",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-04.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-04-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "pun",
+       "big"
+      ],
+      "word": "bug"
+     }
     },
     {
      "title": "5",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-05.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-05-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "mig",
+       "tup"
+      ],
+      "word": "mug"
+     }
     },
     {
      "title": "6",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-06.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-06-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "nun",
+       "bit"
+      ],
+      "word": "bun"
+     }
     },
     {
      "title": "7",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-07.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-07-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "rot",
+       "lun"
+      ],
+      "word": "run"
+     }
     },
     {
      "title": "8",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-08.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-08-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "sin",
+       "hut"
+      ],
+      "word": "sun"
+     }
     },
     {
      "title": "9",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-09.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-09-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "nit",
+       "wup"
+      ],
+      "word": "nut"
+     }
     },
     {
      "title": "10",
      "text": "",
      "images": [
       {
-       "src": "assets/images/level3/l05-build-10.webp",
-       "alt": "Picture with letter tiles",
+       "src": "assets/images/level3/l05-build-10-pic.webp",
+       "alt": "Picture to build a word for",
        "label": ""
       }
      ],
      "choices": [],
-     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. "
+     "narration": "Build a word out from the picture. Say it. Connect the letters. Write the word. ",
+     "build": {
+      "rows": [
+       "lut",
+       "bas"
+      ],
+      "word": "bus"
+     }
     }
    ]
   },
