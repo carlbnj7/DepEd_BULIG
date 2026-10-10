@@ -23,6 +23,17 @@ Wording, word lists, activity order and pictures follow the module. Supplementar
 - Word, phrase and sentence reading uses Speak Answer. Voice-to-text word matching is a guide only, not a pronunciation score. Teachers confirm the module's passing scores (8/10, 15/20) from observation.
 - Group games (dart boards, word maps, baskets, clotheslines, fishing, snake and ladder, spin wheel, mystery box, word hunt) show the module picture and procedure; the pupil chooses Done after their turn.
 
+## Build a Word (Lessons 1–5, Activity 1)
+
+The module's two rows of letter boxes are real buttons. The pupil taps them in order; each letter flies onto the next
+blank line. A full word is checked at once: right turns green, wrong shakes and clears for another try. Tapping a letter
+on a line takes it back. The saved answer keeps earlier tries for the teacher, for example `car (tries: rat)`.
+
+The picture is shown without the printed boxes (`l0N-build-NN-pic.webp`); the original pictures stay in the folder.
+The boxes and the 50 answers were read from the module pages (PDF pages 14, 20, 26, 32 and 38). Every answer takes one
+letter from each column. Notes: Lesson 1 card 1 is "car" (not a short "a" sound, kept as printed); Lesson 3 card 10 is
+"sim" (SIM cards).
+
 ## Source inconsistencies (also listed in the admin Content issues page)
 
 - Lesson 3 Speed Read (PDF p30) prints “sim”; the lesson uses “hid”. Kept as printed.
@@ -40,6 +51,7 @@ Wording, word lists, activity order and pictures follow the module. Supplementar
 ```
 python3 tools/level3/extract_images.py storage/level3-original.pdf   # pictures + page renders
 python3 tools/level3/build_content.py                                # cards JSON + SQL migration
+python3 tools/level3/build_tiles.py                                  # Build a Word boxes, answers, pictures
 ```
 
 Needs PyMuPDF, Pillow and NumPy. `database/level3-images.json` records the PDF page and position of every picture.
