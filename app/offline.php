@@ -49,7 +49,7 @@ function offline_sync_info():never{
     Levels that are still locked can be saved ahead; they open only after the levels before them are finished. */
 function level_downloadable(int $pid,int $level):bool{
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))return false;
- if(!val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]))return false;
+ if(!pupil_start_level($pid))return false;
  return (bool)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$level,pupil_grade($pid)]);
 }
 
