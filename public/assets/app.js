@@ -31,7 +31,7 @@ if(narration){
  window.addEventListener('pagehide',()=>synth?.cancel());
 }
 const form=$('#activity-form');let draftTimer,submitting=false,drawingDirty=false;
-function draft(){if(!form||form.dataset.draft!=='on'||submitting)return;clearTimeout(draftTimer);draftTimer=setTimeout(saveDraft,650);}
+/* Drafts: typed answers save 0.65 s after typing stops. Drawings send the whole picture, so they save at most every 15 s while drawing, and right away when the pupil leaves the page. */let draftSlow=false;function draft(slow){if(!form||form.dataset.draft!=='on'||submitting)return;if(slow&&draftTimer&&draftSlow)return;clearTimeout(draftTimer);draftSlow=!!slow;draftTimer=setTimeout(()=>{draftTimer=null;saveDraft();},slow?15000:650);}document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&draftTimer&&!submitting){clearTimeout(draftTimer);draftTimer=null;saveDraft();}});
 async function saveDraft(){if(submitting||form.dataset.draft!=='on')return;const data=new FormData(form);data.set('action','draft');const status=$('#draft-status');status.textContent='Saving your draft…';try{const res=await fetch('index.php',{method:'POST',body:data,credentials:'same-origin'});const result=await res.json();if(!res.ok||!result.saved)throw new Error(result.error||'Could not save');status.textContent='Draft saved';}catch(error){status.textContent=navigator.onLine===false?'Offline · choose Submit to keep your answer on this device':'Draft not saved. Check your connection before leaving.';}}
 if(form){
  form.addEventListener('input',draft);
@@ -64,7 +64,7 @@ if(canvas){const ctx=canvas.getContext('2d');ctx.lineCap='round';ctx.lineJoin='r
  if(output.value.startsWith('data:image/png')){const image=new Image();image.onload=()=>ctx.drawImage(image,0,0,canvas.width,canvas.height);image.src=output.value;}
  const scale=Math.max(1,canvas.width/600),SIZES=[3,6,12];
  function point(event){const r=canvas.getBoundingClientRect();return [(event.clientX-r.left)*canvas.width/r.width,(event.clientY-r.top)*canvas.height/r.height];}
- function save(){output.value=canvas.toDataURL('image/png');drawingDirty=true;draft();}
+ function save(){output.value=canvas.toDataURL('image/png');drawingDirty=true;draft(true);}
  canvas.addEventListener('pointerdown',event=>{if(form.dataset.draft!=='on')return;
   try{undo.push(ctx.getImageData(0,0,canvas.width,canvas.height));if(undo.length>15)undo.shift();}catch(e){}
   drawing=true;canvas.setPointerCapture(event.pointerId);ctx.globalCompositeOperation=erase?'destination-out':'source-over';ctx.strokeStyle=pen.value;ctx.lineWidth=SIZES[size]*scale*(erase?2.2:1);ctx.beginPath();ctx.moveTo(...point(event));ctx.lineTo(...point(event));ctx.stroke();});

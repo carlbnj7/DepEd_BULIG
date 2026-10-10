@@ -23,7 +23,8 @@ function flash(string $s):void{$_SESSION['flash']=$s;}
 function csrf():string{return $_SESSION['csrf']??=bin2hex(random_bytes(32));}
 function csrf_field():string{return '<input type="hidden" name="csrf" value="'.csrf().'">';}
 function check_csrf():void{if(!hash_equals(csrf(),(string)($_POST['csrf']??'')))fail('Your session changed. Reload the page and try again.',403);}
-function current_user():?array{if(empty($_SESSION['uid']))return null;$u=one('SELECT * FROM users WHERE id=? AND active=1',[$_SESSION['uid']]);if(!$u){unset($_SESSION['uid']);return null;}return $u;}
+/** The signed-in user. Read once per page (a page asks for it many times); every change to a user ends with a redirect, so it is never stale. */
+function current_user():?array{static $c=[];if(empty($_SESSION['uid']))return null;$id=(int)$_SESSION['uid'];if(!array_key_exists($id,$c))$c[$id]=one('SELECT * FROM users WHERE id=? AND active=1',[$id]);if(!$c[$id]){unset($_SESSION['uid']);return null;}return $c[$id];}
 function require_role(string ...$roles):array{$u=current_user();if(!$u)fail('Please sign in again.',401);if(!in_array($u['role'],$roles,true))fail('You do not have access to this page.',403);return $u;}
 function own_pupil(int $pid):void{$u=require_role('teacher');if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$u['id'],$pid]))fail('This pupil is not assigned to you.',403);}
 function audit(string $action,string $detail):void{q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[current_user()['id']??null,$action,$detail]);}
@@ -44,7 +45,7 @@ function lesson_available(int $pid,int $lid):bool{
  if($l['module_grade']!==null&&(int)$l['module_grade']!==pupil_grade($pid))return false;
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$l['level_id']]))return false;
  if(!level_available($pid,(int)$l['level_id']))return false;
- if((int)$l['level_id']<(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]))return true;
+ if((int)$l['level_id']<pupil_start_level($pid))return true;
  return !val('SELECT COUNT(*) FROM lessons l LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.module_id=? AND l.position<? AND l.published=1 AND p.completed_at IS NULL',[$pid,$l['module_id'],$l['position']]);
 }
 function completion_ok(?array $row):bool{return $row&&in_array($row['status'],['approved','completed'],true);}
@@ -101,14 +102,31 @@ function award_badges(int $pid):void{
  $v['voice']=(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('submitted','approved','completed') AND (COALESCE(audio_path,'')<>'' OR COALESCE(audio_paths,'') NOT IN ('','[]','null'))",[$pid]);
  $v['weekend']=(int)val('SELECT COUNT(*) FROM learning_days WHERE pupil_id=? AND DAYOFWEEK(day) IN (1,7)',[$pid]);
  if(function_exists('finished_levels'))$v['levels']=count(finished_levels($pid));
- if(function_exists('rl_info')){$v['rlevel']=rl_info($pid,true)['level'];$v['headstart']=rl_headstart($pid)?1:0;}
+ if(function_exists('rl_info')){$v['rlevel']=rl_info($pid,true)['level'];$v['headstart']=rl_headstart($pid)?1:0;rl_fix_badges($pid,$v['rlevel']);}
  foreach(rows('SELECT * FROM badges WHERE active=1') as $b)if(($v[$b['rule_type']]??0)>=$b['threshold_value']&&q('INSERT IGNORE INTO pupil_badges(pupil_id,badge_id) VALUES(?,?)',[$pid,$b['id']])->rowCount()&&function_exists('notify'))notify($pid,'badge','New badge: '.$b['title'],(string)$b['description'],'?page=achievements');
  q('INSERT IGNORE INTO pupil_rewards(pupil_id,reward_id) SELECT ?,id FROM rewards WHERE active=1 AND required_xp<=?',[$pid,$v['xp']]);
 }
 function progress_stats(int $pid):array{
+ $pre=progress_stats_store();if(isset($pre[$pid]))return $pre[$pid];
  $s=one('SELECT * FROM pupil_streaks WHERE pupil_id=?',[$pid])??['current_streak'=>0,'longest_streak'=>0,'last_activity_date'=>null];
  if(($s['last_activity_date']??'')<date('Y-m-d',strtotime('-1 day')))$s['current_streak']=0;
  return $s+['xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'completed'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'approved'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'pending'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status='submitted'",[$pid])];
+}
+/** Stats read ahead for a whole class by progress_stats_many(); kept for the rest of the page. */
+function progress_stats_store(?array $add=null):array{static $c=[];if($add!==null)$c=$add+$c;return $c;}
+/** The same numbers as progress_stats() for many pupils at once (teacher pages): 5 queries for the class instead of 5 per pupil. */
+function progress_stats_many(array $ids):array{
+ $ids=array_values(array_unique(array_map('intval',$ids)));if(!$ids)return [];$in=implode(',',$ids);$out=[];
+ foreach($ids as $id)$out[$id]=['current_streak'=>0,'longest_streak'=>0,'last_activity_date'=>null];
+ foreach(rows("SELECT * FROM pupil_streaks WHERE pupil_id IN($in)") as $r)$out[(int)$r['pupil_id']]=$r;
+ $yest=date('Y-m-d',strtotime('-1 day'));foreach($out as $id=>$r)if(($r['last_activity_date']??'')<$yest)$out[$id]['current_streak']=0;
+ $col=function(string $sql)use($in):array{return array_map('intval',array_column(rows(str_replace('{IN}',$in,$sql)),'n','pupil_id'));};
+ $xp=$col('SELECT pupil_id,total n FROM pupil_xp WHERE pupil_id IN({IN})');
+ $done=$col('SELECT pupil_id,COUNT(*) n FROM pupil_progress WHERE pupil_id IN({IN}) AND completed_at IS NOT NULL GROUP BY pupil_id');
+ $ok=$col("SELECT pupil_id,COUNT(*) n FROM activity_completion WHERE pupil_id IN({IN}) AND status IN ('approved','completed') GROUP BY pupil_id");
+ $wait=$col("SELECT pupil_id,COUNT(*) n FROM activity_completion WHERE pupil_id IN({IN}) AND status='submitted' GROUP BY pupil_id");
+ foreach($out as $id=>$r)$out[$id]=$r+['xp'=>$xp[$id]??0,'completed'=>$done[$id]??0,'approved'=>$ok[$id]??0,'pending'=>$wait[$id]??0];
+ progress_stats_store($out);return $out;
 }
 function checked_image(string $path):string{
  if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
@@ -171,11 +189,17 @@ function profile_avatar_choices():array{
  return ['boy-1'=>['Boy 1 · Side-part hair','male'],'boy-2'=>['Boy 2 · Curly hair','male'],'boy-3'=>['Boy 3 · Glasses','male'],'girl-1'=>['Girl 1 · Bob haircut','female'],'girl-2'=>['Girl 2 · Braids','female'],'girl-3'=>['Girl 3 · Ponytail and glasses','female']];
 }
 
+/** Remembered for the rest of the page (pages ask many times; every change to these ends with a redirect). */
+function pupil_start_level(int $pid):int{static $c=[];return $c[$pid]??=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);}
+function level_published(int $id):bool{static $c=null;$c??=array_map('intval',array_column(rows('SELECT id,published FROM bulig_levels'),'published','id'));return !empty($c[$id]);}
 function level_available(int $pid,int $level):bool{return level_progress_ready($pid,$level)&&!(function_exists('level_date_locked')&&level_date_locked($pid,$level));}
 /** Open by progress: every earlier level from the starting level is finished (the level schedule is checked separately). */
 function level_progress_ready(int $pid,int $level):bool{
- if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))return false;
- $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);
+ static $c=[];return $c[$pid.':'.$level]??=level_progress_check($pid,$level);
+}
+function level_progress_check(int $pid,int $level):bool{
+ if(!level_published($level))return false;
+ $start=pupil_start_level($pid);
  if(!$start)return false;
  if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$level,pupil_grade($pid)]))return false;
  foreach(rows('SELECT id,published FROM bulig_levels WHERE id>=? AND id<? ORDER BY id',[$start,$level]) as $prior){
@@ -195,7 +219,7 @@ function level5_manifest():array{static $m;if($m===null){$f=__DIR__.'/../databas
 function level6_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level6-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
 function level7_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level7-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
 function per_grade_level(int $level):bool{return in_array($level,[5,6,7,8],true);}
-function lesson_level(int $lid):int{return (int)val('SELECT m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);}
+function lesson_level(int $lid):int{static $c=[];return $c[$lid]??=(int)val('SELECT m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);}
 function level2_manifest():array{static $m;return $m??=json_decode(file_get_contents(__DIR__.'/../database/level2-manifest.json'),true);}
 function level3_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level3-cards.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['cards'=>[],'lessons'=>[],'pupil_pages'=>[],'page_count'=>0];}return $m;}
 /** Source-module metadata for Levels 2A, 2B, 3 and (per grade) 4; null for Level 1. */
@@ -213,20 +237,16 @@ function next_learning_lesson(int $pid):?array{
  return null;
 }
 
-require_once __DIR__.'/level2_cards.php';
-
-require_once __DIR__.'/presentation.php';
-require_once __DIR__.'/pupil_import.php';
-require_once __DIR__.'/admin_pin.php';
-require_once __DIR__.'/admin.php';
-require_once __DIR__.'/pupil_welcome.php';
-require_once __DIR__.'/pupil_fun.php';
-require_once __DIR__.'/teacher_fun.php';
-require_once __DIR__.'/class_done.php';
-require_once __DIR__.'/growth.php';
-require_once __DIR__.'/reach.php';require_once __DIR__.'/cards.php';
-require_once __DIR__.'/offline.php';
-require_once __DIR__.'/saved_login.php';
-require_once __DIR__.'/level1.php';
-require_once __DIR__.'/level2a.php';
-require_once __DIR__.'/level4.php';require_once __DIR__.'/scoring.php';require_once __DIR__.'/insights.php';require_once __DIR__.'/notify.php';require_once __DIR__.'/help.php';require_once __DIR__.'/month_recap.php';require_once __DIR__.'/schedule.php';require_once __DIR__.'/skipped.php';require_once __DIR__.'/reader_level.php';require_once __DIR__.'/login_ui.php';require_once __DIR__.'/checkup.php';require_once __DIR__.'/teacher_accounts.php';
+/* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
+   (status 503) instead of a blank "HTTP 500" page. */
+const BULIG_PARTS=['level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts'];
+function bulig_missing_files(array $missing):never{
+ $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
+ if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}
+ http_response_code(503);header('Retry-After: 600');header('Content-Type: text/html; charset=utf-8');
+ echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BULIG is being updated</title></head><body><main><h1>BULIG is being updated</h1><p>Please try again in a few minutes.</p><p>For the administrator: these files are missing on the server: <b>'.htmlspecialchars($list,ENT_QUOTES,'UTF-8').'</b>. Upload the complete update ZIP again, then open <a href="bulig-check.php">bulig-check.php</a> to confirm.</p></main></body></html>';
+ exit;
+}
+if($__missing=array_values(array_filter(BULIG_PARTS,fn($f)=>!is_file(__DIR__.'/'.$f.'.php'))))bulig_missing_files($__missing);
+foreach(BULIG_PARTS as $__part)require_once __DIR__.'/'.$__part.'.php';
+unset($__part,$__missing);

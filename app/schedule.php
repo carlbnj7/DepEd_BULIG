@@ -14,7 +14,7 @@ function level_opens_on(int $level):?string{$s=schedule_get();if(!$s['on'])retur
 /** Locked by date for this pupil (never the starting level or a level before it). */
 function level_date_locked(int $pid,int $level):bool{
  if(level_opens_on($level)===null)return false;
- $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);
+ $start=pupil_start_level($pid);
  return $start>0&&$level>$start;
 }
 function schedule_date_label(string $d):string{$t=strtotime($d);$days=(int)round(($t-strtotime(date('Y-m-d')))/86400);return ($days===1?'tomorrow, ':'on ').date('l, M j',$t);}
@@ -23,7 +23,7 @@ function schedule_days_left(string $d):int{return max(1,(int)ceil((strtotime($d)
 /** The level this pupil finished early and is now waiting for (null when they still have lessons to do). */
 function schedule_wait(int $pid):?array{
  $s=schedule_get();if(!$s['on'])return null;
- $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);if(!$start)return null;
+ $start=pupil_start_level($pid);if(!$start)return null;
  $prev=$start;
  for($l=$start+1;$l<=8;$l++){
   if(!level_progress_ready($pid,$l))return null;
@@ -57,7 +57,7 @@ function schedule_open_check_pupil(int $pid):void{
   if($d>$today||$d<date('Y-m-d',strtotime('-14 days')))continue;
   $title=level_label($l).' is open now!';
   if(val("SELECT 1 FROM notifications WHERE user_id=? AND kind='schedule' AND title=?",[$pid,$title]))continue;
-  $start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);if(!$start||$l<=$start||!level_progress_ready($pid,$l))continue;
+  $start=pupil_start_level($pid);if(!$start||$l<=$start||!level_progress_ready($pid,$l))continue;
   if(val('SELECT 1 FROM pupil_progress p JOIN lessons ls ON ls.id=p.lesson_id JOIN modules m ON m.id=ls.module_id WHERE p.pupil_id=? AND m.level_id=? AND p.completed_at IS NOT NULL',[$pid,$l]))continue;
   notify($pid,'schedule',$title,'Your class starts '.level_label($l).' today. Let’s go!','?page=lessons&level='.$l.'#level'.$l.'-path');
  }
