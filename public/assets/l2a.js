@@ -6,6 +6,40 @@
 (function(){
  'use strict';
  const $=(s,r)=>(r||document).querySelector(s),$$=(s,r)=>[...(r||document).querySelectorAll(s)];
+ /* Build a Word (Level 3): tap the module's letter boxes; each letter flies onto the next blank line.
+    A full word is checked: right turns green, wrong shakes and clears. The answer keeps the earlier tries for the teacher.
+    The same boxes work on Class Demo slides (data-l3-demo): they are wired when the slide is shown. */
+ const still=matchMedia('(prefers-reduced-motion: reduce)').matches,sfx=n=>{try{window.buligSfx&&window.buligSfx.play(n);}catch(e){}};
+ const OK='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+ const STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z"/></svg>';
+ function wireBuild(b,keep){b.dataset.wired='1';const word=b.dataset.word||'',tiles=$$('.l3-bt',b),lines=$$('.l3-bl',b),msg=$('.l3-bmsg',b);
+  const put=lines.map(()=>null),tries=[];let right=false,busy=false;
+  const nextLine=()=>put.indexOf(null);
+  const paint=()=>{const n=nextLine();lines.forEach((l,i)=>{l.textContent=put[i]===null?'':tiles[put[i]].textContent;l.classList.toggle('f',put[i]!==null);l.classList.toggle('nx',!right&&i===n);});
+   tiles.forEach((t,i)=>{const on=put.includes(i);t.classList.toggle('on',on);t.setAttribute('aria-pressed',on?'true':'false');});};
+  const save=w=>keep(w?w+(tries.length?' (tries: '+tries.join(', ')+')':''):(tries.length?'tries: '+tries.join(', '):''));
+  const say=(k,t)=>{msg.className='l3-bmsg'+(k?' '+k:'');msg.textContent=t;if(k==='ok')msg.insertAdjacentHTML('afterbegin',OK);};
+  const stars=()=>{if(still)return;const r=b.getBoundingClientRect(),l=$('.l3-blines',b).getBoundingClientRect();
+   for(let k=0;k<12;k++){const s=document.createElement('span');s.className='l3-star';s.innerHTML=STAR;const a=k/12*6.283;
+    s.style.left=(l.left-r.left+l.width/2)+'px';s.style.top=(l.top-r.top+l.height/2)+'px';s.style.setProperty('--dx',Math.round(Math.cos(a)*120)+'px');s.style.setProperty('--dy',Math.round(Math.sin(a)*70)+'px');b.append(s);setTimeout(()=>s.remove(),950);}};
+  const check=()=>{const w=put.map(i=>tiles[i].textContent).join('');
+   if(w===word){right=true;b.classList.add('ok');say('ok','Great job! '+w);stars();sfx('correct');save(w);paint();return;}
+   tries.push(w);save('');b.classList.add('no');say('no','Not yet. Look at the picture and try again.');sfx('tryagain');busy=true;
+   setTimeout(()=>{b.classList.remove('no');put.fill(null);busy=false;paint();},1300);};
+  const land=(n,i)=>{put[n]=i;paint();if(nextLine()<0)setTimeout(check,250);};
+  b.addEventListener('click',e=>{if(right||busy)return;const t=e.target.closest('.l3-bt'),l=e.target.closest('.l3-bl');
+   if(t){const i=+t.dataset.i,n=nextLine();if(put.includes(i)||n<0)return;if(msg.textContent)say('','');sfx('pop');
+    t.classList.remove('press');void t.offsetWidth;t.classList.add('press');
+    if(still||!t.animate){land(n,i);return;}
+    const o=b.getBoundingClientRect(),a=t.getBoundingClientRect(),d=lines[n].getBoundingClientRect(),f=document.createElement('span');f.className='l3-fly';f.textContent=t.textContent;b.append(f);
+    const x0=a.left-o.left+a.width/2,y0=a.top-o.top+a.height/2,x1=d.left-o.left+d.width/2,y1=d.top-o.top+d.height/2;f.style.left=x0+'px';f.style.top=y0+'px';
+    put[n]=i;t.classList.add('on');
+    f.animate([{transform:'translate(-50%,-50%)'},{transform:'translate(calc(-50% + '+(x1-x0)/2+'px),calc(-50% + '+((y1-y0)/2-30)+'px)) scale(1.25)'},{transform:'translate(calc(-50% + '+(x1-x0)+'px),calc(-50% + '+(y1-y0)+'px)) scale(1.1)'}],{duration:380,easing:'ease-in-out'}).onfinish=()=>{f.remove();land(n,i);};
+    return;}
+   if(l){const n=+l.dataset.l;if(put[n]===null)return;put[n]=null;paint();}});
+  paint();}
+ const stage=$('#l1-demo [data-d-stage]');
+ if(stage){const wire=()=>$$('.l3-build[data-l3-demo]:not([data-wired])',stage).forEach(b=>wireBuild(b,()=>{}));new MutationObserver(wire).observe(stage,{childList:true});wire();}
  const deck=$('[data-l2-deck]');if(!deck)return;
  const form=$('#activity-form'),out=$('#response'),cards=$$('.l2-card',deck),ro=deck.hasAttribute('data-readonly');
  const prev=$('[data-l2-prev]'),next=$('[data-l2-next]'),send=$('#submit-answer'),done=$('[data-l2-done]'),fb=$('#answer-feedback');
@@ -22,6 +56,7 @@
  $$('[data-kind="tiles"]',deck).forEach(t=>{const c=t.closest('.l2-card'),p=t.dataset.part,box=$('[data-gap]',c)||$('[data-out]',t),tok=[];
   const show=()=>{box.textContent=tok.join('');box.classList.toggle('f',tok.length>0);set(c,p,tok.join('').trim());};
   t.addEventListener('click',e=>{const k=e.target.closest('[data-key]'),er=e.target.closest('[data-erase]');if(k){if(tok.length<40)tok.push(k.dataset.key);show();}else if(er){tok.pop();show();}});});
+ $$('[data-kind="build"]',deck).forEach(b=>{const c=b.closest('.l2-card'),p=b.dataset.part;wireBuild(b,v=>set(c,p,v));});
  /* chips and numbers */
  $$('[data-kind="chip"],[data-kind="chips"],[data-kind="num"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,multi=g.dataset.kind==='chips';
   g.addEventListener('click',e=>{const b=e.target.closest('button[data-val]');if(!b)return;const on=b.getAttribute('aria-pressed')!=='true';

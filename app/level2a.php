@@ -43,6 +43,7 @@ function l3_set(array $a):?array{
  $bank=[];if(preg_match('~^(.*?)\s*Words:\s*(.+)$~su',(string)$s['instruction'],$m)&&preg_match_all('~\d+\.\s*[^\d]+?(?=\s+\d+\.|$)~u',trim($m[2]),$mm)){$s['instruction']=trim($m[1]);$bank=array_map('trim',$mm[0]);}
  $s['module_title']=$u['title']??$s['title'];
  foreach($s['cards'] as $i=>&$c){$c['ui']=($u['cards'][$i]??[])+($c['ui']??[])+(!empty($u['kind'])?['answer'=>[$u['kind']]]:[])+l3_card_ui($s,$c);
+  if(!empty($c['build']))$c['ui']=['answer'=>['build'],'text'=>'']+$c['ui'];
   if(!empty($u['notext'])&&!empty($c['images']))$c['ui']['text']='';
   if(isset($c['ui']['text']))$c['text']=$c['ui']['text'];if(isset($c['ui']['choices']))$c['choices']=$c['ui']['choices'];
   if($bank&&in_array('num',$c['ui']['answer'],true)&&empty($c['words'])){$c['words']=$bank;$c['words_label']='Words';}}
@@ -131,12 +132,23 @@ function l2a_text(string $t,bool $tiles,string $under=''):string{
  if($tiles&&preg_match('~_{2,}~',$t))$h=preg_replace('~_{2,}~','<output class="l2-gap" data-gap></output>',$h,1);
  return '<div class="l2-word'.(mb_strlen($t)>40?' long':'').'">'.$h.'</div>';
 }
+/** Level 3 Build a Word: the module's two rows of letter boxes, tapped in order onto the blank lines (public/assets/l2a.js).
+    On Class Demo slides the same boxes work for the teacher (data-l3-demo); nothing is saved there. */
+function l3_build_tiles(array $b,int $p,bool $demo=false):string{
+ $rows=array_map(fn($r)=>preg_split('//u',(string)$r,-1,PREG_SPLIT_NO_EMPTY),$b['rows']);$len=mb_strlen((string)$b['word']);$k=0;
+ $h='<div class="l3-build n'.count($rows[0]).'" '.($demo?'data-l3-demo':'data-part="'.$p.'" data-kind="build"').' data-word="'.e($b['word']).'"><div class="l3-bgrid" role="group" aria-label="Letter boxes">';
+ foreach($rows as $row)foreach($row as $ch)$h.='<button type="button" class="l3-bt" data-i="'.($k++).'" aria-pressed="false" aria-label="Letter '.e($ch).'">'.e($ch).'</button>';
+ $h.='</div><div class="l3-blines">';
+ for($i=0;$i<$len;$i++)$h.='<button type="button" class="l3-bl" data-l="'.$i.'" aria-label="Blank '.($i+1).'"></button>';
+ return $h.'</div><p class="l3-bmsg" role="status" aria-live="polite"></p></div>';
+}
 function l2a_answer(array $c,int $n,bool $readonly):string{
  if($readonly)return '';$h='';
  foreach($c['ui']['answer']??[] as $p=>$kind){
   if($kind==='tiles'){$t=$c['ui']['tiles']??str_split('abcdefghijklmnopqrstuvwxyz');
    $h.='<div class="l2-tiles'.(count($t)<=15?' big':'').'" data-part="'.$p.'" data-kind="tiles">'.(preg_match('~_{2,}~',$c['text'])?'':'<output class="l2-out" data-out aria-live="polite"></output>').'<div class="l2-keys">';foreach($t as $k)$h.='<button type="button" class="l2-key" data-key="'.e($k).'">'.e($k).'</button>';
    $h.='<button type="button" class="l2-key sp" data-key=" " aria-label="Space">space</button><button type="button" class="l2-key er" data-erase aria-label="Erase">'.l1_icon('prev').'</button></div></div>';}
+  elseif($kind==='build')$h.=l3_build_tiles($c['build'],$p);
   elseif($kind==='chip'||$kind==='chips'){$h.=(!empty($c['ui']['labels'][$p])?'<p class="l2-plab">'.e($c['ui']['labels'][$p]).'</p>':'').'<div class="l2-chips'.(!empty($c['ui']['labels'][$p])?' row':'').(max(array_map('mb_strlen',array_map('strval',$c['ui']['opts'][$p]??$c['choices']))+[0])>22?' long':'').'" data-part="'.$p.'" data-kind="'.$kind.'"'.(!empty($c['ui']['labels'][$p])?' data-lab="'.e($c['ui']['labels'][$p]).'"':'').' role="group">';foreach(($c['ui']['opts'][$p]??$c['choices']) as $ch)$h.='<button type="button" class="l2-chip" data-val="'.e($ch).'" aria-pressed="false">'.e($ch).'</button>';$h.='</div>'.($kind==='chips'?'<p class="l2-how">Tap every word that fits. Tap again to undo.</p>':'');}
   elseif($kind==='split'){$w=(string)($c['ui']['word']??$c['text']);$on=($c['ui']['split']??'')==='onset';$h.='<div class="l2-split'.($on?' onset':'').(mb_strlen($w)>9?' xl':(mb_strlen($w)>6?' l':'')).'" data-part="'.$p.'" data-kind="split" data-mode="'.($on?'onset':'syllable').'"><span class="l2-sw">';
    $L=preg_split('//u',$w,-1,PREG_SPLIT_NO_EMPTY);foreach($L as $i=>$ch){$h.='<span class="l2-ch">'.e($ch).'</span>';if($i<count($L)-1)$h.='<button type="button" class="l2-cut" data-cut="'.($i+1).'" aria-pressed="false" aria-label="Cut after '.e($ch).'"></button>';}
@@ -238,6 +250,7 @@ function l2a_demo_view(array $u,int $level=2,int $grade=0):void{$code=l2a_code($
   echo '<div class="l1d-'.($pics?'two':'one').' l2d">';
   echo '<div class="l1d-txt"><span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span><p class="l2d-dir">'.nl2br(e($set['instruction'])).'</p>'.(!empty($c['ui']['grid'])?'<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>':'').($txt!==''&&empty($c['ui']['grid'])?'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.nl2br(e($txt)).'</p>':'');
   if($txt===''&&!empty($c['ui']['word']))echo '<p class="l1d-q">'.e($c['ui']['word']).'</p>';
+  if(!empty($c['build']))echo l3_build_tiles($c['build'],0,true).'<details class="l5d-key"><summary>'.l1_icon('ok').'Show the answer</summary><p>'.e($c['build']['word']).'</p></details>';
   if(!empty($c['ui']['opts'])){foreach($c['ui']['opts'] as $row)echo '<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$row)).'</div>';}
   else{$bank=$c['choices']?:($c['words']??($c['ui']['tiles']??[]));if($bank)echo '<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$bank)).'</div>';}
   echo '</div>'.$pics.'</div></template>';}

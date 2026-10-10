@@ -105,6 +105,7 @@
    ['.l2-dir','What to do','These are the directions from your book. Tap the yellow speaker to hear them.'],
    [['.l2-cdots'],'Your cards','Each number is a card. Green cards are answered. Tap a number to jump to it.'],
    [['.l2-card:not([hidden]) .l2-keys'],'Letter tiles','Tap the letters to write your answer. The red arrow erases.'],
+   [['.l2-card:not([hidden]) .l3-bgrid'],'Letter boxes','Tap the letters in order. Each one jumps onto the next line. Tap a letter on a line to take it back.'],
    [['.l2-card:not([hidden]) .l2-chips'],'Tap a word','Tap the word or sound you choose. It turns green.'],
    [['.l2-card:not([hidden]) button.l2-pic'],'Tap a picture','Tap the picture you choose. It gets a green check.'],
    [['.l2-card:not([hidden]) .l2-nums'],'Count','Tap the number of sounds you hear.'],
