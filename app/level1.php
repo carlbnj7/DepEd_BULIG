@@ -175,9 +175,9 @@ function l1_words_html(string $text):string{
 /** Steps under a "do it" card. Lessons 2 and 3 are about directions, so the pupil says them back first. */
 function l1_steps(int $position):array{return in_array($position,[2,3],true)?['Listen','Say it back','Do it!']:['Listen','Do it!','Show your teacher'];}
 
-function l1_tag(array $a,string $kind):string{
+function l1_tag(array $a,string $kind,bool $demo=false):string{
  if($kind==='do')return '';/* the mission card has its own label */
- if($kind==='pair')return 'WORK WITH A PARTNER';if($kind==='group')return 'WORK WITH YOUR GROUP';
+ if($kind==='pair'||$kind==='group')return $demo?($kind==='pair'?'WORK WITH A PARTNER':'WORK WITH YOUR GROUP'):'PRACTISE WITH BULIG';
  if($a['type']==='sentence')return 'FINISH THE SENTENCE';
  if($a['phase']!=='learn')return $kind==='do'?'LISTEN AND DO':($kind==='draw'?'LISTEN AND DRAW':'');
  return mb_strtoupper(preg_replace('~\s*·.*$~u','',(string)$a['title']));
@@ -224,8 +224,12 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
   echo '<div class="l1-mission"><span class="l1-mtag">'.(preg_match('~mission~i',$a['title'])?'MISSION CARD':e(mb_strtoupper($a['phase']==='learn'?(string)$a['title']:'Listen and do'))).'</span><p>'.nl2br(e($a['prompt'])).'</p>'.l1_speaker($say).'</div>';ob_start();echo $pics;
   echo '<div class="l1-howto">';foreach(l1_steps((int)$lesson['position']) as $i=>$s)echo '<span><b>'.($i+1).'</b>'.e($s).'</span>';echo '</div>';
  }elseif($kind==='pair'||$kind==='group'){
-  $pairHtml='<div class="l1-pair">'.($kind==='pair'?'<div><img src="'.e(char_src('girl')).'" alt=""><b>A</b><small>Takes a turn first</small></div><div><img src="'.e(char_src('boy')).'" alt=""><b>B</b><small>Listens, then takes a turn</small></div>':'<div><img src="'.e(char_src('girl')).'" alt=""><small>Take turns</small></div><div><img src="'.e(char_src('boy')).'" alt=""><small>Listen to your friends</small></div>').'</div>';
-  echo '<div class="l1-q sm"><p>'.nl2br(e($a['prompt'])).'</p>'.l1_speaker($say).'</div>';ob_start();echo $pairHtml.$pics;
+  /* Pupils work on their own: BULIG is the buddy. The module's pair and group wording stays in Class Demo. */
+  $solo=l1_solo($lesson,$a);$txt=$solo['text']??(string)$a['prompt'];
+  echo '<div class="l1-q sm"><p>'.nl2br(e($txt)).'</p>'.l1_speaker($txt).'</div>';ob_start();
+  echo l1_buddy($solo['steps']??['Do it on your own.','Say your answer out loud.','Tap I did it! when you finish.']);
+  if(!empty($solo['poems']))echo l1_poems_html(false);
+  else{echo $pics;if(!empty($solo['words']))echo l1_word_game($solo['words']);if(!empty($solo['twisters']))echo l1_twisters($solo['twisters']);}
  }elseif($kind==='draw'){
   echo '<div class="l1-listen">'.l1_speaker($say,'Listen to the description','big').'<div><b>Listen to the description</b><small>Tap to hear it again</small></div></div>';ob_start();echo '<details class="l1-words"><summary>Show the words</summary><p>'.nl2br(e($a['prompt'])).'</p></details>'.$pics;
   $photo=str_starts_with((string)($a['drawing']??''),'data:image/jpeg');$drawn=str_starts_with((string)($a['drawing']??''),'data:image/png');
@@ -258,11 +262,42 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  echo '<div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns">';
  if(!$readonly){
   if($speakHere)echo '<button type="button" class="l1-btn2" data-rec-again hidden>'.l1_icon('again').'Try again</button><button id="submit-answer" class="l1-big" type="submit" hidden>Send '.l1_icon('next').'</button>';
-  else echo '<button id="submit-answer" class="l1-big" type="submit">'.($kind==='do'?'I did it! '.l1_icon('ok'):(in_array($kind,['pair','group'],true)?'We did it! '.l1_icon('ok'):($kind==='draw'?'Send my drawing '.l1_icon('ok'):'Next '.l1_icon('next')))).'</button>';
+  else echo '<button id="submit-answer" class="l1-big" type="submit">'.(in_array($kind,['do','pair','group'],true)?'I did it! '.l1_icon('ok'):($kind==='draw'?'Send my drawing '.l1_icon('ok'):'Next '.l1_icon('next'))).'</button>';
  }
  $last=$doneAll===count($all);
  echo '<a id="next-activity" class="l1-big" href="?page=lesson&amp;id='.$lid.'"'.($readonly?'':' hidden').'>'.($last?'Finish lesson':'Next').' '.l1_icon('next').'</a></div></div></form></main></div>';
  foot();
+}
+
+/* ---------------- on your own with BULIG, and the Lesson 9 poems ---------------- */
+
+function l1_solo_data():array{static $d=null;if($d===null){$f=__DIR__.'/../database/level1-solo.json';$d=is_file($f)?(json_decode((string)file_get_contents($f),true)?:[]):[];}return $d;}
+/** How a pupil does a pair or group activity on their own (database/level1-solo.json), or null. */
+function l1_solo(array $lesson,array $a):?array{return l1_solo_data()['acts'][(int)$lesson['position'].':'.$a['phase'].':'.(int)$a['position']]??null;}
+/** "BULIG is your buddy" and the steps to do it alone. */
+function l1_buddy(array $steps):string{
+ $h='<div class="pk-solo"><img src="'.e(char_src(pf_is_girl()?'girl':'boy','cheer')).'" alt=""><div><b>BULIG is your buddy</b><ol>';
+ foreach($steps as $s)$h.='<li>'.e($s).'</li>';return $h.'</ol></div></div>';
+}
+/** Lesson 9: choose a poem, then one picture and one line at a time; the words light up as they are read (l1.js).
+    Pupils: BULIG reads one line, the pupil reads the next. Class Demo: the class reads together (Girls, Boys, Everyone). */
+function l1_poems_html(bool $demo):string{
+ $poems=l1_solo_data()['poems']??[];if(!$poems)return '';
+ $pic=fn($k,$n)=>'assets/images/level1/lesson09/poem-'.$k.'-'.$n.'.webp';
+ $h='<div class="pk'.($demo?' pk-class':'').'" data-pk="'.($demo?'class':'pupil').'" data-pk-poems="'.e(json_encode($poems,JSON_UNESCAPED_UNICODE)).'"><div class="pk-pick"><h3>Choose a poem</h3><div class="pk-poems">';
+ foreach($poems as $k=>$p)$h.='<button type="button" class="pk-poem" data-pk-open="'.e($k).'"><img '.($demo?'data-src':'src').'="'.e($pic($k,1)).'" alt=""><span><b>'.e($p['title']).'</b><small>'.l1_icon('list').count($p['lines']).' lines</small></span></button>';
+ $h.='</div></div><div class="pk-player" data-pk-player hidden></div><div class="pk-imgs" hidden>';
+ foreach($poems as $k=>$p)foreach($p['lines'] as $i=>$x)$h.='<img data-src="'.e($pic($k,$i+1)).'" alt="">';
+ return $h.'</div></div>';
+}
+/** Lesson 11: BULIG says a word, the pupil says a word friend. */
+function l1_word_game(array $words):string{
+ return '<div class="pk-wordgame" data-wordgame="'.e(json_encode(array_values($words))).'"><span class="pk-wg-lab">BULIG’s word</span><b class="pk-wg-word" data-wg-word>?</b><button type="button" class="l1-big pk-wg-btn" data-wg-new>'.l1_icon('spk').'New word</button><small>Now say a word friend!</small></div>';
+}
+/** Lesson 12: the tongue twisters of this lesson, each with Slow and Fast. */
+function l1_twisters(array $list):string{
+ $h='<div class="pk-twisters">';foreach($list as $t)$h.='<div class="pk-tw"><b>'.e($t).'</b><span><button type="button" class="l1-chip" data-say="'.e($t).'" data-rate="0.6">'.l1_icon('spk').'Slow</button><button type="button" class="l1-chip" data-say="'.e($t).'" data-rate="1.05">'.l1_icon('spk').'Fast</button></span></div>';
+ return $h.'</div>';
 }
 
 /* ---------------- Class Demo (projector) ---------------- */
@@ -287,7 +322,11 @@ function l1_demo_view(array $u,array $slides):void{
    echo '<template class="l1d-t demo-template" data-lesson="'.(int)$l['id'].'" data-id="'.(int)$by[(int)$l['id']][0]['id'].'" data-title="Lesson '.(int)$l['position'].' · '.e($l['subtitle']).'" data-part="Lesson start" data-say="'.e($l['title'].'. Today we will: '.implode('. ',$goals)).'"><span class="demo-slide-meta" hidden>Lesson '.(int)$l['position'].' · '.e($l['subtitle']).' · Lesson start</span><div class="l1d-two l1d-start"><img class="l1d-cover" data-src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$l['id'])>=7||(int)$l['position']>=100?'':'LESSON '.(int)$l['position'].' · ').e(mb_strtoupper((string)$l['subtitle'])).'</span><h1>'.e($l['title']).'</h1>';
    if($goals){echo '<p class="l1-lab">TODAY WE WILL…</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul>';}
    echo '</div></div></template>';continue;}
-  $a=$d['a'];$kind=l1_kind($a);$pics=l1_pictures($a,true);$tag=l1_tag($a,$kind);$say=trim((string)($a['narration']?:$a['prompt']));
+  $a=$d['a'];$kind=l1_kind($a);$pics=l1_pictures($a,true);$tag=l1_tag($a,$kind,true);$say=trim((string)($a['narration']?:$a['prompt']));
+  if(($kind==='pair'||$kind==='group')&&in_array((int)$l['position'].':'.$a['phase'].':'.(int)$a['position'],['9:learn:4','9:learn:5'],true)){
+   /* Lesson 9: the class reads a poem together, one picture and one line at a time. */
+   echo '<template class="l1d-t demo-template" data-lesson="'.(int)$l['id'].'" data-id="'.(int)$a['id'].'" data-title="Lesson '.(int)$l['position'].' · '.e($l['subtitle']).'" data-part="'.e(l1_phase_label($a['phase']).' · '.$a['title']).'" data-say="'.e($say).'"><span class="demo-slide-meta" hidden>Lesson '.(int)$l['position'].' · '.e($l['subtitle']).' · '.e(l1_phase_label($a['phase'])).'</span><h1 class="sr-only">'.e($a['title']).'</h1><div class="l1d-one l1d-k-poem"><div class="l1d-txt"><span class="l1-tag">'.e($tag).'</span><p class="l1d-q pkd-q">'.nl2br(e((string)$a['prompt'])).'</p>'.l1_poems_html(true).'</div></div></template>';
+   continue;}
   $txt=(string)$a['prompt'];$long=mb_strlen($txt)>260?' xl':(mb_strlen($txt)>130?' l':'');
   echo '<template class="l1d-t demo-template" data-lesson="'.(int)$l['id'].'" data-id="'.(int)$a['id'].'" data-title="Lesson '.(int)$l['position'].' · '.e($l['subtitle']).'" data-part="'.e(l1_phase_label($a['phase']).($a['phase']==='learn'?' · '.$a['title']:'')).'" data-say="'.e($say).'"><span class="demo-slide-meta" hidden>Lesson '.(int)$l['position'].' · '.e($l['subtitle']).' · '.e(l1_phase_label($a['phase'])).'</span><h1 class="sr-only">'.e($a['title']).'</h1><div class="l1d-'.($pics?'two':'one').' l1d-k-'.$kind.$long.'"><div class="l1d-txt">'.($tag!==''?'<span class="l1-tag">'.e($tag).'</span>':'');
   if($kind==='do'){echo '<div class="l1-mission"><span class="l1-mtag">'.(preg_match('~mission~i',$a['title'])?'MISSION CARD':'LISTEN AND DO').'</span><p>'.nl2br(e($txt)).'</p><div class="l1-howto">';foreach(l1_steps((int)$l['position']) as $k=>$st)echo '<span><b>'.($k+1).'</b>'.e($st).'</span>';echo '</div></div>';}
