@@ -126,6 +126,9 @@ function l2a_match_board(array $c,bool $readonly,string $saved=''):string{
  ob_start();render_matching_card($c['match'],false,!$readonly);$b=(string)ob_get_clean();
  return '<div class="l2-match"'.($readonly?'':' data-part="0" data-kind="match"').'><input type="hidden" class="native-answer" value="'.e($saved).'">'.$b.'</div>';
 }
+/** Stories can be read along (karaoke) in Levels 5 to 7. Not in Level 6 and 7 tests, where the pupil reads alone;
+    Level 5 tests are listening tests, where the module has the story read aloud. */
+function l2a_readalong(array $a):bool{$lv=lesson_level((int)$a['lesson_id']);return $lv===6||(in_array($lv,[7,8],true)&&$a['phase']==='learn');}
 /** Card words: "___ og" shows the blank as a box the letter tiles fill. */
 function l2a_text(string $t,bool $tiles,string $under=''):string{
  if($t==='')return '';$h=nl2br(e($t));if($under!=='')$h=preg_replace('~\b('.preg_quote(e($under),'~').')\b~u','<u>$1</u>',$h,1);
@@ -188,7 +191,7 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
  $lv=lesson_level($lid);head('Level '.l2a_code($lv).' · '.$set['module_title'],'activity-page l1-page l2-page');
  echo '<div class="l1-app l2-app">'.lesson_head($lesson,$all,$a,'?page=lessons&level='.$lv.'#level'.$lv.'-path');
  echo '<main class="l1-main activity-main">';notice();
- echo '<form method="post" id="activity-form" class="activity-form l1-form l2-form" data-mode="answer" data-kind="cards" data-draft="off">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="response" id="response" value="'.e($resp).'"><span id="draft-status" hidden></span>';
+ echo '<form method="post" id="activity-form" class="activity-form l1-form l2-form" data-mode="answer" data-kind="cards" data-draft="off"'.(l2a_readalong($a)?' data-readalong="1"':'').'>'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="response" id="response" value="'.e($resp).'"><span id="draft-status" hidden></span>';
  if($a['feedback'])echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
  echo '<span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span>'.(trim((string)$set['instruction'])!==''?'<div class="l2-dir"><p>'.nl2br(e($set['instruction'])).'</p>'.l1_speaker($set['instruction']).'</div>':'');
  echo '<div class="l2-deck" data-l2-deck data-total="'.$N.'"'.($readonly?' data-readonly':'').'>';
