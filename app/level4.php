@@ -40,7 +40,7 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
    .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my reading">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
    .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button></div>';
  }
- $card=trim((string)ob_get_clean());if($card!=='')echo '<section class="l2-card l1-card l4-card">'.$card.'</section>';
+ $card=trim((string)ob_get_clean());if($card!=='')echo '<section class="l2-card l1-card l4-card"'.($reading&&$a['phase']==='learn'&&!$readonly?' data-readalong="1"':'').'>'.$card.'</section>';
  echo '<div class="l1-end"><div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns">';
  if(!$readonly){
   if($reading)echo '<button type="button" class="l1-btn2" data-rec-again hidden>'.l1_icon('again').'Try again</button><button id="submit-answer" class="l1-big" type="submit" hidden>Send '.l1_icon('next').'</button>';
