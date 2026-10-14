@@ -23,7 +23,8 @@
   await c.put(abs('?page=login'),new Response(await r.text(),{headers:{'Content-Type':'text/html; charset=utf-8'}}));
   for(const u of urls){try{const res=await fetch(u);if(res.ok)await c.put(u,res);}catch(e){}}
   store('bulig-login-sig',sig);}catch(e){}}
- if(uid==='0'){if(online()&&document.body.classList.contains('login-page'))setTimeout(cacheLogin,1500);return;}
+ if(uid==='0'){const tid=($('meta[name="bulig-teacher"]')||{}).content||'';if(tid){teacherOffline(tid);return;}
+  if(online()&&document.body.classList.contains('login-page'))setTimeout(cacheLogin,1500);return;}
  const META='bulig-off-'+uid,DONE='bulig-off-done-'+uid;
  const meta=()=>store(META)||{levels:{}},saveMeta=m=>store(META,m);
  /* A saved level is out of date when BULIG's files changed after it was saved. */
@@ -275,4 +276,133 @@
  window.addEventListener('offline',()=>{slots();render();renderPage();});
  slots();render();renderPage();if(online())setTimeout(sync,800);
  setInterval(async()=>{if(online()&&!state.syncing&&(await waiting()).length)sync();},60000);
+ /* ---------- Teachers: Class Demo without internet ----------
+    "Save for offline" keeps a demo (a level, or one grade of Levels 4–7) on this device in the cache bulig-off-<teacher>-D<key>;
+    Class Demo and the Overview page go in bulig-off-<teacher>-Dhome. "Mark as done" given offline waits on the device
+    (IndexedDB, kind "class_done") and is sent when the device is back online. */
+ function teacherOffline(tid){
+  if(online())caches.open('bulig-who').then(c=>c.put('who',new Response(tid))).catch(()=>{});
+  const KEY='bulig-demo-off-'+tid,dm=()=>store(KEY)||{units:{}},saveDm=m=>store(KEY,m);
+  const BUILD=($('meta[name="bulig-build"]')||{}).content||'',stale=x=>!!(BUILD&&x&&x.build!==BUILD);
+  const mb=b=>b>=1048576?(b/1048576).toFixed(b>=10485760?0:1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
+  const day=t=>new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+  const ICON={ok:'<path d="M20 6 9 17l-5-5"/>',wait:'<path d="M12 8v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/>',off:'<path d="M2 8.8a15 15 0 0 1 20 0M5.5 12.3a10 10 0 0 1 13 0M9 15.8a5 5 0 0 1 6 0M12 19.5h.01M3 3l18 18"/>',down:'<path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/>',tv:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'};
+  const svg=k=>'<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON[k]+'</svg>';
+  const cname=k=>'bulig-off-'+tid+'-D'+k;
+  let info=null,busy=false;
+  async function getInfo(){if(info)return info;const r=await fetch('?page=demo_offline',{credentials:'same-origin',cache:'no-store'});if(!r.ok||r.url.includes('page=login'))throw new Error('Please sign in again, then try saving.');return info=await r.json();}
+
+  /* Save pages (and every picture, script and style they use) into one cache. */
+  async function grab(cache,pages,extra,ui,from,span){
+   const assets=new Set((extra||[]).map(abs));let bytes=0,done=0;
+   const collect=root=>root.querySelectorAll('img[src],img[data-src],script[src],link[rel="stylesheet"][href],link[rel="icon"][href],source[src],image[href]').forEach(n=>{const v=n.getAttribute('src')||n.getAttribute('data-src')||n.getAttribute('href');if(v&&!v.startsWith('data:')){const u=new URL(v,base);if(u.origin===location.origin)assets.add(u.href);}});
+   for(const p of pages){if(ui.cancelled)return null;
+    const res=await fetch(p,{credentials:'same-origin',cache:'no-store'});if(!res.ok||res.url.includes('page=login'))throw new Error('Please sign in again, then try saving.');
+    const html=await res.text();bytes+=html.length;await cache.put(abs(p),new Response(html,{headers:{'Content-Type':'text/html; charset=utf-8'}}));
+    const doc=new DOMParser().parseFromString(html,'text/html');collect(doc);doc.querySelectorAll('template').forEach(t=>collect(t.content));ui.progress(from+span*.15*(++done/pages.length));}
+   for(const css of [...assets].filter(a=>/\.css(\?|$)/.test(a))){try{const t=await (await fetch(css)).text();for(const m of t.matchAll(/url\(["']?([^"')]+)["']?\)/g)){if(m[1].startsWith('data:'))continue;const u=new URL(m[1],css);if(u.origin===location.origin)assets.add(u.href);}}catch(e){}}
+   const list=[...assets],total=list.length||1;let n=0;
+   await Promise.all(Array.from({length:4},async()=>{while(list.length&&!ui.cancelled){const a=list.shift();try{const had=await cache.match(a);if(had)bytes+=(await had.clone().blob()).size;else{const res=await fetch(a);if(res.ok){bytes+=(await res.clone().blob()).size;await cache.put(a,res);}}}catch(e){}ui.progress(from+span*(.15+.85*(++n/total)));}}));
+   return ui.cancelled?null:bytes;}
+  async function saveUnit(u,ui,from=0,span=1){
+   const name=cname(u.key);await caches.delete(name);const cache=await caches.open(name);
+   const bytes=await grab(cache,u.pages,u.assets,ui,from,span);if(bytes===null){await caches.delete(name);return null;}
+   const m=dm();m.units[u.key]={title:u.title,bytes,at:Date.now(),build:BUILD};saveDm(m);return m.units[u.key];}
+  async function saveHome(ui){const i=await getInfo(),c=await caches.open(cname('home'));await grab(c,i.home,[],ui||{progress(){}},0,0);}
+  async function removeUnit(k){await caches.delete(cname(k));const m=dm();delete m.units[k];if(!Object.keys(m.units).length)await caches.delete(cname('home'));saveDm(m);}
+  /* Save several demos one after another, then Class Demo and Overview. */
+  async function saveMany(units,onStep){busy=true;const ui={cancelled:false,progress(p){onStep&&onStep(p,ui.at);}};ui.cancel=()=>{ui.cancelled=true;};
+   try{for(let i=0;i<units.length&&!ui.cancelled;i++){ui.at=units[i];await saveUnit(units[i],ui,i/units.length,1/units.length);}if(!ui.cancelled)await saveHome();}
+   finally{busy=false;}return ui;}
+
+  /* ---------- the "Save for offline" spot on each card ---------- */
+  function progressBox(slot,label){slot.replaceChildren();const box=el('div','off-saving');box.innerHTML='<small><b></b> <span></span></small><div class="off-prog"><i></i></div>';box.querySelector('b').textContent=label;const c=el('button','linkbutton','Cancel');c.type='button';box.append(c);slot.append(box);
+   return {set(p,t){box.querySelector('i').style.width=Math.round(Math.min(1,p)*100)+'%';box.querySelector('span').textContent=t||Math.round(Math.min(1,p)*100)+'%';},cancel:c};}
+  function chip(kind,text,ic){const c=el('span','off-chip '+kind);c.innerHTML=svg(ic||(kind==='saved'?'ok':kind==='upd'?'wait':'off'));c.append(text);return c;}
+  function slotOne(slot){const k=slot.dataset.demoOff,s=dm().units[k],card=slot.closest('.level-card');slot.replaceChildren();
+   if(!online()){if(card)card.classList.toggle('off-dim',!s);slot.append(s?chip('saved','Saved on this device'):chip('need','Needs internet'));return;}
+   if(card)card.classList.remove('off-dim');
+   if(s){const old=stale(s);slot.append(chip(old?'upd':'saved',old?'Needs update':'Saved on this device'));const sm=el('small','off-small',mb(s.bytes)+' · saved '+day(s.at)+' · ');
+    const up=el('button','linkbutton','Update');up.type='button';up.addEventListener('click',()=>startOne(slot,k));const rm=el('button','linkbutton','Remove');rm.type='button';rm.addEventListener('click',async()=>{await removeUnit(k);refresh();});sm.append(up,' · ',rm);slot.append(sm);return;}
+   const b=el('button','btn off-save');b.type='button';b.innerHTML=svg('down')+'Save for offline';b.addEventListener('click',()=>startOne(slot,k));slot.append(b);}
+  async function startOne(slot,k){if(busy)return;let u;try{u=(await getInfo()).units.find(x=>x.key===k);}catch(e){return fail(slot,e);}if(!u)return fail(slot,new Error('This demo cannot be saved yet.'));
+   const pb=progressBox(slot,'Saving for offline…');let ui;pb.cancel.addEventListener('click',()=>ui&&ui.cancel());
+   try{ui=await saveMany([u],p=>pb.set(p));}catch(e){busy=false;return fail(slot,e);}refresh();}
+  function fail(slot,e){refresh();const er=el('small','off-small off-err',e&&e.message?e.message:'Could not save. Check your connection.');slot.append(er);}
+  /* Levels 4–7 on Class Demo: one spot for all grades (it saves the grades this teacher teaches). */
+  function slotLevel(slot){const L=slot.dataset.demoOffLevel,units=Object.entries(dm().units).filter(([k])=>k.startsWith(L+'-')),card=slot.closest('.level-card');slot.replaceChildren();
+   const gr=units.map(([k])=>k.split('-')[1]).sort();
+   if(!online()){if(card)card.classList.toggle('off-dim',!units.length);slot.append(units.length?chip('saved','Saved: Grade '+gr.join(', ')):chip('need','Needs internet'));return;}
+   if(card)card.classList.remove('off-dim');
+   if(units.length){const old=units.some(([,s])=>stale(s));slot.append(chip(old?'upd':'saved',(old?'Needs update · ':'Saved: ')+'Grade '+gr.join(', ')));}
+   getInfo().then(i=>{const mine=i.units.filter(u=>String(u.level)===L&&i.grades.includes(u.grade)),todo=mine.filter(u=>!dm().units[u.key]||stale(dm().units[u.key]));
+    if(!todo.length){if(!units.length)slot.append(el('small','off-small','Open it and choose a grade to save it.'));return;}
+    const b=el('button','btn off-save');b.type='button';b.innerHTML=svg('down');b.append('Save Grade '+todo.map(u=>u.grade).join(', ')+' for offline');
+    b.addEventListener('click',async()=>{if(busy)return;const pb=progressBox(slot,'Saving for offline…');let ui;pb.cancel.addEventListener('click',()=>ui&&ui.cancel());
+     try{ui=await saveMany(todo,(p,u)=>pb.set(p,u?u.title:''));}catch(e){busy=false;return fail(slot,e);}refresh();});slot.append(b);}).catch(()=>{});}
+
+  /* ---------- the "Class Demo without internet" card ---------- */
+  async function renderCard(){const box=$('[data-demo-off-card]');if(!box)return;box.hidden=false;box.replaceChildren();
+   const saved=Object.entries(dm().units),used=saved.reduce((t,[,s])=>t+(s.bytes||0),0),q=await waitingDone();
+   const head=el('div','dm-head'),ic=el('span','dm-ic');ic.innerHTML=svg('tv');const tx=el('div');tx.append(el('h2','','Class Demo without internet'),el('p','muted',online()?'Save the levels you teach on this device. They open in class even when there is no internet.':'You are offline. The levels saved on this device still open.'));head.append(ic,tx);box.append(head);
+   const row=el('div','dm-row');
+   row.append(saved.length?chip('saved',saved.length+' '+(saved.length===1?'demo':'demos')+' saved · '+mb(used)):chip('need','Nothing saved yet',online()?'down':'off'));
+   if(q.length){const c=chip('upd',q.length+' “Mark as done” waiting to send');row.append(c);}
+   box.append(row);
+   if(!online()){if(q.length)box.append(el('p','off-small','They are sent when this device is back online.'));return;}
+   if(q.length){const b=el('button','btn secondary','Send now');b.type='button';b.addEventListener('click',()=>sendDone(true));row.append(b);}
+   let i;try{i=await getInfo();}catch(e){return;}
+   const plain=i.units.filter(u=>!u.grade),mine=plain.concat(i.units.filter(u=>u.grade&&i.grades.includes(u.grade))),need=mine.filter(u=>!dm().units[u.key]||stale(dm().units[u.key]));
+   const old=saved.filter(([k,s])=>stale(s)&&!mine.some(u=>u.key===k)).map(([k])=>i.units.find(u=>u.key===k)).filter(Boolean),todo=need.concat(old);
+   const acts=el('div','dm-acts');
+   if(todo.length){const all=todo.reduce((t,u)=>t+u.bytes,0),upd=todo.every(u=>dm().units[u.key]);
+    const b=el('button','btn primary dm-save');b.type='button';b.innerHTML=svg('down');b.append(upd?'Update '+todo.length+' saved '+(todo.length===1?'demo':'demos'):i.grades.length?'Save for my class · Grade '+i.grades.join(', '):'Save Levels 1–3 for offline');
+    const sm=el('small','off-small','About '+mb(all)+(upd?'':' · '+todo.length+' '+(todo.length===1?'demo':'demos')));
+    b.addEventListener('click',()=>bulk(todo,acts));acts.append(b,sm);}
+   else if(mine.length)acts.append(chip('saved','Everything for your class is saved'));
+   if(!i.grades.length)acts.append(el('small','off-small','Levels 4–7 have a module for each grade: open one and save the grade you teach.'));
+   box.append(acts);}
+  async function bulk(todo,acts){if(busy)return;acts.replaceChildren();const pb=progressBox(acts,'Saving for offline…');let ui;pb.cancel.addEventListener('click',()=>ui&&ui.cancel());
+   try{ui=await saveMany(todo,(p,u)=>pb.set(p,u?u.title+' · '+Math.round(p*100)+'%':''));}catch(e){busy=false;refresh();const c=$('[data-demo-off-card] .dm-acts');if(c)c.append(el('small','off-small off-err',e.message||'Could not save. Check your connection.'));return;}
+   refresh();if(!ui.cancelled)toast('Class Demo saved. It works without internet now.');}
+
+  /* ---------- offline: a note on teacher pages and on the demo ---------- */
+  function banner(){let bar=$('.off-banner.dm-bar');const host=$('main.main');
+   if(online()){if(bar)bar.remove();const pill=$('.dm-pill');if(pill)pill.remove();return;}
+   const n=Object.keys(dm().units).length;
+   if(host&&!bar){bar=el('div','off-banner off-off dm-bar');bar.setAttribute('role','status');bar.innerHTML=svg('off')+'<div><b>You are offline</b><span></span></div>';host.prepend(bar);}
+   if(bar){bar.querySelector('span').textContent=n?' Class Demo levels saved on this device still work.':' Nothing is saved on this device yet. Connect to the internet to use BULIG.';
+    if(n&&!$('[data-demo-off-card]')&&!bar.querySelector('a')){const a=el('a','btn secondary','Open Class Demo');a.href='?page=class_demo';bar.append(a);}}
+   const top=$('.l1d-top,.demo-header');if(top&&!$('.dm-pill')){const p=el('span','dm-pill');p.setAttribute('role','status');p.innerHTML=svg('off')+'<span>Offline</span>';top.append(p);}}
+
+  /* ---------- "Mark as done" without internet ---------- */
+  const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open('bulig-offline',1);r.onupgradeneeded=()=>r.result.createObjectStore('answers',{keyPath:'key'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});
+  const tx=(mode,fn)=>idb().then(db=>new Promise((res,rej)=>{const t=db.transaction('answers',mode),q=fn(t.objectStore('answers'));t.oncomplete=()=>res(q&&'result' in q?q.result:undefined);t.onerror=()=>rej(t.error);}));
+  const waitingDone=()=>tx('readonly',s=>s.getAll()).then(a=>(a||[]).filter(i=>i.kind==='class_done'&&i.uid===tid).sort((x,y)=>x.at<y.at?-1:1)).catch(()=>[]);
+  document.addEventListener('submit',e=>{const f=e.target;if(e.defaultPrevented||!f.matches||!f.matches('form.cd-modal')||online())return;e.preventDefault();
+   const fields=[...new FormData(f)].filter(([k,v])=>k!=='csrf'&&typeof v==='string');
+   tx('readwrite',s=>s.put({key:tid+'-cd-'+Date.now(),uid:tid,kind:'class_done',at:new Date().toISOString(),fields})).then(()=>{
+    const ov=f.closest('.cd-ov');if(ov)ov.hidden=true;document.body.classList.remove('cd-lock');
+    const n=f.querySelectorAll('input[name="pupils[]"]:checked').length;
+    toast('Saved on this device. “Mark as done” for '+n+' '+(n===1?'pupil':'pupils')+' is sent when you are back online.');
+    if(!window.buligToast){const t=el('div','notice demo-notice dm-note');t.setAttribute('role','status');t.textContent='Saved on this device. It is sent when you are back online.';(f.closest('#l1-demo,#class-demo')||document.body).prepend(t);setTimeout(()=>t.remove(),6000);}
+   }).catch(()=>alert('Could not keep it on this device. Please try again when you are online.'));});
+  let sending=false;
+  async function sendDone(loud){if(sending||!online())return;const q=await waitingDone();if(!q.length)return;sending=true;let sent=0;
+   try{const s=await (await fetch('?page=offline_sync',{credentials:'same-origin',cache:'no-store'})).json();if(String(s.tid)!==String(tid))return;
+    for(const item of q){const fd=new FormData();item.fields.forEach(([k,v])=>fd.append(k,v));fd.set('csrf',s.csrf);
+     let res;try{res=await fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',redirect:'manual'});}catch(e){break;}
+     await tx('readwrite',st=>st.delete(item.key));if(res.type==='opaqueredirect'||res.ok)sent++;}}
+   catch(e){}finally{sending=false;}
+   if(sent)toast('“Mark as done” sent for '+sent+' '+(sent===1?'lesson':'lessons')+'. Your pupils’ next lessons are open.');else if(loud)toast('Could not send yet. Try again later.');
+   renderCard();}
+
+  function refresh(){document.querySelectorAll('[data-demo-off]').forEach(slotOne);document.querySelectorAll('[data-demo-off-level]').forEach(slotLevel);renderCard();banner();}
+  refresh();
+  window.addEventListener('online',()=>{refresh();sendDone();});window.addEventListener('offline',refresh);
+  if(online()){setTimeout(()=>sendDone(),900);
+   /* Class Demo and Overview stay fresh on the device while something is saved. */
+   if(Object.keys(dm().units).length&&$('[data-demo-off-card]'))setTimeout(()=>saveHome().catch(()=>{}),2500);}
+ }
 })();

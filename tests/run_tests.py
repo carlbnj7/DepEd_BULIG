@@ -17,7 +17,7 @@ It never touches the live database. Settings (environment variables, all optiona
   BULIG_TEST_PORT     web port for the test server (default 8099)
 Needs: PHP 8 command line, the mysql command line client, Python 3 (standard library only).
 """
-import glob, http.cookiejar, json, os, re, socket, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
+import csv, glob, http.cookiejar, io, json, os, re, socket, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -36,7 +36,7 @@ KEEP = '--keep' in sys.argv
 LOG = os.path.join(HERE, 'last-run-server.log')
 
 # Every table a full install must have (the install file plus all 26 update files).
-EXPECTED_TABLES = sorted('''activities activity_completion activity_drafts admin_security admins answers assessment_attempts
+EXPECTED_TABLES = sorted('''account_id_history activities activity_completion activity_drafts admin_security admins answers assessment_attempts
  assessment_questions assessments audit_log badges bulig_levels content_issues grade_levels help_requests id_sequences
  learning_days lessons login_attempts modules notifications pupil_badges pupil_cards pupil_details pupil_level_assignments
  pupil_progress pupil_rewards pupil_sections pupil_streaks pupil_xp pupils push_queue push_subscriptions questions
@@ -276,6 +276,13 @@ def run_pages(acc):
         for pg in ('dashboard', 'manage', 'accounts', 'progress', 'review', 'sections', 'class_demo', 'notifications', 'cards',
                    'qcheck', 'guide', 'profile', f'pupil&id={uid}', f'report&id={uid}', f'report_card&id={uid}', 'certificates&level=1'):
             page_ok(t, f'?page={pg}', f'Teacher page opens: {pg}')
+        status, _, text = t.req('?page=demo_offline')
+        try:
+            units = json.loads(text).get('units', [])
+        except ValueError:
+            units = []
+        check('Class Demo can be saved for offline (list of levels)', status == 200 and units and all(u.get('pages') for u in units),
+              f'status {status}, {len(units)} demos')
         status, _, _ = t.req('?page=health')
         check('A teacher cannot open an admin page', status == 403, f'status {status}')
 
@@ -288,6 +295,43 @@ def run_pages(acc):
         for pg in ('dashboard', 'accounts', 'reports', 'content', 'activity_log', 'health', 'checkup', 'settings', 'teacher_cards',
                    'teacher_import', 'issues', 'media', 'guide', 'profile', 'notifications', 'visual_audit'):
             page_ok(a, f'?page={pg}', f'Admin page opens: {pg}')
+        test_account_ids(a, acc)
+
+
+def test_account_ids(a, acc):
+    """New account IDs: new accounts get them, old accounts are switched after a backup, old IDs still sign in, undo works."""
+    section('9. Account IDs')
+    status, _, text = a.req('?page=settings&tab=ids')
+    check('Settings › Account IDs opens', status == 200 and 'School code' in text and not PHP_ERROR.search(text), f'status {status}')
+    pid = acc['pupil1']['id']
+    check('A new pupil gets a new-style ID (school code + year + number)', re.fullmatch(r'[A-Z]{3,10}\d{6,}', pid or '') is not None, pid)
+    a.req('index.php', {'action': 'admin_school_code', 'school_code': 'tces', 'csrf': a.token('?page=settings&tab=ids')})
+    a.req('index.php', {'action': 'admin_ids_switch', 'school_code': 'TCES', 'csrf': a.token('?page=settings&tab=ids')})
+    _, _, listing = a.req('?page=ids_csv')
+    rows = {r[1]: r for r in csv.reader(io.StringIO(listing.lstrip('\ufeff'))) if len(r) >= 6}
+    teacher = rows.get('Test Teacher', ['', '', '', '', '', ''])
+    check('Old accounts were switched: teacher T2099001 is now TCEST0001', teacher[4] == 'TCEST0001' and teacher[5] == 'T2099001', teacher)
+    admin = rows.get('Test Admin', ['', '', '', '', '', ''])
+    check('The admin got an ID like A260001', re.fullmatch(r'A\d{6,}', admin[4]) is not None, admin)
+    backups = sorted(glob.glob(os.path.join(ROOT, 'storage', 'backups', 'bulig-before-new-ids-*.sql*')))
+    ok = False
+    if backups:
+        import gzip
+        with (gzip.open if backups[-1].endswith('.gz') else open)(backups[-1], 'rt', encoding='utf-8', errors='replace') as f:
+            ok = 'CREATE TABLE `users`' in f.read()
+    check('A backup copy of the database was saved before the switch', ok, backups[-1:] if backups else 'no backup file')
+    for label, who, pw in (('new teacher ID', 'TCEST0001', acc['teacher']['pw']), ('new ID in small letters', 'tcest0001', acc['teacher']['pw']),
+                           ('old teacher ID', 'T2099001', acc['teacher']['pw'])):
+        _, url, _ = Client().login('teacher', who, pw)
+        check(f'Teacher signs in with the {label}', 'dashboard' in url, url)
+    _, url, _ = Client().login('pupil', pid, acc['pupil1']['pw'])
+    check('Pupil still signs in with the same ID and password', 'dashboard' in url, url)
+    a.req('index.php', {'action': 'admin_ids_undo', 'csrf': a.token('?page=settings&tab=ids')})
+    _, url_old, _ = Client().login('teacher', 'T2099001', acc['teacher']['pw'])
+    _, url_new, _ = Client().login('teacher', 'TCEST0001', acc['teacher']['pw'])
+    check('Undo gives the old IDs back', 'dashboard' in url_old and 'dashboard' not in url_new, f'{url_old} / {url_new}')
+    for f in glob.glob(os.path.join(ROOT, 'storage', 'backups', 'bulig-*.sql*')):
+        os.remove(f)
 
 
 def main():

@@ -1,10 +1,18 @@
 /* BULIG service worker: lets the app be installed, shows a friendly page when offline,
    opens levels a pupil saved for offline use (caches named bulig-off-<pupil>-L<level>),
-   and keeps the sign-in page (cache bulig-login) so saved accounts can open their lessons offline. */
-const CACHE='bulig-offline-v9';
+   and keeps the sign-in page (cache bulig-login) so saved accounts can open their lessons offline.
+   Teachers' saved Class Demo levels use the same caches (bulig-off-<teacher>-D<level>). */
+const CACHE='bulig-offline-v10';
 const FILES=['offline.html','assets/offline.css','assets/brand/bulig-tab.png','assets/brand/bulig-app-medium.png','assets/bulig-logo.png','assets/fonts/poppins-latin-600-normal.woff2'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()));});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&!k.startsWith('bulig-off-')&&k!=='bulig-who'&&k!=='bulig-login').map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&k!==FRESH&&!k.startsWith('bulig-off-')&&k!=='bulig-who'&&k!=='bulig-login').map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+
+/* The Level 2A and 2B pictures were redrawn but kept their file names. Browsers keep pictures for up to 7 days,
+   so each one is fetched fresh from BULIG once (cache "bulig-fresh-2" remembers which), then used normally. */
+const FRESH='bulig-fresh-2';
+async function freshOnce(r){const c=await caches.open(FRESH),k=new URL(r.url);k.search='';
+ if(await c.match(k.href))return fetch(r);
+ const res=await fetch(r.url,{cache:'reload',credentials:'same-origin'});if(res.ok)await c.put(k.href,new Response(''));return res;}
 
 /* The pupil using BULIG on this device; saved pages are only shown to that pupil. */
 async function who(){try{const c=await caches.open('bulig-who');const r=await c.match('who');return r?(await r.text()):'';}catch(e){return '';}}
@@ -17,6 +25,8 @@ async function saved(req,onlyPage){
  u.searchParams.delete('source');if(onlyPage&&!u.searchParams.get('page'))u.searchParams.set('page','dashboard');
  const tries=[u.href];
  if(onlyPage&&u.searchParams.has('feedback')){u.searchParams.delete('feedback');tries.push(u.href);}
+ /* Class Demo keeps the slide in the address (activity, card, lesson); the saved copy is the whole level. */
+ if(onlyPage&&u.searchParams.get('page')==='class_demo'&&['activity','card','lesson'].some(k=>u.searchParams.has(k))){['activity','card','lesson'].forEach(k=>u.searchParams.delete(k));tries.push(u.href);}
  for(const t of tries)for(const n of names){const r=await (await caches.open(n)).match(t);if(r)return r;}
  return null;
 }
@@ -32,9 +42,10 @@ self.addEventListener('fetch',e=>{
  const r=e.request;
  if(r.method!=='GET'||new URL(r.url).origin!==location.origin)return;
  const url=new URL(r.url);
- if(['offline_sync','offline_manifest','offline_levels'].includes(url.searchParams.get('page'))||url.searchParams.get('off')==='1')return;
+ if(['offline_sync','offline_manifest','offline_levels','demo_offline'].includes(url.searchParams.get('page'))||url.searchParams.get('off')==='1')return;
  if(r.mode==='navigate'){e.respondWith(fetch(r).catch(()=>offlinePage(r)));return;}
  if(FILES.some(f=>url.pathname.endsWith('/'+f))){e.respondWith(fetch(r).catch(()=>caches.match(r,{ignoreSearch:true})));return;}
+ if(/\/assets\/images\/level2[ab]\/[^/]+\.webp$/.test(url.pathname)){e.respondWith(freshOnce(r).catch(async()=>(await saved(r,false))||Response.error()));return;}
  if(/\.(css|js|png|jpe?g|webp|gif|svg|woff2?|ico)$/i.test(url.pathname))e.respondWith(fetch(r).catch(async()=>(await saved(r,false))||Response.error()));
 });
 

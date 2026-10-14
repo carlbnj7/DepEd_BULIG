@@ -190,7 +190,8 @@
    [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
   class_demo:[
    ['.pageheading','Class Demo','Present lessons to the whole class on a TV or projector. Nothing is saved for pupils here.'],
-   [['.demo-catalog .level-card.available'],'Choose a level','Tap "Start class demo". Levels 4 to 7 ask you to choose a grade first.']],
+   [['.demo-catalog .level-card.available'],'Choose a level','Tap "Start class demo". Levels 4 to 7 ask you to choose a grade first.'],
+   [['.dm-off'],'Class Demo without internet','Save the levels you teach on this device. In class they open even with no internet. "Mark as done" waits on the device and is sent when you are back online.']],
   'l1-demo':[
    ['.l1d-ln','The lesson','The lesson and the part you are on.'],
    ['[data-d-stage]','The slide','Ask the question. Pupils answer out loud. No typing.'],
@@ -322,7 +323,9 @@
    ['#backup','Backup','Download a copy of the database. Keep it somewhere safe.']],
   settings:[
    [['.sch-card'],'Level schedule','Choose the date each level opens. Pupils who finish early wait for that date, so the class moves together. Fill the dates for me sets one level per week.'],
-   ['nav.ws-tabs','Settings sections','Security, school details, announcements, badges and rewards, and the school year.'],
+   ['nav.ws-tabs','Settings sections','Security, school details, announcements, badges and rewards, the school year and account IDs.'],
+   [['nav.ws-tabs a[href*="tab=ids"]'],'Account IDs','Set your school code (for example PCES). New pupils get IDs like PCES260001 and teachers PCEST0001. Old IDs can be switched here after BULIG saves a backup.'],
+   [['#switch-ids'],'Switch to the new IDs','See every old ID next to its new one. BULIG saves a backup first; passwords and progress stay the same, and old IDs still sign in.'],
    [['.rc-logoset'],'Report card logos','Upload the Division and school logos. They print at the top of every Reading Progress Report Card.'],
    ['#admin-pin','Admin PIN','Change the 4-digit PIN you enter after your password.'],
    [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG protects accounts from wrong passwords.']],

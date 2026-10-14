@@ -44,6 +44,7 @@ function admin_overview():void{
  $week=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=?',[date('Y-m-d H:i:s',strtotime('-7 days'))]);$prev=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=? AND submitted_at<?',[date('Y-m-d H:i:s',strtotime('-14 days')),date('Y-m-d H:i:s',strtotime('-7 days'))]);
  $trend=$prev?(($week>=$prev?'+':'').round(($week-$prev)/$prev*100).'% vs last week'):($week?'first week of activity':'');
  admin_heading('ADMINISTRATOR OVERVIEW','Make room for learning.','School-wide view · School year '.admin_school_year().' · Updated '.date('g:i A'),'<a class="btn secondary" href="?page=settings&amp;tab=announcements">'.icon('mega').'Post announcement</a><a class="btn primary" href="?page=reports">'.icon('chart').'Open reports</a>');
+ echo function_exists('account_ids_admin_notice')?account_ids_admin_notice():'';
  echo admin_kpis([['people',number_format($pupils),'Pupils',$newPupils?'+'.$newPupils.' this month':'',false],['user',count($teachers),'Teachers',$idle?count($idle).' inactive 14+ days':'all active',(bool)$idle],['book',$sections,'Sections',$grades?'Grades '.implode(', ',array_column($grades,'g')):'none yet',false],['check',number_format($week),'Activities this week',$trend,$prev&&$week<$prev]]);
  // pupils at each level: the highest level with work, or the starting level
  $levels=[];foreach(rows("SELECT GREATEST(a.level_id,COALESCE((SELECT MAX(m.level_id) FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)) lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1") as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;
@@ -293,18 +294,23 @@ function admin_backup_csv():never{
 function admin_backup_sql():never{
  require_role('admin');@set_time_limit(600);admin_set('last_backup_at',date('Y-m-d H:i:s'));audit('backup','sql');
  header('Content-Type: application/sql; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-database-'.date('Y-m-d').'.sql"');
- echo "-- BULIG full database backup · ".date('Y-m-d H:i:s')."\n-- Restore: phpMyAdmin → select an EMPTY database → Import this file.\nSET NAMES utf8mb4;\nSET FOREIGN_KEY_CHECKS=0;\n\n";
+ bulig_sql_dump(function(string $t){echo $t;flush();});exit;
+}
+/** The whole database as SQL (tables, then their rows), handed to $write piece by piece. Restore it in phpMyAdmin
+    into an EMPTY database. Used by the Backup download and by the copy saved before account IDs are switched. */
+function bulig_sql_dump(callable $write):void{
+ $write("-- BULIG full database backup · ".date('Y-m-d H:i:s')."\n-- Restore: phpMyAdmin → select an EMPTY database → Import this file.\nSET NAMES utf8mb4;\nSET FOREIGN_KEY_CHECKS=0;\n\n");
  foreach(db()->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN) as $t){
-  $create=db()->query('SHOW CREATE TABLE `'.$t.'`')->fetch(PDO::FETCH_NUM)[1];echo "DROP TABLE IF EXISTS `$t`;\n$create;\n";
+  $create=db()->query('SHOW CREATE TABLE `'.$t.'`')->fetch(PDO::FETCH_NUM)[1];$write("DROP TABLE IF EXISTS `$t`;\n$create;\n");
   for($off=0;;$off+=500){$rs=db()->query('SELECT * FROM `'.$t.'` LIMIT 500 OFFSET '.$off)->fetchAll(PDO::FETCH_NUM);if(!$rs)break;
-   echo 'INSERT INTO `'.$t.'` VALUES ';$parts=[];foreach($rs as $r)$parts[]='('.implode(',',array_map(fn($v)=>$v===null?'NULL':db()->quote((string)$v),$r)).')';echo implode(",\n",$parts).";\n";flush();if(count($rs)<500)break;}
-  echo "\n";}
- echo "SET FOREIGN_KEY_CHECKS=1;\n";exit;
+   $parts=[];foreach($rs as $r)$parts[]='('.implode(',',array_map(fn($v)=>$v===null?'NULL':db()->quote((string)$v),$r)).')';$write('INSERT INTO `'.$t.'` VALUES '.implode(",\n",$parts).";\n");if(count($rs)<500)break;}
+  $write("\n");}
+ $write("SET FOREIGN_KEY_CHECKS=1;\n");
 }
 
 /* ---------------------------------------------------------------- Settings */
 function admin_settings_view(array $u):void{
- $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','badges'=>'Badges & rewards','year'=>'School year','schedule'=>'Level schedule'];if(!isset($tabs[$tab]))$tab='security';
+ $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','badges'=>'Badges & rewards','year'=>'School year','schedule'=>'Level schedule','ids'=>'Account IDs'];if(!isset($tabs[$tab]))$tab='security';
  admin_heading('SETTINGS','Your BULIG workspace.','Security, school details, announcements, badges and the end of the school year.');
  echo '<nav class="ws-tabs">';foreach($tabs as $k=>$v)echo '<a class="'.($tab===$k?'on':'').'" href="?page=settings&amp;tab='.$k.'">'.e($v).'</a>';echo '</nav>';
  if($tab==='security'){echo '<div class="ws-g2">';admin_pin_settings($u);
@@ -317,6 +323,7 @@ function admin_settings_view(array $u):void{
   foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
   echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
  if($tab==='badges')settings_view();
+ if($tab==='ids')account_ids_settings_view($u);
  if($tab==='schedule')schedule_admin_view();
  if($tab==='year'){$b=admin_setting('last_backup_at','');$fresh=$b!==''&&admin_days_since($b)<1;
   $counts=[];foreach(rows("SELECT pu.grade_level g,COUNT(*) n FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 GROUP BY pu.grade_level") as $r)$counts[(int)$r['g']]=(int)$r['n'];
