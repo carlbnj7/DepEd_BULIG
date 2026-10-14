@@ -4359,7 +4359,7 @@ html.dark .rk-how span{background:#16231b;border-color:#2e4234;color:#c9d6cd}htm
 .lb-box.lb-has-board .lb-list{display:none}
 .lb-list{margin:12px 0 0;padding:14px 18px 14px 34px;background:#fff;border:1px solid #e9e2cc;border-radius:18px;line-height:1.8}.lb-list .lb-done b{color:#176444}.lb-list .lb-cur b{color:#c97a00}.lb-list .lb-lock{color:#8a958d}
 .lb-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.lb-legend span{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#fff;border:1px solid #e9e2cc;font-size:.8rem;font-weight:700;color:var(--g700,#176444)}
-.lb-legend i{width:14px;height:14px;border-radius:50%;display:inline-block}.lb-legend .g{background:linear-gradient(#6fdc86,#1d7a3c)}.lb-legend .y{background:linear-gradient(#fff07a,#f29a0c)}.lb-legend .k{background:linear-gradient(#f4f5f1,#b9c1b4)}.lb-legend .r{background:#ffd23f;border:2px solid #c99400}.lb-legend .b{background:linear-gradient(#a9dcff,#3f8fd0)}
+.lb-legend i{width:14px;height:14px;border-radius:50%;display:inline-block}.lb-legend .g{background:linear-gradient(#6fdc86,#1d7a3c)}.lb-legend .y{background:linear-gradient(#fff07a,#f29a0c)}.lb-legend .k{background:linear-gradient(#f4f5f1,#b9c1b4)}.lb-legend .r{background:#ffd23f;border:2px solid #c99400}
 .lb-sum{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.lb-sum div{flex:1;min-width:150px;background:#fff;border:1px solid #e9e2cc;border-radius:18px;padding:12px 14px}.lb-sum b{display:block;font-size:1.5rem;color:var(--g800,#0e3b28);font-family:var(--font-fun)}.lb-sum small{color:var(--muted,#5f6f63);font-weight:600}
 @media(max-width:740px){.lb-card{border-radius:22px;border-width:4px}.lb-sum{gap:6px}.lb-sum div{min-width:0;padding:10px}.lb-sum b{font-size:1.2rem}.lb-sum small{font-size:.72rem;line-height:1.25;display:block}}
 html.dark .lb-card{border-color:#2e4234}html.dark .lb-sum div,html.dark .lb-legend span,html.dark .lb-list{background:#16231b;border-color:#2e4234;color:#c9d6cd}html.dark .lb-sum b{color:#e8f0ea}html.dark .lb-legend span{color:#9be0b4}
@@ -4412,3 +4412,28 @@ html.dark .rc-page{background:#fffef9;color:#1d2a22}html.dark .rc-page td,html.d
 @media(max-width:740px){.adventure-art.lb-mini-art{display:flex;margin-top:14px}.lb-mini{width:100%;max-width:340px}}
 html.dark .lb-mini{border-color:#2e4234}html.dark .lb-mini-cap b{color:#e8f0ea}
 @media(prefers-reduced-motion:reduce){.lb-mini{transition:none}}
+/* v147: "My level now" card (it replaced "Starting level"); on phones the rank card and this card span the full width */
+.pupil-stats a.lvnow{color:inherit;text-decoration:none!important}
+.lvnow .lvn-cover{position:relative;display:block;height:78px;margin:8px 0;border-radius:14px;overflow:hidden;box-shadow:0 0 0 2px #fff,0 6px 14px -8px rgba(14,59,40,.4)}
+.lvnow .lvn-cover img{display:block;width:100%;height:100%;object-fit:cover}
+.lvnow .lvn-cover b{position:absolute;left:9px;bottom:2px;font-family:var(--font-fun);font-size:2.1rem;line-height:1.1;color:#fff;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.45)}
+.lvnow .lvn-name{display:block;font-family:var(--font-fun);font-weight:800;color:var(--g800,#0e3b28);font-size:.86rem;line-height:1.22}
+.lvnow progress.lvn-bar{display:block;width:100%;height:8px;border:0;border-radius:99px;overflow:hidden;background:#f3ecd6;margin:8px 0 6px;accent-color:#f5b800}
+.lvnow progress.lvn-bar::-webkit-progress-bar{background:#f3ecd6;border-radius:99px}.lvnow progress.lvn-bar::-webkit-progress-value{background:linear-gradient(90deg,#ffd23f,#f5b800);border-radius:99px}.lvnow progress.lvn-bar::-moz-progress-bar{background:linear-gradient(90deg,#ffd23f,#f5b800);border-radius:99px}
+.lvnow .stat-foot{font-size:.74rem;line-height:1.3}
+@media(max-width:740px){
+ .pupil-stats .rl-stat{grid-column:1/-1;order:-2}
+ .pupil-stats .rk-card .rl-row{flex-wrap:nowrap;gap:12px}.pupil-stats .rk-card .rk-emr{height:96px;margin:0}.pupil-stats .rk-card .rk-rk{flex:1;flex-basis:auto}
+ .pupil-stats .lvnow{grid-column:1/-1;order:-1;display:grid;grid-template-columns:118px 1fr;column-gap:12px;align-items:center}
+ .pupil-stats .lvnow .stat-label{grid-column:1/-1}.pupil-stats .lvnow .lvn-cover{grid-row:2/5;height:96px;margin:6px 0 0}.pupil-stats .lvnow .lvn-name{font-size:.95rem;align-self:end}.pupil-stats .lvnow .stat-foot{align-self:start}
+}
+html.dark .lvnow .lvn-name{color:#e8f0ea}html.dark .lvnow progress.lvn-bar,html.dark .lvnow progress.lvn-bar::-webkit-progress-bar{background:#2e4234}html.dark .lvnow .lvn-cover{box-shadow:0 0 0 2px #2e4234}
+@media(min-width:961px){.pupil-stats:has(.lvnow){grid-template-columns:1.15fr 1.45fr .95fr .9fr}.lvnow .lvn-cover{height:66px}.lvnow .lvn-name{font-size:.8rem}}
+/* v148: the login logo is easier to see on the night-blue and day-green skies: a thin white outline, a faint warm glow
+   and a little bigger (it stays transparent, no white box). On phones it grows with the screen height so the page still fits
+   (the empty space above and below the picture is trimmed there). */
+.login-page .login-brand img{width:360px;filter:drop-shadow(1.8px 0 0 #fff) drop-shadow(-1.8px 0 0 #fff) drop-shadow(0 1.8px 0 #fff) drop-shadow(0 -1.8px 0 #fff) drop-shadow(0 0 18px rgba(255,236,170,.55)) drop-shadow(0 10px 16px rgba(0,0,0,.35))}
+@media(max-width:740px){
+ .login-page .login-brand img{width:230px}
+ body.login-page:not(.admin-mode):not(.key-page) .login-brand img{--lw:clamp(166px,24.5vh,226px);width:var(--lw);margin:calc(var(--lw)*-.03) 0 calc(var(--lw)*-.038)}
+}
