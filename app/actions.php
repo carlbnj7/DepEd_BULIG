@@ -11,8 +11,9 @@ function action():void{
   $id=trim((string)($_POST['public_id']??''));$role=(string)($_POST['role']??'pupil');$key=hash('sha256',strtolower($id));
   if(login_tries_used($key)>=LOGIN_MAX_TRIES){audit('login_locked',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
   $u=one('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
+  if(!$u&&($moved=account_id_moved($id))&&$moved['role']===$role&&(int)$moved['active'])$u=$moved;   // an ID from before the switch to the new IDs
   if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
-  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil'){$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;}if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin'){$_SESSION['offer_save']=1;$_SESSION['hello']=1;}audit('login',$role);go('?page=dashboard');
+  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if(strcasecmp($id,(string)$u['public_id'])!==0)flash('Your '.$role.' ID is now '.$u['public_id'].'. Your old ID still works, but please use the new one.');if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil'){$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;}if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin'){$_SESSION['offer_save']=1;$_SESSION['hello']=1;}audit('login',$role);go('?page=dashboard');
  }
  if($action==='key_login'){
   /* One scan of a sign-in ticket: the QR code opens a "Hi, NAME!" page, and this button signs the pupil in. */
@@ -58,6 +59,7 @@ function action():void{
  }
  if(str_starts_with($action,'import_')){import_actions($action);return;}
  if(in_array($action,CHECKUP_ACTIONS,true))checkup_action($action);
+ if(in_array($action,ACCOUNT_ID_ACTIONS,true))account_ids_action($action);
  if(in_array($action,TEACHER_ACCOUNT_ACTIONS,true))teacher_account_action($action);
  if(in_array($action,ADMIN_ACTIONS,true)){admin_actions($action);return;}
  if(in_array($action,['admin_pin','admin_pin_create','admin_pin_cancel','change_admin_pin'],true)){admin_pin_actions($action);return;}
@@ -70,7 +72,7 @@ function action():void{
   }
   if(strlen($name)<2||strlen($name)>150||strlen($password)<8||strlen($password)>72)fail('Use a name of 2–150 characters and a password of 8–72 characters.');
   db()->beginTransaction();try{
-   $next=(int)val('SELECT next_value FROM id_sequences WHERE kind=? FOR UPDATE',[$role]);q('UPDATE id_sequences SET next_value=next_value+1 WHERE kind=?',[$role]);$public=($role==='teacher'?'T':'').$next;
+   $public=new_account_id($role);
    q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
    if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');}else{
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level();$details=pupil_details_input();

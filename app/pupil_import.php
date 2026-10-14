@@ -3,7 +3,7 @@
 const IMPORT_MAX_ROWS=300;
 
 function create_pupil_account(array $teacher,string $name,array $section,int $level,array $details):string{
- $next=(int)val('SELECT next_value FROM id_sequences WHERE kind=? FOR UPDATE',['pupil']);q('UPDATE id_sequences SET next_value=next_value+1 WHERE kind=?',['pupil']);$public=(string)$next;
+ $public=new_account_id('pupil');
  q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,'pupil',$name,password_hash('12345678',PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
  q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,(int)$section['grade_level'],$section['name']]);save_pupil_details($id,$details);
  q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$teacher['id'],$id]);
