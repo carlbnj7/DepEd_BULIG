@@ -33,6 +33,10 @@ send an update to the live site without breaking it.
 - `app/post_gate.php`: a pupil opens the next level only after scoring at least 80% (`PT_PASS`) on the level's
   post-test. Below that, "Try again" reopens only the post-test activities that were not fully right. The
   certificate also waits for the pass (`level_finished_at()` in `app/growth.php`).
+- `app/reading_board.php`: the pupil's **My reading board** (the school's Reading Progress Board as a staircase; drawn by
+  `app.js` from `data-lb`) and the teacher's printable **Reading Progress Report Card** (`?page=report_card&id=` for one
+  pupil, `&section=` for a section, A4, one page each). The LRN comes from `pupil_details`; school name, school head and
+  school year from Settings → School info, where the admin also uploads the Division and school logos.
 - `app/reader_level.php`: the reader level (1–100) and the 10 ranks on top of it (`RK_RANKS`, 10 levels each,
   a star every 2 levels). Emblems are in `public/assets/images/ranks/` (small copies in `ranks/sm/`).
 
