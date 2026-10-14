@@ -206,6 +206,7 @@ function level_progress_check(int $pid,int $level):bool{
   if(!$prior['published'])return false;
   $counts=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$prior['id'],pupil_grade($pid)]);
   if(!$counts['total']||$counts['total']!=$counts['done'])return false;
+  if(function_exists('pt_passed')&&!pt_passed($pid,(int)$prior['id']))return false;
  }
  return true;
 }
@@ -239,7 +240,7 @@ function next_learning_lesson(int $pid):?array{
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts'];
+const BULIG_PARTS=['level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
  if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}

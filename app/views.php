@@ -92,11 +92,11 @@ function login_fx(string $role):string{
 }
 function pupil_dashboard(array $u):void{
  echo pf_defs();pupil_welcome($u);schedule_open_check_pupil((int)$u['id']);echo schedule_wait_card($u).month_recap_card($u).pupil_celebrations($u).class_done_note((int)$u['id']);
- $pid=(int)$u['id'];$s=progress_stats($pid);$assign=one('SELECT l.* FROM bulig_levels l JOIN pupil_level_assignments a ON a.level_id=l.id WHERE a.pupil_id=?',[$pid]);pupil_progress_cards($pid,$s,$assign);echo daily_goal_card($pid);pupil_next_step($pid);echo pf_helper($u);
+ $pid=(int)$u['id'];$s=progress_stats($pid);$assign=one('SELECT l.* FROM bulig_levels l JOIN pupil_level_assignments a ON a.level_id=l.id WHERE a.pupil_id=?',[$pid]);pupil_progress_cards($pid,$s,$assign);if(function_exists('pt_card'))echo pt_card($pid);echo daily_goal_card($pid);pupil_next_step($pid);echo pf_helper($u);
 }
 function pupil_lessons(array $u):void{
  $pid=(int)$u['id'];echo pf_defs().class_done_note($pid);$assign=one('SELECT l.* FROM bulig_levels l JOIN pupil_level_assignments a ON a.level_id=l.id WHERE a.pupil_id=?',[$pid]);$level=(int)($_GET['level']??0);
- if(!$level){echo schedule_wait_card($u);level_cards($assign);return;}
+ if(!$level){echo schedule_wait_card($u).(function_exists('pt_card')?pt_card($pid):'');level_cards($assign);return;}
  if(function_exists('level_date_locked')&&level_date_locked($pid,$level)&&level_progress_ready($pid,$level))fail(level_label($level).' opens '.schedule_date_label((string)level_opens_on($level)).'. Your class starts it together. You can practise earlier levels while you wait.',403);
  if(!level_available($pid,$level))fail('This level is not available yet. Complete your earlier level or ask your teacher about your starting level.',403);
  $skipped=$assign&&(int)$assign['id']>$level;
@@ -130,7 +130,7 @@ function lesson_view(array $u):void{
   echo pf_defs().'<section class="completion-card pf-completion">'.pf_lesson_celebration($lid,$pid,$finished).'<span class="eyebrow">'.e(lesson_display_label(lesson_level($lid),(int)$lesson['position'])).'</span><h1>'.($finished?'Lesson complete!':'You did it!').'</h1><p>You earned <strong>'.$xp.' XP</strong> and gave your voice a little more practice.</p>';
   if($finished)echo '<a class="btn primary" href="?page=lessons&amp;level='.lesson_level($lid).'#level'.lesson_level($lid).'-path">Back to my lessons '.icon('arrow').'</a>';
   else echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="finish_lesson"><input type="hidden" name="lesson_id" value="'.$lid.'"><button class="btn primary next">Done '.icon('check').'</button></form>';
-  echo '</section>';if($finished&&isset($_GET['finished']))echo pupil_celebrations($u);
+  echo '</section>'.(function_exists('pt_lesson_note')?pt_lesson_note($pid,$lid):'');if($finished&&isset($_GET['finished']))echo pupil_celebrations($u);
  }else{
   $a=$chosen;$native=level2_card_set($a);$mode=$a['response_mode'];$question=one('SELECT * FROM questions WHERE activity_id=?',[$a['id']]);$exact=$question&&$question['grading']==='exact';if($exact||($mode==='drawing'&&!draw_allowed($a)))$mode='answer';$readonly=completion_ok($a);
   $draft=one('SELECT * FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$a['id']]);$response=$draft['response']??$a['response']??'';$drawing=$draft['drawing']??$a['drawing']??'';$transcript=$draft['transcript']??'';$imgs=activity_images($a);$worksheet=false;
@@ -289,6 +289,7 @@ function pupil_detail():void{
  $empty=fn(string $ic,string $title,string $text)=>'<div class="pd-empty"><span class="pd-ic">'.icon($ic).'</span><div><strong>'.e($title).'</strong><span>'.e($text).'</span></div></div>';
  echo '<div class="pageheading"><div><span class="eyebrow">PUPIL PROGRESS · '.e($p['public_id']).'</span><h1>'.e($p['name']).'</h1><p class="muted">'.e(rl_pupil_line($pid)).' · '.$s['xp'].' XP · '.$s['completed'].' lessons complete · '.$s['current_streak'].' day streak</p></div><a class="btn secondary" href="?page=report&amp;id='.$pid.'">'.icon('chart').'Progress report</a></div>'.(function_exists('schedule_pupil_note')?schedule_pupil_note($pid):'').class_done_path($pid);
  $att=rows('SELECT aa.*,a.title FROM assessment_attempts aa JOIN assessments a ON a.id=aa.assessment_id WHERE aa.pupil_id=? ORDER BY a.lesson_id,a.id',[$pid]);
+ if(function_exists('pt_teacher_rows'))echo pt_teacher_rows($pid);
  echo '<section class="card"><h2>Assessment results</h2>';
  if($att){echo '<div class="tablewrap"><table><thead><tr><th>Assessment</th><th>Status</th><th>Score</th><th>Teacher feedback</th></tr></thead><tbody>';foreach($att as $a)echo '<tr><td>'.e($a['title']).'</td><td>'.e($a['status']).'</td><td>'.($a['score']!==null?e($a['score'].' / '.$a['max_score']):'Observation-based').'</td><td>'.e($a['feedback']).'</td></tr>';echo '</tbody></table></div>';}
  else echo $empty('chart','No assessment results yet','Results show here after '.$first.' finishes a pre-test, post-test or level assessment.');
@@ -413,15 +414,20 @@ function credits_view():void{
   ['Quality assurance',['Krizza R. Alim','Maria Flora G. Dumasog','Michael Kristo S. Bontilao','Rowena Gargar']]];
  $mgmt=[['Victoria V. Gazo, PhD','Chairperson · Schools Division Superintendent'],['Roberto D. Napere Jr., PhD','Co-Chairperson · Assistant Schools Division Superintendent'],['Rosemarie T. Macesar, PhD','Co-Chairperson · Assistant Schools Division Superintendent'],
   ['Elbert R. Francisco, PhD','Chief – CID'],['Rejynne Mary L. Ruiz','LRMDS Manager'],['Neil A. Improgo','PSDS · Division English Coordinator'],['Mary Anthonette D. Melendez','PSDS'],['Mercedita P. Apa-ap','PSDS'],['Ma. Stella K. Virtudes','PSDS']];
- $web=[['carl','Carl Benedict H. Miculob','Web app creator and developer'],['claude','Claude','AI assistant by Anthropic · design and coding'],['chatgpt','ChatGPT','AI assistant by OpenAI · ideas and writing']];
+ /* People first (a photo in assets/images/credits/<file>.webp, otherwise their initials), then the AI tools. */
+ $devs=[['carl','Carl Benedict H. Miculob','Web app creator and developer'],['rimond','Rimond Jabez O. Binayao','Group member'],['joseph','Joseph Benedict T. Cescar','Group member'],['gabriel','Gabriel S. Panis','Group member']];
+ $ai=[['claude','Claude','AI assistant by Anthropic · design and coding'],['chatgpt','ChatGPT','AI assistant by OpenAI · ideas and writing']];
  $img='assets/images/credits/';
  $h='<div class="cr-page"><header class="cr-hero"><div class="cr-logos"><img src="'.$img.'deped-seal.webp" alt="Department of Education seal"><img src="'.$img.'deped-bukidnon.webp" alt="Schools Division of Bukidnon seal"><img class="cr-bp" src="'.$img.'bagong-pilipinas.webp" alt="Bagong Pilipinas"></div><div><h1>Credits</h1><p>Department of Education · Region X – Northern Mindanao · Division of Bukidnon</p></div></header>';
  $h.='<div class="cr-cols"><section class="cr-card"><h2>The BULIG module</h2><p class="cr-t">Development team of the Reading Toolkit</p>';
  foreach($team as [$role,$names])$h.='<div class="cr-role"><b>'.e($role).'</b><div class="cr-chips">'.implode('',array_map(fn($n)=>'<span class="cr-chip">'.e($n).'</span>',$names)).'</div></div>';
  $h.='</section><section class="cr-card"><h2>Management team</h2><p class="cr-t">Schools Division of Bukidnon</p><div class="cr-pps">';
  foreach($mgmt as $i=>[$n,$r])$h.='<div class="cr-pp'.($i===0?' lead':'').'"><b>'.e($n).'</b><small>'.e($r).'</small></div>';
- $h.='</div></section></div><section class="cr-card cr-web"><h2>Web app development</h2><p class="cr-t">The BULIG web app was built from the official DepEd BULIG modules.</p><div class="cr-webs">';
- foreach($web as [$f,$n,$r])$h.='<div class="ab-p"><img class="ab-logo" src="'.$img.$f.'.webp" alt="" loading="lazy"><div><b>'.e($n).'</b><small>'.e($r).'</small></div></div>';
+ $h.='</div></section></div><section class="cr-card cr-web"><h2>Web app development</h2><p class="cr-t">The BULIG web app was built from the official DepEd BULIG modules.</p><div class="cr-webs cr-team">';
+ $card=function(array $w)use($img):string{[$f,$n,$r]=$w;$p=explode(' ',$n);
+  $pic=is_file(__DIR__.'/../public/'.$img.$f.'.webp')?'<img class="ab-logo" src="'.$img.$f.'.webp" alt="" loading="lazy">':'<span class="ab-av ab-g" aria-hidden="true">'.e($p[0][0].end($p)[0]).'</span>';
+  return '<div class="ab-p">'.$pic.'<div><b>'.e($n).'</b><small>'.e($r).'</small></div></div>';};
+ $h.=implode('',array_map($card,$devs)).'</div><div class="cr-webs cr-ai">'.implode('',array_map($card,$ai));
  echo $h.'</div></section></div>';
 }
 function teacher_class_selection(array $u):array{
@@ -577,7 +583,7 @@ function pf_streak_calendar(int $pid,array $s):string{
 /* Sidebar account chips and the pupil phone tab bar. */
 function sidebar_chips(array $u):string{
  $c=fn($i,$t)=>'<span class="side-chip">'.icon($i).e($t).'</span>';$id=(int)$u['id'];
- if($u['role']==='pupil'){$s=progress_stats($id);return '<div class="side-chips">'.$c('fire',(int)$s['current_streak'].' '.((int)$s['current_streak']===1?'day':'days')).$c('star','Lv '.rl_info($id)['level']).'</div>';}
+ if($u['role']==='pupil'){$s=progress_stats($id);return '<div class="side-chips">'.$c('fire',(int)$s['current_streak'].' '.((int)$s['current_streak']===1?'day':'days')).(function_exists('rk_of')?(function($l){$k=rk_of($l);return '<span class="side-chip rk-side" title="'.e($k['name']).' rank, '.$k['stars'].' of '.RK_STARS.' stars">'.rk_img($k['i'],'',true).'Lv '.$l.'</span>';})(rl_info($id)['level']):$c('star','Lv '.rl_info($id)['level'])).'</div>';}
  if($u['role']==='teacher'){$n=(int)val('SELECT COUNT(*) FROM teacher_pupils WHERE teacher_id=?',[$id]);return '<div class="side-chips">'.$c('people',$n.' '.($n===1?'pupil':'pupils')).'</div>';}
  return '<div class="side-chips">'.$c('shield','Administrator').'</div>';
 }

@@ -11,12 +11,13 @@ function level_lessons(int $level,int $grade):array{
 /** Date the pupil finished every lesson of a level, or null if the level is not finished. */
 function level_finished_at(int $pid,int $level):?string{
  $r=one('SELECT COUNT(*) total,COUNT(p.completed_at) done,MAX(p.completed_at) last FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$level,pupil_grade($pid)]);
- return $r&&(int)$r['total']>0&&(int)$r['total']===(int)$r['done']?(string)$r['last']:null;
+ /* A level with a post-test is finished only at 80% or more (app/post_gate.php). */
+ return $r&&(int)$r['total']>0&&(int)$r['total']===(int)$r['done']&&(!function_exists('pt_passed')||pt_passed($pid,$level))?(string)$r['last']:null;
 }
 /** Every level the pupil has finished: [level id => finish date]. */
 function finished_levels(int $pid):array{
  /* One query for all levels (it was one per level, for every pupil on the teacher's pages). */
- $out=[];foreach(rows('SELECT m.level_id,COUNT(*) total,COUNT(p.completed_at) done,MAX(p.completed_at) last FROM lessons l JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.published=1'.GRADE_SQL.' GROUP BY m.level_id ORDER BY m.level_id',[$pid,pupil_grade($pid)]) as $r)if((int)$r['total']>0&&(int)$r['total']===(int)$r['done'])$out[(int)$r['level_id']]=(string)$r['last'];
+ $out=[];foreach(rows('SELECT m.level_id,COUNT(*) total,COUNT(p.completed_at) done,MAX(p.completed_at) last FROM lessons l JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.published=1'.GRADE_SQL.' GROUP BY m.level_id ORDER BY m.level_id',[$pid,pupil_grade($pid)]) as $r)if((int)$r['total']>0&&(int)$r['total']===(int)$r['done']&&(!function_exists('pt_passed')||pt_passed($pid,(int)$r['level_id'])))$out[(int)$r['level_id']]=(string)$r['last'];
  return $out;
 }
 function level_cover(int $level):string{$f='assets/images/covers/level-'.$level.'.webp';return is_file(__DIR__.'/../public/'.$f)?$f:'assets/bulig-logo.png';}

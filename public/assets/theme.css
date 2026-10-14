@@ -4269,3 +4269,86 @@ html.dark body:not(.demo-page) .pk-speed button.on{background:#2c4a33;color:#fff
 html.dark body:not(.demo-page) .pk-back{color:#cfe8d3;border-color:#3d6b48}
 html.dark body:not(.demo-page) .pk-arrow{background:rgba(22,36,27,.92);color:#e7efe4}
 html.dark body:not(.demo-page) .pk-dots i{background:#2c4233}
+/* v142: credits, the web app team (4 people) on one row, the AI tools below */
+.cr-ai{margin-top:8px}
+@media(min-width:741px){.cr-team{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:740px){.cr-ai{margin-top:6px}.cr-webs .ab-av{width:34px;height:34px;font-size:.75rem}}
+
+/* v143: post-test pass mark (80%) */
+.pg-gate{border:2px solid var(--y400,#ffc629);background:linear-gradient(135deg,#fffaf0,#fff);margin-bottom:16px}
+.pg-gate-top{display:flex;gap:14px;align-items:flex-start}.pg-gate-top h2{margin:2px 0 4px}.pg-gate-top p{margin:0}
+.pg-gate-ic{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:var(--y100,#fff4cf);color:var(--y600,#b88900)}.pg-gate-ic .icon{width:26px;height:26px}
+.pg-bar{position:relative;height:14px;border-radius:999px;background:#f1ecdc;margin:16px 0 6px;overflow:visible}
+.pg-fill{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#f5b800,#ffd23f)}
+.pg-mark{position:absolute;top:-5px;bottom:-5px;left:80%;width:3px;border-radius:2px;background:var(--g700,#176444)}
+.pg-legend{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted,#5f6f63)}.pg-legend b{color:var(--g800,#0e3b28)}
+.pg-go{margin-top:12px}.pg-go .btn{min-width:180px}
+.pg-fill.w0{width:0%}.pg-fill.w5{width:5%}.pg-fill.w10{width:10%}.pg-fill.w15{width:15%}.pg-fill.w20{width:20%}.pg-fill.w25{width:25%}.pg-fill.w30{width:30%}.pg-fill.w35{width:35%}.pg-fill.w40{width:40%}.pg-fill.w45{width:45%}.pg-fill.w50{width:50%}.pg-fill.w55{width:55%}.pg-fill.w60{width:60%}.pg-fill.w65{width:65%}.pg-fill.w70{width:70%}.pg-fill.w75{width:75%}.pg-fill.w80{width:80%}.pg-fill.w85{width:85%}.pg-fill.w90{width:90%}.pg-fill.w95{width:95%}.pg-fill.w100{width:100%}
+.pg-teacher table{width:100%}.pg-ok{display:inline-flex;align-items:center;gap:4px;color:var(--g700,#176444);font-weight:700}.pg-ok .icon{width:16px;height:16px}.pg-no{color:#b5541c;font-weight:700}
+@media(max-width:740px){.pg-gate-top{gap:10px}.pg-gate-ic{width:40px;height:40px}.pg-go .btn{width:100%}}
+html.dark .pg-gate{background:#1d2d23;border-color:#ffd966}html.dark .pg-bar{background:#2e4234}html.dark .pg-legend b{color:#e8f0ea}html.dark .pg-mark{background:#9fe0bb}
+.pg-pass{border-color:var(--g500,#2f8f5b);background:linear-gradient(135deg,#f1faf4,#fff)}.pg-pass .pg-gate-ic{background:#e3f4e9;color:var(--g700,#176444)}.pg-pass .pg-fill{background:linear-gradient(90deg,#2f8f5b,#5cc488)}
+.completion-card+.pg-gate{max-width:760px;margin:16px auto 0}
+html.dark .pg-pass{background:#1a3324;border-color:#5cc488}
+/* v144: ranks. 10 picture emblems (Beginner to Mythic), 5 stars each; the reader level (1-100) stays as a small pill. */
+.rk-stars{display:inline-flex;gap:3px;align-items:center;vertical-align:middle}.rk-stars svg{width:18px;height:18px}
+.rk-stars .on{fill:#ffc629;stroke:#c48a10}.rk-stars .off{fill:#efe8d2;stroke:#d9cfb2}
+.rk-lvpill{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;background:#0e3b28;color:#ffd966;font-size:.72rem;font-weight:800;letter-spacing:.02em;white-space:nowrap}
+.rk-lvpill small{font-size:.62rem;font-weight:700;color:#d7ecdf}
+.rk-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.72rem;color:var(--muted,#5f6f63)}
+/* home card */
+.rk-card .rl-row{flex-direction:row;flex-wrap:nowrap;align-items:center;gap:10px;margin:4px 0 10px}
+.rk-card .rk-emr{flex:none;height:118px;width:auto;margin:-6px 0 -4px -4px;filter:drop-shadow(0 4px 6px rgba(14,59,40,.18))}
+.rk-card .rk-rk{flex:1;min-width:0}.rk-card .rk-rk b{display:block;font-family:var(--font-fun);font-size:1.25rem;font-weight:800;line-height:1.15;color:var(--g800,#0e3b28);margin-bottom:4px}
+.rk-card .rk-rk .rk-stars svg{width:20px;height:20px}.rk-card .rk-meta{margin-top:6px}
+/* My achievements: rank road */
+.rk-road{padding:22px}.rk-head{display:flex;gap:20px;align-items:center}
+.rk-head .rk-big{flex:none;height:250px;width:auto;filter:drop-shadow(0 8px 14px rgba(14,59,40,.22))}
+.rk-htext{flex:1;min-width:0}.rk-htext h2{margin:0 0 2px}
+.rk-rline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0}
+.rk-title{font-family:var(--font-fun);font-size:2rem;font-weight:800;color:var(--g800,#0e3b28);line-height:1.1}.rk-rline .rk-stars svg{width:30px;height:30px}
+.rk-htext .rk-meta{gap:8px;margin:8px 0 2px;font-size:.82rem}
+.rk-htext .rk-bar{max-width:420px;margin-top:10px}
+.rk-next{margin:8px 0 0;font-size:.85rem;color:var(--g700,#176444);font-weight:600}
+.rk-ladder{list-style:none;padding:0;margin:22px 0 6px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;row-gap:16px}
+.rk-step{position:relative;text-align:center;padding:12px 4px 10px;border-radius:16px;background:#fdf8ea;border:1px solid #e9e2cc}
+.rk-step img{height:124px;width:auto;max-width:100%}.rk-step b{display:block;font-size:.8rem;color:var(--g800,#0e3b28);line-height:1.2;margin-top:4px}.rk-step small{display:block;font-size:.68rem;color:var(--muted,#5f6f63);margin-top:3px}
+.rk-step.lock img{filter:grayscale(1) opacity(.45)}.rk-step.lock b{color:#8a958d}
+.rk-step.done{background:#f5faee;border-color:#cfe5c6}
+.rk-step.now{background:#fff;border:2px solid #ffc629;box-shadow:0 6px 16px rgba(196,138,16,.18)}
+.rk-here{position:absolute;top:-10px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#0e3b28;color:#ffd966;font-size:.6rem;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:999px}
+.rk-lk{position:absolute;top:8px;right:8px;color:#8a958d}.rk-lk .rl-ic{width:18px;height:18px}
+.rk-how{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.rk-how span{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#f5faee;border:1px solid #d7e8cf;font-size:.8rem;font-weight:600;color:var(--g700,#176444)}
+.rk-how .icon,.rk-how .rl-ic{width:16px;height:16px}
+/* popups */
+.rk-stage{position:relative;display:grid;place-items:center;margin:4px 0 0}
+.rk-stage .rk-em2{position:relative;height:230px;width:auto;filter:drop-shadow(0 10px 16px rgba(0,0,0,.25));animation:rl-pop .7s cubic-bezier(.2,1.5,.4,1) .2s both}
+.rk-lvchip{display:inline-flex;align-items:center;gap:6px;margin:6px 0 4px;padding:4px 12px;border-radius:999px;background:#0e3b28;color:#ffd966;font-weight:800;font-size:.85rem}
+.rk-cel h2{margin:6px 0 4px}.rk-cel .rk-stars{margin:2px 0 4px}
+.rk-from{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 8px;margin:12px 0 4px;font-size:.8rem}
+.rk-from span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;padding:3px 10px 3px 3px;border-radius:999px;background:#fdf8ea;border:1px solid #e9e2cc;font-weight:700;color:var(--g800,#0e3b28)}
+.rk-from img{height:40px;width:auto}.rk-from .rl-ic{width:20px;height:20px;color:var(--g700,#176444)}
+.rk-chip-pop{flex-wrap:wrap;justify-content:center}.rk-chip-pop img{height:30px;width:auto}.rk-chip-pop .rk-stars svg{width:15px;height:15px}
+/* teacher list and sidebar */
+.rk-inl{display:inline-flex;align-items:center;gap:4px;margin-top:4px;padding:1px 8px 1px 2px;border-radius:999px;background:#fdf8ea;border:1px solid #e9e2cc;font-size:.7rem;font-weight:700;color:var(--g700,#176444);white-space:nowrap;width:max-content;max-width:100%}
+.rk-inl img{height:30px;width:auto}.rk-inl .rk-lvn{font-size:.6rem;font-weight:700;color:var(--muted,#5f6f63);margin-right:2px}
+.rk-inl .rk-n{display:inline-flex;align-items:center;gap:2px;font-size:.68rem;color:#c48a10;margin-left:2px}.rk-s1{width:10px;height:10px;fill:#ffc629}
+.mp-item b+.rk-inl{display:flex}
+.side-chip.rk-side{padding-left:4px}.side-chip.rk-side img{height:22px;width:auto}
+@media(max-width:740px){
+ .rk-card .rl-row{flex-wrap:wrap;gap:6px}.rk-card .rk-emr{height:104px;margin:0 auto}.rk-card .rk-rk{flex-basis:100%}
+ .rk-road{padding:16px}.rk-head{flex-direction:column;text-align:center;gap:6px}.rk-head .rk-big{height:210px}.rk-title{font-size:1.7rem}
+ .rk-rline,.rk-htext .rk-meta{justify-content:center}.rk-htext .rk-bar{margin-left:auto;margin-right:auto}
+ .rk-ladder{gap:5px;row-gap:12px}.rk-step{padding:12px 2px 8px;border-radius:12px}.rk-step img{height:72px}.rk-step b{font-size:.62rem}.rk-step small{font-size:.52rem;white-space:nowrap;letter-spacing:-.01em}
+ .rk-lk{top:4px;right:4px}.rk-lk .rl-ic{width:13px;height:13px}.rk-here{font-size:.5rem;padding:2px 6px}
+ .rk-stage .rk-em2{height:200px}
+}
+@media(prefers-reduced-motion:reduce){.rk-stage .rk-em2{animation:none}}
+html.dark .rk-card .rk-rk b,html.dark .rk-title,html.dark .rk-step b,html.dark .rk-from span{color:#e8f0ea}
+html.dark .rk-meta,html.dark .rk-step small{color:#a9bcb0}html.dark .rk-next{color:#9be0b4}
+html.dark .rk-stars .off{fill:#2e4234;stroke:#46604f}
+html.dark .rk-step,html.dark .rk-from span,html.dark .rk-inl{background:#16231b;border-color:#2e4234}html.dark .rk-step.done{background:#173326;border-color:#2f6b47}
+html.dark .rk-step.now{background:#2a2616;border-color:#ffd966}html.dark .rk-step.lock b{color:#6f8577}
+html.dark .rk-how span{background:#16231b;border-color:#2e4234;color:#c9d6cd}html.dark .rk-inl{color:#9be0b4}html.dark .rk-inl .rk-lvn{color:#a9bcb0}
+.rk-cel .rk-stars svg{width:26px;height:26px}
+@media(max-width:740px){.rk-road .rl-hs-more{justify-content:center;text-align:center}}

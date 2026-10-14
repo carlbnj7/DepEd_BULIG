@@ -31,7 +31,7 @@
   dashboard:[
    ['.identity-banner','This is you','Your name and grade are here. Tap your picture to change it.'],
    ['.level-stat','Your starting level','This is your starting level. Your teacher chose it for you, and your lessons begin here.'],
-   [['.rl-stat','.xp-stat'],'Your reader level','You earn XP for every activity you finish. XP makes your reader level go up, all the way to Level 100! Tap to see your level road.'],
+   [['.rl-stat','.xp-stat'],'Your level and rank','You earn XP for every activity you finish. XP makes your level go up, all the way to Level 100. Every 2 levels give a star, and 5 stars take you to the next rank! Tap to see all the ranks.'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
    ['.badge-stat','Your badges','Badges are prizes for learning. Tap to see the ones you earned.'],
    ['.goal-card','Today’s goal','Finish 3 activities a day. The ring fills up as you go!'],
@@ -126,7 +126,7 @@
    ['.pf-cal-grid','Your learning days','Days with a flame are days you learned. Try to learn a little every day!'],
    ['.pf-cal-mon','Other months','Use the arrows to look at other months.']],
   achievements:[
-   ['.rl-road','My reader level','Your level goes up when you earn XP. The highest level is 100.'],
+   ['.rl-road','My rank','Your rank goes from Beginner to Mythic. Every 2 levels give a star; fill 5 stars to reach the next rank. The highest level is 100.'],
    [['.rl-now'],'Your title','You get a new title every 10 levels. This is your title now.'],
    [['.rl-how'],'How to level up','Finish activities to earn XP. If your teacher moved you to a higher level, you got XP for the levels you skipped.'],
    ['.pf-shelf','Your badge shelf','All the badges you can earn in BULIG.'],
