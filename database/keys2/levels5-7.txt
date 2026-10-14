@@ -1,0 +1,46 @@
+# Levels 5-7: answers for typed and tapped cards the module answer key did not cover. Judged from the story or word bank on the page.
+# Typed answers: "a|b" = any of these; "has:x" = the answer contains x; "has2:a,b,c" = the answer names at least two of these.
+6:1:1100:pre:3 | 4=tf|t f|t, f
+6:1:4203:learn:3 | 1=t 2=f 3=t 4=t 5=f
+6:1:10209:learn:2 | 3=#1          # the module prints "a. Our toys b).Our tools" as one choice; it holds the right answer, "Our tools"
+6:1:23300:post:4 | 2=tf|t f|t, f
+6:1:23300:post:9 | 2=#1          # "a. Father b, Mother" holds the right answer, "Mother"
+6:2:9207:learn:2 | 9=squirrel|tarsier|woodpecker 11=squirrel 12=tarsier 13=tree 14=woodpecker
+6:2:10208:learn:2 | 9=butterfly 11=sky 12=butterfly 13=me
+6:2:11209:learn:2 | 12=monkey|deer|kangaroo 14=monkey 15=you 16=has:deer,kangaroo 17=you
+6:2:12210:learn:2 | 13=fish|dolphin|whale 15=fish 16=swimming|swim 17=blue 18=has:dolphin,whale
+6:2:20218:learn:2 | 9=gold 10=copper 11=coal
+6:2:21219:learn:2 | 10=bicycle|bike 11=train 12=airplane|plane
+6:2:22220:learn:3 | 1=has:boracay 2=has:mayon 3=has:pagsanjan 4=has:banaue
+6:4:2100:pre:1 | 2=body 3=feathers|feather 4=bill 5=eyes|eye 6=toes|toe 7=side 8=page 9=heavy 10=clean 11=enough
+6:4:2100:pre:2 | 1=beans 2=banana 3=leaves 4=radio 5=gold 6=ant 7=kitten 8=community 9=deer 10=umbrella 12=bed 13=hand 14=east 15=cake 16=tail
+6:4:2100:pre:3 | 2=has:max|has:dog 3=has:brown 4=has2:swing,slide,bird,duck,snack 5=has:snack|has:water 6=has:bird|has:duck
+6:4:7205:learn:1 | 2=cap 3=cup 4=pot 5=desk 6=case 7=pencil 8=plate 9=brick 10=bowl 11=knife 12=pail 13=pen 14=pie
+6:4:10208:learn:1 | 2=listen 3=nap 4=shut 5=slip 6=slow 7=mark 8=learn 9=quite|quiet 10=kiss 11=knock 12=send 13=shake
+6:4:12210:learn:1 | 2=above 3=across 4=ago 5=almost 6=outside 9=between 10=center 11=under 12=beside 13=began
+6:4:18215:learn:1 | 1=forest 2=correct 3=words|sword 4=drink 5=paragraph 6=sentence 7=parade 8=earth|heart
+6:4:24300:post:1 | 2=enough 3=eyes|eye 4=heavy 5=bill 6=side 7=body 8=clean 9=toes|toe 10=page 11=feathers|feather
+6:4:24300:post:2 | 1=kitten 2=gold 3=umbrella 4=beans 5=deer 6=radio 7=community 8=ant 9=banana 10=leaves 12=tail 13=east 14=bed 15=cake 16=hand
+6:4:24300:post:3 | 2=has:bird|has:duck 3=has:max|has:dog 4=has:snack|has:water 5=has:brown 6=has2:swing,slide,bird,duck,snack
+6:5:1100:pre:4 | 4=fellow 5=dentist 6=pants 7=ship 8=reason
+6:5:8207:learn:1 | 2=blood 3=captain 4=chance 5=fellow 6=feed 7=expect 8=pound 9=except 10=either 11=dentist
+6:5:9208:learn:1 | 2=nor 3=overalls|overall 4=pants 5=several 6=point 7=everything 8=shaped 9=rather 10=ship 11=reason
+6:5:20219:learn:1 | 1=sugar 2=tear 3=umbrella 4=visit 5=zipper 6=stove 7=spoon 8=soldier 9=scissors 10=sandwich 11=salt 12=rubber 13=rose|roses 14=handkerchief 15=noon
+6:5:21220:learn:1 | 1=napkin 2=mirror 3=medicine 4=lips 5=lesson 6=juice 7=office 8=grocery 9=hammer 10=gate 11=curtain 12=cupboard 13=crown 14=crayons|crayon 15=cocoa
+6:5:24402:learn:1 | 1=rose 2=soldier 3=cupboard 4=visit 5=thousand 6=church 7=stove 8=napkin 9=noon 10=twenty
+6:5:25403:learn:1 | 1=handkerchief|tissue|hanky|towel 2=child|kid|youth 3=tomorrow 4=size 5=quarter 6=scissors|knife|cutter 9=pharmacy|drugstore|botika 10=deposit|save
+6:5:28406:learn:1 | 1=garage 2=thumb 3=captain 4=shadow 5=follow 6=degree|degrees 7=choice|decision 8=clarify|explain 9=pilot 10=oil
+6:5:35413:learn:1 | 1=garage 2=thumb 3=shadow 4=captain 5=follow
+6:5:38416:learn:1 | 1=beauty|beautiful 2=calculator|calculate|solve 3=environment 4=journey|trip 5=inspiration|inspire|motivation
+6:5:40418:learn:1 | 1=beautiful 2=solve|calculate 3=environment 4=journey|trip 5=inspire|motivate 6=mysterious|confusing 7=respect|praise 8=discover 9=challenge 10=creative
+6:5:41419:learn:1 | 1=mysterious 2=respect 3=discover|explore 4=challenge 5=creative
+6:6:1100:pre:1 | 1=7 2=twelve
+6:6:11210:learn:1 | 3=blue 4=mind 5=wish 6=exercise 7=energy 8=direction 10=paint 11=bill 12=perhaps 13=rain 14=window 15=direction 16=anything 17=difference 18=wish 19=count
+6:6:16215:learn:1 | 1=patients 2=accept 3=except 4=guest 5=guessed 6=our 7=please 8=town 9=myself 10=early 11=send 12=quietly 13=wide 14=believe 15=carefully 16=patience 17=action 18=paragraph
+6:6:22300:post:1 | 1=three 2=5 4=3 8=softly 9=cold
+6:6:22300:post:2 | 5=dog 6=green
+7:6:10209:learn:1 | 3=C
+7:6:11210:learn:1 | 2=C 3=B
+7:6:12211:learn:1 | 2=B 3=A 4=B
+7:6:13212:learn:1 | 2=C 3=C
+8:1:37237:learn:1 | 2=ice drop|egg soup

@@ -30,12 +30,14 @@
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
    ['.identity-banner','This is you','Your name and grade are here. Tap your picture to change it.'],
-   ['.level-stat','Your starting level','This is your starting level. Your teacher chose it for you, and your lessons begin here.'],
-   [['.rl-stat','.xp-stat'],'Your reader level','You earn XP for every activity you finish. XP makes your reader level go up, all the way to Level 100! Tap to see your level road.'],
+   ['.level-stat','My level now','The level you are on now and how much of it you finished. It also shows the level your teacher started you at. Tap it to go to that level.'],
+   [['.rl-stat','.xp-stat'],'Your level and rank','You earn XP for every activity you finish. XP makes your level go up, all the way to Level 100. Every 2 levels give a star, and 5 stars take you to the next rank! Tap to see all the ranks.'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
    ['.badge-stat','Your badges','Badges are prizes for learning. Tap to see the ones you earned.'],
+   [['.pg-gate'],'Post-test result','You need 80% on a level’s post-test to open the next level. Tap Try again to answer the parts you missed. You can do it!'],
    ['.goal-card','Today’s goal','Finish 3 activities a day. The ring fills up as you go!'],
    [['.next-adventure .btn.primary','.next-adventure'],'Start learning','Tap this button to go to your next lesson. BULIG remembers where you stopped.'],
+   [['.lb-mini-art'],'Your reading ladder','This is your reading ladder. You stand on the level you are on now, and every level you finish (or start above) gets a ribbon. Tap it to see your whole reading board.'],
    [['.pupil-tabbar .tab-play','.sidebar nav a[href="?page=lessons"]'],'All your lessons','Here you find all your levels and the road map of each level.'],
    [['.pupil-tabbar a[href="?page=calendar"]','.sidebar nav a[href="?page=calendar"]'],'Your calendar','See every day you learned.'],
    [['.pupil-tabbar a[href="?page=profile"]','.sidebar nav a[href="?page=profile"]'],'Your profile','Change your picture and see this week. Settings are there too.'],
@@ -50,7 +52,9 @@
    [['.nt-row'],'Open one','Tap a notification to go straight to it. A yellow dot means it is new.'],
    [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
   lessons:[
+   [['.pg-gate'],'Post-test result','You need 80% on the post-test to open the next level. Tap Try again to answer the parts you missed.'],
    ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
+   [['a.off-pagelink[href="?page=board"]'],'My reading board','See all your levels as a ladder, with a ribbon for every level you finish or start above.'],
    [['.level-card.pf-current','.level-card.available'],'Your level','Your level is always at the top. Tap "Continue learning" to open your next lesson, or "See my learning path" for the road map.'],
    [['.level-fold>summary'],'Optional practice','Levels your teacher skipped are folded here. Tap to open them and practise whenever you like.'],
    [['.level-card.unavailable'],'Locked levels','A lock means you need to finish the level before it first. Tap a locked level to see what to do.'],
@@ -120,20 +124,25 @@
    [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
    [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.']],
   'lesson-done':[
-   ['.completion-card','Lesson finished!','Great job! Tap the button to save the lesson and go back to your map.']],
+   ['.completion-card','Lesson finished!','Great job! Tap the button to save the lesson and go back to your map.'],
+   [['.pg-gate'],'Your post-test score','This is your post-test score. 80% or more opens the next level. Below that, tap Try again to answer the missed parts.']],
   calendar:[
    ['.pf-cal-sum','Your streak','How many days in a row you learned, and your best streak ever.'],
    ['.pf-cal-grid','Your learning days','Days with a flame are days you learned. Try to learn a little every day!'],
    ['.pf-cal-mon','Other months','Use the arrows to look at other months.']],
   achievements:[
-   ['.rl-road','My reader level','Your level goes up when you earn XP. The highest level is 100.'],
-   [['.rl-now'],'Your title','You get a new title every 10 levels. This is your title now.'],
-   [['.rl-how'],'How to level up','Finish activities to earn XP. If your teacher moved you to a higher level, you got XP for the levels you skipped.'],
+   ['.rl-road','My rank','Your rank goes from Beginner to Mythic. Every 2 levels give a star; fill 5 stars to reach the next rank. The highest level is 100.'],
+   [['.rk-ladder'],'All the ranks','Beginner, Learner, Explorer … all the way to Mythic. The one that says YOU ARE HERE is your rank now.'],
+   [['.rk-how'],'How to rank up','Finish activities to earn XP. If your teacher moved you to a higher level, you got XP for the levels you skipped.'],
    ['.pf-shelf','Your badge shelf','All the badges you can earn in BULIG.'],
    [['.pf-shelf-item.pf-got'],'Badges you earned','Shiny badges are yours! The date shows when you earned it.'],
    [['.pf-shelf-item.pf-locked'],'Badges to earn','Read what to do to unlock each badge.'],
-   ['.cert-card','My certificates','Finish every lesson of a level to get a certificate. Tap it to print.'],
+   ['.cert-card','My certificates','Finish every lesson of a level and pass its post-test (80% or more) to get a certificate. Tap it to print.'],
    ['.badgegrid','Rewards','Collect XP to reach each reward.']],
+  board:[
+   ['.lb-sum','Your ribbons','How many ribbons you have, the level you are on, and how many levels are left to the Reading Castle.'],
+   ['.lb-card','Your reading ladder','Each step is a level. You stand on the step you are on now. Finish a level and its ribbon is yours! Tap a step to open its lessons.'],
+   [['.lb-legend'],'What the colours mean','Green is finished, yellow is where you are, and grey is locked.']],
   offline:[
    ['.off-sum','Your saved lessons','See how many levels are saved on this device, and how much space they use.'],
    [['.op-all'],'Download everything','One tap saves every level you can open. Use Wi-Fi for big downloads.'],
@@ -216,6 +225,7 @@
   manage:[
    ['.pupil-tabs','Three tabs','You are on Learning. Open Accounts to add pupils or print sign-in tickets, and Progress to see the whole class.'],
    ['.mp-list','Your pupils','Search or filter by section, then tap a pupil to manage them.'],
+   [['.rk-inl'],'Level and rank','Each pupil’s reader level (1 to 100), rank emblem and stars. They go up as the pupil finishes activities.'],
    ['.mp-bulkbar','Many pupils at once','Tick pupils in the list and set one starting level for all of them.'],
    ['.mp-start','Starting level','Change where this pupil begins. Earlier levels become optional practice.'],
    ['.cd-path','Learning path','Every level and lesson with its status. Open "Activities" to tick single activities.'],
@@ -227,19 +237,27 @@
    [['a[href*="page=certificates"]'],'Certificates','Print certificates for every pupil who finished this level.']],
   sections:[
    ['.section-add','Add a section','Type the section name, choose the grade and add it.'],
-   ['.section-board','Your sections','Sections grouped by grade. Tap one to rename or archive it.']],
+   ['.section-board','Your sections','Sections grouped by grade. Tap one to rename or archive it.'],
+   [['.section-chip summary'],'Report cards','Tap a section, then Report cards, to print a Reading Progress Report Card for every pupil in it, one page each.']],
   review:[
    ['.pageheading','Activity history','Read what your pupils answered and leave short notes.'],
    ['.rv-tabs','Needs feedback','New answers wait here. Once you save feedback, an answer moves to Reviewed.'],
    ['.rv-filter','One pupil at a time','Choose a pupil to see only their answers.'],
    [['.rv-item'],'Open an answer','Tap a line to read the answer, drawing or reading result.'],
+   [['.rv-ks'],'Auto score','BULIG checks answers with the answer key. Open an answer to see each card marked Right or Wrong, with the right answer. You can change any score.'],
    [['.rv-phrases'],'Quick feedback','Tap a ready-made phrase, or write your own note. Then press Save.']],
+  report_card:[
+   [['.rc-btns .btn.primary'],'Print','Print the cards or save them as a PDF. Each pupil gets one A4 page.'],
+   [['.rc-page'],'The report card','Name, LRN, grade and section, school and school year come from BULIG. The ladder and the remarks show each level’s result and date.'],
+   [['.rc-tip'],'Logos','Your administrator can upload the Division and school logos in Settings, School info.']],
   guide:[
    [['form.card'],'Choose a lesson','The full text of each lesson plan. In Class Demo, tap "Lesson plan" for a quick view.'],
    [['.source-pages'],'Original pages','Open the matching pages of the official module.'],
    [['a.btn.secondary[href*="download_source"]'],'Download the module','Get the original module file for printing.']],
   'pupil-detail':[
-   ['.pageheading','Pupil progress','XP, finished lessons and streak for this pupil.'],
+   ['.pageheading','Pupil progress','Reader level, rank, XP, finished lessons and streak for this pupil.'],
+   [['a[href*="report_card&id"]'],'Report card','Print this pupil’s Reading Progress Report Card: the reading ladder, each level’s result and date, and lines for signatures.'],
+   [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.'],
    ['#learning-path','Learning path','Mark lessons as done in class here, or use My pupils for activities too.']],
   profile:P.profile
  };
@@ -305,6 +323,7 @@
   settings:[
    [['.sch-card'],'Level schedule','Choose the date each level opens. Pupils who finish early wait for that date, so the class moves together. Fill the dates for me sets one level per week.'],
    ['nav.ws-tabs','Settings sections','Security, school details, announcements, badges and rewards, and the school year.'],
+   [['.rc-logoset'],'Report card logos','Upload the Division and school logos. They print at the top of every Reading Progress Report Card.'],
    ['#admin-pin','Admin PIN','Change the 4-digit PIN you enter after your password.'],
    [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG protects accounts from wrong passwords.']],
   profile:[

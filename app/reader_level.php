@@ -11,8 +11,11 @@
 const RL_MAX=100;
 /* Share of the head-start XP given right away. */
 const RL_HS_NOW=.25;
-/* A new title every 10 levels: [first level, title, icon]. */
-const RL_TIERS=[[1,'Little Reader','sprout'],[10,'Word Finder','find'],[20,'Sound Explorer','sound'],[30,'Story Seeker','map'],[40,'Page Turner','page'],[50,'Book Buddy','book'],[60,'Bright Reader','sun'],[70,'Story Star','star'],[80,'Reading Hero','shield'],[90,'Reading Champion','trophy'],[100,'Master Reader','crown']];
+/* Ranks: 10 ranks of 10 reader levels each (Levels 1-10 Beginner, 11-20 Learner, ... 91-100 Mythic). Every 2 reader levels
+   give a star, 5 stars in each rank; the level after the 5th star gives the next rank. XP never goes down, so stars and ranks
+   are never taken away. Emblems: public/assets/images/ranks/<key>.webp (small copies in ranks/sm/ for chips). */
+const RK_RANKS=[['beginner','Beginner'],['learner','Learner'],['explorer','Explorer'],['achiever','Achiever'],['champion','Champion'],['guardian','Guardian'],['elite','Elite'],['master','Master'],['legend','Legend'],['mythic','Mythic']];
+const RK_STARS=5;
 
 /** XP needed to go from level $n to level $n+1. */
 function rl_step(int $n):int{return 20+(int)round(.72*($n-1));}
@@ -20,8 +23,24 @@ function rl_step(int $n):int{return 20+(int)round(.72*($n-1));}
 function rl_need(int $l):int{static $t=null;if($t===null){$t=[1=>0];for($n=1;$n<RL_MAX;$n++)$t[$n+1]=$t[$n]+rl_step($n);}return $t[max(1,min(RL_MAX,$l))];}
 /** Level, XP inside the level (cur) and XP the level needs (need) for an XP total. */
 function rl_from_xp(int $xp):array{$l=1;while($l<RL_MAX&&$xp>=rl_need($l+1))$l++;$max=$l>=RL_MAX;return ['level'=>$l,'xp'=>$xp,'cur'=>$max?0:$xp-rl_need($l),'need'=>$max?0:rl_step($l),'max'=>$max];}
-function rl_tier(int $l):array{$t=RL_TIERS[0];foreach(RL_TIERS as $x)if($l>=$x[0])$t=$x;return $t;}
 function rl_pct(array $r):int{return $r['max']?100:(int)floor(100*$r['cur']/max(1,$r['need']));}
+/** The rank of a reader level: i (0-9), k (emblem file), name, from / to (its levels) and stars (0-5). */
+function rk_of(int $level):array{$level=max(1,min(RL_MAX,$level));$i=min(count(RK_RANKS)-1,intdiv($level-1,10));$from=$i*10+1;return ['i'=>$i,'k'=>RK_RANKS[$i][0],'name'=>RK_RANKS[$i][1],'from'=>$from,'to'=>$from+9,'stars'=>min(RK_STARS,intdiv($level-$from+1,2))];}
+/** A rank emblem picture ($small: the light copy for chips). */
+function rk_img(int $i,string $cls,bool $small=false,string $alt=''):string{
+ $k=RK_RANKS[$i][0];$f='assets/images/ranks/'.($small?'sm/':'').$k.'.webp';if(!is_file(__DIR__.'/../public/'.$f))$f='assets/images/ranks/'.$k.'.webp';
+ return '<img class="'.$cls.'" src="'.e($f).'" alt="'.e($alt).'" decoding="async">';
+}
+/** The 5 rank stars, $n of them filled. */
+function rk_stars(int $n,string $cls=''):string{
+ $s='';for($x=0;$x<RK_STARS;$x++)$s.='<svg viewBox="0 0 24 24" class="'.($x<$n?'on':'off').'"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" stroke-width="1.3" stroke-linejoin="round"/></svg>';
+ return '<span class="rk-stars'.($cls?' '.$cls:'').'" role="img" aria-label="'.$n.' of '.RK_STARS.' stars">'.$s.'</span>';
+}
+/** Teacher lists: "Lv 39 [emblem] Achiever 4/5". */
+function rk_chip(int $pid):string{$r=rl_info($pid);$k=rk_of($r['level']);return '<span class="rk-inl" title="Reader level '.$r['level'].' · '.e($k['name']).', '.$k['stars'].' of '.RK_STARS.' stars"><span class="rk-lvn">Lv '.$r['level'].'</span>'.rk_img($k['i'],'',true).e($k['name']).'<span class="rk-n">'.$k['stars'].'/'.RK_STARS.' '.rk_star1().'</span></span>';}
+/** "an Achiever", "a Champion". */
+function rk_a(string $name):string{return (preg_match('~^[AEIOU]~',$name)?'an ':'a ').$name;}
+function rk_star1():string{return '<svg class="rk-s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>';}
 
 /** Head-start XP for each BULIG level below the pupil's starting level: [level id => XP]. */
 function rl_headstart(int $pid,bool $fresh=false):array{
@@ -49,12 +68,12 @@ function rl_info(int $pid,bool $fresh=false):array{return rl_from_xp(rl_xp($pid,
 
 /** After XP is added: tell the pupil (bell) when they reach a new reader level. */
 function rl_after_xp(int $pid,int $before):void{
- if(!function_exists('notify'))return;$r=rl_info($pid,true);if($r['level']<=$before)return;$t=rl_tier($r['level']);
- notify($pid,'rlevel','You reached Level '.$r['level'].'!',(rl_tier($before)[0]!==$t[0]?'New title: '.$t[1].'. ':'').($r['max']?'This is the highest level!':($r['need']-$r['cur']).' XP to Level '.($r['level']+1).'.'),'?page=achievements#reader-level');
+ if(!function_exists('notify'))return;$r=rl_info($pid,true);if($r['level']<=$before)return;
+ $k=rk_of($r['level']);$k0=rk_of($before);notify($pid,'rlevel',$k['i']>$k0['i']?'Rank up! You are now '.rk_a($k['name']).'!':'You reached Level '.$r['level'].'!',($k['i']>$k0['i']?'Level '.$r['level'].'. ':($k['stars']>$k0['stars']?'New star: '.$k['stars'].' of '.RK_STARS.'. ':'')).($r['max']?'This is the highest level!':($r['need']-$r['cur']).' XP to Level '.($r['level']+1).'.'),'?page=achievements#reader-level');
 }
 
-/** For the teacher's pupil page: "Reader level 93 (Reading Champion)". */
-function rl_pupil_line(int $pid):string{$r=rl_info($pid);return 'Reader level '.$r['level'].' ('.rl_tier($r['level'])[1].')';}
+/** For the teacher's pupil page: "Reader level 93 · Mythic rank, 1 of 5 stars". */
+function rl_pupil_line(int $pid):string{$r=rl_info($pid);$k=rk_of($r['level']);return 'Reader level '.$r['level'].' · '.$k['name'].' rank, '.$k['stars'].' of '.RK_STARS.' stars';}
 
 /** Reader-level badges above the pupil's level are taken back (the old head start gave them all at once). Called by
     award_badges(); rl_celebration() also forgets them in the "seen" record so each pops up again when really reached. */
@@ -73,21 +92,30 @@ function rl_ring(int $level,int $pct,string $cls=''):string{
 
 /* ---------- Pupil home: "My reader level" card ---------- */
 function rl_card(int $pid):string{
- $r=rl_info($pid);$t=rl_tier($r['level']);$next=$r['level']+1;
- $h='<a class="pupil-stat xp-stat rl-stat" href="?page=achievements#reader-level" aria-label="My reader level: Level '.$r['level'].', '.e($t[1]).'. '.($r['max']?'The highest level.':$r['cur'].' of '.$r['need'].' XP to Level '.$next.'.').'"><span class="stat-label">'.icon('star').'My reader level</span><span class="rl-row">'.rl_ring($r['level'],rl_pct($r)).'<span class="rl-name"><b>'.rl_icon($t[2]).e($t[1]).'</b><small>'.number_format($r['xp']).' XP in all</small></span></span>';
+ $r=rl_info($pid);$k=rk_of($r['level']);$next=$r['level']+1;
+ $h='<a class="pupil-stat xp-stat rl-stat rk-card" href="?page=achievements#reader-level" aria-label="My level and rank: '.e($k['name']).', '.$k['stars'].' of '.RK_STARS.' stars, Level '.$r['level'].'. '.($r['max']?'The highest level.':$r['cur'].' of '.$r['need'].' XP to Level '.$next.'.').'"><span class="stat-label">'.icon('star').'My level and rank</span>'
+  .'<span class="rl-row">'.rk_img($k['i'],'rk-emr').'<span class="rk-rk"><b>'.e($k['name']).'</b>'.rk_stars($k['stars']).'<span class="rk-meta"><span class="rk-lvpill"><small>LV</small>'.$r['level'].'</span>'.$k['stars'].' of '.RK_STARS.' stars</span></span></span>';
  if($r['max'])return $h.'<span class="stat-foot">You reached the highest level!</span></a>';
  return $h.'<span class="pfx-xp" data-pfx-xp="'.$pid.'" data-xp="'.$r['xp'].'"><progress data-pf-fill value="'.$r['cur'].'" max="'.$r['need'].'"></progress><span class="pfx-shine" aria-hidden="true"></span></span><span class="stat-foot">'.$r['cur'].' / '.$r['need'].' XP to Level '.$next.'</span></a>';
 }
 
 /* ---------- My achievements: the level road from Level 1 to 100 ---------- */
 function rl_road(int $pid):string{
- $r=rl_info($pid);$t=rl_tier($r['level']);$hs=rl_headstart_now($pid);$later=array_sum(rl_headstart($pid))-$hs;
- $h='<section class="card rl-road" id="reader-level" aria-label="My reader level"><div class="rl-rhead">'.rl_ring($r['level'],rl_pct($r),'rl-ring-md').'<div class="rl-rtext"><h2>My reader level</h2><p class="muted">Level '.$r['level'].' · '.e($t[1]).' · '.number_format($r['xp']).' XP in all'.($hs?' (with '.number_format($hs).' head-start XP)':'').'</p>'.($later>0?'<p class="rl-hs-more">'.rl_icon('up').number_format($later).' more head-start XP comes as you finish your activities.</p>':'');
- $h.=$r['max']?'<p class="rl-top">'.rl_icon('crown').'You reached Level 100, the highest level. You are a Master Reader!</p>':'<progress class="rl-bar" value="'.$r['cur'].'" max="'.$r['need'].'" aria-label="XP toward Level '.($r['level']+1).'"></progress><small>'.$r['cur'].' / '.$r['need'].' XP to Level '.($r['level']+1).'. A new title every 10 levels!</small>';
- $h.='</div></div><ol class="rl-stops">';
- foreach(RL_TIERS as $x){$st=$x[0]===$t[0]?'now':($x[0]<$t[0]?'done':'');$h.='<li class="rl-stop'.($st?' rl-'.$st:'').'">'.($st==='now'?'<span class="rl-here">YOU ARE HERE</span>':'').'<span class="rl-sic">'.rl_icon($st===''?'lock':$x[2]).'</span><small>LV '.$x[0].'</small><b>'.e($x[1]).'</b></li>';}
- return $h.'</ol><div class="rl-how"><span>'.icon('check').'Finish an activity: +5 to +20 XP</span><span>'.rl_icon('up').'Skipped levels give XP too</span><span>'.icon('star').'Highest level: 100</span></div></section>';
+ $r=rl_info($pid);$k=rk_of($r['level']);$hs=rl_headstart_now($pid);$later=array_sum(rl_headstart($pid))-$hs;$lv=$r['level'];
+ $h='<section class="card rl-road rk-road" id="reader-level" aria-label="My rank and reader level"><div class="rk-head">'.rk_img($k['i'],'rk-big',false,$k['name'].' rank').'<div class="rk-htext"><h2>My rank</h2><div class="rk-rline"><span class="rk-title">'.e($k['name']).'</span>'.rk_stars($k['stars']).'</div>'
+  .'<div class="rk-meta"><span class="rk-lvpill"><small>LEVEL</small>'.$lv.' of '.RL_MAX.'</span>'.number_format($r['xp']).' XP in all'.($hs?' (with '.number_format($hs).' head-start XP)':'').'</div>'.($later>0?'<p class="rl-hs-more">'.rl_icon('up').number_format($later).' more head-start XP comes as you finish your activities.</p>':'');
+ if($r['max'])$h.='<p class="rl-top">'.rl_icon('crown').'You reached Level 100, the highest level. You are a Mythic reader!</p>';
+ else{$tips=[$r['cur'].' / '.$r['need'].' XP to Level '.($lv+1)];
+  if($k['stars']<RK_STARS){$sl=$k['from']+2*($k['stars']+1)-1;$tips[]='Level '.$sl.' gives your '.rk_ord($k['stars']+1).' star';}
+  if($k['i']<count(RK_RANKS)-1)$tips[]='Level '.($k['to']+1).' makes you '.rk_a(RK_RANKS[$k['i']+1][1]).'!';
+  $h.='<progress class="rl-bar rk-bar" value="'.$r['cur'].'" max="'.$r['need'].'" aria-label="XP toward Level '.($lv+1).'"></progress><p class="rk-next">'.e(implode(' · ',$tips)).'</p>';}
+ $h.='</div></div><ol class="rk-ladder">';
+ foreach(RK_RANKS as $i=>$x){$st=$i<$k['i']?'done':($i===$k['i']?'now':'lock');
+  $h.='<li class="rk-step '.$st.'">'.($st==='now'?'<span class="rk-here">YOU ARE HERE</span>':'').($st==='lock'?'<span class="rk-lk">'.rl_icon('lock').'</span>':'').rk_img($i,'',false,$x[1].($st==='lock'?' (not yet)':'')).'<b>'.e($x[1]).'</b><small>Levels '.($i*10+1).'–'.($i*10+10).'</small></li>';}
+ return $h.'</ol><div class="rk-how"><span>'.icon('check').'Finish activities to earn XP</span><span>'.icon('star').'Every 2 reader levels = 1 star</span><span>'.rl_icon('up').'Fill 5 stars to rank up</span><span>'.rl_icon('shield').'Stars are never taken away</span></div></section>';
 }
+/** 1st, 2nd, 3rd, 4th, 5th. */
+function rk_ord(int $n):string{return $n.([1=>'st',2=>'nd',3=>'rd'][$n]??'th');}
 
 /* ---------- Popups: head start and level up (shown once each, from pupil_celebrations) ---------- */
 function rl_level_name(int $level,int $pid):string{
@@ -96,7 +124,7 @@ function rl_level_name(int $level,int $pid):string{
  return level_label($level).($title!==''?' · '.$title:'').($graded?' (Grade '.pupil_grade($pid).')':'');
 }
 function rl_celebration(array $u,array &$seen,int &$shown):string{
- $pid=(int)$u['id'];$r=rl_info($pid);$t=rl_tier($r['level']);$hs=rl_headstart($pid);$sum=array_sum($hs);$now=rl_headstart_now($pid);
+ $pid=(int)$u['id'];$r=rl_info($pid);$hs=rl_headstart($pid);$sum=array_sum($hs);$now=rl_headstart_now($pid);
  $h0=(int)($seen['h']??0);$r0=(int)($seen['r']??0);if($r0>$r['level'])$seen['b']=array_values(array_diff(array_map('intval',$seen['b']??[]),array_map('intval',array_column(rows("SELECT id FROM badges WHERE rule_type='rlevel' AND threshold_value>?",[$r['level']]),'id'))));$first=explode(' ',trim((string)$u['name']))[0];$out='';
  $conf='<div class="lc-confetti" aria-hidden="true">'.str_repeat('<i></i>',18).'</div>';$close='<button type="button" class="pw-close" data-welcome-close aria-label="Close">'.icon('close').'</button>';
  if($sum>$h0&&$shown<3){$shown++;
@@ -105,14 +133,19 @@ function rl_celebration(array $u,array &$seen,int &$shown):string{
   $out.='<div class="pw-overlay pf-cel rl-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rl-hs"><div class="pw-panel pf-cel-panel">'.$close.$conf.pf_ribbon('HEAD START!',200,'pf-green').'<h2 id="rl-hs">You skipped ahead, '.e($first).'!</h2><p class="pw-msg">Your teacher started you at '.e(level_label($start)).'. You still get the XP for the levels you skipped.</p>'
    .'<ul class="rl-hs-list">'.$li.'<li class="rl-hs-total"><span>Head-start XP</span><b>+'.number_format($sum).' XP</b></li>'
    .'<li class="rl-hs-now"><span>You get now</span><b>+'.number_format($now).' XP</b></li>'.($sum>$now?'<li class="rl-hs-later"><span>Comes as you finish your activities</span><b>+'.number_format($sum-$now).' XP</b></li>':'').'</ul>'
-   .'<div class="rl-jump">'.rl_ring($from,0).'<span class="rl-arrow">'.rl_icon('next').'</span>'.rl_ring($r['level'],rl_pct($r),'rl-ring-md').'</div><p class="rl-title-chip">'.rl_icon($t[2]).'Your title: <b>'.e($t[1]).'</b></p>'
+   .'<div class="rl-jump">'.rl_ring($from,0).'<span class="rl-arrow">'.rl_icon('next').'</span>'.rl_ring($r['level'],rl_pct($r),'rl-ring-md').'</div><p class="rl-title-chip rk-chip-pop">'.rk_img(rk_of($r['level'])['i'],'',true).'Your rank: <b>'.e(rk_of($r['level'])['name']).'</b>'.rk_stars(rk_of($r['level'])['stars']).'</p>'
    .'<div class="pw-actions"><button type="button" class="btn primary" data-welcome-close>Let’s go!</button><a class="btn secondary" href="?page=achievements#reader-level">See my level road</a></div></div></div>';
  }elseif($r0>0&&$r['level']>$r0&&$shown<3){$shown++;
-  $newTitle=rl_tier($r0)[0]!==$t[0];
-  $out.='<div class="pw-overlay pf-cel rl-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rl-up"><div class="pw-panel pf-cel-panel">'.$close.$conf.'<div class="rl-stage" aria-hidden="true"><div class="pf-burst"></div>'.rl_ring($r['level'],100,'rl-ring-lg').'</div>'.pf_ribbon('LEVEL UP!',190,'pf-green')
-   .'<h2 id="rl-up">You reached Level '.$r['level'].', '.e($first).'!</h2>'.($newTitle?'<p class="rl-title-chip">'.rl_icon($t[2]).'New title: <b>'.e($t[1]).'</b></p>':'')
-   .'<p class="pw-msg">'.($r['max']?'This is the highest level. You are a Master Reader!':($r['need']-$r['cur']).' XP to Level '.($r['level']+1).'. Keep reading!').'</p>'
-   .'<div class="pw-actions"><button type="button" class="btn primary" data-welcome-close>Yay!</button><a class="btn secondary" href="?page=achievements#reader-level">See my level road</a></div></div></div>';
+  $k=rk_of($r['level']);$k0=rk_of($r0);
+  if($k['i']>$k0['i'])$out.='<div class="pw-overlay pf-cel rl-cel rk-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rk-up"><div class="pw-panel pf-cel-panel">'.$close.$conf.'<div class="rk-stage" aria-hidden="true"><div class="pf-burst"></div>'.rk_img($k['i'],'rk-em2').'</div>'.pf_ribbon('RANK UP!',190,'pf-green')
+   .'<span class="rk-lvchip">Level '.$r['level'].'</span><h2 id="rk-up">You are now '.e(rk_a($k['name'])).', '.e($first).'!</h2>'.rk_stars($k['stars'])
+   .'<div class="rk-from"><span>'.rk_img($k0['i'],'',true).e($k0['name']).'</span>'.rl_icon('next').'<span>'.rk_img($k['i'],'',true).e($k['name']).'</span></div>'
+   .'<p class="pw-msg">'.($r['max']?'This is the highest level. You are a Mythic reader!':'You reached Level '.$r['level'].'. Keep reading to fill all '.RK_STARS.' stars!').'</p>'
+   .'<div class="pw-actions"><button type="button" class="btn primary" data-welcome-close>Yay!</button><a class="btn secondary" href="?page=achievements#reader-level">See my ranks</a></div></div></div>';
+  else $out.='<div class="pw-overlay pf-cel rl-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rl-up"><div class="pw-panel pf-cel-panel">'.$close.$conf.'<div class="rl-stage" aria-hidden="true"><div class="pf-burst"></div>'.rl_ring($r['level'],100,'rl-ring-lg').'</div>'.pf_ribbon('LEVEL UP!',190,'pf-green')
+   .'<h2 id="rl-up">You reached Level '.$r['level'].', '.e($first).'!</h2><p class="rl-title-chip rk-chip-pop">'.rk_img($k['i'],'',true).($k['stars']>$k0['stars']?'New star! ':'').'<b>'.e($k['name']).'</b>'.rk_stars($k['stars']).'</p>'
+   .'<p class="pw-msg">'.($r['max']?'This is the highest level. You are a Mythic reader!':($r['need']-$r['cur']).' XP to Level '.($r['level']+1).'. Keep reading!').'</p>'
+   .'<div class="pw-actions"><button type="button" class="btn primary" data-welcome-close>Yay!</button><a class="btn secondary" href="?page=achievements#reader-level">See my rank</a></div></div></div>';
  }
  $seen['h']=$sum;$seen['r']=$r['level'];return $out;
 }

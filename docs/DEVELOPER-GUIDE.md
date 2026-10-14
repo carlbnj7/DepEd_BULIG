@@ -23,6 +23,23 @@ send an update to the live site without breaking it.
 | `tools/` | Helpers: update builder, checker refresh, picture shrinker, admin creation. |
 | `live-update/` | Update ZIPs and SQL files given to the live site, plus preview pictures. |
 
+**Answer keys, post-test pass mark and ranks**
+
+- `database/answer-keys.json` holds the module answer keys (Levels 5–7). `database/answer-keys-2.json` holds the keys
+  BULIG judged itself for cards the modules leave unkeyed (Levels 2A, 2B, 3 and 5–7). Edit `database/keys2/*.txt`
+  (the format is at the top of `tools/keys/build2.php`), then run `php tools/keys/build2.php`; it checks every answer
+  against the real card and lists any mistake. `app/scoring.php` marks answers with both files; cards with no single
+  right answer (speaking, drawing, writing, opinions) count as right when answered, and the teacher can change any score.
+- `app/post_gate.php`: a pupil opens the next level only after scoring at least 80% (`PT_PASS`) on the level's
+  post-test. Below that, "Try again" reopens only the post-test activities that were not fully right. The
+  certificate also waits for the pass (`level_finished_at()` in `app/growth.php`).
+- `app/reading_board.php`: the pupil's **My reading board** (the school's Reading Progress Board as a staircase; drawn by
+  `app.js` from `data-lb`) and the teacher's printable **Reading Progress Report Card** (`?page=report_card&id=` for one
+  pupil, `&section=` for a section, A4, one page each). The LRN comes from `pupil_details`; school name, school head and
+  school year from Settings → School info, where the admin also uploads the Division and school logos.
+- `app/reader_level.php`: the reader level (1–100) and the 10 ranks on top of it (`RK_RANKS`, 10 levels each,
+  a star every 2 levels). Emblems are in `public/assets/images/ranks/` (small copies in `ranks/sm/`).
+
 The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`, `tests/` and `docs/` from the web.
 
 ## Rules the code depends on
