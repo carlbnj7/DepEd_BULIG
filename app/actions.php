@@ -183,8 +183,10 @@ function action():void{
    if($ok){q('DELETE FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);update_learning($pid,$aid);}
    db()->commit();$message=$ok?($exact?'Correct! Great work.':($mode==='none'?'You’re ready for the next step.':($mode==='perform'?'Activity completed. Well done!':($oral?'Your answer is saved. Great speaking!':'Your response is saved. Thank you for sharing!')))):'Not quite yet. Listen again and give it another try.';
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  if($ok&&function_exists('pt_after_answer'))pt_after_answer($pid,$a);
   submission_reply($a,$ok,$message,$ok?(int)$a['xp_reward']:0);
  }
+ if($action==='post_retake'){pt_retake(require_role('pupil'),(int)($_POST['level']??0));}
  if($action==='help_request'){help_request(require_role('pupil'));}
  if($action==='notif_read_all'){$u=current_user();if(!$u)fail('Please sign in.',403);if(notif_ready())q('UPDATE notifications SET read_at=NOW() WHERE user_id=? AND read_at IS NULL',[(int)$u['id']]);$b=(string)($_POST['back']??'');go(preg_match('/^\?page=[a-z_]+(&[A-Za-z0-9_=%&.-]*)?$/',$b)?$b:'?page=notifications');}
  /* Teacher review: approve every answer the answer key marked fully right (nothing written, drawn or recorded to read). */

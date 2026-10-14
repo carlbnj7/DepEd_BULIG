@@ -230,7 +230,7 @@ def run_pages(acc):
     status, url, _ = p.login('pupil', acc['pupil1']['id'], acc['pupil1']['pw'])
     if not check('Pupil can sign in', 'dashboard' in url and status == 200, url):
         return
-    for pg in ('dashboard', 'lessons', 'achievements', 'calendar', 'profile', 'settings', 'notifications', 'offline', 'credits'):
+    for pg in ('dashboard', 'lessons', 'achievements', 'board', 'calendar', 'profile', 'settings', 'notifications', 'offline', 'credits'):
         page_ok(p, f'?page={pg}', f'Pupil page opens: {pg}')
     acts = php_cli('probe.php', 'first_activities', 1, 1)
     if check('Level 1 has lessons and activities', acts, acts):
@@ -274,7 +274,7 @@ def run_pages(acc):
     if check('Teacher can sign in', 'dashboard' in url, url):
         uid = acc['pupil1']['uid']
         for pg in ('dashboard', 'manage', 'accounts', 'progress', 'review', 'sections', 'class_demo', 'notifications', 'cards',
-                   'qcheck', 'guide', 'profile', f'pupil&id={uid}', f'report&id={uid}', 'certificates&level=1'):
+                   'qcheck', 'guide', 'profile', f'pupil&id={uid}', f'report&id={uid}', f'report_card&id={uid}', 'certificates&level=1'):
             page_ok(t, f'?page={pg}', f'Teacher page opens: {pg}')
         status, _, _ = t.req('?page=health')
         check('A teacher cannot open an admin page', status == 403, f'status {status}')

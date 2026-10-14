@@ -1,0 +1,70 @@
+# Level 2A. Judged from the pictures and the words (the module has no answer key for Level 2A).
+2:0:1:pre:2 | 1=d 2=a 3=c 4=b 5=v          # dog, ant, can, bed, van
+2:0:1:pre:3 | 1=a 2=a 3=e 4=a 5=a          # fan, bag, net, cap, mat
+2:0:1:pre:4 | 1=t 2=n 3=y 4=x 5=g          # cat, man, toy, box, bag
+2:0:1:pre:5 | 1=s 2=f 3=b 4=h 5=s 6=/i/ 7=/a/ 8=/e/   # sun-sack-soap, fan-foot-fin, bus-bat-bed, head-hat-ham, soup-seed-sip; pit, jam, pen
+2:0:1:pre:6 | 1=/e/ 2=/i/ 3=P2 4=P3 5=P3 6=P4 7=P3      # net, lips; leg-wig, sun-man, van-can, man-fan, bat-rat
+2:0:1:pre:7 | 1=cam 2=ham 3=yell 4=P3 6=P2              # ball-bird-fish; card 5 (bell, well, hut) is left for the teacher: no two pictures share a first sound
+2:0:1:pre:8 | 1=P3 3=P3 4=P2                            # mop-map-hat, rug-mug-bird, feet-jar-meat; card 2 (pen, key, boy) is left for the teacher
+2:0:1:pre:9 | 2=star 3=bread 4=sleep 5=twin 6=corn 7=mask 8=bird 9=hen 10=flag
+2:0:1:pre:10 | 1=3 2=3 3=3 4=3 5=3                       # can, fin, pen, ham, bed
+2:0:1:pre:11 | 1=P1 2=P2 3=P1 4=P1 5=P1                  # jam, lip, dog, hat, hen
+2:0:1:pre:12 | 1=P1 2=P2 3=P3 4=P6 5=P4                  # jet, rag, pin, ham, pig
+2:0:1:pre:13 | 1=P2 2=P3 3=P2 4=P3 5=P3                  # mall-all, rice-ice, cape-ape, stall-tall, bin-in
+2:0:1:pre:14 | 1=an 2=at 3=ed 4=ig 5=up                  # pan, hat, bed, pig, cup without the first sound
+2:0:1:pre:16 | 2=/t/;heart 3=/c/;cat 5=/ll/;glass 6=/s/;stick 7=/l/;pearl 8=/m/;meat 9=/r/;grapes 10=/p/;plate 11=/l/;blow 12=/s/;star   # card 4 (tee + /t/ /d/ /g/ for "tree") has no right choice: left for the teacher
+2:0:1:pre:17 | 1=#1 2=#2 3=#2 4=#1 5=#1 6=#1 7=#2 8=#2
+2:0:2:learn:2 | 1=P1+P2+P3+P4?+P5+P7+P8+P9               # ball, bun, bag, (lady)bug, bed, bee, bus, bath; not the taxi
+2:0:2:learn:3 | 1=/c/ 2=/r/ 3=/h/ 4=/s/ 5=/p/            # car, rat, hat, sun, pan
+2:0:2:learn:4 | 1=P2+P3+P4+P5+P6+P7+P8+P9?^5             # find five /r/: ring, roof, rug, rat, ribbon, rod, ribs (restaurant counts too); not bee, car, star
+2:0:3:learn:3 | 1=/n/ 2=/a/ 3=/o/ 4=/i/                  # ink, rat, boy, pin
+2:0:3:learn:4 | 1=/e/ 2=i 3=a 4=u 5=o 6=e                # ten, kit, rag, bun, cow, ten
+2:0:4:learn:2 | 1=P1+P2+P3+P4+P5+P6+P9?                  # bat, cat, rat, ant, parrot, rabbit (the insect counts too); not turtle, tiger, turkey
+2:0:4:learn:3 | 1=d 2=g 3=n 4=t 5=r                      # pad, rag, bin, bat, bar
+2:0:5:learn:2 | 1=1-7,2-6,3-9,4-10,5-8                   # bus-bat, leg-log, sun-star, dog-doll, pig-pan
+2:0:5:learn:3 | 1=m 2=c~k 3=h 4=k 5=r                    # man-mug-mop, can-cut-cow, hat-hug-ham, kid-key-kit, run-rat-red
+2:0:6:learn:2 | 1=P1 2=P2 3=P1 4=P3 5=P3                 # jet/jar/car, pan/cup/can, wax/ten/pen, rat/map/pot, bin/pin/dot
+2:0:6:learn:3 | 1=tub+gun+hut                            # same middle sound as "nun"
+2:0:7:learn:2 | 1=bed+Ted+mad 2=mop+lip+map 3=yet+met+set 4=cab+lab+nab 5=sip+hip+hop
+2:0:7:learn:3 | 1=blue 2=blue 3=red 4=red 5=black 6=yellow 7=yellow 8=black   # bag, tag, van, ten, cat, red, dad, net
+2:0:8:learn:2 | 1=rain 2=ball 3=table 4=rug 5=man 6=rang 7=van 8=milk
+2:0:8:learn:3 | 1=P3 2=P2 3=P3 4=P1 5=P3 6=pen            # dog, spoon, boy, truck, goat; pen
+2:0:9:learn:2 | 1=P3 2=P1 4=P1 5=P3                       # rug/cup/cap, bird/well/bell, well/pin/grill, fan/cat/key; card 3 (hut, boy, pot) left for the teacher
+2:0:9:learn:3 | 1=mut 2=met 3=sale 4=meet 5=hoot 7=map 8=house 9=fell 10=hen     # card 6 (way, key, man): all three middles differ, left for the teacher
+2:0:10:learn:2 | 1=mate 2=eat 3=heat 4=tag 5=cup
+2:0:10:learn:3 | 1=P3 2=P2                                # meat/feet/key, jar/cap/car; cards 3-4 left for the teacher (picture names unclear)
+2:0:10:learn:4 | 2=ram 3=bin 4=pad 5=wall 6=ot
+2:0:11:learn:2 | 1=pig 2=lamp 3=belt 4=peg 5=dog
+2:0:11:learn:4 | 1=bit 2=pet 3=man 4=put 5=sit
+2:0:12:learn:2 | 1=P2 2=P1 3=P1 4=P2 5=P2                 # ship, cat, flag, tree, star
+2:0:12:learn:3 | 1=sp 2=gr 3=gr 4=dr 5=sh 6=gl 7=cr 8=sn 9=fr 10=fl   # spider, grapes, grass, dress, shoes, glass, crab, snail, frog, flower
+2:0:13:learn:2 | 1=camp+gift+desk+golf+sand+wasp+corn?     # final blends; corn (rn) also accepted (the module counts rn as a final blend)
+2:0:13:learn:4 | 1=rd 2=lk 3=ck 4=ck 5=rn 6=lt 7=rl 8=nd 9=sk 10=nt   # bird, milk, black, sack, horn, belt, girl, sand, mask, tent
+2:0:14:learn:2 | 2=3 3=3 4=3
+2:0:14:learn:3 | 1=3 2=4
+2:0:15:learn:3 | 1=#1 2=#2 3=#1                          # car, pen, bin
+2:0:15:learn:4 | 1=#2 2=#2                               # sand, four
+2:0:15:learn:5 | 1=seg:mat 2=seg:arm 3=seg:car 4=seg:book 5=seg:mask   # the word, split into its sounds
+2:0:16:learn:2 | 1=wig 2=lock 3=top 4=ice 5=ear 6=rip
+2:0:16:learn:3 | 1=ax 2=it 3=an 4=ap 5=up 6=words:top,and,oak 7=words:ear,rain,rap 8=words:am,at,ash
+2:0:17:learn:4 | 1=ax 2=it 3=an 4=ap 5=up
+2:0:17:learn:5 | 1=words:top,and,oak 2=words:ear,rain,rap 3=words:am,at,ash
+2:0:18:learn:2 | 1=cart 2=tent 3=clap 4=crab 5=card 6=stick
+2:0:18:learn:4 | 1=farm 2=plant 3=fork 4=ant 5=grapes
+2:0:19:learn:2 | 1=crab 2=crib 3=bread 4=meat 5=farm 6=clamp 7=mask 8=star 9=clip 10=drag
+2:0:20:learn:2 | 1=m 2=c 3=m 4=m 5=h                      # man, car, mat, map, ham
+2:0:20:learn:3 | 1=c 2=h 3=d 4=t 5=w                      # cat, ham, dam, ten, wig
+2:0:21:learn:2 | 1=g 2=t 3=t 4=t 5=m                      # bag, cat, mat, rat, ham
+2:0:21:learn:3 | 1=n 2=t 3=t 4=t 5=n                      # fan, cat, mat, bat, man
+# Post-test
+2:0:22:post:2 | 1=r 2=f 3=b 4=c~k 5=p 6=a                 # rabbit, fish, butterfly, cat, pig, pan
+2:0:22:post:3 | 1=w 2=b 3=x 4=u 5=sound:rat 6=sound:jet~plane 7=sound:pin 8=sound:dog 9=sound:mat~rug   # cow, bag, box, cup; the sounds of rat, jet, pin, dog, mat
+2:0:22:post:4 | 1=far 2=tap 3=nip 4=sit 6=P3 7=P1          # card 5 (mat, pit, key) is left for the teacher: the module does not say which rule it tests
+2:0:22:post:5 | 1=P2 2=P3 3=P3                            # cat/boy/cap, hen/ten/ring, well/bell/fan
+2:0:22:post:6 | 1=fan 2=grass 3=read 4=book 5=clap 6=nest 7=rat 8=fish 9=mat 10=red
+2:0:22:post:7 | 1=3 2=3 3=3 4=3 5=3
+2:0:22:post:8 | 1=#1 2=#2 3=#1 4=#2 5=#1 6=sound:pan 7=sound:jar 8=sound:kit     # wig, six, leg, fan, bag; pan, jar, kit
+2:0:22:post:9 | 1=sound:map 2=sound:bed
+2:0:22:post:10 | 2=/t/;heart 3=/c/;cat 4=/r/;tree 5=/l/;pearl|/s/;spear 6=/s/;stick 7=/s/;spear 8=/h/;heat 9=/r/;grapes 10=/p/;plate 11=/l/;blow 12=/c/;clip
+2:0:22:post:11 | 1=E 2=E 3=B 4=E 5=B 6=B 7=E 8=B 9=B 10=B
+2:0:22:post:12 | 1=bag 2=bat 3=car 4=can 5=cam            # card 5: camera, "cam"
