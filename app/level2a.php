@@ -256,6 +256,8 @@ function l2a_demo_view(array $u,int $level=2,int $grade=0):void{$code=l2a_code($
   if(!empty($c['build']))echo l3_build_tiles($c['build'],0,true).'<details class="l5d-key"><summary>'.l1_icon('ok').'Show the answer</summary><p>'.e($c['build']['word']).'</p></details>';
   if(!empty($c['ui']['opts'])){foreach($c['ui']['opts'] as $row)echo '<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$row)).'</div>';}
   else{$bank=$c['choices']?:($c['words']??($c['ui']['tiles']??[]));if($bank)echo '<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$bank)).'</div>';}
+  /* The answer from BULIG's own answer key (database/keys2), for the teacher to show after the class answers. */
+  if(empty($c['build'])&&function_exists('activity_key')&&($key=activity_key($a)[$d['i']+1]??null)&&($ans=key_want($key))!=='')echo '<details class="l5d-key"><summary>'.l1_icon('ok').'Show the answer</summary><p>'.e($ans).'</p></details>';
   echo '</div>'.$pics.'</div></template>';}
  echo '</div>';foot();
 }
@@ -289,7 +291,7 @@ function l5_demo_card(array $a,array $set,array $c,int $n,string $pics):string{
  $how=['write'=>'Pupils write their answers.','paper'=>'Pupils do this with you or on paper.','say'=>'Pupils read this aloud.','speed'=>'Reading for speed: time the reading together.','lgrid'=>'Find the words in the puzzle together.'];
  foreach($kinds as $k)if(isset($how[$k])){$h.='<p class="l5d-how">'.e($how[$k]).'</p>';break;}
  $key=activity_key($a)[$n]??null;
- if($key){$ans=$key['t']==='choice'?implode(' or ',array_merge([$key['a']],$key['alt']??[])):($key['t']==='match'?implode(', ',array_map(fn($i,$l)=>$i.' – '.strtoupper($l),array_keys($key['a']),$key['a'])):implode(' · ',array_map(fn($l,$v)=>$l.' = '.$v,array_keys($key['a']),$key['a'])));
+ if($key){$ans=$key['t']==='match'?implode(', ',array_map(fn($i,$l)=>$i.' – '.strtoupper($l),array_keys($key['a']),$key['a'])):key_want($key);
   $h.='<details class="l5d-key"><summary>'.l1_icon('ok').'Show the answer</summary><p>'.e($ans).'</p></details>';}
  return '<div class="l1d-'.($pics?'two':'one').' l2d l5d">'.$h.'</div>'.$pics.'</div>';
 }

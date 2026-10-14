@@ -13,14 +13,14 @@ function qc_text(array $set,int $n,string $t):string{
 
 function qcheck_view(array $u):void{
  $tid=(int)$u['id'];
- echo '<div class="pageheading"><div><span class="eyebrow">QUESTION CHECK · LEVELS 5–7</span><h1>Which questions did the class miss?</h1><p class="muted">For each lesson, see how many of your pupils got each question right and the wrong answer they chose most. Use it to plan what to read again together.</p></div></div>';
- $levels=[6,7,8];$level=(int)($_GET['level']??0);$grade=(int)($_GET['grade']??0);$lid=(int)($_GET['lesson']??0);
+ echo '<div class="pageheading"><div><span class="eyebrow">QUESTION CHECK · LEVELS 2A–7</span><h1>Which questions did the class miss?</h1><p class="muted">For each lesson, see how many of your pupils got each question right and the wrong answer they chose most. Use it to plan what to read again together.</p></div></div>';
+ $levels=[2,3,4,6,7,8];$level=(int)($_GET['level']??0);$grade=(int)($_GET['grade']??0);$lid=(int)($_GET['lesson']??0);
  /* Start with the lesson your pupils answered most recently. */
- if(!$lid&&!$level){$r=one("SELECT l.id,m.level_id,m.grade_level FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id AND t.teacher_id=? JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (6,7,8) AND c.status IN ('completed','approved') ORDER BY c.submitted_at DESC LIMIT 1",[$tid]);if($r){$lid=(int)$r['id'];$level=(int)$r['level_id'];$grade=(int)$r['grade_level'];}}
+ if(!$lid&&!$level){$r=one("SELECT l.id,m.level_id,m.grade_level FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id AND t.teacher_id=? JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (2,3,4,6,7,8) AND c.status IN ('completed','approved') ORDER BY c.submitted_at DESC LIMIT 1",[$tid]);if($r){$lid=(int)$r['id'];$level=(int)$r['level_id'];$grade=(int)$r['grade_level'];}}
  if(!in_array($level,$levels,true))$level=6;if($grade<1||$grade>6)$grade=1;
- $keys=answer_keys()['keys']??[];
- $lessons=[];foreach(rows('SELECT l.id,l.position,l.title,l.subtitle FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND m.grade_level=? AND l.published=1 ORDER BY l.position',[$level,$grade]) as $l){
-  $has=false;foreach(array_keys($keys) as $k)if(str_starts_with($k,$level.':'.$grade.':'.$l['position'].':')){$has=true;break;}if($has)$lessons[(int)$l['id']]=$l;}
+ $keys=answer_keys()['keys']??[];$graded=in_array($level,[6,7,8],true);$kg=$graded?$grade:0;
+ $lessons=[];foreach(rows('SELECT l.id,l.position,l.title,l.subtitle FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND '.($graded?'m.grade_level=?':'m.grade_level IS NULL').' AND l.published=1 ORDER BY l.position',$graded?[$level,$grade]:[$level]) as $l){
+  $has=false;foreach(array_keys($keys) as $k)if(str_starts_with($k,$level.':'.$kg.':'.$l['position'].':')){$has=true;break;}if($has)$lessons[(int)$l['id']]=$l;}
  if(!isset($lessons[$lid]))$lid=$lessons?(int)array_key_first($lessons):0;
  $answered=[];if($lessons)foreach(rows("SELECT a.lesson_id,COUNT(DISTINCT c.pupil_id) n FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id AND t.teacher_id=? JOIN activities a ON a.id=c.activity_id WHERE a.lesson_id IN (".implode(',',array_keys($lessons)).") AND c.status IN ('completed','approved') GROUP BY a.lesson_id",[$tid]) as $r)$answered[(int)$r['lesson_id']]=(int)$r['n'];
  echo '<form method="get" class="card pg-filter qc-filter"><input type="hidden" name="page" value="qcheck"><label>Level<select name="level" data-autosubmit>';foreach($levels as $l)echo '<option value="'.$l.'"'.($l===$level?' selected':'').'>'.e(level_label($l)).'</option>';echo '</select></label>';
@@ -32,15 +32,15 @@ function qcheck_view(array $u):void{
   $done=rows("SELECT c.* FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id AND t.teacher_id=? WHERE c.activity_id=? AND c.status IN ('completed','approved')",[$tid,(int)$a['id']]);
   $pupils=max($pupils,count($done));
   $stat=[];foreach($key as $n=>$k)$stat[(int)$n]=['pts'=>0,'of'=>0,'n'=>0,'wrong'=>[]];
-  foreach($done as $c){$s=key_score($a,(string)$c['response']);if(!$s)continue;foreach($s['cards'] as $n=>$x){if(!isset($stat[$n]))continue;$st=&$stat[$n];$st['n']++;$st['pts']+=$x['pts'];$st['of']+=$x['of'];if($x['t']==='choice'&&!$x['pts']&&$x['got']!=='')$st['wrong'][$x['got']]=($st['wrong'][$x['got']]??0)+1;unset($st);}}
+  foreach($done as $c){$s=key_score($a,(string)$c['response']);if(!$s)continue;foreach($s['cards'] as $n=>$x){if(!isset($stat[$n]))continue;$st=&$stat[$n];$st['n']++;$st['pts']+=$x['pts'];$st['of']+=$x['of'];if(in_array($x['t'],['choice','card'],true)&&!$x['pts']&&$x['got']!=='')$st['wrong'][$x['got']]=($st['wrong'][$x['got']]??0)+1;unset($st);}}
   $shown++;
   echo '<section class="card qc-act"><div class="qc-head"><h2>'.e($set['module_title']).'</h2><span class="muted">'.e(l1_phase_label($a['phase'])).' · '.count($done).' '.(count($done)===1?'pupil':'pupils').' answered</span></div>';
   if(!$done){echo '<p class="muted">None of your pupils has answered this activity yet.</p></section>';continue;}
   echo '<div class="tablewrap"><table class="qc-table"><thead><tr><th>Question</th><th>Pupils right</th><th>Wrong answer chosen most</th></tr></thead><tbody>';
   foreach($stat as $n=>$st){$k=$key[$n];$pct=$st['of']?(int)round(100*$st['pts']/$st['of']):0;$cls=$pct>=75?'ok':($pct>=50?'part':'no');
    arsort($st['wrong']);$w=$st['wrong']?array_key_first($st['wrong']):null;
-   $right=$k['t']==='choice'?$st['pts'].' of '.$st['n']:$pct.'% of '.($k['t']==='match'?'pairs':'events');
-   echo '<tr class="qc-'.$cls.'"><td><b>'.$n.'.</b> '.e(qc_text($set,$n,$k['t'])).'<small class="qc-ans">Answer: '.e($k['t']==='choice'?implode(' or ',array_merge([$k['a']],$k['alt']??[])):($k['t']==='match'?implode(', ',array_map(fn($i,$l)=>$i.'-'.$l,array_keys($k['a']),$k['a'])):implode(' · ',array_map(fn($l,$v)=>$l.' = '.$v,array_keys($k['a']),$k['a'])))).'</small></td>';
+   $right=in_array($k['t'],['choice','card'],true)?$st['pts'].' of '.$st['n']:$pct.'% of '.($k['t']==='match'?'pairs':'events');
+   echo '<tr class="qc-'.$cls.'"><td><b>'.$n.'.</b> '.e(qc_text($set,$n,$k['t'])).'<small class="qc-ans">Answer: '.e(key_want($k)).'</small></td>';
    echo '<td><span class="qc-bar" role="img" aria-label="'.$pct.' percent right"><i class="qc-fill w'.(int)(round($pct/5)*5).'"></i></span><small>'.e($right).'</small></td>';
    echo '<td>'.($w!==null?'<span class="qc-wrong">'.e($w).' ('.$st['wrong'][$w].')</span>':'<span class="muted">—</span>').($cls==='no'&&$st['n']?'<small class="qc-tip">Read this part of the story again together.</small>':'').'</td></tr>';}
   echo '</tbody></table></div></section>';}
@@ -65,8 +65,8 @@ function pupil_report_view(array $u):void{
   foreach($lv as $r){$L=(int)$r['level_id'];$ls=level_lessons($L,$grade);if(!$ls)continue;$ids=implode(',',array_map(fn($x)=>(int)$x['id'],$ls));$d=(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL AND lesson_id IN ('.$ids.')',[$pid]);
    echo '<tr><td>'.e(level_label($L).' · '.(string)val('SELECT title FROM bulig_levels WHERE id=?',[$L])).'</td><td>'.$d.' of '.count($ls).'</td><td>'.($d>=count($ls)?'Finished':($d?'In progress':'Started')).'</td></tr>';}
   echo '</tbody></table>';}
- /* Pre-test and post-test (marked by the answer key). */
- $tests=rows("SELECT m.level_id,a.phase,SUM(c.score) s,SUM(c.max_score) mx FROM activity_completion c JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=? AND m.level_id IN (6,7,8) AND a.phase IN ('pre','post') AND c.max_score>0 AND c.status IN ('completed','approved') GROUP BY m.level_id,a.phase ORDER BY m.level_id",[$pid]);
+ /* Pre-test and post-test (marked by the answer keys). */
+ $tests=rows("SELECT m.level_id,a.phase,SUM(c.score) s,SUM(c.max_score) mx FROM activity_completion c JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=? AND a.phase IN ('pre','post') AND c.max_score>0 AND c.status IN ('completed','approved') GROUP BY m.level_id,a.phase ORDER BY m.level_id",[$pid]);
  if($tests){$by=[];foreach($tests as $t)$by[(int)$t['level_id']][$t['phase']]=$t;$n=fn($x)=>rtrim(rtrim(number_format((float)$x,2),'0'),'.');
   echo '<h2 class="rp-h">Pre-test and post-test</h2><table class="rp-table"><thead><tr><th>Level</th><th>Pre-test</th><th>Post-test</th><th>Change</th></tr></thead><tbody>';
   foreach($by as $L=>$t){$pre=$t['pre']??null;$post=$t['post']??null;$pp=$pre?100*$pre['s']/$pre['mx']:null;$qp=$post?100*$post['s']/$post['mx']:null;
