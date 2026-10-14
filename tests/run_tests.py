@@ -306,7 +306,14 @@ def test_account_ids(a, acc):
     pid = acc['pupil1']['id']
     check('A new pupil gets a new-style ID (school code + year + number)', re.fullmatch(r'[A-Z]{3,10}\d{6,}', pid or '') is not None, pid)
     a.req('index.php', {'action': 'admin_school_code', 'school_code': 'tces', 'csrf': a.token('?page=settings&tab=ids')})
+    # Like many live servers: users and the history table compare text differently (MySQL error 1267 before the fix).
+    coll = "SELECT collation_name FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='%s' AND column_name='%s'"
+    users_coll = mysql('-N', '-e', coll % ('users', 'public_id'), db=DB['name']).stdout.strip()
+    other = 'utf8mb4_unicode_ci' if users_coll != 'utf8mb4_unicode_ci' else 'utf8mb4_general_ci'
+    mysql('-e', f'ALTER TABLE account_id_history CONVERT TO CHARACTER SET utf8mb4 COLLATE {other}', db=DB['name'])
     a.req('index.php', {'action': 'admin_ids_switch', 'school_code': 'TCES', 'csrf': a.token('?page=settings&tab=ids')})
+    hist_coll = mysql('-N', '-e', coll % ('account_id_history', 'old_id'), db=DB['name']).stdout.strip()
+    check('The switch works when the two tables compare text differently (and makes them match)', hist_coll == users_coll, f'{users_coll} / {hist_coll}')
     _, _, listing = a.req('?page=ids_csv')
     rows = {r[1]: r for r in csv.reader(io.StringIO(listing.lstrip('\ufeff'))) if len(r) >= 6}
     teacher = rows.get('Test Teacher', ['', '', '', '', '', ''])
