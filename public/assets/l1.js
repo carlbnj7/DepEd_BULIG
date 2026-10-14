@@ -196,6 +196,8 @@
  if(D){
   const tpls=$$('template.l1d-t',D),stage=$('[data-d-stage]',D),prev=$('[data-d-prev]',D),next=$('[data-d-next]',D),count=$('[data-d-count]',D),lis=$('[data-d-listen]',D),les=$('#demo-lesson'),jump=$('#demo-jump'),full=$('[data-d-full]',D);
   let at=Math.min(tpls.length-1,Math.max(0,+D.dataset.start||0));
+  /* A saved (offline) copy always starts at slide 1: go back to the slide in the address. */
+  {const q=new URLSearchParams(location.search),qa=q.get('activity'),ql=q.get('lesson');if(!at&&(qa||ql)){const i=qa?tpls.findIndex(t=>t.dataset.id===qa):tpls.findIndex(t=>t.dataset.lesson===ql);if(i>0)at=i;}}
   const startOf=i=>{const l=tpls[i].dataset.lesson;return tpls.findIndex(t=>t.dataset.lesson===l);};
   /* Fit the slide: make the words smaller until nothing needs scrolling. */
   function fit(){const box=stage.querySelector('.l1d-one,.l1d-two');if(!box)return;let f=1;box.style.setProperty('--fit','1');

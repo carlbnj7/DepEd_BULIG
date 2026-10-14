@@ -25,7 +25,11 @@
   t.addEventListener('pointerdown',e=>{sx=e.clientX;t.setPointerCapture(e.pointerId);});t.addEventListener('pointermove',e=>{if(sx!==null)t.style.setProperty('--dx',(e.clientX-sx)+'px');});
   t.addEventListener('pointerup',e=>{if(sx===null)return;const d=e.clientX-sx;sx=null;if(Math.abs(d)>70)close();else t.style.setProperty('--dx','0px');});return t;}
  window.buligToast=toast;
- $$('div.notice[role=status]').forEach(n=>{if(n.closest('.tst-stack'))return;const txt=(n.querySelector('span')||n).textContent.trim();if(!txt)return;n.remove();setTimeout(()=>toast(txt,/could not|error|failed|not allowed|incorrect|invalid/i.test(txt)?'err':'ok'),still?0:350);});
+ /* A message waits until the greeting and the welcome card after signing in are closed, so it is not hidden behind them. */
+ const afterWelcome=async fn=>{const wait=n=>new Promise(r=>document.addEventListener(n,r,{once:true}));
+  if(window.buligHelloOpen&&window.buligHelloOpen())await wait('bulig:hello-done');await new Promise(r=>setTimeout(r,80));
+  if(window.pfOverlayOpen&&window.pfOverlayOpen())await wait('pf:overlays-done');fn();};
+ $$('div.notice[role=status]').forEach(n=>{if(n.closest('.tst-stack'))return;const txt=(n.querySelector('span')||n).textContent.trim();if(!txt)return;n.remove();setTimeout(()=>afterWelcome(()=>toast(txt,/could not|error|failed|not allowed|incorrect|invalid/i.test(txt)?'err':'ok',/ID is now/.test(txt)?12000:0)),still?0:350);});
 
  /* ---------- shimmer placeholders while a slow page loads ---------- */
  const main=$('main.main');
