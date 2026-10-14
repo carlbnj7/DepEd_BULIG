@@ -21,9 +21,9 @@ function teacher_sections_label(int $id):string{
  return $s?'Grade '.(int)$s[0]['grade_level'].' · '.$s[0]['name'].(count($s)>1?' +'.(count($s)-1).' more':''):'';
 }
 
-/** A new teacher: Teacher ID from the sequence, a starter password and a Teacher Pass key. Call inside a transaction. */
+/** A new teacher: a Teacher ID (PCEST0001), a starter password and a Teacher Pass key. Call inside a transaction. */
 function teacher_create(string $name,string $sex):array{
- $next=(int)val('SELECT next_value FROM id_sequences WHERE kind=? FOR UPDATE',['teacher']);q('UPDATE id_sequences SET next_value=next_value+1 WHERE kind=?',['teacher']);$public='T'.$next;
+ $public=new_account_id('teacher');
  q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,'teacher',$name,password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
  q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sex);
  $card=card_issue($id,true);

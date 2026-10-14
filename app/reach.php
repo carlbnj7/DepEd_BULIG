@@ -6,11 +6,12 @@
 /** Changes whenever BULIG's files are updated, so lessons saved for offline can be marked "Needs update". */
 function bulig_build():string{
  static $b=null;if($b!==null)return $b;$s='';$r=__DIR__.'/../';
- foreach(['app/views.php','app/presentation.php','app/level2_cards.php','public/assets/app.js','public/assets/theme.css','public/assets/learn.js','public/assets/delight.js','public/assets/offline.js'] as $f)$s.=$f.@filemtime($r.$f).'-'.@filesize($r.$f).';';
+ foreach(['app/views.php','app/presentation.php','app/level2_cards.php','public/assets/app.js','public/assets/theme.css','public/assets/learn.js','public/assets/delight.js','public/assets/offline.js','app/teacher_demo.php','app/level1.php','app/level2a.php','public/assets/l1.js','public/assets/l2a.js','public/assets/cards.js'] as $f)$s.=$f.@filemtime($r.$f).'-'.@filesize($r.$f).';';
  return $b=substr(md5($s),0,10);
 }
-/** Extra tags in <head> for pupils: build, push key, and the once-per-sign-in download offer. */
+/** Extra tags in <head> for pupils: build, push key, and the once-per-sign-in download offer (teachers get the build for the offline Class Demo). */
 function reach_head(?array $cu):string{
+ if($cu&&$cu['role']==='teacher')return '<meta name="bulig-build" content="'.bulig_build().'">';
  if(!$cu||$cu['role']!=='pupil')return '';$h='<meta name="bulig-build" content="'.bulig_build().'">';
  if(push_ready())$h.='<meta name="bulig-vapid" content="'.e(vapid_keys()['public']).'">';
  if(!empty($_SESSION['dl_offer'])){$h.='<meta name="bulig-dl-offer" content="1">';unset($_SESSION['dl_offer']);}

@@ -56,6 +56,15 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   `INSERT IGNORE INTO schema_migrations(version) VALUES('0NN_name');`. Add the table to `EXPECTED_TABLES` in
   `tests/run_tests.py` and to the database list in `public/bulig-check.php`.
 - **Pictures:** keep them small. `python3 tools/shrink_images.py` shrinks PNG/JPG files without changing names.
+- **Account IDs** (`app/account_ids.php`): make every new ID with `new_account_id('pupil'|'teacher'|'admin')`
+  inside the transaction that creates the account (Pupil PCES260001, Teacher PCEST0001, Admin A260001; numbers per
+  school code in `id_sequences`). IDs never change after they are made. Old IDs live in `account_id_history` and
+  still sign in; the admin switches old accounts in Settings › Account IDs after a backup is saved in `storage/backups`.
+- **Offline mode** (`public/sw.js`, `public/assets/offline.js`, `app/offline.php`): pupils save levels
+  (`?page=offline_manifest`) into caches named `bulig-off-<pupil>-L<level>`; teachers save Class Demo levels
+  (`?page=demo_offline`, one per level or per grade for Levels 4–7) into `bulig-off-<teacher>-D<level>[-<grade>]`.
+  A page that loads pictures from a script (not from its HTML) must list them in `offline_extra_assets()`.
+  Answers and "Mark as done" given offline wait in IndexedDB (`bulig-offline`) and are sent when back online.
 
 ## Run BULIG on your computer
 
