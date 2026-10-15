@@ -121,3 +121,55 @@ function key_perfect_ids(int $tid,int $pupil=0):array{
  $out=[];foreach(rows("SELECT c.id,c.activity_id FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE t.teacher_id=? AND m.level_id IN (2,3,4,6,7,8) AND c.status IN ('completed','approved') AND c.reviewed_at IS NULL AND c.max_score>0 AND c.score>=c.max_score AND c.drawing IS NULL".($pupil?' AND c.pupil_id=?':''),$pupil?[$tid,$pupil]:[$tid]) as $r)if(key_fully_auto((int)$r['activity_id']))$out[]=(int)$r['id'];
  return $out;
 }
+
+/* ---------- Automatic checking (v151) ----------
+   BULIG checks every answer the moment the pupil sends it, so nothing waits for the teacher. Cards with an answer key
+   are marked right or wrong; spoken, drawn and written answers count as done. Right after "Done" (and whenever the
+   activity is opened again) the pupil sees the score, stars and the right answer for anything missed, and can try the
+   activity again for practice: the best score is kept and no extra XP is given. Teachers can still look at every
+   answer, change a score or write a note on the pupil's page (Answers and scores). */
+/** True when the activity is a card activity with an answer key, so BULIG can show a score. */
+function ac_keyed(array $a):bool{static $c=[];$id=(int)$a['id'];if(isset($c[$id]))return $c[$id];
+ if(!isset($a['lesson_id'],$a['title'],$a['prompt']))$a=one('SELECT * FROM activities WHERE id=?',[$id])??$a;
+ return $c[$id]=isset($a['lesson_id'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,6,7,8],true)&&activity_key($a)&&l2a_set($a);}
+/** What the pupil missed, in words a child can read: [[number, what, the right answer, 'goes with'|'is'], ...]. */
+function ac_misses(array $a,array $s):array{
+ $set=l2a_set($a);$key=activity_key($a)??[];if(!$set)return [];$bc=l2a_blank_counts($a,$set,lesson_level((int)$a['lesson_id']));$out=[];
+ foreach($s['cards'] as $n=>$c){if($c['t']==='open'||$c['pts']>=$c['of'])continue;$q=$set['cards'][$n-1]??[];$k=$key[$n]??null;if(!$k)continue;
+  if($c['t']==='match'){$m=$q['match']??$q;$left=[];foreach(preg_split('/\n/',(string)($m['text']??'')) as $l)if(preg_match('/^\s*(\d+)\s*[.)]\s*(.*)$/',trim($l),$mm))$left[$mm[1]]=trim($mm[2]);
+   $right=[];foreach(($m['choices']??[]) as $ch)if(preg_match('/^\s*([a-zA-Z])\s*[.)]\s*(.*)$/s',(string)$ch,$mm))$right[strtolower($mm[1])]=strtolower($mm[1]).'. '.trim($mm[2]);
+   $have=[];if(preg_match_all('~(\d+)\s*-\s*([a-z])~i',$c['got'],$g,PREG_SET_ORDER))foreach($g as $x)$have[$x[1]]=strtolower($x[2]);
+   foreach($k['a'] as $i=>$l)if(($have[(string)$i]??'')!==$l)$out[]=[(string)$i,($left[(string)$i]??'')!==''?$left[(string)$i]:'Number '.$i,$right[$l]??$l,'goes with'];}
+  elseif($c['t']==='order')$out[]=[(string)$n,'The right order',implode(', ',array_map(fn($lab,$v)=>$lab.' = '.$v,array_keys($k['a']),$k['a'])),'is'];
+  else{$t=blank_plain(trim(preg_replace('~\s+~u',' ',(string)($q['text']??''))),$bc[$n-1]??0);$out[]=[(string)$n,$t!==''?mb_strimwidth($t,0,90,'…'):'Card '.$n,$c['want'],'is']; }}
+ return $out;
+}
+/** The result card. $c: the saved answer (response, score, max_score, rubric_scores, submitted_at).
+    $o: fresh (just sent), xp, practice (a "try again" answer), best (the score that is kept). */
+function ac_card(array $a,array $c,array $o=[]):string{
+ if(!ac_keyed($a))return '';$s=key_score($a,(string)($c['response']??''));if(!$s||!$s['total'])return '';
+ $right=$s['right'];$total=$s['total'];$j=json_decode((string)($c['rubric_scores']??''),true);$teacher=is_array($j)&&isset($j['teacher_score'])&&empty($o['fresh']);
+ if($teacher&&(float)($c['max_score']??0)>0){$right=(float)$c['score'];$total=(float)$c['max_score'];}
+ $num=fn($x)=>rtrim(rtrim(number_format((float)$x,1),'0'),'.');$pct=$total?$right/$total:0;$stars=(int)round(5*$pct);if($right>0&&$stars<1)$stars=1;
+ $title=!empty($o['practice'])?'Practice checked!':($pct>=1?'Perfect! Every answer is right.':($pct>=.8?'Great work!':($pct>=.5?'Good try!':'Let’s look again together.')));
+ $sub=!empty($o['practice'])?(string)($o['best']??''):(!empty($o['fresh'])?'BULIG checked your answers.':($teacher?'Your teacher checked this.':'BULIG checked this'.(!empty($c['submitted_at'])?' on '.date('F j',strtotime((string)$c['submitted_at'])):'').'.'));
+ $h='<div class="ac-panel'.($pct>=1?' ac-perfect':'').'" role="status"><div class="ac-top"><span class="ac-badge" aria-hidden="true">'.l1_icon('ok').'</span><div><b>'.e($title).'</b><small>'.e($sub).'</small></div></div>';
+ $h.='<div class="ac-score"><strong>'.$num($right).' <span>of '.$num($total).' right</span></strong><span class="ac-stars" role="img" aria-label="'.$stars.' of 5 stars">'.str_repeat('<i></i>',$stars).str_repeat('<i class="off"></i>',5-$stars).'</span></div>';
+ if(!empty($o['xp']))$h.='<span class="ac-xp">+'.(int)$o['xp'].' XP</span>';
+ if(!$teacher&&$pct<1&&($miss=ac_misses($a,$s))){$h.='<p class="ac-lab">LOOK AGAIN</p><ul class="ac-again">';
+  foreach(array_slice($miss,0,6) as [$n,$what,$want,$how])$h.='<li><em>'.e($n).'</em><span>'.($how==='goes with'?e($what).' goes with <b>'.e($want).'</b>':e($what).'<br>The answer: <b>'.e($want).'</b>').'</span></li>';
+  if(count($miss)>6)$h.='<li class="ac-more"><span>and '.(count($miss)-6).' more</span></li>';$h.='</ul>';}
+ if($pct<1&&!$teacher)$h.='<div class="ac-btns"><a class="ac-btn" href="?page=lesson&amp;id='.(int)$a['lesson_id'].'&amp;activity='.(int)$a['id'].'&amp;again=1">'.l1_icon('again').'Try it again</a></div>';
+ return $h.'</div>';
+}
+/** "Try it again": mark the new answer, keep the best one. No XP and no change to the pupil's progress. */
+function ac_practice(int $pid,array $a,array $old,string $answer):array{
+ $new=key_score($a,$answer);$j=json_decode((string)($old['rubric_scores']??''),true);$locked=is_array($j)&&isset($j['teacher_score']);
+ $prev=$old['score']!==null&&$old['max_score']!==null?['right'=>(float)$old['score'],'total'=>(float)$old['max_score']]:key_score($a,(string)$old['response']);/* answers saved before scores were kept are marked now */
+ $was=(float)($prev['right']??0);$better=!$locked&&$new&&$new['right']>$was;
+ if($better){q('UPDATE activity_completion SET response=?,score=?,max_score=? WHERE id=?',[$answer,$new['right'],$new['total'],(int)$old['id']]);}
+ q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[(int)$old['id'],$answer,'practice',$pid]);
+ $num=fn($x)=>rtrim(rtrim(number_format((float)$x,1),'0'),'.');$best=$better?$new['right']:$was;$of=$better?$new['total']:(float)($prev['total']??($new['total']??0));
+ $msg=$better?'Better! Your new best score is '.$num($best).' of '.$num($of).'.':'Your best score stays '.$num($best).' of '.$num($of).'.';
+ return ['message'=>$msg,'card'=>ac_card($a,['response'=>$answer],['fresh'=>true,'practice'=>true,'best'=>$msg])];
+}

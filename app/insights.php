@@ -13,7 +13,7 @@ function qc_text(array $set,int $n,string $t,int $blank=0):string{
 
 function qcheck_view(array $u):void{
  $tid=(int)$u['id'];
- echo '<div class="pageheading"><div><span class="eyebrow">QUESTION CHECK · LEVELS 2A–7</span><h1>Which questions did the class miss?</h1><p class="muted">For each lesson, see how many of your pupils got each question right and the wrong answer they chose most. Use it to plan what to read again together.</p></div></div>';
+ echo hm_head('TEACHING · CLASS RESULTS · LEVELS 2A–7','Class results','BULIG checks every answer. For each lesson, see how many of your pupils got each question right and the wrong answer they chose most. Use it to plan what to read again together. To see one pupil’s answers, open the pupil › Answers and scores.');
  $levels=[2,3,4,6,7,8];$level=(int)($_GET['level']??0);$grade=(int)($_GET['grade']??0);$lid=(int)($_GET['lesson']??0);
  /* Start with the lesson your pupils answered most recently. */
  if(!$lid&&!$level){$r=one("SELECT l.id,m.level_id,m.grade_level FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id AND t.teacher_id=? JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (2,3,4,6,7,8) AND c.status IN ('completed','approved') ORDER BY c.submitted_at DESC LIMIT 1",[$tid]);if($r){$lid=(int)$r['id'];$level=(int)$r['level_id'];$grade=(int)$r['grade_level'];}}

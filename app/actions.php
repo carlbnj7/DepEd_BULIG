@@ -2,11 +2,14 @@
 /* After feedback, go back to the same Activity history tab and pupil filter. */
 /* Drawing answers (draw in the app or upload a photo) are only for the real drawing activities of Level 1. */
 function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing'&&lesson_level((int)$a['lesson_id'])===1;}
-function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=review&tab=(todo|done|all)(&pupil=[0-9]+)?$~',$b)?$b:'?page=review';}
+function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=(review&tab=(todo|done|all)(&pupil=[0-9]+)?|pupil&id=[0-9]+&tab=answers(&p=[0-9]+)?)$~',$b)?$b:'?page=qcheck';}
 function action():void{
  check_csrf();$action=(string)($_POST['action']??'');unset($_SESSION['notif_live']);
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
+ if(str_starts_with($action,'rc_'))rc_action($action);
+ if($action==='moved_seen')staff_action($action);
+ if($action==='move_section')pupils_move_section(require_role('teacher'));
  if($action==='login'){
   $id=trim((string)($_POST['public_id']??''));$role=(string)($_POST['role']??'pupil');$key=hash('sha256',strtolower($id));
   if(login_tries_used($key)>=LOGIN_MAX_TRIES){audit('login_locked',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
@@ -25,7 +28,7 @@ function action():void{
  }
  if($action==='card_new'||$action==='cards_starter'){
   $u=require_role('teacher');if(!cards_ready())fail('Ask the administrator to import 018_pupil_cards.sql first.');$sec=(int)($_POST['section']??0);$back='?page=cards'.($sec?'&section='.$sec:'');
-  if($action==='card_new'){$id=(int)($_POST['id']??0);own_pupil($id);$n=card_issue($id,true);$p=one('SELECT name,public_id FROM users WHERE id=?',[$id]);audit('card_new',(string)$p['public_id']);
+  if($action==='card_new'){$id=(int)($_POST['id']??0);own_pupil($id);$b=(string)($_POST['back']??'');if(preg_match('~^\?page=pupil&id=[0-9]+&tab=account$~',$b))$back=$b;$n=card_issue($id,true);$p=one('SELECT name,public_id FROM users WHERE id=?',[$id]);audit('card_new',(string)$p['public_id']);
    flash('New ticket for '.$p['name'].'. Starter password: '.$n['pw'].'. The old QR code no longer works.');go($back);}
   $ids=array_map('intval',array_column(rows('SELECT t.pupil_id FROM teacher_pupils t JOIN users u ON u.id=t.pupil_id WHERE t.teacher_id=? AND u.active=1'.($sec?' AND EXISTS(SELECT 1 FROM pupil_sections ps WHERE ps.pupil_id=u.id AND ps.section_id=?)':''),$sec?[$u['id'],$sec]:[$u['id']]),'pupil_id'));$done=0;
   foreach($ids as $id){$h=(string)val('SELECT password_hash FROM users WHERE id=?',[$id]);if(password_verify('12345678',$h)){card_issue($id,true);$done++;}}
@@ -68,15 +71,15 @@ function action():void{
   if($role==='teacher'&&cards_ready()){
    $sx=(string)($_POST['teacher_sex']??'');if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Use a name of 2–150 characters.');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');
    db()->beginTransaction();try{$c=teacher_create($name,$sx);audit('create_teacher',$c['public']);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
-   $_SESSION['new_teacher']=$c['id'];go('?page=accounts&add=1#add-teacher');
+   $_SESSION['new_teacher']=$c['id'];go(($_POST['back']??'')==='add_teachers'?'?page=add_teachers':'?page=accounts&add=1#add-teacher');
   }
   if(strlen($name)<2||strlen($name)>150||strlen($password)<8||strlen($password)>72)fail('Use a name of 2–150 characters and a password of 8–72 characters.');
   db()->beginTransaction();try{
    $public=new_account_id($role);
    q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
    if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');}else{
-    $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level();$details=pupil_details_input();
-    q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);$password=new_pupil_password($id);
+    $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level(1,true);$details=pupil_details_input();
+    q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);$password=new_pupil_password($id);
    }audit('create_'.$role,$public);db()->commit();if($role==='pupil')$_SESSION['new_pupil']=$id;else flash('Account created. '.$role.' ID: '.$public.'. Share the password you set privately.');
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=accounts');
  }
@@ -90,9 +93,9 @@ function action():void{
    if($u['role']==='teacher'){
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);
     save_pupil_details($id,pupil_details_input($id));
-    q('UPDATE pupils SET grade_level=?,section=? WHERE user_id=?',[$section['grade_level'],$section['name'],$id]);q('INSERT INTO pupil_sections VALUES(?,?) ON DUPLICATE KEY UPDATE section_id=VALUES(section_id)',[$id,$section['id']]);$level=selected_start_level((int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$id])?:1);q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?) ON DUPLICATE KEY UPDATE level_id=VALUES(level_id),assigned_by=VALUES(assigned_by),assigned_at=NOW()',[$id,$level,$u['id']]);
+    q('UPDATE pupils SET grade_level=?,section=? WHERE user_id=?',[$section['grade_level'],$section['name'],$id]);q('INSERT INTO pupil_sections VALUES(?,?) ON DUPLICATE KEY UPDATE section_id=VALUES(section_id)',[$id,$section['id']]);$level=selected_start_level((int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$id])?:1,true);if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?) ON DUPLICATE KEY UPDATE level_id=VALUES(level_id),assigned_by=VALUES(assigned_by),assigned_at=NOW()',[$id,$level,$u['id']]);
    }audit('update_account',(string)$id);db()->commit();flash('Account updated.');
-  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=accounts');
+  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go($u['role']==='teacher'?'?page=pupil&id='.$id.'&tab=account':'?page=accounts');
  }
  if($action==='change_password'){
   $u=require_role('pupil','teacher','admin');$old=(string)($_POST['current_password']??'');$new=(string)($_POST['new_password']??'');
@@ -102,7 +105,7 @@ function action():void{
   q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);card_forget_starter((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go($u['role']==='pupil'?'?page=settings':'?page=profile');
  }
  if($action==='set_start_level'){
-  $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=manage(&id=[0-9]+)?$~',$back))$back='?page=manage';
+  $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=(manage(&id=[0-9]+)?|pupil&id=[0-9]+)$~',$back))$back='?page=manage';
   $pupils=isset($_POST['pupil'])?[(int)$_POST['pupil']]:array_map('intval',(array)($_POST['pupils']??[]));$pupils=array_values(array_unique(array_filter($pupils)));
   if(!$pupils){flash('Tick at least one pupil first.');go($back);}
   $level=selected_start_level();if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))fail('Choose a level that is available.');
@@ -154,7 +157,10 @@ function action():void{
   $audio=$action==='submit'?(string)($_POST['audio']??''):'';if(isset($_POST['audio_card'])&&!is_array($_POST['audio_card']))fail('Invalid recording.');$heard=($_POST['heard']??'')==='1';if(strlen($audio)>12500000)fail('This recording is too long. Please record again.');
   db()->beginTransaction();try{
    q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a))$drawing='';$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
-   if(completion_ok($old)){db()->commit();submission_reply($a,true,'Already saved. You can continue.',0);}
+   if(completion_ok($old)){
+    /* "Try it again" (v151): practice on a finished card activity; BULIG keeps the best score, no extra XP */
+    if($action==='submit'&&!empty($_POST['again'])&&function_exists('ac_keyed')&&ac_keyed($a)&&$answer!==''){$pr=ac_practice($pid,$a,$old,$answer);db()->commit();submission_reply($a,true,$pr['message'],0,$pr['card']);}
+    db()->commit();submission_reply($a,true,'Already saved. You can continue.',0);}
    if($action==='draft'){
     q('INSERT INTO activity_drafts(pupil_id,activity_id,response,drawing,transcript) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript)',[$pid,$aid,$answer,$drawing?:null,$transcript?:null]);db()->commit();header('Content-Type: application/json');echo json_encode(['saved'=>true]);exit;
    }
@@ -186,7 +192,8 @@ function action():void{
    db()->commit();$message=$ok?($exact?'Correct! Great work.':($mode==='none'?'You’re ready for the next step.':($mode==='perform'?'Activity completed. Well done!':($oral?'Your answer is saved. Great speaking!':'Your response is saved. Thank you for sharing!')))):'Not quite yet. Listen again and give it another try.';
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   if($ok&&function_exists('pt_after_answer'))pt_after_answer($pid,$a);
-  submission_reply($a,$ok,$message,$ok?(int)$a['xp_reward']:0);
+  $check=$ok&&function_exists('ac_keyed')&&ac_keyed($a)?ac_card($a,['response'=>$answer],['fresh'=>true,'xp'=>(int)$a['xp_reward']]):'';/* BULIG's result card (v151) */
+  submission_reply($a,$ok,$message,$ok?(int)$a['xp_reward']:0,$check);
  }
  if($action==='post_retake'){pt_retake(require_role('pupil'),(int)($_POST['level']??0));}
  if($action==='help_request'){help_request(require_role('pupil'));}
@@ -269,8 +276,8 @@ function action():void{
  fail('Unknown action.',400);
 }
 
-function submission_reply(array $a,bool $ok,string $message,int $xp):never{
+function submission_reply(array $a,bool $ok,string $message,int $xp,string $check=''):never{
  $url='?page=lesson&id='.$a['lesson_id'].'&activity='.$a['id'].'&feedback=1';
- if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>$ok,'message'=>$message,'xp'=>$xp,'url'=>$url]);exit;}
+ if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>$ok,'message'=>$message,'xp'=>$xp,'url'=>$url]+($check!==''?['check'=>$check]:[]));exit;}
  flash($message);go($url);
 }

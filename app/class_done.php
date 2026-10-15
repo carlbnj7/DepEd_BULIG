@@ -109,26 +109,4 @@ function class_done_path(int $pid,string $back='',bool $acts=false):string{
 }
 
 /** Teacher page: manage pupils (starting level, done in class by level, lesson or activity). */
-function manage_pupils_view(array $u):void{
- $tid=(int)$u['id'];$sel=(int)($_GET['id']??0);
- $pupils=rows('SELECT u.id,u.name,u.public_id,u.avatar_path,p.grade_level,p.section,a.level_id,(SELECT COUNT(*) FROM pupil_progress pp WHERE pp.pupil_id=u.id AND pp.completed_at IS NOT NULL) done FROM teacher_pupils tp JOIN users u ON u.id=tp.pupil_id JOIN pupils p ON p.user_id=u.id LEFT JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE tp.teacher_id=? ORDER BY p.grade_level,p.section,u.name',[$tid]);
- if($sel&&!in_array($sel,array_map('intval',array_column($pupils,'id')),true))fail('This pupil is not assigned to you.',403);
- $levels=rows('SELECT id,title FROM bulig_levels WHERE published=1 ORDER BY id');
- $opts=fn(int $cur)=>implode('',array_map(fn($l)=>'<option value="'.(int)$l['id'].'"'.((int)$l['id']===$cur?' selected':'').'>'.e(level_label((int)$l['id']).' · '.preg_replace('~\s*·\s*Level \w+$~u','',(string)$l['title'])).'</option>',$levels));
- $groups=[];foreach($pupils as $p)$groups['Grade '.$p['grade_level'].' · '.$p['section']][]=$p;
- echo pupils_tabs('manage',count($pupils));
- echo '<div class="mp-grid'.($sel?' has-pick':'').'"><section class="card mp-list"><h2>Your pupils</h2>';
- if(!$pupils){echo '<p class="muted">You have no pupils yet. Add them in the Accounts tab.</p></section></div>';return;}
- echo '<div class="mp-tools"><input type="search" placeholder="Search pupils" aria-label="Search pupils" data-mp-search><select aria-label="Show section" data-mp-section><option value="">All sections</option>';foreach(array_keys($groups) as $g)echo '<option>'.e($g).'</option>';echo '</select></div>';
- echo '<form method="post" class="mp-bulk">'.csrf_field().'<input type="hidden" name="action" value="set_start_level"><input type="hidden" name="back" value="?page=manage'.($sel?'&amp;id='.$sel:'').'">';
- foreach($groups as $g=>$list){echo '<div class="mp-group" data-mp-group="'.e($g).'"><div class="mp-gh"><strong>'.e($g).'</strong><button type="button" class="linkbutton" data-mp-all>Select all</button></div>';
-  foreach($list as $p){$id=(int)$p['id'];echo '<div class="mp-item'.($id===$sel?' on':'').'" data-mp-name="'.e(strtolower($p['name'].' '.$p['public_id'])).'"><input type="checkbox" name="pupils[]" value="'.$id.'" aria-label="Choose '.e($p['name']).'"><a href="?page=manage&amp;id='.$id.'#mp-pupil"'.($id===$sel?' aria-current="true"':'').'>'.avatar($p).'<span><b>'.e($p['name']).'</b>'.(function_exists('rk_chip')?rk_chip($id):'').'<small>Starts at '.e($p['level_id']?level_label((int)$p['level_id']):'not set').' · '.(int)$p['done'].' lessons done</small></span>'.icon('arrow').'</a></div>';}
-  echo '</div>';}
- echo '<p class="mp-empty muted" data-mp-empty hidden>No pupils match your search.</p><div class="mp-bulkbar"><label>Set starting level for the ticked pupils<select name="level_id">'.$opts(1).'</select></label><button class="btn secondary" data-confirm="Change the starting level for the ticked pupils?">Apply to ticked</button></div></form></section>';
- echo '<div class="mp-detail" id="mp-pupil">';
- if(!$sel){echo '<section class="card mp-pick">'.icon('people').'<h2>Choose a pupil</h2><p class="muted">Pick a pupil from the list to change their starting level or mark work as done in class.</p></section></div></div>';return;}
- $p=one('SELECT u.*,p.grade_level,p.section,a.level_id FROM users u JOIN pupils p ON p.user_id=u.id LEFT JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.id=?',[$sel]);$s=progress_stats($sel);
- echo '<section class="card mp-head">'.avatar($p).'<div><span class="eyebrow">'.e($p['public_id']).' · Grade '.(int)$p['grade_level'].' · '.e($p['section']).'</span><h2>'.e($p['name']).'</h2><p class="muted">'.(int)$s['xp'].' XP · '.(int)$s['completed'].' lessons complete · '.(int)$s['current_streak'].' day streak</p></div><a class="btn quiet" href="?page=pupil&amp;id='.$sel.'">See answers</a></section>';
- echo '<section class="card mp-start"><h2>Starting level</h2><p class="muted">Levels before the starting level become optional practice. The pupil can begin right away at the level you choose.</p><form method="post" class="mp-startform">'.csrf_field().'<input type="hidden" name="action" value="set_start_level"><input type="hidden" name="pupil" value="'.$sel.'"><input type="hidden" name="back" value="?page=manage&amp;id='.$sel.'"><label>Starting level<select name="level_id">'.$opts((int)$p['level_id']).'</select></label><button class="btn primary">'.icon('check').'Save starting level</button></form></section>';
- echo class_done_path($sel,'?page=manage&id='.$sel.'#learning-path',true).'</div></div>';
-}
+function manage_pupils_view(array $u):void{pupil_list_view($u);}

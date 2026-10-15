@@ -117,5 +117,6 @@ function progress_view(array $u):void{
   echo '<tr><th class="pg-name"><a href="?page=pupil&amp;id='.$id.'">'.e($p['name']).'</a>'.((int)$p['level_id']>$level?'<small>starts at '.e(level_label((int)$p['level_id'])).'</small>':'').'</th>'.$cells.'<td class="pg-sum">'.$n.'/'.count($lessons).'</td></tr>';}
  echo '</tbody></table></div><div class="pg-legend"><span><i class="pg-d"></i>Done</span><span><i class="pg-h"></i>Started</span><span><i class="pg-s"></i>No work for 7+ days</span><span><i class="pg-z"></i>Not yet</span></div></section>';
  $table=ob_get_clean();
- echo ($finished?'<a class="btn secondary" href="?page=certificates&amp;level='.$level.'&amp;section='.$sec.'">'.icon('download').'Certificates ('.$finished.')</a>':'').'</div>'.$table;
+ echo '<div class="pg-acts"><button type="button" class="btn secondary" data-print>'.icon('print').'Print</button>'.($finished?'<a class="btn secondary" href="?page=certificates&amp;level='.$level.'&amp;section='.$sec.'">'.icon('download').'Certificates ('.$finished.')</a>':'').'</div></div>'.$table;
+ echo '<p class="pg-printed">Printed '.e(date('F j, Y')).' · '.e($u['name']).'</p>';
 }
