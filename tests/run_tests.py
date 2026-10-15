@@ -35,12 +35,12 @@ BASE = f'http://127.0.0.1:{PORT}/'
 KEEP = '--keep' in sys.argv
 LOG = os.path.join(HERE, 'last-run-server.log')
 
-# Every table a full install must have (the install file plus all 26 update files).
+# Every table a full install must have (the install file plus every update file).
 EXPECTED_TABLES = sorted('''account_id_history activities activity_completion activity_drafts admin_security admins answers assessment_attempts
  assessment_questions assessments audit_log badges bulig_levels content_issues grade_levels help_requests id_sequences
  learning_days lessons login_attempts modules notifications pupil_badges pupil_cards pupil_details pupil_level_assignments
  pupil_progress pupil_rewards pupil_sections pupil_streaks pupil_xp pupils push_queue push_subscriptions questions
- reading_assessments response_history rewards saved_logins schema_migrations sections settings source_pages
+ reading_assessments reading_checks response_history rewards saved_logins schema_migrations sections settings source_pages
  teacher_pupils teachers users xp_transactions'''.split())
 # MySQL errors an update file may meet when its change is already in place (the files are safe to run again).
 ALREADY_DONE = {1050, 1060, 1061, 1062, 1091, 1826, 1022}
@@ -275,6 +275,7 @@ def run_pages(acc):
         if check('Level 6 Grade 3 has lessons', acts6, acts6):
             page_ok(p6, f"?page=lesson&id={acts6[0]['lesson_id']}", 'Level 6 lesson start page opens')
             page_ok(p6, f"?page=lesson&id={acts6[0]['lesson_id']}&activity={acts6[0]['id']}", 'Level 6 activity page opens')
+            test_auto_check(p6, acc, acts6[0])
 
     section('7. Teacher')
     t = Client()
@@ -282,9 +283,21 @@ def run_pages(acc):
     if check('Teacher can sign in', 'dashboard' in url, url):
         uid = acc['pupil1']['uid']
         for pg in ('dashboard', 'manage', 'accounts', 'progress', 'review', 'sections', 'class_demo', 'notifications', 'cards',
-                   'qcheck', 'guide', 'profile', f'pupil&id={uid}', f'report&id={uid}', f'report_card&id={uid}', 'certificates&level=1'):
+                   'qcheck', 'guide', 'profile', f'pupil&id={uid}', f'report&id={uid}', f'report_card&id={uid}', 'certificates&level=1',
+                   'print', 'moved', 'rcheck', 'rcheck_rules', 'rcheck_print', f'pupil&id={uid}&tab=answers', f'pupil&id={uid}&tab=rcheck',
+                   f'pupil&id={uid}&tab=badges', f'pupil&id={uid}&tab=account', 'progress&section=0&level=1'):
             page_ok(t, f'?page={pg}', f'Teacher page opens: {pg}')
         status, _, text = t.req('?page=dashboard')
+        check('Teacher Home has the grouped menu (MY CLASS, TEACHING, PRINT) and "Find a page"',
+              all(g in text for g in ('>MY CLASS<', '>TEACHING<', '>PRINT<')) and 'data-find-input' in text and 'Needs you today' in text)
+        check('Nothing waits for the teacher: no "Check answers", BULIG checks every answer, Class results in the menu',
+              'Check answers' not in text and 'Answers to check' not in text and 'BULIG checks every answer' in text and 'href="?page=qcheck"' in text)
+        _, url, _ = t.req(f"?page=review&pupil={acc['pupil1']['uid']}")
+        check('Old "Check answers" links open the pupil’s Answers and scores', f"page=pupil&id={acc['pupil1']['uid']}&tab=answers" in url, url)
+        _, _, ans = t.req(f"?page=pupil&id={acc['pupil1']['uid']}&tab=answers")
+        check('A pupil’s Answers and scores lists their answers with BULIG’s score and the teacher’s tools',
+              'Answers and scores' in ans and 'rv-item' in ans and 'Let the pupil do it again' in ans and not PHP_ERROR.search(ans))
+        test_reading_check(t, acc)
         m = re.search(r'name="action" value="help_done"><input type="hidden" name="id" value="(\d+)"', text)
         check('Teacher Overview shows "Asked for help" with the pupil and "Mark as helped"', 'Asked for help' in text and 'Test needs help' in text and m)
         if m:
@@ -318,9 +331,82 @@ def run_pages(acc):
     status, url, _ = a.req('index.php', {'action': 'admin_pin', 'pin': acc['admin']['pin'], 'csrf': tok})
     if check('Admin can sign in with password and PIN', 'dashboard' in url, url):
         for pg in ('dashboard', 'accounts', 'reports', 'content', 'activity_log', 'health', 'checkup', 'settings', 'teacher_cards',
-                   'teacher_import', 'issues', 'media', 'guide', 'profile', 'notifications', 'visual_audit'):
+                   'teacher_import', 'issues', 'media', 'guide', 'profile', 'notifications', 'visual_audit', 'add_teachers',
+                   'add_teachers&mode=many', 'print', 'moved'):
             page_ok(a, f'?page={pg}', f'Admin page opens: {pg}')
         test_account_ids(a, acc)
+
+
+def jget(text):
+    try:
+        return json.loads(text)
+    except ValueError:
+        return {}
+
+
+def test_auto_check(p6, acc, act):
+    """BULIG checks every answer: the pupil sees the score and right answers at once and can try again (best score kept, no XP)."""
+    section('6b. Automatic checking')
+    ca = php_cli('probe.php', 'card_answers', act['id'])
+    if not check('The first Level 6 activity has an answer key, so BULIG can mark it', ca.get('keyed') and ca.get('cards'), ca):
+        return
+    aid, page = str(act['id']), f"?page=lesson&id={act['lesson_id']}&activity={act['id']}"
+    _, _, text = p6.req('index.php', {'action': 'submit', 'activity_id': aid, 'response': ca['wrong'], 'csrf': p6.token(page)}, accept_json=True)
+    j = jget(text)
+    check('Right after "Done", BULIG shows the score, the right answers and "Try it again"',
+          j.get('saved') and all(x in j.get('check', '') for x in ('ac-panel', 'LOOK AGAIN', 'Try it again')), text[:200])
+    xp = php_cli('probe.php', 'xp', acc['pupil6']['uid'])['xp']
+    status, _, text = p6.req(page + '&again=1')
+    check('"Try it again" opens a fresh copy for practice', 'name="again" value="1"' in text and 'ac-practice' in text, f'status {status}')
+    _, _, text = p6.req('index.php', {'action': 'submit', 'activity_id': aid, 'again': '1', 'response': ca['right'], 'csrf': p6.token(page)}, accept_json=True)
+    j = jget(text)
+    check('A better practice try becomes the new best score', 'Better!' in j.get('message', '') and j.get('xp') == 0, text[:200])
+    _, _, text = p6.req('index.php', {'action': 'submit', 'activity_id': aid, 'again': '1', 'response': ca['wrong'], 'csrf': p6.token(page)}, accept_json=True)
+    check('A worse practice try keeps the best score', 'stays' in jget(text).get('message', ''), text[:200])
+    check('Practice gives no extra XP', php_cli('probe.php', 'xp', acc['pupil6']['uid'])['xp'] == xp)
+    _, _, text = p6.req(page)
+    check('The finished activity shows BULIG’s result card with the best score', 'Perfect! Every answer is right.' in text and 'ac-panel' in text)
+
+
+def test_reading_check(t, acc):
+    """Reading check: a pupil with no level takes it at the first sign-in, BULIG places them, the teacher can change the level."""
+    section('7b. Reading check')
+    r = acc.get('pupilR')
+    if not check('Test pupil with no starting level was added', r and r.get('uid'), r):
+        return
+    p = Client()
+    _, url, text = p.login('pupil', r['id'], r['pw'])
+    check('A pupil with no starting level goes to the reading check first', 'rcheck' in url and 'reading level' in text, url)
+    _, url, _ = p.req('?page=lessons')
+    check('Other pupil pages wait until the reading check is done', 'rcheck' in url, url)
+    _, url, text = p.req('index.php', {'action': 'rc_begin', 'csrf': p.token('?page=rcheck')})
+    tok = re.search(r'name="rc_token" value="([^"]+)"', text)
+    check('Part 1 (Talk and listen) opens', 'TALK AND LISTEN' in text and tok, url)
+    if not tok:
+        return
+    talk = 'BULIG card answers\n' + '\n'.join(f'Card {n}: (voice recording)' for n in range(1, 6))
+    _, _, text = p.req('index.php', {'action': 'rc_submit', 'rc_token': tok.group(1), 'response': talk, 'csrf': p.token('?page=rcheck')}, accept_json=True)
+    _, _, text = p.req('?page=rcheck')
+    tok = re.search(r'name="rc_token" value="([^"]+)"', text)
+    check('After Part 1 comes Part 2 (Sound games)', 'SOUND GAMES' in text and tok, text[:0])
+    if not tok:
+        return
+    wrong = 'BULIG card answers\n' + '\n'.join(f'Card {n}: zzz' for n in range(1, 6))
+    p.req('index.php', {'action': 'rc_submit', 'rc_token': tok.group(1), 'response': wrong, 'csrf': p.token('?page=rcheck')}, accept_json=True)
+    _, url, text = p.req('?page=rcheck')
+    check('Five wrong sound games end the check at Level 2A (the pupil cannot reach 8 of 10)', 'YOU START AT' in text and 'Level 2A' in text, url)
+    lv = mysql('-N', '-e', f"SELECT level_id FROM pupil_level_assignments WHERE pupil_id={int(r['uid'])}", db=DB['name']).stdout.strip()
+    check('BULIG saved the starting level (Level 2A)', lv == '2', lv)
+    _, url, _ = p.req('?page=lessons')
+    check('After the check the pupil can open the lessons', 'page=lessons' in url and 'rcheck' not in url, url)
+    status, _, text = t.req('?page=rcheck')
+    check('Teacher sees the pupil and the level on Reading check', status == 200 and 'Test Pupil Check' in text and 'Level 2A' in text, f'status {status}')
+    page_ok(t, f"?page=rcheck_pupil&id={r['uid']}", 'Teacher opens one pupil’s reading check')
+    t.req('index.php', {'action': 'rc_level', 'id': str(r['uid']), 'level_id': '3', 'note': 'Test note', 'csrf': t.token(f"?page=rcheck_pupil&id={r['uid']}")})
+    lv = mysql('-N', '-e', f"SELECT level_id FROM pupil_level_assignments WHERE pupil_id={int(r['uid'])}", db=DB['name']).stdout.strip()
+    check('Teacher can change the starting level (now Level 2B)', lv == '3', lv)
+    status, _, text = t.req('?page=rcheck_pupil&id=' + str(acc['pupil6']['uid']))
+    check('A pupil who did not take the check shows a clear message, not an error', status in (200, 302, 303) and not PHP_ERROR.search(text), f'status {status}')
 
 
 def test_account_ids(a, acc):

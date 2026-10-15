@@ -148,6 +148,7 @@ function rc_card(int $pid,string $teacher):string{
 }
 /** Teacher page: the card of one pupil (?id=) or of every pupil in a section (?section=). */
 function rc_view(array $u):void{
+ $who=(string)($_GET['who']??'');if($who!==''){if($who[0]==='s')$_GET['section']=(int)substr($who,1);elseif($who[0]==='p')$_GET['id']=(int)substr($who,1);}
  $tid=(int)$u['id'];$sid=(int)($_GET['section']??0);$pid=(int)($_GET['id']??0);
  if($sid){$s=owned_section($sid,$tid);$ids=array_map('intval',array_column(rows('SELECT u.id FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN teacher_pupils t ON t.pupil_id=u.id AND t.teacher_id=? WHERE ps.section_id=? AND u.active=1 ORDER BY u.name',[$tid,$sid]),'id'));$title='Grade '.(int)$s['grade_level'].' – '.$s['name'];$back='?page=sections';}
  else{own_pupil($pid);$ids=[$pid];$title=(string)val('SELECT name FROM users WHERE id=?',[$pid]);$back='?page=pupil&id='.$pid;}

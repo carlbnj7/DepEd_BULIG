@@ -166,8 +166,9 @@ function resolved_image_path(string $path):?string{
  return null;
 }
 function level_label(int $id):string{return [1=>'Level 1',2=>'Level 2A',3=>'Level 2B',4=>'Level 3',5=>'Level 4',6=>'Level 5',7=>'Level 6',8=>'Level 7'][$id]??'Level '.$id;}
-function selected_start_level(int $fallback=1):int{
+function selected_start_level(int $fallback=1,bool $check=false):int{
  $id=(int)($_POST['level_id']??$fallback);
+ if($id===0&&$check&&function_exists('rc_ready')&&rc_ready())return 0;/* 0: no level yet, the pupil takes the reading check */
  if(!val('SELECT id FROM bulig_levels WHERE id=?',[$id]))fail('Choose a valid starting level.');
  return $id;
 }
@@ -240,7 +241,7 @@ function next_learning_lesson(int $pid):?array{
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids'];
+const BULIG_PARTS=['level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
  if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}
