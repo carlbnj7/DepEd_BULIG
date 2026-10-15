@@ -22,14 +22,14 @@ function mode_button(string $cls=''):string{return '<button type="button" class=
 function mode_card():string{$o=fn($m,$t,$d)=>'<button type="button" class="mode-opt" role="radio" aria-checked="false" data-mode-set="'.$m.'"><b>'.$t.'</b><small>'.$d.'</small></button>';
  return '<section class="card mode-card"><h2>How BULIG looks</h2><p class="muted">Choose light or dark colours. Auto follows your phone or computer setting. Saved on this device.</p><div class="mode-opts" role="radiogroup" aria-label="How BULIG looks">'.$o('light','Light','Bright and clear').$o('dark','Dark','Easy on the eyes at night').$o('auto','Auto','Follows this device').'</div></section>';}
 /* Loading screens: the BULIG opening screen (first page of a visit), and a hello from the person's own
-   character right after signing in. Both show only while the page loads (loading.js hides them). */
+   character right after signing in. Each shows for at least about 2.5 seconds, with a bar that fills up (loading.js hides them). */
 function loading_screens(?array $cu,string $class):string{
- $h='<div class="boot" aria-hidden="true"><span class="boot-glow"></span><span class="boot-l l1">a</span><span class="boot-l l2">b</span><span class="boot-l l3">ma</span><span class="boot-l l4">E</span><span class="boot-logo"></span><span class="boot-bar"><i></i></span><span class="boot-hills"></span><span class="boot-kid k1"></span><span class="boot-kid k2"></span></div>';
+ $h='<div class="boot" aria-hidden="true"><span class="boot-glow"></span><span class="boot-l l1">a</span><span class="boot-l l2">b</span><span class="boot-l l3">ma</span><span class="boot-l l4">E</span><span class="boot-logo"></span><span class="boot-tag">Small steps. <em>Bright futures.</em></span><span class="boot-bar"><i></i></span><span class="boot-say"><i>Opening BULIG…</i><i>Getting your lessons ready…</i><i>Almost there…</i></span><span class="boot-hills"></span><span class="boot-kid k1"></span><span class="boot-kid k2"></span></div>';
  if($cu&&!empty($_SESSION['hello'])&&($_GET['page']??'dashboard')==='dashboard'&&!($cu['role']==='admin'&&!empty($_SESSION['pin_pending']))){unset($_SESSION['hello']);
   $first=explode(' ',trim((string)$cu['name']))[0];$hr=(int)date('G');$greet=$hr<12?'GOOD MORNING':($hr<18?'GOOD AFTERNOON':'GOOD EVENING');
   $who=$cu['role']==='pupil'?(pf_is_girl()?'girl':'boy'):($cu['role']==='admin'?'admin-':'teacher-').(tf_is_male((int)$cu['id'])?'male':'female');
   [$title,$text]=$cu['role']==='pupil'?['Hi, '.$first.'!','Getting your lessons ready…']:($cu['role']==='teacher'?['Hi, Teacher '.$first.'!','Opening your class…']:['Welcome back, '.$first.'!','Checking the whole school…']);
-  $h.='<div class="hello hello-'.e($cu['role']).'" data-hello role="status" aria-live="polite"><span class="hello-sun"></span><span class="hello-ring"></span><div class="hello-in"><img class="hello-who" src="'.char_src($who).'" alt=""><div class="hello-txt"><small>'.($cu['role']==='admin'?'ADMINISTRATOR':$greet).'</small><b>'.e($title).'</b><span>'.e($text).'</span><span class="hello-bar"><i></i></span></div></div></div>';}
+  $h.='<div class="hello hello-'.e($cu['role']).'" data-hello role="status" aria-live="polite"><span class="hello-sun"></span><span class="hello-ring"></span><div class="hello-in"><span class="hello-halo"></span><img class="hello-who" src="'.char_src($who).'" alt=""><div class="hello-txt"><small>'.($cu['role']==='admin'?'ADMINISTRATOR':$greet).'</small><b>'.e($title).'</b><span>'.e($text).'</span><span class="hello-bar"><i></i></span></div></div></div>';}
  return $h;
 }
 /* iPhones (iOS 26) show a letter on the Home Screen when they cannot fetch the icon, so iPhones get the BULIG icon inside the page itself. */
@@ -55,7 +55,7 @@ function source_link(int $n,int $lid=0):string{
 function module_label(int $level,?int $grade):string{return level_label($level).($grade?' · Grade '.$grade:'');}
 
 /** The sign-in page frame: the story side and the white card (the card's content comes after). */
-function login_shell_open(bool $admin,string $role):string{return ''.mode_button('mode-login').'<main class="login-layout"><section class="login-story">'.($admin?'':login_fx($role)).'<a class="login-brand" href="?page=login"><img src="assets/bulig-logo.png" alt="BULIG"></a><div class="story-content">'.($admin?'<span class="eyebrow">'.icon('shield').' ADMINISTRATOR WORKSPACE</span><h1>Handle with<br>care.</h1><p>This area manages teacher accounts, lessons and settings for every BULIG classroom.</p>':'<span class="eyebrow">A LITTLE PRACTICE. A LOT OF POSSIBILITY.</span><h1>Small steps.<br>Bright futures.</h1><p>A welcoming place to read, speak, and grow.<br>Your next adventure starts with a little practice.</p>').'<div class="story-photo"><img src="assets/images/covers/login.webp" alt="Happy pupils reading books together in a sunny meadow"><span>'.icon('book').'Level 1 · Oral Language</span></div></div><small>Building Up Literacy, Inspiring Growth</small></section><section class="login-panel"><div class="login-card">';}
+function login_shell_open(bool $admin,string $role):string{return ''.mode_button('mode-login').'<main class="login-layout"><section class="login-story">'.($admin?'':login_fx($role)).'<a class="login-brand" href="?page=login"><img src="assets/bulig-logo.png" alt="BULIG"></a><div class="story-content">'.($admin?'<span class="eyebrow">'.icon('shield').' ADMINISTRATOR WORKSPACE</span><h1>Handle with<br>care.</h1><p>This area manages teacher accounts, lessons and settings for every BULIG classroom.</p>':'<span class="eyebrow">A LITTLE PRACTICE. A LOT OF POSSIBILITY.</span><h1>Small steps.<br><span class="lgn-gold">Bright futures.</span></h1><p>A welcoming place to read, speak, and grow.<br>Your next adventure starts with a little practice.</p>').'<div class="story-photo"><img src="assets/images/covers/login.webp" alt="Happy pupils reading books together in a sunny meadow"><span>'.icon('book').'Level 1 · Oral Language</span></div></div><small>Building Up Literacy, Inspiring Growth</small></section><section class="login-panel"><div class="login-card">';}
 function login_shell_close():string{return '</div></section></main><script defer src="'.asset_url('login.js').'"></script>';}
 function login_view():void{
  $role=in_array($_GET['role']??'',['pupil','teacher','admin'],true)?$_GET['role']:'pupil';$admin=$role==='admin';$confirmed=$admin&&($_GET['confirm']??'')==='1';$fail=login_fail_take($role);head($admin?'Administrator access':'Welcome','login-page'.($admin?' admin-mode':' lsky-'.login_daypart()));
@@ -92,7 +92,7 @@ function login_fx(string $role):string{
 }
 function pupil_dashboard(array $u):void{
  echo pf_defs();pupil_welcome($u);schedule_open_check_pupil((int)$u['id']);echo schedule_wait_card($u).month_recap_card($u).pupil_celebrations($u).class_done_note((int)$u['id']);
- $pid=(int)$u['id'];$s=progress_stats($pid);$assign=one('SELECT l.* FROM bulig_levels l JOIN pupil_level_assignments a ON a.level_id=l.id WHERE a.pupil_id=?',[$pid]);pupil_progress_cards($pid,$s,$assign);if(function_exists('pt_card'))echo pt_card($pid);echo daily_goal_card($pid);pupil_next_step($pid);echo pf_helper($u);
+ $pid=(int)$u['id'];$s=progress_stats($pid);$assign=one('SELECT l.* FROM bulig_levels l JOIN pupil_level_assignments a ON a.level_id=l.id WHERE a.pupil_id=?',[$pid]);pupil_progress_cards($pid,$s,$assign);if(function_exists('pt_card'))echo pt_card($pid);echo daily_goal_card($pid);pupil_next_step($pid);echo pf_helper($u);if(function_exists('rate_due')&&rate_due($u))echo rate_pupil_popup($u);/* the monthly stars (v152) */
 }
 function pupil_lessons(array $u):void{
  $pid=(int)$u['id'];echo pf_defs().class_done_note($pid);$assign=one('SELECT l.* FROM bulig_levels l JOIN pupil_level_assignments a ON a.level_id=l.id WHERE a.pupil_id=?',[$pid]);$level=(int)($_GET['level']??0);
@@ -130,7 +130,7 @@ function lesson_view(array $u):void{
   echo pf_defs().'<section class="completion-card pf-completion">'.pf_lesson_celebration($lid,$pid,$finished).'<span class="eyebrow">'.e(lesson_display_label(lesson_level($lid),(int)$lesson['position'])).'</span><h1>'.($finished?'Lesson complete!':'You did it!').'</h1><p>You earned <strong>'.$xp.' XP</strong> and gave your voice a little more practice.</p>';
   if($finished)echo '<a class="btn primary" href="?page=lessons&amp;level='.lesson_level($lid).'#level'.lesson_level($lid).'-path">Back to my lessons '.icon('arrow').'</a>';
   else echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="finish_lesson"><input type="hidden" name="lesson_id" value="'.$lid.'"><button class="btn primary next">Done '.icon('check').'</button></form>';
-  echo '</section>'.(function_exists('pt_lesson_note')?pt_lesson_note($pid,$lid):'');if($finished&&isset($_GET['finished']))echo pupil_celebrations($u);
+  echo '</section>'.(function_exists('pt_lesson_note')?pt_lesson_note($pid,$lid):'');if($finished&&isset($_GET['finished'])){echo pupil_celebrations($u);if(function_exists('rate_due')&&rate_due($u))echo rate_pupil_popup($u);}
  }else{
   $a=$chosen;$native=level2_card_set($a);$mode=$a['response_mode'];$question=one('SELECT * FROM questions WHERE activity_id=?',[$a['id']]);$exact=$question&&$question['grading']==='exact';if($exact||($mode==='drawing'&&!draw_allowed($a)))$mode='answer';$readonly=completion_ok($a);
   $draft=one('SELECT * FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$a['id']]);$response=$draft['response']??$a['response']??'';$drawing=$draft['drawing']??$a['drawing']??'';$transcript=$draft['transcript']??'';$imgs=activity_images($a);$worksheet=false;
@@ -330,6 +330,7 @@ function profile_view(array $u):void{
  foreach(['female'=>!$m,'male'=>$m] as $sx=>$on)echo '<button name="character" value="'.$sx.'" class="char-opt'.($on?' on':'').'" aria-pressed="'.($on?'true':'false').'"><img src="'.char_src($k.'-'.$sx).'" alt="" loading="lazy"><span>'.ucfirst($sx).' '.$w.'</span>'.($on?'<small>'.icon('check').'Chosen</small>':'').'</button>';
  echo '</form></section>';
  echo mode_card();
+ if($u['role']==='teacher'&&function_exists('rate_profile_card'))echo rate_profile_card();
  password_change_form();
  echo '<section class="card st-group">'.about_row().'</section>'.about_dialog();
 }
@@ -381,7 +382,7 @@ function credits_view():void{
  $mgmt=[['Victoria V. Gazo, PhD','Chairperson · Schools Division Superintendent'],['Roberto D. Napere Jr., PhD','Co-Chairperson · Assistant Schools Division Superintendent'],['Rosemarie T. Macesar, PhD','Co-Chairperson · Assistant Schools Division Superintendent'],
   ['Elbert R. Francisco, PhD','Chief – CID'],['Rejynne Mary L. Ruiz','LRMDS Manager'],['Neil A. Improgo','PSDS · Division English Coordinator'],['Mary Anthonette D. Melendez','PSDS'],['Mercedita P. Apa-ap','PSDS'],['Ma. Stella K. Virtudes','PSDS']];
  /* People first (a photo in assets/images/credits/<file>.webp, otherwise their initials), then the AI tools. */
- $devs=[['carl','Carl Benedict H. Miculob','Web app creator and developer'],['rimond','Rimond Jabez O. Binayao','Group member'],['joseph','Joseph Benedict T. Cescar','Group member'],['gabriel','Gabriel S. Panis','Group member']];
+ $devs=[['abunda','Marchilyn A. Abunda','Capstone adviser'],['carl','Carl Benedict H. Miculob','Web app creator and developer'],['rimond','Rimond Jabez O. Binayao','Group member'],['joseph','Joseph Benedict T. Cescar','Group member'],['gabriel','Gabriel S. Panis','Group member']];
  $ai=[['claude','Claude','AI assistant by Anthropic · design and coding'],['chatgpt','ChatGPT','AI assistant by OpenAI · ideas and writing']];
  $img='assets/images/credits/';
  $h='<div class="cr-page"><header class="cr-hero"><div class="cr-logos"><img src="'.$img.'deped-seal.webp" alt="Department of Education seal"><img src="'.$img.'deped-bukidnon.webp" alt="Schools Division of Bukidnon seal"><img class="cr-bp" src="'.$img.'bagong-pilipinas.webp" alt="Bagong Pilipinas"></div><div><h1>Credits</h1><p>Department of Education · Region X – Northern Mindanao · Division of Bukidnon</p></div></header>';

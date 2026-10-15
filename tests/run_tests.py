@@ -40,7 +40,7 @@ EXPECTED_TABLES = sorted('''account_id_history activities activity_completion ac
  assessment_questions assessments audit_log badges bulig_levels content_issues grade_levels help_requests id_sequences
  learning_days lessons login_attempts modules notifications pupil_badges pupil_cards pupil_details pupil_level_assignments
  pupil_progress pupil_rewards pupil_sections pupil_streaks pupil_xp pupils push_queue push_subscriptions questions
- reading_assessments reading_checks response_history rewards saved_logins schema_migrations sections settings source_pages
+ reading_assessments reading_checks response_history app_ratings rewards saved_logins schema_migrations sections settings source_pages
  teacher_pupils teachers users xp_transactions'''.split())
 # MySQL errors an update file may meet when its change is already in place (the files are safe to run again).
 ALREADY_DONE = {1050, 1060, 1061, 1062, 1091, 1826, 1022}
@@ -263,6 +263,8 @@ def run_pages(acc):
             status, _, text = p.req('index.php', {'action': 'draft', 'activity_id': nxt['id'], 'response': 'half done', 'csrf': tok}, accept_json=True)
             check('Work in progress is saved as a draft', '"saved":true' in text.replace(' ', ''), f'status {status}: {text[:120]}')
 
+    test_ratings_pupil(p)
+
     section('6. Pupil started at Level 6 (Grade 3): reader level head start')
     rl = php_cli('probe.php', 'reader', acc['pupil6']['uid'])
     check('Head start does not jump the pupil to reader Level 100', 1 < rl['level'] < 90, rl)
@@ -298,6 +300,7 @@ def run_pages(acc):
         check('A pupil’s Answers and scores lists their answers with BULIG’s score and the teacher’s tools',
               'Answers and scores' in ans and 'rv-item' in ans and 'Let the pupil do it again' in ans and not PHP_ERROR.search(ans))
         test_reading_check(t, acc)
+        test_ratings_teacher(t)
         m = re.search(r'name="action" value="help_done"><input type="hidden" name="id" value="(\d+)"', text)
         check('Teacher Overview shows "Asked for help" with the pupil and "Mark as helped"', 'Asked for help' in text and 'Test needs help' in text and m)
         if m:
@@ -334,6 +337,10 @@ def run_pages(acc):
                    'teacher_import', 'issues', 'media', 'guide', 'profile', 'notifications', 'visual_audit', 'add_teachers',
                    'add_teachers&mode=many', 'print', 'moved'):
             page_ok(a, f'?page={pg}', f'Admin page opens: {pg}')
+        status, _, text = a.req('?page=ratings&period=all')
+        check('Reports › App ratings shows the pupils’ stars and the teachers’ evaluation',
+              status == 200 and 'How do pupils and teachers rate BULIG?' in text and '1 pupil rated BULIG' in text and '1 teacher answered' in text
+              and '4.2' in text and 'More practice for Level 3, please.' in text and not PHP_ERROR.search(text), f'status {status}')
         test_account_ids(a, acc)
 
 
@@ -366,6 +373,38 @@ def test_auto_check(p6, acc, act):
     check('Practice gives no extra XP', php_cli('probe.php', 'xp', acc['pupil6']['uid'])['xp'] == xp)
     _, _, text = p6.req(page)
     check('The finished activity shows BULIG’s result card with the best score', 'Perfect! Every answer is right.' in text and 'ac-panel' in text)
+
+
+def test_ratings_pupil(p):
+    """App ratings: a pupil rates BULIG with stars; "Not now" is kept."""
+    section('5b. App ratings (pupil)')
+    tok = p.token('?page=dashboard')
+    _, _, text = p.req('index.php', {'action': 'rate_app', 'stars': '9', 'csrf': tok}, accept_json=True)
+    check('Stars must be 1 to 5', '"ok":true' not in text.replace(' ', ''), text[:120])
+    _, _, text = p.req('index.php', {'action': 'rate_app', 'stars': '4', 'csrf': tok}, accept_json=True)
+    j = jget(text)
+    check('A pupil can rate BULIG with stars', j.get('ok') and j.get('stars') == 4 and j.get('word') == 'I like it!', text[:160])
+    _, _, text = p.req('index.php', {'action': 'rate_later', 'csrf': tok}, accept_json=True)
+    check('"Not now" is saved', jget(text).get('ok'), text[:120])
+    status, _, _ = p.req('?page=ratings')
+    check('A pupil cannot open the administrator’s App ratings', status == 403, f'status {status}')
+
+
+def test_ratings_teacher(t):
+    """App ratings: a teacher answers the 5-question evaluation from My profile › Rate BULIG."""
+    section('7c. App ratings (teacher)')
+    status, _, text = t.req('?page=profile')
+    check('My profile has "Rate BULIG"', 'href="?page=rate"' in text, f'status {status}')
+    status, _, text = t.req('?page=rate')
+    check('Rate BULIG shows the five questions with stars', status == 200 and text.count('data-rt-stars') == 5 and 'Easy to use' in text, f'status {status}')
+    tok = t.token('?page=rate')
+    _, _, text = t.req('index.php', {'action': 'rate_app', 'q1': '5', 'q2': '4', 'q3': '5', 'csrf': tok}, accept_json=True)
+    check('Every question needs stars', '"ok":true' not in text.replace(' ', ''), text[:120])
+    _, _, text = t.req('index.php', {'action': 'rate_app', 'q1': '5', 'q2': '4', 'q3': '5', 'q4': '4', 'q5': '3', 'comment': 'More practice for Level 3, please.', 'csrf': tok}, accept_json=True)
+    j = jget(text)
+    check('A teacher can send the evaluation (overall = the average, 4.2)', j.get('ok') and float(j.get('overall', 0)) == 4.2, text[:160])
+    _, _, text = t.req('?page=rate')
+    check('Rate BULIG then shows when the teacher last rated', 'You last rated BULIG on' in text and '4.2' in text)
 
 
 def test_reading_check(t, acc):
