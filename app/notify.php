@@ -33,10 +33,7 @@ function notif_live(array $u):array{
  $items=[];
  if($u['role']==='teacher'){
   $tid=(int)$u['id'];
-  $perfect=function_exists('key_perfect_ids')?count(key_perfect_ids($tid)):0;
-  if($perfect)$items[]=['check',$perfect.' '.($perfect===1?'answer':'answers').' scored 100% by the answer key','Approve them all in one tap.','?page=review','Approve all'];
-  $wait=(int)val("SELECT COUNT(*) FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id WHERE t.teacher_id=? AND c.status IN ('completed','approved') AND c.reviewed_at IS NULL",[$tid])-$perfect;
-  if($wait>0)$items[]=['edit',$wait.' '.($wait===1?'answer is':'answers are').' waiting for your feedback','Written, drawn and spoken answers, newest pupils first.','?page=review','Open'];
+  /* v151: BULIG checks every answer, so no "answers waiting for your feedback" here any more */
   $need=[];foreach(rows('SELECT u.id,u.name,u.active FROM users u JOIN teacher_pupils t ON t.pupil_id=u.id WHERE t.teacher_id=? AND u.active=1 ORDER BY u.name',[$tid]) as $p)if(function_exists('tf_needs_checkin')&&tf_needs_checkin($p,progress_stats((int)$p['id'])))$need[]=explode(' ',trim((string)$p['name']))[0];
   if($need)$items[]=['people',count($need).' '.(count($need)===1?'pupil needs':'pupils need').' a check-in',implode(', ',array_slice($need,0,4)).(count($need)>4?' and '.(count($need)-4).' more':'').' had no learning in the past 7 days.','?page=dashboard','See pupils'];
  }

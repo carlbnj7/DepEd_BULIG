@@ -49,7 +49,8 @@ if(form){
    if(data.saved){
     form.dataset.draft='off';if(button)button.hidden=true;next.hidden=false;next.focus();
     $('#draft-status').textContent='Saved';
-    if(data.xp){const earned=document.createElement('span');earned.className='earned-xp';earned.textContent='+'+data.xp+' XP';feedback.append(earned);}
+    if(data.check){feedback.innerHTML=data.check;feedback.classList.add('has-check');}/* BULIG's result card (v151): built and escaped by the server */
+    else if(data.xp){const earned=document.createElement('span');earned.className='earned-xp';earned.textContent='+'+data.xp+' XP';feedback.append(earned);}
     if(['none','perform'].includes(form.dataset.mode))location.href=next.href;
    }else{if(button){button.disabled=false;button.innerHTML=original;}$('#response')?.focus();}
   }catch(error){feedback.className='answer-feedback tryagain';feedback.textContent=error.message||'Check your connection and try again.';if(button){button.disabled=false;button.innerHTML=original;}}
@@ -553,7 +554,8 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
   ['.tour-help','blur(3px) saturate(180%)',''],['.pupil-tabbar .tab-play-btn','',''],['.notif-pop','blur(20px) saturate(190%)',''],['.pw-panel','blur(22px) saturate(190%)','']];
  const all=[];PARTS.forEach(([sel,blur,where])=>document.querySelectorAll(sel).forEach(el=>{el.classList.add('lg-g');all.push({el,blur,where});}));
  /* 1. Shine */
- let sx=26,sy=0,queued=false;const paint=()=>{queued=false;all.forEach(({el})=>{el.style.setProperty('--lg-sx',sx.toFixed(1)+'%');el.style.setProperty('--lg-sy',sy.toFixed(1)+'%');});};
+ let sx=26,sy=0,queued=false;const paint=()=>{queued=false;const dx=50-sx,dy=50-sy,l=Math.hypot(dx,dy)||1,rx=(dx/l).toFixed(2),ry=(dy/l).toFixed(2);/* the bright rim faces the light (v150) */
+  all.forEach(({el})=>{el.style.setProperty('--lg-sx',sx.toFixed(1)+'%');el.style.setProperty('--lg-sy',sy.toFixed(1)+'%');el.style.setProperty('--lg-rx',rx);el.style.setProperty('--lg-ry',ry);});};
  const move=(x,y)=>{x=Math.max(0,Math.min(100,x));y=Math.max(-10,Math.min(100,y));if(Math.abs(x-sx)<.8&&Math.abs(y-sy)<.8)return;sx=x;sy=y;if(!queued){queued=true;requestAnimationFrame(paint);}};
  if(!still){addEventListener('pointermove',e=>{if(e.pointerType==='mouse'&&!lite())move(e.clientX/innerWidth*100,e.clientY/innerHeight*100);},{passive:true});
   const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -572,9 +574,13 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
   setTimeout(()=>{if(window.ResizeObserver)new ResizeObserver(()=>place(on,false)).observe(wrap);},800);};
  const tb=document.querySelector('.pupil-tabbar');if(tb){const it=[...tb.querySelectorAll(':scope>a')];bubble(tb,it,false,'lg-tab',a=>a.classList.contains('on'));}
  const nav=document.querySelector('.sidebar nav');if(nav){const it=[...nav.querySelectorAll(':scope>a.navitem')];bubble(nav,it,true,'lg-nav',a=>a.classList.contains('selected'));}
+ /* Segmented tabs (v150): the green pill slides from the last tab to the one just opened */
+ document.querySelectorAll('.pupil-tabs').forEach((w,k)=>{const it=[...w.querySelectorAll(':scope>a.pt-tab')];if(it.length>1)bubble(w,it,false,'lg-seg:'+(w.getAttribute('aria-label')||k),a=>a.classList.contains('on'));});
  /* 4. Top blur while scrolling (not on lesson or certificate pages) */
  if(!b.matches('.view-lesson,.view-certificate,.l1-page')){const edge=document.createElement('div');edge.className='lg-edge';edge.setAttribute('aria-hidden','true');b.appendChild(edge);
   let on=false;const chk=()=>{const s=scrollY>24;if(s!==on){on=s;d.classList.toggle('lg-scrolled',s);}};addEventListener('scroll',chk,{passive:true});chk();}
+ /* Soft blur under the pupil tab bar on phones (v150) */
+ if(tb&&!b.matches('.view-lesson,.view-certificate,.l1-page')){const eb=document.createElement('div');eb.className='lg-edge-b';eb.setAttribute('aria-hidden','true');b.appendChild(eb);}
  /* 5. Lens */
  const ua=navigator.userAgent,lensOK=/\bChrome\/\d+/.test(ua)&&!/CriOS|EdgiOS|FxiOS|iPhone|iPad/.test(ua)&&window.CSS&&CSS.supports('backdrop-filter','url(#a) blur(1px)')&&!!document.createElement('canvas').getContext;
  if(!lensOK)return;const NS='http://www.w3.org/2000/svg';let svg=null;const made=new Map();

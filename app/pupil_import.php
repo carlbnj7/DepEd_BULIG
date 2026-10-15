@@ -7,7 +7,7 @@ function create_pupil_account(array $teacher,string $name,array $section,int $le
  q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,'pupil',$name,password_hash('12345678',PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
  q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,(int)$section['grade_level'],$section['name']]);save_pupil_details($id,$details);
  q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$teacher['id'],$id]);
- q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$teacher['id']]);
+ if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$teacher['id']]);
  $GLOBALS['last_starter_pw']=new_pupil_password($id);
  return $public;
 }
@@ -69,7 +69,7 @@ function import_columns(array $header):array{
 }
 function import_name_case(string $s):string{$s=trim(preg_replace('/\s+/',' ',$s));return $s!==''&&$s===mb_strtoupper($s)?mb_convert_case(mb_strtolower($s),MB_CASE_TITLE,'UTF-8'):$s;}
 function import_level(string $v,int $default):?int{
- $v=strtoupper(trim(str_ireplace('level','',$v)));if($v==='')return $default;
+ $v=strtoupper(trim(str_ireplace('level','',$v)));if($v==='')return $default;if(in_array($v,['BULIG','CHECK','READING CHECK','?'],true)&&function_exists('rc_ready')&&rc_ready())return 0;
  $map=['1'=>1,'2A'=>2,'2B'=>3,'3'=>4,'4'=>5,'5'=>6,'6'=>7,'7'=>8];return $map[$v]??null;
 }
 
@@ -105,7 +105,7 @@ function import_check(array $rows,array $teacher,int $defaultSection,int $defaul
   }elseif($default)$row['section']=$default;
   else $err('Section is missing. Add a Section column or choose a section for the whole list.');
   $sec=$row['section']??$row['new_section'];if($sec)$row['grade']=(int)$sec['grade_level'];
-  $lv=import_level($get('level'),$defaultLevel);if($lv===null||!val('SELECT id FROM bulig_levels WHERE id=?',[$lv]))$err('Starting level “'.$get('level').'” is not a BULIG level (use 1, 2A, 2B, 3, 4, 5, 6 or 7).');else $row['level']=$lv;
+  $lv=import_level($get('level'),$defaultLevel);if($lv===null||($lv!==0&&!val('SELECT id FROM bulig_levels WHERE id=?',[$lv])))$err('Starting level “'.$get('level').'” is not a BULIG level (use 1, 2A, 2B, 3, 4, 5, 6 or 7).');else $row['level']=$lv;
   if($row['status']==='ok'){
    if($lrn!==''&&isset($seenLrn[$lrn]))$err('Same LRN as line '.$seenLrn[$lrn].' in this file.');
    elseif($lrn!==''&&val('SELECT pupil_id FROM pupil_details WHERE lrn=?',[$lrn])){$row['status']='skip';$row['notes'][]='Already in BULIG (same LRN).';}
@@ -126,7 +126,7 @@ function import_actions(string $action):void{
   $u=require_role('teacher');$f=$_FILES['class_list']??null;
   if(!$f||($f['error']??UPLOAD_ERR_NO_FILE)!==UPLOAD_ERR_OK)fail(($f['error']??0)===UPLOAD_ERR_INI_SIZE||($f['error']??0)===UPLOAD_ERR_FORM_SIZE?'The file is too big. Keep it under 2 MB.':'Choose a CSV or Excel file to upload.');
   if($f['size']>2*1024*1024)fail('The file is too big. Keep it under 2 MB.');
-  $level=selected_start_level();$rows=import_read_file($f['tmp_name'],(string)$f['name']);
+  $level=selected_start_level(1,true);$rows=import_read_file($f['tmp_name'],(string)$f['name']);
   $checked=import_check($rows,$u,(int)($_POST['section_id']??0),$level);
   $_SESSION['pupil_import']=['token'=>bin2hex(random_bytes(16)),'file'=>mb_substr(basename((string)$f['name']),0,120),'rows'=>$checked,'teacher'=>(int)$u['id']];unset($_SESSION['pupil_import_done']);
   go('?page=accounts&import=preview#import');
@@ -171,7 +171,7 @@ function import_card(array $u):void{
   echo '<p class="import-summary"><strong>'.e($p['file']).'</strong> · <span class="pill ok">'.$ok.' ready</span> <span class="pill skip">'.$skip.' already in BULIG</span> <span class="pill bad">'.$bad.' need fixing</span></p>';
   if($bad)echo '<p class="muted">Rows that need fixing will be left out. Fix them in your file and upload again, or import the ready rows now and add the rest later.</p>';
   echo '<div class="tablewrap import-preview"><table><thead><tr><th>Line</th><th>Name</th><th>LRN</th><th>Sex</th><th>Section</th><th>Start</th><th>Check</th></tr></thead><tbody>';
-  foreach($p['rows'] as $r){$sec=$r['section']??$r['new_section'];echo '<tr class="row-'.$r['status'].'"><td>'.$r['line'].'</td><td>'.e($r['name']?:'—').'</td><td>'.e($r['lrn']?:'—').'</td><td>'.e($r['sex']?ucfirst($r['sex']):'—').'</td><td>'.e($sec?'Grade '.$sec['grade_level'].' · '.$sec['name']:'—').'</td><td>'.e(level_label((int)$r['level'])).'</td><td><span class="pill '.($r['status']==='ok'?'ok':($r['status']==='skip'?'skip':'bad')).'">'.($r['status']==='ok'?'Ready':($r['status']==='skip'?'Skip':'Fix')).'</span>'.($r['notes']?'<small>'.e(implode(' ',$r['notes'])).'</small>':'').'</td></tr>';}
+  foreach($p['rows'] as $r){$sec=$r['section']??$r['new_section'];echo '<tr class="row-'.$r['status'].'"><td>'.$r['line'].'</td><td>'.e($r['name']?:'—').'</td><td>'.e($r['lrn']?:'—').'</td><td>'.e($r['sex']?ucfirst($r['sex']):'—').'</td><td>'.e($sec?'Grade '.$sec['grade_level'].' · '.$sec['name']:'—').'</td><td>'.e((int)$r['level']?level_label((int)$r['level']):'Reading check').'</td><td><span class="pill '.($r['status']==='ok'?'ok':($r['status']==='skip'?'skip':'bad')).'">'.($r['status']==='ok'?'Ready':($r['status']==='skip'?'Skip':'Fix')).'</span>'.($r['notes']?'<small>'.e(implode(' ',$r['notes'])).'</small>':'').'</td></tr>';}
   echo '</tbody></table></div><div class="import-actions">';
   if($ok)echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="import_confirm"><input type="hidden" name="token" value="'.e($p['token']).'"><button class="btn primary">'.icon('check').'Create '.$ok.' pupil account'.($ok===1?'':'s').'</button></form>';
   echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="import_cancel"><button class="btn secondary">Cancel</button></form></div></section>';return;
@@ -182,5 +182,5 @@ function import_card(array $u):void{
  }
  echo '<ol class="import-steps"><li>Open your class list in Excel (or the DepEd SF1). Keep a header row with <strong>Name</strong> (or Last name, First name, Middle name), <strong>LRN</strong>, <strong>Sex</strong> and, if you like, <strong>Grade</strong>, <strong>Section</strong> and <strong>Starting level</strong>.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet — you will see every row first.</li><li>Press <strong>Create accounts</strong>, then download the login list to give each pupil their ID.</li></ol>';
  echo '<form method="post" enctype="multipart/form-data" class="formgrid import-form">'.csrf_field().'<input type="hidden" name="action" value="import_preview"><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><label class="import-file">Class list file (.xlsx or .csv)<input type="file" name="class_list" accept=".csv,.xlsx,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>';
- echo '<label>Section for pupils without one<select name="section_id"><option value="0">Use the Section column</option>';foreach($sections as $s)echo '<option value="'.$s['id'].'">Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';echo '</select></label>'.starting_level_field(1).'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' pupils, 2 MB. Sections not found are added when the file has a Grade column. Pupils already in BULIG (same LRN) are skipped.</small><button class="btn primary">'.icon('arrow').'Check the list</button></div></form></section>';
+ echo '<label>Section for pupils without one<select name="section_id"><option value="0">Use the Section column</option>';foreach($sections as $s)echo '<option value="'.$s['id'].'">Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';echo '</select></label>'.starting_level_field(function_exists('rc_ready')&&rc_ready()?0:1).'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' pupils, 2 MB. Sections not found are added when the file has a Grade column. Pupils already in BULIG (same LRN) are skipped.</small><button class="btn primary">'.icon('arrow').'Check the list</button></div></form></section>';
 }

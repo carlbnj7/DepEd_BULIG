@@ -171,20 +171,21 @@
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
-   ['.sidebar nav a[href="?page=dashboard"]','Overview','Your class at a glance: pupils, activity this week, and who needs help.'],
-   ['.class-tabs','Grades and sections','Choose a grade or section to see only those pupils.'],
+   ['.hm-head','Teacher Home','Things that need you come first. Everything else is one tap away.'],
+   ['#tf-todo','Needs you today','Pupils who need a check-in, reading checks to look at and pupils who asked for help. Tap a card to go straight there.'],
+   ['.hm-auto','BULIG checks every answer','Pupils see their score and the right answers as soon as they finish. Nothing waits for you. To see one pupil’s answers, change a score or write a note, open the pupil › Answers and scores.'],
    ['#tf-help','Asked for help','When a pupil taps “I need help” in a lesson, at school or at home, it shows here: who, what is hard and where. Tap See pupil, or Mark as helped when you are done.'],
-   ['.tf-alert','Check-ins','Pupils who have not learned for a while appear here so you can follow up.'],
-   ['.tdash-stats','Quick numbers','Total pupils, finished activities and learning steps.'],
-   ['.mobile-menu-toggle','Menu','Tap here to open the menu: Class Demo, My pupils, My sections, Activity history and more. Each page has its own short tour.'],
-   ['.sidebar nav a[href="?page=class_demo"]','Class Demo','Show any level on your TV or projector. Use "Mark as done" after you teach a lesson together.'],
-   ['.sidebar nav a[href="?page=manage"]','My pupils','Three tabs: Learning (starting levels, lessons done in class), Accounts (add, import, edit, sign-in tickets) and Progress (the whole class at a glance).'],
-   ['.sidebar nav a[href="?page=sections"]','My sections','Add the sections you handle.'],
-   ['.sidebar nav a[href="?page=review"]','Activity history','Read your pupils’ answers and leave short feedback.'],
+   ['.hm-grid','What do you want to do?','The jobs teachers do most: add pupils, print tickets, report cards and certificates, change a starting level, reset a password, Class Demo and class progress.'],
+   ['.class-tabs','Grades and sections','Choose a grade or section to see only those pupils in My class below.'],
+   ['.nv-find','Find a page','Type what you need, for example “print” or “password”, then tap the page. Press Enter to open the first one.'],
+   ['.sidebar .nv-g','The menu in groups','MY CLASS: your pupils, adding pupils, the reading check and sections. TEACHING: Class Demo and Class results. PRINT: everything you can print.'],
+   ['.sidebar nav a[href="?page=rcheck"]','Reading check','Pupils with no starting level take a short reading check the first time they sign in. BULIG places them, and you can change any level.'],
+   ['.sidebar nav a[href="?page=print"]','Print centre','Everything you can print, in one place: sign-in tickets, report cards, progress reports, certificates, the class sheet and reading check results.'],
+   ['.mobile-menu-toggle','Menu','Tap here to open the menu. It has a “Find a page” box at the top. Each page has its own short tour.'],
    [['.notif-top','.notif-m'],'Notifications','Tap the bell for answers waiting for your feedback, pupils who finished a level, and pupils who need a check-in. The yellow number shows what is new.'],
    [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
    [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. On a shared computer, untick "Keep me saved" when BULIG asks.'],
-   [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
+   [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it. Lost? Open “See what moved” from the note on Home.']],
   notifications:[
    ['.pageheading','Notifications','Work that needs you now is at the top. Notes about finished levels and new accounts come after.'],
    [['.nt-row'],'Open one','Tap one to go straight to the right page. Items under Needs you now go away by themselves once the work is done.'],
@@ -210,12 +211,12 @@
    ['.demo-footer','Move between slides','Use Previous and Next, or the arrow keys. Press F for full screen.'],
    ['[data-cd-open]','Mark as done','After teaching, tap here and tick the pupils who were present. Their next lesson opens right away.']],
   accounts:[
-   ['.pupil-tabs','Three tabs','Learning: starting levels and lessons done in class. Accounts: this tab, to add and edit pupils. Progress: the whole class at a glance.'],
+   ['.pupil-tabs','Add pupils','My pupils has three tabs: Pupil list, Add pupils (this one) and Class progress.'],
+   ['.ap-choice','One pupil or a whole class','Add one pupil with a short form, or a whole class at once from an Excel list. The DepEd SF1 list works.'],
    [['form.formgrid:not(.import-form)'],'Add one pupil','Fill in the name, section, sex and starting level. BULIG makes the Pupil ID and an easy starter password for you.'],
+   [['form.formgrid:not(.import-form) select[name="level_id"]','form.formgrid:not(.import-form)'],'Let BULIG find the level','Leave the starting level on “Let BULIG find it”. The pupil takes the reading check at first sign-in and BULIG places them. You can change it later.'],
    [['form.formgrid:not(.import-form) .btn.primary','form.formgrid:not(.import-form)'],'Their ticket, right away','After you save, a window shows the new pupil’s sign-in ticket with the QR code. Print it there, or add the next pupil.'],
-   ['#import','Import a class','Download the template, fill it in Excel, then upload it to add a whole class at once.'],
-   [['details.account-detail'],'Pupil details','Open a pupil to edit details or reset the password.'],
-   [['.acc-head a[href="?page=cards"]'],'Sign-in tickets','Print a ticket for each pupil with their Pupil ID, starter password and a QR code that signs them in with one scan.']],
+   [['#import','.import-card'],'Import a class','Download the template, fill it in Excel, then upload it. Check every row before the accounts are made.']],
   cards:[
    ['.lc-upgrade','Starter passwords','Pupils still on the old password 12345678 can each get their own easy starter password here. Print their new tickets right away.'],
    ['.lc-filter','Choose a section','Print tickets for one section or for all your pupils.'],
@@ -225,13 +226,11 @@
    [['.tk'],'One ticket per pupil','One scan of the QR code signs the pupil in. The starter password shows until the pupil makes their own.'],
    [['.tk-new button'],'New ticket','Lost a ticket? Make a new one: the old QR code stops working and the pupil gets a new starter password.']],
   manage:[
-   ['.pupil-tabs','Three tabs','You are on Learning. Open Accounts to add pupils or print sign-in tickets, and Progress to see the whole class.'],
-   ['.mp-list','Your pupils','Search or filter by section, then tap a pupil to manage them.'],
+   ['.pupil-tabs','My pupils','Three tabs: Pupil list (this one), Add pupils, and Class progress.'],
+   ['.mp-bar','Find a pupil','Search by name or ID, or choose a section.'],
+   ['.mp-tbl','Every pupil in one list','Grouped by section, with each pupil’s starting level, reading check and last learning day. Tap a name to open the pupil’s page.'],
    [['.rk-inl'],'Level and rank','Each pupil’s reader level (1 to 100), rank emblem and stars. They go up as the pupil finishes activities.'],
-   ['.mp-bulkbar','Many pupils at once','Tick pupils in the list and set one starting level for all of them.'],
-   ['.mp-start','Starting level','Change where this pupil begins. Earlier levels become optional practice.'],
-   ['.cd-path','Learning path','Every level and lesson with its status. Open "Activities" to tick single activities.'],
-   [['.cd-actions'],'Mark as done in class','Tick lessons or activities you did together, then save. Use "Undo" if you made a mistake.']],
+   ['.mp-bulk','Many pupils at once','Tick pupils, then set one starting level for all of them, move them to another section, or print their sign-in tickets.']],
   progress:[
    ['.pupil-tabs','Progress tab','Every pupil and every lesson of one level, on one screen.'],
    ['.pg-filter','Choose a section and level','The grid changes as soon as you pick.'],
@@ -242,12 +241,7 @@
    ['.section-board','Your sections','Sections grouped by grade. Tap one to rename or archive it.'],
    [['.section-chip summary'],'Report cards','Tap a section, then Report cards, to print a Reading Progress Report Card for every pupil in it, one page each.']],
   review:[
-   ['.pageheading','Activity history','Read what your pupils answered and leave short notes.'],
-   ['.rv-tabs','Needs feedback','New answers wait here. Once you save feedback, an answer moves to Reviewed.'],
-   ['.rv-filter','One pupil at a time','Choose a pupil to see only their answers.'],
-   [['.rv-item'],'Open an answer','Tap a line to read the answer, drawing or reading result.'],
-   [['.rv-ks'],'Auto score','BULIG checks answers with the answer key. Open an answer to see each card marked Right or Wrong, with the right answer. You can change any score.'],
-   [['.rv-phrases'],'Quick feedback','Tap a ready-made phrase, or write your own note. Then press Save.']],
+   [['.hm-head','.pageheading'],'Pupils’ answers','BULIG checks every answer. Open a pupil › Answers and scores to listen, look, change a score or write a note.']],
   report_card:[
    [['.rc-btns .btn.primary'],'Print','Print the cards or save them as a PDF. Each pupil gets one A4 page.'],
    [['.rc-page'],'The report card','Name, LRN, grade and section, school and school year come from BULIG. The ladder and the remarks show each level’s result and date.'],
@@ -257,11 +251,43 @@
    [['.source-pages'],'Original pages','Open the matching pages of the official module.'],
    [['a.btn.secondary[href*="download_source"]'],'Download the module','Get the original module file for printing.']],
   'pupil-detail':[
-   ['.pageheading','Pupil progress','Reader level, rank, XP, finished lessons and streak for this pupil.'],
-   [['a[href*="report_card&id"]'],'Report card','Print this pupil’s Reading Progress Report Card: the reading ladder, each level’s result and date, and lines for signatures.'],
-   [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.'],
-   ['#learning-path','Learning path','Mark lessons as done in class here, or use My pupils for activities too.']],
-  profile:P.profile
+   ['.hm-head','One pupil','The pupil’s name, ID, level and progress. The buttons print this pupil’s report card, progress report and sign-in ticket.'],
+   ['.pp-tabs','Everything about this pupil','Learning path, Answers and scores (every answer with BULIG’s score; change a score or write a note there), Reading check, Badges and Account (name, section, password and a new ticket).'],
+   ['.mp-start','Starting level','Change where this pupil begins. Earlier levels become optional practice.'],
+   ['#learning-path','Learning path','Every level and lesson with its status. Open a level to mark lessons done in class.'],
+   [['.cd-actions'],'Mark as done in class','Tick lessons or activities you did together, then save. Use "Undo" if you made a mistake.'],
+   [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.']],
+  profile:P.profile,
+  qcheck:[
+   ['.hm-head','Class results','BULIG checks every answer. Here you see which questions your class finds hard, so you can read them again together.'],
+   ['.qc-filter','Choose what to see','Pick a level, a grade and a lesson.'],
+   [['.qc-act'],'Each activity','How many pupils got each question right, and the wrong answer chosen most. Re-teach the ones in red.'],
+   ['.sidebar nav a[href="?page=manage"]','One pupil’s answers','Open My pupils, then a pupil › Answers and scores to listen, look, change a score or write a note.']],
+  rcheck:[
+   ['.hm-head','Reading check','Pupils with no starting level take this check the first time they sign in. BULIG uses the BULIG Assessment and Grouping guide and the module pre-tests.'],
+   ['.rk-sum','At a glance','How many pupils BULIG placed, how many you changed, how many need you to listen, and who has not finished.'],
+   ['.rk-tbl','Every pupil','The parts each pupil took, the starting level and the status. “Please listen” means BULIG could not hear the pupil, or Talk and listen needs your rating. Tap a name to open it.'],
+   [['.hm-head .buttonrow'],'How BULIG decides, and printing','Read the rules BULIG follows, or print the results for your records.']],
+  rcheck_pupil:[
+   ['.hm-head','One pupil’s reading check','The starting level BULIG chose and why.'],
+   ['.rk-whybox','Why this level','Which parts the pupil passed and where the check stopped.'],
+   [['.rk-levelform'],'Keep or change the level','Choose another starting level and write what you noticed, or tap “I checked it” to keep BULIG’s level. Work already done is kept.'],
+   [['.rk-cols section.card:nth-child(2)'],'Official result','Type the pupil’s official CRLA or Phil-IRI result. BULIG compares it with its own level.'],
+   [['.rk-part audio','.rk-part'],'Listen to the pupil','Every part shows what the pupil answered. Play the recordings to hear the pupil read.'],
+   [['.rk-rate'],'Rate Talk and listen','Rate the pupil’s spoken answers with the Level 1 module rubric. Good (9 of 12) passes.']],
+  rcheck_rules:[
+   ['.hm-head','How BULIG decides','The rules BULIG follows to choose a starting level, and where each rule comes from.'],
+   [['.rk-tbl'],'The table','Each part, what it checks, the score needed to pass, and the level a pupil starts at when it is not passed.'],
+   [['.rk-src'],'Sources','The BULIG Assessment and Grouping guide, the module pre-tests, and Phil-IRI for reading a story.']],
+  print:[
+   ['.hm-head','Print centre','Everything you can print, in one place. Each one opens a preview first.'],
+   [['.pc-card'],'Choose what and for whom','Pick a section or a pupil on a card, then tap its print button.'],
+   [['#pc-reportcards'],'Report cards','One A4 page for each pupil, with the reading ladder. Choose a whole section or one pupil.'],
+   [['#pc-rcheck'],'Reading check results','Each pupil’s starting level and the parts of the check, with the official CRLA or Phil-IRI result.'],
+   ['.pc-tip','Save as PDF','In the print window, choose “Save as PDF” to keep a copy instead of printing.']],
+  moved:[
+   ['.hm-head','Where things are now','The menu has a new order. This page lists every old place and where it is now.'],
+   [['.wm-tbl'],'Old place, new place','Find the old name on the left. The right side tells you where it is now. Tap it to go there.']]
  };
  const A={
   credits:[
@@ -270,17 +296,14 @@
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
-   ['.ws-kpis','The school at a glance','Pupils, teachers, grades and learning this week, for the whole school.'],
-   [['.ws-g2 section.card'],'Pupils at each level','How many pupils are working in each BULIG level.'],
-   [['.ws-g2 section.card:nth-child(2)'],'Needs attention','Teachers who have not signed in lately and other things to follow up.'],
-   ['.ws-btns','Quick actions','Post an announcement for teachers, or open the school reports.'],
-   ['.sidebar nav a[href="?page=accounts"]','Teachers','Add teachers, reset passwords and move pupils between teachers.'],
-   ['.sidebar nav a[href="?page=reports"]','Reports','Progress by grade and section. Download it for division reports.'],
-   ['.sidebar nav a[href="?page=content"]','Lesson studio','Show, hide or edit the activities of each level.'],
-   ['.sidebar nav a[href="?page=activity_log"]','Activity log','Who signed in and what changed, with wrong passwords and PINs.'],
-   ['.sidebar nav a[href="?page=health"]','System health','Install checks, pictures, database updates and backups.'],
-   ['.sidebar nav a[href="?page=settings"]','Settings','Your PIN, school details, announcements, badges and the school year.'],
-   ['.mobile-menu-toggle','Menu','Tap here to open the menu: Teachers, Reports, Lesson studio, Activity log, System health and Settings. Each page has its own short tour.'],
+   [['.hm-head','.pageheading'],'Admin Home','What needs you first, then the jobs you do most.'],
+   [['.hm-todo','.hm-checkup'],'Needs you','Things to follow up, like locked accounts or teachers who have not signed in.'],
+   ['.hm-grid','What do you want to do?','Add teachers, print Teacher Passes, reset a password, move pupils, download a backup, print the school report, post an announcement, edit a lesson.'],
+   [['.hm-g3'],'The school at a glance','Pupils at each level, teachers and learning this week.'],
+   ['.nv-find','Find a page','Type what you need, for example “backup” or “passes”, then tap the page.'],
+   ['.sidebar .nv-g','The menu in groups','PEOPLE: teachers and accounts. LESSONS: the lesson studio. REPORTS & PRINT: reports, passes and backups. SYSTEM: activity log, health and settings.'],
+   ['.sidebar nav a[href="?page=print"]','Print & download','Teacher Passes, the school report, backups, the activity log and teacher lists, in one place.'],
+   ['.mobile-menu-toggle','Menu','Tap here to open the menu. It has a “Find a page” box at the top. Each page has its own short tour.'],
    [['.notif-top','.notif-m'],'Notifications','Tap the bell for System health alerts and new pupil accounts. The yellow number shows what is new.'],
    [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
    [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. Admin accounts are never saved on a device.'],
@@ -300,6 +323,7 @@
    ['table.ws-table','Progress by section','Each grade and section with its teacher, pupils and activities.'],
    ['.ws-btns','Download or print','Download the report for Excel, or print it and save it as a PDF.']],
   content:[
+   ['.st-tabs','Lesson studio','Three tabs: Lessons (this one), Content notes from teachers, and Pictures.'],
    ['nav.ws-levels','Choose a level','Pick the level you want to look at.'],
    ['form.ws-filters','Choose a lesson','Pick a grade and lesson, then choose Open.'],
    ['table.ws-table','Activities','Every activity in the lesson. Show or hide it for pupils, or edit its text and pictures.'],
@@ -334,7 +358,18 @@
    [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in and guides your tours.'],
     ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
-   [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']]
+   [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']],
+  add_teachers:[
+   ['.ap-choice','One teacher or many','Add one teacher with a short form, or the whole team at once from an Excel list.'],
+   [['.ap-one form','form.formgrid'],'Add one teacher','Enter the name and sex. BULIG makes the Teacher ID and a starter password. The teacher makes their own password at first sign-in.'],
+   [['.import-card'],'Add many teachers','Download the template, fill it in, upload it and check every row before the accounts are made.']],
+  print:[
+   [['.hm-head','.pageheading'],'Print & download','Teacher Passes, the school report, backups, the activity log and teacher lists, in one place.'],
+   [['.pc-card'],'Choose and print','Each card opens a preview first, or downloads the file.'],
+   [['#pc-backup'],'Backup','Download a copy of the database. Keep it somewhere safe.']],
+  moved:[
+   ['.hm-head','Where things are now','The menu has a new order. This page lists every old place and where it is now.'],
+   [['.wm-tbl'],'Old place, new place','Find the old name on the left. The right side tells you where it is now.']]
  };
  const raw=(pupil?P:me.role==='admin'?A:T)[key];if(!raw)return;
  const steps=raw.filter(Boolean);
