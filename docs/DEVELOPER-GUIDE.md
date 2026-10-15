@@ -55,6 +55,10 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   (`CREATE TABLE IF NOT EXISTS`, `INSERT IGNORE`, guarded `ALTER`) and end it with
   `INSERT IGNORE INTO schema_migrations(version) VALUES('0NN_name');`. Add the table to `EXPECTED_TABLES` in
   `tests/run_tests.py` and to the database list in `public/bulig-check.php`.
+- **Button colours** (`public/assets/theme.css`, poster palette): green buttons and selected tabs or answers use
+  `var(--btn-green)` (hover `var(--btn-green-hover)`), yellow buttons `var(--btn-yellow)`. White buttons: white, a
+  `var(--y300)` edge and `var(--g700)` writing; light green buttons: `var(--g100)` with a `var(--g200)` edge. Use these
+  instead of new hex colours, so every button keeps the same green.
 - **Pictures:** keep them small. `python3 tools/shrink_images.py` shrinks PNG/JPG files without changing names.
 - **Account IDs** (`app/account_ids.php`): make every new ID with `new_account_id('pupil'|'teacher'|'admin')`
   inside the transaction that creates the account (Pupil PCES260001, Teacher PCEST0001, Admin A260001; numbers per
@@ -65,6 +69,13 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   (`?page=demo_offline`, one per level or per grade for Levels 4–7) into `bulig-off-<teacher>-D<level>[-<grade>]`.
   A page that loads pictures from a script (not from its HTML) must list them in `offline_extra_assets()`.
   Answers and "Mark as done" given offline wait in IndexedDB (`bulig-offline`) and are sent when back online.
+- **Blanks in card words** (`app/level2a.php`): write them as `___` in the content. `blank_html()` draws them on the
+  pupil's card and on Class Demo slides. In Levels 2A, 2B and 3 a blank shows one short line per missing letter,
+  counted from the card's answer key by `blank_letters()` ("n ___ t" with the answer "e" shows n _ t); the letter
+  tiles fill those lines. A blank for a word in a sentence is one long line.
+- **"I need help"** (`app/help.php`): the pupil's request is saved in `help_requests` and sent to every teacher of the
+  pupil as a `help` notification. The teacher sees it in the bell and in "Asked for help" on the Overview;
+  "Mark as helped" marks that notification as read.
 
 ## Run BULIG on your computer
 
