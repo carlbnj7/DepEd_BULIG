@@ -21,8 +21,11 @@ foreach([1=>'Rizal',3=>'Mabini'] as $grade=>$sname){q('INSERT INTO sections(teac
 /* A Grade 1 pupil who starts at Level 1, and a Grade 3 pupil the teacher started at Level 6 (bulig_levels id 7). */
 $p1=create_pupil_account($t,'Test Pupil One',$sections[1],1,[]);
 $p6=create_pupil_account($t,'Test Pupil Six',$sections[3],7,[]);
-foreach([$p1,$p6] as $p)q('UPDATE users SET password_hash=? WHERE public_id=?',[password_hash(T_PUPIL_PW,PASSWORD_DEFAULT),$p]);
+/* A Grade 1 pupil with no starting level: the reading check finds it at the first sign-in. */
+$pr=create_pupil_account($t,'Test Pupil Check',$sections[1],0,[]);
+foreach([$p1,$p6,$pr] as $p)q('UPDATE users SET password_hash=? WHERE public_id=?',[password_hash(T_PUPIL_PW,PASSWORD_DEFAULT),$p]);
 db()->commit();
 echo json_encode(['admin'=>['id'=>'testadmin','pw'=>T_ADMIN_PW,'pin'=>T_ADMIN_PIN],'teacher'=>['id'=>'T2099001','pw'=>T_TEACHER_PW],
  'pupil1'=>['id'=>$p1,'pw'=>T_PUPIL_PW,'uid'=>(int)val('SELECT id FROM users WHERE public_id=?',[$p1])],
- 'pupil6'=>['id'=>$p6,'pw'=>T_PUPIL_PW,'uid'=>(int)val('SELECT id FROM users WHERE public_id=?',[$p6])]]),"\n";
+ 'pupil6'=>['id'=>$p6,'pw'=>T_PUPIL_PW,'uid'=>(int)val('SELECT id FROM users WHERE public_id=?',[$p6])],
+ 'pupilR'=>['id'=>$pr,'pw'=>T_PUPIL_PW,'uid'=>(int)val('SELECT id FROM users WHERE public_id=?',[$pr])]]),"\n";

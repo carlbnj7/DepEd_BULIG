@@ -39,6 +39,28 @@ send an update to the live site without breaking it.
   school year from Settings → School info, where the admin also uploads the Division and school logos.
 - `app/reader_level.php`: the reader level (1–100) and the 10 ranks on top of it (`RK_RANKS`, 10 levels each,
   a star every 2 levels). Emblems are in `public/assets/images/ranks/` (small copies in `ranks/sm/`).
+- `app/reading_check.php` (table `reading_checks`, update `028_reading_check.sql`): the **reading check** a Grade 1–6
+  pupil with no starting level takes at the first sign-in (`rc_needed()`; `public/index.php` sends them to
+  `?page=rcheck`). Seven parts (`RC_PARTS`), each drawn from the levels' own module pre-tests: Grades 1–3 start at
+  Part 1 and go up; Grades 4–6 start with Part 5 (a story) and go up or down. A part stops early once the result
+  is decided, and Read the words stops after 5 wrong words in a row. Part 1 is rated by the teacher with the Level 1
+  rubric (Good, 9 of 12); Parts 6 and 7 pass at 80%; the story uses the Phil-IRI word-reading bands (97% / 90%).
+  The levels for an official CRLA or Phil-IRI result the teacher types are in `RC_OFFICIAL`. Do not change these
+  numbers without a DepEd source. `public/assets/rcheck.js` listens (speech recognition) and records at the same
+  time; recordings stay in `storage/recordings` and only the pupil's teacher can play them (`?page=rc_audio`).
+  Teachers see and change levels on `?page=rcheck` and `?page=rcheck_pupil&id=`; a starting level of `0` when
+  adding or importing pupils means "let the reading check find it".
+- **Automatic checking** (`app/scoring.php`, v151): BULIG checks every answer the moment it is sent, so there is no
+  "Check answers" page for teachers. Card activities with an answer key get a result card (`ac_card()`: score, stars,
+  the right answer for anything missed) right after "Done" and whenever the activity is opened again. "Try it again"
+  (`&again=1`, `ac_practice()`) is practice: the best score is kept and no XP is given. Spoken, drawn and written answers
+  count as done. Teachers see every answer on a pupil's page › Answers and scores (`review_view($u,$pupil)`), where they
+  can still listen, look, change a score, write a note or let the pupil do it again. Old `?page=review` links redirect
+  there or to Class results (`?page=qcheck`).
+- `app/staff_ui.php`: the teacher and admin menus (`staff_nav_list()`, grouped with yellow labels), "Find a page"
+  (`staff_find_list()`, filtered by `public/assets/staff.js`), Teacher Home, Print centre, Add pupils / Add teachers,
+  the pupil list, the one-pupil page with tabs, Admin Home, Print & download and "Where things are now"
+  (`?page=moved`). When a page moves, add a line to `moved_view()` and to the tour in `public/assets/tour.js`.
 
 The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`, `tests/` and `docs/` from the web.
 
@@ -59,6 +81,10 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   `var(--btn-green)` (hover `var(--btn-green-hover)`), yellow buttons `var(--btn-yellow)`. White buttons: white, a
   `var(--y300)` edge and `var(--g700)` writing; light green buttons: `var(--g100)` with a `var(--g200)` edge. Use these
   instead of new hex colours, so every button keeps the same green.
+- **Liquid Glass** (`theme.css`, sections v130, v131 and v150; script in `app.js`): only the navigation layer is glass
+  (sidebar, top bar, pupil tab bar, round buttons, popups, segmented tabs). Cards with words stay solid. Behind words
+  the glass keeps enough tint to read. `html.lg-lite` (slow phones, "Reduce transparency", or Glass look off in
+  Settings) turns it all back to solid colours, so every glass rule starts with `html:not(.lg-lite)`.
 - **Pictures:** keep them small. `python3 tools/shrink_images.py` shrinks PNG/JPG files without changing names.
 - **Account IDs** (`app/account_ids.php`): make every new ID with `new_account_id('pupil'|'teacher'|'admin')`
   inside the transaction that creates the account (Pupil PCES260001, Teacher PCEST0001, Admin A260001; numbers per

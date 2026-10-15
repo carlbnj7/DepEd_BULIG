@@ -149,7 +149,7 @@ function checkup_action(string $action):never{
    q('UPDATE pupils SET grade_level=?,section=? WHERE user_id=?',[$s['grade_level'],$s['name'],$pid]);
    q('INSERT INTO pupil_sections VALUES(?,?) ON DUPLICATE KEY UPDATE section_id=VALUES(section_id)',[$pid,$s['id']]);
    q('INSERT INTO teacher_pupils VALUES(?,?) ON DUPLICATE KEY UPDATE teacher_id=VALUES(teacher_id)',[$s['teacher_id'],$pid]);
-   if(!val('SELECT 1 FROM pupil_level_assignments WHERE pupil_id=?',[$pid]))q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,1,?)',[$pid,$s['teacher_id']]);
+   if(!(function_exists('rc_ready')&&rc_ready())&&!val('SELECT 1 FROM pupil_level_assignments WHERE pupil_id=?',[$pid]))q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,1,?)',[$pid,$s['teacher_id']]);
    audit('admin_place_pupil',mb_substr($p['public_id'].' → Grade '.$s['grade_level'].' '.$s['name'],0,200));db()->commit();
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   notify((int)$s['teacher_id'],'people','A pupil joined your section',$p['name'].' is now in Grade '.$s['grade_level'].' – '.$s['name'].'.','?page=manage');

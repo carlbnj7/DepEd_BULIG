@@ -212,15 +212,18 @@ function l2a_start_page(array $lesson,array $all,array $first):void{
 
 /** One Level 2A activity: its cards one at a time, answered on the card; Submit on the last card. */
 function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set):void{
- $lid=(int)$lesson['id'];$readonly=completion_ok($a);$cards=$set['cards'];$N=count($cards);
+ $lid=(int)$lesson['id'];$again=completion_ok($a)&&!empty($_GET['again'])&&function_exists('ac_keyed')&&ac_keyed($a);/* "Try it again" (v151): a fresh copy for practice */
+ $readonly=completion_ok($a)&&!$again;$cards=$set['cards'];$N=count($cards);
  $phase=array_values(array_filter($all,fn($x)=>$x['phase']===$a['phase']));$at=0;foreach($phase as $i=>$x)if((int)$x['id']===(int)$a['id'])$at=$i+1;$doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));
- $saved=[];$resp=str_replace(["\r\n","\r"],"\n",(string)($a['response']??''));if(str_starts_with($resp,"BULIG card answers\n"))foreach(preg_split('/\n(?=Card [0-9]+(?: \(no\. [0-9]+\))?:)/',substr($resp,19)) as $line)if(preg_match('/^Card ([0-9]+)(?: \(no\. [0-9]+\))?:\s?(.*)$/s',$line,$m))$saved[(int)$m[1]]=$m[2];
- $aud=[];if($a['completion_id']&&l2a_audio_supported()){$aud=json_decode((string)val('SELECT audio_paths FROM activity_completion WHERE id=?',[(int)$a['completion_id']]),true)?:[];}
+ $saved=[];$resp=$again?'':str_replace(["\r\n","\r"],"\n",(string)($a['response']??''));if(str_starts_with($resp,"BULIG card answers\n"))foreach(preg_split('/\n(?=Card [0-9]+(?: \(no\. [0-9]+\))?:)/',substr($resp,19)) as $line)if(preg_match('/^Card ([0-9]+)(?: \(no\. [0-9]+\))?:\s?(.*)$/s',$line,$m))$saved[(int)$m[1]]=$m[2];
+ $aud=[];if($a['completion_id']&&!$again&&l2a_audio_supported()){$aud=json_decode((string)val('SELECT audio_paths FROM activity_completion WHERE id=?',[(int)$a['completion_id']]),true)?:[];}
  $lv=lesson_level($lid);$blanks=l2a_blank_counts($a,$set,$lv);head('Level '.l2a_code($lv).' · '.$set['module_title'],'activity-page l1-page l2-page');
  echo '<div class="l1-app l2-app">'.lesson_head($lesson,$all,$a,'?page=lessons&level='.$lv.'#level'.$lv.'-path');
  echo '<main class="l1-main activity-main">';notice();
- echo '<form method="post" id="activity-form" class="activity-form l1-form l2-form" data-mode="answer" data-kind="cards" data-draft="off"'.(l2a_readalong($a)?' data-readalong="1"':'').'>'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="response" id="response" value="'.e($resp).'"><span id="draft-status" hidden></span>';
- if($a['feedback'])echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
+ echo '<form method="post" id="activity-form" class="activity-form l1-form l2-form" data-mode="answer" data-kind="cards" data-draft="off"'.(l2a_readalong($a)?' data-readalong="1"':'').'>'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="response" id="response" value="'.e($resp).'">'.($again?'<input type="hidden" name="again" value="1">':'').'<span id="draft-status" hidden></span>';
+ if($readonly&&$a['completion_id']&&function_exists('ac_card'))echo ac_card($a,one('SELECT response,score,max_score,rubric_scores,submitted_at FROM activity_completion WHERE id=?',[(int)$a['completion_id']])??[]);
+ if($again)echo '<div class="ac-practice">'.l1_icon('again').'<div><b>Try it again</b><p>Practise as many times as you like. BULIG keeps your best score.</p></div></div>';
+ if($a['feedback']&&!$again)echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
  echo '<span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span>'.(trim((string)$set['instruction'])!==''?'<div class="l2-dir"><p>'.nl2br(e($set['instruction'])).'</p>'.l1_speaker($set['instruction']).'</div>':'');
  echo '<div class="l2-deck" data-l2-deck data-total="'.$N.'"'.($readonly?' data-readonly':'').'>';
  foreach($cards as $i=>$c){$n=$i+1;$kinds=$c['ui']['answer']??[];$tiles=in_array('tiles',$kinds,true);

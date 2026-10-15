@@ -36,39 +36,7 @@ function teacher_announcements():void{
 }
 
 /* ---------------------------------------------------------------- Overview */
-function admin_overview():void{
- $pupils=(int)val("SELECT COUNT(*) FROM users WHERE role='pupil' AND active=1");$newPupils=(int)val("SELECT COUNT(*) FROM users WHERE role='pupil' AND created_at>=?",[date('Y-m-01')]);
- $teachers=rows("SELECT id,name,active FROM users WHERE role='teacher' ORDER BY name");$logins=admin_last_logins();
- $idle=array_values(array_filter($teachers,fn($t)=>$t['active']&&(admin_days_since($logins[(int)$t['id']]??null)??999)>=14));
- $sections=(int)val('SELECT COUNT(*) FROM sections s WHERE 1'.admin_live_sections_sql());$grades=rows('SELECT DISTINCT grade_level g FROM sections s WHERE 1'.admin_live_sections_sql().' ORDER BY g');
- $week=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=?',[date('Y-m-d H:i:s',strtotime('-7 days'))]);$prev=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=? AND submitted_at<?',[date('Y-m-d H:i:s',strtotime('-14 days')),date('Y-m-d H:i:s',strtotime('-7 days'))]);
- $trend=$prev?(($week>=$prev?'+':'').round(($week-$prev)/$prev*100).'% vs last week'):($week?'first week of activity':'');
- admin_heading('ADMINISTRATOR OVERVIEW','Make room for learning.','School-wide view · School year '.admin_school_year().' · Updated '.date('g:i A'),'<a class="btn secondary" href="?page=settings&amp;tab=announcements">'.icon('mega').'Post announcement</a><a class="btn primary" href="?page=reports">'.icon('chart').'Open reports</a>');
- echo function_exists('account_ids_admin_notice')?account_ids_admin_notice():'';
- echo admin_kpis([['people',number_format($pupils),'Pupils',$newPupils?'+'.$newPupils.' this month':'',false],['user',count($teachers),'Teachers',$idle?count($idle).' inactive 14+ days':'all active',(bool)$idle],['book',$sections,'Sections',$grades?'Grades '.implode(', ',array_column($grades,'g')):'none yet',false],['check',number_format($week),'Activities this week',$trend,$prev&&$week<$prev]]);
- // pupils at each level: the highest level with work, or the starting level
- $levels=[];foreach(rows("SELECT GREATEST(a.level_id,COALESCE((SELECT MAX(m.level_id) FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)) lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1") as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;
- $max=max([1]+$levels);
- echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>Pupils at each level</h2><a href="?page=reports">View report '.icon('arrow').'</a></div><div class="ws-bars">';
- foreach(rows('SELECT id FROM bulig_levels ORDER BY id') as $l){$n=$levels[(int)$l['id']]??0;echo '<div class="ws-bar"><span>'.e(level_label((int)$l['id'])).'</span><u><i class="w-'.(int)(round($n/$max*20)*5).'"></i></u><b>'.$n.'</b></div>';}
- echo '</div></section><section class="card"><div class="ws-hd"><h2>Needs attention</h2></div><div class="ws-list">';
- $inactive=admin_inactive_pupils(7);$top=one("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN sections s ON s.id=ps.section_id WHERE u.role='pupil' AND u.active=1 AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?) GROUP BY s.id ORDER BY c DESC LIMIT 1",[date('Y-m-d',strtotime('-6 days'))]);
- $failed=(int)val("SELECT COUNT(*) FROM audit_log WHERE action IN ('login_failed','admin_pin_failed') AND created_at>=?",[date('Y-m-d 00:00:00')]);$failedPin=(int)val("SELECT COUNT(*) FROM audit_log WHERE action='admin_pin_failed' AND created_at>=?",[date('Y-m-d 00:00:00')]);
- $health=admin_health_checks();$bad=array_filter($health,fn($c)=>!$c[1]);
- $item=fn($cls,$icon,$html,$link,$href)=>'<div class="ws-li '.$cls.'">'.icon($icon).'<span>'.$html.'</span><a class="ws-sp" href="'.$href.'">'.$link.'</a></div>';
- echo $idle?$item('warn','user','<b>'.count($idle).' teacher'.(count($idle)===1?'':'s').'</b> haven’t signed in for 14+ days<small>'.e(implode(' · ',array_slice(array_column($idle,'name'),0,3))).(count($idle)>3?' …':'').'</small>','View','?page=accounts&amp;status=idle'):$item('','check','<b>All teachers</b> signed in within 14 days','View','?page=accounts');
- echo $inactive?$item('warn','people','<b>'.$inactive.' pupil'.($inactive===1?'':'s').'</b> inactive for 7+ days'.($top?'<small>Most in '.e($top['n']).'</small>':''),'View','?page=reports'):$item('','check','<b>All pupils</b> learned in the last 7 days','View','?page=reports');
- echo $item($failed?'bad':'','lock','<b>'.$failed.' wrong password'.($failed===1?'':'s').'</b> today'.($failedPin?'<small>'.$failedPin.' on admin PIN</small>':''),'Log','?page=activity_log&amp;tab=security&amp;days=1');
- echo checkup_overview_item();
- echo $item($bad?'warn':'','heart','<b>System health: '.($bad?count($bad).' to check':'all good').'</b><small>'.e(admin_backup_note()).'</small>','Open','?page=health');
- echo '</div></section></div><div class="ws-g3">';
- echo '<section class="card"><div class="ws-hd"><h2>Most active sections</h2><small class="muted">last 30 days</small></div><div class="ws-list">';
- $act=rows("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM activity_completion c JOIN pupil_sections ps ON ps.pupil_id=c.pupil_id JOIN sections s ON s.id=ps.section_id WHERE c.submitted_at>=? GROUP BY s.id ORDER BY c DESC LIMIT 3",[date('Y-m-d',strtotime('-30 days'))]);
- foreach($act as $a)echo '<div class="ws-li">'.icon('star').'<span>'.e($a['n']).'</span><span class="ws-sp ws-pill ok">'.number_format((int)$a['c']).'</span></div>';if(!$act)echo '<p class="muted">No activity in the last 30 days yet.</p>';
- echo '</div></section><section class="card"><div class="ws-hd"><h2>Announcement</h2><a href="?page=settings&amp;tab=announcements">Edit</a></div>';
- $ann=admin_announcements(true);if($ann){$a=$ann[0];echo '<div class="ws-ann"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · Shown to all teachers'.($a['until']?' until '.e(date('M j',strtotime($a['until']))):'').'</small></div>';}else echo '<p class="muted">No announcement. Post one for all teachers in Settings.</p>';
- echo '</section><section class="card"><div class="ws-hd"><h2>Quick actions</h2></div><div class="ws-list"><a class="ws-li link" href="?page=accounts&amp;add=1">'.icon('user').'<span>Add a teacher</span><span class="ws-sp">'.icon('arrow').'</span></a><a class="ws-li link" href="?page=health#backup">'.icon('download').'<span>Download backup</span><span class="ws-sp">'.icon('arrow').'</span></a><a class="ws-li link" href="?page=settings&amp;tab=year">'.icon('cal').'<span>End of school year</span><span class="ws-sp">'.icon('arrow').'</span></a></div></section></div>';
-}
+function admin_overview():void{admin_home(current_user());}
 
 /* ---------------------------------------------------------------- Teachers */
 function admin_teachers_view(array $u):void{
@@ -179,7 +147,7 @@ function admin_studio_view():void{
  $level=(int)($_GET['level']??($sel['level_id']??1));$per=per_grade_level($level);$grade=$per?(int)($_GET['grade']??($sel['mg']??1)):0;if($per&&($grade<1||$grade>6))$grade=1;
  $lessons=rows('SELECT l.*,m.grade_level mg FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=?'.($per?' AND m.grade_level=?':'').' ORDER BY l.position',$per?[$level,$grade]:[$level]);
  if(!$sel||(int)$sel['level_id']!==$level||($per&&(int)$sel['mg']!==$grade))$sel=$lessons?$lessons[0]+['level_id'=>$level]:null;
- admin_heading('LESSON STUDIO','Thoughtfully prepared. Ready to learn.','Choose a level, grade and lesson. Show or hide an activity, or fix its text. The official module page stays one click away.');
+ admin_heading('LESSONS','Lesson studio','Choose a level, grade and lesson. Show or hide an activity, or fix its text. The official module page stays one click away. Content notes and pictures are tabs here.');echo studio_tabs('content');
  echo '<nav class="ws-levels">';foreach($levels as $l){$id=(int)$l['id'];$short=[1=>'Oral Language',2=>'Sounds in Words',3=>'Sounds in Words',4=>'Word Recognition',5=>'Fluency',6=>'Listening & Vocabulary',7=>'Comprehension',8=>'Love for Reading'][$id]??$l['title'];echo '<a class="'.($id===$level?'on':'').'" href="?page=content&amp;level='.$id.'" title="'.e($l['title']).'"><b>'.e(level_label($id)).'</b>'.e($short).'</a>';}echo '</nav>';
  echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="content"><input type="hidden" name="level" value="'.$level.'">';
  if($per){echo '<select name="grade" data-autosubmit>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';echo '</select>';}
@@ -247,7 +215,7 @@ function admin_log_csv():never{
 }
 
 /* ---------------------------------------------------------------- System health + backup */
-const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools','016_saved_logins','024_notifications','025_help_requests','026_more_badges'];
+const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools','016_saved_logins','024_notifications','025_help_requests','026_more_badges','028_reading_check'];
 function admin_backup_note():string{$b=admin_setting('last_backup_at','');if(!$b)return 'No backup downloaded yet';$d=admin_days_since($b);return 'Last backup '.($d===0?'today':($d===1?'yesterday':$d.' days ago'));}
 function admin_count_files(string $dir,string $pattern):int{
  if(!is_dir($dir))return 0;$n=0;$it=new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir,FilesystemIterator::SKIP_DOTS));foreach($it as $f)if(preg_match($pattern,$f->getFilename()))$n++;return $n;
