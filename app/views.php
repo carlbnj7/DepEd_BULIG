@@ -172,7 +172,7 @@ function teacher_dashboard(array $u):void{
  $badgeWeek=$ids?array_flip(array_map('intval',array_column(rows('SELECT DISTINCT pupil_id FROM pupil_badges WHERE pupil_id IN('.tf_in($ids).') AND earned_at>=?',[date('Y-m-d H:i:s',strtotime('-7 days'))]),'pupil_id'))):[];
  echo '<div class="tdash-head"><div><span class="eyebrow">TEACHER OVERVIEW</span><h1>Every learner matters.</h1><p class="muted">A clear view of your pupils’ next steps.</p></div><div class="tdash-actions"><a class="btn secondary" href="#tf-certs">'.icon('star').'Certificates</a><a class="btn secondary" href="?page=class_demo">'.icon('book').'Class Demo</a><a class="btn primary" href="?page=accounts">'.icon('people').'Add a pupil</a></div></div>';
  section_filter($u,'dashboard',$sid,$grade);
- month_recap_teacher($u);schedule_open_check_teacher((int)$u['id']);echo tf_checkin($need).tf_stats($ids,$pending,(int)val('SELECT COUNT(*) FROM lessons WHERE published=1'));
+ echo help_teacher_card($u);month_recap_teacher($u);schedule_open_check_teacher((int)$u['id']);echo tf_checkin($need).tf_stats($ids,$pending,(int)val('SELECT COUNT(*) FROM lessons WHERE published=1'));
  if($pupils)echo tf_chart($ids).'<div class="tf-grid">'.tf_tree($pupils,$stats,$badgeWeek).tf_feed($ids).'</div>';
  echo tf_certificates($pupils,$sid);
  echo '<section class="card tdash-table tf-table"><div class="section-heading"><h2>Class overview</h2><a href="?page=review">Activity history '.icon('arrow').'</a></div><div class="tablewrap"><table class="pupil-table"><thead><tr><th>Pupil</th><th>Section</th><th>Starting level</th><th>Completed</th><th>XP</th><th>Last learning day</th><th>Status</th></tr></thead><tbody>';

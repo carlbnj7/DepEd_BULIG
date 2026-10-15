@@ -250,6 +250,14 @@ def run_pages(acc):
         p.req('index.php', sub, accept_json=True)
         after = php_cli('probe.php', 'xp', acc['pupil1']['uid'])
         check('Sending the same activity again gives no extra XP', after == mid, f'{mid} -> {after}')
+        status, url, text = p.req(f"?page=lesson&id={first['lesson_id']}&activity={first['id']}")
+        check('Lesson screen has the "I need help" button, for class and home', 'data-help-open' in text and 'in class or at home' in text)
+        tok = p.token(f"?page=lesson&id={first['lesson_id']}&activity={first['id']}")
+        back = f"?page=lesson&id={first['lesson_id']}&activity={first['id']}"
+        status, url, text = p.req('index.php', {'action': 'help_request', 'reason': 'question', 'lesson_id': first['lesson_id'],
+                                                 'activity_id': first['id'], 'back': back, 'csrf': tok})
+        check('"I need help" tells the pupil their teacher got the message', 'Your teacher got your message' in text and 'come to you' not in text,
+              f'status {status}, ended at {url}')
         if len(acts) > 1:
             nxt = acts[1]
             status, _, text = p.req('index.php', {'action': 'draft', 'activity_id': nxt['id'], 'response': 'half done', 'csrf': tok}, accept_json=True)
@@ -276,6 +284,23 @@ def run_pages(acc):
         for pg in ('dashboard', 'manage', 'accounts', 'progress', 'review', 'sections', 'class_demo', 'notifications', 'cards',
                    'qcheck', 'guide', 'profile', f'pupil&id={uid}', f'report&id={uid}', f'report_card&id={uid}', 'certificates&level=1'):
             page_ok(t, f'?page={pg}', f'Teacher page opens: {pg}')
+        status, _, text = t.req('?page=dashboard')
+        m = re.search(r'name="action" value="help_done"><input type="hidden" name="id" value="(\d+)"', text)
+        check('Teacher Overview shows "Asked for help" with the pupil and "Mark as helped"', 'Asked for help' in text and 'Test needs help' in text and m)
+        if m:
+            tok = t.token('?page=dashboard')
+            status, url, text = t.req('index.php', {'action': 'help_done', 'id': m.group(1), 'csrf': tok})
+            check('"Mark as helped" marks the request as seen', 'Marked as helped' in text and ' · Seen' in text and 'value="help_done"' not in text,
+                  f'status {status}, ended at {url}')
+        blanks = php_cli('probe.php', 'blanks')
+        check('Blanks: one line per missing letter ("n ___ t" with e is 1, "___ og" with fr is 2)', not blanks['wrong'], blanks['wrong'])
+        h = blanks['html']
+        check('Blanks: pupil card has letter lines the tiles fill, Class Demo shows the same lines',
+              h['pupil'].count('<i></i>') == 1 and 'data-n="1"' in h['pupil'] and h['demo'].count('<i></i>') == 1, h)
+        check('Blanks: a word blank is one long line, a blank inside a word stays as written', 'bl-w' in h['word'] and h['inword'] == 'technolog__ is', h)
+        check('Blanks: teacher lists show "_ _ og" too', h['plain'] == '_ _ og', h['plain'])
+        check(f"Blanks: every Level 2A, 2B and 3 card ({blanks['cards']}) shows one line per missing letter", blanks['cards'] and not blanks['left_count'],
+              f"{blanks['left_count']} left: {blanks['left']}")
         status, _, text = t.req('?page=demo_offline')
         try:
             units = json.loads(text).get('units', [])

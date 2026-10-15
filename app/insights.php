@@ -5,8 +5,8 @@
    - Progress report: one printable page per pupil (level, lessons, scores, pre-test and post-test, oral reading, notes). */
 
 /** One card's question text, short. */
-function qc_text(array $set,int $n,string $t):string{
- $c=$set['cards'][$n-1]??[];$x=trim(preg_replace('~\s+~u',' ',(string)($c['text']??'')));
+function qc_text(array $set,int $n,string $t,int $blank=0):string{
+ $c=$set['cards'][$n-1]??[];$x=blank_plain(trim(preg_replace('~\s+~u',' ',(string)($c['text']??''))),$blank);
  if($x===''&&$t==='match')$x='Matching';if($x===''&&$t==='order')$x='Number the events';if($x==='')$x='Card '.$n;
  return mb_strimwidth($x,0,140,'…');
 }
@@ -28,7 +28,7 @@ function qcheck_view(array $u):void{
  echo '<label class="qc-lesson">Lesson<select name="lesson" data-autosubmit>';foreach($lessons as $id=>$l)echo '<option value="'.$id.'"'.($id===$lid?' selected':'').'>'.e(lesson_display_label($level,(int)$l['position']).' · '.$l['subtitle'].' ('.($answered[$id]??0).' answered)').'</option>';echo '</select></label><button class="btn secondary pg-go">Show</button></form>';
  if(!$lid){echo '<section class="empty">'.icon('chart').'<h2>No questions to check here yet.</h2><p>This grade has no lessons with an answer key.</p></section>';return;}
  $acts=rows("SELECT a.* FROM activities a WHERE a.lesson_id=? AND a.published=1 ORDER BY FIELD(a.phase,'pre','learn','post'),a.position",[$lid]);$shown=0;$pupils=0;
- foreach($acts as $a){$key=activity_key($a);if(!$key)continue;$set=l2a_set($a);if(!$set)continue;
+ foreach($acts as $a){$key=activity_key($a);if(!$key)continue;$set=l2a_set($a);if(!$set)continue;$bc=l2a_blank_counts($a,$set,lesson_level((int)$a['lesson_id']));
   $done=rows("SELECT c.* FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id AND t.teacher_id=? WHERE c.activity_id=? AND c.status IN ('completed','approved')",[$tid,(int)$a['id']]);
   $pupils=max($pupils,count($done));
   $stat=[];foreach($key as $n=>$k)$stat[(int)$n]=['pts'=>0,'of'=>0,'n'=>0,'wrong'=>[]];
@@ -40,7 +40,7 @@ function qcheck_view(array $u):void{
   foreach($stat as $n=>$st){$k=$key[$n];$pct=$st['of']?(int)round(100*$st['pts']/$st['of']):0;$cls=$pct>=75?'ok':($pct>=50?'part':'no');
    arsort($st['wrong']);$w=$st['wrong']?array_key_first($st['wrong']):null;
    $right=in_array($k['t'],['choice','card'],true)?$st['pts'].' of '.$st['n']:$pct.'% of '.($k['t']==='match'?'pairs':'events');
-   echo '<tr class="qc-'.$cls.'"><td><b>'.$n.'.</b> '.e(qc_text($set,$n,$k['t'])).'<small class="qc-ans">Answer: '.e(key_want($k)).'</small></td>';
+   echo '<tr class="qc-'.$cls.'"><td><b>'.$n.'.</b> '.e(qc_text($set,$n,$k['t'],$bc[$n-1]??0)).'<small class="qc-ans">Answer: '.e(key_want($k)).'</small></td>';
    echo '<td><span class="qc-bar" role="img" aria-label="'.$pct.' percent right"><i class="qc-fill w'.(int)(round($pct/5)*5).'"></i></span><small>'.e($right).'</small></td>';
    echo '<td>'.($w!==null?'<span class="qc-wrong">'.e($w).' ('.$st['wrong'][$w].')</span>':'<span class="muted">—</span>').($cls==='no'&&$st['n']?'<small class="qc-tip">Read this part of the story again together.</small>':'').'</td></tr>';}
   echo '</tbody></table></div></section>';}
