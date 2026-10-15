@@ -159,7 +159,7 @@
    [['.me-week .weekdays'],'This week','The days you learned this week have a check.'],
    ['.me-pic','Your picture','Choose a character, or upload your own photo.'],
    [['.me-setbtn','.sidebar nav a[href="?page=settings"]'],'Settings','Sound, colours, offline lessons, your password and About BULIG are in Settings.']]:[
-   ['.char-pick','Your teacher character','Choose the character that greets you after you sign in and guides your tours.'],
+   ['.char-pick','Your teacher character','Choose the character that greets you after you sign in. George the Explorer guides your tours.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
    ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']]
@@ -364,7 +364,7 @@
    [['.rt-box'],'Pupils','The average stars, and how many pupils gave 5, 4, 3, 2 or 1 star.'],
    [['.rt-box:nth-child(2)'],'Teachers','The average, each of the five questions, and what teachers said.']],
   profile:[
-   [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in and guides your tours.'],
+   [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in. George the Explorer guides your tours.'],
     ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']],
@@ -388,7 +388,10 @@
   try{const fd=new FormData();fd.set('csrf',(document.querySelector('meta[name="csrf"]')||{}).content||'');fd.set('action','tour_seen');fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
 
  /* ---------- UI ---------- */
- const charImg=()=>{const i=document.createElement('img');i.src=me.char;i.alt='';i.width=62;i.height=84;return i;};
+ /* George the Explorer guides every tour (pupils, teachers and admins). She points, holds her map, gives a thumbs up, and cheers on the last step. */
+ const G=me.guide||{},pose=p=>G[p]||me.char;
+ const charImg=(p)=>{const i=document.createElement('img');i.src=pose(p||'point');i.alt='';i.className='tour-george';i.width=62;i.height=84;return i;};
+ function metGeorge(){if(me.met)return;me.met=true;try{const fd=new FormData();fd.set('csrf',(document.querySelector('meta[name="csrf"]')||{}).content||'');fd.set('action','george_met');fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
  let layer=null,idx=-1,cur=[],raf=0;
  /* Voice narration: each step is read aloud in a calm, natural voice (the pupil's chosen voice when there is one). */
  const synth=window.speechSynthesis||null;let talkOn=true;try{talkOn=localStorage.getItem('bulig-tour-voice')!=='off';}catch(e){}
@@ -421,11 +424,12 @@
  function start(){close(false);cur=steps.filter(s=>!s[0]||find(s[0]));if(!cur.length)return;
   layer=document.createElement('div');layer.className='tour-layer';layer.setAttribute('role','dialog');layer.setAttribute('aria-modal','true');layer.setAttribute('aria-label','Guided tour');
   layer.innerHTML='<div class="tour-block"></div><div class="tour-spot" aria-hidden="true"></div><div class="tour-bub"><div class="tour-bub-in"><div class="tour-txt"><h3></h3><p></p></div></div><div class="tour-nav"><span class="tour-dots" aria-hidden="true"></span><button type="button" class="tour-skip">Skip</button><button type="button" class="tour-back">Back</button><button type="button" class="tour-next">Next</button></div></div>';
-  layer.querySelector('.tour-bub-in').prepend(charImg());layer.querySelector('.tour-nav').prepend(voiceBtn());
+  layer.querySelector('.tour-bub-in').prepend(charImg('point'));layer.querySelector('.tour-nav').prepend(voiceBtn());
   layer.querySelector('.tour-skip').onclick=()=>close(true);layer.querySelector('.tour-back').onclick=()=>{if(idx>0)go(idx-1);};layer.querySelector('.tour-next').onclick=()=>go(idx+1);
   document.body.append(layer);document.body.classList.add('tour-on');document.addEventListener('keydown',keys,true);addEventListener('resize',place);addEventListener('scroll',place,true);go(0);}
  function go(n){if(!layer)return;if(n>=cur.length){close(true);return;}idx=n;const [sel,title,text]=cur[n];
   layer.querySelector('h3').textContent=title;layer.querySelector('.tour-txt p').textContent=text;say(title,text);
+  const gi=layer.querySelector('.tour-george');if(gi)gi.src=pose(n===cur.length-1&&n>0?'cheer':['point','map','thumbs'][n%3]);
   layer.querySelector('.tour-dots').innerHTML=cur.map((_,k)=>'<i'+(k===n?' class="on"':'')+'></i>').join('');
   layer.querySelector('.tour-back').style.visibility=n?'visible':'hidden';const nx=layer.querySelector('.tour-next');nx.textContent=n===cur.length-1?'Finish':'Next';
   const el=find(sel);layer.classList.toggle('tour-center',!el);
@@ -449,12 +453,13 @@
  function offer(){if(document.querySelector('.tour-offer'))return;if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeout(offer,600),{once:true});return;}if(document.querySelector('[data-save-offer]')&&!window.buligSaveDone){document.addEventListener('bulig:save-done',()=>setTimeout(offer,500),{once:true});return;}const big=key==='dashboard';
   const o=document.createElement('div');o.className='tour-offer'+(big?' tour-offer-big':'');o.setAttribute('role','dialog');o.setAttribute('aria-label','Guided tour');
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Skip for now</button></div></div>';
-  o.querySelector('.tour-offer-card').prepend(charImg());
-  o.querySelector('b').textContent=big?(pupil?'Hi, '+me.name+'! I am your reading buddy.':'Welcome to BULIG, Teacher '+me.name+'!'):(pupil?'New here?':'New page');
-  o.querySelector('.tour-offer-txt span').textContent=big?(pupil?'Do you want me to show you around BULIG?':'Would you like a quick tour of your workspace?'):(pupil?'I can show you how this page works.':'Want a quick tour of this page?');
+  o.querySelector('.tour-offer-card').prepend(charImg('hello'));if(big)o.classList.add('tour-offer-george');
+  const hi=pupil?'Hi, '+me.name+'!':me.role==='admin'?'Hello, '+me.name+'!':'Hello, Teacher '+me.name+'!';
+  o.querySelector('b').textContent=big?hi+' I am George the Explorer.':(pupil?'New here?':'New page');
+  o.querySelector('.tour-offer-txt span').textContent=big?(pupil?'I will be your reading buddy. Do you want me to show you around BULIG?':'I am BULIG’s guide. Would you like me to show you around your '+(me.role==='admin'?'admin area':'workspace')+'?'):(pupil?'George can show you how this page works.':'George can show you how this page works.');
   o.querySelector('.tour-yes').textContent=big?'Yes, show me!':'Show me';
-  o.querySelector('.tour-yes').onclick=()=>{o.remove();markDone();start();};
-  o.querySelector('.tour-no').onclick=()=>{o.remove();markDone();toast(pupil?'Okay! Tap the yellow ? anytime to see the tour.':'You can open the tour anytime with the ? button.');};
+  o.querySelector('.tour-yes').onclick=()=>{o.remove();markDone();if(big)metGeorge();start();};
+  o.querySelector('.tour-no').onclick=()=>{o.remove();markDone();if(big)metGeorge();toast(pupil?'Okay! Tap the yellow ? anytime to see the tour.':'You can open the tour anytime with the ? button.');};
   document.body.append(o);setTimeout(()=>o.querySelector('.tour-yes').focus({preventScroll:true}),80);}
  function toast(t){document.querySelectorAll('.tour-toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='tour-toast';d.setAttribute('role','status');d.textContent=t;document.body.append(d);
   /* Sit right next to the ? button, with a little tail pointing at it. */
@@ -468,6 +473,17 @@
 
  /* Someone who already answered the offer on this device (older BULIG kept it per page) is told to the server, not asked again. */
  const answeredHere=()=>{try{for(let i=0;i<localStorage.length;i++)if((localStorage.key(i)||'').indexOf('bulig-tour-'+me.id+'-')===0)return true;}catch(e){}return false;};
- const ready=()=>{if(key!=='dashboard'||me.seen)return;if(answeredHere())markDone();else setTimeout(offer,900);};
+ /* Already took the tour before George arrived: she says hello once (on the dashboard). */
+ function meet(){if(document.querySelector('.tour-offer'))return;
+  const o=document.createElement('div');o.className='tour-offer tour-offer-big tour-offer-george tour-meet';o.setAttribute('role','dialog');o.setAttribute('aria-label','Meet George the Explorer');
+  o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><small class="tour-new">NEW FRIEND</small><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Show me around</button></div></div>';
+  o.querySelector('.tour-offer-card').prepend(charImg('hello'));
+  o.querySelector('b').textContent=(pupil?'Hi, '+me.name+'!':me.role==='admin'?'Hello, '+me.name+'!':'Hello, Teacher '+me.name+'!')+' I am George the Explorer.';
+  o.querySelector('.tour-offer-txt span').textContent=pupil?'I am your new reading buddy! I will cheer for you when you finish a lesson or level up. Tap me anytime for a message.':'I am BULIG’s new guide. Tap the ? button anytime and I will show you around.';
+  o.querySelector('.tour-yes').textContent=pupil?'Hi, George!':'Nice to meet you!';
+  o.querySelector('.tour-yes').onclick=()=>{o.remove();metGeorge();};
+  o.querySelector('.tour-no').onclick=()=>{o.remove();metGeorge();start();};
+  document.body.append(o);setTimeout(()=>o.querySelector('.tour-yes').focus({preventScroll:true}),80);}
+ const ready=()=>{if(key!=='dashboard')return;if(me.seen){if(!me.met&&me.guide)setTimeout(meet,900);return;}if(answeredHere())markDone();else setTimeout(offer,900);};
  if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',ready,{once:true});else ready();
 })();

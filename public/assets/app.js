@@ -295,7 +295,9 @@ document.querySelectorAll('.ws-table').forEach(t=>{const h=[...t.querySelectorAl
   document.querySelectorAll('[data-pf-plus]').forEach(p=>{const k='pf-plus-'+p.dataset.pfPlus;if(!store(k)){p.hidden=false;store(k,'1');}});};
  if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',start,{once:true});else start();
  document.querySelectorAll('[data-pf-wiggle]').forEach(c=>{const l=c.querySelector('.level-lock .icon');if(!l)return;const go=()=>{l.classList.remove('pf-wig');void l.getBoundingClientRect();l.classList.add('pf-wig');};c.addEventListener('click',e=>{if(!e.target.closest('a'))go();});});
- const h=document.querySelector('[data-pf-helper]');if(h){const b=h.parentNode.querySelector('.pf-bubble');let lines=[];try{lines=JSON.parse(h.dataset.lines);}catch(e){}let i=Math.floor(Math.random()*lines.length),t;
+ const h=document.querySelector('[data-pf-helper]');if(h){const b=h.parentNode.querySelector('.pf-bubble');let lines=[];try{lines=JSON.parse(h.dataset.lines);}catch(e){}let i=1+Math.floor(Math.random()*Math.max(1,lines.length-1)),t;
+  /* George's first words on this device: "Hi! I am George the Explorer." */
+  try{if(h.closest('.pf-buddy-george')&&!localStorage.getItem('bulig-george-hi')){i=0;localStorage.setItem('bulig-george-hi','1');}}catch(e){}
   const say=()=>{if(!lines.length)return;b.textContent=lines[i++%lines.length];b.classList.add('on');h.classList.remove('pf-wave-now');void h.getBoundingClientRect();h.classList.add('pf-wave-now');clearTimeout(t);t=setTimeout(()=>b.classList.remove('on'),3200);};
   h.addEventListener('click',say);const greet=()=>setTimeout(say,1800);if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',greet,{once:true});else greet();}
 })();

@@ -159,3 +159,15 @@ All checks must pass before an update goes out.
 - **A page looks old after an update:** press Ctrl+F5. Style and script files change name on every update, so
   this is rare.
 - `tests/last-run-server.log` holds the PHP log of the last test run.
+
+## George the Explorer (BULIG's guide)
+
+George is one character for everyone, with five poses in `public/assets/images/characters/george-*.webp`
+(hello, thumbs, point, map, cheer). Use `char_src('george', $pose)` in PHP.
+
+- Pupil Overview: the reading buddy in the corner (`pf_helper`).
+- Tours on every dashboard (`tour.js`): she guides each step, introduces herself in the first offer, and says hello once to
+  people who already took the tour (remembered as `george_met_<user id>` in `settings`).
+- Finished lessons, finished levels, the new-level gate, level up, rank up and head start (`pupil_fun.php`, `reader_level.php`).
+
+The pupil's own boy or girl stays on the activity screens, the reading ladder and the hello after signing in.

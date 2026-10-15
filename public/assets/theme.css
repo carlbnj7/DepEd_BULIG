@@ -5080,3 +5080,21 @@ html.dark .hello-txt small{background:rgba(74,169,91,.16);color:#9be0b4}html.dar
 .boot-kid{filter:drop-shadow(0 12px 14px rgba(0,0,0,.4))}
 /* While the hello or the opening screen is up, the menu and top bar do not slide over it during the page change. */
 body:has([data-hello]) .sidebar,body:has([data-hello]) .topbar,body:has([data-hello]) .pupil-tabbar,html.bulig-boot .sidebar,html.bulig-boot .topbar,html.bulig-boot .pupil-tabbar{view-transition-name:none}
+
+/* v155: George the Explorer, BULIG's guide. She is the reading buddy on the pupil Overview, guides every tour (pupils, teachers,
+   admins) and introduces herself once, cheers on finished lessons and level-ups, and leads the way into a new level. */
+.pf-buddy-george .pf-helper{width:118px}
+@media(max-width:700px){.pf-buddy-george .pf-helper{width:92px}}
+.tour-bub-in>img.tour-george{object-fit:contain;object-position:bottom}
+.tour-offer-george .tour-offer-card{max-width:360px}
+.tour-offer-george .tour-offer-card>img{height:190px;margin-top:-118px;animation:tour-wave 2.6s ease-in-out infinite,george-in .7s cubic-bezier(.2,1.4,.4,1) both}
+.tour-offer-george .tour-offer-txt b{color:#0c2614;letter-spacing:-.02em}
+.tour-new{display:inline-block;margin:2px 0 4px;padding:4px 10px;border-radius:999px;background:#fff4cf;color:#7d5a00;font:800 .66rem Poppins,sans-serif;letter-spacing:.16em}
+.tour-meet .tour-offer-btns .tour-no{color:#0a6a20;font-weight:700}
+@keyframes george-in{from{transform:translateY(40px) scale(.85);opacity:0}}
+/* level up, rank up and head start: George cheers beside the badge */
+.cel-george{position:absolute;right:calc(50% - 165px);bottom:-6px;height:150px;width:auto;filter:drop-shadow(0 10px 12px rgba(0,0,0,.25));animation:george-in .7s .35s cubic-bezier(.2,1.4,.4,1) both;pointer-events:none}
+.rk-stage .cel-george{right:calc(50% - 175px);height:165px}
+.rl-stage-hs{height:150px}.cel-george-solo{position:relative;right:auto;bottom:auto;height:150px}
+@media(max-width:420px){.cel-george{right:4px;height:120px}.rk-stage .cel-george{right:0;height:130px}}
+@media(prefers-reduced-motion:reduce){.cel-george,.tour-offer-george .tour-offer-card>img{animation:none}}
