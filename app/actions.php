@@ -8,6 +8,7 @@ function action():void{
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if(str_starts_with($action,'rc_'))rc_action($action);
+ if($action==='rate_app'||$action==='rate_later')rate_action($action);/* app ratings (v152) */
  if($action==='moved_seen')staff_action($action);
  if($action==='move_section')pupils_move_section(require_role('teacher'));
  if($action==='login'){
