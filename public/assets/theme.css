@@ -4959,3 +4959,124 @@ html.dark .rt-word{color:#9be0b4}html.dark .rt-sum{background:#2a2f1e;border-col
 html.dark .rt-lab textarea{background:#0f1a14;color:#e8f0ea;border-color:#2e4234}html.dark .rt-x{background:#1d2d23;color:#e8f0ea}
 html.dark .rt-big strong{color:#e8f0ea}html.dark .rt-bar div{background:#1d2d23}html.dark .rt-crit em{color:#ffd966}
 html.dark .rt-notes li{background:#1d2d23;border-color:#2e4234}html.dark .rt-notes li small{color:#a9bfae}html.dark .rt-lastnote{background:#1d2d23;color:#e8f0ea}
+
+/* v153: Login, premium finish. Same layout, pictures and green button as before; only the finish changes:
+   a deeper night sky (rich emerald by day), "Bright futures." in gold, a clean tilted photo frame, calmer letters,
+   and on the right a lighter "Who's learning today?" (green-and-gold ring, white "Sign in with another account"),
+   green-outlined Pupil / Teacher cards and smoother boxes. The right side's colours apply in light mode only. */
+/* page around the card: calmer ivory with faint gold and green light */
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page){background:radial-gradient(60% 50% at 0% 0%,rgba(247,193,39,.16),transparent 70%),radial-gradient(60% 55% at 100% 100%,rgba(22,132,47,.12),transparent 70%),#f6f4ec}
+/* the card: one crisp edge and a deep, soft shadow */
+html body.login-page:not(.admin-mode):not(.key-page) .login-story{border-radius:30px 0 0 30px;box-shadow:inset 0 -3px 0 #f7c127,0 40px 80px -36px rgba(8,28,18,.55)!important}
+html body.login-page:not(.admin-mode):not(.key-page) .login-panel{border-radius:0 30px 30px 0;border:1px solid rgba(12,38,20,.07);border-left:0;box-shadow:0 40px 80px -36px rgba(8,28,18,.35)}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-panel{background:radial-gradient(90% 45% at 50% 0%,#fbfaf2,#fff 70%)}
+/* evening sky: deeper, layered night with a green glow along the hills */
+html body.login-page.lsky-e:not(.admin-mode) .login-story{background:radial-gradient(90% 60% at 85% 0%,rgba(92,116,214,.55),transparent 60%),radial-gradient(80% 45% at 15% 100%,rgba(22,132,47,.55),transparent 70%),linear-gradient(172deg,#0f1738 0%,#18245a 46%,#0f2d2a 100%)!important}
+html body.login-page.lsky-e:not(.admin-mode) .lfx-glow{background:radial-gradient(circle,rgba(150,175,255,.22),rgba(120,140,220,.06) 45%,transparent 70%)}
+/* daytime sky: rich emerald with warm sunlight */
+html body.login-page.lsky-m:not(.admin-mode) .login-story,html body.login-page.lsky-a:not(.admin-mode) .login-story{background:radial-gradient(70% 55% at 0% 0%,rgba(255,214,90,.45),transparent 60%),radial-gradient(80% 50% at 100% 100%,rgba(74,169,91,.35),transparent 70%),linear-gradient(160deg,#04461a 0%,#0a6a20 55%,#0f7a2a 100%)!important}
+html body.login-page:not(.admin-mode):not(.key-page) .lfx-stars i{box-shadow:0 0 6px 1px rgba(255,255,255,.75)}
+html body.login-page:not(.admin-mode):not(.key-page) .lfx-stars i:nth-child(4n){width:4px;height:4px;opacity:1}
+html body.login-page:not(.admin-mode):not(.key-page) .lfx-moon{filter:drop-shadow(0 0 22px rgba(255,236,170,.6))}
+html body.login-page:not(.admin-mode):not(.key-page) .lfx-letters{opacity:.14}
+html body.login-page:not(.admin-mode):not(.key-page) .lfx-hills path:first-child{fill:rgba(74,169,91,.22)}html body.login-page:not(.admin-mode):not(.key-page) .lfx-hills path:last-child{fill:rgba(22,132,47,.5)}
+html body.login-page:not(.admin-mode):not(.key-page) .lfx-kid{filter:drop-shadow(0 14px 14px rgba(0,0,0,.4))}
+html body.login-page:not(.admin-mode):not(.key-page) .lfx-kids::after{content:"";position:absolute;left:8%;right:8%;bottom:-6px;height:22px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.35),transparent);z-index:-1}
+/* words on the sky */
+html body.login-page:not(.admin-mode):not(.key-page) .story-content .eyebrow{display:inline-flex;align-items:center;gap:10px;color:#ffd84d!important;font-size:.68rem;letter-spacing:.26em;font-weight:700;opacity:.92}
+html body.login-page:not(.admin-mode):not(.key-page) .story-content .eyebrow::before{content:"";width:26px;height:2px;border-radius:2px;background:linear-gradient(90deg,#f7c127,rgba(247,193,39,.2))}
+html body.login-page:not(.admin-mode):not(.key-page) .story-content h1{font-weight:700;letter-spacing:-.045em;line-height:1.02;text-shadow:0 2px 24px rgba(0,0,0,.25)}
+html body.login-page:not(.admin-mode):not(.key-page) .story-content h1 .lgn-gold{background:linear-gradient(92deg,#fff3b0,#ffd84d 45%,#f7c127);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+html body.login-page:not(.admin-mode):not(.key-page) .story-content>p{color:rgba(255,255,255,.74)!important}
+/* the photo: a clean white frame with a gentle tilt (no thick yellow base) */
+html body.login-page:not(.admin-mode):not(.key-page) .story-photo{background:#fff!important;border:0!important;border-radius:22px;padding:7px!important;transform:rotate(-2.5deg);box-shadow:0 0 0 1px rgba(255,255,255,.5),0 28px 50px -20px rgba(0,0,0,.65)!important}
+html body.login-page:not(.admin-mode):not(.key-page) .story-photo img[src*="covers/login"]{border-radius:16px;border:0!important;box-shadow:none!important}
+@media(min-width:741px){html body.login-page:not(.admin-mode):not(.key-page) .login-story>small{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.55);letter-spacing:.04em}html body.login-page:not(.admin-mode):not(.key-page) .login-story>small::before{content:"";width:18px;height:1px;background:rgba(255,255,255,.4)}}
+/* ===== right side (light mode; dark mode keeps its own colours) ===== */
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-card h2{font-weight:700;letter-spacing:-.04em;color:#0c2614}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-card p.muted{color:#66766c}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .lgn-greet{background:#fff7da;box-shadow:inset 0 0 0 1px rgba(224,168,0,.25)}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .admin-pill{background:#fff;border:1px solid rgba(12,38,20,.12);color:#5d6f63;box-shadow:0 1px 2px rgba(12,38,20,.05)}
+/* saved accounts: "Who's learning today?" */
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-head .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:#eef6ea;color:#0a6a20;letter-spacing:.18em;font-size:.66rem}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-head .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#16842f;box-shadow:0 0 0 3px rgba(22,132,47,.18)}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-head h2{font-size:clamp(2rem,4.6vh,2.6rem);line-height:1.08;margin:14px 0 8px}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-bub{--qp-bg:conic-gradient(from 200deg,#0a6a20,#4aa95b,#f7c127,#ffe27a,#0a6a20)!important;--qp-sh:rgba(3,79,21,.55)!important}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-bub::before{box-shadow:0 20px 34px -14px rgba(3,79,21,.5)!important}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-face{inset:6%!important;background:#fff!important;border:3px solid #fff;box-sizing:border-box}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-tag{background:#fff!important;color:#0a6a20!important;box-shadow:0 4px 10px -4px rgba(12,38,20,.3),0 0 0 1px rgba(12,38,20,.06);letter-spacing:.14em}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-name{font-weight:700;color:#0c2614;letter-spacing:-.01em}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-meta{color:#8a978e}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-or{color:#a3aea6;letter-spacing:.2em;font-weight:600}html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-or::before,html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-or::after{background:rgba(12,38,20,.09)}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-other{min-height:56px;border-radius:16px!important;background:#fff!important;border:1px solid rgba(12,38,20,.14)!important;color:#0c2614!important;font-weight:600;box-shadow:0 1px 2px rgba(12,38,20,.06),0 10px 24px -16px rgba(12,38,20,.35);transition:transform .2s,box-shadow .2s}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-other svg{color:#16842f}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-other:hover{transform:translateY(-1px);box-shadow:0 1px 2px rgba(12,38,20,.06),0 16px 30px -16px rgba(12,38,20,.45)}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-foot{color:#8a978e}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .qp-manage-btn{background:transparent!important;border:0!important;box-shadow:none!important;color:#0a6a20!important;font-weight:600;text-decoration:none}
+/* sign-in form */
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .lgn-role{border:1px solid rgba(12,38,20,.12)!important;background:#fff;border-radius:20px;box-shadow:0 1px 2px rgba(12,38,20,.05)}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .lgn-role-pics{background:linear-gradient(180deg,#f1f7ec,#e3f0dc)!important}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .lgn-role.active{border-color:#16842f!important;background:#f6fbf3!important;box-shadow:0 0 0 4px rgba(22,132,47,.13),0 14px 26px -16px rgba(3,79,21,.45)!important}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-card form.stack input:not([type=hidden]){min-height:54px;border-radius:14px;border:1px solid rgba(12,38,20,.15);background:#fff;box-shadow:inset 0 1px 2px rgba(12,38,20,.04)}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-card form.stack input:focus{border-color:#16842f;box-shadow:0 0 0 4px rgba(22,132,47,.14);outline:none}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-card .lgn-eye{background:#f1f7ec}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-card .btn.primary{min-height:54px;border-radius:14px;letter-spacing:.01em;box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 14px 26px -12px rgba(3,79,21,.6)}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .lgn-scan{border-radius:16px}
+html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-credits{color:#5d6f63}
+/* phone */
+@media(max-width:740px){
+ html body.login-page:not(.admin-mode):not(.key-page) .login-story{border-radius:28px 28px 0 0!important}
+ html body.login-page:not(.admin-mode):not(.key-page) .login-panel{border-radius:0 0 28px 28px;border:1px solid rgba(12,38,20,.07);border-top:0}
+ html body.login-page:not(.admin-mode):not(.key-page) .qp-head h2{font-size:1.9rem}
+}
+
+/* v154: Loading screens, premium and easier to notice. The opening screen and the hello after signing in stay for about
+   2.5 seconds: the logo pops in with a light shine, "Small steps. Bright futures." appears, a gold bar fills up and three short
+   messages follow each other ("Opening BULIG…", "Getting your lessons ready…", "Almost there…"). Same colours as the login. */
+.boot{background:radial-gradient(60% 45% at 50% 38%,rgba(255,214,90,.26),transparent 70%),radial-gradient(90% 60% at 50% 110%,rgba(22,132,47,.55),transparent 70%),linear-gradient(170deg,#04461a 0%,#063d18 45%,#04190d 100%);transition:opacity .6s ease,transform .6s ease}
+html.bulig-boot.boot-out .boot{opacity:0;transform:scale(1.03)}
+.boot-glow{width:min(620px,95vw);background:radial-gradient(circle,rgba(255,214,90,.32),rgba(255,214,90,0) 62%)}
+.boot-logo{width:min(420px,70vw);filter:drop-shadow(0 14px 26px rgba(0,0,0,.45));animation:boot-pop .8s cubic-bezier(.2,1.4,.4,1) both,boot-breathe 3s .9s ease-in-out infinite}
+.boot-logo::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%) -150% 0/60% 100% no-repeat;-webkit-mask:url(bulig-logo.png) center/contain no-repeat;mask:url(bulig-logo.png) center/contain no-repeat;animation:boot-shine 1.2s .8s ease-in-out both}
+.boot-tag{position:relative;margin-top:14px;font:700 clamp(1.05rem,2.6vw,1.45rem)/1.2 Poppins,sans-serif;letter-spacing:-.02em;color:#fff;opacity:0;animation:boot-up .6s .55s ease-out forwards}
+.boot-tag em{font-style:normal;background:linear-gradient(92deg,#fff3b0,#ffd84d 45%,#f7c127);-webkit-background-clip:text;background-clip:text;color:transparent}
+.boot-bar{margin-top:26px;width:min(300px,64vw);height:8px;background:rgba(255,255,255,.14);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
+.boot-bar i{width:0;background:linear-gradient(90deg,#ffe066,#f7c127 60%,#ffd84d);box-shadow:0 0 14px rgba(255,214,90,.75);animation:boot-fill 2.3s .3s cubic-bezier(.3,.7,.3,1) forwards}
+html.bulig-boot.boot-out .boot-bar i{animation:none;width:100%}
+.boot-say{position:relative;display:block;margin-top:14px;width:min(320px,80vw);height:1.4em;text-align:center;font:500 .92rem Poppins,sans-serif;color:rgba(255,255,255,.78)}
+.boot-say i{position:absolute;left:0;right:0;font-style:normal;opacity:0;animation:boot-say .8s ease both}
+.boot-say i:nth-child(1){animation-delay:.35s}.boot-say i:nth-child(2){animation-delay:1.15s}.boot-say i:nth-child(3){animation:boot-say-last .5s 1.95s ease both}
+.boot-l{color:rgba(255,226,120,.1)}
+.boot-hills{background:linear-gradient(#0b5a24,#063d18)}
+html.boot-quick .boot-tag,html.boot-quick .boot-say i:nth-child(3){animation:none;opacity:1}html.boot-quick .boot-say i:not(:nth-child(3)){display:none}
+html.boot-quick .boot-bar i{width:35%;animation:boot-bar 1.1s ease-in-out infinite}
+@keyframes boot-fill{0%{width:0}60%{width:70%}100%{width:94%}}
+@keyframes boot-shine{to{background-position:250% 0}}
+@keyframes boot-breathe{50%{transform:translateY(-4px)}}
+@keyframes boot-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes boot-say{0%{opacity:0;transform:translateY(8px)}20%,80%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-6px)}}
+@keyframes boot-say-last{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* hello after signing in */
+.hello{background:radial-gradient(60% 50% at 30% 40%,rgba(255,214,90,.22),transparent 70%),radial-gradient(70% 60% at 100% 100%,rgba(22,132,47,.14),transparent 70%),#fbf8ee;transition:opacity .6s ease,transform .6s ease}
+.hello.out{transform:scale(1.02)}
+.hello-halo{position:absolute;left:16px;top:50%;width:min(330px,46vh);aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:radial-gradient(circle,#fff 0 40%,rgba(255,255,255,0) 70%),conic-gradient(from 200deg,rgba(22,132,47,.25),rgba(247,193,39,.35),rgba(22,132,47,.25));filter:blur(2px);animation:hello-halo 2.6s ease-in-out infinite}
+.hello-who{position:relative}
+.hello-txt small{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:#eef6ea;color:#0a6a20;letter-spacing:.18em;font-size:.7rem}
+.hello-txt b{font-weight:700;letter-spacing:-.035em;color:#0c2614;margin:10px 0 6px}
+.hello-txt b,.hello-txt>span:not(.hello-bar){opacity:0;animation:boot-up .6s .35s ease-out forwards}
+.hello-txt>span:not(.hello-bar){animation-delay:.6s}
+.hello-bar{width:260px;height:8px;background:#ece5cf;box-shadow:inset 0 1px 2px rgba(12,38,20,.12)}
+.hello-bar i{width:0;background:linear-gradient(90deg,#16842f,#4aa95b 60%,#f7c127);box-shadow:0 0 12px rgba(22,132,47,.45);animation:boot-fill 2.4s .4s cubic-bezier(.3,.7,.3,1) forwards}
+.hello.out .hello-bar i{animation:none;width:100%}
+@keyframes hello-halo{50%{transform:translateY(-50%) scale(1.05)}}
+@media(max-width:740px){.hello-halo{left:50%;top:16px;width:min(240px,36vh);transform:translateX(-50%)}.hello-bar{width:200px}
+ @keyframes hello-halo{50%{transform:translateX(-50%) scale(1.05)}}}
+html.dark .hello{background:radial-gradient(60% 50% at 30% 40%,rgba(255,214,90,.12),transparent 70%),radial-gradient(100% 80% at 50% 30%,#1d2d23,#101a14)}
+html.dark .hello-halo{background:radial-gradient(circle,rgba(255,255,255,.08) 0 40%,transparent 70%),conic-gradient(from 200deg,rgba(74,169,91,.25),rgba(247,193,39,.25),rgba(74,169,91,.25))}
+html.dark .hello-txt small{background:rgba(74,169,91,.16);color:#9be0b4}html.dark .hello-txt b{color:#eef5f0}
+@media(prefers-reduced-motion:reduce){.boot-tag,.boot-say i:nth-child(3),.hello-txt b,.hello-txt>span:not(.hello-bar){opacity:1}.boot-say i:not(:nth-child(3)){display:none}.boot-bar i,.hello-bar i{width:60%}}
+.boot-logo{width:min(480px,76vw)}
+.boot-kid.k1{left:7%;background-image:url(images/characters/boy-cheer.webp?v=1)}.boot-kid.k2{right:7%;background-image:url(images/characters/girl.webp?v=1);animation-delay:.45s}
+.boot-kid{filter:drop-shadow(0 12px 14px rgba(0,0,0,.4))}
+/* While the hello or the opening screen is up, the menu and top bar do not slide over it during the page change. */
+body:has([data-hello]) .sidebar,body:has([data-hello]) .topbar,body:has([data-hello]) .pupil-tabbar,html.bulig-boot .sidebar,html.bulig-boot .topbar,html.bulig-boot .pupil-tabbar{view-transition-name:none}

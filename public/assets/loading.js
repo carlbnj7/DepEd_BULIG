@@ -2,7 +2,8 @@
    - Opening screen: the logo and a loading bar on the first page of a visit, until the page has loaded.
    - Hello after signing in: the person's own character, until the dashboard has loaded.
    - Opening a lesson: if a lesson takes longer than about 0.3 seconds to open, the level picture and the pupil's character show.
-   Each one only covers loading time; none of them makes anyone wait longer. */
+   The opening screen and the hello stay for about 2.5 seconds so they can be seen (the bar fills up meanwhile); a lesson's
+   screen only covers loading time. */
 (function(){
  'use strict';
  var d=document.documentElement,still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -12,11 +13,11 @@
  function whenLoaded(fn,min,max){var done=false;function go(){if(done)return;done=true;var wait=Math.max(0,min-since());setTimeout(fn,still?0:wait);}
   if(document.readyState==='complete')go();else{window.addEventListener('load',go,{once:true});setTimeout(go,max);}}
  /* ---------- opening screen ---------- */
- function hideBoot(){if(!d.classList.contains('bulig-boot'))return;d.classList.add('boot-out');try{sessionStorage.setItem('bulig-open','1');}catch(e){}setTimeout(function(){d.classList.remove('bulig-boot','boot-out');},still?0:450);}
- if(d.classList.contains('bulig-boot'))whenLoaded(hideBoot,Math.max(1100,arrived+800),4000);
+ function hideBoot(){if(!d.classList.contains('bulig-boot'))return;d.classList.add('boot-out');try{sessionStorage.setItem('bulig-open','1');}catch(e){}setTimeout(function(){d.classList.remove('bulig-boot','boot-out');},still?0:650);}
+ if(d.classList.contains('bulig-boot'))whenLoaded(hideBoot,arrived+2500,6000);
  /* ---------- hello after signing in ---------- */
  var hello=document.querySelector('[data-hello]');
- if(hello)whenLoaded(function(){hello.classList.add('out');setTimeout(function(){hello.remove();document.dispatchEvent(new Event('bulig:hello-done'));},still?0:450);},Math.max(1500,arrived+1100),4500);
+ if(hello)whenLoaded(function(){hello.classList.add('out');setTimeout(function(){hello.remove();document.dispatchEvent(new Event('bulig:hello-done'));},still?0:600);},arrived+2600,6500);
  window.buligHelloOpen=function(){return !!document.querySelector('[data-hello]:not(.out)');};
  /* Signing in: the opening screen covers the wait until the dashboard arrives. */
  function showBoot(){d.classList.remove('boot-out');d.classList.add('bulig-boot','boot-quick');}
