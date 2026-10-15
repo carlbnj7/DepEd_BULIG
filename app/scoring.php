@@ -101,10 +101,10 @@ function key_save_score(int $cid):void{
 
 /** Teacher review: each marked card with the pupil's answer, a check or a cross, and the right answer. */
 function key_review(array $r):string{
- $a=one('SELECT * FROM activities WHERE id=?',[(int)$r['activity_id']]);if(!$a)return '';$s=key_score($a,(string)$r['response']);if(!$s||!$s['cards'])return '';$set=l2a_set($a);
+ $a=one('SELECT * FROM activities WHERE id=?',[(int)$r['activity_id']]);if(!$a)return '';$s=key_score($a,(string)$r['response']);if(!$s||!$s['cards'])return '';$set=l2a_set($a);$bc=$set?l2a_blank_counts($a,$set,lesson_level((int)$a['lesson_id'])):[];
  $open=count(array_filter($s['cards'],fn($c)=>$c['t']==='open'));
  $h='<div class="ks"><p class="ks-sum">'.l1_icon('ok').'<b>Auto score: '.$s['right'].' / '.$s['total'].'</b><span>'.($open?'Answers with one right answer are marked with the answer key. Spoken, drawn and written answers count when the pupil answered; change the score if you need to.':'Every answer is marked with the answer key.').'</span></p><ol class="ks-list">';
- foreach($s['cards'] as $n=>$c){$q=$set['cards'][$n-1]??[];$text=trim(preg_replace('~\s+~u',' ',(string)($q['text']??'')));if($text===''&&$c['t']==='match')$text='Matching';if($text===''&&$c['t']==='order')$text='Number the events';if($text===''&&($ch=array_values($q['ui']['opts'][0]??$q['choices']??[])))$text=implode(' / ',array_map('strval',$ch));if($text==='')$text=($q['images']??[])?'Picture card':'Card';
+ foreach($s['cards'] as $n=>$c){$q=$set['cards'][$n-1]??[];$text=blank_plain(trim(preg_replace('~\s+~u',' ',(string)($q['text']??''))),$bc[$n-1]??0);if($text===''&&$c['t']==='match')$text='Matching';if($text===''&&$c['t']==='order')$text='Number the events';if($text===''&&($ch=array_values($q['ui']['opts'][0]??$q['choices']??[])))$text=implode(' / ',array_map('strval',$ch));if($text==='')$text=($q['images']??[])?'Picture card':'Card';
   $ok=$c['pts']===$c['of'];$h.='<li class="'.($ok?'ok':($c['pts']?'part':'no')).'"><span class="ks-q">Card '.$n.' · '.e(mb_strimwidth($text,0,110,'…')).'</span><span class="ks-a">'.($c['got']!==''?e(mb_strimwidth($c['got'],0,160,'…')):'<i>No answer</i>').'</span><span class="ks-r">'.($ok?l1_icon('ok').($c['t']==='open'?'Answered':'Right'):($c['of']>1?$c['pts'].' / '.$c['of']:($c['t']==='open'?'No answer':'Wrong'))).(!$ok&&$c['t']!=='open'?' · Answer: '.e($c['want']):'').'</span></li>';}
  return $h.'</ol></div>';
 }

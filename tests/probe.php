@@ -13,6 +13,18 @@ $out=match($what){
  'first_activities'=>rows("SELECT a.id,a.lesson_id,a.xp_reward,a.response_mode FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND (m.grade_level IS NULL OR m.grade_level=?) AND a.published=1 AND l.published=1 AND l.id=(SELECT l2.id FROM lessons l2 JOIN modules m2 ON m2.id=l2.module_id WHERE m2.level_id=? AND (m2.grade_level IS NULL OR m2.grade_level=?) AND l2.published=1 ORDER BY l2.position,l2.id LIMIT 1) ORDER BY FIELD(a.phase,'pre','learn','post'),a.position LIMIT 3",[$pid,(int)($argv[3]??1),$pid,(int)($argv[3]??1)]),
  'migrations'=>array_column(rows('SELECT version FROM schema_migrations ORDER BY version'),'version'),
  'tables'=>array_column(rows('SHOW TABLES'),array_key_first(rows('SHOW TABLES')[0]??['x'=>0])),
+ /* Blanks: one line per missing letter in Levels 2A, 2B and 3 (blank_letters, blank_html), and every such card in the content. */
+ 'blanks'=>(function():array{
+  $cases=[['n ___ t','e',1],['n ___ t','net',1],['t ___ n','/e/',1],['___ og','fr',2],['___ og','frog',2],['___ eam','scr',3],['bl + ack = ____','black',5],
+   ['p + ail = ____','pail',4],['Beginning sound: ___','c or k',1],['can → ___ an','m',1],['bat → ___','bag',3],['One two, tie my ___.','shoe',0],['___ and ___','x',0]];
+  $wrong=[];foreach($cases as [$t,$a,$n])if(($got=blank_letters($t,$a))!==$n)$wrong[]="$t ($a): $got, not $n";
+  $h=['pupil'=>blank_html('n ___ t',1,true),'demo'=>blank_html('n ___ t',1),'word'=>blank_html('tie my ___.',0),'inword'=>blank_html('technolog__ is',0),'plain'=>blank_plain('___ og',2)];
+  $left=[];$cards=0;
+  foreach(rows("SELECT a.*,m.level_id FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (2,3,4) AND a.published=1 AND l.published=1") as $a){
+   $set=l2a_set($a);if(!$set)continue;$bc=l2a_blank_counts($a,$set,(int)$a['level_id']);
+   foreach($set['cards'] as $i=>$c){$t=(string)$c['text'];if(preg_match_all('~_{2,}~',$t)!==1||preg_match('~[.,!?;"“”]~u',$t))continue;$cards++;if(($bc[$i]??0)<1)$left[]=$a['id'].'#'.($i+1).' '.$t;}}
+  return ['wrong'=>$wrong,'html'=>$h,'cards'=>$cards,'left'=>array_slice($left,0,5),'left_count'=>count($left)];
+ })(),
  default=>['error'=>'unknown probe']
 };
 echo json_encode($out),"\n";

@@ -54,7 +54,10 @@
  function set(c,p,v){val.set(key(c,p),v);collect();}
  /* letter tiles */
  $$('[data-kind="tiles"]',deck).forEach(t=>{const c=t.closest('.l2-card'),p=t.dataset.part,box=$('[data-gap]',c)||$('[data-out]',t),tok=[];
-  const show=()=>{box.textContent=tok.join('');box.classList.toggle('f',tok.length>0);set(c,p,tok.join('').trim());};
+  /* "n _ t": one line per missing letter (data-n); the letters go on the lines in order (a blend tile like "fr" fills two),
+     extra letters get a line of their own */
+  const show=()=>{if(box.dataset.n){const ch=[...tok.join('')],want=Math.max(+box.dataset.n,ch.length);while(box.children.length<want)box.append(document.createElement('i'));while(box.children.length>want)box.lastElementChild.remove();[...box.children].forEach((x,i)=>{x.textContent=ch[i]||'';});}else box.textContent=tok.join('');
+   box.classList.toggle('f',tok.length>0);set(c,p,tok.join('').trim());};
   t.addEventListener('click',e=>{const k=e.target.closest('[data-key]'),er=e.target.closest('[data-erase]');if(k){if(tok.length<40)tok.push(k.dataset.key);show();}else if(er){tok.pop();show();}});});
  $$('[data-kind="build"]',deck).forEach(b=>{const c=b.closest('.l2-card'),p=b.dataset.part;wireBuild(b,v=>set(c,p,v));});
  /* chips and numbers */

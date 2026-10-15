@@ -13,6 +13,6 @@ CREATE TABLE IF NOT EXISTS account_id_history(
   UNIQUE KEY uq_account_old_id(old_id),
   KEY idx_account_user(user_id),
   CONSTRAINT fk_account_id_history_user FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;
 
 INSERT IGNORE INTO schema_migrations(version) VALUES('027_account_ids');

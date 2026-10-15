@@ -13,7 +13,8 @@ html.dark body:not(.demo-page) input,html.dark body:not(.demo-page) textarea,htm
 html.dark body:not(.demo-page) input::placeholder,html.dark body:not(.demo-page) textarea::placeholder{color:#7f9486!important}
 html.dark body:not(.demo-page) .btn.secondary,html.dark body:not(.demo-page) .btn.quiet,html.dark body:not(.demo-page) .btn.off-save,html.dark body:not(.demo-page) .back-levels,html.dark body:not(.demo-page) a.tab,html.dark body:not(.demo-page) .tab-manage,html.dark body:not(.demo-page) li.tf-fi,html.dark body:not(.demo-page) summary,html.dark body:not(.demo-page) .narration,html.dark body:not(.demo-page) .native-choices li,html.dark body:not(.demo-page) .pf-cal-hint,html.dark body:not(.demo-page) .level-lock,html.dark body:not(.demo-page) span.native-counter,html.dark body:not(.demo-page) .eyebrow.bg,html.dark body:not(.demo-page) .role-tabs{background:var(--sf2)!important;color:var(--tx)!important;border-color:var(--ln)!important}
 html.dark body:not(.demo-page) .btn.off-save{color:#7fdcaa!important;border-color:#2f6b47!important}
-html.dark body:not(.demo-page) .role-tabs .active,html.dark body:not(.demo-page) a.tab.active{background:var(--sf3)!important;color:#fff!important}
+html.dark body:not(.demo-page) .role-tabs .active{background:var(--sf3)!important;color:#fff!important}
+html.dark body:not(.demo-page) a.tab.active{background:var(--btn-green)!important;border-color:var(--g800)!important;color:#fff!important}
 html.dark body:not(.demo-page) th{background:#1f2a1a!important;color:#ffd966!important}
 html.dark body:not(.demo-page) td{border-color:var(--ln)!important;color:var(--tx)}
 html.dark body:not(.demo-page) .pf-week span i,html.dark body:not(.demo-page) .pf-week span{color:var(--mu)}
@@ -61,3 +62,6 @@ html.dark body:not(.demo-page) .pupil-tabbar a{color:#cfe9d9!important}
 html.dark body:not(.demo-page) .pupil-tabbar a.on,html.dark body:not(.demo-page) .pupil-tabbar .tab-play{color:#ffd23f!important}
 html.dark body:not(.demo-page) a.pupil-stat{color:var(--tx)!important}
 html.dark:has(body.demo-page){background:#fdf8e6;color-scheme:light}
+/* Green buttons and selected tabs look the same as in light mode: the one green, with white writing.
+   Links in the page are light green in dark mode with a long selector; :not(#_) makes this rule stronger than it. */
+html.dark body:not(.demo-page):not(#_) :is(a.l1-big,a.pt-tab.on,a.rv-tab.on,a.dc-tab.on,.ws-tabs a.on,a.lb-mini-go,.rv-item[open] .rv-go),html.dark body:not(.demo-page):not(#_) :is(a.l1-big,a.pt-tab.on,a.rv-tab.on,a.dc-tab.on,.ws-tabs a.on) *{color:#fff!important}

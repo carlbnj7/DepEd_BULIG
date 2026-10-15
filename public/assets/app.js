@@ -522,7 +522,7 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  document.querySelector('[data-help-open]')?.addEventListener('click',()=>{const off=!navigator.onLine;dlg.querySelector('[data-help-off]').hidden=!off;dlg.querySelector('.hp-send').disabled=off;if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');});
  dlg.querySelector('[data-help-close]')?.addEventListener('click',()=>dlg.close?dlg.close():dlg.removeAttribute('open'));
  dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
- const t=document.querySelector('.hp-toast');if(t)setTimeout(()=>t.classList.add('hp-gone'),4200);
+ const t=document.querySelector('.hp-toast');if(t)setTimeout(()=>t.classList.add('hp-gone'),8000);
 })();
 
 /* Level schedule (admin Settings): fill each level's opening date from Week 1, one level after another. */
