@@ -123,15 +123,28 @@ function account_ids_backups():array{
 }
 
 /* ---------- switching ---------- */
+/** account_id_history must compare text the same way as users.public_id. 027 first made it utf8mb4_general_ci, while
+    databases made on a host whose default is utf8mb4_unicode_ci have users in that collation (MySQL error 1267
+    "Illegal mix of collations"). The table is changed to match; if the host does not allow that, nothing breaks,
+    because BULIG never compares the two columns directly. */
+function account_ids_match_collation():void{
+ try{
+  $col=fn($t,$c)=>val('SELECT COLLATION_NAME FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name=? AND column_name=?',[$t,$c]);
+  $want=(string)$col('users','public_id');$have=(string)$col('account_id_history','old_id');
+  if($want!==''&&$have!==''&&$want!==$have&&preg_match('/^(utf8mb4|utf8mb3|utf8)_[a-z0-9_]+$/D',$want,$m))
+   db()->exec('ALTER TABLE account_id_history CONVERT TO CHARACTER SET '.($m[1]==='utf8'?'utf8mb3':$m[1]).' COLLATE '.$want);
+ }catch(Throwable $e){}
+}
 /** Give every account with an old ID its new ID, after saving a backup copy of the database. */
 function account_ids_switch(string $code,bool $ownBackup):array{
  if(!account_ids_ready())throw new RuntimeException('Import 027_account_ids.sql in phpMyAdmin first.');
  $backup='';
+ account_ids_match_collation();
  try{$backup=account_ids_backup('before-new-ids');}catch(Throwable $e){if(!$ownBackup)throw new RuntimeException('BULIG could not save a backup copy ('.$e->getMessage().'), so nothing was changed. Download a backup from System health (or export the database in phpMyAdmin), then tick “I already saved a backup” and try again.');}
  db()->beginTransaction();
  try{
   /* rows left from a switch that was later reversed by restoring a backup: that account has its old ID again */
-  q('DELETE h FROM account_id_history h JOIN users u ON u.id=h.user_id WHERE h.old_id=u.public_id');
+  foreach(rows('SELECT h.id,h.old_id,u.public_id cur FROM account_id_history h JOIN users u ON u.id=h.user_id') as $r)if(strcasecmp((string)$r['old_id'],(string)$r['cur'])===0)q('DELETE FROM account_id_history WHERE id=?',[(int)$r['id']]);
   $plan=account_ids_plan($code);$max=[];
   foreach($plan as $p){
    if(account_id_taken($p['new']))throw new RuntimeException('The ID '.$p['new'].' is already in use. Nothing was changed.');

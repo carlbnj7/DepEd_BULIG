@@ -84,7 +84,7 @@
    [['.native-card-nav.deck-bar','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, the yellow button sends your activity. Your work saves by itself.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null,
    ['.lesson-outline','All activities','Open this to see every activity in this lesson and what you already finished.'],
-   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home, and will help you as soon as they can.'],
    [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.']],
   'l1-start':[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
@@ -92,11 +92,11 @@
    ['.l1-goals','Today you will…','These are the things you will learn. Tap the yellow speaker to hear them.'],
    ['.l1-steps','Three parts','First a few questions, then practice, then show what you learned.'],
    ['.l1-go','Start','Tap Let’s start! when you are ready.'],
-   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home, and will help you as soon as they can.'],
    [['.sk-pick'],'Start anywhere','This level was skipped for you, so everything is open. Tap a part to start there, or open Pick any activity.']],
   l1:[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
-   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home, and will help you as soon as they can.'],
    [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.'],
    [['.l1-q .l1-spk','.l1-mission .l1-spk','.l1-listen .l1-spk','.l1-speed'],'Listen','Tap the yellow speaker to hear it again.'],
    [['.l1-mic'],'Say your answer','Tap the red microphone and say your answer. Tap it again to stop. Then listen to it, and tap Send.'],
@@ -121,7 +121,7 @@
    [['.l2-card:not([hidden]) .l2-nums'],'Count','Tap the number of sounds you hear.'],
    [['.l2-card:not([hidden]) .l1-mic'],'Say it','Tap the red microphone and say your answer. Tap again to stop.'],
    [['[data-l2-next]','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, tap Submit.'],
-   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets a message and will come to you.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home, and will help you as soon as they can.'],
    [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.']],
   'lesson-done':[
    ['.completion-card','Lesson finished!','Great job! Tap the button to save the lesson and go back to your map.'],
@@ -173,6 +173,7 @@
   dashboard:[
    ['.sidebar nav a[href="?page=dashboard"]','Overview','Your class at a glance: pupils, activity this week, and who needs help.'],
    ['.class-tabs','Grades and sections','Choose a grade or section to see only those pupils.'],
+   ['#tf-help','Asked for help','When a pupil taps “I need help” in a lesson, at school or at home, it shows here: who, what is hard and where. Tap See pupil, or Mark as helped when you are done.'],
    ['.tf-alert','Check-ins','Pupils who have not learned for a while appear here so you can follow up.'],
    ['.tdash-stats','Quick numbers','Total pupils, finished activities and learning steps.'],
    ['.mobile-menu-toggle','Menu','Tap here to open the menu: Class Demo, My pupils, My sections, Activity history and more. Each page has its own short tour.'],
