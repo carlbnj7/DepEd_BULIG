@@ -57,6 +57,11 @@ send an update to the live site without breaking it.
   count as done. Teachers see every answer on a pupil's page › Answers and scores (`review_view($u,$pupil)`), where they
   can still listen, look, change a score, write a note or let the pupil do it again. Old `?page=review` links redirect
   there or to Class results (`?page=qcheck`).
+- `app/ratings.php` (table `app_ratings`, update `029_app_ratings.sql`, script `public/assets/rate.js`): **app ratings**.
+  Pupils rate BULIG with 1–5 stars after they finish a lesson (at most once a month); teachers answer a 5-question star
+  evaluation (`RATE_QUESTIONS`) on Home once a quarter after 14 days with BULIG, or any time at `?page=rate` (My profile ›
+  Rate BULIG). "Not now" waits 7 days (pupils) or 3 days (teachers), kept in `settings` as `rate_later_<user id>`. The
+  administrator reads the results at `?page=ratings` (Reports › App ratings); each person counts once per period.
 - `app/staff_ui.php`: the teacher and admin menus (`staff_nav_list()`, grouped with yellow labels), "Find a page"
   (`staff_find_list()`, filtered by `public/assets/staff.js`), Teacher Home, Print centre, Add pupils / Add teachers,
   the pupil list, the one-pupil page with tabs, Admin Home, Print & download and "Where things are now"

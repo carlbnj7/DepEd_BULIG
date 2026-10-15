@@ -257,7 +257,11 @@
    ['#learning-path','Learning path','Every level and lesson with its status. Open a level to mark lessons done in class.'],
    [['.cd-actions'],'Mark as done in class','Tick lessons or activities you did together, then save. Use "Undo" if you made a mistake.'],
    [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.']],
-  profile:P.profile,
+  profile:P.profile.concat([['.rt-pcard','Rate BULIG','Five quick questions with stars. Your answers help the Division improve BULIG.']]),
+  rate:[
+   ['.rt-rows','Five quick questions','Tap 1 to 5 stars for each one. Your overall rating is the average.'],
+   ['.rt-lab','Tell us more','Optional: write what we should improve.'],
+   ['.rt-btn','Send','Send your evaluation. You can rate BULIG again any time.']],
   qcheck:[
    ['.hm-head','Class results','BULIG checks every answer. Here you see which questions your class finds hard, so you can read them again together.'],
    ['.qc-filter','Choose what to see','Pick a level, a grade and a lesson.'],
@@ -301,7 +305,7 @@
    ['.hm-grid','What do you want to do?','Add teachers, print Teacher Passes, reset a password, move pupils, download a backup, print the school report, post an announcement, edit a lesson.'],
    [['.hm-g3'],'The school at a glance','Pupils at each level, teachers and learning this week.'],
    ['.nv-find','Find a page','Type what you need, for example “backup” or “passes”, then tap the page.'],
-   ['.sidebar .nv-g','The menu in groups','PEOPLE: teachers and accounts. LESSONS: the lesson studio. REPORTS & PRINT: reports, passes and backups. SYSTEM: activity log, health and settings.'],
+   ['.sidebar .nv-g','The menu in groups','PEOPLE: teachers and accounts. LESSONS: the lesson studio. REPORTS & PRINT: reports, app ratings, passes and backups. SYSTEM: activity log, health and settings.'],
    ['.sidebar nav a[href="?page=print"]','Print & download','Teacher Passes, the school report, backups, the activity log and teacher lists, in one place.'],
    ['.mobile-menu-toggle','Menu','Tap here to open the menu. It has a “Find a page” box at the top. Each page has its own short tour.'],
    [['.notif-top','.notif-m'],'Notifications','Tap the bell for System health alerts and new pupil accounts. The yellow number shows what is new.'],
@@ -354,6 +358,11 @@
    [['.rc-logoset'],'Report card logos','Upload the Division and school logos. They print at the top of every Reading Progress Report Card.'],
    ['#admin-pin','Admin PIN','Change the 4-digit PIN you enter after your password.'],
    [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG protects accounts from wrong passwords.']],
+  ratings:[
+   ['.hm-head','App ratings','How pupils and teachers rate BULIG. Each person counts once: their latest rating.'],
+   ['.rt-per','Choose the period','The last 3 months, 12 months or all time.'],
+   [['.rt-box'],'Pupils','The average stars, and how many pupils gave 5, 4, 3, 2 or 1 star.'],
+   [['.rt-box:nth-child(2)'],'Teachers','The average, each of the five questions, and what teachers said.']],
   profile:[
    [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in and guides your tours.'],
     ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
