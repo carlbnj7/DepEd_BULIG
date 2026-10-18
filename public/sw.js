@@ -7,7 +7,7 @@ const FILES=['offline.html','assets/offline.css','assets/brand/bulig-tab.png','a
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&k!==FRESH&&!k.startsWith('bulig-off-')&&k!=='bulig-who'&&k!=='bulig-login').map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 
-/* The Level 2A and 2B pictures were redrawn but kept their file names. Browsers keep pictures for up to 7 days,
+/* The Level 2A, 2B, 4, 6 and 7 pictures were redrawn but kept their file names. Browsers keep pictures for up to 7 days,
    so each one is fetched fresh from BULIG once (cache "bulig-fresh-2" remembers which), then used normally. */
 const FRESH='bulig-fresh-2';
 async function freshOnce(r){const c=await caches.open(FRESH),k=new URL(r.url);k.search='';
@@ -45,7 +45,7 @@ self.addEventListener('fetch',e=>{
  if(['offline_sync','offline_manifest','offline_levels','demo_offline'].includes(url.searchParams.get('page'))||url.searchParams.get('off')==='1')return;
  if(r.mode==='navigate'){e.respondWith(fetch(r).catch(()=>offlinePage(r)));return;}
  if(FILES.some(f=>url.pathname.endsWith('/'+f))){e.respondWith(fetch(r).catch(()=>caches.match(r,{ignoreSearch:true})));return;}
- if(/\/assets\/images\/level2[ab]\/[^/]+\.webp$/.test(url.pathname)){e.respondWith(freshOnce(r).catch(async()=>(await saved(r,false))||Response.error()));return;}
+ if(/\/assets\/images\/level(2[ab]|[467])\/([^/]+\/)?[^/]+\.webp$/.test(url.pathname)){e.respondWith(freshOnce(r).catch(async()=>(await saved(r,false))||Response.error()));return;}
  if(/\.(css|js|png|jpe?g|webp|gif|svg|woff2?|ico)$/i.test(url.pathname))e.respondWith(fetch(r).catch(async()=>(await saved(r,false))||Response.error()));
 });
 

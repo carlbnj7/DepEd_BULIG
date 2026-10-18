@@ -139,7 +139,7 @@ function teacher_import_view():void{
  }
  echo '<div class="section-heading"><div><span class="eyebrow">STEP 1</span><h2>Upload a teacher list</h2></div><a class="btn quiet small" href="?page=teacher_template">'.icon('download').'Download template</a></div>'
   .'<ol class="import-steps"><li>Open the template in Excel. Fill in <strong>Last name</strong>, <strong>First name</strong>, <strong>Middle name</strong> and <strong>Sex</strong> (M or F). <strong>Grade</strong> and <strong>Section</strong> are optional: BULIG adds that section for the teacher.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet. You will see every row first.</li><li>Press <strong>Create accounts</strong>, then print the Teacher Passes.</li></ol>'
-  .'<div class="tablewrap import-preview tc-sample"><table><thead><tr><th>Last name</th><th>First name</th><th>Middle name</th><th>Sex</th><th>Grade <small>optional</small></th><th>Section <small>optional</small></th></tr></thead><tbody><tr><td>Fernandez</td><td>Liza</td><td>Cruz</td><td>F</td><td>4</td><td>Silang</td></tr><tr><td>Ramos</td><td>Jose</td><td>Dizon</td><td>M</td><td>1</td><td>Rizal</td></tr><tr><td>Lopez</td><td>Carmen</td><td>Reyes</td><td>F</td><td></td><td></td></tr></tbody></table></div>'
+  .'<div class="tablewrap import-preview tc-sample"><table><thead><tr><th>Last name</th><th>First name</th><th>Middle name</th><th>Sex</th><th>Grade <small>optional</small></th><th>Section <small>optional</small></th></tr></thead><tbody><tr class="tc-what"><td>Family name</td><td>Given name</td><td>Middle name</td><td>M or F</td><td>1 to 6</td><td>Section name</td></tr></tbody></table></div>'
   .'<form method="post" enctype="multipart/form-data" class="formgrid import-form">'.csrf_field().'<input type="hidden" name="action" value="timport_preview"><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><label class="import-file">Teacher list file (.xlsx or .csv)<input type="file" name="teacher_list" accept=".csv,.xlsx,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>'
   .'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' teachers, 2 MB. Teachers already in BULIG (same name) are skipped.</small><button class="btn primary">'.icon('check').'Check the list</button></div></form></section>';
 }
@@ -147,7 +147,7 @@ function teacher_import_view():void{
 function teacher_import_download(string $page):never{
  require_role('admin');
  if($page==='teacher_template'){header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-teacher-list-template.csv"');
-  echo "\xEF\xBB\xBF".'Last name,First name,Middle name,Sex,Grade,Section'."\r\n".'Fernandez,Liza,Cruz,F,4,Silang'."\r\n".'Ramos,Jose,Dizon,M,1,Rizal'."\r\n".'Lopez,Carmen,Reyes,F,,'."\r\n";exit;}
+  echo "\xEF\xBB\xBF".'Last name,First name,Middle name,Sex,Grade,Section'."\r\n";exit;}
  $done=$_SESSION['teacher_import_done']??[];if(!$done)fail('There is no finished import to download.',404);
  header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-new-teacher-logins.csv"');$h=fopen('php://output','w');fwrite($h,"\xEF\xBB\xBF");
  fputcsv($h,['Teacher ID','Name','First section','Starter password'],',','"','\\');foreach($done as $d)fputcsv($h,[$d['id'],$d['name'],$d['section'],$d['pw']],',','"','\\');exit;
