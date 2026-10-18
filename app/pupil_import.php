@@ -129,9 +129,9 @@ function import_actions(string $action):void{
   $level=selected_start_level(1,true);$rows=import_read_file($f['tmp_name'],(string)$f['name']);
   $checked=import_check($rows,$u,(int)($_POST['section_id']??0),$level);
   $_SESSION['pupil_import']=['token'=>bin2hex(random_bytes(16)),'file'=>mb_substr(basename((string)$f['name']),0,120),'rows'=>$checked,'teacher'=>(int)$u['id']];unset($_SESSION['pupil_import_done']);
-  go('?page=accounts&import=preview#import');
+  go('?page=accounts&mode=class&import=preview#import');
  }
- if($action==='import_cancel'){require_role('teacher');unset($_SESSION['pupil_import']);flash('Import cancelled. No accounts were created.');go('?page=accounts#import');}
+ if($action==='import_cancel'){require_role('teacher');unset($_SESSION['pupil_import']);flash('Import cancelled. No accounts were created.');go('?page=accounts&mode=class#import');}
  if($action==='import_confirm'){
   $u=require_role('teacher');$p=$_SESSION['pupil_import']??null;
   if(!$p||!hash_equals($p['token'],(string)($_POST['token']??''))||(int)$p['teacher']!==(int)$u['id'])fail('This import has expired. Upload the class list again.');
@@ -150,14 +150,14 @@ function import_actions(string $action):void{
    audit('import_pupils',count($done).' from '.$p['file']);db()->commit();
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   unset($_SESSION['pupil_import']);$_SESSION['pupil_import_done']=$done;
-  flash(count($done).' pupil account'.(count($done)===1?'':'s').' created. Each pupil has their own starter password: print their sign-in tickets.');go('?page=accounts&import=done#import');
+  flash(count($done).' pupil account'.(count($done)===1?'':'s').' created. Each pupil has their own starter password: print their sign-in tickets.');go('?page=accounts&mode=class&import=done#import');
  }
 }
 
 function import_download(string $what):never{
  require_role('teacher');header('Content-Type: text/csv; charset=utf-8');
  if($what==='template'){header('Content-Disposition: attachment; filename="BULIG-class-list-template.csv"');
-  echo "\xEF\xBB\xBF".'Last name,First name,Middle name,LRN,Sex,Grade,Section,Starting level'."\r\n".'Dela Cruz,Juan,Santos,123456789012,M,1,Sampaguita,1'."\r\n".'Reyes,Ana,Lopez,,F,1,Sampaguita,1'."\r\n";exit;}
+  echo "\xEF\xBB\xBF".'Last name,First name,Middle name,LRN,Sex,Grade,Section,Starting level'."\r\n";exit;}
  $done=$_SESSION['pupil_import_done']??[];if(!$done)fail('There is no finished import to download.',404);
  header('Content-Disposition: attachment; filename="BULIG-new-pupil-logins.csv"');$h=fopen('php://output','w');fwrite($h,"\xEF\xBB\xBF");
  fputcsv($h,['Pupil ID','Name','LRN','Section','Starter password'],',','"','\\');foreach($done as $d)fputcsv($h,[$d['id'],$d['name'],$d['lrn']!==''?'="'.$d['lrn'].'"':'',$d['section'],$d['pw']??'12345678'],',','"','\\');exit;
@@ -177,7 +177,7 @@ function import_card(array $u):void{
   echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="import_cancel"><button class="btn secondary">Cancel</button></form></div></section>';return;
  }
  if($mode==='done'&&$done){
-  echo '<p class="import-summary"><span class="pill ok">'.count($done).' accounts created</span> Each new pupil has their own starter password. Print their sign-in tickets: one scan of the QR code signs them in.</p><div class="import-actions"><a class="btn primary" href="?page=import_logins">'.icon('arrow').'Download login list (CSV)</a><a class="btn secondary" href="?page=accounts#import">Import another list</a></div>';
+  echo '<p class="import-summary"><span class="pill ok">'.count($done).' accounts created</span> Each new pupil has their own starter password. Print their sign-in tickets: one scan of the QR code signs them in.</p><div class="import-actions"><a class="btn primary" href="?page=import_logins">'.icon('arrow').'Download login list (CSV)</a><a class="btn secondary" href="?page=accounts&amp;mode=class#import">Import another list</a></div>';
   echo '<div class="tablewrap import-preview"><table><thead><tr><th>Pupil ID</th><th>Name</th><th>LRN</th><th>Section</th></tr></thead><tbody>';foreach($done as $d)echo '<tr><td><strong>'.e($d['id']).'</strong></td><td>'.e($d['name']).'</td><td>'.e($d['lrn']?:'—').'</td><td>'.e($d['section']).'</td></tr>';echo '</tbody></table></div></section>';return;
  }
  echo '<ol class="import-steps"><li>Open your class list in Excel (or the DepEd SF1). Keep a header row with <strong>Name</strong> (or Last name, First name, Middle name), <strong>LRN</strong>, <strong>Sex</strong> and, if you like, <strong>Grade</strong>, <strong>Section</strong> and <strong>Starting level</strong>.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet — you will see every row first.</li><li>Press <strong>Create accounts</strong>, then download the login list to give each pupil their ID.</li></ol>';

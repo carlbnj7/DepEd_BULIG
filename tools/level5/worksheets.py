@@ -27,6 +27,21 @@ def numbered(lines, lead='', start=1):
     return [Q(i, t, lead=lead) for i, t in enumerate(lines, start)]
 
 
+def sort_cards(words, groups):
+    """One card per word from the box: tap the group it belongs to (marked with the key in database/keys2)."""
+    return [dict(Q(i, w, groups), narration=w) for i, w in enumerate(words, 1)]
+
+
+def spell_cards(words):
+    """Spelling: BULIG says the word, the pupil types it (the word is not shown)."""
+    return [dict(Q(i, 'Listen, then spell the word.'), speak=w, narration=w) for i, w in enumerate(words, 1)]
+
+
+W515 = ['touch', 'spoke', 'sold', 'fell', 'tongue', 'porch', 'toe', 'arm', 'chalk', 'furniture', 'heart', 'scooter', 'shirt', 'shadow', 'knee']
+W516 = ['throat', 'thumb', 'hot iron', 'fill in', 'chain', 'change', 'company', 'coughing', 'grain', 'garage', 'follow', 'guess', 'laid', 'blind', 'Facebook posts']
+W555 = ['Captain', 'Garage', 'Thumb', 'Shadow', 'Follow']
+
+
 # worksheet pictures: (grade, page, clip in points)
 FIGURES = {
     '4:21': (4, 21, (48, 175, 560, 748)),
@@ -137,9 +152,9 @@ def pages():
         grid_card(GRIDS['4:36'], ['south', 'area', 'problem', 'medium', 'huge', 'fraction', 'equal', 'cost', 'answer', 'circle', 'whole', 'amount', 'square'], TAP)])
     # ---- Grade 5 worksheets --------------------------------------------------------------------
     P['5:15'] = dict(instruction='Read and Classify · Activity 5 - Classify as Noun or Verb. Directions: Identify the following words in the box below as noun or verb and write your answer on the proper column.', cards=[
-        R(lead='Write each word under Verb or Noun.', words=['touch', 'spoke', 'sold', 'fell', 'tongue', 'porch', 'toe', 'arm', 'chalk', 'furniture', 'heart', 'scooter', 'shirt', 'shadow', 'knee'])])
+        R(lead='Write each word under Verb or Noun.', words=W515)] + sort_cards(W515, ['Verb', 'Noun']))
     P['5:16'] = dict(instruction='Read and Classify · Activity 6 - Classify as Noun or Verb. Direction: Identify the following words in the box below as noun or verb and write your answer on the proper column.', cards=[
-        R(lead='Write each word under Verb or Noun.', words=['throat', 'thumb', 'hot iron', 'fill in', 'chain', 'change', 'company', 'coughing', 'grain', 'garage', 'follow', 'guess', 'laid', 'blind', 'Facebook posts'])])
+        R(lead='Write each word under Verb or Noun.', words=W516)] + sort_cards(W516, ['Verb', 'Noun']))
     P['5:29'] = dict(instruction='Developing Understanding Through Paragraphs · Activity 17 – Short Passage. Direction: Supply the missing word to complete the sentence in the paragraph. Choose your answers from the box below.', cards=[
         R('Mother goes to the ______ to prepare for their __________ party. ____ daughter will receive an award in her graduation ______________. '
           'She passes through a __________ in going to the market. She buys the ingredients for the gathering like ________, ______, ______, ________ and _________ cake. '
@@ -173,7 +188,7 @@ def pages():
         'I’m the dark outline you see when the light is behind you. What am I?', 'I lead the crew as we sail across the sea. Who am I?',
         'I’m a term for moving behind someone. What am I?']))
     P['5:55'] = dict(instruction='Activity 14: Sorting Activity. Directions: Sort the following words into two categories: People and Objects.', cards=[
-        R(lead='Write each word under People or Objects.', words=['Captain', 'Garage', 'Thumb', 'Shadow', 'Follow'])])
+        R(lead='Write each word under People or Objects.', words=W555)] + sort_cards(W555, ['People', 'Objects']))
     P['5:56'] = dict(instruction='Activity 15: Word Search. Directions: Find and circle the vocabulary words in the puzzle below.', cards=[
         grid_card(GRIDS['5:56'], ['Garage', 'Thumb', 'Captain', 'Shadow', 'Follow'], 'Words to find — ' + TAP.lower())])
     P['5:57'] = dict(instruction='Activity 16: Vocabulary Riddles. Directions: Solve the following riddles based on the vocabulary terms.', cards=numbered([
@@ -238,9 +253,9 @@ def pages():
     P['6:23'] = dict(instruction='Word Puzzle · Activity 14. Directions: Read the words in the box. Search for each word in the puzzle and encircle it, if it appears horizontally, vertically and diagonally.', cards=[
         grid_card(GRIDS['6:23'], ['circle', 'whole', 'amount', 'square', 'sign', 'resign', 'when', 'benign', 'today', 'campaign', 'design', 'groan', 'road', 'live',
                                   'thank', 'bigger', 'how', 'always', 'night', 'spring'], TAP)])
-    P['6:25'] = dict(instruction='Correctly Spelled · Activity 16. Directions: Write the correct spelling of words as dictated by the teacher.', cards=[
-        R(lead='Spelling words', words=['everybody', 'company', 'absence', 'ache', 'accomplish', 'athlete', 'occasion', 'restaurant', 'city', 'middle', 'moment',
-                                        'frightened', 'exclaimed', 'several', 'lonely', 'drew', 'since', 'straight'])])
+    P['6:25'] = dict(instruction='Correctly Spelled · Activity 16. Directions: Write the correct spelling of words as dictated by the teacher.', cards=spell_cards(
+        ['everybody', 'company', 'absence', 'ache', 'accomplish', 'athlete', 'occasion', 'restaurant', 'city', 'middle', 'moment',
+         'frightened', 'exclaimed', 'several', 'lonely', 'drew', 'since', 'straight']))
     P['6:26'] = dict(instruction='Roll Word Game · Activity 17. Directions: Look at the words shown in the flashcards, read it. Find and cross it out on your worksheet.', cards=[
         R(lead='Flashcard words', words=['however', 'because', 'practice', 'condition', 'admit', 'solution', 'endurance', 'eligible', 'parallel', 'grateful',
                                          'decided', 'served', 'amazed', 'silent', 'wrecked', 'improved', 'certainly', 'entered', 'realized', 'interrupted'])])
@@ -270,6 +285,7 @@ COMPLETE = {
 }
 # cards missing at the end of a page (the question starts there, its choices are on the next page)
 APPEND = {
+    '4:38': spell_cards(['ant', 'bug', 'kitten', 'everybody', 'deer', 'animal', 'world', 'home', 'teeth', 'tongue', 'umbrella', 'company']),
     '1:30': [R('Listen carefully as your teacher reads the story “My Food”. Then, answer the questions below. Circle the letter of the correct answer.', lead='B. Listening Comprehension'),
              Q(1, 'Who buys the food in the story?', ['a. Mother', 'b. Father', 'c. Sibling'])],
 }

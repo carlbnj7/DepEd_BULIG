@@ -44,6 +44,16 @@
   const again=$('[data-rec-again]'),send=$('#submit-answer'),audioIn=$('#l1-audio'),heardIn=$('#l1-heard'),startLabel=label.textContent;
   const MAX=+rec.dataset.max||60,fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   let mr=null,stream=null,chunks=[],t0=0,tick=null,secs=0,url='',player=null,state='idle';
+  /* Level 4: BULIG listens while the pupil reads (the browser's speech recognition) and sends what it heard, so the
+     reading is scored with the module's miscue table. Without it (some phones, no internet) only the recording is sent. */
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition,listen=rec.classList.contains('l4-rec')&&!!SR,saidIn=$('#transcript');
+  let sr=null,srOn=false,said=[];
+  function srStart(){if(!listen)return;said=[];srOn=true;const make=()=>{sr=new SR();sr.lang='en-US';sr.continuous=true;sr.interimResults=false;
+    sr.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)said.push(e.results[i][0].transcript);if(saidIn)saidIn.value=said.join(' ').trim();};
+    sr.onerror=e=>{if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
+    sr.onend=()=>{if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
+   make();try{sr.start();}catch(e){srOn=false;}}
+  function srStop(){srOn=false;try{sr&&sr.stop();}catch(e){}}
  /* Microphone: ask with clean-sound settings, then plain audio (some iPhones refuse the first). */
  async function getMic(){const md=navigator.mediaDevices;try{return await md.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}
   catch(e){if(e&&(e.name==='NotAllowedError'||e.name==='SecurityError'))throw e;await new Promise(r=>setTimeout(r,350));return await md.getUserMedia({audio:true});}}
@@ -58,17 +68,17 @@
   function ui(s){state=s;rec.dataset.state=s;go.classList.toggle('on',s==='rec');go.setAttribute('aria-label',s==='rec'?'Stop recording':'Tap and say your answer');
    go.hidden=s==='done';playBox.hidden=s!=='done';if(again)again.hidden=s!=='done';if(send)send.hidden=s!=='done';
    if(s==='idle'){label.textContent=startLabel;sub.textContent='';}
-   if(s==='rec'){label.textContent='0:00';sub.textContent=rec.classList.contains('l4-rec')?'Read now. Tap the button when you finish.':'Speak now. Tap the button to stop.';}
+   if(s==='rec'){label.textContent='0:00';sub.textContent=rec.classList.contains('l4-rec')?(listen?'Read now. BULIG is listening. Tap the button when you finish.':'Read now. Tap the button when you finish.'):'Speak now. Tap the button to stop.';}
    if(s==='done'){label.textContent='Listen to your answer';sub.textContent='Happy with it? Tap Send. Or tap Try again.';}}
-  function reset(){if(player){player.pause();player=null;}if(url){URL.revokeObjectURL(url);url='';}audioIn.value='';heardIn.value='';bar.style.setProperty('--p','0');}
+  function reset(){if(player){player.pause();player=null;}if(url){URL.revokeObjectURL(url);url='';}audioIn.value='';heardIn.value='';if(saidIn&&listen)saidIn.value='';bar.style.setProperty('--p','0');}
   async function start(){if(state==='starting'||state==='rec')return;state='starting';rec.dataset.state='starting';go.classList.add('busy');stopSay();reset();
-   try{stream=await getMic();}
-   catch(err){go.classList.remove('busy');ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(err);heardB.hidden=false;return;}
+   srStart();try{stream=await getMic();}
+   catch(err){srStop();go.classList.remove('busy');ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(err);heardB.hidden=false;return;}
    const type=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
    try{mr=new MediaRecorder(stream,type?{mimeType:type,audioBitsPerSecond:32000}:undefined);}catch(e){mr=new MediaRecorder(stream);}
    chunks=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};mr.onstop=finish;mr.start(500);
    go.classList.remove('busy');t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=MAX)stop();},250);}
-  function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;if(mr&&mr.state!=='inactive')mr.stop();if(stream)stream.getTracks().forEach(t=>t.stop());}
+  function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;srStop();if(mr&&mr.state!=='inactive')mr.stop();if(stream)stream.getTracks().forEach(t=>t.stop());}
   function finish(){const kind=((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/'),blob=new Blob(chunks,{type:kind});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Tap the microphone and try again.';return;}
    url=URL.createObjectURL(blob);len.textContent=fmt(secs);const sIn=$('#l1-secs');if(sIn)sIn.value=String(Math.round(secs));
@@ -230,7 +240,7 @@ document.querySelectorAll('.rv-rub [data-rub-total]').forEach(t=>{const f=t.clos
 document.querySelectorAll('.l4-score').forEach(f=>{const words=+f.dataset.words||0,q=s=>f.querySelector(s);
  const calc=()=>{const mis=[...f.querySelectorAll('.l4-mis input')].reduce((a,i)=>a+Math.max(0,+i.value||0),0),tot=Math.min(words,mis);
   const score=words?Math.round((words-tot)/words*1000)/10:0,secs=+q('[data-l4-secs]').value||0;
-  q('[data-l4-total]').textContent=tot;q('[data-l4-score]').textContent=score+'%';
-  q('[data-l4-level]').textContent=score>=98?'Independent':(score>=90?'Instructional':'Frustration');
+  q('[data-l4-total]').textContent=tot;q('[data-l4-score]').textContent=score+'%';const r=q('[data-l4-right]');if(r)r.textContent=words-tot;
+  const lv=q('[data-l4-level]'),k=score>=98?'ind':(score>=90?'ins':'frus');lv.textContent=score>=98?'Independent':(score>=90?'Instructional':'Frustration');lv.className='lv lv-'+k;
   q('[data-l4-wpm]').textContent=secs?Math.round((words-tot)/secs*60)+' words per minute':'Type the reading time';};
  f.addEventListener('input',calc);calc();});

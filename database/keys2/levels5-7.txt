@@ -44,3 +44,8 @@
 7:6:12211:learn:1 | 2=B 3=A 4=B
 7:6:13212:learn:1 | 2=C 3=C
 8:1:37237:learn:1 | 2=ice drop|egg soup
+6:5:6205:learn:1 | 2=Verb|Noun 3=Verb 4=Verb 5=Verb 6=Noun 7=Noun 8=Noun 9=Noun 10=Noun 11=Noun 12=Noun 13=Noun 14=Noun 15=Noun 16=Noun   # noun or verb; "touch" can be either
+6:5:7206:learn:1 | 2=Noun 3=Noun 4=Noun 5=Verb 6=Noun 7=Verb|Noun 8=Noun 9=Verb 10=Noun 11=Noun 12=Verb 13=Verb|Noun 14=Verb 15=Verb|Noun 16=Noun   # noun or verb; "change", "guess" and "blind" can be either
+6:5:36414:learn:1 | 2=People 3=Objects 4=Objects 5=Objects 6=People|Objects   # "follow" is neither a person nor an object, so either is right
+6:4:19216:learn:1 | 2=ant 3=bug 4=kitten 5=everybody 6=deer 7=animal 8=world 9=home 10=teeth 11=tongue 12=umbrella 13=company   # spelling, the word is read aloud
+6:6:17216:learn:1 | 1=everybody 2=company 3=absence 4=ache 5=accomplish 6=athlete 7=occasion 8=restaurant 9=city 10=middle 11=moment 12=frightened 13=exclaimed 14=several 15=lonely 16=drew 17=since 18=straight   # spelling dictated, the word is read aloud

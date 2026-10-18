@@ -141,7 +141,7 @@ function ap_choice(string $on,array $a,array $b,string $page):string{
 }
 function add_pupils_view(array $u):void{
  $np=(int)($_SESSION['new_pupil']??0);unset($_SESSION['new_pupil']);if($np&&val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$u['id'],$np]))echo new_pupil_overlay($np);
- $mode=($_GET['mode']??'')==='class'||isset($_GET['step'])?'class':'one';$secs=teacher_sections((int)$u['id']);
+ $mode=($_GET['mode']??'')==='class'||isset($_GET['step'])||isset($_GET['import'])?'class':'one';$secs=teacher_sections((int)$u['id']);
  echo pupils_tabs('accounts',(int)val('SELECT COUNT(*) FROM teacher_pupils WHERE teacher_id=?',[$u['id']]));
  echo ap_choice($mode,['useredit','One pupil','Type the name and choose the section'],['excel','A whole class','Upload an Excel list · DepEd SF1 works'],'accounts');
  if($mode==='class'){import_card($u);return;}
