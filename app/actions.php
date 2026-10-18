@@ -68,16 +68,16 @@ function action():void{
  if(in_array($action,ADMIN_ACTIONS,true)){admin_actions($action);return;}
  if(in_array($action,['admin_pin','admin_pin_create','admin_pin_cancel','change_admin_pin'],true)){admin_pin_actions($action);return;}
  if($action==='create_account'){
-  $u=require_role('admin','teacher');$role=$u['role']==='admin'?'teacher':'pupil';$name=trim((string)($_POST['name']??''));$password=$role==='pupil'?'12345678':(string)($_POST['password']??'');
+  $u=require_role('admin','teacher');$role=$u['role']==='admin'?'teacher':'pupil';$nm=name_input();$name=$nm['name'];$password=$role==='pupil'?'12345678':(string)($_POST['password']??'');
   if($role==='teacher'&&cards_ready()){
    $sx=(string)($_POST['teacher_sex']??'');if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Use a name of 2–150 characters.');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');
-   db()->beginTransaction();try{$c=teacher_create($name,$sx);audit('create_teacher',$c['public']);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+   db()->beginTransaction();try{$c=teacher_create($name,$sx);name_parts_save($c['id'],$nm['parts']);audit('create_teacher',$c['public']);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
    $_SESSION['new_teacher']=$c['id'];go(($_POST['back']??'')==='add_teachers'?'?page=add_teachers':'?page=accounts&add=1#add-teacher');
   }
   if(strlen($name)<2||strlen($name)>150||strlen($password)<8||strlen($password)>72)fail('Use a name of 2–150 characters and a password of 8–72 characters.');
   db()->beginTransaction();try{
    $public=new_account_id($role);
-   q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
+   q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();name_parts_save($id,$nm['parts']);
    if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');}else{
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level(1,true);$details=pupil_details_input();
     q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);$password=new_pupil_password($id);
@@ -90,7 +90,7 @@ function action():void{
   $name=trim((string)($_POST['name']??''));if(!$name||strlen($name)>150)fail('Enter a valid name.');$password=(string)($_POST['password']??'');
   if($password!==''&&(strlen($password)<8||strlen($password)>72))fail('Use a password of 8–72 characters.');
   db()->beginTransaction();try{
-   q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!==''||!isset($_POST['active']))saved_login_clear($id);if($password!==''){q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);card_forget_starter($id);}
+   if($name!==$target['name'])name_parts_forget($id);q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!==''||!isset($_POST['active']))saved_login_clear($id);if($password!==''){q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);card_forget_starter($id);}
    if($u['role']==='teacher'){
     $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);
     save_pupil_details($id,pupil_details_input($id));

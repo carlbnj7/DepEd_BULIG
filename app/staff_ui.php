@@ -18,7 +18,7 @@ function staff_nav_list(array $u):array{
 }
 /** Which menu item a page belongs to. */
 function staff_nav_on(string $role,string $page):string{
- if($role==='teacher')return ['pupil'=>'manage','progress'=>'manage','cards'=>'print','certificates'=>'print','report'=>'print','report_card'=>'print','rcheck_pupil'=>'rcheck','rcheck_rules'=>'rcheck','rcheck_print'=>'rcheck','review'=>'qcheck','guide'=>'class_demo','moved'=>'dashboard','rate'=>'profile'][$page]??$page;
+ if($role==='teacher')return ['pupil'=>'manage','progress'=>'manage','cards'=>'print','certificates'=>'print','report'=>'print','report_card'=>'print','section_report'=>'print','rcheck_pupil'=>'rcheck','rcheck_rules'=>'rcheck','rcheck_print'=>'rcheck','review'=>'qcheck','guide'=>'class_demo','moved'=>'dashboard','rate'=>'profile'][$page]??$page;
  if($role==='admin')return ['teacher_cards'=>'print','teacher_import'=>'add_teachers','issues'=>'content','media'=>'content','edit_activity'=>'content','guide'=>'content','visual_audit'=>'content','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
  return $page;
 }
@@ -123,7 +123,7 @@ function print_centre_view(array $u):void{
  $img=fn($n)=>is_file(__DIR__.'/../public/assets/images/print/'.$n.'.webp')?'assets/images/print/'.$n.'.webp':'icon:print';
  echo hm_head('PRINT CENTRE','Everything you can print','Choose what to print and for whom. Each one opens a preview first, with a green <b>Print or save as PDF</b> button.');
  if(!$pupils){echo '<section class="empty">'.icon('people').'<h2>No pupils yet.</h2><p>Add pupils first. Then their tickets, report cards and certificates are ready to print here.</p><a class="btn primary" href="?page=accounts">'.icon('useredit').'Add pupils</a></section>';return;}
- echo '<div class="pc-grid">';
+ echo '<div class="pc-grid">'.section_report_card($secs,$img);
  echo print_card('pc-tickets',$img('tickets'),'Sign-in tickets','Reading Pass for each pupil: name, Pupil ID, starter password and a QR code to sign in.',$f('cards',print_select('For','section',$secOpts).$btn('Print tickets')),'Also in My pupils: tick pupils, then <b>Print sign-in tickets</b>.');
  echo print_card('pc-reportcards',$img('reportcard'),'Report cards','Reading Progress Report Card with the reading ladder. One A4 page for each pupil.','<form method="get" class="pc-form" data-pc-rc><input type="hidden" name="page" value="report_card">'.print_select('For','who',$rcOpts).$btn('Print report cards').'</form>','Also on each pupil’s page.');
  echo print_card('pc-progress',$img('progress'),'Progress reports','One pupil’s lessons, scores and your notes. Good for a parents’ meeting.',$f('report',print_select('Pupil','id',$pupOpts).$btn('Print progress report')),'Also on each pupil’s page.');
@@ -147,8 +147,8 @@ function add_pupils_view(array $u):void{
  if($mode==='class'){import_card($u);return;}
  echo '<section class="card"><h2>Add one pupil</h2>';
  if(!$secs)echo '<p class="ap-need">'.icon('alert').'<span>Add a section first (for example Grade 1 · Rizal). <a href="?page=sections">Add a section</a></span></p>';
- echo '<form class="formgrid" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account"><label>Full name<input name="name" required maxlength="150"></label><div class="default-password"><strong>Starter password</strong><p>Made for each pupil</p><small>BULIG makes an easy password like mango4721. You see it after saving, and it is printed on the pupil’s sign-in ticket. The pupil may change it in Settings.</small></div>';
- echo grade_fields(['level_id'=>rc_ready()?0:1],$secs).'<div class="formend"><small>A unique Pupil ID is made automatically. After saving, BULIG shows the pupil’s sign-in ticket, ready to print.</small><button class="btn primary" type="submit">'.icon('check').'Create account</button></div></form></section>';
+ echo '<form class="formgrid" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account">'.name_fields().'<div class="default-password"><strong>Starter password</strong><p>Made for each pupil</p><small>BULIG makes an easy password like mango4721. You see it after saving, and it is printed on the pupil’s sign-in ticket. The pupil may change it in Settings.</small></div>';
+ echo grade_fields(['level_id'=>rc_ready()?0:1],$secs).'<div class="formend"><small>A unique Pupil ID is made automatically. After saving, BULIG shows the pupil’s sign-in ticket, ready to print.</small><button class="btn primary" type="submit">'.icon('check').'Create account</button></div></form></section>'.names_script();
 }
 
 /* ---------------- administrator: Add teachers (one, or many) ---------------- */
@@ -158,7 +158,7 @@ function add_teachers_view(array $u):void{
  echo ap_choice($mode,['useredit','One teacher','Type the name of the teacher'],['excel','Many teachers','Upload an Excel list of the whole team'],'add_teachers');
  if($mode==='many'){ob_start();teacher_import_view();$h=(string)ob_get_clean();echo preg_replace('~^.*?(<section)~s','$1',$h,1);return;}
  $nt=(int)($_SESSION['new_teacher']??0);unset($_SESSION['new_teacher']);if($nt)echo new_teacher_overlay($nt);
- echo '<section class="card ap-one"><h2>Add one teacher</h2><form class="ws-formrow" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account"><input type="hidden" name="back" value="add_teachers"><label>Full name<input name="name" required maxlength="150"></label>'.(cards_ready()?'':'<label>Password (8–72 characters)<input name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password"></label>').'<label>Sex<select name="teacher_sex" required><option value="">Choose Male or Female</option><option value="female">Female</option><option value="male">Male</option></select></label><button class="btn primary">'.icon('check').'Create teacher account</button></form><p class="muted ap-note">'.icon('info').'After saving, BULIG shows the new Teacher Pass with the Teacher ID and starter password, ready to print.</p></section>';
+ echo '<section class="card ap-one"><h2>Add one teacher</h2><form class="ws-formrow" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account"><input type="hidden" name="back" value="add_teachers">'.name_fields().''.(cards_ready()?'':'<label>Password (8–72 characters)<input name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password"></label>').'<label>Sex<select name="teacher_sex" required><option value="">Choose Male or Female</option><option value="female">Female</option><option value="male">Male</option></select></label><button class="btn primary">'.icon('check').'Create teacher account</button></form><p class="muted ap-note">'.icon('info').'After saving, BULIG shows the new Teacher Pass with the Teacher ID and starter password, ready to print.</p></section>'.names_script();
 }
 
 /* ---------------- administrator: Home ---------------- */
