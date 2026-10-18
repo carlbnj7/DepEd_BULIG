@@ -41,7 +41,7 @@ EXPECTED_TABLES = sorted('''account_id_history activities activity_completion ac
  learning_days lessons login_attempts modules notifications pupil_badges pupil_cards pupil_details pupil_level_assignments
  pupil_progress pupil_rewards pupil_sections pupil_streaks pupil_xp pupils push_queue push_subscriptions questions
  reading_assessments reading_checks response_history app_ratings rewards saved_logins schema_migrations sections settings source_pages
- teacher_pupils teachers users xp_transactions'''.split())
+ teacher_pupils teachers user_names users xp_transactions'''.split())
 # MySQL errors an update file may meet when its change is already in place (the files are safe to run again).
 ALREADY_DONE = {1050, 1060, 1061, 1062, 1091, 1826, 1022}
 
@@ -303,6 +303,8 @@ def run_pages(acc):
               'Answers and scores' in ans and 'rv-item' in ans and 'Let the pupil do it again' in ans and not PHP_ERROR.search(ans))
         test_reading_check(t, acc)
         test_ratings_teacher(t)
+        test_section_report(t)
+        test_names(t)
         m = re.search(r'name="action" value="help_done"><input type="hidden" name="id" value="(\d+)"', text)
         check('Teacher Overview shows "Asked for help" with the pupil and "Mark as helped"', 'Asked for help' in text and 'Test needs help' in text and m)
         if m:
@@ -418,6 +420,55 @@ def test_level4_scoring():
     check('"was" for "saw" is a reversal', r.get('reversal') == 1, str(r.get('reversal')))
     check('Too little heard: the teacher scores it instead', r.get('too_little') is True, str(r.get('too_little')))
     check('A perfect reading of every Level 4 passage (Grades 1-6) scores 100%', r.get('passages', 0) >= 60 and not r.get('not_100'), f"{r.get('passages')} passages, not 100%: {r.get('not_100')}")
+
+
+def test_section_report(t):
+    """Section data report: a teacher prints all the results of one section in one level (Print centre)."""
+    section('7d. Section data report')
+    status, _, text = t.req('?page=print')
+    m = re.search(r'id="pc-sd".*?<select name="section"><option value="(\d+)"', text, re.S)
+    check('Print centre has the Section data report card', status == 200 and m is not None, f'status {status}')
+    if not m:
+        return
+    sid = m.group(1)
+    status, _, text = t.req(f'?page=section_report&section={sid}&level=5&p[]=sum&p[]=pp&p[]=irl&p[]=rt&p[]=help&p[]=act')
+    check('Level 4 report: six pages with the summary and the Phil-IRI profile', status == 200 and text.count('class="sd-page"') == 6 and 'Section Level Summary' in text and 'Phil-IRI Class Reading Profile' in text, f'status {status}')
+    status, _, text = t.req(f'?page=section_report&section={sid}&level=6&p[]=sum&p[]=irl&p[]=rt')
+    check('Other levels skip the Phil-IRI page and list the questions to re-teach', status == 200 and text.count('class="sd-page"') == 2 and 'Phil-IRI Class Reading Profile' not in text, f'status {status}')
+    status, _, _ = t.req('?page=section_report&section=999999&level=5')
+    check('A section of another teacher cannot be printed', status in (403, 404), f'status {status}')
+
+
+def test_names(t):
+    """Names in parts: First, Middle, Last and Extension for one pupil, and "Type the list" for a whole class."""
+    section('7e. Names in parts and "Type the list"')
+    status, _, text = t.req('?page=accounts')
+    check('Add one pupil asks for First, Middle, Last name and Extension', status == 200 and all(f'name="{n}"' in text for n in ('first_name', 'middle_name', 'last_name', 'name_ext')) and 'Shows as' in text and 'name="name"' not in text, f'status {status}')
+    status, _, text = t.req('?page=accounts&mode=class')
+    m = re.search(r'class="bk-top"><label>Section<select name="section_id" required><option value="">Choose a section</option><option value="(\d+)"', text)
+    check('A whole class opens on "Type the list" (no paste option) with the Upload a file tab', status == 200 and m is not None and 'data-bk-row' in text and 'Upload a file' in text and 'Paste' not in text, f'status {status}')
+    if not m:
+        return
+    sid = m.group(1)
+    tok = t.token('?page=accounts')
+    t.req('index.php', {'action': 'create_account', 'first_name': 'rosa', 'middle_name': 'Lim', 'last_name': 'DE LA PAZ', 'name_ext': 'Jr.', 'sex': 'female', 'section_id': sid, 'level_id': '1', 'csrf': tok})
+    got = mysql('-N', '-e', "SELECT CONCAT_WS('|',u.name,n.first_name,n.middle_name,n.last_name,n.name_ext) FROM users u JOIN user_names n ON n.user_id=u.id WHERE n.last_name='De La Paz'", db=DB['name']).stdout.strip()
+    check('One pupil is saved as "Rosa L. De La Paz Jr." and the name parts are kept', got == 'Rosa L. De La Paz Jr.|Rosa|Lim|De La Paz|Jr.', got)
+    rows = {'action': 'import_typed', 'section_id': sid, 'level_id': '1', 'csrf': t.token('?page=accounts&mode=class')}
+    for i, r in enumerate([('Tan', 'Leo', 'Uy', 'sr', 'M', ''), ('Tan', 'Leo', 'Uy', 'sr', 'M', ''), ('', '', '', '', 'F', '')]):
+        for k, v in zip(('last', 'first', 'middle', 'ext', 'sex', 'lrn'), r):
+            rows[f't[{k}][{i}]'] = v
+    _, url, text = t.req('index.php', rows)
+    made = mysql('-N', '-e', "SELECT COUNT(*) FROM users WHERE name='Leo U. Tan Sr.'", db=DB['name']).stdout.strip()
+    check('A typed list with a row to fix comes back with the rows and the note; nothing is saved', 'how=type' in url and 'value="Tan"' in text and 'row 1 of this list' in text and made == '0', url)
+    rows['t[first][1]'] = 'Lea'
+    rows['t[sex][1]'] = 'F'
+    rows['csrf'] = t.token('?page=accounts&mode=class')
+    _, url, text = t.req('index.php', rows)
+    made = mysql('-N', '-e', "SELECT GROUP_CONCAT(CONCAT(u.name,'/',IFNULL(n.name_ext,'')) ORDER BY u.name) FROM users u JOIN user_names n ON n.user_id=u.id WHERE n.last_name='Tan'", db=DB['name']).stdout.strip()
+    check('Fixed, the typed list makes the accounts (an empty row with only F picked is skipped)', 'import=done' in url and '2 pupil accounts created' in text and made == 'Lea U. Tan Sr./Sr.,Leo U. Tan Sr./Sr.', made or url)
+    _, _, text = t.req('?page=import_template')
+    check('The class list template has an Extension column', text.lstrip('\ufeff').startswith('Last name,First name,Middle name,Extension,'), text[:80])
 
 
 def test_ratings_teacher(t):

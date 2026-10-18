@@ -213,10 +213,10 @@
   accounts:[
    ['.pupil-tabs','Add pupils','My pupils has three tabs: Pupil list, Add pupils (this one) and Class progress.'],
    ['.ap-choice','One pupil or a whole class','Add one pupil with a short form, or a whole class at once from an Excel list. The DepEd SF1 list works.'],
-   [['form.formgrid:not(.import-form)'],'Add one pupil','Fill in the name, section, sex and starting level. BULIG makes the Pupil ID and an easy starter password for you.'],
+   [['form.formgrid:not(.import-form)'],'Add one pupil','Type the first, middle and last name (and Jr., Sr. … if any), then the section, sex and starting level. BULIG makes the Pupil ID and an easy starter password for you.'],
    [['form.formgrid:not(.import-form) select[name="level_id"]','form.formgrid:not(.import-form)'],'Let BULIG find the level','Leave the starting level on “Let BULIG find it”. The pupil takes the reading check at first sign-in and BULIG places them. You can change it later.'],
    [['form.formgrid:not(.import-form) .btn.primary','form.formgrid:not(.import-form)'],'Their ticket, right away','After you save, a window shows the new pupil’s sign-in ticket with the QR code. Print it there, or add the next pupil.'],
-   [['#import','.import-card'],'Import a class','Download the template, fill it in Excel, then upload it. Check every row before the accounts are made.']],
+   [['#import','.import-card'],'Add a whole class','Type the list: one row per pupil, Enter goes to the next. Or choose Upload a file to use an Excel list. Nothing is saved until every row is right.']],
   cards:[
    ['.lc-upgrade','Starter passwords','Pupils still on the old password 12345678 can each get their own easy starter password here. Print their new tickets right away.'],
    ['.lc-filter','Choose a section','Print tickets for one section or for all your pupils.'],
@@ -370,7 +370,7 @@
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']],
   add_teachers:[
    ['.ap-choice','One teacher or many','Add one teacher with a short form, or the whole team at once from an Excel list.'],
-   [['.ap-one form','form.formgrid'],'Add one teacher','Enter the name and sex. BULIG makes the Teacher ID and a starter password. The teacher makes their own password at first sign-in.'],
+   [['.ap-one form','form.formgrid'],'Add one teacher','Enter the first, middle and last name (and extension, if any) and the sex. BULIG makes the Teacher ID and a starter password. The teacher makes their own password at first sign-in.'],
    [['.import-card'],'Add many teachers','Download the template, fill it in, upload it and check every row before the accounts are made.']],
   print:[
    [['.hm-head','.pageheading'],'Print & download','Teacher Passes, the school report, backups, the activity log and teacher lists, in one place.'],

@@ -97,6 +97,20 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   Oral Reading Score, Reading Level and Reading Speed in `rubric_scores` (`l4`, `auto` = 1) and `score` / 100. Under a
   third of the passage heard = no automatic score (the teacher scores from the recording). The teacher's table keeps
   BULIG's marks when numbers are changed. `php tests/probe.php l4` checks every passage.
+- **Section data report** (`app/section_report.php`, Print centre card `#pc-sd`, `?page=section_report&section=&level=&p[]=&month=`):
+  one section in one level on A4 pages with the report card band (`rc_logo`, `rc_tribal`). Pages: `sum`, `pp`, `irl`
+  (Level 4 only), `rt` (Level 4 miscues and passages; other levels the answer-key questions most pupils missed),
+  `help`, `act` (learning_days, logins and `offline_answer` from audit_log). Bar widths use `w0`–`w100` classes
+  (no inline styles: the CSP blocks them).
+- **Names in parts** (`app/names.php`, script `public/assets/names.js`, update `030_name_parts.sql`, table `user_names`):
+  Add one pupil / Add one teacher ask for First, Middle, Last name and an Extension (`NAME_EXTS`). `users.name` keeps the
+  shown name from `name_compose()` ("Juan S. Dela Cruz Jr."); the parts go in `user_names` (`name_parts_save()`, skipped
+  when the table is missing). Editing a name as one line (Edit account, admin rename) removes the parts (`name_parts_forget()`).
+  All-capital or all-small names are capitalised (`import_name_case()`).
+- **A whole class** (`import_card()` in `app/pupil_import.php`): two tabs. "Type the list" (`import_typed_grid()`, action
+  `import_typed`, fields `t[last|first|middle|ext|sex|lrn][row]`) runs the same `import_check()` as a file; any row to fix
+  sends the list back with the notes and saves nothing, otherwise `import_create()` makes the accounts. "Upload a file"
+  (`how=file`) is the CSV/Excel import; the templates for pupils and teachers have an Extension column.
 - **Redrawn pictures** keep their file names and are saved as WebP (quality 82, longest side at most 1200 px).
   Browsers keep pictures for up to 7 days, so `public/sw.js` fetches each redrawn picture fresh once (the
   `level(2[ab]|[4-7])` rule, cache `bulig-fresh-2`). Add a level to that rule when its pictures are redrawn.
