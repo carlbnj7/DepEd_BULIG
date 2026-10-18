@@ -265,6 +265,7 @@ def run_pages(acc):
 
     test_ratings_pupil(p)
     test_george(p)
+    test_level4_scoring()
 
     section('6. Pupil started at Level 6 (Grade 3): reader level head start')
     rl = php_cli('probe.php', 'reader', acc['pupil6']['uid'])
@@ -407,6 +408,16 @@ def test_george(p):
     m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', page)
     met = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')).get('met') if m else None
     check('George says hello only once (it is remembered)', jget(text).get('ok') and met is True, text[:120])
+
+
+def test_level4_scoring():
+    """Level 4: BULIG counts the module's miscues from what the speech recognizer heard."""
+    section('5d. Level 4 reading scored by BULIG')
+    r = php_cli('probe.php', 'l4', 0)
+    check('A sample reading gives the right miscues (2 mispronunciations, 1 omission, 1 substitution, 1 repetition, 1 transposition)', r.get('sample') == [2, 1, 1, 0, 1, 1, 0], str(r.get('sample')))
+    check('"was" for "saw" is a reversal', r.get('reversal') == 1, str(r.get('reversal')))
+    check('Too little heard: the teacher scores it instead', r.get('too_little') is True, str(r.get('too_little')))
+    check('A perfect reading of every Level 4 passage (Grades 1-6) scores 100%', r.get('passages', 0) >= 60 and not r.get('not_100'), f"{r.get('passages')} passages, not 100%: {r.get('not_100')}")
 
 
 def test_ratings_teacher(t):

@@ -8,8 +8,9 @@
      the pictures, the words and the stories.
    - A card with a key is right or wrong (a matching board scores 1 point per pair, numbering events 1 point per event).
    - A card without a single right answer (speaking, drawing, writing your own ideas, reading aloud) counts as right
-     when the pupil answers it. Levels 1 and 4 are spoken: an answered activity counts as right.
-   - The teacher can always change the score (and Level 4 readings are scored by the teacher). */
+     when the pupil answers it. Level 1 is spoken: an answered activity counts as right.
+   - The teacher can always change the score. Level 4 readings are scored by BULIG with the module's miscue table
+     (app/level4.php: l4_auto), or by the teacher when the device could not listen. */
 
 function answer_keys():array{static $k;if($k===null){$k=['keys'=>[],'notes'=>[]];
  foreach(['answer-keys.json','answer-keys-2.json'] as $f){$f=__DIR__.'/../database/'.$f;$j=is_file($f)?(json_decode((string)file_get_contents($f),true)??[]):[];

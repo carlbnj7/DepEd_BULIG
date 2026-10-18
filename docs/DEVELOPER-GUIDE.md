@@ -91,6 +91,15 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   the glass keeps enough tint to read. `html.lg-lite` (slow phones, "Reduce transparency", or Glass look off in
   Settings) turns it all back to solid colours, so every glass rule starts with `html:not(.lg-lite)`.
 - **Pictures:** keep them small. `python3 tools/shrink_images.py` shrinks PNG/JPG files without changing names.
+- **Level 4 scoring** (`app/level4.php`): while the pupil reads, `public/assets/l1.js` runs the browser's speech
+  recognition and sends what it heard (`transcript`). `l4_miscues()` lines it up with the passage (`l4_words()`, the
+  title too when the module counts it) and names each change with the module's 7 miscue types; `l4_auto()` saves the
+  Oral Reading Score, Reading Level and Reading Speed in `rubric_scores` (`l4`, `auto` = 1) and `score` / 100. Under a
+  third of the passage heard = no automatic score (the teacher scores from the recording). The teacher's table keeps
+  BULIG's marks when numbers are changed. `php tests/probe.php l4` checks every passage.
+- **Redrawn pictures** keep their file names and are saved as WebP (quality 82, longest side at most 1200 px).
+  Browsers keep pictures for up to 7 days, so `public/sw.js` fetches each redrawn picture fresh once (the
+  `level(2[ab]|[467])` rule, cache `bulig-fresh-2`). Add a level to that rule when its pictures are redrawn.
 - **Account IDs** (`app/account_ids.php`): make every new ID with `new_account_id('pupil'|'teacher'|'admin')`
   inside the transaction that creates the account (Pupil PCES260001, Teacher PCEST0001, Admin A260001; numbers per
   school code in `id_sequences`). IDs never change after they are made. Old IDs live in `account_id_history` and
