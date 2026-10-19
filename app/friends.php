@@ -39,6 +39,29 @@ function login_friend_pairs():array{
  $p=[['toby','cheer','george','hello'],['max','hello','dracs','hello'],['bruno','thumbs','mia','hello'],['zion','cheer','arah','hello'],['roxanne','hello','claude','thumbs']];
  return array_map(fn($x)=>['a'=>friend_img($x[0],$x[1]),'b'=>friend_img($x[2],$x[3])],$p);
 }
+/** A friend says something on their own page (v166): Arah on My calendar, Zion and Toby on My achievements, Toby on
+   the reading board, Claude in Settings, Bruno after a wrong answer, and on each lesson's first screen the friend of
+   that level (Max: Level 1, Mia: Levels 2A-3, Roxanne: Level 4, Dracs: Levels 5-7). */
+function friend_say(string $id,string $pose,string $text):string{
+ $f=null;foreach(BULIG_FRIENDS as $x)if($x[0]===$id)$f=$x;if(!$f)return '';
+ return '<aside class="fs-say fs-'.$id.'"><img src="'.e(friend_img($id,$pose)).'" alt="" width="64" height="80" loading="lazy"><div><b>'.e($f[1].' '.$f[2]).'</b><span>'.e($text).'</span></div></aside>';
+}
+function level_friend(int $lv):string{
+ if($lv===1)return friend_say('max','mic','Hi! I am Max the Listener. In Level 1 we listen and speak. When you see the microphone, tap it and talk to me!');
+ if(in_array($lv,[2,3,4],true))return friend_say('mia','blocks','Hi! I am Mia the Builder. Let’s build words, one sound at a time!');
+ if($lv===5)return friend_say('roxanne','time','Tick, tock! I am Roxanne the Timekeeper. Read the passage out loud and I will time your reading.');
+ if($lv>=6)return friend_say('dracs','book','Hi there! I am Dracs the Storyteller. Let’s open this story together. Stories are full of magic!');
+ return '';
+}
+
+function arah_say(int $pid):string{
+ $n=(int)(progress_stats($pid)['current_streak']??0);
+ return friend_say('arah','calendar',$n>1?'You learned '.$n.' days in a row! Come back tomorrow to keep your flame burning.':($n===1?'You learned today! Come back tomorrow and your flame will grow.':'Let’s start a new streak today! Read a little every day and I will mark your calendar.'));
+}
+function toby_say(int $pid):string{
+ $n=(int)val('SELECT COUNT(*) FROM pupil_badges WHERE pupil_id=?',[$pid]);
+ return friend_say('toby','thumbs',$n?'You have '.$n.' '.($n===1?'badge':'badges').' so far! Every badge is a step up the trail.':'Your first badge comes after your first activity. Let’s go, trailblazer!');
+}
 /** Roxanne on Today's goal: how the day is going. */
 function roxanne_goal(int $n,int $goal):string{
  $done=$n>=$goal;$say=$done?'Tick, tock, goal done! See you tomorrow.':($n?'Tick, tock! Only '.($goal-$n).' more today.':'Tick, tock! A little reading every day.');

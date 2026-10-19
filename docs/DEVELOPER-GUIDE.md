@@ -134,6 +134,10 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   `pals`: dl, dlDone, save, bye, remind, rest); the boy/girl picture stays on the reading ladder and the lesson map.
 - **Sign-in page friends** (v165): `login_friend_pairs()` (friends.php) gives the 5 pairs in `data-lfx-pairs`; login.js
   swaps the two pictures every 4.2 seconds (classes `lfx-swap`, `lfx-in`). The teacher sign-in keeps the teacher characters.
+- **Friends on their pages** (v166): `friend_say($id,$pose,$text)` (friends.php, class `fs-say fs-<id>`): Arah on My calendar
+  (`arah_say`), Zion and Toby on My achievements (`toby_say`), Toby on the reading board, Claude in pupil Settings, Bruno
+  in the result card after a wrong answer (scoring.php), and `level_friend($lv)` on each lesson's first screen (Max L1,
+  Mia L2A-L3, Roxanne L4, Dracs L5-L7). Rank emblems were redrawn (v166); `rk_img()` adds `?v=2`.
 - **Notifications page** (`app/notify.php`, v164): All / Unread tabs, actions `notif_mark` (`to` read|unread),
   `notif_delete`, `notif_delete_read` and `notif_read_all`, only on the person's own rows; Notifications is in every menu.
 - **No Lesson studio** (v161): the administrator cannot change module content. The pages `content`, `edit_activity`, `media`

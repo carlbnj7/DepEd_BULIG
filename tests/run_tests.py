@@ -447,6 +447,13 @@ def test_friends(p):
     pics = ' '.join([str(tour.get('char')), str(tour.get('hi'))] + list((tour.get('pals') or {}).values()))
     check('Outside the ladder and the lesson map, friends stand in for the pupil’s boy or girl picture',
           'george-' in pics and 'toby-' in pics and 'claude-' in pics and 'roxanne-' in pics and 'boy' not in pics and 'girl' not in pics, pics[:200])
+    _, _, cal = p.req('?page=calendar')
+    _, _, ach = p.req('?page=achievements')
+    _, _, brd = p.req('?page=board')
+    _, _, st = p.req('?page=settings')
+    check('Each friend is on their own page: Arah on My calendar, Zion and Toby on My achievements, Toby on the board, Claude in Settings',
+          'fs-say fs-arah' in cal and 'fs-say fs-zion' in ach and 'fs-say fs-toby' in ach and 'fs-say fs-toby' in brd and 'fs-say fs-claude' in st)
+    check('The rank emblems are the new ones (loaded fresh)', 'images/ranks/' in ach and '.webp?v=2' in ach)
     _, _, r = p.req('index.php', {'action': 'friends_met', 'csrf': p.token('?page=dashboard')}, accept_json=True)
     _, _, text = p.req('?page=dashboard')
     check('The introduction shows only once (it is remembered)', jget(r).get('ok') and 'name="bulig-friends"' not in text, r[:120])
