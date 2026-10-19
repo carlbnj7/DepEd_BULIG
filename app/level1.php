@@ -191,7 +191,7 @@ function lesson_start_page(array $lesson,array $all,array $first):void{
  $lid=(int)$lesson['id'];$lv=lesson_level($lid);$count=['pre'=>0,'learn'=>0,'post'=>0];foreach($all as $x)if(isset($count[$x['phase']]))$count[$x['phase']]++;
  head(level_label($lv).' · '.$lesson['subtitle'],'activity-page l1-page');
  echo '<div class="l1-app l1-start-app" data-l1-start>'.lesson_head($lesson,$all,$first,'?page=lessons&level='.$lv.'#level'.$lv.'-path').'<main class="l1-main l1-start activity-main">';
- echo '<div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-'.min(8,max(1,$lv)).'.webp" alt=""><div><span class="l1-tag">'.(per_grade_level($lv)?e(mb_strtoupper(lesson_display_label($lv,(int)$lesson['position']))).'</span><h1>'.e($lesson['subtitle']):(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title'])).'</h1></div></div>';
+ echo '<div class="l1-start-in">'.level_friend(lesson_level((int)$lesson['id'])).'<div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-'.min(8,max(1,$lv)).'.webp" alt=""><div><span class="l1-tag">'.(per_grade_level($lv)?e(mb_strtoupper(lesson_display_label($lv,(int)$lesson['position']))).'</span><h1>'.e($lesson['subtitle']):(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title'])).'</h1></div></div>';
  $goals=l1_goals((string)$lesson['objectives']);
  if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
  echo lesson_parts($lesson,$all,$count);
@@ -201,7 +201,7 @@ function l1_start_page(array $lesson,array $all,array $first):void{
  $lid=(int)$lesson['id'];$count=['pre'=>0,'learn'=>0,'post'=>0];foreach($all as $x)$count[$x['phase']]++;
  head('Level 1 · '.$lesson['subtitle'],'activity-page l1-page');
  echo '<div class="l1-app l1-start-app" data-l1-start>'.lesson_head($lesson,$all,$first,'?page=lessons&level=1#level1-path').'<main class="l1-main l1-start activity-main">';
- echo '<div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
+ echo '<div class="l1-start-in">'.level_friend(lesson_level((int)$lesson['id'])).'<div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
  $goals=l1_goals((string)$lesson['objectives']);
  if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
  echo lesson_parts($lesson,$all,$count);

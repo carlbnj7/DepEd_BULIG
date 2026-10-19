@@ -29,7 +29,7 @@ function rk_of(int $level):array{$level=max(1,min(RL_MAX,$level));$i=min(count(R
 /** A rank emblem picture ($small: the light copy for chips). */
 function rk_img(int $i,string $cls,bool $small=false,string $alt=''):string{
  $k=RK_RANKS[$i][0];$f='assets/images/ranks/'.($small?'sm/':'').$k.'.webp';if(!is_file(__DIR__.'/../public/'.$f))$f='assets/images/ranks/'.$k.'.webp';
- return '<img class="'.$cls.'" src="'.e($f).'" alt="'.e($alt).'" decoding="async">';
+ return '<img class="'.$cls.'" src="'.e($f).'?v=2" alt="'.e($alt).'" decoding="async">';   // v2: the redrawn emblems (v166)
 }
 /** The 5 rank stars, $n of them filled. */
 function rk_stars(int $n,string $cls=''):string{
