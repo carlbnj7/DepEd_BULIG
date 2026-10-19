@@ -5603,3 +5603,65 @@ html.dark .fs-bub{background:#14261b}html.dark .fs-bub span{color:#e8f3ec}
 .rx-timer{background:none;border:0;padding:0;align-items:flex-end}.rx-timer img{width:auto;height:110px}
 .rx-timer span{background:#fff;border:2.5px solid #e58a00;border-radius:18px 18px 18px 4px;padding:9px 14px;margin-bottom:30px;box-shadow:0 6px 14px rgba(0,0,0,.1)}
 html.dark .cl-tip,html.dark .rx-timer{background:none}html.dark .cl-tip>div,html.dark .rx-goal span,html.dark .rx-timer span{background:#14261b}
+/* v170: fit your own photo before it is saved (assets/delight.js) */
+html.crop-open,html.crop-open body{overflow:hidden}
+.crop-ov{position:fixed;inset:0;z-index:3000;display:grid;place-items:center;padding:16px;background:rgba(8,28,16,.62);backdrop-filter:blur(4px);opacity:0;transition:opacity .2s}
+.crop-ov.on{opacity:1}
+.crop-box{width:min(440px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#fffdf6;border-radius:26px;padding:22px 22px 18px;box-shadow:0 24px 60px rgba(0,0,0,.35);transform:translateY(14px) scale(.97);transition:transform .25s cubic-bezier(.2,1.3,.4,1)}
+.crop-ov.on .crop-box{transform:none}
+.crop-box h2{margin:0;font-size:1.35rem;color:#0e3b28}.crop-tip{margin:4px 0 14px;font-size:.88rem;color:#5f6f63}
+.crop-stage{position:relative;width:min(300px,100%);aspect-ratio:1;margin:0 auto;border-radius:18px;overflow:hidden;background:#e9efe6;touch-action:none;cursor:grab;user-select:none}
+.crop-stage.grab{cursor:grabbing}.crop-stage:focus-visible{outline:3px solid #f2b10c;outline-offset:3px}
+.crop-cv{display:block;width:100%;height:100%}
+.crop-ring{position:absolute;inset:0;pointer-events:none;border-radius:50%;box-shadow:0 0 0 999px rgba(10,30,18,.55);outline:3px solid #fff;outline-offset:-3px}
+.crop-tools{display:flex;align-items:center;gap:10px;margin:14px auto 0;width:min(300px,100%)}
+.crop-box .crop-zoom{flex:1;display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px;margin:0!important;color:#176444}
+.crop-zoom svg,.crop-box .btn svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.crop-zoom input{flex:1;accent-color:#176444;min-width:0}
+.crop-turn{padding:8px 12px;min-height:40px}
+.crop-look{display:flex;align-items:center;gap:14px;margin:16px 0 4px;padding:12px 14px;border-radius:16px;background:#f2f7ec;border:1px solid #dfe9d6}
+.crop-lk{flex:1;min-width:0}.crop-lk b{display:block;font-size:.9rem;color:#0e3b28}.crop-lk span{display:block;font-size:.78rem;color:#5f6f63}
+.crop-pair{display:flex;align-items:flex-end;gap:10px}
+.crop-pv{display:block;border-radius:50%;box-shadow:0 0 0 3px #fff,0 4px 10px rgba(0,0,0,.18)}.crop-pv.big{width:72px;height:72px}.crop-pv.small{width:36px;height:36px}
+.crop-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.crop-acts .btn{justify-content:center}.crop-ok{grid-column:1/-1;order:-1}
+.crop-acts .btn{min-height:44px}.crop-ok.busy{opacity:.7}
+@media(max-width:480px){.crop-box{padding:18px 16px 14px;border-radius:22px}.crop-acts .btn{white-space:nowrap;padding-left:10px;padding-right:10px;font-size:.88rem}}
+html.dark .crop-box{background:#16231b}html.dark .crop-box h2,html.dark .crop-lk b{color:#e8f0ea!important}html.dark .crop-tip,html.dark .crop-lk span{color:#a9bcb0!important}
+html.dark .crop-look{background:#1d2d23;border-color:#2e4234}html.dark .crop-zoom{color:#7fdcaa}html.dark .crop-zoom input{accent-color:#3fbf7f}html.dark .crop-stage{background:#0f1913}
+/* v170: "Leave this activity?" (assets/delight.js) */
+.leave-ov{position:fixed;inset:0;z-index:3000;display:grid;place-items:center;padding:16px;background:rgba(8,28,16,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .2s}
+.leave-ov.on{opacity:1}
+.leave-box{display:flex;align-items:flex-end;gap:14px;width:min(460px,100%);background:#fffdf6;border-radius:26px;padding:20px 22px 20px 12px;box-shadow:0 24px 60px rgba(0,0,0,.35);transform:translateY(14px) scale(.96);transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+.leave-ov.on .leave-box{transform:none}
+.leave-pal{width:110px;height:auto;flex:none;align-self:flex-end;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+.leave-tx{flex:1;min-width:0}.leave-who{display:block;font-size:.72rem;font-weight:800;letter-spacing:.05em;color:#3f8a73}
+.leave-tx h2{margin:2px 0 4px;font-size:1.3rem;color:#0e3b28}.leave-tx p{margin:0 0 14px;font-size:.92rem;color:#4b6352}
+.leave-acts{display:flex;flex-wrap:wrap;gap:8px}.leave-acts .btn{flex:1 1 auto;justify-content:center;min-height:46px}
+@media(max-width:420px){.leave-box{flex-direction:column;align-items:center;text-align:center;padding:18px 16px}.leave-pal{width:90px;align-self:center}}
+html.dark .leave-box{background:#16231b}html.dark .leave-tx h2{color:#e8f0ea!important}html.dark .leave-tx p{color:#a9bcb0!important}html.dark .leave-who{color:#7fd1b4!important}
+/* v170: My profile › My BULIG friends (meet them again) */
+.fa-card{display:grid;gap:12px}.fa-card h2{margin:0}.fa-card p{margin:4px 0 0}
+.fa-faces{display:flex;flex-wrap:wrap;gap:2px}.fa-faces img{width:38px;height:52px;object-fit:contain;object-position:bottom;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15))}
+.fa-card .btn{justify-self:start}
+@media(max-width:740px){.fa-card .btn{justify-self:stretch;justify-content:center}}
+@media(min-width:900px){.me-page>.me-hero,.me-page>.fa-card,.me-page>.rt-pcard{grid-column:1}.me-page>.me-pic{grid-column:2;grid-row:1/span 3}.me-page{grid-auto-rows:min-content}.me-page>.rt-pcard{align-self:start}}
+/* v170: My profile on PC: the left cards keep their own height (no stretched gaps); more pictures per row */
+@media(min-width:900px){.me-page{grid-template-rows:auto auto 1fr;align-items:start}.me-page>.rt-pcard{align-self:start}
+ .me-pic .avatar-options{grid-template-columns:repeat(auto-fill,minmax(116px,1fr))!important;gap:12px}}
+/* v170: My profile on phones: four pictures per row, the friends on one row, Sofie smaller */
+@media(max-width:740px){
+ .me-pic fieldset{margin:12px 0}.me-pic legend{margin-bottom:10px}
+ .me-pic .avatar-options{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px}
+ .me-pic .avatar-option{padding:18px 3px 7px;gap:4px;border-radius:14px}
+ .me-pic .avatar-option input{left:5px;top:5px;width:14px;height:14px}
+ .me-pic .avatar-option-picture{width:100%;max-width:62px;height:auto;aspect-ratio:1}.me-pic .avatar-option-picture img{width:100%;height:100%}
+ .me-pic .avatar-option-label{font-size:.7rem}
+ .fa-faces{flex-wrap:nowrap;gap:0;justify-content:space-between}.fa-faces img{width:25px;height:36px;min-width:0;flex:0 1 25px}
+ .rt-pcard .btn{width:100%;justify-content:center}
+ .me-page>.fs-float img{height:78px}.me-page>.fs-float{bottom:84px}}
+/* v170: on phones George is back at the bottom right (above the tab bar), not inside the greeting card */
+@media(max-width:740px){
+ .role-pupil .pf-buddy{position:fixed;top:auto;bottom:84px;right:6px;z-index:40}
+ .role-pupil .pf-buddy-george .pf-helper{width:76px}
+ .role-pupil .pf-bubble{right:68px;bottom:80px;top:auto;max-width:150px;font-size:.76rem;border-radius:16px 16px 4px 16px}
+ .role-pupil .identity-banner .identity-copy{padding-right:0}}

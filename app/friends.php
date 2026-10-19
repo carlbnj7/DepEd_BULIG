@@ -79,9 +79,16 @@ function roxanne_timer():string{
  return '<div class="rx-timer" data-rx data-time="'.e(friend_img('roxanne','time')).'" data-go="'.e(friend_img('roxanne','point')).'" data-done="'.e(friend_img('roxanne','cheer')).'"><img src="'.e(friend_img('roxanne','time')).'" alt="" width="64" height="70"><span data-rx-say>I am Roxanne the Timekeeper. I will time your reading. Tap the microphone when you are ready!</span></div>';
 }
 
+/** My profile: all the friends' faces and "Meet my friends again" (the introduction plays again on Home). */
+function friends_again_card():string{
+ $f='';foreach(BULIG_FRIENDS as $x)$f.='<img src="'.e(friend_img($x[0],'hello')).'" alt="'.e($x[1].' '.$x[2]).'" title="'.e($x[1].' '.$x[2]).'" width="44" height="60" loading="lazy">';
+ return '<section class="card fa-card"><div><h2>My BULIG friends</h2><p class="muted">Want to hear them say hello again? Meet all '.count(BULIG_FRIENDS).' friends one more time.</p></div><div class="fa-faces" aria-hidden="true">'.$f.'</div><a class="btn primary" href="?page=dashboard&amp;meet=1">'.icon('replay').'Meet my friends again</a></section>';
+}
+function friends_again_row():string{return '<a class="st-row" href="?page=dashboard&amp;meet=1"><span class="st-ic st-g">'.icon('replay').'</span><span class="st-t"><b>Meet my friends again</b><small>George and the BULIG friends say hello again</small></span>'.icon('chev','st-chev').'</a>';}
 /** <meta name="bulig-friends"> for assets/friends.js: only for a pupil who has not met the friends yet. */
 function friends_meta(?array $cu):string{
- if(!$cu||$cu['role']!=='pupil'||friends_met((int)$cu['id']))return '';
+ $again=($_GET['meet']??'')==='1'&&($_GET['page']??'dashboard')==='dashboard';   // v170: "Meet my friends again"
+ if(!$cu||$cu['role']!=='pupil'||(!$again&&friends_met((int)$cu['id'])))return '';
  $list=array_map(fn($f)=>['id'=>$f[0],'name'=>$f[1],'title'=>$f[2],'girl'=>$f[3],'c'=>$f[4],'job'=>$f[6],'line'=>$f[7],'pitch'=>$f[8],'rate'=>$f[9],
   'hello'=>friend_img($f[0],'hello'),'special'=>friend_img($f[0],$f[5]),'last'=>friend_img($f[0],$f[10])],BULIG_FRIENDS);
  return '<meta name="bulig-friends" content="'.e(json_encode(['name'=>explode(' ',trim((string)$cu['name']))[0],'tour'=>!tour_seen((int)$cu['id']),'friends'=>$list])).'">';
