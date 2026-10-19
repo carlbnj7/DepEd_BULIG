@@ -98,3 +98,13 @@
  }
  btn.addEventListener('click',open);
 })();
+
+/* The friends take turns on the sign-in page, two at a time (v165). */
+(function(){
+ 'use strict';
+ const box=document.querySelector('[data-lfx-pairs]');if(!box)return;let pairs;try{pairs=JSON.parse(box.dataset.lfxPairs);}catch(e){return;}
+ if(!pairs||pairs.length<2)return;pairs.forEach(p=>{[p.a,p.b].forEach(s=>{const i=new Image();i.src=s;});});
+ const a=box.querySelector('.lfx-k1'),b=box.querySelector('.lfx-k2');let n=0;
+ setInterval(()=>{if(document.hidden)return;n=(n+1)%pairs.length;box.classList.add('lfx-swap');
+  setTimeout(()=>{a.src=pairs[n].a;b.src=pairs[n].b;box.classList.remove('lfx-swap');box.classList.add('lfx-in');setTimeout(()=>box.classList.remove('lfx-in'),700);},380);},4200);
+})();

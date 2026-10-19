@@ -6,7 +6,7 @@
  'use strict';
  const $=s=>document.querySelector(s),key=($('meta[name="bulig-vapid"]')||{}).content||'';
  let me=null;try{me=JSON.parse(($('meta[name="bulig-tour"]')||{}).content||'null');}catch(e){}
- if(!me||me.role!=='pupil')return;
+ if(!me||(me.role!=='pupil'&&me.role!=='teacher'))return;const T=me.role==='teacher';   // teachers too (v167)
  const can='serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window&&!!key;
  const homeScreen=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
  const iOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -39,13 +39,13 @@
   if(window.pfOverlayOpen&&window.pfOverlayOpen())await wait('pf:overlays-done');
   if(window.buligDlPending)await wait('bulig:dl-done');
   /* Wait until nothing else is on screen (tour offer, download box, celebrations), then ask. */
-  const busy=()=>document.querySelector('.tour-offer,.tour-layer,.tour-toast,.dl-ov,.dl-panel.on,.pw-overlay:not([hidden]),.qs-sheet.on,.bdg-ov');
+  const busy=()=>document.querySelector('.fr-layer,.tour-offer,.tour-layer,.tour-toast,.dl-ov,.dl-panel.on,.pw-overlay:not([hidden]),.qs-sheet.on,.bdg-ov');
   const nap=ms=>new Promise(r=>setTimeout(r,ms));let calm=0;for(let i=0;i<360&&calm<3;i++){await nap(500);calm=busy()?0:calm+1;}if(busy()||get(ASK))return;
   const ov=el('div','rm-ov'),box=el('div','rm-box');ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-labelledby','rm-title');
-  if(me.hi||me.char){const im=el('img','rm-art');im.src=me.hi||me.char;im.alt='';box.append(im);}
-  const h=el('h3','','Can BULIG remind you?');h.id='rm-title';box.append(h,el('p','','We’ll send a short, friendly note. Never more than one a day.'));
-  const ex=el('div','rm-ex');[['fire','Time to read! Keep your streak'],['msg','Your teacher left you a note'],['key','A new lesson is open']].forEach(([i,t])=>{const d=el('div','rm-x rm-'+i);d.append(el('span','rm-ic'),el('span','',t));ex.append(d);});box.append(ex);
-  const yes=el('button','btn primary rm-yes','Yes, remind me'),no=el('button','btn secondary rm-no','Not now');yes.type=no.type='button';box.append(yes,no);ov.append(box);document.body.append(ov);
+  const art=(me.pals&&me.pals.remind)||me.hi||me.char;if(art){const im=el('img','rm-art');im.src=art;im.alt='';box.append(im);}   // pupils: Roxanne the Timekeeper (v164)
+  const h=el('h3','',T?'Can BULIG notify you?':'Can BULIG remind you?');h.id='rm-title';box.append(h,el('p','',T?'We’ll tell you on this device when your pupils need you.':'We’ll send a short, friendly note. Never more than one a day.'));
+  const ex=el('div','rm-ex');(T?[['msg','A pupil asked for help'],['key','A pupil finished a level'],['fire','A reading check is done']]:[['fire','Time to read! Keep your streak'],['msg','Your teacher left you a note'],['key','A new lesson is open']]).forEach(([i,t])=>{const d=el('div','rm-x rm-'+i);d.append(el('span','rm-ic'),el('span','',t));ex.append(d);});box.append(ex);
+  const yes=el('button','btn primary rm-yes',T?'Yes, notify me':'Yes, remind me'),no=el('button','btn secondary rm-no','Not now');yes.type=no.type='button';box.append(yes,no);ov.append(box);document.body.append(ov);
   requestAnimationFrame(()=>ov.classList.add('on'));yes.focus();
   const close=()=>{ov.classList.remove('on');setTimeout(()=>ov.remove(),still?0:250);};
   no.addEventListener('click',()=>{set(ASK,'later');close();});

@@ -81,7 +81,7 @@ function daily_goal_card(int $pid):string{
  $n=count($rows);$pct=min(100,(int)round($n/DAILY_GOAL*100));$done=$n>=DAILY_GOAL;
  $h='<section class="card goal-card'.($done?' goal-done':'').'" data-goal="'.date('Y-m-d').'" aria-label="Today’s goal"><div class="goal-ring" data-p="'.$pct.'"><div><b>'.min($n,99).'/'.DAILY_GOAL.'</b><small>today</small></div></div><div class="goal-text"><span class="eyebrow">TODAY’S GOAL</span><h2>'.($done?'Goal reached! Great reading today.':($n?'Keep going! '.(DAILY_GOAL-$n).' more to reach your goal.':'Finish '.DAILY_GOAL.' activities today.')).'</h2><ul>';
  foreach(array_slice($rows,0,DAILY_GOAL) as $r)$h.='<li class="ok">'.icon('check').e($r['title']).'</li>';
- $h.='</ul>';
+ $h.='</ul>'.roxanne_goal($n,DAILY_GOAL);
  if(!$done){$nx=function_exists('next_learning_lesson')?next_learning_lesson($pid):null;
   $h.=$nx?'<a class="btn primary goal-go" href="?page=lesson&amp;id='.(int)$nx['id'].'" data-level="'.(int)$nx['level_id'].'" data-title="'.e($nx['subtitle']?:$nx['title']).'">'.($n?'One more! Keep going':'Start my next lesson').icon('arrow').'</a>'
    :'<a class="btn primary goal-go" href="?page=lessons">'.($n?'One more! Keep going':'Choose a lesson').icon('arrow').'</a>';}

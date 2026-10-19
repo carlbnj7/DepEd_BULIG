@@ -14,6 +14,7 @@ const BULIG_FRIENDS=[
  ['toby','Toby','the Trailblazer',false,'#2f8f3a','flag','Progress, badges and level-ups',"Hello! I am Toby the Trailblazer. Every lesson you finish, we climb higher together!",.95,1.0,'cheer'],
  ['zion','Zion','the Rank Keeper',false,'#c62828','emblem','Ranks and stars',"Hello! I am Zion the Rank Keeper. Earn your stars, and I will give you a new rank emblem!",.85,.93,'cheer'],
  ['arah','Arah','the Streak Keeper',true,'#e2508f','calendar','Your reading streak and calendar',"Hi! I am Arah the Streak Keeper. Read a little every day, and I will keep your flame burning!",1.22,1.0,'cheer'],
+ ['roxanne','Roxanne','the Timekeeper',true,'#e58a00','time','Reading time and breaks',"Tick, tock! I am Roxanne the Timekeeper. I time your reading, I count your goal for today, and I tell you when it is time for a short break.",1.45,1.08,'cheer'],
  ['claude','Claude','the Protector',false,'#1d2f5c','shield','Keeping your account safe',"Hello! I am Claude the Protector. I keep your account safe. Never share your password with anyone!",.78,.9,'thumbs'],
 ];
 
@@ -22,6 +23,54 @@ function friends_met(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings
 /** Met: the friends, and George too (she says hello first). */
 function friends_mark_met(int $uid):void{
  foreach(['friends_met_','george_met_'] as $k)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[$k.$uid,date('Y-m-d H:i:s')]);
+}
+
+/** The pupil's own boy or girl picture is only on the reading ladder and the lesson map. Everywhere else a friend shows up:
+   George by default (sign-in hello, loading, the lesson buddy), Toby for saving lessons offline, Claude for
+   "Save me on this device" and signing out, Roxanne for reminders and breaks. */
+function friends_tour_fix(?array $cu,array $m):array{
+ if(!$cu||$cu['role']!=='pupil')return $m;
+ $m['char']=friend_img('george','cheer');$m['hi']=friend_img('george','hello');
+ $m['pals']=['dl'=>friend_img('toby','thumbs'),'dlDone'=>friend_img('toby','cheer'),'save'=>friend_img('claude','shield'),'bye'=>friend_img('claude','hello'),'remind'=>friend_img('roxanne','time'),'rest'=>friend_img('roxanne','time')];
+ return $m;
+}
+/** The sign-in page: the friends take turns, two at a time (assets/login.js). */
+function login_friend_pairs():array{
+ $p=[['toby','cheer','george','hello'],['max','hello','dracs','hello'],['bruno','thumbs','mia','hello'],['zion','cheer','arah','hello'],['roxanne','hello','claude','thumbs']];
+ return array_map(fn($x)=>['a'=>friend_img($x[0],$x[1]),'b'=>friend_img($x[2],$x[3])],$p);
+}
+/** A friend says something on their own page (v166): Arah on My calendar, Zion and Toby on My achievements, Toby on
+   the reading board, Claude in Settings, Bruno after a wrong answer, and on each lesson's first screen the friend of
+   that level (Max: Level 1, Mia: Levels 2A-3, Roxanne: Level 4, Dracs: Levels 5-7). */
+function friend_say(string $id,string $pose,string $text,bool $float=true):string{
+ $f=null;foreach(BULIG_FRIENDS as $x)if($x[0]===$id)$f=$x;if(!$f)return '';
+ /* like George: the whole friend, no box; on a page the friend stands at the bottom right (tap for the message again) */
+ return '<aside class="fs-say fs-'.$id.' '.($float?'fs-float':'fs-inline').'"'.($float?' data-fs':'').'><img src="'.e(friend_img($id,$pose)).'" alt="" width="120" height="150" loading="lazy"><div class="fs-bub" role="status"><b>'.e($f[1].' '.$f[2]).'</b><span>'.e($text).'</span></div></aside>';
+}
+function level_friend(int $lv):string{
+ if($lv===1)return friend_say('max','mic','Hi! I am Max the Listener. In Level 1 we listen and speak. When you see the microphone, tap it and talk to me!');
+ if(in_array($lv,[2,3,4],true))return friend_say('mia','blocks','Hi! I am Mia the Builder. Let’s build words, one sound at a time!');
+ if($lv===5)return friend_say('roxanne','time','Tick, tock! I am Roxanne the Timekeeper. Read the passage out loud and I will time your reading.');
+ if($lv>=6)return friend_say('dracs','book','Hi there! I am Dracs the Storyteller. Let’s open this story together. Stories are full of magic!');
+ return '';
+}
+
+function arah_say(int $pid):string{
+ $n=(int)(progress_stats($pid)['current_streak']??0);
+ return friend_say('arah','calendar',$n>1?'You learned '.$n.' days in a row! Come back tomorrow to keep your flame burning.':($n===1?'You learned today! Come back tomorrow and your flame will grow.':'Let’s start a new streak today! Read a little every day and I will mark your calendar.'));
+}
+function toby_say(int $pid):string{
+ $n=(int)val('SELECT COUNT(*) FROM pupil_badges WHERE pupil_id=?',[$pid]);
+ return friend_say('toby','thumbs',$n?'You have '.$n.' '.($n===1?'badge':'badges').' so far! Every badge is a step up the trail.':'Your first badge comes after your first activity. Let’s go, trailblazer!',false);
+}
+/** Roxanne on Today's goal: how the day is going. */
+function roxanne_goal(int $n,int $goal):string{
+ $done=$n>=$goal;$say=$done?'Tick, tock, goal done! See you tomorrow.':($n?'Tick, tock! Only '.($goal-$n).' more today.':'Tick, tock! A little reading every day.');
+ return '<div class="rx-goal"><img src="'.e(friend_img('roxanne',$done?'cheer':'time')).'" alt="" width="58" height="64"><span><b>Roxanne the Timekeeper</b>'.e($say).'</span></div>';
+}
+/** Roxanne beside the Level 4 recorder: she times the reading (l1.js changes what she says). */
+function roxanne_timer():string{
+ return '<div class="rx-timer" data-rx data-time="'.e(friend_img('roxanne','time')).'" data-go="'.e(friend_img('roxanne','point')).'" data-done="'.e(friend_img('roxanne','cheer')).'"><img src="'.e(friend_img('roxanne','time')).'" alt="" width="64" height="70"><span data-rx-say>I am Roxanne the Timekeeper. I will time your reading. Tap the microphone when you are ready!</span></div>';
 }
 
 /** <meta name="bulig-friends"> for assets/friends.js: only for a pupil who has not met the friends yet. */

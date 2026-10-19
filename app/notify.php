@@ -1,7 +1,8 @@
 <?php
 /* Notifications: the bell on every dashboard.
    - Saved notifications (table notifications, database/migrations/024_notifications.sql): made when something happens
-     (a teacher's note, "do it again", a new badge, a finished level, a new account). They can be marked as read.
+     (a teacher's note, "do it again", a new badge, a finished level, a new account). On the Notifications page each one
+     can be marked as read or unread, or deleted; "Mark all as read" and "Delete all read" do all at once.
    - "Needs you now" items are counted live when the page opens (answers waiting, pupils who need a check-in,
      System health). They go away by themselves once the work is done.
    Without the table the app works as before: the bell shows only the live items. */
@@ -12,6 +13,8 @@ function notif_ready():bool{static $r=null;if($r===null){try{$r=(bool)one("SHOW 
 function notify(int $uid,string $kind,string $title,string $body='',string $url=''):void{
  if($uid<=0||!notif_ready())return;
  try{q('INSERT INTO notifications(user_id,kind,title,body,url) VALUES(?,?,?,?,?)',[$uid,mb_substr($kind,0,30),mb_substr($title,0,200),mb_substr($body,0,300),mb_substr($url,0,250)]);}catch(Throwable $e){}
+ /* a teacher who allowed notifications also gets help requests, finished levels and reading checks on their phone or computer (v167) */
+ if(in_array($kind,['help','certificate','reading'],true)&&function_exists('push_queue')&&val("SELECT role FROM users WHERE id=?",[$uid])==='teacher')try{push_queue($uid,$kind,$title,$body,$url);}catch(Throwable $e){}
 }
 /** Every teacher of a pupil. */
 function notify_teachers(int $pid,string $kind,string $title,string $body='',string $url=''):void{
@@ -78,20 +81,38 @@ function notif_panel(array $u):string{
  return $h.'</div><a class="np-all" href="?page=notifications">See all notifications'.icon('arrow').'</a></div>';
 }
 function notifications_view(array $u):void{
- $uid=(int)$u['id'];$live=notif_live($u);$saved=notif_ready()?rows('SELECT * FROM notifications WHERE user_id=? ORDER BY created_at DESC,id DESC LIMIT 60',[$uid]):[];
- $unread=count(array_filter($saved,fn($r)=>$r['read_at']===null));$n=$unread+count($live);
- echo '<div class="pageheading"><div><span class="eyebrow">NOTIFICATIONS</span><h1>What’s new for you</h1><p class="muted">'.($n?$n.' new · Tap one to open it.':'You are all caught up.').'</p></div>'.($unread?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="notif_read_all"><button class="btn secondary">'.icon('check').'Mark all as read</button></form>':'').'</div>';
- $svg=fn($k)=>notif_icon($k);
- $row=function(string $k,string $t,string $s,string $href,string $btn,bool $new,string $id='')use($svg):string{
-  return '<a class="card nt-row'.($new?' new':'').'" href="'.e($href!==''?($id!==''?'?page=notifications&open='.$id:$href):'#').'">'.$svg($k).'<span class="nt-tx"><b>'.e($t).'</b>'.($s!==''?'<small>'.e($s).'</small>':'').'</span>'.($btn!==''?'<span class="btn '.($new?'primary':'secondary').' nt-btn">'.e($btn).'</span>':'').($new?'<span class="nt-dot" aria-label="New"></span>':'').'</a>';};
+ $uid=(int)$u['id'];$show=($_GET['show']??'')==='unread'?'unread':'all';$live=notif_live($u);
+ $all=notif_ready()?rows('SELECT * FROM notifications WHERE user_id=? ORDER BY created_at DESC,id DESC LIMIT 100',[$uid]):[];
+ $unread=count(array_filter($all,fn($r)=>$r['read_at']===null));$read=count($all)-$unread;$n=$unread+count($live);
+ $saved=$show==='unread'?array_values(array_filter($all,fn($r)=>$r['read_at']===null)):$all;
+ $btn=fn(string $action,string $label,string $ic,string $cls='',string $confirm='',array $extra=[])=>'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="'.$action.'"><input type="hidden" name="show" value="'.$show.'">'
+  .implode('',array_map(fn($k,$v)=>'<input type="hidden" name="'.$k.'" value="'.e((string)$v).'">',array_keys($extra),$extra)).'<button class="'.$cls.'"'.($confirm!==''?' data-confirm="'.e($confirm).'"':'').' title="'.e($label).'" aria-label="'.e($label).'">'.icon($ic).'<span>'.e($label).'</span></button></form>';
+ echo '<div class="pageheading"><div><span class="eyebrow">NOTIFICATIONS</span><h1>What’s new for you</h1><p class="muted">'.($n?$n.' new · Tap one to open it.':'You are all caught up.').'</p></div><div class="nt-tools">'
+  .($unread?$btn('notif_read_all','Mark all as read','check','btn primary'):'')
+  .($read?$btn('notif_delete_read','Delete all read','close','btn secondary','Delete the '.$read.' '.($read===1?'notification':'notifications').' you have read?'):'').'</div></div>';
+ echo '<nav class="nt-tabs" aria-label="Show"><a href="?page=notifications"'.($show==='all'?' class="on" aria-current="page"':'').'>All <b>'.(count($all)+count($live)).'</b></a><a href="?page=notifications&amp;show=unread"'.($show==='unread'?' class="on" aria-current="page"':'').'>Unread <b>'.$n.'</b></a></nav>';
+ $row=function(string $k,string $t,string $s,string $href,string $label,bool $new,?array $r)use($btn):string{
+  $h='<div class="card nt-row'.($new?' new':'').'"><a class="nt-main" href="'.e($href).'">'.notif_icon($k).'<span class="nt-tx"><b>'.e($t).'</b>'.($s!==''?'<small>'.e($s).'</small>':'').($r?'<em>'.e(notif_ago((string)$r['created_at'])).'</em>':'').'</span>'.($label!==''?'<span class="btn '.($new?'primary':'secondary').' nt-btn">'.e($label).'</span>':'').($new?'<span class="nt-dot" aria-label="New"></span>':'').'</a>';
+  if($r)$h.='<div class="nt-acts">'.($new?$btn('notif_mark','Mark as read','check','nt-act',"",['id'=>$r['id'],'to'=>'read']):$btn('notif_mark','Mark as unread','bell','nt-act','',['id'=>$r['id'],'to'=>'unread']))
+   .$btn('notif_delete','Delete','close','nt-act nt-del','',['id'=>$r['id']]).'</div>';
+  return $h.'</div>';};
  echo '<div class="nt-list">';
- if($live){echo '<p class="eyebrow nt-day">NEEDS YOU NOW</p>';foreach($live as [$k,$t,$s,$href,$btn])echo $row($k,$t,$s,$href,$btn,true);}
+ if($live){echo '<p class="eyebrow nt-day">NEEDS YOU NOW <small>These go away by themselves when the work is done.</small></p>';foreach($live as [$k,$t,$s,$href,$b])echo $row($k,$t,$s,$href,$b,true,null);}
  $day='';$btns=['schedule'=>'Open','month'=>'See it','help'=>'See pupil','note'=>'Open','again'=>'Start','badge'=>'See it','rlevel'=>'See it','certificate'=>$u['role']==='teacher'?'Print':'See it','account'=>'Open'];
  foreach($saved as $r){$d=date('Y-m-d',strtotime((string)$r['created_at']));$lab=$d===date('Y-m-d')?'TODAY':($d===date('Y-m-d',strtotime('-1 day'))?'YESTERDAY':strtoupper(date('F j',strtotime($d))));
   if($lab!==$day){$day=$lab;echo '<p class="eyebrow nt-day">'.e($lab).'</p>';}
-  echo $row((string)$r['kind'],(string)$r['title'],(string)$r['body'],(string)$r['url'],$r['url']!==''?($btns[$r['kind']]??'Open'):'',$r['read_at']===null,(string)$r['id']);}
- if(!$live&&!$saved)echo '<section class="empty">'.icon('bell').'<h2>No notifications yet.</h2><p>'.($u['role']==='pupil'?'Notes from your teacher, new badges and certificates will show here.':'Answers to check, finished levels and pupils who need you will show here.').'</p></section>';
+  $url=(string)$r['url'];echo $row((string)$r['kind'],(string)$r['title'],(string)$r['body'],'?page=notifications&open='.(int)$r['id'],$url!==''?($btns[$r['kind']]??'Open'):'',$r['read_at']===null,$r);}
+ if(!$live&&!$saved)echo '<section class="empty">'.icon('bell').'<h2>'.($show==='unread'&&$all?'No unread notifications.':'No notifications yet.').'</h2><p>'.($show==='unread'&&$all?'You have read them all. <a href="?page=notifications">See all</a>':($u['role']==='pupil'?'Notes from your teacher, new badges and certificates will show here.':'Finished levels, help requests and pupils who need you will show here.')).'</p></section>';
  echo '</div>';
+}
+/** Mark one as read or unread, delete one, or delete every read one: always only the person's own notifications. */
+function notif_action(string $action):void{
+ $u=current_user();if(!$u)fail('Please sign in.',403);$uid=(int)$u['id'];$back='?page=notifications'.(($_POST['show']??'')==='unread'?'&show=unread':'');
+ if(!notif_ready())go($back);$id=(int)($_POST['id']??0);
+ if($action==='notif_mark')q('UPDATE notifications SET read_at='.(($_POST['to']??'')==='unread'?'NULL':'COALESCE(read_at,NOW())').' WHERE id=? AND user_id=?',[$id,$uid]);
+ if($action==='notif_delete'){q('DELETE FROM notifications WHERE id=? AND user_id=?',[$id,$uid]);flash('Notification deleted.');}
+ if($action==='notif_delete_read'){$n=(int)val('SELECT COUNT(*) FROM notifications WHERE user_id=? AND read_at IS NOT NULL',[$uid]);q('DELETE FROM notifications WHERE user_id=? AND read_at IS NOT NULL',[$uid]);flash($n.' read '.($n===1?'notification':'notifications').' deleted.');}
+ go($back);
 }
 /** Open one notification: mark it as read, then go where it points. */
 function notif_open(array $u):void{

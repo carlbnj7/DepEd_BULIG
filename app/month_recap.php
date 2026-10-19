@@ -24,12 +24,11 @@ function month_recap_card(array $u):string{
  if(function_exists('notif_ready')&&notif_ready()&&!val("SELECT 1 FROM notifications WHERE user_id=? AND kind='month' AND title=?",[$pid,$title]))
   notify($pid,'month',$title,$s['acts'].' '.($s['acts']===1?'activity':'activities').($s['lessons']?', '.$s['lessons'].' '.($s['lessons']===1?'lesson':'lessons'):'').($s['badges']?' and '.$s['badges'].' '.($s['badges']===1?'badge':'badges'):'').'. Great work!','?page=dashboard#month-recap');
  $diff=$s['acts']-$s['before'];$cmp=$s['before']===0?'Your first month of learning!':($diff>0?$diff.' more than last month!':($diff===0?'The same as last month. Keep going!':'Let’s read a little more this month!'));
- $sex=(string)(val('SELECT sex FROM pupil_details WHERE pupil_id=?',[$pid])?:'');
  $chip=fn($ic,$t)=>'<span class="mr-chip">'.icon($ic).e($t).'</span>';
  $h='<section class="card mr-card" id="month-recap" data-recap="'.e($m['name']).'" aria-label="'.e($title).'"><span class="mr-confetti" aria-hidden="true">'.str_repeat('<i></i>',10).'</span>';
  $h.='<div class="mr-main"><span class="eyebrow">'.e(strtoupper($title)).'</span><div class="mr-big"><b data-count="'.$s['acts'].'">'.$s['acts'].'</b><span>'.($s['acts']===1?'activity':'activities').' finished</span></div><small class="mr-cmp">'.e($cmp).'</small></div>';
  $h.='<div class="mr-chips">'.($s['lessons']?$chip('book',$s['lessons'].' '.($s['lessons']===1?'lesson':'lessons')):'').($s['badges']?$chip('star',$s['badges'].' '.($s['badges']===1?'badge':'badges')):'').($s['xp']?$chip('bolt',$s['xp'].' XP'):'').($s['best']!==''?$chip('cal','Best day: '.$s['best']):'').'</div>';
- $h.='<img class="mr-kid" src="assets/images/characters/'.($sex==='male'?'boy':'girl').'-cheer.webp" alt="" loading="lazy"><button type="button" class="mr-close" data-recap-close aria-label="Hide">'.icon('close').'</button></section>';
+ $h.='<img class="mr-kid" src="'.e(friend_img('arah','cheer')).'" alt="" loading="lazy"><button type="button" class="mr-close" data-recap-close aria-label="Hide">'.icon('close').'</button></section>';
  return $h;
 }
 /** Once a month: one notification for the teacher about the whole class. */
