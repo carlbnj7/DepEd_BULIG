@@ -5645,3 +5645,6 @@ html.dark .leave-box{background:#16231b}html.dark .leave-tx h2{color:#e8f0ea!imp
 .fa-card .btn{justify-self:start}
 @media(max-width:740px){.fa-card .btn{justify-self:stretch;justify-content:center}}
 @media(min-width:900px){.me-page>.me-hero,.me-page>.fa-card,.me-page>.rt-pcard{grid-column:1}.me-page>.me-pic{grid-column:2;grid-row:1/span 3}.me-page{grid-auto-rows:min-content}.me-page>.rt-pcard{align-self:start}}
+/* v170: My profile on PC: the left cards keep their own height (no stretched gaps); more pictures per row */
+@media(min-width:900px){.me-page{grid-template-rows:auto auto 1fr;align-items:start}.me-page>.rt-pcard{align-self:start}
+ .me-pic .avatar-options{grid-template-columns:repeat(auto-fill,minmax(116px,1fr))!important;gap:12px}}
