@@ -5566,7 +5566,7 @@ html.dark .hello-txt small{background:rgba(74,169,91,.22);color:#b9f0cb;border-c
 .fs-say img{width:64px;height:80px;object-fit:contain;object-position:bottom;flex:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.14))}
 .fs-say b{display:block;font-size:.74rem;letter-spacing:.06em;color:var(--fs)}
 .fs-say span{display:block;font-weight:600;font-size:.95rem;line-height:1.45;color:#21362a}
-.fs-max{--fs:#1e7fd6}.fs-dracs{--fs:#7a4fc9}.fs-bruno{--fs:#3f8a73}.fs-mia{--fs:#d86a0c}.fs-toby{--fs:#2f8f3a}.fs-zion{--fs:#c62828}.fs-arah{--fs:#d63d80}.fs-claude{--fs:#1d2f5c}.fs-roxanne{--fs:#c77700}.fs-george{--fs:#0f8a83}
+.fs-max{--fs:#1e7fd6}.fs-dracs{--fs:#7a4fc9}.fs-bruno{--fs:#3f8a73}.fs-mia{--fs:#d86a0c}.fs-toby{--fs:#2f8f3a}.fs-zion{--fs:#c62828}.fs-arah{--fs:#d63d80}.fs-claude{--fs:#1d2f5c}.fs-roxanne{--fs:#c77700}.fs-george{--fs:#0f8a83}.fs-kai{--fs:#2f5fd0}.fs-sofie{--fs:#0b8fb0}
 .ac-panel .fs-say{margin:12px 0 4px;background:#fff}
 .l1-start-in>.fs-say{margin:0 auto 14px}
 @media(max-width:740px){.fs-say{padding:8px 12px 8px 8px;gap:10px}.fs-say img{width:52px;height:66px}.fs-say span{font-size:.9rem}}
@@ -5591,6 +5591,9 @@ html.dark .fs-say b{color:color-mix(in srgb,var(--fs) 55%,#fff)}html.dark .fs-sa
 @media(prefers-reduced-motion:reduce){.fs-float,.fs-float img{animation:none}}
 html.dark .fs-bub{background:#14261b}html.dark .fs-bub span{color:#e8f3ec}
 .ac-panel .fs-say{background:none}
+/* v169: the floating friends speak like George: a small bubble that goes away after 4 seconds (tap the friend to hear it again) */
+.fs-float .fs-bub{max-width:200px;padding:7px 11px;bottom:112px}.fs-float .fs-bub span{font-size:.84rem;line-height:1.35}
+@media(max-width:740px){.fs-float{bottom:80px;right:4px}.fs-float img{height:96px}.fs-float .fs-bub{bottom:74px;right:calc(100% - 12px);max-width:150px;padding:6px 10px;border-width:2px}.fs-float .fs-bub b{display:none}.fs-float .fs-bub span{font-size:.74rem;line-height:1.3}}
 /* Claude's tip and Roxanne on Today's goal: also without a box */
 .cl-tip{background:none;border:0;padding:0;align-items:flex-end;gap:6px}
 .cl-tip img{width:auto;height:130px;max-height:none;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18))}

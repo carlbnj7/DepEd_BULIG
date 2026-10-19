@@ -187,7 +187,10 @@ function save_pupil_details(int $id,array $details):void{
  catch(PDOException $e){if(($e->errorInfo[1]??0)===1062)fail('This LRN is already assigned to a pupil.');throw $e;}
 }
 function profile_avatar_choices():array{
- return ['boy-1'=>['Boy 1 · Side-part hair','male'],'boy-2'=>['Boy 2 · Curly hair','male'],'boy-3'=>['Boy 3 · Glasses','male'],'girl-1'=>['Girl 1 · Bob haircut','female'],'girl-2'=>['Girl 2 · Braids','female'],'girl-3'=>['Girl 3 · Ponytail and glasses','female']];
+ /* v169: 19 pupil avatars in the school uniform (boy-1 to boy-10, girl-1 to girl-10; 20 in all) */
+ $all=['boy-1'=>['Boy 1 · Side-part hair','male'],'boy-2'=>['Boy 2 · Curly hair','male'],'boy-3'=>['Boy 3 · Glasses','male'],'boy-4'=>['Boy 4 · Spiky hair','male'],'boy-5'=>['Boy 5 · Bangs','male'],'boy-6'=>['Boy 6 · Short hair','male'],'boy-7'=>['Boy 7 · Glasses and middle part','male'],'boy-8'=>['Boy 8 · Wavy hair','male'],'boy-9'=>['Boy 9 · Messy hair','male'],'boy-10'=>['Boy 10 · Glasses and short sides','male'],
+  'girl-1'=>['Girl 1 · Bob haircut','female'],'girl-2'=>['Girl 2 · Braids','female'],'girl-3'=>['Girl 3 · Ponytail and glasses','female'],'girl-4'=>['Girl 4 · Space buns','female'],'girl-5'=>['Girl 5 · Wavy hair and headband','female'],'girl-6'=>['Girl 6 · Curly pigtails','female'],'girl-7'=>['Girl 7 · Long hair and clip','female'],'girl-8'=>['Girl 8 · Braid and glasses','female'],'girl-9'=>['Girl 9 · Short hair and bow tie','female'],'girl-10'=>['Girl 10 · Top bun and ribbon','female']];
+ return array_filter($all,fn($k)=>is_file(__DIR__.'/../public/assets/avatars/'.$k.'.png'),ARRAY_FILTER_USE_KEY);
 }
 
 /** Remembered for the rest of the page (pages ask many times; every change to these ends with a redirect). */

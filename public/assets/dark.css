@@ -65,3 +65,31 @@ html.dark:has(body.demo-page){background:#fdf8e6;color-scheme:light}
 /* Green buttons and selected tabs look the same as in light mode: the one green, with white writing.
    Links in the page are light green in dark mode with a long selector; :not(#_) makes this rule stronger than it. */
 html.dark body:not(.demo-page):not(#_) :is(a.l1-big,a.pt-tab.on,a.rv-tab.on,a.dc-tab.on,.ws-tabs a.on,a.lb-mini-go,.rv-item[open] .rv-go),html.dark body:not(.demo-page):not(#_) :is(a.l1-big,a.pt-tab.on,a.rv-tab.on,a.dc-tab.on,.ws-tabs a.on) *{color:#fff!important}
+/* v169: boxes that kept a white or cream background in dark mode (their text turned light and could not be seen) */
+html.dark body:not(.demo-page) :is(.ws-li,.ws-acts a,.ws-acts button,.ws-more>summary,.ws-tabs a:not(.on),.empty){background:var(--sf2)!important;border-color:var(--ln)!important;color:var(--tx)!important}
+html.dark body:not(.demo-page) :is(.ws-li,.ws-acts a,.ws-acts button,.ws-tabs a:not(.on),.empty) :is(span,b,strong,h2,h3){color:var(--tx)!important}
+html.dark body:not(.demo-page) :is(.ws-acts a,.ws-acts button) .icon,html.dark body:not(.demo-page) .ws-li>.icon{color:#7fdcaa!important}
+html.dark body:not(.demo-page) :is(.ws-acts a,.ws-acts button,.ws-tabs a:not(.on)):hover{background:var(--sf3)!important}
+html.dark body:not(.demo-page) .ws-acts :is(a,button).danger,html.dark body:not(.demo-page) .ws-acts :is(a,button)[class*="del"]{color:#ff9b87!important}
+html.dark body:not(.demo-page) .ws-li.warn{background:#2a2614!important;border-color:#5a4b16!important}
+html.dark body:not(.demo-page) .pf-cal-top,html.dark body:not(.demo-page) .pf-cal-inline .pf-cal-top{background:radial-gradient(circle at 30% 0,#3b2b12,transparent 70%),#18221b!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .goal-ring{background:conic-gradient(#3fbf7f calc(var(--p)*1%),#2a3a2f 0)!important}
+html.dark body:not(.demo-page) .goal-done .goal-ring{background:conic-gradient(#f2b10c calc(var(--p)*1%),#2a3a2f 0)!important}
+html.dark body:not(.demo-page) .goal-ring::before{background:var(--sf)!important}
+html.dark body:not(.demo-page) .tk-band b{color:#0f5a37!important}
+html.dark body:not(.demo-page) .nv-new{color:#0e3b28!important}
+html.dark body:not(.demo-page) .lc-pick .lc-count{color:var(--tx)!important}
+html.dark body:not(.demo-page) :is(.l2-cnum,.pf-cd b){color:#b9cabf!important}
+html.dark body:not(.demo-page) .ws-kpi em.bad{color:#ff8a73!important}
+html.dark body:not(.demo-page) .ws-table tr,html.dark body:not(.demo-page) .lesson-tabs a:not(.active):not(.on){background:var(--sf2)!important;border-color:var(--ln)!important;color:var(--tx)!important}
+html.dark body:not(.demo-page) .ws-pill.ok{background:#1f3a2a!important;color:#9fe0b8!important}html.dark body:not(.demo-page) .ws-pill.warn{background:#3a3216!important;color:#ffd966!important}
+html.dark body:not(.demo-page) .ws-pill.bad{background:#3d1f1a!important;color:#ff9b87!important}html.dark body:not(.demo-page) .ws-pill.off{background:var(--sf3)!important;color:#c3cfc7!important}
+html.dark body:not(.demo-page) .sx-mode span,html.dark body:not(.demo-page) .pf-future b{color:var(--mu)!important}
+html.dark body:not(.demo-page) .fs-bub span{color:#e8f3ec!important}html.dark body:not(.demo-page) .fs-bub b{color:color-mix(in srgb,var(--fs) 55%,#fff)!important}
+/* the report card and the sign-in tickets are paper: they stay light, with dark writing, in dark mode too */
+html.dark body:not(.demo-page) .rc-page :is(.ds b,.rc-signs b,td){color:#1d2a22!important}html.dark body:not(.demo-page) .rc-page tr.lock td.ds b{color:#7d8a81!important}
+html.dark body:not(.demo-page) .rc-page :is(.rc-info label,.rc-lh,th,.ds small,.rc-signs){color:#5f6f63!important}html.dark body:not(.demo-page) .rc-page th{background:transparent!important}
+html.dark body:not(.demo-page) .rc-page :is(.rc-title h1,.rc-info span){color:#0e3b28!important}html.dark body:not(.demo-page) .rc-title h1 small{color:#c48a10!important}
+html.dark body:not(.demo-page) .rc-page .rm.no{color:#6d6a5e!important}html.dark body:not(.demo-page) .rc-page .rm.pass{color:#176444!important}html.dark body:not(.demo-page) .rc-page .rm.now{color:#9a6a00!important}html.dark body:not(.demo-page) .rc-page .rm.skip{color:#2b5f8f!important}
+html.dark body:not(.demo-page) .rc-band :is(b,span,small,.rc-mid b){color:#fff!important}html.dark body:not(.demo-page) .rc-now{color:#fff!important}html.dark body:not(.demo-page) .rc-now b{color:#ffd966!important}
+html.dark body:not(.demo-page) .ids-formats span{color:#7fdcaa!important}
