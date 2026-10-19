@@ -95,7 +95,7 @@ function teacher_home(array $u):void{
  echo '<p class="hm-sub">What do you want to do?</p><div class="hm-grid">'
   .hm_task('useredit','Add pupils','One pupil or a whole class list','?page=accounts').hm_task('print','Print sign-in tickets','Reading Pass with ID and QR','?page=cards',true)
   .hm_task('print','Print report cards','One pupil or a whole section','?page=print#pc-reportcards',true).hm_task('star','Print certificates','For pupils who finished a level','?page=print#pc-certs',true)
-  .'</div>';   // the other tasks are in the menu (My pupils, Class Demo, Class results)
+  .'</div>'.claude_tip($u);   // the other tasks are in the menu (My pupils, Class Demo, Class results)
  echo '<p class="hm-sub" id="tf-class">My class</p>';section_filter($u,'dashboard',$sid,$grade);
  echo tf_stats($ids,$pending,(int)val('SELECT COUNT(*) FROM lessons WHERE published=1'));
  echo '<section class="card tf-table tf-list"><div class="section-heading"><h2>My pupils</h2><a href="?page=manage">All pupils '.icon('arrow').'</a></div>';
@@ -187,7 +187,7 @@ function admin_home(array $u):void{
   .hm_task('useredit','Add teachers','One teacher or a whole Excel list','?page=add_teachers').hm_task('print','Print Teacher Passes','Teacher ID, password and QR','?page=teacher_cards',true)
   .hm_task('key','Reset a teacher’s password','Teachers › New starter password','?page=accounts').hm_task('move','Move pupils to a teacher','When a class changes teacher','?page=accounts#move')
   .hm_task('download','Download a backup','Keep a copy of all records','?page=health#backup',true).hm_task('print','Print school report','For the principal or division','?page=reports',true)
-  .hm_task('mega','Post an announcement','All teachers see it','?page=settings&tab=announcements').'</div>';
+  .hm_task('mega','Post an announcement','All teachers see it','?page=settings&tab=announcements').'</div>'.claude_tip($u);
  echo '<p class="hm-sub">School at a glance</p>';
  echo admin_kpis([['people',number_format($pupils),'Pupils',$newPupils?'+'.$newPupils.' this month':'',false],['user',count($teachers),'Teachers',$idle?count($idle).' inactive 14+ days':'all active',(bool)$idle],['book',$sections,'Sections',$grades?'Grades '.implode(', ',array_column($grades,'g')):'none yet',false],['check',number_format($week),'Activities this week',$trend,$prev&&$week<$prev]]);
  $levels=[];foreach(rows("SELECT GREATEST(a.level_id,COALESCE((SELECT MAX(m.level_id) FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)) lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1") as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;$max=max([1]+$levels);
@@ -330,6 +330,7 @@ function pupil_page_view(array $u):void{
  $p['level_id']=$p['level_id']??(function_exists('rc_ready')&&rc_ready()?0:1);
  echo '<section class="card"><h2>'.icon('useredit').' Account</h2><form method="post" class="formgrid">'.csrf_field().'<input type="hidden" name="action" value="update_account"><input type="hidden" name="id" value="'.$pid.'"><label>Full name<input name="name" value="'.e($p['name']).'" required maxlength="150"></label><label>New password (optional)<input name="password" type="password" minlength="8" maxlength="72" autocomplete="new-password"></label>'.grade_fields($p,teacher_sections((int)$u['id'])).'<label class="checkbox"><input type="checkbox" name="active" '.($p['active']?'checked':'').'>Account active</label><div class="formend"><small>Pupil ID: '.e($p['public_id']).'</small><button class="btn primary" type="submit">'.icon('check').'Save changes</button></div></form></section>';
  if(cards_ready())echo '<section class="card"><h2>'.icon('key').' Sign-in ticket and starter password</h2><p class="muted">Forgot the password? Make a new ticket: BULIG makes a new starter password and a new QR code. The old QR code stops working.</p><div class="buttonrow"><a class="btn secondary" href="?page=cards&amp;pupils[]='.$pid.'">'.icon('print').'Print sign-in ticket</a><form method="post">'.csrf_field().'<input type="hidden" name="action" value="card_new"><input type="hidden" name="id" value="'.$pid.'"><input type="hidden" name="back" value="?page=pupil&amp;id='.$pid.'&amp;tab=account"><button class="btn primary" data-confirm="Make a new ticket and starter password for '.e($p['name']).'?">'.icon('key').'New starter password</button></form></div></section>';
+ echo '<section class="card del-card"><h2>'.icon('alert').' Delete this pupil</h2><p class="muted">Only for a pupil added by mistake, or added twice. A pupil who moved away can be turned off instead (Account active, above): their work stays, and you can turn them on again.</p>'.delete_box('delete_pupil',$pid,$p['name'],'pupil').'</section>';
 }
 
 /** Class at a glance (class activity, reading tree, milestones): at the end of Class results since v161. */

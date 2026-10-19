@@ -265,6 +265,7 @@ def run_pages(acc):
 
     test_ratings_pupil(p)
     test_george(p)
+    test_friends(p)
     test_level4_scoring()
 
     section('6. Pupil started at Level 6 (Grade 3): reader level head start')
@@ -350,6 +351,7 @@ def run_pages(acc):
         check('Reports › App ratings shows the pupils’ stars and the teachers’ evaluation',
               status == 200 and 'How do pupils and teachers rate BULIG?' in text and '1 pupil rated BULIG' in text and '1 teacher answered' in text
               and '4.2' in text and 'More practice for Level 3, please.' in text and not PHP_ERROR.search(text), f'status {status}')
+        test_delete_teacher(a)
         test_account_ids(a, acc)
 
 
@@ -417,6 +419,53 @@ def test_george(p):
     check('George says hello only once (it is remembered)', jget(text).get('ok') and met is True, text[:120])
 
 
+def test_friends(p):
+    """Meet your BULIG friends: George and 8 friends, shown once; Claude's safety tip on Home."""
+    section('5c2. Meet your BULIG friends')
+    poses = {'max': 'mic', 'dracs': 'book', 'bruno': 'tryagain', 'mia': 'blocks', 'toby': 'flag', 'zion': 'emblem', 'arah': 'calendar'}
+    missing = [f'{k}-{x}' for k, sp in poses.items() for x in ('hello', 'point', 'thumbs', 'cheer', sp)
+               if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'{k}-{x}.webp'))]
+    missing += [f'claude-{x}' for x in ('hello', 'thumbs', 'shield', 'worried', 'sad')
+                if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'claude-{x}.webp'))]
+    check('All 40 pictures of the 8 friends are in place', not missing, missing)
+    _, _, text = p.req('?page=dashboard')
+    m = re.search(r'<meta name="bulig-friends" content="([^"]+)"', text)
+    data = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&').replace('&#039;', "'")) if m else {}
+    names = [f.get('name') for f in data.get('friends', [])]
+    check('A pupil who has not met the friends gets the introduction: George first, then 8 friends', names[:1] == ['George'] and len(names) == 9 and 'assets/friends' in text, names)
+    check('Claude the Protector gives a safety tip on the pupil Home page', 'class="cl-tip"' in text and 'claude-' in text)
+    _, _, r = p.req('index.php', {'action': 'friends_met', 'csrf': p.token('?page=dashboard')}, accept_json=True)
+    _, _, text = p.req('?page=dashboard')
+    check('The introduction shows only once (it is remembered)', jget(r).get('ok') and 'name="bulig-friends"' not in text, r[:120])
+
+
+def test_delete_pupil(t):
+    """A teacher deletes a pupil for good (typing DELETE); their work goes with them."""
+    section('7g. Delete a pupil')
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    pid = q("SELECT id FROM users WHERE name='Gina Uy'")
+    _, _, text = t.req(f'?page=pupil&id={pid}&tab=account')
+    check('The pupil Account tab has "Delete this pupil"', 'Delete this pupil' in text and 'value="delete_pupil"' in text)
+    _, _, text = t.req('index.php', {'action': 'delete_pupil', 'id': pid, 'confirm': 'yes', 'csrf': t.token('?page=dashboard')})
+    check('Without typing DELETE nothing is deleted', q(f'SELECT COUNT(*) FROM users WHERE id={int(pid)}') == '1' and 'Type DELETE' in text)
+    q(f"INSERT INTO learning_days(pupil_id,day) VALUES({int(pid)},CURDATE())")
+    _, _, text = t.req('index.php', {'action': 'delete_pupil', 'id': pid, 'confirm': 'delete', 'csrf': t.token('?page=dashboard')})
+    left = q(f"SELECT (SELECT COUNT(*) FROM users WHERE id={int(pid)})+(SELECT COUNT(*) FROM pupils WHERE user_id={int(pid)})+(SELECT COUNT(*) FROM pupil_sections WHERE pupil_id={int(pid)})+(SELECT COUNT(*) FROM teacher_pupils WHERE pupil_id={int(pid)})+(SELECT COUNT(*) FROM learning_days WHERE pupil_id={int(pid)})")
+    check('Typing DELETE deletes the pupil and everything that belongs to them', left == '0' and 'was deleted' in text, left)
+
+
+def test_delete_teacher(a):
+    """The administrator deletes a teacher only when they have no pupils and no sections."""
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    busy = q("SELECT teacher_id FROM teacher_pupils LIMIT 1")
+    _, _, text = a.req('index.php', {'action': 'delete_teacher', 'id': busy, 'confirm': 'DELETE', 'csrf': a.token('?page=accounts')})
+    check('A teacher with pupils cannot be deleted', q(f'SELECT COUNT(*) FROM users WHERE id={int(busy)}') == '1' and 'still has pupils' in text)
+    a.req('index.php', {'action': 'create_account', 'role': 'teacher', 'first_name': 'Temp', 'last_name': 'Delete', 'teacher_sex': 'male', 'password': 'TempDelete42!', 'back': 'add_teachers', 'csrf': a.token('?page=add_teachers')})
+    tid = q("SELECT id FROM users WHERE name='Temp Delete' AND role='teacher'")
+    _, _, text = a.req('index.php', {'action': 'delete_teacher', 'id': tid, 'confirm': 'DELETE', 'csrf': a.token('?page=accounts')})
+    check('A teacher with no pupils and no sections can be deleted', tid != '' and q(f"SELECT COUNT(*) FROM users WHERE name='Temp Delete'") == '0' and 'was deleted' in text, tid)
+
+
 def test_level4_scoring():
     """Level 4: BULIG counts the module's miscues from what the speech recognizer heard."""
     section('5d. Level 4 reading scored by BULIG')
@@ -475,6 +524,7 @@ def test_names(t):
     _, _, text = t.req('?page=import_template')
     check('The class list template has an Extension column', text.lstrip('\ufeff').startswith('Last name,First name,Middle name,Extension,'), text[:80])
     test_sections(t, sid)
+    test_delete_pupil(t)
 
 
 def test_sections(t, sid):

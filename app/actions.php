@@ -49,9 +49,11 @@ function action():void{
   $t=saved_login_create($u);audit('saved_login','device');saved_login_json(['ok'=>true,'token'=>$t,'profile'=>saved_login_profile($u)]);
  }
  if($action==='forget_login'){if(saved_login_ready())saved_login_forget((string)($_POST['token']??''));saved_login_json(['ok'=>true]);}
+ if($action==='friends_met'){$u=current_user();if($u)friends_mark_met((int)$u['id']);header('Content-Type: application/json');echo '{"ok":true}';exit;}
  if($action==='tour_seen'||$action==='george_met'){$u=current_user();if($u)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[($action==='george_met'?'george_met_':'tour_seen_').(int)$u['id'],date('Y-m-d H:i:s')]);saved_login_json(['ok'=>(bool)$u]);}
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
  if($action==='delete_section'){sections_action($action);return;}
+ if($action==='delete_pupil'||$action==='delete_teacher'){account_delete_action($action);return;}
  if($action==='save_section'){
   $u=require_role('teacher');$sid=(int)($_POST['id']??0);$name=import_name_case(mb_substr((string)($_POST['name']??''),0,80));$grade=(int)($_POST['grade_level']??0);
   if(!$name||strlen($name)>80||$grade<1||$grade>6)fail('Enter a section name and grade from 1 to 6.');
@@ -73,7 +75,7 @@ function action():void{
   if($role==='teacher'&&cards_ready()){
    $sx=(string)($_POST['teacher_sex']??'');if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Use a name of 2–150 characters.');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');
    db()->beginTransaction();try{$c=teacher_create($name,$sx);name_parts_save($c['id'],$nm['parts']);audit('create_teacher',$c['public']);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
-   $_SESSION['new_teacher']=$c['id'];go(($_POST['back']??'')==='add_teachers'?'?page=add_teachers':'?page=accounts&add=1#add-teacher');
+   $_SESSION['new_teacher']=$c['id'];go('?page=add_teachers');
   }
   if(strlen($name)<2||strlen($name)>150||strlen($password)<8||strlen($password)>72)fail('Use a name of 2–150 characters and a password of 8–72 characters.');
   db()->beginTransaction();try{

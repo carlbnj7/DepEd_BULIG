@@ -115,12 +115,12 @@ function checkup_view():void{
  echo '</div>'.($d['off']?'<p class="ck-note">'.icon('info').'<span>'.$d['off'].' account'.($d['off']===1?' is':'s are').' turned off. They cannot sign in. Their work stays saved for reports.</span></p>':'').checkup_off_pupils().'<p class="ck-note">'.icon('replay').'<span>The check runs each time you open this page. Problems also show on the Overview page.</span></p></section></div>';
 }
 
-/** Turned-off pupils, so a pupil turned off by mistake can be turned on again here. Teachers are turned on from the Teachers page. */
+/** Turned-off pupils, so a pupil turned off by mistake can be turned on again here, or deleted for good. Teachers are turned on (or deleted) from the Teachers page. */
 function checkup_off_pupils():string{
  $off=rows("SELECT u.id,u.name,u.public_id,s.grade_level,s.name sname FROM users u LEFT JOIN pupil_sections ps ON ps.pupil_id=u.id LEFT JOIN sections s ON s.id=ps.section_id WHERE u.role='pupil' AND u.active=0 ORDER BY u.name LIMIT 60");
  if(!$off)return '';
  $h='<details class="ck-details ck-off" id="ck-off"><summary class="btn secondary">'.icon('eye').'Show turned-off pupils</summary><div class="ck-place">';
- foreach($off as $p)$h.='<div class="ck-place-row ck-off-row"><span><b>'.e($p['name']).'</b><small>'.e($p['public_id']).' · '.e($p['grade_level']?'Grade '.(int)$p['grade_level'].' – '.$p['sname']:'No section').'</small></span>'.ck_btn('admin_ck_toggle_pupil',['id'=>$p['id']],'Turn on','check','secondary','Turn on '.$p['name'].' ('.$p['public_id'].')? They will be able to sign in again.').'</div>';
+ foreach($off as $p)$h.='<div class="ck-place-row ck-off-row"><span><b>'.e($p['name']).'</b><small>'.e($p['public_id']).' · '.e($p['grade_level']?'Grade '.(int)$p['grade_level'].' – '.$p['sname']:'No section').'</small></span>'.ck_btn('admin_ck_toggle_pupil',['id'=>$p['id']],'Turn on','check','secondary','Turn on '.$p['name'].' ('.$p['public_id'].')? They will be able to sign in again.').delete_box('delete_pupil',(int)$p['id'],$p['name'],'pupil',true).'</div>';
  return $h.'</div></details>';
 }
 

@@ -319,7 +319,7 @@
    [['.nt-row'],'Open one','Tap one to open the page where you can fix it.'],
    [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
   accounts:[
-   [['#add-teacher','.ws-btns'],'Add a teacher','Enter the name and sex. BULIG makes the teacher ID and a first password.'],
+   ['.ws-btns','Add teachers','Opens Add teachers: one teacher at a time, or the whole team from an Excel list.'],
    ['.ws-filters','Find a teacher','Search by name, or filter by grade and status.'],
    ['table.ws-table','Your teaching team','Sections, pupils and last sign-in for each teacher. Edit names, reset passwords or turn an account off here.'],
    ['#move','Move pupils','Move pupils to another teacher. They keep their progress, XP and badges.']],
@@ -452,8 +452,8 @@ if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeo
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Skip for now</button></div></div>';
   o.querySelector('.tour-offer-card').prepend(charImg('hello'));if(big)o.classList.add('tour-offer-george');
   const hi=pupil?'Hi, '+me.name+'!':me.role==='admin'?'Hello, '+me.name+'!':'Hello, Teacher '+me.name+'!';
-  o.querySelector('b').textContent=big?hi+' I am George the Explorer.':(pupil?'New here?':'New page');
-  o.querySelector('.tour-offer-txt span').textContent=big?(pupil?'I will be your reading buddy. Do you want me to show you around BULIG?':'I am BULIG’s guide. Would you like me to show you around your '+(me.role==='admin'?'admin area':'workspace')+'?'):(pupil?'George can show you how this page works.':'George can show you how this page works.');
+  o.querySelector('b').textContent=big?(window.buligFriendsMet?'Ready, '+me.name+'?':hi+' I am George the Explorer.'):(pupil?'New here?':'New page');
+  o.querySelector('.tour-offer-txt span').textContent=big?(pupil?(window.buligFriendsMet?'Now let me show you around BULIG. It only takes a minute!':'I will be your reading buddy. Do you want me to show you around BULIG?'):'I am BULIG’s guide. Would you like me to show you around your '+(me.role==='admin'?'admin area':'workspace')+'?'):(pupil?'George can show you how this page works.':'George can show you how this page works.');
   o.querySelector('.tour-yes').textContent=big?'Yes, show me!':'Show me';
   o.querySelector('.tour-yes').onclick=()=>{o.remove();markDone();if(big)metGeorge();start();};
   o.querySelector('.tour-no').onclick=()=>{o.remove();markDone();if(big)metGeorge();toast(pupil?'Okay! Tap the yellow ? anytime to see the tour.':'You can open the tour anytime with the ? button.');};
@@ -488,6 +488,7 @@ if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeo
   o.querySelector('.tour-yes').onclick=()=>{o.remove();metGeorge();};
   o.querySelector('.tour-no').onclick=()=>{o.remove();metGeorge();start();};
   document.body.append(o);setTimeout(()=>o.querySelector('.tour-yes').focus({preventScroll:true}),80);}
- const ready=()=>{if(key!=='dashboard')return;if(me.seen){if(!me.met&&me.guide)setTimeout(meet,900);return;}if(answeredHere())markDone();else setTimeout(offer,900);};
+ const ready=()=>{if(key!=='dashboard')return;if(window.buligFriendsMet)me.met=true;   // George already said hello in "Meet your BULIG friends"
+ if(me.seen){if(!me.met&&me.guide)setTimeout(meet,900);return;}if(answeredHere())markDone();else setTimeout(offer,900);};
  if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',ready,{once:true});else ready();
 })();
