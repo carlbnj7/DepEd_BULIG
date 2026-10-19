@@ -175,8 +175,9 @@
    ['#tf-todo','Needs you today','Pupils who need a check-in, reading checks to look at and pupils who asked for help. Tap a card to go straight there.'],
    ['.hm-auto','BULIG checks every answer','Pupils see their score and the right answers as soon as they finish. Nothing waits for you. To see one pupil’s answers, change a score or write a note, open the pupil › Answers and scores.'],
    ['#tf-help','Asked for help','When a pupil taps “I need help” in a lesson, at school or at home, it shows here: who, what is hard and where. Tap See pupil, or Mark as helped when you are done.'],
-   ['.hm-grid','What do you want to do?','The jobs teachers do most: add pupils, print tickets, report cards and certificates, change a starting level, reset a password, Class Demo and class progress.'],
+   ['.hm-grid','What do you want to do?','The jobs teachers do most: add pupils, and print tickets, report cards and certificates.'],
    ['.class-tabs','Grades and sections','Choose a grade or section to see only those pupils in My class below.'],
+   [['.tf-list','.class-tabs'],'My pupils','Each pupil with their level and last learning day. “Check in” means no learning in 7 days. Tap a pupil to open their page.'],
    ['.nv-find','Find a page','Type what you need, for example “print” or “password”, then tap the page. Press Enter to open the first one.'],
    ['.sidebar .nv-g','The menu in groups','MY CLASS: your pupils, adding pupils, the reading check and sections. TEACHING: Class Demo and Class results. PRINT: everything you can print.'],
    ['.sidebar nav a[href="?page=rcheck"]','Reading check','Pupils with no starting level take a short reading check the first time they sign in. BULIG places them, and you can change any level.'],
@@ -216,7 +217,7 @@
    [['form.formgrid:not(.import-form)'],'Add one pupil','Type the first, middle and last name (and Jr., Sr. … if any), then the section, sex and starting level. BULIG makes the Pupil ID and an easy starter password for you.'],
    [['form.formgrid:not(.import-form) select[name="level_id"]','form.formgrid:not(.import-form)'],'Let BULIG find the level','Leave the starting level on “Let BULIG find it”. The pupil takes the reading check at first sign-in and BULIG places them. You can change it later.'],
    [['form.formgrid:not(.import-form) .btn.primary','form.formgrid:not(.import-form)'],'Their ticket, right away','After you save, a window shows the new pupil’s sign-in ticket with the QR code. Print it there, or add the next pupil.'],
-   [['#import','.import-card'],'Add a whole class','Type the list: one row per pupil, Enter goes to the next. Or choose Upload a file to use an Excel list. Nothing is saved until every row is right.']],
+   [['#import','.import-card'],'Add a whole class','Type the list: one row per pupil, Enter goes to the next. Choose one section for everyone or a section on each row, and change any pupil’s starting level on their row. Or choose Upload a file to use an Excel list. Nothing is saved until every row is right.']],
   cards:[
    ['.lc-upgrade','Starter passwords','Pupils still on the old password 12345678 can each get their own easy starter password here. Print their new tickets right away.'],
    ['.lc-filter','Choose a section','Print tickets for one section or for all your pupils.'],
@@ -237,9 +238,9 @@
    [['.pg-table'],'The grid','Green is done, light green is started, yellow means no work for 7+ days. Tap a name to open that pupil.'],
    [['a[href*="page=certificates"]'],'Certificates','Print certificates for every pupil who finished this level.']],
   sections:[
-   ['.section-add','Add a section','Type the section name, choose the grade and add it.'],
-   ['.section-board','Your sections','Sections grouped by grade. Tap one to rename or archive it.'],
-   [['.section-chip summary'],'Report cards','Tap a section, then Report cards, to print a Reading Progress Report Card for every pupil in it, one page each.']],
+   ['.section-add','Add a section','Choose the grade, then type the section name. BULIG shows how it will look, and warns you if the section is already taken.'],
+   [['.sx-card','.section-add'],'One card for each section','Add pupils straight into this section, see its pupils, print its report cards or rename it. Remove works only for an empty section.'],
+   [['.sx-act a.sx-go','.section-add'],'Add pupils','Opens Add pupils with this section already chosen.']],
   review:[
    [['.hm-head','.pageheading'],'Pupils’ answers','BULIG checks every answer. Open a pupil › Answers and scores to listen, look, change a score or write a note.']],
   report_card:[
@@ -266,6 +267,7 @@
    ['.hm-head','Class results','BULIG checks every answer. Here you see which questions your class finds hard, so you can read them again together.'],
    ['.qc-filter','Choose what to see','Pick a level, a grade and a lesson.'],
    [['.qc-act'],'Each activity','How many pupils got each question right, and the wrong answer chosen most. Re-teach the ones in red.'],
+   [['#glance'],'Class at a glance','Class activity for the last 7 days, the class reading tree and pupil milestones.'],
    ['.sidebar nav a[href="?page=manage"]','One pupil’s answers','Open My pupils, then a pupil › Answers and scores to listen, look, change a score or write a note.']],
   rcheck:[
    ['.hm-head','Reading check','Pupils with no starting level take this check the first time they sign in. BULIG uses the BULIG Assessment and Grouping guide and the module pre-tests.'],
@@ -326,12 +328,6 @@
    ['.ws-kpis','Key numbers','Pupils, average score, finished lessons and pupils who need a check-in.'],
    ['table.ws-table','Progress by section','Each grade and section with its teacher, pupils and activities.'],
    ['.ws-btns','Download or print','Download the report for Excel, or print it and save it as a PDF.']],
-  content:[
-   ['.st-tabs','Lesson studio','Three tabs: Lessons (this one), Content notes from teachers, and Pictures.'],
-   ['nav.ws-levels','Choose a level','Pick the level you want to look at.'],
-   ['form.ws-filters','Choose a lesson','Pick a grade and lesson, then choose Open.'],
-   ['table.ws-table','Activities','Every activity in the lesson. Show or hide it for pupils, or edit its text and pictures.'],
-   [['details.card'],'Assessments','Open an assessment to update its rubric and scoring.']],
   activity_log:[
    ['nav.ws-tabs','Filter by kind','See all events, or only sign-ins, wrong passwords and PINs, account changes or content changes.'],
    ['.ws-filters','Search','Search for a name or ID and pick the dates.'],
@@ -450,7 +446,8 @@
   bub.style.left=x+'px';bub.style.top=y+'px';});}
 
  /* First visit: the character offers the tour. */
- function offer(){if(document.querySelector('.tour-offer'))return;if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeout(offer,600),{once:true});return;}if(document.querySelector('[data-save-offer]')&&!window.buligSaveDone){document.addEventListener('bulig:save-done',()=>setTimeout(offer,500),{once:true});return;}const big=key==='dashboard';
+ function offer(){if(document.querySelector('.tour-offer'))return;if(document.querySelector('.hm-moved'))return;   // one note at a time: the menu note first
+if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeout(offer,600),{once:true});return;}if(document.querySelector('[data-save-offer]')&&!window.buligSaveDone){document.addEventListener('bulig:save-done',()=>setTimeout(offer,500),{once:true});return;}const big=key==='dashboard';
   const o=document.createElement('div');o.className='tour-offer'+(big?' tour-offer-big':'');o.setAttribute('role','dialog');o.setAttribute('aria-label','Guided tour');
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Skip for now</button></div></div>';
   o.querySelector('.tour-offer-card').prepend(charImg('hello'));if(big)o.classList.add('tour-offer-george');
@@ -470,11 +467,18 @@
  /* The ? button on every page that has a tour. */
  const help=document.createElement('button');help.type='button';help.className='tour-help'+(pupil?' tour-help-pupil':'')+(key==='demo-slide'?' tour-help-demo':'')+(key==='activity'||key==='lesson-done'?' tour-help-activity':'');help.setAttribute('aria-label','Show me how this page works');help.title='Show me how this page works';help.textContent='?';
  help.addEventListener('click',()=>{document.querySelector('.tour-offer')?.remove();start();});document.body.append(help);
+ /* On a phone the ? sits in the top bar (beside the hand in a lesson, beside the bell elsewhere), never over an answer or a button. */
+ const dock=()=>{help.classList.remove('tour-help-dock','tour-help-dock-g');['top','left','right'].forEach(k=>help.style.removeProperty(k));const at=(k,v)=>help.style.setProperty(k,v+'px','important');
+  if(!matchMedia('(max-width:740px)').matches||key==='demo-slide')return;
+  const hand=document.querySelector('.hp-open'),bell=document.querySelector('.notif-m');let r;
+  if(hand&&(r=hand.getBoundingClientRect()).width){help.classList.add('tour-help-dock','tour-help-dock-g');at('top',Math.round(r.top+scrollY+(r.height-42)/2));at('right',Math.round(document.documentElement.clientWidth-r.left+10));}
+  else if(bell&&(r=bell.getBoundingClientRect()).width){help.classList.add('tour-help-dock');at('top',Math.round(r.top+(r.height-42)/2));const menu=document.querySelector('.mobile-menu-toggle'),m=menu&&menu.getBoundingClientRect();if(r.left>=innerWidth/2&&m&&m.width)r=m;at('left',Math.round(r.right+10));}};
+ dock();addEventListener('resize',dock);addEventListener('load',dock);
 
  /* Someone who already answered the offer on this device (older BULIG kept it per page) is told to the server, not asked again. */
  const answeredHere=()=>{try{for(let i=0;i<localStorage.length;i++)if((localStorage.key(i)||'').indexOf('bulig-tour-'+me.id+'-')===0)return true;}catch(e){}return false;};
  /* Already took the tour before George arrived: she says hello once (on the dashboard). */
- function meet(){if(document.querySelector('.tour-offer'))return;
+ function meet(){if(document.querySelector('.tour-offer')||document.querySelector('.hm-moved'))return;
   const o=document.createElement('div');o.className='tour-offer tour-offer-big tour-offer-george tour-meet';o.setAttribute('role','dialog');o.setAttribute('aria-label','Meet George the Explorer');
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><small class="tour-new">NEW FRIEND</small><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Show me around</button></div></div>';
   o.querySelector('.tour-offer-card').prepend(charImg('hello'));

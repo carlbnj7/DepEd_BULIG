@@ -142,15 +142,23 @@ function import_actions(string $action):void{
   import_create($p['rows'],$u,$p['file']);
  }
  if($action==='import_typed'){
-  $u=require_role('teacher');$sid=(int)($_POST['section_id']??0);if(!$sid)fail('Choose the section for this list.');owned_section($sid,(int)$u['id']);$level=selected_start_level(1,true);
-  $t=(array)($_POST['t']??[]);$keys=['last','first','middle','ext','sex','lrn'];$n=0;foreach($keys as $k)foreach(array_keys((array)($t[$k]??[])) as $i)$n=max($n,(int)$i+1);
+  $u=require_role('teacher');$tid=(int)$u['id'];$many=($_POST['sec_mode']??'')==='many';$level=selected_start_level(1,true);
+  $mine=[];foreach(teacher_sections($tid) as $x)$mine[(int)$x['id']]=$x;
+  $sid=0;$newSec=null;
+  if(!$many){if(($_POST['section_id']??'')==='new')$newSec=section_new_input();else{$sid=(int)($_POST['section_id']??0);if(!$sid)fail('Choose the section for this list.');owned_section($sid,$tid);}}
+  $t=(array)($_POST['t']??[]);$keys=['last','first','middle','ext','sex','lrn','sec','level'];$n=0;foreach($keys as $k)foreach(array_keys((array)($t[$k]??[])) as $i)$n=max($n,(int)$i+1);
   if($n>IMPORT_MAX_ROWS)fail('Type up to '.IMPORT_MAX_ROWS.' pupils at a time.');
-  $typed=[];for($i=0;$i<$n;$i++){$r=[];foreach($keys as $k)$r[]=mb_substr(trim((string)(((array)($t[$k]??[]))[$i]??'')),0,80);if($r[0].$r[1].$r[2].$r[5]==='')$r=['','','','','',''];$typed[]=$r;}   // only M or F picked: an empty row
+  $codes=[0=>'BULIG',1=>'1',2=>'2A',3=>'2B',4=>'3',5=>'4',6=>'5',7=>'6',8=>'7'];
+  $typed=[];$list=[];
+  for($i=0;$i<$n;$i++){$r=[];foreach($keys as $k)$r[]=mb_substr(trim((string)(((array)($t[$k]??[]))[$i]??'')),0,80);
+   if($r[0].$r[1].$r[2].$r[5]===''){$typed[]=array_fill(0,8,'');$list[]=array_fill(0,9,'');continue;}   // only M or F picked: an empty row
+   $typed[]=$r;$sec=$newSec?['grade_level'=>$newSec[0],'name'=>$newSec[1]]:($many?($mine[(int)$r[6]]??null):null);$lv=$r[7]===''?$level:(int)$r[7];
+   $list[]=[$r[0],$r[1],$r[2],$r[3],$r[4],$r[5],$sec['name']??'',$sec?(string)$sec['grade_level']:'',$codes[$lv]??''];}
   if(!array_filter($typed,fn($r)=>implode('',$r)!==''))fail('Type at least one pupil first.');
-  $checked=import_check(array_merge([['Last name','First name','Middle name','Extension','Sex','LRN']],$typed),$u,$sid,$level);
-  foreach($checked as &$c){$c['line']--;$c['notes']=preg_replace_callback('/line (\d+) in this file/',fn($m)=>'row '.((int)$m[1]-1).' of this list',$c['notes']);}unset($c);   // row numbers of the list, not of a file
+  $checked=import_check(array_merge([['Last name','First name','Middle name','Extension','Sex','LRN','Section','Grade','Starting level']],$list),$u,$sid,$level);
+  foreach($checked as &$c){$c['line']--;$c['notes']=array_map(fn($x)=>preg_replace_callback('/line (\d+) in this file/',fn($m)=>'row '.((int)$m[1]-1).' of this list',str_starts_with($x,'Section is missing')?'Choose a section.':$x),$c['notes']);}unset($c);   // row numbers of the list, not of a file
   $bad=array_filter($checked,fn($r)=>$r['status']==='error');
-  if($bad){$_SESSION['pupil_typed']=['rows'=>$typed,'notes'=>array_column(array_map(fn($r)=>[$r['line']-1,implode(' ',$r['notes'])],$bad),1,0),'section'=>$sid,'level'=>$level];
+  if($bad){$_SESSION['pupil_typed']=['rows'=>$typed,'notes'=>array_column(array_map(fn($r)=>[$r['line']-1,implode(' ',array_filter($r['notes'],fn($x)=>!str_starts_with($x,'New section')))],$bad),1,0),'section'=>$sid,'level'=>$level,'many'=>$many,'new'=>$newSec];
    flash(count($bad).' '.(count($bad)===1?'row needs':'rows need').' fixing. Nothing was saved yet: fix the rows marked in red, then press Create again.');go('?page=accounts&mode=class&how=type#import');}
   unset($_SESSION['pupil_typed']);import_create($checked,$u,'the typed list');
  }
@@ -214,23 +222,31 @@ function import_card(array $u):void{
 /** "Type the list": one row per pupil. Enter goes to the next pupil; assets/names.js checks each row while typing.
    Rows that need fixing come back here with the server's note (nothing is saved until every row is right). */
 function import_typed_grid(array $sections):string{
- if(!$sections)return '<p class="ap-need">'.icon('alert').'<span>Add a section first (for example Grade 1 · Rizal). <a href="?page=sections">Add a section</a></span></p>';
- $back=$_SESSION['pupil_typed']??null;unset($_SESSION['pupil_typed']);$rows=$back['rows']??[];$notes=$back['notes']??[];
- $sid=(int)($back['section']??(count($sections)===1?$sections[0]['id']:0));
- $h='<form method="post" class="bk-form" data-bk>'.csrf_field().'<input type="hidden" name="action" value="import_typed"><div class="bk-top"><label>Section<select name="section_id" required><option value="">Choose a section</option>';
- foreach($sections as $s)$h.='<option value="'.$s['id'].'"'.((int)$s['id']===$sid?' selected':'').'>Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';
- $h.='</select></label>'.starting_level_field((int)($back['level']??(function_exists('rc_ready')&&rc_ready()?0:1))).'</div>';
- $h.='<div class="bk-gridwrap"><table class="bk-grid"><thead><tr><th>#</th><th>Last name</th><th>First name</th><th>Middle name</th><th class="c-ext">Ext.</th><th class="c-sex">Sex</th><th class="c-lrn">LRN (optional)</th><th class="c-st"><span class="sr-only">Check</span></th></tr></thead><tbody data-bk-body>';
- for($i=0,$n=max(10,count($rows));$i<$n;$i++)$h.=import_typed_row($i,$rows[$i]??[],$notes[$i]??'');
- $h.='</tbody></table></div><template data-bk-tpl>'.import_typed_row(-1,[],'').'</template>';
+ $tid=(int)current_user()['id'];$back=$_SESSION['pupil_typed']??null;unset($_SESSION['pupil_typed']);$rows=$back['rows']??[];$notes=$back['notes']??[];$many=!empty($back['many']);
+ $sid=(int)($back['section']??($_GET['section']??(count($sections)===1?$sections[0]['id']:0)));$level=(int)($back['level']??(function_exists('rc_ready')&&rc_ready()?0:1));
+ $mode=fn($v,$on,$b,$t)=>'<label class="'.($on?'on':'').'"><input type="radio" name="sec_mode" value="'.$v.'"'.($on?' checked':'').' data-bk-mode><i></i><div><b>'.$b.'</b><span>'.$t.'</span></div></label>';
+ $h='<form method="post" class="bk-form" data-bk data-mode="'.($many?'many':'one').'">'.csrf_field().'<input type="hidden" name="action" value="import_typed">'
+  .'<div class="sx-mode">'.$mode('one',!$many,'All pupils in one section','Choose the section once, for the whole list.').$mode('many',$many,'Pupils in different sections','Choose the section on each row.').'</div>'
+  .'<div class="bk-top"><div class="bk-onesec">'.section_select($sections,$sid,$tid).'</div><div class="bk-lvall">'.str_replace(['<label>Starting level<select name="level_id" required>'],['<label>Starting level for everyone<select name="level_id" required data-bk-lvall>'],starting_level_field($level)).'</div></div>'
+  .'<p class="sx-hint">Each pupil can start at a different level: change it on that pupil’s row.</p>';
+ $h.='<div class="bk-gridwrap"><table class="bk-grid"><thead><tr><th>#</th><th>Last name</th><th>First name</th><th>Middle name</th><th class="c-ext">Ext.</th><th class="c-sex">Sex</th><th class="c-sec">Section</th><th class="c-lv">Starting level</th><th class="c-lrn">LRN (optional)</th><th class="c-st"><span class="sr-only">Check</span></th></tr></thead><tbody data-bk-body>';
+ for($i=0,$n=max(10,count($rows));$i<$n;$i++)$h.=import_typed_row($i,$rows[$i]??[],$notes[$i]??'',$sections,$level);
+ $h.='</tbody></table></div><template data-bk-tpl>'.import_typed_row(-1,[],'',$sections,$level).'</template>';
  return $h.'<div class="bk-foot"><small>Press <b>Enter</b> for the next pupil. Empty rows are skipped. <span data-bk-count aria-live="polite"></span></small><span class="bk-btns"><button type="button" class="btn secondary" data-bk-more>+ 10 more rows</button><button class="btn primary" data-bk-go>'.icon('check').'<span data-bk-label>Create pupil accounts</span></button></span></div></form>';
 }
-function import_typed_row(int $i,array $r,string $note):string{
+function import_typed_row(int $i,array $r,string $note,array $sections,int $level):string{
  $n=$i<0?'__':(string)$i;$v=fn($k)=>e((string)($r[$k]??''));$ext=(string)($r[3]??'');$sex=strtoupper((string)($r[4]??''));
  $in=fn($k,$col,$lab,$extra='')=>'<td data-l="'.$lab.'"><input name="t['.$col.']['.$n.']" value="'.$v($k).'" maxlength="60" autocomplete="off" aria-label="'.$lab.', pupil '.($i<0?'':$i+1).'"'.$extra.'></td>';
  $o='<option value="">—</option>';foreach(NAME_EXTS as $x)$o.='<option value="'.$x.'"'.(name_ext_norm($ext)===$x?' selected':'').'>'.$x.'</option>';
  $mf='';foreach(['M'=>'Male','F'=>'Female'] as $k=>$t)$mf.='<label><input type="radio" name="t[sex]['.$n.']" value="'.$k.'"'.(in_array($sex,[$k,strtoupper($t)],true)?' checked':'').' aria-label="'.$t.'"><b>'.$k.'</b></label>';
  return '<tr data-bk-row'.($note!==''?' class="err"':'').'><td data-bk-n>'.($i<0?'':$i+1).'</td>'.$in(0,'last','Last name',$i===0?' placeholder="Type here…"':'').$in(1,'first','First name').$in(2,'middle','Middle name')
   .'<td class="c-ext" data-l="Ext."><select name="t[ext]['.$n.']" aria-label="Extension">'.$o.'</select></td><td class="c-sex" data-l="Sex"><span class="bk-sex">'.$mf.'</span></td>'
-  .'<td class="c-lrn" data-l="LRN (optional)"><input name="t[lrn]['.$n.']" value="'.$v(5).'" maxlength="14" inputmode="numeric" autocomplete="off" aria-label="LRN"></td><td class="c-st" data-bk-st>'.($note!==''?'<span class="bad">'.e($note).'</span>':'').'</td></tr>';
+  .import_typed_choices($n,$r,$sections,$level).'<td class="c-lrn" data-l="LRN (optional)"><input name="t[lrn]['.$n.']" value="'.$v(5).'" maxlength="14" inputmode="numeric" autocomplete="off" aria-label="LRN"></td><td class="c-st" data-bk-st>'.($note!==''?'<span class="bad">'.e($note).'</span>':'').'</td></tr>';
+}
+/** A row's own Section (when pupils are in different sections) and Starting level. */
+function import_typed_choices(string $n,array $r,array $sections,int $level):string{
+ $sec=(int)($r[6]??0);$lv=($r[7]??'')===''?$level:(int)$r[7];
+ $o='<option value="">Choose</option>';foreach($sections as $s)$o.='<option value="'.$s['id'].'"'.((int)$s['id']===$sec?' selected':'').'>'.e('Gr. '.(int)$s['grade_level'].' · '.$s['name']).'</option>';
+ $l=(function_exists('rc_ready')&&rc_ready()?'<option value="0"'.($lv===0?' selected':'').'>BULIG finds it</option>':'');foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $x)$l.='<option value="'.$x['id'].'"'.((int)$x['id']===$lv?' selected':'').'>'.e(level_label((int)$x['id'])).'</option>';
+ return '<td class="c-sec" data-l="Section"><select name="t[sec]['.$n.']" aria-label="Section">'.$o.'</select></td><td class="c-lv" data-l="Starting level"><select name="t[level]['.$n.']" aria-label="Starting level" data-bk-lv'.($lv!==$level?' class="chg" data-own="1"':'').'>'.$l.'</select></td>';
 }

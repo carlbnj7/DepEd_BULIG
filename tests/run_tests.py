@@ -337,10 +337,15 @@ def run_pages(acc):
     tok = a.token('?page=login&role=admin&confirm=1')
     status, url, _ = a.req('index.php', {'action': 'admin_pin', 'pin': acc['admin']['pin'], 'csrf': tok})
     if check('Admin can sign in with password and PIN', 'dashboard' in url, url):
-        for pg in ('dashboard', 'accounts', 'reports', 'content', 'activity_log', 'health', 'checkup', 'settings', 'teacher_cards',
-                   'teacher_import', 'issues', 'media', 'guide', 'profile', 'notifications', 'visual_audit', 'add_teachers',
+        for pg in ('dashboard', 'accounts', 'reports', 'activity_log', 'health', 'checkup', 'settings', 'teacher_cards',
+                   'teacher_import', 'guide', 'profile', 'notifications', 'visual_audit', 'add_teachers',
                    'add_teachers&mode=many', 'print', 'moved'):
             page_ok(a, f'?page={pg}', f'Admin page opens: {pg}')
+        _, url, text = a.req('?page=content')
+        check('The Lesson studio is gone: its old link goes to Admin Home and the menu has no Lesson studio',
+              'page=dashboard' in url and 'Lesson studio' not in text and 'href="?page=content"' not in text, url)
+        _, _, text = a.req('index.php', {'action': 'save_activity', 'id': '1', 'title': 'Changed', 'csrf': a.token('?page=dashboard')})
+        check('Module content cannot be changed by the administrator', 'Unknown action' in text or 'not found' in text.lower())
         status, _, text = a.req('?page=ratings&period=all')
         check('Reports › App ratings shows the pupils’ stars and the teachers’ evaluation',
               status == 200 and 'How do pupils and teachers rate BULIG?' in text and '1 pupil rated BULIG' in text and '1 teacher answered' in text
@@ -445,7 +450,7 @@ def test_names(t):
     status, _, text = t.req('?page=accounts')
     check('Add one pupil asks for First, Middle, Last name and Extension', status == 200 and all(f'name="{n}"' in text for n in ('first_name', 'middle_name', 'last_name', 'name_ext')) and 'Shows as' in text and 'name="name"' not in text, f'status {status}')
     status, _, text = t.req('?page=accounts&mode=class')
-    m = re.search(r'class="bk-top"><label>Section<select name="section_id" required><option value="">Choose a section</option><option value="(\d+)"', text)
+    m = re.search(r'class="bk-onesec"><label>Section<select name="section_id" required data-sx-select><option value="">Choose a section</option><option value="(\d+)"', text)
     check('A whole class opens on "Type the list" (no paste option) with the Upload a file tab', status == 200 and m is not None and 'data-bk-row' in text and 'Upload a file' in text and 'Paste' not in text, f'status {status}')
     if not m:
         return
@@ -469,6 +474,40 @@ def test_names(t):
     check('Fixed, the typed list makes the accounts (an empty row with only F picked is skipped)', 'import=done' in url and '2 pupil accounts created' in text and made == 'Lea U. Tan Sr./Sr.,Leo U. Tan Sr./Sr.', made or url)
     _, _, text = t.req('?page=import_template')
     check('The class list template has an Extension column', text.lstrip('\ufeff').startswith('Last name,First name,Middle name,Extension,'), text[:80])
+    test_sections(t, sid)
+
+
+def test_sections(t, sid):
+    """Sections: add (Grade first), no doubles, remove only when empty, "+ Add a new section" from Add pupils,
+    and the typed list with a section on each row and a starting level on each row."""
+    section('7f. Sections')
+    status, _, text = t.req('?page=sections')
+    check('Sections page: Grade first, then the name, and one card per section with Add pupils and Remove',
+          status == 200 and text.index('data-sx-grade') < text.index('data-sx-name') and 'class="sx-card"' in text and 'class="sx-go"' in text and 'Remove' in text, f'status {status}')
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    tok = t.token('?page=sections')
+    t.req('index.php', {'action': 'save_section', 'grade_level': '4', 'name': 'acacia', 'csrf': tok})
+    new = q("SELECT id FROM sections WHERE grade_level=4 AND name='Acacia'")
+    check('A new section is saved with a capital letter (Grade 4 · Acacia)', new != '', new)
+    _, _, text = t.req('index.php', {'action': 'save_section', 'grade_level': '4', 'name': 'ACACIA', 'csrf': t.token('?page=sections')})
+    check('The same section cannot be added twice', q("SELECT COUNT(*) FROM sections WHERE grade_level=4 AND LOWER(name)='acacia'") == '1' and 'You already have Grade 4' in text)
+    busy = q(f"SELECT section_id FROM pupil_sections LIMIT 1")
+    _, _, text = t.req('index.php', {'action': 'delete_section', 'id': busy, 'csrf': t.token('?page=sections')})
+    check('A section with pupils cannot be removed', q(f"SELECT COUNT(*) FROM sections WHERE id={int(busy)}") == '1' and 'still has pupils' in text)
+    t.req('index.php', {'action': 'delete_section', 'id': new, 'csrf': t.token('?page=sections')})
+    check('An empty section can be removed', q(f"SELECT COUNT(*) FROM sections WHERE id={int(new)}") == '0')
+    t.req('index.php', {'action': 'create_account', 'first_name': 'Gina', 'last_name': 'Uy', 'sex': 'female', 'section_id': 'new', 'new_grade': '2', 'new_section': 'narra', 'level_id': '1', 'csrf': t.token('?page=accounts')})
+    got = q("SELECT CONCAT(s.grade_level,' ',s.name) FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN sections s ON s.id=ps.section_id WHERE u.name='Gina Uy'")
+    check('"+ Add a new section" in Add one pupil makes the section and puts the pupil in it', got == '2 Narra', got)
+    narra = q("SELECT id FROM sections WHERE grade_level=2 AND name='Narra'")
+    rows = {'action': 'import_typed', 'sec_mode': 'many', 'level_id': '1', 'csrf': t.token('?page=accounts&mode=class')}
+    for i, r in enumerate([('Vega', 'Ivy', 'F', sid, '4'), ('Wong', 'Jay', 'M', narra, '1')]):
+        for k, v in zip(('last', 'first', 'sex', 'sec', 'level'), r):
+            rows[f't[{k}][{i}]'] = v
+    _, url, _ = t.req('index.php', rows)
+    got = q("SELECT GROUP_CONCAT(CONCAT(u.name,'/',ps.section_id,'/',a.level_id) ORDER BY u.name) FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.name IN ('Ivy Vega','Jay Wong')")
+    check('Type the list, pupils in different sections: each pupil gets their own section and starting level',
+          'import=done' in url and got == f'Ivy Vega/{sid}/4,Jay Wong/{narra}/1', got or url)
 
 
 def test_ratings_teacher(t):

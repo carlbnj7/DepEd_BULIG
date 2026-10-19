@@ -51,15 +51,16 @@ function action():void{
  if($action==='forget_login'){if(saved_login_ready())saved_login_forget((string)($_POST['token']??''));saved_login_json(['ok'=>true]);}
  if($action==='tour_seen'||$action==='george_met'){$u=current_user();if($u)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[($action==='george_met'?'george_met_':'tour_seen_').(int)$u['id'],date('Y-m-d H:i:s')]);saved_login_json(['ok'=>(bool)$u]);}
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
+ if($action==='delete_section'){sections_action($action);return;}
  if($action==='save_section'){
-  $u=require_role('teacher');$sid=(int)($_POST['id']??0);$name=trim((string)($_POST['name']??''));$grade=(int)($_POST['grade_level']??0);
+  $u=require_role('teacher');$sid=(int)($_POST['id']??0);$name=import_name_case(mb_substr((string)($_POST['name']??''),0,80));$grade=(int)($_POST['grade_level']??0);
   if(!$name||strlen($name)>80||$grade<1||$grade>6)fail('Enter a section name and grade from 1 to 6.');
   db()->beginTransaction();try{
    q('SELECT id FROM users WHERE id=? FOR UPDATE',[$u['id']]);if($sid){$old=owned_section($sid,(int)$u['id']);if($grade!=(int)$old['grade_level']&&val('SELECT COUNT(*) FROM pupil_sections WHERE section_id=?',[$sid]))fail('Move pupils to another section before changing this section’s grade.');}
-   if(val('SELECT id FROM sections WHERE teacher_id=? AND grade_level=? AND name=? AND id<>?',[$u['id'],$grade,$name,$sid]))fail('You already have this section for this grade.');
+   if(val('SELECT id FROM sections WHERE teacher_id=? AND grade_level=? AND LOWER(name)=LOWER(?) AND id<>?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$u['id'],$grade,$name,$sid]))fail('You already have Grade '.$grade.' · '.$name.'.');
    if($sid){q('UPDATE sections SET name=?,grade_level=? WHERE id=?',[$name,$grade,$sid]);q('UPDATE pupils p JOIN pupil_sections ps ON ps.pupil_id=p.user_id SET p.section=?,p.grade_level=? WHERE ps.section_id=?',[$name,$grade,$sid]);}
-   else{q('INSERT INTO sections(teacher_id,grade_level,name) VALUES(?,?,?)',[$u['id'],$grade,$name]);$sid=(int)db()->lastInsertId();}audit('save_section',(string)$sid);db()->commit();flash('Section saved.');
-  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=sections');
+   else{q('INSERT INTO sections(teacher_id,grade_level,name) VALUES(?,?,?)',[$u['id'],$grade,$name]);$sid=(int)db()->lastInsertId();}audit('save_section',(string)$sid);db()->commit();flash('Grade '.$grade.' · '.$name.' is saved. Next: add its pupils.');
+  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=sections#section-'.$sid);
  }
  if(str_starts_with($action,'import_')){import_actions($action);return;}
  if(in_array($action,CHECKUP_ACTIONS,true))checkup_action($action);
@@ -79,7 +80,7 @@ function action():void{
    $public=new_account_id($role);
    q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();name_parts_save($id,$nm['parts']);
    if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');}else{
-    $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level(1,true);$details=pupil_details_input();
+    $section=section_from_post((int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level(1,true);$details=pupil_details_input();
     q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);$password=new_pupil_password($id);
    }audit('create_'.$role,$public);db()->commit();if($role==='pupil')$_SESSION['new_pupil']=$id;else flash('Account created. '.$role.' ID: '.$public.'. Share the password you set privately.');
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=accounts');
@@ -92,7 +93,7 @@ function action():void{
   db()->beginTransaction();try{
    if($name!==$target['name'])name_parts_forget($id);q('UPDATE users SET name=?,active=? WHERE id=?',[$name,isset($_POST['active'])?1:0,$id]);if($password!==''||!isset($_POST['active']))saved_login_clear($id);if($password!==''){q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($password,PASSWORD_DEFAULT),$id]);card_forget_starter($id);}
    if($u['role']==='teacher'){
-    $section=owned_section((int)($_POST['section_id']??0),(int)$u['id']);
+    $section=section_from_post((int)$u['id']);
     save_pupil_details($id,pupil_details_input($id));
     q('UPDATE pupils SET grade_level=?,section=? WHERE user_id=?',[$section['grade_level'],$section['name'],$id]);q('INSERT INTO pupil_sections VALUES(?,?) ON DUPLICATE KEY UPDATE section_id=VALUES(section_id)',[$id,$section['id']]);$level=selected_start_level((int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$id])?:1,true);if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?) ON DUPLICATE KEY UPDATE level_id=VALUES(level_id),assigned_by=VALUES(assigned_by),assigned_at=NOW()',[$id,$level,$u['id']]);
    }audit('update_account',(string)$id);db()->commit();flash('Account updated.');
@@ -246,36 +247,11 @@ function action():void{
    refresh_progress($pid,(int)$a['lesson_id']);award_badges($pid);audit('review_assessment',$pid.':'.$aid);db()->commit();flash('Optional assessment feedback saved. Learning progression is unchanged.');
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go(review_back());
  }
- if($action==='save_lesson'){
-  require_role('admin');$id=(int)($_POST['id']??0);$title=trim((string)($_POST['title']??''));if(!$title||strlen($title)>255)fail('Enter a lesson title.');$image=trim((string)($_POST['image_path']??''));if($image)checked_image($image);
-  if(val('SELECT published FROM lessons WHERE id=?',[$id])!=(isset($_POST['published'])?1:0)&&val('SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE a.lesson_id=?',[$id]))fail('This lesson already has pupil work. Its publication status must remain stable.');
-  q('UPDATE lessons SET title=?,subtitle=?,objectives=?,image_path=?,published=? WHERE id=?',[$title,substr((string)$_POST['subtitle'],0,255),substr((string)$_POST['objectives'],0,12000),$image?:null,isset($_POST['published'])?1:0,$id]);audit('edit_lesson',(string)$id);flash('Lesson saved.');go('?page=content&id='.$id);
- }
- if($action==='save_activity'){
-  require_role('admin');$id=(int)($_POST['id']??0);$a=one('SELECT * FROM activities WHERE id=?',[$id]);if(!$a)fail('Activity not found.',404);
-  $title=trim((string)($_POST['title']??''));$prompt=trim((string)($_POST['prompt']??''));$type=(string)($_POST['type']??'');$xp=(int)($_POST['xp_reward']??10);$grading=(string)($_POST['grading']??'teacher');$mode=(string)($_POST['response_mode']??'answer');if(!in_array($mode,['answer','none','perform','drawing'],true))fail('Choose an interaction mode.');if($grading==='exact'||$mode==='drawing')$mode='answer';
-  if(!$title||strlen($title)>255||!$prompt||strlen($prompt)>30000||!in_array($type,['open','sentence','reading','physical','group','drawing','choice','exact','reference'],true)||$xp<0||$xp>1000||!in_array($grading,['teacher','exact'],true))fail('Check the activity fields.');
-  $imgs=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['image_paths']??'')))));foreach($imgs as $image)checked_image($image);
-  $answers=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['answers']??'')))));$options=array_values(array_filter(array_map('trim',explode("\n",(string)($_POST['options']??'')))));
-  if($grading==='exact'&&!$answers)fail('Exact grading requires at least one accepted answer.');if($type==='choice'&&!$options)fail('Add answer choices.');
-  db()->beginTransaction();try{
-   // Publishing changes after progress would silently change completion requirements.
-   if((int)$a['published']!==(isset($_POST['published'])?1:0)&&val('SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE a.lesson_id=?',[$a['lesson_id']]))fail('This lesson already has pupil work. Keep its published activity set stable.');
-   q('UPDATE activities SET response_mode=?,title=?,type=?,instructions=?,prompt=?,image_path=?,image_paths=?,narration=?,expected_text=?,xp_reward=?,published=?,revision=revision+1 WHERE id=?',[$mode,$title,$type,substr((string)$_POST['instructions'],0,12000),$prompt,$imgs[0]??null,json_encode($imgs),substr((string)$_POST['narration'],0,30000),substr((string)($_POST['expected_text']??''),0,12000)?:null,$xp,isset($_POST['published'])?1:0,$id]);
-   $qid=(int)val('SELECT id FROM questions WHERE activity_id=?',[$id]);q('UPDATE questions SET content=?,grading=? WHERE id=?',[$prompt,$grading,$qid]);q('DELETE FROM answers WHERE question_id=?',[$qid]);foreach(array_unique(array_merge($options,$answers)) as $answer)q('INSERT INTO answers(question_id,content,correct) VALUES(?,?,?)',[$qid,$answer,in_array($answer,$answers,true)?1:0]);
-   audit('edit_activity',(string)$id);db()->commit();flash('Activity saved. Existing responses retain their original prompt.');
-  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=edit_activity&id='.$id);
- }
- if($action==='upload_media'){require_role('admin');$path=save_uploaded_image('media');audit('upload_media',$path);flash('Image uploaded: '.$path);go('?page=media');}
- if($action==='acknowledge'){$u=require_role('admin');q('UPDATE content_issues SET resolution=?,acknowledged_by=?,acknowledged_at=NOW() WHERE id=?',[substr((string)$_POST['resolution'],0,3000),$u['id'],(int)$_POST['id']]);flash('Content decision recorded.');go('?page=issues');}
  if($action==='save_reward'){
   require_role('admin');$id=(int)($_POST['id']??0);$title=trim((string)$_POST['title']);$xp=(int)$_POST['required_xp'];if(!$title||strlen($title)>100||$xp<0)fail('Check reward details.');q('UPDATE rewards SET title=?,required_xp=?,active=? WHERE id=?',[$title,$xp,isset($_POST['active'])?1:0,$id]);flash('Reward updated.');go('?page=settings&tab=badges');
  }
  if($action==='save_badge'){
   require_role('admin');$id=(int)$_POST['id'];$threshold=(int)$_POST['threshold_value'];$title=trim((string)$_POST['title']);if(!$title||strlen($title)>100||$threshold<1)fail('Check badge details.');q('UPDATE badges SET title=?,description=?,threshold_value=?,active=? WHERE id=?',[$title,substr((string)$_POST['description'],0,255),$threshold,isset($_POST['active'])?1:0,$id]);flash('Badge updated.');go('?page=settings&tab=badges');
- }
- if($action==='save_assessment'){
-  require_role('admin');$id=(int)$_POST['id'];$criteria=array_values(array_filter(array_map('trim',explode("\n",(string)$_POST['criteria']))));if(count($criteria)>12)fail('Use up to 12 criteria.');q('UPDATE assessments SET rubric=?,rubric_criteria=? WHERE id=?',[substr((string)$_POST['rubric'],0,30000),json_encode($criteria),$id]);audit('edit_assessment',(string)$id);flash('Assessment rubric updated.');go('?page=content&id='.(int)$_POST['lesson_id']);
  }
  fail('Unknown action.',400);
 }
