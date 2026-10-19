@@ -5572,3 +5572,31 @@ html.dark .hello-txt small{background:rgba(74,169,91,.22);color:#b9f0cb;border-c
 @media(max-width:740px){.fs-say{padding:8px 12px 8px 8px;gap:10px}.fs-say img{width:52px;height:66px}.fs-say span{font-size:.9rem}}
 html.dark .fs-say{background:color-mix(in srgb,var(--fs) 16%,#14261b);border-color:color-mix(in srgb,var(--fs) 40%,#14261b)}
 html.dark .fs-say b{color:color-mix(in srgb,var(--fs) 55%,#fff)}html.dark .fs-say span{color:#dfece4}
+/* v168: every friend looks like George: the whole character, no box, with a speech bubble.
+   On a page the friend stands at the bottom right (tap for the message again); in a card the friend stands beside a bubble. */
+.fs-say{background:none!important;border:0!important;padding:0!important;max-width:none}
+.fs-say img{width:auto;height:150px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18))}
+.fs-bub{position:relative;background:#fff;border:2.5px solid var(--fs);border-radius:18px;padding:9px 14px;box-shadow:0 6px 14px rgba(0,0,0,.12);font-family:var(--font-fun)}
+.fs-bub b{display:block;font-size:.7rem;letter-spacing:.05em;color:var(--fs)}
+.fs-bub span{display:block;font-weight:700;font-size:.88rem;line-height:1.4;color:#17331f}
+.fs-inline{display:flex;align-items:flex-end;gap:6px;margin:6px 0 14px}
+.fs-inline .fs-bub{margin-bottom:46px;max-width:520px;border-radius:18px 18px 18px 4px}
+.fs-float{position:fixed;right:14px;bottom:0;z-index:40;margin:0;display:block;cursor:pointer;animation:fs-up .7s cubic-bezier(.2,1.4,.4,1) both}
+.fs-float img{height:170px;transform-origin:50% 100%;animation:fs-sway 3.4s 1s ease-in-out infinite}
+.fs-float .fs-bub{position:absolute;right:calc(100% - 18px);bottom:120px;width:max-content;max-width:240px;border-radius:18px 18px 4px 18px;opacity:0;transform:scale(.4);transform-origin:bottom right;transition:.35s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.fs-float.on .fs-bub{opacity:1;transform:none}
+@keyframes fs-up{from{transform:translateY(60px);opacity:0}}
+@keyframes fs-sway{50%{transform:rotate(-2deg)}}
+@media(max-width:740px){.fs-float{bottom:84px;right:6px}.fs-float img{height:120px}.fs-float .fs-bub{bottom:96px;max-width:170px}.fs-bub span{font-size:.8rem}.fs-inline img{height:110px}.fs-inline .fs-bub{margin-bottom:30px}}
+@media(prefers-reduced-motion:reduce){.fs-float,.fs-float img{animation:none}}
+html.dark .fs-bub{background:#14261b}html.dark .fs-bub span{color:#e8f3ec}
+.ac-panel .fs-say{background:none}
+/* Claude's tip and Roxanne on Today's goal: also without a box */
+.cl-tip{background:none;border:0;padding:0;align-items:flex-end;gap:6px}
+.cl-tip img{width:auto;height:130px;max-height:none;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18))}
+.cl-tip>div{position:relative;margin-bottom:40px;background:#fff;border:2.5px solid #1d2f5c;border-radius:18px 18px 18px 4px;padding:9px 14px;box-shadow:0 6px 14px rgba(0,0,0,.12)}
+.rx-goal{align-items:flex-end;gap:6px}.rx-goal img{width:auto;height:100px}
+.rx-goal span{background:#fff;border:2.5px solid #e58a00;border-radius:18px 18px 18px 4px;padding:8px 13px;margin-bottom:26px;box-shadow:0 6px 14px rgba(0,0,0,.1)}
+.rx-timer{background:none;border:0;padding:0;align-items:flex-end}.rx-timer img{width:auto;height:110px}
+.rx-timer span{background:#fff;border:2.5px solid #e58a00;border-radius:18px 18px 18px 4px;padding:9px 14px;margin-bottom:30px;box-shadow:0 6px 14px rgba(0,0,0,.1)}
+html.dark .cl-tip,html.dark .rx-timer{background:none}html.dark .cl-tip>div,html.dark .rx-goal span,html.dark .rx-timer span{background:#14261b}

@@ -92,3 +92,10 @@
  const check=()=>{if(Date.now()-s.from>=MIN)show();};
  setTimeout(check,4000);setInterval(check,60000);
 })();
+
+/* A friend standing on a page (v168): says the message when the page opens, then again when tapped. */
+(function(){
+ const f=document.querySelector('[data-fs]');if(!f)return;let t=0;
+ const say=()=>{f.classList.add('on');clearTimeout(t);t=setTimeout(()=>f.classList.remove('on'),7000);};
+ setTimeout(say,900);f.addEventListener('click',say);
+})();
