@@ -128,6 +128,12 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   `george_met_<id>`); app.js opens it after the welcome panels (`window.buligFriendsStart`) and the tour offer waits for it.
   Each friend speaks with their own voice (female for girls, male for boys, own pitch and speed). Claude the Protector:
   `claude_tip()` on every Home page, `claude_pop()` worried/sad in the sign-in popups.
+  Roxanne the Timekeeper (v164, pictures `roxanne-*`): `roxanne_timer()` beside the Level 4 recorder (l1.js `rxSay()`),
+  `roxanne_goal()` on Today's goal, and a break note after 30 minutes of learning (friends.js, sessionStorage
+  `bulig-rest-<id>`). `friends_tour_fix()` gives pupils friends instead of their boy/girl picture (meta `char`, `hi`,
+  `pals`: dl, dlDone, save, bye, remind, rest); the boy/girl picture stays on the reading ladder and the lesson map.
+- **Notifications page** (`app/notify.php`, v164): All / Unread tabs, actions `notif_mark` (`to` read|unread),
+  `notif_delete`, `notif_delete_read` and `notif_read_all`, only on the person's own rows; Notifications is in every menu.
 - **No Lesson studio** (v161): the administrator cannot change module content. The pages `content`, `edit_activity`, `media`
   and `issues` and the actions `save_lesson`, `save_activity`, `save_assessment`, `upload_media`, `acknowledge` and
   `admin_toggle_activity` were removed; old links go to Admin Home. Picture check (System health › `visual_audit`) stays, read-only.
