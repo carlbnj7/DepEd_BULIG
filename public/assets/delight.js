@@ -160,3 +160,31 @@
  }
  ins.forEach(i=>i.addEventListener('change',()=>open(i)));
 })();
+
+/* v170: leaving an activity in the middle. Once the pupil has started (typed, tapped an answer, recorded), the close (X)
+   button, the menu, the bottom tabs and the top bar ask first: Bruno the Helper says "Keep going" or "Leave".
+   Links inside the activity (Next, Try again) are not stopped. */
+(function(){
+ const main=document.querySelector('body.activity-page .activity-main');if(!main)return;let started=false,ok=false;
+ const mark=e=>{if(e.target.closest('form,[data-l1],[data-rec],.l2-card,.l1-card,button,label,input,textarea,select'))started=true;};
+ main.addEventListener('input',()=>{started=true;},true);main.addEventListener('change',()=>{started=true;},true);main.addEventListener('pointerdown',mark,true);
+ document.addEventListener('submit',()=>{started=false;},true);
+ const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+ function ask(go){
+  const ov=el('div','leave-ov'),box=el('div','leave-box');box.setAttribute('role','alertdialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-labelledby','leave-h');
+  const img=el('img','leave-pal');img.src='assets/images/characters/bruno-thumbs.webp?v=1';img.alt='';img.width=110;img.height=150;
+  const h=el('h2',null,'Leave this activity?');h.id='leave-h';const p=el('p',null,'You have not finished it yet. Stay a little longer, you can do it!');
+  const who=el('small','leave-who','Bruno the Helper');
+  const stay=el('button','btn primary','Keep going');stay.type='button';const bye=el('button','btn secondary','Leave');bye.type='button';
+  const acts=el('div','leave-acts');acts.append(stay,bye);const tx=el('div','leave-tx');tx.append(who,h,p,acts);box.append(img,tx);ov.append(box);
+  const close=()=>{ov.remove();document.removeEventListener('keydown',key);};const key=e=>{if(e.key==='Escape')close();};
+  stay.onclick=close;bye.onclick=()=>{ok=true;close();go();};ov.addEventListener('click',e=>{if(e.target===ov)close();});
+  document.body.append(ov);document.addEventListener('keydown',key);requestAnimationFrame(()=>ov.classList.add('on'));stay.focus();
+ }
+ document.addEventListener('click',e=>{
+  if(!started||ok||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey)return;
+  const a=e.target.closest('a[href]');if(!a||main.contains(a)||a.target==='_blank'||a.hasAttribute('download')||a.hasAttribute('data-no-leave-check'))return;
+  const h=a.getAttribute('href');if(!h||h.charAt(0)==='#'||/^(javascript|mailto|tel):/i.test(h))return;
+  e.preventDefault();e.stopImmediatePropagation();ask(()=>{location.href=a.href;});
+ },true);
+})();

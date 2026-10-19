@@ -37,3 +37,24 @@
  var less=window.matchMedia&&matchMedia('(prefers-reduced-transparency: reduce)').matches;
  if(g==='off'||(g!=='on'&&(slow||less)))d.classList.add('lg-lite');
 })();
+
+/* v170: dark mode safety net. Dark mode makes text light; a box that keeps a white or cream background (a popup, a
+   note, a chip) would then hide its words. After the page draws, and whenever something new appears, light words on a
+   light box get dark ink (class dk-ink). Only plain background colours are checked, never pictures or gradients. */
+(function(){
+ var d=document.documentElement;if(!window.MutationObserver||!window.getComputedStyle)return;
+ function rgb(s){var m=/rgba?\(([^)]+)\)/.exec(s||'');if(!m)return null;var v=m[1].split(/[ ,\/]+/).filter(Boolean).map(Number);return {r:v[0],g:v[1],b:v[2],a:v.length>3?v[3]:1};}
+ function lum(c){function f(x){x/=255;return x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4);}return .2126*f(c.r)+.7152*f(c.g)+.0722*f(c.b);}
+ function boxBg(el){for(var e=el;e&&e!==document.body;e=e.parentElement){var cs=getComputedStyle(e);if(cs.backgroundImage&&cs.backgroundImage!=='none')return null;var c=rgb(cs.backgroundColor);if(c&&c.a>=.85)return c;if(c&&c.a>.15)return null;}return null;}
+ function scan(root){
+  if(!d.classList.contains('dark')||!document.body||document.body.classList.contains('demo-page'))return;
+  var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n,seen=new Set(),k=0;
+  while((n=w.nextNode())&&k<1500){k++;var el=n.parentElement;if(!el||seen.has(el)||!/\S/.test(n.nodeValue))continue;seen.add(el);
+   if(el.closest('svg,.dk-ink,.demo-page'))continue;var fg=rgb(getComputedStyle(el).color);if(!fg||lum(fg)<.55)continue;
+   var bg=boxBg(el);if(bg&&lum(bg)>.7)el.classList.add('dk-ink');}
+ }
+ var q=[],t=0;function later(){if(t)return;t=setTimeout(function(){t=0;var l=q.splice(0);for(var i=0;i<l.length;i++)if(l[i].isConnected)scan(l[i]);},120);}
+ function go(){scan(document.body);new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var m=ms[i];if(m.type==='childList'){for(var j=0;j<m.addedNodes.length;j++){var a=m.addedNodes[j];if(a.nodeType===1){q.push(a);}}}else if(m.target.nodeType===1&&m.target!==document.body&&!(m.attributeName==='class'&&m.target.classList.contains('dk-ink')))q.push(m.target);}if(q.length)later();}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden','open','class']});}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
+ new MutationObserver(function(){if(d.classList.contains('dark')&&document.body)scan(document.body);}).observe(d,{attributes:true,attributeFilter:['class']});
+})();
