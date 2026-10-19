@@ -5555,3 +5555,9 @@ html.dark .rx-rest{background:#14261b;border-color:#5c4320}html.dark .rx-rest b{
 .hello-txt small{background:#e2f1dc;color:#075919;border:1px solid rgba(7,89,25,.18);opacity:1}
 .hello-admin .hello-txt small{background:#e3eafb;color:#1f3f8a;border-color:rgba(31,63,138,.2)}
 html.dark .hello-txt small{background:rgba(74,169,91,.22);color:#b9f0cb;border-color:rgba(155,224,180,.3)}
+/* v165: the friends take turns on the sign-in page */
+.lfx-kids[data-lfx-pairs] .lfx-kid{transition:transform .35s ease-in,opacity .35s ease-in}
+.lfx-kids.lfx-swap .lfx-kid{transform:translateY(40px) scale(.85);opacity:0}
+.lfx-kids.lfx-in .lfx-kid{animation:lfx-peek .6s cubic-bezier(.2,1.4,.4,1) both}
+.lfx-kids.lfx-in .lfx-k2{animation-delay:.08s}
+.lfx-kids.lfx-swap @media(prefers-reduced-motion:reduce){.lfx-kids.lfx-swap .lfx-kid,.lfx-kids.lfx-in .lfx-kid{transform:none;animation:none}}

@@ -216,6 +216,12 @@ def run_pages(acc):
     page_ok(anon, '?page=credits', 'Credits page opens')
     status, url, _ = anon.req('?page=dashboard')
     check('Signed-out visitor is sent to the sign-in page', 'page=login' in url or status in (302, 401, 403), url)
+    _, _, text = anon.req('?page=login')
+    m = re.search(r'data-lfx-pairs="([^"]+)"', text)
+    pairs = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')) if m else []
+    pics = ' '.join(p['a'] + ' ' + p['b'] for p in pairs)
+    check('Sign-in page: all 10 friends take turns, two at a time, with no name tags',
+          len(pairs) == 5 and all(k in pics for k in ('george', 'toby', 'max', 'dracs', 'bruno', 'mia', 'zion', 'arah', 'roxanne', 'claude')) and 'lfx-who' not in text, pics[:160])
     _, _, text = anon.req('bulig-check.php')
     bad = len(re.findall(r'class="bad"', text))
     check('bulig-check.php finds no missing or changed files and no missing tables', bad == 0 and 'BULIG' in text, f'{bad} problems listed')

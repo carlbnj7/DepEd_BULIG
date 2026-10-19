@@ -132,6 +132,8 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   `roxanne_goal()` on Today's goal, and a break note after 30 minutes of learning (friends.js, sessionStorage
   `bulig-rest-<id>`). `friends_tour_fix()` gives pupils friends instead of their boy/girl picture (meta `char`, `hi`,
   `pals`: dl, dlDone, save, bye, remind, rest); the boy/girl picture stays on the reading ladder and the lesson map.
+- **Sign-in page friends** (v165): `login_friend_pairs()` (friends.php) gives the 5 pairs in `data-lfx-pairs`; login.js
+  swaps the two pictures every 4.2 seconds (classes `lfx-swap`, `lfx-in`). The teacher sign-in keeps the teacher characters.
 - **Notifications page** (`app/notify.php`, v164): All / Unread tabs, actions `notif_mark` (`to` read|unread),
   `notif_delete`, `notif_delete_read` and `notif_read_all`, only on the person's own rows; Notifications is in every menu.
 - **No Lesson studio** (v161): the administrator cannot change module content. The pages `content`, `edit_activity`, `media`

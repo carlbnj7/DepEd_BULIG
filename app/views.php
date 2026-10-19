@@ -90,7 +90,7 @@ function login_fx(string $role):string{
   .'<svg class="lfx-bird lfx-b1" viewBox="0 0 26 14">'.$bird.'</svg><svg class="lfx-bird lfx-b2" viewBox="0 0 26 14">'.$bird.'</svg>'
   .'<span class="lfx-letters" data-lfx-letters></span>'
   .'<svg class="lfx-hills" viewBox="0 0 400 80" preserveAspectRatio="none"><path d="M0 50q100-40 200-10t200-10v50H0z"/><path d="M0 64q120-24 220-4t180-6v26H0z"/></svg>'
-  .'<span class="lfx-kids"><img class="lfx-kid lfx-k1" src="'.$a.'" alt=""><img class="lfx-kid lfx-k2" src="'.$b.'" alt=""></span></div>';
+  .'<span class="lfx-kids"'.($role==='teacher'?'':' data-lfx-pairs="'.e(json_encode(login_friend_pairs())).'"').'><img class="lfx-kid lfx-k1" src="'.$a.'" alt=""><img class="lfx-kid lfx-k2" src="'.$b.'" alt="">'.'</span></div>';
 }
 function pupil_dashboard(array $u):void{
  echo pf_defs();pupil_welcome($u);schedule_open_check_pupil((int)$u['id']);echo schedule_wait_card($u).month_recap_card($u).pupil_celebrations($u).class_done_note((int)$u['id']);

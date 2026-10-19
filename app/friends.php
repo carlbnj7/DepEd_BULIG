@@ -34,6 +34,11 @@ function friends_tour_fix(?array $cu,array $m):array{
  $m['pals']=['dl'=>friend_img('toby','thumbs'),'dlDone'=>friend_img('toby','cheer'),'save'=>friend_img('claude','shield'),'bye'=>friend_img('claude','hello'),'remind'=>friend_img('roxanne','time'),'rest'=>friend_img('roxanne','time')];
  return $m;
 }
+/** The sign-in page: the friends take turns, two at a time (assets/login.js). */
+function login_friend_pairs():array{
+ $p=[['toby','cheer','george','hello'],['max','hello','dracs','hello'],['bruno','thumbs','mia','hello'],['zion','cheer','arah','hello'],['roxanne','hello','claude','thumbs']];
+ return array_map(fn($x)=>['a'=>friend_img($x[0],$x[1]),'b'=>friend_img($x[2],$x[3])],$p);
+}
 /** Roxanne on Today's goal: how the day is going. */
 function roxanne_goal(int $n,int $goal):string{
  $done=$n>=$goal;$say=$done?'Tick, tock, goal done! See you tomorrow.':($n?'Tick, tock! Only '.($goal-$n).' more today.':'Tick, tock! A little reading every day.');
