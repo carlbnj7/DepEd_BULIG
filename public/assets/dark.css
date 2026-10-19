@@ -121,3 +121,6 @@ html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-panel,.rt-ov .rt-card,.crop
  box-shadow:inset 1px 1.5px 0 rgba(255,255,255,.22),inset 0 -14px 22px -18px rgba(255,255,255,.14),0 30px 70px -22px rgba(0,0,0,.75)!important}
 html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-stat,.hp-opt,.crop-look,.crop-stage){background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.14)!important}
 html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-overlay,.rt-ov,.crop-ov,.leave-ov,.hp-sheet,.np-ov,.fr-layer,.cd-ov,.lgn-pop-wrap){background:rgba(0,0,0,.42)!important}
+/* v170: the phone top bar buttons (bell, light/dark, sign out) are yellow like the ? button, in light and dark mode */
+html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m),html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m).lg-g{background:var(--lg-gold,linear-gradient(#ffd84d,#f2b10c))!important;color:#0e3b28!important;border-color:rgba(255,255,255,.75)!important;box-shadow:inset 1px 1.5px 0 rgba(255,255,255,.8),0 4px 12px rgba(150,100,0,.35)!important}
+html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m) :is(svg,.icon){color:#0e3b28!important;stroke:currentColor}
