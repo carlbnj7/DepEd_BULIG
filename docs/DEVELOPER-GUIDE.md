@@ -97,9 +97,37 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   Oral Reading Score, Reading Level and Reading Speed in `rubric_scores` (`l4`, `auto` = 1) and `score` / 100. Under a
   third of the passage heard = no automatic score (the teacher scores from the recording). The teacher's table keeps
   BULIG's marks when numbers are changed. `php tests/probe.php l4` checks every passage.
+- **Section data report** (`app/section_report.php`, Print centre card `#pc-sd`, `?page=section_report&section=&level=&p[]=&month=`):
+  one section in one level on A4 pages with the report card band (`rc_logo`, `rc_tribal`). Pages: `sum`, `pp`, `irl`
+  (Level 4 only), `rt` (Level 4 miscues and passages; other levels the answer-key questions most pupils missed),
+  `help`, `act` (learning_days, logins and `offline_answer` from audit_log). Bar widths use `w0`–`w100` classes
+  (no inline styles: the CSP blocks them).
+- **Names in parts** (`app/names.php`, script `public/assets/names.js`, update `030_name_parts.sql`, table `user_names`):
+  Add one pupil / Add one teacher ask for First, Middle, Last name and an Extension (`NAME_EXTS`). `users.name` keeps the
+  shown name from `name_compose()` ("Juan S. Dela Cruz Jr."); the parts go in `user_names` (`name_parts_save()`, skipped
+  when the table is missing). Editing a name as one line (Edit account, admin rename) removes the parts (`name_parts_forget()`).
+  All-capital or all-small names are capitalised (`import_name_case()`).
+- **A whole class** (`import_card()` in `app/pupil_import.php`): two tabs. "Type the list" (`import_typed_grid()`, action
+  `import_typed`, fields `t[last|first|middle|ext|sex|lrn][row]`) runs the same `import_check()` as a file; any row to fix
+  sends the list back with the notes and saves nothing, otherwise `import_create()` makes the accounts. "Upload a file"
+  (`how=file`) is the CSV/Excel import; the templates for pupils and teachers have an Extension column.
+- **Sections** (`app/sections.php`): the Sections page (Grade first, then the name, "Shows as …", one card per section with
+  Add pupils `?page=accounts&section=`, View pupils, Report cards, Rename and Remove; Remove only when the section has no
+  pupils, action `delete_section`). `section_select()` is the Section list of Add pupils with "+ Add a new section…"
+  (`section_id=new`, `new_grade`, `new_section`); `section_from_post()` turns it into a section. A teacher cannot add the
+  same section twice; another teacher's section with the same grade and name only shows a warning (`section_known()`).
+  Type the list: `sec_mode` one (one Section for all) or many (`t[sec][row]`), and `t[level][row]` a starting level on each
+  row ("Starting level for everyone" fills the rows not changed by hand).
+- **No Lesson studio** (v161): the administrator cannot change module content. The pages `content`, `edit_activity`, `media`
+  and `issues` and the actions `save_lesson`, `save_activity`, `save_assessment`, `upload_media`, `acknowledge` and
+  `admin_toggle_activity` were removed; old links go to Admin Home. Picture check (System health › `visual_audit`) stays, read-only.
+- **Easier on phones** (v161): the ? of the tours docks in the top bar on phones (`dock()` in `tour.js`: beside the hand in a lesson,
+  beside the bell or the menu button elsewhere). George sits in the pupil's greeting card on phones. Teacher Home shows a short
+  "My pupils" list (`.tf-list`); Class at a glance moved to the end of Class results (`class_glance()`). The tour offer and
+  George's hello wait while the "menu has a new order" note is showing.
 - **Redrawn pictures** keep their file names and are saved as WebP (quality 82, longest side at most 1200 px).
   Browsers keep pictures for up to 7 days, so `public/sw.js` fetches each redrawn picture fresh once (the
-  `level(2[ab]|[4-7])` rule, cache `bulig-fresh-2`). Add a level to that rule when its pictures are redrawn.
+  `level(2[ab]|[3-7])` rule, cache `bulig-fresh-3`). Add a level to that rule when its pictures are redrawn. Change the cache name (bulig-fresh-N) whenever more pictures are redrawn, so devices fetch them again.
 - **Account IDs** (`app/account_ids.php`): make every new ID with `new_account_id('pupil'|'teacher'|'admin')`
   inside the transaction that creates the account (Pupil PCES260001, Teacher PCEST0001, Admin A260001; numbers per
   school code in `id_sequences`). IDs never change after they are made. Old IDs live in `account_id_history` and

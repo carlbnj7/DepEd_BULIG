@@ -1,5 +1,5 @@
 <?php
-/** Administrator workspace: Overview, Teachers, Reports, Lesson studio, Activity log, System health, Settings. */
+/** Administrator workspace: Overview, Teachers, Reports, Activity log, System health, Settings. */
 
 /* ---------------------------------------------------------------- small helpers */
 function admin_setting(string $key,string $default=''):string{
@@ -141,31 +141,6 @@ function admin_report_csv():never{
  foreach($rows as $r)fputcsv($h,[$r['section'],$r['teacher'],$r['pupils'],$r['activities'],$r['avg']??'',$r['pre']??'',$r['post']??'',$r['lessons'],$r['inactive']],',','"','\\');exit;
 }
 
-/* ---------------------------------------------------------------- Lesson studio */
-function admin_studio_view():void{
- $levels=rows('SELECT id,title,published FROM bulig_levels ORDER BY id');$lid=(int)($_GET['id']??0);$sel=$lid?one('SELECT l.*,m.level_id,m.grade_level mg FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]):null;
- $level=(int)($_GET['level']??($sel['level_id']??1));$per=per_grade_level($level);$grade=$per?(int)($_GET['grade']??($sel['mg']??1)):0;if($per&&($grade<1||$grade>6))$grade=1;
- $lessons=rows('SELECT l.*,m.grade_level mg FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=?'.($per?' AND m.grade_level=?':'').' ORDER BY l.position',$per?[$level,$grade]:[$level]);
- if(!$sel||(int)$sel['level_id']!==$level||($per&&(int)$sel['mg']!==$grade))$sel=$lessons?$lessons[0]+['level_id'=>$level]:null;
- admin_heading('LESSONS','Lesson studio','Choose a level, grade and lesson. Show or hide an activity, or fix its text. The official module page stays one click away. Content notes and pictures are tabs here.');echo studio_tabs('content');
- echo '<nav class="ws-levels">';foreach($levels as $l){$id=(int)$l['id'];$short=[1=>'Oral Language',2=>'Sounds in Words',3=>'Sounds in Words',4=>'Word Recognition',5=>'Fluency',6=>'Listening & Vocabulary',7=>'Comprehension',8=>'Love for Reading'][$id]??$l['title'];echo '<a class="'.($id===$level?'on':'').'" href="?page=content&amp;level='.$id.'" title="'.e($l['title']).'"><b>'.e(level_label($id)).'</b>'.e($short).'</a>';}echo '</nav>';
- echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="content"><input type="hidden" name="level" value="'.$level.'">';
- if($per){echo '<select name="grade" data-autosubmit>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';echo '</select>';}
- echo '<select name="id" data-autosubmit>';foreach($lessons as $l)echo '<option value="'.$l['id'].'" '.($sel&&(int)$sel['id']===(int)$l['id']?'selected':'').'>'.e(lesson_display_label($level,(int)$l['position']).($l['subtitle']?' · '.$l['subtitle']:'')).'</option>';
- echo '</select><button class="btn secondary">Open</button><span class="ws-sp muted">'.count($lessons).' lessons in '.e(module_label($level,$per?$grade:null)).'</span></form>';
- if(!$sel){echo '<section class="card"><p class="muted">No lessons are installed for this level yet.</p></section>';return;}
- $hasWork=(bool)val('SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE a.lesson_id=?',[$sel['id']]);
- echo '<section class="card"><div class="ws-hd"><h2>'.e(lesson_display_label($level,(int)$sel['position']).($sel['subtitle']?' · '.$sel['subtitle']:'')).'</h2>'.($sel['source_pages']&&($pg=json_decode((string)$sel['source_pages'],true))?source_link((int)$pg[0],(int)$sel['id']):'').'</div>';
- if($hasWork)echo '<p class="ws-note muted">'.icon('lock').' Pupils already did this lesson, so activities can’t be hidden or shown (it would change their progress). Text can still be fixed.</p>';
- echo '<div class="tablewrap"><table class="ws-table"><thead><tr><th>#</th><th>Activity</th><th>Type</th><th>Shown to pupils</th><th>Actions</th></tr></thead><tbody>';
- foreach(rows("SELECT * FROM activities WHERE lesson_id=? ORDER BY FIELD(phase,'pre','learn','post'),position",[$sel['id']]) as $a){
-  echo '<tr><td>'.(int)$a['position'].'</td><td><strong>'.e($a['title']).'</strong></td><td>'.e(ucfirst($a['type'])).'</td><td><span class="ws-pill '.($a['published']?'ok':'off').'">'.($a['published']?'Shown':'Hidden').'</span></td><td><div class="ws-acts"><a href="?page=edit_activity&amp;id='.$a['id'].'">'.icon('edit').'Fix text</a>';
-  if(!$hasWork)echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_toggle_activity"><input type="hidden" name="id" value="'.$a['id'].'"><button type="submit">'.icon($a['published']?'eye':'eye').($a['published']?'Hide':'Show').'</button></form>';
-  echo '</div></td></tr>';}
- echo '</tbody></table></div></section>';
- foreach(rows('SELECT * FROM assessments WHERE lesson_id=?',[$sel['id']]) as $a){echo '<details class="card"><summary>'.e($a['title']).' · Assessment rubric</summary><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="save_assessment"><input type="hidden" name="id" value="'.$a['id'].'"><input type="hidden" name="lesson_id" value="'.$sel['id'].'"><label>Original rubric / assessment<textarea name="rubric" rows="10">'.e($a['rubric']).'</textarea></label><label>Numeric rubric criteria (one per line; leave empty if none is supplied)<textarea name="criteria">'.e(implode("\n",json_decode($a['rubric_criteria']??'[]',true)?:[])).'</textarea></label><button class="btn primary">Save rubric</button></form></details>';}
-}
-
 /* ---------------------------------------------------------------- Activity log */
 function admin_log_labels():array{
  return ['login'=>['ok','Signed in'],'saved_login'=>['ok','Saved sign-in on a device'],'login_failed'=>['bad','Wrong password'],'login_locked'=>['bad','Sign-in locked'],'admin_pin_failed'=>['bad','Wrong admin PIN'],'admin_pin_created'=>['warn','Created admin PIN'],'admin_pin_changed'=>['warn','Changed admin PIN'],
@@ -243,7 +218,7 @@ function admin_health_view():void{
  echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>Checks</h2><span class="ws-pill '.($ok===count($checks)?'ok':'warn').'">'.$ok.' of '.count($checks).' OK</span></div>';
  foreach($checks as [$label,$good,$detail])echo '<div class="ws-chk '.($good?'y':'n').'">'.icon($good?'check':'alert').'<span>'.e($label).'</span><span class="ws-sp">'.e($detail).'</span></div>';
  echo '</section><div class="ws-stack"><section class="card" id="backup"><div class="ws-hd"><h2>'.icon('db').' Backup</h2><small class="muted">'.e(admin_backup_note()).'</small></div><p class="muted">Download pupils, teachers, sections and results. Keep a copy on a USB drive or Google Drive every week.</p><div class="ws-btns"><a class="btn primary" href="?page=backup_csv">'.icon('download').'Download backup (Excel)</a><a class="btn secondary" href="?page=backup_sql">'.icon('db').'Full database (SQL)</a></div></section>';
- echo '<section class="card"><div class="ws-hd"><h2>'.icon('image').' Picture check</h2></div><p class="muted">Finds activities whose pictures are missing on the server.</p><div class="ws-btns"><a class="btn secondary" href="?page=visual_audit">Run picture check</a><a class="btn quiet" href="?page=media">Level 1 module pictures</a><a class="btn quiet" href="?page=issues">Level 1 content notes</a></div></section></div></div>';
+ echo '<section class="card"><div class="ws-hd"><h2>'.icon('image').' Picture check</h2></div><p class="muted">Finds activities whose pictures are missing on the server.</p><div class="ws-btns"><a class="btn secondary" href="?page=visual_audit">Run picture check</a></div></section></div></div>';
 }
 function admin_backup_csv():never{
  $u=require_role('admin');@set_time_limit(300);
@@ -311,7 +286,7 @@ function admin_actions(string $action):void{
  if($action==='admin_reset_password'){$t=admin_teacher((int)($_POST['id']??0));$p=admin_new_password();q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($p,PASSWORD_DEFAULT),$t['id']]);saved_login_clear((int)$t['id']);try{q("DELETE FROM remember_tokens WHERE user_id=?",[$t['id']]);}catch(Throwable $e){}
   audit('admin_reset_password',(string)$t['id']);flash('New password for '.$t['name'].' ('.$t['public_id'].'): '.$p.' — give it to the teacher privately. They can change it in My profile.');go('?page=accounts');}
  if($action==='admin_toggle_teacher'){$t=admin_teacher((int)($_POST['id']??0));q('UPDATE users SET active=1-active WHERE id=?',[$t['id']]);audit('admin_toggle_teacher',(string)$t['id']);flash($t['name'].' is now '.($t['active']?'turned off. They cannot sign in.':'turned on.'));go('?page=accounts');}
- if($action==='admin_rename_teacher'){$t=admin_teacher((int)($_POST['id']??0));$name=trim((string)($_POST['name']??''));if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Enter a name of 2–150 characters.');q('UPDATE users SET name=? WHERE id=?',[$name,$t['id']]);tf_set_sex((int)$t['id'],(string)($_POST['teacher_sex']??''));audit('admin_rename_teacher',(string)$t['id']);flash('Teacher details saved.');go('?page=accounts');}
+ if($action==='admin_rename_teacher'){$t=admin_teacher((int)($_POST['id']??0));$name=trim((string)($_POST['name']??''));if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Enter a name of 2–150 characters.');if($name!==$t['name'])name_parts_forget((int)$t['id']);q('UPDATE users SET name=? WHERE id=?',[$name,$t['id']]);tf_set_sex((int)$t['id'],(string)($_POST['teacher_sex']??''));audit('admin_rename_teacher',(string)$t['id']);flash('Teacher details saved.');go('?page=accounts');}
  if($action==='admin_move_pupils'){
   $to=admin_teacher((int)($_POST['to']??0));if(!$to['active'])fail('Choose an active teacher.');$from=(string)($_POST['from']??'');$moved=0;
   db()->beginTransaction();try{
@@ -323,9 +298,6 @@ function admin_actions(string $action):void{
    audit('admin_move_pupils',$label.' → '.$to['name']);db()->commit();
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   flash('Moved '.$label.' to '.$to['name'].'.');go('?page=accounts');}
- if($action==='admin_toggle_activity'){$a=one('SELECT * FROM activities WHERE id=?',[(int)($_POST['id']??0)]);if(!$a)fail('Activity not found.',404);
-  if(val('SELECT COUNT(*) FROM activity_completion c JOIN activities x ON x.id=c.activity_id WHERE x.lesson_id=?',[$a['lesson_id']]))fail('Pupils already did this lesson, so its activities can’t be hidden or shown.');
-  q('UPDATE activities SET published=1-published,revision=revision+1 WHERE id=?',[$a['id']]);audit('admin_toggle_activity',(string)$a['id']);flash('“'.$a['title'].'” is now '.($a['published']?'hidden from pupils.':'shown to pupils.'));go('?page=content&id='.$a['lesson_id']);}
  if($action==='admin_logo'||$action==='admin_logo_remove'){rc_logo_action($action);}
  if($action==='admin_school_info'){foreach(['school_name','school_id','school_district','school_head','school_year'] as $k)admin_set($k,mb_substr(trim((string)($_POST[$k]??'')),0,150));audit('school_info','saved');flash('School info saved.');go('?page=settings&tab=school');}
  if($action==='admin_announcement_add'){$title=trim((string)($_POST['title']??''));if($title===''||mb_strlen($title)>120)fail('Enter a title of up to 120 characters.');$until=(string)($_POST['until']??'');if($until!==''&&!preg_match('/^\d{4}-\d{2}-\d{2}$/',$until))$until='';
@@ -346,4 +318,4 @@ function admin_actions(string $action):void{
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   flash('School year '.$year.' started. '.$up.' pupils moved up a grade and '.$done.' Grade 6 pupils finished BULIG. Teachers can now make new sections.');go('?page=settings&tab=year');}
 }
-const ADMIN_ACTIONS=['admin_logo','admin_logo_remove','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_toggle_activity','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule'];
+const ADMIN_ACTIONS=['admin_logo','admin_logo_remove','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule'];

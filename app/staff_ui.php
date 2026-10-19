@@ -1,6 +1,6 @@
 <?php
 /* The menus and the "where is it?" pages for teachers, the administrator and pupils.
-   - Menus are grouped under yellow words (MY CLASS, TEACHING, PRINT; PEOPLE, LESSONS, REPORTS & PRINT, SYSTEM;
+   - Menus are grouped under yellow words (MY CLASS, TEACHING, PRINT; PEOPLE, REPORTS & PRINT, SYSTEM;
      LEARN, MY PROGRESS, ABOUT ME). Teachers and the administrator also get a "Find a page" box (assets/staff.js).
    - Teacher pages: Home (what needs you first, then quick tasks), Print centre (every printout), Add pupils
      (one pupil or a whole class), and "Where things are now".
@@ -13,13 +13,13 @@ function staff_nav_list(array $u):array{
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
    ['g','TEACHING'],['class_demo','book','Class Demo'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['profile','user','My profile']];}
- return [['dashboard','home','Home'],['g','PEOPLE'],['accounts','people','Teachers'],['add_teachers','useredit','Add teachers'],['checkup','shield','Account check'],['g','LESSONS'],['content','book','Lesson studio'],
+ return [['dashboard','home','Home'],['g','PEOPLE'],['accounts','people','Teachers'],['add_teachers','useredit','Add teachers'],['checkup','shield','Account check'],
   ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['activity_log','clock','Activity log'],['health','heart','System health'],['settings','settings','Settings'],['hr'],['profile','user','My profile']];
 }
 /** Which menu item a page belongs to. */
 function staff_nav_on(string $role,string $page):string{
- if($role==='teacher')return ['pupil'=>'manage','progress'=>'manage','cards'=>'print','certificates'=>'print','report'=>'print','report_card'=>'print','rcheck_pupil'=>'rcheck','rcheck_rules'=>'rcheck','rcheck_print'=>'rcheck','review'=>'qcheck','guide'=>'class_demo','moved'=>'dashboard','rate'=>'profile'][$page]??$page;
- if($role==='admin')return ['teacher_cards'=>'print','teacher_import'=>'add_teachers','issues'=>'content','media'=>'content','edit_activity'=>'content','guide'=>'content','visual_audit'=>'content','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
+ if($role==='teacher')return ['pupil'=>'manage','progress'=>'manage','cards'=>'print','certificates'=>'print','report'=>'print','report_card'=>'print','section_report'=>'print','rcheck_pupil'=>'rcheck','rcheck_rules'=>'rcheck','rcheck_print'=>'rcheck','review'=>'qcheck','guide'=>'class_demo','moved'=>'dashboard','rate'=>'profile'][$page]??$page;
+ if($role==='admin')return ['teacher_cards'=>'print','teacher_import'=>'add_teachers','guide'=>'dashboard','visual_audit'=>'health','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
  return $page;
 }
 function staff_nav_html(array $u,string $page):string{
@@ -49,7 +49,7 @@ function staff_find_list(string $role):array{
  return [
   ['Home','Things that need you, quick tasks','?page=dashboard','home'],['Teachers','Your teaching team','?page=accounts','people'],['Add a teacher','Add teachers › One teacher','?page=add_teachers','useredit'],['Add many teachers','Add teachers › Many teachers (Excel list)','?page=add_teachers&mode=many','excel'],
   ['Teacher Passes','Print & download › Teacher Passes','?page=teacher_cards','print'],['Reset a teacher’s password','Teachers › New starter password','?page=accounts','key'],['Move pupils to another teacher','Teachers › Move pupils','?page=accounts#move','move'],['Account check','Accounts to fix','?page=checkup','shield'],
-  ['App ratings','How pupils and teachers rate BULIG','?page=ratings','star'],['Lesson studio','Edit lessons and activities','?page=content','book'],['Content notes','Lesson studio › Content notes','?page=issues','flag'],['Pictures','Lesson studio › Pictures','?page=media','image'],['School reports','Progress by grade and section','?page=reports','chart'],
+  ['App ratings','How pupils and teachers rate BULIG','?page=ratings','star'],['School reports','Progress by grade and section','?page=reports','chart'],
   ['Print & download','Every print and download','?page=print','print'],['Download a backup','Print & download › Backup','?page=health#backup','download'],['Activity log','Who did what, and when','?page=activity_log','clock'],['System health','Checks and backup','?page=health','heart'],
   ['Settings','Security, school info, announcements, school year','?page=settings','settings'],['School logos','Settings › School info','?page=settings&tab=school','image'],['Post an announcement','Settings › Announcements','?page=settings&tab=announcements','mega'],['End of school year','Settings › School year','?page=settings&tab=year','cal'],
   ['Account IDs','Settings › Account IDs','?page=settings&tab=ids','key'],['Admin PIN','Settings › Security','?page=settings&tab=security','lock'],['My profile and password','Photo, character, dark mode, password','?page=profile','user'],['Where things are now','What moved in the new menu','?page=moved','info']];
@@ -88,22 +88,24 @@ function teacher_home(array $u):void{
   .hm_todo($need?'hot':'calm','alert',count($need),'Need a check-in',$need?implode(', ',$names).(count($need)>3?' and '.(count($need)-3).' more':'').' · no learning in 7 days':'Everyone learned in the last 7 days','See who','#tf-class')
   .hm_todo($rcTodo?'hot':'calm','ladder',$rcTodo+$rcWait,'Reading checks',$rcTodo?$rcTodo.' to look at'.($rcWait?' · '.$rcWait.' not finished yet':''):($rcWait?$rcWait.' pupils not finished yet':'New pupils find their level here'),'Open reading check','?page=rcheck')
   .hm_todo($help?'hot':'calm','hand',$help,'Asked for help',$help?'Pupils tapped “I need help” this week':'No one asked for help this week',$help?'See who':($helpWeek?'See this week':'How it works'),$helpWeek?'#tf-help':'?page=moved#help',true).'</div>';
- echo '<div class="hm-auto"><span class="hm-auto-ic">'.icon('check').'</span><div><b>BULIG checks every answer for you</b><small>'.($checked?number_format($checked).' '.($checked===1?'answer':'answers').' checked so far. ':'').'Pupils see their score and the right answers at once. Nothing waits for you. You can still change a score or write a note on any pupil’s page.</small></div><a href="?page=qcheck">Class results '.icon('arrow').'</a></div>';
+ if(strtotime((string)($u['created_at']??'now'))>=strtotime('-7 days'))echo '<div class="hm-auto"><span class="hm-auto-ic">'.icon('check').'</span><div><b>BULIG checks every answer for you</b><small>'.($checked?number_format($checked).' '.($checked===1?'answer':'answers').' checked so far. ':'').'Pupils see their score and the right answers at once. Nothing waits for you. You can still change a score or write a note on any pupil’s page.</small></div><a href="?page=qcheck">Class results '.icon('arrow').'</a></div>';
  if($helpWeek)echo help_teacher_card($u);
  if(function_exists('rate_due')&&rate_due($u))echo rate_teacher_form(true);/* the quarterly evaluation (v152) */
  month_recap_teacher($u);schedule_open_check_teacher($tid);
  echo '<p class="hm-sub">What do you want to do?</p><div class="hm-grid">'
   .hm_task('useredit','Add pupils','One pupil or a whole class list','?page=accounts').hm_task('print','Print sign-in tickets','Reading Pass with ID and QR','?page=cards',true)
   .hm_task('print','Print report cards','One pupil or a whole section','?page=print#pc-reportcards',true).hm_task('star','Print certificates','For pupils who finished a level','?page=print#pc-certs',true)
-  .hm_task('ladder','Change a starting level','For one pupil or many at once','?page=manage').hm_task('key','Reset a pupil’s password','Open the pupil, then Account','?page=manage')
-  .hm_task('book','Start Class Demo','Show a lesson on the big screen','?page=class_demo').hm_task('chart','See class progress','Every pupil and every lesson','?page=progress').'</div>';
+  .'</div>';   // the other tasks are in the menu (My pupils, Class Demo, Class results)
  echo '<p class="hm-sub" id="tf-class">My class</p>';section_filter($u,'dashboard',$sid,$grade);
  echo tf_stats($ids,$pending,(int)val('SELECT COUNT(*) FROM lessons WHERE published=1'));
- echo '<section class="card tdash-table tf-table"><div class="section-heading"><h2>Class overview</h2><a href="?page=manage">My pupils '.icon('arrow').'</a></div><div class="tablewrap"><table class="pupil-table"><thead><tr><th>Pupil</th><th>Section</th><th>Starting level</th><th>Completed</th><th>XP</th><th>Last learning day</th><th>Status</th></tr></thead><tbody>';
- foreach($pupils as $p){$s=$stats[(int)$p['id']];$inactive=!$s['last_activity_date']||$s['last_activity_date']<date('Y-m-d',strtotime('-7 days'));[$label,$tone]=!$p['active']?['Inactive account','off']:(!$p['level_id']?['Reading check','warn']:($inactive?['Needs a check-in','warn']:['Learning','ok']));
-  echo '<tr><td data-label="Pupil"><a class="pupil-cell" href="?page=pupil&amp;id='.$p['id'].'">'.avatar($p).'<span><strong>'.e($p['name']).'</strong><small>'.e($p['public_id']).'</small></span></a></td><td data-label="Section">'.e($p['section']?:'—').'</td><td data-label="Starting level">'.($p['level_id']?e($p['level_title']).tf_progress((int)$p['id'],(int)$p['level_id'],$tone==='warn'):'<a href="?page=rcheck_pupil&amp;id='.(int)$p['id'].'">Waiting for the reading check</a>').'</td><td data-label="Completed"><strong>'.$s['completed'].'</strong> <small class="inline">activities</small></td><td data-label="XP"><strong>'.$s['xp'].'</strong><small>'.$s['current_streak'].'-day streak · best '.$s['longest_streak'].'</small></td><td data-label="Last learning day">'.e($s['last_activity_date']??'Not yet').'</td><td data-label="Status"><span class="status status-'.$tone.'">'.$label.'</span></td></tr>';}
- if(!$pupils)echo '<tr class="empty-row"><td colspan="7">No pupils in this selection yet. Choose another section or add pupils.</td></tr>';echo '</tbody></table></div></section>';
- if($pupils){echo '<p class="hm-sub">Class at a glance</p>'.tf_chart($ids).'<div class="tf-grid">'.tf_tree($pupils,$stats,$badgeWeek).tf_feed($ids).'</div>';}
+ echo '<section class="card tf-table tf-list"><div class="section-heading"><h2>My pupils</h2><a href="?page=manage">All pupils '.icon('arrow').'</a></div>';
+ if(!$pupils)echo '<p class="muted">No pupils in this selection yet. Choose another section or add pupils.</p>';
+ else{echo '<div class="cl-list">';
+  foreach(array_slice($pupils,0,8) as $p){$s=$stats[(int)$p['id']];$inactive=!$s['last_activity_date']||$s['last_activity_date']<date('Y-m-d',strtotime('-7 days'));[$label,$tone]=!$p['active']?['Inactive','off']:(!$p['level_id']?['Reading check','warn']:($inactive?['Check in','warn']:['On track','ok']));
+   $last=$s['last_activity_date']?($s['last_activity_date']===date('Y-m-d')?'learned today':'last learned '.date('M j',strtotime($s['last_activity_date']))):'not started yet';
+   echo '<a class="cl-row" href="?page=pupil&amp;id='.(int)$p['id'].'">'.avatar($p).'<b>'.e($p['name']).'</b><small>'.e(($p['level_id']?level_label((int)$p['level_id']):'No level yet').' · '.($p['section']?:'—').' · '.$last).'</small><span class="status status-'.$tone.'">'.$label.'</span></a>';}
+  echo '</div>'.(count($pupils)>8?'<a class="cl-more" href="?page=manage">See all '.count($pupils).' pupils '.icon('arrow').'</a>':'');}
+ echo '<a class="cl-charts" href="?page=qcheck#glance">'.icon('chart').'<span>Class activity, reading tree and milestones are in <b>Class results</b></span>'.icon('arrow').'</a></section>';
 }
 
 /* ---------------- teacher: Print centre ---------------- */
@@ -123,7 +125,7 @@ function print_centre_view(array $u):void{
  $img=fn($n)=>is_file(__DIR__.'/../public/assets/images/print/'.$n.'.webp')?'assets/images/print/'.$n.'.webp':'icon:print';
  echo hm_head('PRINT CENTRE','Everything you can print','Choose what to print and for whom. Each one opens a preview first, with a green <b>Print or save as PDF</b> button.');
  if(!$pupils){echo '<section class="empty">'.icon('people').'<h2>No pupils yet.</h2><p>Add pupils first. Then their tickets, report cards and certificates are ready to print here.</p><a class="btn primary" href="?page=accounts">'.icon('useredit').'Add pupils</a></section>';return;}
- echo '<div class="pc-grid">';
+ echo '<div class="pc-grid">'.section_report_card($secs,$img);
  echo print_card('pc-tickets',$img('tickets'),'Sign-in tickets','Reading Pass for each pupil: name, Pupil ID, starter password and a QR code to sign in.',$f('cards',print_select('For','section',$secOpts).$btn('Print tickets')),'Also in My pupils: tick pupils, then <b>Print sign-in tickets</b>.');
  echo print_card('pc-reportcards',$img('reportcard'),'Report cards','Reading Progress Report Card with the reading ladder. One A4 page for each pupil.','<form method="get" class="pc-form" data-pc-rc><input type="hidden" name="page" value="report_card">'.print_select('For','who',$rcOpts).$btn('Print report cards').'</form>','Also on each pupil’s page.');
  echo print_card('pc-progress',$img('progress'),'Progress reports','One pupil’s lessons, scores and your notes. Good for a parents’ meeting.',$f('report',print_select('Pupil','id',$pupOpts).$btn('Print progress report')),'Also on each pupil’s page.');
@@ -143,12 +145,12 @@ function add_pupils_view(array $u):void{
  $np=(int)($_SESSION['new_pupil']??0);unset($_SESSION['new_pupil']);if($np&&val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$u['id'],$np]))echo new_pupil_overlay($np);
  $mode=($_GET['mode']??'')==='class'||isset($_GET['step'])||isset($_GET['import'])?'class':'one';$secs=teacher_sections((int)$u['id']);
  echo pupils_tabs('accounts',(int)val('SELECT COUNT(*) FROM teacher_pupils WHERE teacher_id=?',[$u['id']]));
- echo ap_choice($mode,['useredit','One pupil','Type the name and choose the section'],['excel','A whole class','Upload an Excel list · DepEd SF1 works'],'accounts');
+ echo ap_choice($mode,['useredit','One pupil','Type the name and choose the section'],['excel','A whole class','Type the list or upload Excel · DepEd SF1 works'],'accounts');
  if($mode==='class'){import_card($u);return;}
  echo '<section class="card"><h2>Add one pupil</h2>';
- if(!$secs)echo '<p class="ap-need">'.icon('alert').'<span>Add a section first (for example Grade 1 · Rizal). <a href="?page=sections">Add a section</a></span></p>';
- echo '<form class="formgrid" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account"><label>Full name<input name="name" required maxlength="150"></label><div class="default-password"><strong>Starter password</strong><p>Made for each pupil</p><small>BULIG makes an easy password like mango4721. You see it after saving, and it is printed on the pupil’s sign-in ticket. The pupil may change it in Settings.</small></div>';
- echo grade_fields(['level_id'=>rc_ready()?0:1],$secs).'<div class="formend"><small>A unique Pupil ID is made automatically. After saving, BULIG shows the pupil’s sign-in ticket, ready to print.</small><button class="btn primary" type="submit">'.icon('check').'Create account</button></div></form></section>';
+ if(!$secs)echo '<p class="ap-need">'.icon('info').'<span>No section yet. In Section below, choose “+ Add a new section…”, or open <a href="?page=sections">Sections</a>.</span></p>';
+ echo '<form class="formgrid" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account">'.name_fields().'<div class="default-password"><strong>Starter password</strong><p>Made for each pupil</p><small>BULIG makes an easy password like mango4721. You see it after saving, and it is printed on the pupil’s sign-in ticket. The pupil may change it in Settings.</small></div>';
+ echo grade_fields(['level_id'=>rc_ready()?0:1,'section_id'=>(int)($_GET['section']??0)],$secs).'<div class="formend"><small>A unique Pupil ID is made automatically. After saving, BULIG shows the pupil’s sign-in ticket, ready to print.</small><button class="btn primary" type="submit">'.icon('check').'Create account</button></div></form></section>'.names_script();
 }
 
 /* ---------------- administrator: Add teachers (one, or many) ---------------- */
@@ -158,7 +160,7 @@ function add_teachers_view(array $u):void{
  echo ap_choice($mode,['useredit','One teacher','Type the name of the teacher'],['excel','Many teachers','Upload an Excel list of the whole team'],'add_teachers');
  if($mode==='many'){ob_start();teacher_import_view();$h=(string)ob_get_clean();echo preg_replace('~^.*?(<section)~s','$1',$h,1);return;}
  $nt=(int)($_SESSION['new_teacher']??0);unset($_SESSION['new_teacher']);if($nt)echo new_teacher_overlay($nt);
- echo '<section class="card ap-one"><h2>Add one teacher</h2><form class="ws-formrow" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account"><input type="hidden" name="back" value="add_teachers"><label>Full name<input name="name" required maxlength="150"></label>'.(cards_ready()?'':'<label>Password (8–72 characters)<input name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password"></label>').'<label>Sex<select name="teacher_sex" required><option value="">Choose Male or Female</option><option value="female">Female</option><option value="male">Male</option></select></label><button class="btn primary">'.icon('check').'Create teacher account</button></form><p class="muted ap-note">'.icon('info').'After saving, BULIG shows the new Teacher Pass with the Teacher ID and starter password, ready to print.</p></section>';
+ echo '<section class="card ap-one"><h2>Add one teacher</h2><form class="ws-formrow" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account"><input type="hidden" name="back" value="add_teachers">'.name_fields().''.(cards_ready()?'':'<label>Password (8–72 characters)<input name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password"></label>').'<label>Sex<select name="teacher_sex" required><option value="">Choose Male or Female</option><option value="female">Female</option><option value="male">Male</option></select></label><button class="btn primary">'.icon('check').'Create teacher account</button></form><p class="muted ap-note">'.icon('info').'After saving, BULIG shows the new Teacher Pass with the Teacher ID and starter password, ready to print.</p></section>'.names_script();
 }
 
 /* ---------------- administrator: Home ---------------- */
@@ -173,7 +175,7 @@ function admin_home(array $u):void{
  admin_heading('ADMINISTRATOR HOME','What would you like to do today?','School year '.admin_school_year().' · Things that need you come first.','<a class="btn secondary" href="?page=print">'.icon('print').'Print &amp; download</a><a class="btn secondary" href="?page=settings&amp;tab=announcements">'.icon('mega').'Post announcement</a><a class="btn primary" href="?page=add_teachers">'.icon('useredit').'Add teachers</a>');
  echo function_exists('account_ids_admin_notice')?account_ids_admin_notice():'';
  $inactive=admin_inactive_pupils(7);$top=one("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN sections s ON s.id=ps.section_id WHERE u.role='pupil' AND u.active=1 AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?) GROUP BY s.id ORDER BY c DESC LIMIT 1",[date('Y-m-d',strtotime('-6 days'))]);
- $health=admin_health_checks();$bad=array_filter($health,fn($c)=>!$c[1]);$notes=(int)val('SELECT COUNT(*) FROM content_issues WHERE acknowledged_at IS NULL');
+ $health=admin_health_checks();$bad=array_filter($health,fn($c)=>!$c[1]);
  $failed=(int)val("SELECT COUNT(*) FROM audit_log WHERE action IN ('login_failed','admin_pin_failed') AND created_at>=?",[date('Y-m-d 00:00:00')]);
  echo '<p class="hm-sub">Needs you today</p><div class="hm-todo">'
   .hm_todo($bad?'hot':'calm','heart',count($bad),'System checks',admin_backup_note(),'Open System health','?page=health')
@@ -185,7 +187,7 @@ function admin_home(array $u):void{
   .hm_task('useredit','Add teachers','One teacher or a whole Excel list','?page=add_teachers').hm_task('print','Print Teacher Passes','Teacher ID, password and QR','?page=teacher_cards',true)
   .hm_task('key','Reset a teacher’s password','Teachers › New starter password','?page=accounts').hm_task('move','Move pupils to a teacher','When a class changes teacher','?page=accounts#move')
   .hm_task('download','Download a backup','Keep a copy of all records','?page=health#backup',true).hm_task('print','Print school report','For the principal or division','?page=reports',true)
-  .hm_task('mega','Post an announcement','All teachers see it','?page=settings&tab=announcements').hm_task('book','Edit a lesson','Lesson studio','?page=content').'</div>';
+  .hm_task('mega','Post an announcement','All teachers see it','?page=settings&tab=announcements').'</div>';
  echo '<p class="hm-sub">School at a glance</p>';
  echo admin_kpis([['people',number_format($pupils),'Pupils',$newPupils?'+'.$newPupils.' this month':'',false],['user',count($teachers),'Teachers',$idle?count($idle).' inactive 14+ days':'all active',(bool)$idle],['book',$sections,'Sections',$grades?'Grades '.implode(', ',array_column($grades,'g')):'none yet',false],['check',number_format($week),'Activities this week',$trend,$prev&&$week<$prev]]);
  $levels=[];foreach(rows("SELECT GREATEST(a.level_id,COALESCE((SELECT MAX(m.level_id) FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)) lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1") as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;$max=max([1]+$levels);
@@ -196,7 +198,7 @@ function admin_home(array $u):void{
  foreach($act as $a)echo '<div class="ws-li">'.icon('star').'<span>'.e($a['n']).'</span><span class="ws-sp ws-pill ok">'.number_format((int)$a['c']).'</span></div>';if(!$act)echo '<p class="muted">No activity in the last 30 days yet.</p>';
  echo '</div></section><section class="card"><div class="ws-hd"><h2>Announcement</h2><a href="?page=settings&amp;tab=announcements">Edit</a></div>';
  $ann=admin_announcements(true);if($ann){$a=$ann[0];echo '<div class="ws-ann"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · Shown to all teachers'.($a['until']?' until '.e(date('M j',strtotime($a['until']))):'').'</small></div>';}else echo '<p class="muted">No announcement. Post one for all teachers in Settings.</p>';
- echo '</section></div>'.($notes?'<p class="hm-foot">'.icon('flag').' '.$notes.' content notes still need a decision. <a href="?page=issues">Lesson studio › Content notes</a></p>':'');
+ echo '</section></div>';
 }
 
 /* ---------------- administrator: Print & download ---------------- */
@@ -214,12 +216,6 @@ function admin_print_view(array $u):void{
  echo '</div><div class="pc-tip"><i>'.icon('info').'</i><div><b>Tip:</b> To keep a copy instead of printing, choose <b>Save as PDF</b> in the print window.</div></div>';
 }
 
-/* ---------------- Lesson studio tabs (administrator) ---------------- */
-function studio_tabs(string $on):string{
- $notes=(int)val('SELECT COUNT(*) FROM content_issues WHERE acknowledged_at IS NULL');
- $t=fn($k,$p,$ic,$label,$extra='')=>'<a class="pt-tab'.($on===$k?' on':'').'" href="?page='.$p.'"'.($on===$k?' aria-current="page"':'').'>'.icon($ic).$label.$extra.'</a>';
- return '<nav class="pupil-tabs st-tabs" aria-label="Lesson studio">'.$t('content','content','book','Lessons').$t('issues','issues','flag','Content notes',$notes?'<b>'.$notes.'</b>':'').$t('media','media','image','Pictures').'</nav>';
-}
 /* ---------------- Check answers tabs (teacher; not shown since v151, BULIG checks every answer) ---------------- */
 function check_tabs(string $on):string{
  $n=staff_review_count((int)current_user()['id']);
@@ -241,7 +237,7 @@ function moved_view(array $u):void{
  $a='<section class="card"><h2>'.icon('shield').' Administrator</h2>'.$tbl($r('Overview','Home','Things that need you are first, then quick tasks')
   .$r('Teacher Passes (Teachers page)','Print &amp; download › Teacher Passes','Also: Teachers page').$r('Reports › Print / Excel','Print &amp; download › School report','Also: School reports')
   .$r('Download backup (System health)','Print &amp; download › Backup','Also: System health').$r('Activity log › Download CSV','Print &amp; download › Activity log','Also: Activity log')
-  .$r('Teachers › Add a teacher / Add many teachers','Add teachers','In the menu: one teacher, or the whole team from Excel').$r('Content notes (only from Overview)','Lesson studio › Content notes').$r('Pictures (only from System health)','Lesson studio › Pictures')
+  .$r('Teachers › Add a teacher / Add many teachers','Add teachers','In the menu: one teacher, or the whole team from Excel')
   .$r('Reports','School reports','Under REPORTS &amp; PRINT').$r('—','Print &amp; download','Every print and download in one place',true).$r('—','Find a page','Type what you need, for example “backup”',true)).'</section>';
  $p='<section class="card"><h2>'.icon('star').' Pupils</h2><p class="muted">Pupils keep the same pages and names. Their menu now has yellow group words: <b>Learn</b>, <b>My progress</b> and <b>About me</b>. On the phone, pupils keep their bottom bar. A new pupil with no starting level takes the <b>reading check</b> at first sign-in.</p></section>';
  echo '<div class="wm-cols">'.($u['role']==='admin'?$a.$t:$t.$a).'</div>'.$p;
@@ -334,4 +330,12 @@ function pupil_page_view(array $u):void{
  $p['level_id']=$p['level_id']??(function_exists('rc_ready')&&rc_ready()?0:1);
  echo '<section class="card"><h2>'.icon('useredit').' Account</h2><form method="post" class="formgrid">'.csrf_field().'<input type="hidden" name="action" value="update_account"><input type="hidden" name="id" value="'.$pid.'"><label>Full name<input name="name" value="'.e($p['name']).'" required maxlength="150"></label><label>New password (optional)<input name="password" type="password" minlength="8" maxlength="72" autocomplete="new-password"></label>'.grade_fields($p,teacher_sections((int)$u['id'])).'<label class="checkbox"><input type="checkbox" name="active" '.($p['active']?'checked':'').'>Account active</label><div class="formend"><small>Pupil ID: '.e($p['public_id']).'</small><button class="btn primary" type="submit">'.icon('check').'Save changes</button></div></form></section>';
  if(cards_ready())echo '<section class="card"><h2>'.icon('key').' Sign-in ticket and starter password</h2><p class="muted">Forgot the password? Make a new ticket: BULIG makes a new starter password and a new QR code. The old QR code stops working.</p><div class="buttonrow"><a class="btn secondary" href="?page=cards&amp;pupils[]='.$pid.'">'.icon('print').'Print sign-in ticket</a><form method="post">'.csrf_field().'<input type="hidden" name="action" value="card_new"><input type="hidden" name="id" value="'.$pid.'"><input type="hidden" name="back" value="?page=pupil&amp;id='.$pid.'&amp;tab=account"><button class="btn primary" data-confirm="Make a new ticket and starter password for '.e($p['name']).'?">'.icon('key').'New starter password</button></form></div></section>';
+}
+
+/** Class at a glance (class activity, reading tree, milestones): at the end of Class results since v161. */
+function class_glance(array $u):void{
+ $tid=(int)$u['id'];$pupils=rows('SELECT u.*,p.grade_level,p.section,a.level_id FROM users u JOIN pupils p ON p.user_id=u.id JOIN teacher_pupils t ON t.pupil_id=u.id LEFT JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE t.teacher_id=? AND u.active=1 ORDER BY u.name',[$tid]);
+ if(!$pupils)return;$ids=array_map(fn($p)=>(int)$p['id'],$pupils);$stats=progress_stats_many($ids);
+ $badgeWeek=array_flip(array_map('intval',array_column(rows('SELECT DISTINCT pupil_id FROM pupil_badges WHERE pupil_id IN('.tf_in($ids).') AND earned_at>=?',[date('Y-m-d H:i:s',strtotime('-7 days'))]),'pupil_id')));
+ echo tf_defs().'<p class="hm-sub" id="glance">Class at a glance</p>'.tf_chart($ids).'<div class="tf-grid">'.tf_tree($pupils,$stats,$badgeWeek).tf_feed($ids).'</div>';
 }
