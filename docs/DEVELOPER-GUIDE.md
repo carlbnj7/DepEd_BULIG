@@ -138,6 +138,12 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   (`arah_say`), Zion and Toby on My achievements (`toby_say`), Toby on the reading board, Claude in pupil Settings, Bruno
   in the result card after a wrong answer (scoring.php), and `level_friend($lv)` on each lesson's first screen (Max L1,
   Mia L2A-L3, Roxanne L4, Dracs L5-L7). Rank emblems were redrawn (v166); `rk_img()` adds `?v=2`.
+- **Friends on phone notifications** (v167): `push_icon($kind,$title)` (reach.php) picks the picture in
+  `assets/images/characters/push/` (daily: Roxanne, streak: Arah, lessons: George, teacher note: George or Bruno for
+  "Try …", rank: Zion, help: Dracs, certificate: George, reading: Max); sw.js shows `d.icon`. Rank ups are queued for the
+  pupil's phone (reader_level.php). Teachers can allow notifications too (remind.js, `push_action` for teachers);
+  `notify()` queues help, certificate and reading notes for them, and cron/notify.php sends teachers each note as it
+  comes (no daily reminder for teachers). iPhone and iPad always show the app icon.
 - **Notifications page** (`app/notify.php`, v164): All / Unread tabs, actions `notif_mark` (`to` read|unread),
   `notif_delete`, `notif_delete_read` and `notif_read_all`, only on the person's own rows; Notifications is in every menu.
 - **No Lesson studio** (v161): the administrator cannot change module content. The pages `content`, `edit_activity`, `media`

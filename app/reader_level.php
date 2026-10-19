@@ -69,7 +69,7 @@ function rl_info(int $pid,bool $fresh=false):array{return rl_from_xp(rl_xp($pid,
 /** After XP is added: tell the pupil (bell) when they reach a new reader level. */
 function rl_after_xp(int $pid,int $before):void{
  if(!function_exists('notify'))return;$r=rl_info($pid,true);if($r['level']<=$before)return;
- $k=rk_of($r['level']);$k0=rk_of($before);notify($pid,'rlevel',$k['i']>$k0['i']?'Rank up! You are now '.rk_a($k['name']).'!':'You reached Level '.$r['level'].'!',($k['i']>$k0['i']?'Level '.$r['level'].'. ':($k['stars']>$k0['stars']?'New star: '.$k['stars'].' of '.RK_STARS.'. ':'')).($r['max']?'This is the highest level!':($r['need']-$r['cur']).' XP to Level '.($r['level']+1).'.'),'?page=achievements#reader-level');
+ $k=rk_of($r['level']);$k0=rk_of($before);if($k['i']>$k0['i']&&function_exists('push_queue'))push_queue($pid,'rank','You are now '.rk_a($k['name']).'!','Zion has your new rank emblem. Come and see it!','?page=achievements');notify($pid,'rlevel',$k['i']>$k0['i']?'Rank up! You are now '.rk_a($k['name']).'!':'You reached Level '.$r['level'].'!',($k['i']>$k0['i']?'Level '.$r['level'].'. ':($k['stars']>$k0['stars']?'New star: '.$k['stars'].' of '.RK_STARS.'. ':'')).($r['max']?'This is the highest level!':($r['need']-$r['cur']).' XP to Level '.($r['level']+1).'.'),'?page=achievements#reader-level');
 }
 
 /** For the teacher's pupil page: "Reader level 93 · Mythic rank, 1 of 5 stars". */

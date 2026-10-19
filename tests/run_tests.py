@@ -454,6 +454,9 @@ def test_friends(p):
     check('Each friend is on their own page: Arah on My calendar, Zion and Toby on My achievements, Toby on the board, Claude in Settings',
           'fs-say fs-arah' in cal and 'fs-say fs-zion' in ach and 'fs-say fs-toby' in ach and 'fs-say fs-toby' in brd and 'fs-say fs-claude' in st)
     check('The rank emblems are the new ones (loaded fresh)', 'images/ranks/' in ach and '.webp?v=2' in ach)
+    missing = [x for x in ('roxanne', 'arah', 'george', 'bruno', 'zion', 'dracs', 'claude', 'max', 'toby') if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters/push', x + '.png'))]
+    sw = open(os.path.join(ROOT, 'public/sw.js')).read()
+    check('Phone notifications show the friend: 9 friend icons, and the service worker uses the icon sent', not missing and 'icon:d.icon||' in sw, missing)
     _, _, r = p.req('index.php', {'action': 'friends_met', 'csrf': p.token('?page=dashboard')}, accept_json=True)
     _, _, text = p.req('?page=dashboard')
     check('The introduction shows only once (it is remembered)', jget(r).get('ok') and 'name="bulig-friends"' not in text, r[:120])
