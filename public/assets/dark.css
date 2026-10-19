@@ -93,3 +93,31 @@ html.dark body:not(.demo-page) .rc-page :is(.rc-title h1,.rc-info span){color:#0
 html.dark body:not(.demo-page) .rc-page .rm.no{color:#6d6a5e!important}html.dark body:not(.demo-page) .rc-page .rm.pass{color:#176444!important}html.dark body:not(.demo-page) .rc-page .rm.now{color:#9a6a00!important}html.dark body:not(.demo-page) .rc-page .rm.skip{color:#2b5f8f!important}
 html.dark body:not(.demo-page) .rc-band :is(b,span,small,.rc-mid b){color:#fff!important}html.dark body:not(.demo-page) .rc-now{color:#fff!important}html.dark body:not(.demo-page) .rc-now b{color:#ffd966!important}
 html.dark body:not(.demo-page) .ids-formats span{color:#7fdcaa!important}
+/* v170: popups that stayed white (glass) in dark mode: the welcome popup, the tour bubbles, "I need help", the year-end steps */
+html.dark body:not(.demo-page) .pw-panel,html.dark:not(.lg-lite) body:not(.demo-page) .pw-panel,html.dark:not(.lg-lite) body:not(.demo-page) .pw-panel.lg-g{background:linear-gradient(160deg,rgba(32,50,39,.97),rgba(20,33,25,.96) 60%,rgba(26,42,32,.97))!important;border-color:rgba(255,255,255,.12)!important;border-top-color:#f6c02c!important}
+html.dark body:not(.demo-page) .pw-panel::before{background:linear-gradient(180deg,rgba(63,191,127,.14),rgba(63,191,127,0))!important}
+html.dark body:not(.demo-page) .pw-panel h2{color:#fff!important}html.dark body:not(.demo-page) .pw-msg{color:#c3d3c8!important}html.dark body:not(.demo-page) .pw-eyebrow{color:#7fdcaa!important}
+html.dark body:not(.demo-page) .pw-stat{background:var(--sf2)!important;border-color:var(--ln)!important;color:#c3d3c8!important}html.dark body:not(.demo-page) .pw-stat b{color:#fff!important}
+html.dark body:not(.demo-page) .tour-bub,html.dark:not(.lg-lite) body:not(.demo-page) .tour-bub{background:linear-gradient(160deg,rgba(32,50,39,.97),rgba(20,33,25,.96) 60%,rgba(26,42,32,.97))!important;border-color:rgba(255,255,255,.12)!important;color:var(--tx)!important}
+html.dark body:not(.demo-page) .tour-bub :is(p,span,small,li,div){color:#c3d3c8}html.dark body:not(.demo-page) .tour-bub :is(h2,h3,b,strong){color:#fff!important}
+html.dark body:not(.demo-page) :is(.hp-card,.ws-step){background:var(--sf)!important;border-color:var(--ln)!important;color:var(--tx)!important}
+html.dark body:not(.demo-page) .hp-opt{background:var(--sf2)!important;border-color:var(--ln)!important;color:var(--tx)!important}html.dark body:not(.demo-page) .hp-opt span{color:var(--tx)!important}
+html.dark body:not(.demo-page) .hp-opt:has(input:checked){background:#1f3a2a!important;border-color:#3fbf7f!important}
+html.dark body:not(.demo-page) .hp-off{background:#3a3216!important;border-color:#6b5414!important;color:#ffd966!important}html.dark body:not(.demo-page) p.hp-off{color:#ffd966!important}
+html.dark body:not(.demo-page) .sx-prev span{color:#b9cabf!important}
+html.dark body:not(.demo-page) .dk-ink,html.dark body:not(.demo-page) .dk-ink :not(svg):not(path){color:#1d2a22!important}
+/* v170: every popup in liquid glass (frosted, the page softly blurred behind), still easy to read. Slow phones and
+   "Reduce transparency" (html.lg-lite) keep the solid popups. */
+html:not(.lg-lite) body:not(.demo-page) :is(.pw-panel,.rt-ov .rt-card,.crop-box,.leave-box,.hp-card,.lgn-pop,.cd-modal,.pf-cal-ov:not(.pf-cal-inline) .pf-cal-panel,.np-box,.ab-dialog,.tour-offer-card,.tour-bub,.fr-panel,.empty-check){
+ background:linear-gradient(160deg,rgba(255,255,255,.82),rgba(255,251,238,.66) 55%,rgba(255,255,255,.76))!important;
+ -webkit-backdrop-filter:blur(26px) saturate(185%);backdrop-filter:blur(26px) saturate(185%);
+ border:1px solid rgba(255,255,255,.78)!important;
+ box-shadow:inset 1px 1.5px 0 rgba(255,255,255,.95),inset -1px -1px 0 rgba(255,255,255,.35),inset 0 -14px 22px -18px rgba(255,255,255,.8),0 30px 70px -22px rgba(8,28,16,.6),0 2px 8px rgba(8,28,16,.12)!important}
+html:not(.lg-lite) body:not(.demo-page) :is(.pw-overlay,.rt-ov,.crop-ov,.leave-ov,.hp-sheet,.np-ov,.fr-layer,.cd-ov,.lgn-pop-wrap){background:rgba(8,28,16,.34)!important;-webkit-backdrop-filter:blur(6px) saturate(140%);backdrop-filter:blur(6px) saturate(140%)}
+html:not(.lg-lite) body:not(.demo-page) :is(.pw-stat,.hp-opt,.crop-look,.crop-stage){background:rgba(255,255,255,.52)!important;border-color:rgba(255,255,255,.8)!important}
+html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-panel,.rt-ov .rt-card,.crop-box,.leave-box,.hp-card,.lgn-pop,.cd-modal,.pf-cal-ov:not(.pf-cal-inline) .pf-cal-panel,.np-box,.ab-dialog,.tour-offer-card,.tour-bub,.fr-panel,.empty-check){
+ background:linear-gradient(160deg,rgba(52,78,61,.66),rgba(16,28,21,.60) 55%,rgba(34,54,42,.64))!important;
+ border:1px solid rgba(255,255,255,.16)!important;
+ box-shadow:inset 1px 1.5px 0 rgba(255,255,255,.22),inset 0 -14px 22px -18px rgba(255,255,255,.14),0 30px 70px -22px rgba(0,0,0,.75)!important}
+html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-stat,.hp-opt,.crop-look,.crop-stage){background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.14)!important}
+html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-overlay,.rt-ov,.crop-ov,.leave-ov,.hp-sheet,.np-ov,.fr-layer,.cd-ov,.lgn-pop-wrap){background:rgba(0,0,0,.42)!important}

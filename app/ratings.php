@@ -25,13 +25,13 @@ function rate_stars(string $name,string $label):string{
 }
 function rate_script():string{return '<script defer src="'.asset_url('rate.js').'"></script>';}
 /** Pupils: "Do you like learning with BULIG?" with five stars. Shown after a finished lesson when rate_due(). */
-function rate_pupil_popup(array $u):string{
+function rate_pupil_popup(array $u,bool $popup=true):string{
  $first=explode(' ',trim((string)$u['name']))[0];$q='Do you like learning with BULIG?';
- return '<div class="rt-ov" data-rt hidden role="dialog" aria-modal="true" aria-labelledby="rt-title"><form method="post" class="rt-card" data-rt-form data-rt-name="'.e($first).'">'.csrf_field()
-  .'<input type="hidden" name="action" value="rate_app"><button type="button" class="rt-x" data-rt-later aria-label="Not now">'.icon('close').'</button>'
+ return ($popup?'<div class="rt-ov" data-rt hidden role="dialog" aria-modal="true" aria-labelledby="rt-title">':'').'<form method="post" class="rt-card'.($popup?'':' rt-inline').'" data-rt-form data-rt-name="'.e($first).'">'.csrf_field()
+  .'<input type="hidden" name="action" value="rate_app">'.($popup?'<button type="button" class="rt-x" data-rt-later aria-label="Not now">'.icon('close').'</button>':'')
   .'<div class="rt-hero" aria-hidden="true"><i></i></div><span class="rt-eb">YOUR TURN</span><div class="rt-q"><h2 id="rt-title">'.e($q).'</h2><button type="button" class="rt-spk" data-rt-say="'.e($q.' Tap the stars.').'" aria-label="Hear the question">'.icon('sound').'</button></div>'
   .'<p class="rt-sub">Tap the stars, '.e($first).'.</p>'.rate_stars('stars','Your stars').'<div class="rt-word" data-rt-word aria-live="polite"></div>'
-  .'<button class="rt-btn" data-rt-send>Send</button><button type="button" class="rt-later" data-rt-later>Not now</button></form></div>'.rate_script();
+  .'<button class="rt-btn" data-rt-send>Send</button>'.($popup?'<button type="button" class="rt-later" data-rt-later>Not now</button>':'').'</form>'.($popup?'</div>':'').rate_script();
 }
 /** Teachers: the five-question evaluation. $popup: on Teacher Home; otherwise the Rate BULIG page. */
 function rate_teacher_form(bool $popup):string{
@@ -45,13 +45,18 @@ function rate_teacher_form(bool $popup):string{
 }
 /** My profile › Rate BULIG (teachers). */
 function rate_page_view(array $u):void{
+ if($u['role']==='pupil'){   // v170: pupils can rate any time from My profile, with the same stars as the popup
+  echo '<a class="st-back" href="?page=profile">'.icon('arrow','flip').'My profile</a><div class="pageheading"><div><span class="eyebrow">MY PROFILE · RATE BULIG</span><h1>Rate BULIG</h1><p class="muted">Tell us how you like learning with BULIG.</p></div></div>';
+  if(!rate_ready()){echo '<section class="empty">'.icon('star').'<h2>Ratings are not ready yet.</h2><p>Please try again another day.</p></section>';return;}
+  if($last=rate_last((int)$u['id']))echo '<p class="rt-lastnote">'.icon('check').'<span>You gave BULIG <b>'.(int)$last['stars'].' ★</b> on '.e(date('F j, Y',strtotime((string)$last['created_at']))).'. You can rate it again any time.</span></p>';
+  echo rate_pupil_popup($u,false);return;}
  echo hm_head('MY PROFILE · RATE BULIG','Rate BULIG','Tell the Division how BULIG is working for you and your pupils. It takes one minute.');
  if(!rate_ready()){echo '<section class="empty">'.icon('star').'<h2>Ratings are not installed yet.</h2><p>Ask your administrator to import 029_app_ratings.sql.</p></section>';return;}
  if($last=rate_last((int)$u['id']))echo '<p class="rt-lastnote">'.icon('check').'You last rated BULIG on '.e(date('F j, Y',strtotime((string)$last['created_at']))).': <b>'.e(rtrim(rtrim((string)$last['overall'],'0'),'.')).' ★</b>. You can rate it again any time.</p>';
  echo rate_teacher_form(false);
 }
 /** "Rate BULIG" on a teacher's My profile. */
-function rate_profile_card():string{return rate_ready()?'<section class="card rt-pcard"><div><h2>'.icon('star').'Rate BULIG</h2><p class="muted">Five quick questions with stars. Your answers help the Division improve BULIG.</p></div><a class="btn secondary" href="?page=rate">Rate BULIG '.icon('arrow').'</a></section>':'';}
+function rate_profile_card(bool $pupil=false):string{return rate_ready()?'<section class="card rt-pcard'.($pupil?' rt-pcard-kid':'').'"><div><h2>'.icon('star').'Rate BULIG</h2><p class="muted">'.($pupil?'Do you like learning with BULIG? Give it stars any time.':'Five quick questions with stars. Your answers help the Division improve BULIG.').'</p></div><a class="btn secondary" href="?page=rate">Rate BULIG '.icon('arrow').'</a></section>':'';}
 
 function rate_action(string $action):void{
  $u=current_user();if(!$u||!in_array($u['role'],['pupil','teacher'],true))fail('Only pupils and teachers rate BULIG.',403);if(!rate_ready())fail('Ratings are not installed yet.');
@@ -67,7 +72,7 @@ function rate_action(string $action):void{
  q('INSERT INTO app_ratings(user_id,role,stars,overall,answers,comment) VALUES(?,?,?,?,?,?)',[$uid,$u['role'],$stars,$overall,$answers,$comment]);
  q('DELETE FROM settings WHERE setting_key=?',['rate_later_'.$uid]);audit('app_rating',$u['role'].' '.$overall);
  if($json){header('Content-Type: application/json');echo json_encode(['ok'=>true,'stars'=>$stars,'overall'=>$overall,'word'=>RATE_WORDS[$stars]??'']);exit;}
- flash('Thank you! Your rating was sent.');go($u['role']==='teacher'?'?page=rate':'?page=dashboard');
+ flash('Thank you! Your rating was sent.');go('?page=rate');
 }
 
 /** Reports › App ratings (administrator). Each person counts once in a period: their latest rating. */

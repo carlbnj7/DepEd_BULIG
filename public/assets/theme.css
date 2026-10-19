@@ -5628,3 +5628,20 @@ html.crop-open,html.crop-open body{overflow:hidden}
 @media(max-width:480px){.crop-box{padding:18px 16px 14px;border-radius:22px}.crop-acts .btn{white-space:nowrap;padding-left:10px;padding-right:10px;font-size:.88rem}}
 html.dark .crop-box{background:#16231b}html.dark .crop-box h2,html.dark .crop-lk b{color:#e8f0ea!important}html.dark .crop-tip,html.dark .crop-lk span{color:#a9bcb0!important}
 html.dark .crop-look{background:#1d2d23;border-color:#2e4234}html.dark .crop-zoom{color:#7fdcaa}html.dark .crop-zoom input{accent-color:#3fbf7f}html.dark .crop-stage{background:#0f1913}
+/* v170: "Leave this activity?" (assets/delight.js) */
+.leave-ov{position:fixed;inset:0;z-index:3000;display:grid;place-items:center;padding:16px;background:rgba(8,28,16,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .2s}
+.leave-ov.on{opacity:1}
+.leave-box{display:flex;align-items:flex-end;gap:14px;width:min(460px,100%);background:#fffdf6;border-radius:26px;padding:20px 22px 20px 12px;box-shadow:0 24px 60px rgba(0,0,0,.35);transform:translateY(14px) scale(.96);transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+.leave-ov.on .leave-box{transform:none}
+.leave-pal{width:110px;height:auto;flex:none;align-self:flex-end;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+.leave-tx{flex:1;min-width:0}.leave-who{display:block;font-size:.72rem;font-weight:800;letter-spacing:.05em;color:#3f8a73}
+.leave-tx h2{margin:2px 0 4px;font-size:1.3rem;color:#0e3b28}.leave-tx p{margin:0 0 14px;font-size:.92rem;color:#4b6352}
+.leave-acts{display:flex;flex-wrap:wrap;gap:8px}.leave-acts .btn{flex:1 1 auto;justify-content:center;min-height:46px}
+@media(max-width:420px){.leave-box{flex-direction:column;align-items:center;text-align:center;padding:18px 16px}.leave-pal{width:90px;align-self:center}}
+html.dark .leave-box{background:#16231b}html.dark .leave-tx h2{color:#e8f0ea!important}html.dark .leave-tx p{color:#a9bcb0!important}html.dark .leave-who{color:#7fd1b4!important}
+/* v170: My profile › My BULIG friends (meet them again) */
+.fa-card{display:grid;gap:12px}.fa-card h2{margin:0}.fa-card p{margin:4px 0 0}
+.fa-faces{display:flex;flex-wrap:wrap;gap:2px}.fa-faces img{width:38px;height:52px;object-fit:contain;object-position:bottom;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15))}
+.fa-card .btn{justify-self:start}
+@media(max-width:740px){.fa-card .btn{justify-self:stretch;justify-content:center}}
+@media(min-width:900px){.me-page>.me-hero,.me-page>.fa-card,.me-page>.rt-pcard{grid-column:1}.me-page>.me-pic{grid-column:2;grid-row:1/span 3}.me-page{grid-auto-rows:min-content}.me-page>.rt-pcard{align-self:start}}
