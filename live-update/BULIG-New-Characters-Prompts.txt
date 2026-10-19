@@ -1,0 +1,138 @@
+BULIG - George's new friends: drawing prompts for ChatGPT
+=========================================================
+
+HOW TO USE
+1. Start a new ChatGPT chat and upload one George picture (for example george-hello.webp) so it can copy her style.
+2. Paste the STYLE text below, then the text for ONE character.
+3. Ask for ONE pose per image. Do the 5 poses one by one, in the same chat, so the character stays the same.
+4. Save each image as .webp (or .png) with the file name shown, and send them back in one ZIP.
+
+STYLE (paste this every time)
+-----------------------------
+Same art style as the attached George the Explorer picture: cute cartoon chibi style for young
+Filipino pupils (Grades 1-6), big head and big shiny eyes, friendly open smile, thick dark brown
+outlines, soft shading, bright warm colours. Full body from head to shoes, standing, facing the viewer.
+Transparent background, no shadow on the ground, no text, no logo, no frame.
+Tall portrait image (about 3 wide x 4 tall). Leave a little empty space around the character.
+Keep the character exactly the same in every pose (face, hair, clothes, colours).
+
+THE 5 POSES (same for every character)
+--------------------------------------
+  -hello   waving with one hand, happy smile
+  -point   pointing to the side with one hand, one foot stepping forward
+  -thumbs  thumbs-up with one hand, winking
+  -cheer   jumping with joy, one arm up
+  -special the character's own pose (written under each character)
+
+
+1. MAX THE LISTENER  (boy)
+--------------------------
+Job in BULIG: shows up when a pupil must LISTEN or SPEAK (reading check, Level 1 speaking,
+Level 4 reading aloud): "Tap the mic and read to me!"
+Look: Filipino boy, about 8 years old, short black hair, brown skin. Big round blue headphones
+around his neck. Light blue T-shirt with a small sound-wave print, navy shorts, white sneakers
+with blue laces. Main colour: BLUE.
+Special pose: holding a small microphone up to his mouth, other hand cupped behind his ear.
+File names: max-hello, max-point, max-thumbs, max-cheer, max-mic
+
+
+2. DRACS THE STORYTELLER  (girl)
+--------------------------------
+Job in BULIG: the STORY helper for Levels 4-7. Opens stories and cheers when a pupil
+finishes a passage.
+Look: Filipino girl, about 11 years old (an older-sister age), shoulder-length black hair with
+a purple headband, brown skin, round glasses. Purple cardigan over a white blouse, lavender
+skirt, small star-shaped bookmark pinned on the cardigan, purple shoes. Main colour: PURPLE.
+Special pose: holding an open storybook with both hands, a few small sparkles coming out of it.
+File names: dracs-hello, dracs-point, dracs-thumbs, dracs-cheer, dracs-book
+
+
+3. BRUNO THE HELPER  (boy)
+-------------------------
+Job in BULIG: the "TRY AGAIN" friend. Shows up gently after a wrong answer:
+"It's okay! Let's try once more."
+Look: Filipino boy, about 8 years old, round friendly face, short wavy black hair, brown skin,
+warm calm smile. Soft grey hoodie with a small red heart patch on the chest, mint-green shorts,
+grey-and-mint sneakers. Main colour: GREY and MINT GREEN.
+Special pose: holding a big pink pencil eraser in one hand like he is gently erasing a mistake,
+other hand giving a small encouraging wave, kind smile.
+File names: bruno-hello, bruno-point, bruno-thumbs, bruno-cheer, bruno-tryagain
+
+
+4. MIA THE BUILDER  (girl)
+--------------------------
+Job in BULIG: the SPELLING and SOUNDS helper for Levels 2A-3 (Build a Word, blends, sounds).
+Look: Filipino girl, about 8 years old, black hair in two puffy pigtails with orange ties,
+brown skin. Orange hard hat, orange overalls over a yellow T-shirt, a tool belt with
+big colourful letter blocks in it, brown boots. Main colour: ORANGE.
+Special pose: stacking three big wooden letter blocks (the blocks show the letters c, a, t).
+File names: mia-hello, mia-point, mia-thumbs, mia-cheer, mia-blocks
+
+
+5. TOBY THE TRAILBLAZER  (boy)
+------------------------------
+Job in BULIG: the PROGRESS and BADGES helper (Reading Progress Board, level-ups):
+"You climbed to Level 5!"
+Look: Filipino boy, about 11 years old, short spiky black hair, brown skin. Green scout shirt
+with a yellow neckerchief, khaki shorts, a small backpack, hiking boots, a few colourful
+badges pinned on his shirt. Main colour: GREEN.
+Special pose: planting a small flag on top of a little hill, big proud smile.
+File names: toby-hello, toby-point, toby-thumbs, toby-cheer, toby-flag
+
+
+6. ZION THE RANK KEEPER  (boy)
+-----------------------------------
+Job in BULIG: keeps the RANKS and STARS. When a pupil earns a new star he adds it; when a pupil
+reaches a new rank (Beginner, Learner, Explorer, Achiever, Champion, Guardian, Elite, Master,
+Legend, Mythic) he presents the new emblem: "You are now an Achiever!" He stands beside the
+rank card on the pupil home page and the Reading Progress Board.
+Look: Filipino boy, about 10 years old, short neat black hair, brown skin, confident friendly
+smile. Red short-sleeved shirt with gold trim, a gold sash across his chest with three small
+shiny stars on it, a short red cape, dark shorts, red-and-gold sneakers. Main colour: RED and GOLD.
+Special pose: holding up a round shining rank emblem (a green-and-gold crest with a gem in the
+middle and leaves around it, NO words on it) with both hands, proud smile, little sparkles around.
+File names: zion-hello, zion-point, zion-thumbs, zion-cheer, zion-emblem
+(Tip: also upload rank emblem picture achiever.webp so ChatGPT copies the emblem style.)
+
+
+7. ARAH THE STREAK KEEPER  (girl)
+---------------------------------
+Job in BULIG: keeps the STREAK and the CALENDAR. Shows up beside the streak flame and the
+streak calendar: "3 days in a row! Come back tomorrow to keep your flame burning!"
+On a missed day she says gently: "Let's start a new streak today!"
+Look: Filipino girl, about 9 years old, black hair in one high ponytail tied with a pink ribbon,
+small fringe, brown skin, bright cheerful smile. Pink T-shirt with a small orange flame print,
+a light pink vest, white skirt with pink trim, pink sneakers with white laces.
+Main colour: PINK (with a small orange flame as her sign).
+Special pose: holding up a small wall calendar with both hands, three days marked with
+check marks and a little orange flame floating above it, happy proud smile.
+File names: arah-hello, arah-point, arah-thumbs, arah-cheer, arah-calendar
+
+
+8. CLAUDE THE PROTECTOR  (boy)
+------------------------------
+Job in BULIG: keeps every account SAFE. Stands on the dashboard of pupils, teachers and the
+administrator. Shows up for passwords, signing in and signing out, a locked account and a
+new device: "Keep your password a secret!", "Don't forget to sign out on a shared computer!"
+Look: Filipino boy, about 12 years old (a big-brother age), short neat black hair with a side
+part, brown skin, calm confident smile. Dark navy jacket with a silver zipper and a small
+silver shield badge on the chest, light grey shirt, dark grey pants, navy-and-silver sneakers.
+Main colour: DARK NAVY and SILVER.
+Special pose: holding up a round silver shield with a small padlock picture in the middle
+(NO words on it) in one hand, other hand giving a thumbs-up, proud smile, a soft glow around
+the shield.
+File names: claude-hello, claude-point, claude-thumbs, claude-cheer, claude-shield
+
+
+THE WHOLE TEAM
+--------------
+  George the Explorer   girl   the guide for everyone (already in BULIG)   yellow and teal
+  Max the Listener      boy    listening and speaking                      blue
+  Dracs the Storyteller girl   stories, Levels 4-7                          purple
+  Bruno the Helper      boy    try again after a mistake                    grey and mint green
+  Mia the Builder       girl   spelling and sounds, Levels 2A-3             orange
+  Toby the Trailblazer  boy    progress, badges, level-ups                  green
+  Zion the Rank Keeper  boy    ranks and stars                              red and gold
+  Arah the Streak Keeper girl  streak flame and calendar                    pink
+  Claude the Protector  boy    account safety, on every dashboard           dark navy and silver
+Each friend has their own main colour so pupils can tell them apart at a glance.
