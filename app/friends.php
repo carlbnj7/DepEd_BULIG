@@ -42,9 +42,10 @@ function login_friend_pairs():array{
 /** A friend says something on their own page (v166): Arah on My calendar, Zion and Toby on My achievements, Toby on
    the reading board, Claude in Settings, Bruno after a wrong answer, and on each lesson's first screen the friend of
    that level (Max: Level 1, Mia: Levels 2A-3, Roxanne: Level 4, Dracs: Levels 5-7). */
-function friend_say(string $id,string $pose,string $text):string{
+function friend_say(string $id,string $pose,string $text,bool $float=true):string{
  $f=null;foreach(BULIG_FRIENDS as $x)if($x[0]===$id)$f=$x;if(!$f)return '';
- return '<aside class="fs-say fs-'.$id.'"><img src="'.e(friend_img($id,$pose)).'" alt="" width="64" height="80" loading="lazy"><div><b>'.e($f[1].' '.$f[2]).'</b><span>'.e($text).'</span></div></aside>';
+ /* like George: the whole friend, no box; on a page the friend stands at the bottom right (tap for the message again) */
+ return '<aside class="fs-say fs-'.$id.' '.($float?'fs-float':'fs-inline').'"'.($float?' data-fs':'').'><img src="'.e(friend_img($id,$pose)).'" alt="" width="120" height="150" loading="lazy"><div class="fs-bub" role="status"><b>'.e($f[1].' '.$f[2]).'</b><span>'.e($text).'</span></div></aside>';
 }
 function level_friend(int $lv):string{
  if($lv===1)return friend_say('max','mic','Hi! I am Max the Listener. In Level 1 we listen and speak. When you see the microphone, tap it and talk to me!');
@@ -60,7 +61,7 @@ function arah_say(int $pid):string{
 }
 function toby_say(int $pid):string{
  $n=(int)val('SELECT COUNT(*) FROM pupil_badges WHERE pupil_id=?',[$pid]);
- return friend_say('toby','thumbs',$n?'You have '.$n.' '.($n===1?'badge':'badges').' so far! Every badge is a step up the trail.':'Your first badge comes after your first activity. Let’s go, trailblazer!');
+ return friend_say('toby','thumbs',$n?'You have '.$n.' '.($n===1?'badge':'badges').' so far! Every badge is a step up the trail.':'Your first badge comes after your first activity. Let’s go, trailblazer!',false);
 }
 /** Roxanne on Today's goal: how the day is going. */
 function roxanne_goal(int $n,int $goal):string{
