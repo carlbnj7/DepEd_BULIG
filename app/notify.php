@@ -13,6 +13,8 @@ function notif_ready():bool{static $r=null;if($r===null){try{$r=(bool)one("SHOW 
 function notify(int $uid,string $kind,string $title,string $body='',string $url=''):void{
  if($uid<=0||!notif_ready())return;
  try{q('INSERT INTO notifications(user_id,kind,title,body,url) VALUES(?,?,?,?,?)',[$uid,mb_substr($kind,0,30),mb_substr($title,0,200),mb_substr($body,0,300),mb_substr($url,0,250)]);}catch(Throwable $e){}
+ /* a teacher who allowed notifications also gets help requests, finished levels and reading checks on their phone or computer (v167) */
+ if(in_array($kind,['help','certificate','reading'],true)&&function_exists('push_queue')&&val("SELECT role FROM users WHERE id=?",[$uid])==='teacher')try{push_queue($uid,$kind,$title,$body,$url);}catch(Throwable $e){}
 }
 /** Every teacher of a pupil. */
 function notify_teachers(int $pid,string $kind,string $title,string $body='',string $url=''):void{
