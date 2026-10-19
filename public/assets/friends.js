@@ -23,15 +23,19 @@
   const isF=x=>FEM.test(x.name)&&!/\bmale\b/i.test(x.name.replace(/female/ig,''));
   return{f:v.filter(isF),m:v.filter(x=>!isF(x)&&MAL.test(x.name)),all:v};}
  function voiceFor(f){const V=pool(),list=f.girl?V.f:V.m,same=F.filter(x=>x.girl===f.girl);if(list.length)return list[same.indexOf(f)%list.length];return V.all[0]||null;}
- let words=[],timer=0,box=null;
+ let words=[],timer=0,box=null,talk=0;   // talk: which speech is current (a stopped one must not touch the next friend's words)
  function lightAll(){words.forEach(w=>w.el.classList.add('on'));}
- function hush(){if(synth)synth.cancel();clearInterval(timer);if(box)box.classList.remove('fr-talking');}
+ function hush(){talk++;if(synth)synth.cancel();clearInterval(timer);if(box)box.classList.remove('fr-talking');}
  function say(f,text){hush();
   if(!talkOn||!synth){let i=0;box.classList.add('fr-talking');timer=setInterval(()=>{if(words[i])words[i++].el.classList.add('on');else{clearInterval(timer);box&&box.classList.remove('fr-talking');}},210);return;}
-  const run=()=>{const u=new SpeechSynthesisUtterance(text),v=voiceFor(f);if(v){u.voice=v;u.lang=v.lang;}else u.lang='en-US';u.pitch=f.pitch||1;u.rate=f.rate||.95;
-   u.onstart=()=>box&&box.classList.add('fr-talking');
-   u.onboundary=e=>{if(e.name&&e.name!=='word')return;words.forEach(w=>w.el.classList.toggle('on',w.at<=e.charIndex));};
-   u.onend=u.onerror=()=>{if(box)box.classList.remove('fr-talking');lightAll();};synth.speak(u);};
+  const me=++talk;const run=()=>{if(me!==talk)return;const u=new SpeechSynthesisUtterance(text),v=voiceFor(f);if(v){u.voice=v;u.lang=v.lang;}else u.lang='en-US';u.pitch=f.pitch||1;u.rate=f.rate||.95;
+   /* v170: many voices (the Google ones) send no word events, so the words also light up on a clock that follows the
+      friend's speed; a real word event takes over from the clock. */
+   let real=false,t0=0;const cps=13.5*(u.rate||1);
+   const clock=()=>{if(real||me!==talk)return;clearInterval(timer);t0=performance.now();timer=setInterval(()=>{if(real||me!==talk){clearInterval(timer);return;}const at=(performance.now()-t0)/1000*cps;words.forEach(w=>w.el.classList.toggle('on',w.at<=at));},90);};
+   u.onstart=()=>{if(me!==talk)return;if(box)box.classList.add('fr-talking');clock();};
+   u.onboundary=e=>{if(me!==talk||(e.name&&e.name!=='word'))return;real=true;clearInterval(timer);words.forEach(w=>w.el.classList.toggle('on',w.at<=e.charIndex));};
+   u.onend=u.onerror=()=>{if(me!==talk)return;clearInterval(timer);if(box)box.classList.remove('fr-talking');lightAll();};synth.speak(u);};
   if(synth.getVoices().length)setTimeout(run,140);else{let done=false;const go=()=>{if(done)return;done=true;run();};synth.addEventListener('voiceschanged',go,{once:true});setTimeout(go,700);}}
 
  /* ---------- screens ---------- */
