@@ -5392,3 +5392,116 @@ main p,main li,.card p,.notice,.ap-need{overflow-wrap:anywhere}
 /* bigger tap areas for small links */
 .crumb a,.section-heading>a,.tab-row .tab-manage,a.source-link,.pg-name a,.hm-auto>a,.tf-list .cl-more{display:inline-flex;align-items:center;min-height:40px}
 .tab-row .tab-manage{padding:0 8px}
+/* v162: Delete a pupil or a teacher (type DELETE), status pills that do not overlap */
+.tc-st{display:table;margin:6px 0 0}
+.del-box>summary{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:700;font-size:.85rem;color:#b3261e;border:1px solid rgba(179,38,30,.28);background:#fff8f7;cursor:pointer;list-style:none;min-height:40px}
+.del-box>summary::-webkit-details-marker{display:none}
+.del-box>summary .icon{width:16px;height:16px}
+.del-box.small>summary{padding:6px 10px;font-size:.76rem;min-height:0;border-radius:10px}
+.del-box[open]>summary{background:#b3261e;color:#fff;border-color:#b3261e}
+.del-form{margin-top:10px;padding:14px;border-radius:14px;border:1px solid rgba(179,38,30,.25);background:#fff8f7;display:grid;gap:10px;max-width:460px}
+.del-form p{margin:0;font-size:.88rem;color:#5c1b16}
+.del-form label{display:grid;gap:5px;font-weight:700;font-size:.82rem;color:#5c1b16}
+.del-form input{text-transform:uppercase;letter-spacing:.08em}
+.btn.danger,.ws-acts .del-form .btn.danger{background:#b3261e;color:#fff;border:0;justify-self:start;padding:10px 16px;border-radius:12px;font-weight:700;font-size:.88rem}
+.btn.danger:hover,.ws-acts .del-form .btn.danger:hover{background:#8f1d17}
+.ws-acts .del-box[open]{flex-basis:100%}
+.ws-acts .del-box>summary{font-family:inherit}
+.del-off{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:10px;font-size:.76rem;font-weight:600;color:#9a8f8a;border:1px dashed rgba(0,0,0,.15);cursor:not-allowed}
+.del-off .icon{width:14px;height:14px}
+.del-card h2{display:flex;align-items:center;gap:8px;color:#b3261e}
+.ck-off-row{flex-wrap:wrap}.ck-off-row .del-box[open]{flex-basis:100%}
+html.dark .del-box>summary{background:#2c1c1a;border-color:#5a2a26;color:#ffb3a6}
+html.dark .del-box[open]>summary{background:#b3261e;color:#fff}
+html.dark .del-form{background:#241614;border-color:#5a2a26}
+html.dark .del-form p,html.dark .del-form label{color:#ffd9d2}
+html.dark .del-off{color:#8a7f7a;border-color:rgba(255,255,255,.15)}
+html.dark .del-card h2{color:#ffb3a6}
+/* v163: "Meet your BULIG friends" (friends.js), Claude the Protector's safety tip and sign-in popups */
+body.fr-on{overflow:hidden}
+.fr-layer{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:16px;background:rgba(10,40,22,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:fr-fade .3s ease}
+.fr-layer.fr-out{opacity:0;transition:opacity .3s}
+@keyframes fr-fade{from{opacity:0}}
+.fr-panel{--fr-c:#16842f;position:relative;width:min(920px,100%);max-height:calc(100vh - 32px);border-radius:30px;background:#fff;overflow:hidden;box-shadow:0 30px 70px -30px rgba(0,0,0,.6);display:grid;grid-template-columns:1fr 1.1fr;color:#0f3318;font-family:var(--font-body)}
+.fr-stage{position:relative;min-height:450px;background:radial-gradient(120% 90% at 50% 100%,color-mix(in srgb,var(--fr-c) 26%,#fff) 0%,#fff 70%);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.fr-stage::before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;bottom:-60px;left:50%;transform:translateX(-50%);background:var(--fr-c);opacity:.14}
+.fr-rays{position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg,rgba(255,255,255,0) 0 9deg,rgba(255,255,255,.55) 9deg 18deg);animation:fr-spin 40s linear infinite;opacity:.6;pointer-events:none}
+@keyframes fr-spin{to{transform:rotate(1turn)}}
+.fr-kid{position:relative;height:400px;width:auto;max-width:92%;object-fit:contain;filter:drop-shadow(0 14px 16px rgba(0,0,0,.18));margin-bottom:14px}
+.fr-in{animation:fr-pop .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes fr-pop{0%{transform:translateY(60px) scale(.7);opacity:0}100%{transform:none;opacity:1}}
+.fr-talking .fr-kid{animation:fr-bob .45s ease-in-out infinite alternate}
+@keyframes fr-bob{to{transform:translateY(-6px) rotate(-1deg)}}
+.fr-count{position:absolute;top:16px;left:16px;font-weight:800;font-size:.72rem;letter-spacing:.14em;color:#034f15;background:rgba(255,255,255,.88);padding:6px 12px;border-radius:999px}
+.fr-side{display:flex;flex-direction:column;padding:30px 30px 22px;gap:14px;min-width:0;overflow:auto}
+.fr-eyebrow{font-size:.74rem;font-weight:800;letter-spacing:.16em;color:#0a6a20}
+.fr-plate{display:flex;align-items:center;gap:12px}
+.fr-dot{width:16px;height:16px;border-radius:50%;background:var(--fr-c);box-shadow:0 0 0 4px color-mix(in srgb,var(--fr-c) 22%,#fff);flex:none}
+.fr-panel h2{margin:0;font-size:2rem;line-height:1.1;font-weight:800;color:#0f3318}
+.fr-plate h2 span{display:block;font-size:1.05rem;font-weight:700;color:var(--fr-c)}
+.fr-lead{margin:0;color:#4f6b57;font-weight:600;line-height:1.5}
+.fr-bubble{position:relative;background:color-mix(in srgb,var(--fr-c) 9%,#fff);border:2px solid color-mix(in srgb,var(--fr-c) 35%,#fff);border-radius:22px;padding:16px 20px;font-size:1.12rem;line-height:1.55;font-weight:600;min-height:120px}
+.fr-bubble::before{content:"";position:absolute;left:-12px;top:34px;width:20px;height:20px;background:inherit;border-left:2px solid color-mix(in srgb,var(--fr-c) 35%,#fff);border-bottom:2px solid color-mix(in srgb,var(--fr-c) 35%,#fff);transform:rotate(45deg)}
+.fr-w{opacity:.22;transition:opacity .15s}.fr-w.on{opacity:1}
+.fr-job{display:flex;align-items:center;gap:8px;font-size:.86rem;color:#4f6b57;font-weight:600}
+.fr-job svg{width:18px;height:18px;color:var(--fr-c);flex:none}
+.fr-dots{display:flex;gap:6px;flex-wrap:wrap}
+.fr-dots i{width:30px;height:30px;border-radius:50%;background:#eef2ef;overflow:hidden;border:2px solid #fff;box-shadow:0 0 0 1px #dfe7e1}
+.fr-dots i img{width:100%;height:140%;object-fit:cover;object-position:top}
+.fr-dots i.on{box-shadow:0 0 0 3px var(--fr-c)}.fr-dots i.done{opacity:.55}
+.fr-actions{display:flex;align-items:center;gap:10px;margin-top:auto}
+.fr-actions .btn.primary{flex:1;min-height:54px;font-size:1rem}
+.fr-actions .btn svg{width:20px;height:20px}
+.fr-round{display:inline-grid;place-items:center;width:54px;height:54px;flex:none;border-radius:14px;background:#fff;color:#034f15;border:1.5px solid #e3e9e4;cursor:pointer}
+.fr-round svg{width:20px;height:20px}
+.fr-foot{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:#4f6b57}
+.fr-skip{background:none;border:0;color:#4f6b57;font:600 .9rem var(--font-body);cursor:pointer;padding:10px;min-height:40px;align-self:center}
+.fr-start .fr-side{justify-content:center}
+.fr-final{grid-template-columns:1fr}
+.fr-final .fr-stage{min-height:0;padding:26px 16px 0;display:block}
+.fr-team{position:relative;display:flex;justify-content:center;align-items:flex-end}
+.fr-team img{height:168px;min-width:0;margin:0 -14px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.15));animation:fr-pop .6s both cubic-bezier(.2,1.4,.4,1)}
+.fr-team .fr-t1{animation-delay:.07s}.fr-team .fr-t2{animation-delay:.14s}.fr-team .fr-t3{animation-delay:.21s}.fr-team .fr-t4{animation-delay:.28s}.fr-team .fr-t5{animation-delay:.35s}.fr-team .fr-t6{animation-delay:.42s}.fr-team .fr-t7{animation-delay:.49s}.fr-team .fr-t8{animation-delay:.56s}
+.fr-final .fr-side{align-items:center;text-align:center;padding:20px 30px 26px}
+.fr-final h2{font-size:1.9rem}
+.fr-final .fr-actions{width:min(420px,100%)}
+@media(max-width:740px){
+ .fr-layer{padding:0;place-items:end stretch}
+ .fr-panel{grid-template-columns:1fr;border-radius:28px 28px 0 0;max-height:100vh;max-height:100dvh;width:100%;overflow:auto}
+ .fr-stage{min-height:0;height:36vh}.fr-kid{height:32vh;margin-bottom:6px}
+ .fr-side{padding:16px 18px 20px;gap:12px;overflow:visible}
+ .fr-panel h2{font-size:1.5rem}.fr-plate h2 span{font-size:.95rem}
+ .fr-bubble{font-size:1rem;min-height:0;padding:14px 16px}
+ .fr-bubble::before{left:40px;top:-11px;transform:rotate(135deg)}
+ .fr-dots i{width:24px;height:24px}
+ .fr-team{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;gap:4px 0}
+ .fr-team img{height:110px;margin:0}
+ .fr-final .fr-stage{height:auto;padding-top:18px}
+ .fr-final h2{font-size:1.45rem}
+}
+@media(prefers-reduced-motion:reduce){.fr-rays,.fr-in,.fr-talking .fr-kid,.fr-team img{animation:none}}
+html.dark .fr-panel{background:#14261b;color:#e8f3ec}
+html.dark .fr-panel h2{color:#f2f8f4}
+html.dark .fr-stage{background:radial-gradient(120% 90% at 50% 100%,color-mix(in srgb,var(--fr-c) 35%,#14261b) 0%,#14261b 70%)}
+html.dark .fr-rays{opacity:.12}
+html.dark .fr-bubble{background:color-mix(in srgb,var(--fr-c) 18%,#14261b);border-color:color-mix(in srgb,var(--fr-c) 45%,#14261b);color:#f2f8f4}
+html.dark .fr-lead,html.dark .fr-job,html.dark .fr-foot,html.dark .fr-skip{color:#b9cdbf}
+html.dark .fr-round{background:#1c3325;color:#cfe9d9;border-color:#2c4a37}
+html.dark .fr-eyebrow{color:#7fd39a}
+html.dark .fr-count{background:rgba(20,38,27,.85);color:#cfe9d9}
+/* Claude the Protector: a safety tip on each Home page */
+.cl-tip{display:flex;align-items:center;gap:14px;margin:16px 0;padding:12px 18px 12px 12px;border-radius:20px;background:linear-gradient(100deg,#eef2fa,#f8f9fd);border:1px solid #d9e0ee;color:#1d2f5c}
+.cl-tip img{width:60px;height:auto;max-height:100px;object-fit:contain;flex:none;filter:drop-shadow(0 4px 6px rgba(29,47,92,.18))}
+.cl-tip b{display:block;font-size:.78rem;letter-spacing:.06em;color:#1d2f5c}
+.cl-tip span{display:block;font-weight:600;font-size:.95rem;line-height:1.45;color:#2b3a5e}
+html.dark .cl-tip{background:linear-gradient(100deg,#18233d,#1b2740);border-color:#2c3a5c}
+html.dark .cl-tip b{color:#c8d4f0}html.dark .cl-tip span{color:#dbe3f5}
+/* Claude in the sign-in popups: worried after a wrong password, sad while the account waits */
+.lgn-claude{display:block;height:150px;width:auto;margin:-6px auto 4px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.15));animation:lgn-wiggle .7s .35s ease-in-out}
+.lgn-claude-row{display:flex;align-items:center;justify-content:center;gap:8px}
+.lgn-claude-row .lgn-claude{height:132px;margin:0}
+.lgn-claude-row .lgn-clock{margin:0}
+@media(max-width:380px){.lgn-claude{height:120px}.lgn-claude-row .lgn-claude{height:104px}}
+.cl-tip{max-width:760px}
+.fr-start .fr-dots{gap:8px}.fr-start .fr-dots i{width:46px;height:46px}
+@media(max-width:740px){.fr-start .fr-dots i{width:34px;height:34px}}

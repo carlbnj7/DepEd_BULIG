@@ -118,6 +118,16 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   same section twice; another teacher's section with the same grade and name only shows a warning (`section_known()`).
   Type the list: `sec_mode` one (one Section for all) or many (`t[sec][row]`), and `t[level][row]` a starting level on each
   row ("Starting level for everyone" fills the rows not changed by hand).
+- **Delete an account** (`app/account_delete.php`, v162): `delete_pupil` (the pupil's teacher, on the pupil's Account tab;
+  the administrator, in Account check › turned-off pupils) and `delete_teacher` (administrator, Teachers page, only when the
+  teacher has no pupils and no sections). The person types DELETE (`confirm`). A pupil's rows in every pupil table, their
+  per-person settings, uploaded picture and `storage/recordings/<id>` go too; what others did keeps its record without the name.
+- **George's friends** (`app/friends.php`, `public/assets/friends.js`, v163): `BULIG_FRIENDS` lists George, Max, Dracs,
+  Bruno, Mia, Toby, Zion, Arah and Claude (pictures `assets/images/characters/<id>-<pose>.webp`). "Meet your BULIG friends"
+  shows once on the pupil Home (`<meta name="bulig-friends">` until `friends_met_<id>`; action `friends_met` also sets
+  `george_met_<id>`); app.js opens it after the welcome panels (`window.buligFriendsStart`) and the tour offer waits for it.
+  Each friend speaks with their own voice (female for girls, male for boys, own pitch and speed). Claude the Protector:
+  `claude_tip()` on every Home page, `claude_pop()` worried/sad in the sign-in popups.
 - **No Lesson studio** (v161): the administrator cannot change module content. The pages `content`, `edit_activity`, `media`
   and `issues` and the actions `save_lesson`, `save_activity`, `save_assessment`, `upload_media`, `acknowledge` and
   `admin_toggle_activity` were removed; old links go to Admin Home. Picture check (System health › `visual_audit`) stays, read-only.
