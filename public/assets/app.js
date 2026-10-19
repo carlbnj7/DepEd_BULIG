@@ -277,10 +277,12 @@ document.addEventListener('click',e=>{const c=e.target.closest('[data-confirm]')
 document.addEventListener('change',e=>{const s=e.target.closest('[data-autosubmit]');if(s&&s.form){if(s.name==='grade'){const id=s.form.querySelector('[name=id]');if(id)id.disabled=true;}s.form.requestSubmit();}});
 /* Admin tables: label each cell so phones can show rows as cards (v21) */
 document.querySelectorAll('.ws-table').forEach(t=>{const h=[...t.querySelectorAll('thead th')].map(x=>x.textContent.trim());t.querySelectorAll('tbody tr').forEach(r=>[...r.children].forEach((c,i)=>{if(h[i]&&!c.hasAttribute('colspan'))c.dataset.label=h[i];}));});
-/* Pupil welcome and celebration panels, shown one after another (v24) */
-(function(){const q=[...document.querySelectorAll('.pw-overlay')];if(!q.length)return;let cur=null;
- const esc=e=>{if(e.key==='Escape'&&cur)close();};
- function show(){cur=q.shift()||null;if(!cur){document.removeEventListener('keydown',esc);document.dispatchEvent(new Event('pf:overlays-done'));return;}cur.hidden=false;const f=cur.querySelector('.pw-actions .btn');if(f)setTimeout(()=>f.focus(),600);}
+/* Pupil welcome and celebration panels, shown one after another (v24); then "Meet your BULIG friends" once (friends.js, v163) */
+(function(){const q=[...document.querySelectorAll('.pw-overlay')],friends=window.buligFriendsStart;if(!q.length&&!friends)return;let cur=null;
+ const esc=e=>{if(e.key==='Escape'&&cur&&cur.nodeType)close();};
+ function show(){cur=q.shift()||null;
+  if(!cur&&window.buligFriendsStart){window.buligFriendsStart=null;cur={};friends(()=>{cur=null;show();});return;}
+  if(!cur){document.removeEventListener('keydown',esc);document.dispatchEvent(new Event('pf:overlays-done'));return;}cur.hidden=false;const f=cur.querySelector('.pw-actions .btn');if(f)setTimeout(()=>f.focus(),600);}
  function close(){const w=cur;cur=null;w.classList.add('pw-out');setTimeout(()=>{w.remove();show();},320);}
  q.forEach(w=>{w.querySelectorAll('[data-welcome-close]').forEach(b=>b.addEventListener('click',()=>{if(cur===w)close();}));w.addEventListener('click',e=>{if(e.target===w&&cur===w)close();});});
  document.addEventListener('keydown',esc);window.pfOverlayOpen=()=>!!cur;show();})();
