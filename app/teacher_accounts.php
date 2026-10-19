@@ -95,12 +95,15 @@ function teacher_import_check(array $rows):array{
   if(count($out)>=IMPORT_MAX_ROWS)fail('A teacher list can have up to '.IMPORT_MAX_ROWS.' teachers per upload. Split the file and upload it in parts.');
   $name=$get('name');
   if($name!==''&&substr_count($name,',')===1){[$l,$f]=array_map('trim',explode(',',$name));if($l!==''&&$f!=='')$name=$f.' '.$l;}
-  if($name===''){$name=trim(import_name_case($get('first')).' '.import_name_case($get('middle')).' '.import_name_case($get('last')));}else $name=import_name_case($name);
+  $ext=name_ext_norm($get('ext'));$parts=null;
+  if($name===''){[$f,$m,$l]=[import_name_case($get('first')),import_name_case($get('middle')),import_name_case($get('last'))];$name=name_compose($f,$m,$l,(string)$ext);if($f!==''&&$l!=='')$parts=[$f,$m,$l,(string)$ext];}
+  else $name=trim(import_name_case($name).' '.$ext);
   $name=trim(preg_replace('/\s+/',' ',$name));$sexRaw=strtolower($get('sex'));
   $sex=in_array($sexRaw,['m','male','lalaki','l'],true)?'male':(in_array($sexRaw,['f','female','babae','b'],true)?'female':null);
-  $row=['line'=>$hi+$n+2,'name'=>$name,'sex'=>$sex,'grade'=>0,'section'=>'','status'=>'ok','notes'=>[]];
+  $row=['line'=>$hi+$n+2,'name'=>$name,'parts'=>$parts,'sex'=>$sex,'grade'=>0,'section'=>'','status'=>'ok','notes'=>[]];
   $err=function(string $m)use(&$row){$row['status']='error';$row['notes'][]=$m;};
   if(mb_strlen($name)<2||mb_strlen($name)>150)$err('Name is missing or too long.');
+  if($ext===null)$err('Extension must be Jr., Sr., II, III, IV or V (or blank).');
   if(!$sex)$err($sexRaw===''?'Sex is missing (M or F).':'Sex must be M or F.');
   $grade=$get('grade');$grade=$grade!==''?(int)preg_replace('/\D/','',$grade):0;$sec=$get('section');
   if($sec!==''){
@@ -138,8 +141,8 @@ function teacher_import_view():void{
   echo '<div class="tablewrap import-preview"><table><thead><tr><th>Teacher ID</th><th>Name</th><th>First section</th></tr></thead><tbody>';foreach($done as $d)echo '<tr><td><strong>'.e($d['id']).'</strong></td><td>'.e($d['name']).'</td><td>'.e($d['section']?:'—').'</td></tr>';echo '</tbody></table></div></section>';return;
  }
  echo '<div class="section-heading"><div><span class="eyebrow">STEP 1</span><h2>Upload a teacher list</h2></div><a class="btn quiet small" href="?page=teacher_template">'.icon('download').'Download template</a></div>'
-  .'<ol class="import-steps"><li>Open the template in Excel. Fill in <strong>Last name</strong>, <strong>First name</strong>, <strong>Middle name</strong> and <strong>Sex</strong> (M or F). <strong>Grade</strong> and <strong>Section</strong> are optional: BULIG adds that section for the teacher.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet. You will see every row first.</li><li>Press <strong>Create accounts</strong>, then print the Teacher Passes.</li></ol>'
-  .'<div class="tablewrap import-preview tc-sample"><table><thead><tr><th>Last name</th><th>First name</th><th>Middle name</th><th>Sex</th><th>Grade <small>optional</small></th><th>Section <small>optional</small></th></tr></thead><tbody><tr class="tc-what"><td>Family name</td><td>Given name</td><td>Middle name</td><td>M or F</td><td>1 to 6</td><td>Section name</td></tr></tbody></table></div>'
+  .'<ol class="import-steps"><li>Open the template in Excel. Fill in <strong>Last name</strong>, <strong>First name</strong>, <strong>Middle name</strong>, <strong>Extension</strong> (Jr., Sr., II … or blank) and <strong>Sex</strong> (M or F). <strong>Grade</strong> and <strong>Section</strong> are optional: BULIG adds that section for the teacher.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet. You will see every row first.</li><li>Press <strong>Create accounts</strong>, then print the Teacher Passes.</li></ol>'
+  .'<div class="tablewrap import-preview tc-sample"><table><thead><tr><th>Last name</th><th>First name</th><th>Middle name</th><th>Extension <small>optional</small></th><th>Sex</th><th>Grade <small>optional</small></th><th>Section <small>optional</small></th></tr></thead><tbody><tr class="tc-what"><td>Family name</td><td>Given name</td><td>Middle name</td><td>Jr., Sr., II or blank</td><td>M or F</td><td>1 to 6</td><td>Section name</td></tr></tbody></table></div>'
   .'<form method="post" enctype="multipart/form-data" class="formgrid import-form">'.csrf_field().'<input type="hidden" name="action" value="timport_preview"><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><label class="import-file">Teacher list file (.xlsx or .csv)<input type="file" name="teacher_list" accept=".csv,.xlsx,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>'
   .'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' teachers, 2 MB. Teachers already in BULIG (same name) are skipped.</small><button class="btn primary">'.icon('check').'Check the list</button></div></form></section>';
 }
@@ -147,7 +150,7 @@ function teacher_import_view():void{
 function teacher_import_download(string $page):never{
  require_role('admin');
  if($page==='teacher_template'){header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-teacher-list-template.csv"');
-  echo "\xEF\xBB\xBF".'Last name,First name,Middle name,Sex,Grade,Section'."\r\n";exit;}
+  echo "\xEF\xBB\xBF".'Last name,First name,Middle name,Extension,Sex,Grade,Section'."\r\n";exit;}
  $done=$_SESSION['teacher_import_done']??[];if(!$done)fail('There is no finished import to download.',404);
  header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-new-teacher-logins.csv"');$h=fopen('php://output','w');fwrite($h,"\xEF\xBB\xBF");
  fputcsv($h,['Teacher ID','Name','First section','Starter password'],',','"','\\');foreach($done as $d)fputcsv($h,[$d['id'],$d['name'],$d['section'],$d['pw']],',','"','\\');exit;
@@ -206,7 +209,7 @@ function teacher_account_action(string $action):never{
   $done=[];db()->beginTransaction();try{
    $have=[];foreach(rows("SELECT name FROM users WHERE role='teacher'") as $t)$have[ck_name_key((string)$t['name'])]=1;
    foreach($p['rows'] as $r){if($r['status']!=='ok'||isset($have[ck_name_key($r['name'])]))continue;
-    $c=teacher_create($r['name'],(string)$r['sex']);$have[ck_name_key($r['name'])]=1;$label='';
+    $c=teacher_create($r['name'],(string)$r['sex']);name_parts_save($c['id'],$r['parts']??null);$have[ck_name_key($r['name'])]=1;$label='';
     if($r['section']!==''){q('INSERT INTO sections(teacher_id,grade_level,name) VALUES(?,?,?)',[$c['id'],$r['grade'],$r['section']]);$label='Grade '.$r['grade'].' – '.$r['section'];}
     $done[]=['uid'=>$c['id'],'id'=>$c['public'],'name'=>$r['name'],'section'=>$label,'pw'=>$c['pw']];}
    audit('import_teachers',count($done).' from '.$p['file']);db()->commit();
