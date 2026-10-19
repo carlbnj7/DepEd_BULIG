@@ -160,6 +160,7 @@ function ac_card(array $a,array $c,array $o=[]):string{
  if(!$teacher&&$pct<1&&($miss=ac_misses($a,$s))){$h.='<p class="ac-lab">LOOK AGAIN</p><ul class="ac-again">';
   foreach(array_slice($miss,0,6) as [$n,$what,$want,$how])$h.='<li><em>'.e($n).'</em><span>'.($how==='goes with'?e($what).' goes with <b>'.e($want).'</b>':e($what).'<br>The answer: <b>'.e($want).'</b>').'</span></li>';
   if(count($miss)>6)$h.='<li class="ac-more"><span>and '.(count($miss)-6).' more</span></li>';$h.='</ul>';}
+ if($pct<1&&!$teacher&&function_exists('friend_say'))$h.=friend_say('bruno','tryagain','Made a mistake? That is okay! Tap Try it again and we will do it together.',false);
  if($pct<1&&!$teacher)$h.='<div class="ac-btns"><a class="ac-btn" href="?page=lesson&amp;id='.(int)$a['lesson_id'].'&amp;activity='.(int)$a['id'].'&amp;again=1">'.l1_icon('again').'Try it again</a></div>';
  return $h.'</div>';
 }

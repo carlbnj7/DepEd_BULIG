@@ -5076,7 +5076,7 @@ html.dark .hello-halo{background:radial-gradient(circle,rgba(255,255,255,.08) 0 
 html.dark .hello-txt small{background:rgba(74,169,91,.16);color:#9be0b4}html.dark .hello-txt b{color:#eef5f0}
 @media(prefers-reduced-motion:reduce){.boot-tag,.boot-say i:nth-child(3),.hello-txt b,.hello-txt>span:not(.hello-bar){opacity:1}.boot-say i:not(:nth-child(3)){display:none}.boot-bar i,.hello-bar i{width:60%}}
 .boot-logo{width:min(480px,76vw)}
-.boot-kid.k1{left:7%;background-image:url(images/characters/boy-cheer.webp?v=1)}.boot-kid.k2{right:7%;background-image:url(images/characters/girl.webp?v=1);animation-delay:.45s}
+.boot-kid.k1{left:7%;background-image:url(images/characters/toby-cheer.webp?v=1)}.boot-kid.k2{right:7%;background-image:url(images/characters/george-hello.webp?v=1);animation-delay:.45s}
 .boot-kid{filter:drop-shadow(0 12px 14px rgba(0,0,0,.4))}
 /* While the hello or the opening screen is up, the menu and top bar do not slide over it during the page change. */
 body:has([data-hello]) .sidebar,body:has([data-hello]) .topbar,body:has([data-hello]) .pupil-tabbar,html.bulig-boot .sidebar,html.bulig-boot .topbar,html.bulig-boot .pupil-tabbar{view-transition-name:none}
@@ -5505,3 +5505,98 @@ html.dark .cl-tip b{color:#c8d4f0}html.dark .cl-tip span{color:#dbe3f5}
 .cl-tip{max-width:760px}
 .fr-start .fr-dots{gap:8px}.fr-start .fr-dots i{width:46px;height:46px}
 @media(max-width:740px){.fr-start .fr-dots i{width:34px;height:34px}}
+/* v164: Notifications page: All / Unread, mark as read or unread, delete, mark all as read, delete all read */
+.nt-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.nt-tools form{margin:0}
+.nt-tools .btn .icon{width:18px;height:18px}
+.nt-tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.nt-tabs a{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--y300,#ffd966);background:#fff;color:var(--g800,#034f15);font-weight:700;text-decoration:none}
+.nt-tabs a b{min-width:24px;height:22px;padding:0 7px;border-radius:999px;background:var(--g50,#f3faf6);display:inline-grid;place-items:center;font-size:.75rem}
+.nt-tabs a.on{background:var(--btn-green);color:#fff;border-color:var(--g800,#034f15)}.nt-tabs a.on b{background:rgba(255,255,255,.22);color:#fff}
+.nt-row{padding:0;gap:0;align-items:stretch;flex-wrap:nowrap}
+.nt-main{display:flex;align-items:center;gap:14px;padding:14px 16px;flex:1;min-width:0;text-decoration:none!important;color:inherit}
+.nt-acts{display:flex;align-items:center;gap:6px;padding:0 14px 0 4px;flex:none}
+.nt-acts form{margin:0}
+.nt-act{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 12px;border-radius:10px;border:1px solid var(--y300,#ffd966);background:#fff;font:600 .78rem var(--font-body);color:var(--g700,#176444);cursor:pointer;white-space:nowrap}
+.nt-act .icon{width:15px;height:15px}
+.nt-act:hover{background:var(--g50,#f3faf6)}
+.nt-act.nt-del{color:#b3261e;border-color:rgba(179,38,30,.28);background:#fff8f7}
+.nt-day small{display:block;font-size:.72rem;letter-spacing:0;text-transform:none;font-weight:600;color:var(--muted,#5b6b60);margin-top:2px}
+@media(max-width:740px){
+ .nt-row{flex-direction:column}
+ .nt-main{flex-wrap:wrap}
+ .nt-acts{padding:0 14px 12px 70px;flex-wrap:wrap}
+ .pageheading .nt-tools{width:100%}.nt-tools .btn{flex:1}
+}
+html.dark .nt-tabs a{background:#1c3325;color:#cfe9d9;border-color:#2c4a37}
+html.dark .nt-tabs a.on{background:var(--btn-green);color:#fff}
+html.dark .nt-act{background:#1c3325;color:#cfe9d9;border-color:#2c4a37}
+html.dark .nt-act.nt-del{background:#2c1c1a;border-color:#5a2a26;color:#ffb3a6}
+/* v164: Roxanne the Timekeeper (Level 4 reading timer, Today's goal, break note); 10 friends on the last screen */
+.rx-timer{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:10px 14px;border-radius:18px;background:#fff6e6;border:1px solid #ffd9a3;color:#6b3d00;font-weight:600;line-height:1.45}
+.rx-timer img{width:64px;height:auto;flex:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.12))}
+.rx-timer[data-state="rec"] img{animation:rx-tick 1s steps(2,end) infinite}
+@keyframes rx-tick{50%{transform:rotate(-6deg)}}
+.rx-goal{display:flex;align-items:center;gap:10px;margin:10px 0 12px}
+.rx-goal img{width:58px;height:auto;flex:none}
+.rx-goal span{font-weight:600;font-size:.92rem;color:#6b3d00;line-height:1.4}.rx-goal b{display:block;font-size:.72rem;letter-spacing:.06em;color:#b36b00}
+.rx-rest{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:2147482000;display:flex;align-items:center;gap:14px;width:min(560px,calc(100% - 24px));padding:12px 16px;border-radius:22px;background:#fff;border:2px solid #ffd9a3;box-shadow:0 20px 40px -18px rgba(0,0,0,.45);animation:fr-pop .5s cubic-bezier(.2,1.4,.4,1)}
+.rx-rest.out{opacity:0;transition:opacity .3s}
+.rx-rest img{width:70px;height:auto;flex:none}
+.rx-rest div{flex:1;min-width:0}.rx-rest b{display:block;color:#0f3318}.rx-rest span{display:block;font-size:.9rem;color:#4f6b57;font-weight:600;line-height:1.4}
+.rx-rest .btn{flex:none;min-height:46px;padding:0 16px}
+@media(max-width:740px){.rx-rest{bottom:96px;flex-wrap:wrap}.rx-rest .btn{flex:1 1 100%}}
+.fr-team img{height:150px;margin:0 -16px}.fr-team .fr-t9{animation-delay:.63s}
+@media(max-width:740px){.fr-team{grid-template-columns:repeat(5,1fr)}.fr-team img{height:96px;margin:0}}
+html.dark .rx-timer{background:#2a2112;border-color:#5c4320;color:#ffd9a3}
+html.dark .rx-goal span{color:#ffd9a3}html.dark .rx-goal b{color:#ffbf66}
+html.dark .rx-rest{background:#14261b;border-color:#5c4320}html.dark .rx-rest b{color:#f2f8f4}html.dark .rx-rest span{color:#b9cdbf}
+/* v164: the sign-in greeting label ("GOOD EVENING", "ADMINISTRATOR") sits above the glow, so it is clear for every role */
+.hello-txt{position:relative;z-index:1}
+.hello-txt small{background:#e2f1dc;color:#075919;border:1px solid rgba(7,89,25,.18);opacity:1}
+.hello-admin .hello-txt small{background:#e3eafb;color:#1f3f8a;border-color:rgba(31,63,138,.2)}
+html.dark .hello-txt small{background:rgba(74,169,91,.22);color:#b9f0cb;border-color:rgba(155,224,180,.3)}
+/* v165: the friends take turns on the sign-in page */
+.lfx-kids[data-lfx-pairs] .lfx-kid{transition:transform .35s ease-in,opacity .35s ease-in}
+.lfx-kids.lfx-swap .lfx-kid{transform:translateY(40px) scale(.85);opacity:0}
+.lfx-kids.lfx-in .lfx-kid{animation:lfx-peek .6s cubic-bezier(.2,1.4,.4,1) both}
+.lfx-kids.lfx-in .lfx-k2{animation-delay:.08s}
+.lfx-kids.lfx-swap @media(prefers-reduced-motion:reduce){.lfx-kids.lfx-swap .lfx-kid,.lfx-kids.lfx-in .lfx-kid{transform:none;animation:none}}
+/* v166: a friend says something on their own page (friend_say): each in their own colour */
+.fs-say{--fs:#16842f;display:flex;align-items:center;gap:14px;margin:0 0 16px;padding:10px 18px 10px 12px;border-radius:20px;background:color-mix(in srgb,var(--fs) 8%,#fff);border:1px solid color-mix(in srgb,var(--fs) 28%,#fff);max-width:760px}
+.fs-say img{width:64px;height:80px;object-fit:contain;object-position:bottom;flex:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.14))}
+.fs-say b{display:block;font-size:.74rem;letter-spacing:.06em;color:var(--fs)}
+.fs-say span{display:block;font-weight:600;font-size:.95rem;line-height:1.45;color:#21362a}
+.fs-max{--fs:#1e7fd6}.fs-dracs{--fs:#7a4fc9}.fs-bruno{--fs:#3f8a73}.fs-mia{--fs:#d86a0c}.fs-toby{--fs:#2f8f3a}.fs-zion{--fs:#c62828}.fs-arah{--fs:#d63d80}.fs-claude{--fs:#1d2f5c}.fs-roxanne{--fs:#c77700}.fs-george{--fs:#0f8a83}
+.ac-panel .fs-say{margin:12px 0 4px;background:#fff}
+.l1-start-in>.fs-say{margin:0 auto 14px}
+@media(max-width:740px){.fs-say{padding:8px 12px 8px 8px;gap:10px}.fs-say img{width:52px;height:66px}.fs-say span{font-size:.9rem}}
+html.dark .fs-say{background:color-mix(in srgb,var(--fs) 16%,#14261b);border-color:color-mix(in srgb,var(--fs) 40%,#14261b)}
+html.dark .fs-say b{color:color-mix(in srgb,var(--fs) 55%,#fff)}html.dark .fs-say span{color:#dfece4}
+/* v168: every friend looks like George: the whole character, no box, with a speech bubble.
+   On a page the friend stands at the bottom right (tap for the message again); in a card the friend stands beside a bubble. */
+.fs-say{background:none!important;border:0!important;padding:0!important;max-width:none}
+.fs-say img{width:auto;height:150px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18))}
+.fs-bub{position:relative;background:#fff;border:2.5px solid var(--fs);border-radius:18px;padding:9px 14px;box-shadow:0 6px 14px rgba(0,0,0,.12);font-family:var(--font-fun)}
+.fs-bub b{display:block;font-size:.7rem;letter-spacing:.05em;color:var(--fs)}
+.fs-bub span{display:block;font-weight:700;font-size:.88rem;line-height:1.4;color:#17331f}
+.fs-inline{display:flex;align-items:flex-end;gap:6px;margin:6px 0 14px}
+.fs-inline .fs-bub{margin-bottom:46px;max-width:520px;border-radius:18px 18px 18px 4px}
+.fs-float{position:fixed;right:14px;bottom:0;z-index:40;margin:0;display:block;cursor:pointer;animation:fs-up .7s cubic-bezier(.2,1.4,.4,1) both}
+.fs-float img{height:170px;transform-origin:50% 100%;animation:fs-sway 3.4s 1s ease-in-out infinite}
+.fs-float .fs-bub{position:absolute;right:calc(100% - 18px);bottom:120px;width:max-content;max-width:240px;border-radius:18px 18px 4px 18px;opacity:0;transform:scale(.4);transform-origin:bottom right;transition:.35s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.fs-float.on .fs-bub{opacity:1;transform:none}
+@keyframes fs-up{from{transform:translateY(60px);opacity:0}}
+@keyframes fs-sway{50%{transform:rotate(-2deg)}}
+@media(max-width:740px){.fs-float{bottom:84px;right:6px}.fs-float img{height:120px}.fs-float .fs-bub{bottom:96px;max-width:170px}.fs-bub span{font-size:.8rem}.fs-inline img{height:110px}.fs-inline .fs-bub{margin-bottom:30px}}
+@media(prefers-reduced-motion:reduce){.fs-float,.fs-float img{animation:none}}
+html.dark .fs-bub{background:#14261b}html.dark .fs-bub span{color:#e8f3ec}
+.ac-panel .fs-say{background:none}
+/* Claude's tip and Roxanne on Today's goal: also without a box */
+.cl-tip{background:none;border:0;padding:0;align-items:flex-end;gap:6px}
+.cl-tip img{width:auto;height:130px;max-height:none;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18))}
+.cl-tip>div{position:relative;margin-bottom:40px;background:#fff;border:2.5px solid #1d2f5c;border-radius:18px 18px 18px 4px;padding:9px 14px;box-shadow:0 6px 14px rgba(0,0,0,.12)}
+.rx-goal{align-items:flex-end;gap:6px}.rx-goal img{width:auto;height:100px}
+.rx-goal span{background:#fff;border:2.5px solid #e58a00;border-radius:18px 18px 18px 4px;padding:8px 13px;margin-bottom:26px;box-shadow:0 6px 14px rgba(0,0,0,.1)}
+.rx-timer{background:none;border:0;padding:0;align-items:flex-end}.rx-timer img{width:auto;height:110px}
+.rx-timer span{background:#fff;border:2.5px solid #e58a00;border-radius:18px 18px 18px 4px;padding:9px 14px;margin-bottom:30px;box-shadow:0 6px 14px rgba(0,0,0,.1)}
+html.dark .cl-tip,html.dark .rx-timer{background:none}html.dark .cl-tip>div,html.dark .rx-goal span,html.dark .rx-timer span{background:#14261b}

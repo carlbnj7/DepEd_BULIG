@@ -9,13 +9,15 @@
 
 /** The menu of each role: [page, icon, label, extra] or ['g', group word] or ['hr']. */
 function staff_nav_list(array $u):array{
- if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['profile','user','My profile'],['settings','settings','Settings']];
+ if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile'],['settings','settings','Settings']];
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
-   ['g','TEACHING'],['class_demo','book','Class Demo'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['profile','user','My profile']];}
+   ['g','TEACHING'],['class_demo','book','Class Demo'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
  return [['dashboard','home','Home'],['g','PEOPLE'],['accounts','people','Teachers'],['add_teachers','useredit','Add teachers'],['checkup','shield','Account check'],
-  ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['activity_log','clock','Activity log'],['health','heart','System health'],['settings','settings','Settings'],['hr'],['profile','user','My profile']];
+  ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['activity_log','clock','Activity log'],['health','heart','System health'],['settings','settings','Settings'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
 }
+/** The number of new notifications beside Notifications in the menu. */
+function staff_notif_badge(array $u):array{$n=function_exists('notif_count')?notif_count($u):0;return $n?['count'=>$n]:[];}
 /** Which menu item a page belongs to. */
 function staff_nav_on(string $role,string $page):string{
  if($role==='teacher')return ['pupil'=>'manage','progress'=>'manage','cards'=>'print','certificates'=>'print','report'=>'print','report_card'=>'print','section_report'=>'print','rcheck_pupil'=>'rcheck','rcheck_rules'=>'rcheck','rcheck_print'=>'rcheck','review'=>'qcheck','guide'=>'class_demo','moved'=>'dashboard','rate'=>'profile'][$page]??$page;

@@ -51,7 +51,7 @@
  window.buligLockOverlay=function(o){
   const art=el('div','qo-lockart');art.innerHTML=padlock;
   [[-64,-30],[64,-24],[-50,30],[54,34],[0,-46]].forEach(([x,y])=>{const k=el('i','qo-spark');k.style.setProperty('--dx',x+'px');k.style.setProperty('--dy',y+'px');art.append(k);});
-  if(me&&me.char){const k=el('img','qo-kid');k.src=me.char;k.alt='';art.append(k);}
+  const kid=me&&((me.pals&&me.pals.save)||me.char);if(kid){const k=el('img','qo-kid');k.src=kid;k.alt='';art.append(k);}   // pupils: Claude keeps the account safe (v164)
   const extra=[];
   if(o.pct!=null&&o.need){const bar=el('div','qo-prog'),i=el('i');bar.append(i);bar.style.setProperty('--w',Math.max(3,Math.min(100,+o.pct))+'%');extra.push(bar,el('p','qo-small',o.need+' · '+o.pct+'% done'));}
   overlay({cls:'qo-lock',art,title:o.title,text:o.text,extra,primary:o.go?{label:o.go.label,href:o.go.href}:{label:'Okay'},secondary:o.go?{label:'Okay'}:null});
@@ -67,7 +67,7 @@
  document.addEventListener('submit',async e=>{const f=e.target;if(!f.querySelector||!f.querySelector('input[name="action"][value="logout"]')||f.dataset.ok||!me)return;e.preventDefault();
   const saved=load().find(x=>String(x.uid)===String(me.id));let pending=0;
   try{if(window.buligOffline&&window.buligOffline.pending)pending=await Promise.race([window.buligOffline.pending(),new Promise(r=>setTimeout(()=>r(0),800))]);}catch(x){}
-  const art=el('div','qo-byeart');if(me.hi||me.char){const i=el('img');i.src=me.hi||me.char;i.alt='';art.append(i);}
+  const art=el('div','qo-byeart'),bye=(me.pals&&me.pals.bye)||me.hi||me.char;if(bye){const i=el('img');i.src=bye;i.alt='';art.append(i);}
   const extra=[];let box=null;
   if(saved){const l=el('label','qo-check');box=el('input');box.type='checkbox';box.checked=true;l.append(box,document.createTextNode(' Keep me saved on this device'));extra.push(l);}
   if(pending)extra.push(el('p','qo-warn',pending+' '+(pending===1?'answer is':'answers are')+' still waiting to upload. They will upload the next time you sign in on this device.'));
@@ -145,10 +145,10 @@
    }).catch(()=>{if(p.role==='pupil'?offLevels(p):offDemos(p)){render();openOffline(p);return;}alert.textContent=navigator.onLine===false?'You are offline. Connect to the internet to sign in.':'Could not sign in. Please try again.';alert.hidden=false;render();});}
   /* No internet: a saved pupil opens the levels saved on this device. Answers wait here and upload later with the saved key. */
   function openOffline(p){
-   const art=el('div','qo-byeart'),img=el('img');img.alt='';img.src='assets/images/characters/'+(p.img&&/girl/.test(p.img)?'girl':'boy')+'-cheer.webp';
+   const art=el('div','qo-byeart'),img=el('img');img.alt='';img.src='assets/images/characters/george-cheer.webp';
    if(p.role!=='pupil'&&offDemos(p)){overlay({cls:'qo-bye qo-offgo',title:'Hi, '+p.first+'!',text:'Opening the Class Demo saved on this device. You can teach without internet.',extra:[Object.assign(el('div','qo-dots'),{innerHTML:'<i></i><i></i><i></i>'})]});setWho(p.uid).then(()=>setTimeout(()=>{location.href='?page=class_demo';},still?100:1100));return;}
    if(p.role!=='pupil'){overlay({cls:'qo-bye',title:'Teachers need the internet',text:'Your class pages show live information, so please connect to the internet to sign in. Next time, save Class Demo for offline to teach without internet.',primary:{label:'Okay'}});return;}
-   if(!offLevels(p)){img.src='assets/images/characters/'+(p.img&&/girl/.test(p.img)?'girl':'boy')+'.webp';art.append(img);overlay({cls:'qo-bye',art,title:'No saved lessons yet, '+p.first,text:'Next time you have internet, open My lessons and tap “Save for offline” on your level. Then you can learn here without internet.',primary:{label:'Okay'}});return;}
+   if(!offLevels(p)){img.src='assets/images/characters/toby-hello.webp';art.append(img);overlay({cls:'qo-bye',art,title:'No saved lessons yet, '+p.first,text:'Next time you have internet, open My lessons and tap “Save for offline” on your level. Then you can learn here without internet.',primary:{label:'Okay'}});return;}
    art.append(img);const dots=el('div','qo-dots');dots.innerHTML='<i></i><i></i><i></i>';
    overlay({cls:'qo-bye qo-offgo',art,title:'Hi, '+p.first+'!',text:'Opening your saved lessons. You can learn without internet.',extra:[dots]});
    setWho(p.uid).then(()=>setTimeout(()=>{location.href='?page=dashboard';},still?100:1100));}

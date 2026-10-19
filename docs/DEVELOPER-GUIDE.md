@@ -128,6 +128,24 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   `george_met_<id>`); app.js opens it after the welcome panels (`window.buligFriendsStart`) and the tour offer waits for it.
   Each friend speaks with their own voice (female for girls, male for boys, own pitch and speed). Claude the Protector:
   `claude_tip()` on every Home page, `claude_pop()` worried/sad in the sign-in popups.
+  Roxanne the Timekeeper (v164, pictures `roxanne-*`): `roxanne_timer()` beside the Level 4 recorder (l1.js `rxSay()`),
+  `roxanne_goal()` on Today's goal, and a break note after 30 minutes of learning (friends.js, sessionStorage
+  `bulig-rest-<id>`). `friends_tour_fix()` gives pupils friends instead of their boy/girl picture (meta `char`, `hi`,
+  `pals`: dl, dlDone, save, bye, remind, rest); the boy/girl picture stays on the reading ladder and the lesson map.
+- **Sign-in page friends** (v165): `login_friend_pairs()` (friends.php) gives the 5 pairs in `data-lfx-pairs`; login.js
+  swaps the two pictures every 4.2 seconds (classes `lfx-swap`, `lfx-in`). The teacher sign-in keeps the teacher characters.
+- **Friends on their pages** (v166): `friend_say($id,$pose,$text)` (friends.php, class `fs-say fs-<id>`): Arah on My calendar
+  (`arah_say`), Zion and Toby on My achievements (`toby_say`), Toby on the reading board, Claude in pupil Settings, Bruno
+  in the result card after a wrong answer (scoring.php), and `level_friend($lv)` on each lesson's first screen (Max L1,
+  Mia L2A-L3, Roxanne L4, Dracs L5-L7). Rank emblems were redrawn (v166); `rk_img()` adds `?v=2`.
+- **Friends on phone notifications** (v167): `push_icon($kind,$title)` (reach.php) picks the picture in
+  `assets/images/characters/push/` (daily: Roxanne, streak: Arah, lessons: George, teacher note: George or Bruno for
+  "Try …", rank: Zion, help: Dracs, certificate: George, reading: Max); sw.js shows `d.icon`. Rank ups are queued for the
+  pupil's phone (reader_level.php). Teachers can allow notifications too (remind.js, `push_action` for teachers);
+  `notify()` queues help, certificate and reading notes for them, and cron/notify.php sends teachers each note as it
+  comes (no daily reminder for teachers). iPhone and iPad always show the app icon.
+- **Notifications page** (`app/notify.php`, v164): All / Unread tabs, actions `notif_mark` (`to` read|unread),
+  `notif_delete`, `notif_delete_read` and `notif_read_all`, only on the person's own rows; Notifications is in every menu.
 - **No Lesson studio** (v161): the administrator cannot change module content. The pages `content`, `edit_activity`, `media`
   and `issues` and the actions `save_lesson`, `save_activity`, `save_assessment`, `upload_media`, `acknowledge` and
   `admin_toggle_activity` were removed; old links go to Admin Home. Picture check (System health › `visual_audit`) stays, read-only.

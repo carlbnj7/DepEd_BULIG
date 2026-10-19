@@ -50,7 +50,9 @@
   notifications:[
    ['.pageheading','Notifications','Everything new for you, newest first: notes from your teacher, badges and certificates.'],
    [['.nt-row'],'Open one','Tap a notification to go straight to it. A yellow dot means it is new.'],
-   [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
+   [['.nt-tabs'],'All or Unread','See every notification, or only the ones you have not read yet.'],
+   [['.nt-acts'],'Read, unread or delete','Mark one as read or as unread again, or delete it.'],
+   [['.nt-tools','.pageheading'],'All at once','Mark all as read clears the yellow number on the bell. Delete all read removes the ones you have already seen.']],
   lessons:[
    [['.pg-gate'],'Post-test result','You need 80% on the post-test to open the next level. Tap Try again to answer the parts you missed.'],
    ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
@@ -190,7 +192,9 @@
   notifications:[
    ['.pageheading','Notifications','Work that needs you now is at the top. Notes about finished levels and new accounts come after.'],
    [['.nt-row'],'Open one','Tap one to go straight to the right page. Items under Needs you now go away by themselves once the work is done.'],
-   [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
+   [['.nt-tabs'],'All or Unread','See every notification, or only the ones you have not read yet.'],
+   [['.nt-acts'],'Read, unread or delete','Mark one as read or as unread again, or delete it.'],
+   [['.nt-tools','.pageheading'],'All at once','Mark all as read clears the yellow number on the bell. Delete all read removes the ones you have already seen.']],
   class_demo:[
    ['.pageheading','Class Demo','Present lessons to the whole class on a TV or projector. Nothing is saved for pupils here.'],
    [['.demo-catalog .level-card.available'],'Choose a level','Tap "Start class demo". Levels 4 to 7 ask you to choose a grade first.'],
@@ -317,7 +321,9 @@
   notifications:[
    ['.pageheading','Notifications','System health alerts and new pupil accounts, newest first.'],
    [['.nt-row'],'Open one','Tap one to open the page where you can fix it.'],
-   [['.pageheading form'],'Mark all as read','Clears the yellow number on the bell when you have seen everything.']],
+   [['.nt-tabs'],'All or Unread','See every notification, or only the ones you have not read yet.'],
+   [['.nt-acts'],'Read, unread or delete','Mark one as read or as unread again, or delete it.'],
+   [['.nt-tools','.pageheading'],'All at once','Mark all as read clears the yellow number on the bell. Delete all read removes the ones you have already seen.']],
   accounts:[
    ['.ws-btns','Add teachers','Opens Add teachers: one teacher at a time, or the whole team from an Excel list.'],
    ['.ws-filters','Find a teacher','Search by name, or filter by grade and status.'],

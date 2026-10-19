@@ -10,16 +10,21 @@ $now=new DateTimeImmutable('now');$hour=(int)$now->format('G');$today=$now->form
 q('DELETE FROM push_queue WHERE created_at<NOW()-INTERVAL 3 DAY');
 if($hour<7||$hour>=20){echo "Quiet hours. Nothing sent.\n";exit(0);}
 $sent=0;$failed=0;$byUser=[];
-foreach(rows('SELECT s.*,u.name FROM push_subscriptions s JOIN users u ON u.id=s.user_id AND u.active=1 ORDER BY s.user_id,s.id') as $s)$byUser[(int)$s['user_id']][]=$s;
+foreach(rows('SELECT s.*,u.name,u.role FROM push_subscriptions s JOIN users u ON u.id=s.user_id AND u.active=1 ORDER BY s.user_id,s.id') as $s)$byUser[(int)$s['user_id']][]=$s;
 foreach($byUser as $pid=>$subs){
+ if($subs[0]['role']==='teacher'){   // teachers (v167): every note as it comes (help, a finished level), no daily reminder
+  foreach(rows('SELECT * FROM push_queue WHERE user_id=? AND sent_at IS NULL ORDER BY id LIMIT 5',[$pid]) as $n){
+   foreach($subs as $s){try{$code=push_send($s,['title'=>$n['title'],'body'=>$n['body'],'url'=>$n['url'],'tag'=>'bulig-'.$n['kind'].'-'.$n['id'],'icon'=>push_icon((string)$n['kind'],(string)$n['title'])]);}catch(Throwable $e){$code=0;}if($code>=200&&$code<300)$sent++;else $failed++;}
+   q('UPDATE push_queue SET sent_at=NOW() WHERE id=?',[(int)$n['id']]);}
+  continue;}
  if(in_array($today,array_map(fn($x)=>(string)$x['last_sent_on'],$subs),true))continue;
  $first=explode(' ',trim((string)$subs[0]['name']))[0];$queue=rows('SELECT * FROM push_queue WHERE user_id=? AND sent_at IS NULL ORDER BY FIELD(kind,\'teacher\',\'lessons\'),id',[$pid]);
  $daily=null;$any=false;$used=[];
  foreach($subs as $s){$p=push_prefs($s);if($weekend&&!$p['weekends'])continue;$msg=null;
-  foreach($queue as $n)if(($n['kind']==='teacher'&&$p['teacher'])||($n['kind']==='lessons'&&$p['lessons'])||!in_array($n['kind'],['teacher','lessons'],true)){$msg=['title'=>$n['title'],'body'=>$n['body'],'url'=>$n['url'],'tag'=>'bulig-'.$n['kind']];$used[(int)$n['id']]=1;break;}
+  foreach($queue as $n)if(($n['kind']==='teacher'&&$p['teacher'])||($n['kind']==='lessons'&&$p['lessons'])||!in_array($n['kind'],['teacher','lessons'],true)){$msg=['title'=>$n['title'],'body'=>$n['body'],'url'=>$n['url'],'tag'=>'bulig-'.$n['kind'],'icon'=>push_icon((string)$n['kind'],(string)$n['title'])];$used[(int)$n['id']]=1;break;}
   if(!$msg&&$p['daily']&&$hour===(int)$p['hour']){
    if($daily===null){$daily=false;if(!(int)val('SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND submitted_at>=CURDATE()',[$pid])){$streak=(int)progress_stats($pid)['current_streak'];
-    $daily=['title'=>'Time to read, '.$first.'!','body'=>$streak>1?'You’re on a '.$streak.'-day streak. One activity keeps it going.':'A little practice today makes a brighter day. Your next lesson is ready.','url'=>'?page=dashboard','tag'=>'bulig-daily'];}}
+    $daily=$streak>1?['title'=>$streak.' days in a row, '.$first.'!','body'=>'Arah is keeping your flame burning. One activity today keeps your streak going.','url'=>'?page=calendar','tag'=>'bulig-daily','icon'=>push_icon('streak')]:['title'=>'Time to read, '.$first.'!','body'=>'Tick, tock! A little practice today makes a brighter day. Your next lesson is ready.','url'=>'?page=dashboard','tag'=>'bulig-daily','icon'=>push_icon('daily')];}}
    $msg=$daily?:null;}
   if(!$msg)continue;
   try{$code=push_send($s,$msg);}catch(Throwable $e){$code=0;}

@@ -205,6 +205,7 @@ function action():void{
  if($action==='post_retake'){pt_retake(require_role('pupil'),(int)($_POST['level']??0));}
  if($action==='help_request'){help_request(require_role('pupil'));}
  if($action==='help_done'||$action==='help_done_all'){help_done(require_role('teacher'),$action==='help_done_all');}
+ if($action==='notif_mark'||$action==='notif_delete'||$action==='notif_delete_read')notif_action($action);
  if($action==='notif_read_all'){$u=current_user();if(!$u)fail('Please sign in.',403);if(notif_ready())q('UPDATE notifications SET read_at=NOW() WHERE user_id=? AND read_at IS NULL',[(int)$u['id']]);$b=(string)($_POST['back']??'');go(preg_match('/^\?page=[a-z_]+(&[A-Za-z0-9_=%&.-]*)?$/',$b)?$b:'?page=notifications');}
  /* Teacher review: approve every answer the answer key marked fully right (nothing written, drawn or recorded to read). */
  if($action==='review_approve_all'){

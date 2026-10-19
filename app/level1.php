@@ -191,7 +191,7 @@ function lesson_start_page(array $lesson,array $all,array $first):void{
  $lid=(int)$lesson['id'];$lv=lesson_level($lid);$count=['pre'=>0,'learn'=>0,'post'=>0];foreach($all as $x)if(isset($count[$x['phase']]))$count[$x['phase']]++;
  head(level_label($lv).' · '.$lesson['subtitle'],'activity-page l1-page');
  echo '<div class="l1-app l1-start-app" data-l1-start>'.lesson_head($lesson,$all,$first,'?page=lessons&level='.$lv.'#level'.$lv.'-path').'<main class="l1-main l1-start activity-main">';
- echo '<div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-'.min(8,max(1,$lv)).'.webp" alt=""><div><span class="l1-tag">'.(per_grade_level($lv)?e(mb_strtoupper(lesson_display_label($lv,(int)$lesson['position']))).'</span><h1>'.e($lesson['subtitle']):(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title'])).'</h1></div></div>';
+ echo '<div class="l1-start-in">'.level_friend(lesson_level((int)$lesson['id'])).'<div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-'.min(8,max(1,$lv)).'.webp" alt=""><div><span class="l1-tag">'.(per_grade_level($lv)?e(mb_strtoupper(lesson_display_label($lv,(int)$lesson['position']))).'</span><h1>'.e($lesson['subtitle']):(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title'])).'</h1></div></div>';
  $goals=l1_goals((string)$lesson['objectives']);
  if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
  echo lesson_parts($lesson,$all,$count);
@@ -201,7 +201,7 @@ function l1_start_page(array $lesson,array $all,array $first):void{
  $lid=(int)$lesson['id'];$count=['pre'=>0,'learn'=>0,'post'=>0];foreach($all as $x)$count[$x['phase']]++;
  head('Level 1 · '.$lesson['subtitle'],'activity-page l1-page');
  echo '<div class="l1-app l1-start-app" data-l1-start>'.lesson_head($lesson,$all,$first,'?page=lessons&level=1#level1-path').'<main class="l1-main l1-start activity-main">';
- echo '<div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
+ echo '<div class="l1-start-in">'.level_friend(lesson_level((int)$lesson['id'])).'<div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(lesson_level((int)$lesson['id'])>=7||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
  $goals=l1_goals((string)$lesson['objectives']);
  if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
  echo lesson_parts($lesson,$all,$count);
@@ -245,7 +245,7 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  }else{
   $q=$kind==='look'&&mb_strlen((string)$a['prompt'])>140;
   echo '<div class="l1-q'.($q?' sm':'').($a['type']==='sentence'?' st':'').'"><p>'.l1_question_html($a).'</p>'.l1_speaker($say).'</div>';ob_start();
-  echo $pics!==''?$pics:($kind==='speak'?'<img class="l1-buddy" src="'.e(char_src(pf_is_girl()?'girl':'boy')).'" alt="">':'');
+  echo $pics!==''?$pics:($kind==='speak'?'<img class="l1-buddy" src="'.e(friend_img('max','mic')).'" alt="">':'');
  }
  /* bottom: recorder, or one big button */
  $speakHere=in_array($kind,['speak','read'],true)&&$mode==='answer';
@@ -276,7 +276,7 @@ function l1_solo_data():array{static $d=null;if($d===null){$f=__DIR__.'/../datab
 function l1_solo(array $lesson,array $a):?array{return l1_solo_data()['acts'][(int)$lesson['position'].':'.$a['phase'].':'.(int)$a['position']]??null;}
 /** "BULIG is your buddy" and the steps to do it alone. */
 function l1_buddy(array $steps):string{
- $h='<div class="pk-solo"><img src="'.e(char_src(pf_is_girl()?'girl':'boy','cheer')).'" alt=""><div><b>BULIG is your buddy</b><ol>';
+ $h='<div class="pk-solo"><img src="'.e(friend_img('george','cheer')).'" alt=""><div><b>BULIG is your buddy</b><ol>';
  foreach($steps as $s)$h.='<li>'.e($s).'</li>';return $h.'</ol></div></div>';
 }
 /** Lesson 9: choose a poem, then one picture and one line at a time; the words light up as they are read (l1.js).

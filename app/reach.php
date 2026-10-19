@@ -11,7 +11,7 @@ function bulig_build():string{
 }
 /** Extra tags in <head> for pupils: build, push key, and the once-per-sign-in download offer (teachers get the build for the offline Class Demo). */
 function reach_head(?array $cu):string{
- if($cu&&$cu['role']==='teacher')return '<meta name="bulig-build" content="'.bulig_build().'">';
+ if($cu&&$cu['role']==='teacher')return '<meta name="bulig-build" content="'.bulig_build().'">'.(push_ready()?'<meta name="bulig-vapid" content="'.e(vapid_keys()['public']).'">':'');
  if(!$cu||$cu['role']!=='pupil')return '';$h='<meta name="bulig-build" content="'.bulig_build().'">';
  if(push_ready())$h.='<meta name="bulig-vapid" content="'.e(vapid_keys()['public']).'">';
  if(!empty($_SESSION['dl_offer'])){$h.='<meta name="bulig-dl-offer" content="1">';unset($_SESSION['dl_offer']);}
@@ -68,11 +68,17 @@ function push_queue(int $pid,string $kind,string $title,string $body,string $url
  if(!push_ready()||!val('SELECT COUNT(*) FROM push_subscriptions WHERE user_id=?',[$pid]))return;
  q('INSERT INTO push_queue(user_id,kind,title,body,url) VALUES(?,?,?,?,?)',[$pid,$kind,mb_substr($title,0,120),mb_substr($body,0,200),mb_substr($url,0,200)]);
 }
+/** The friend on a phone notification (v167): the BULIG mark stays as the small badge. */
+function push_icon(string $kind,string $title=''):string{
+ $id=['daily'=>'roxanne','streak'=>'arah','lessons'=>'george','rank'=>'zion','help'=>'dracs','certificate'=>'george','reading'=>'max','account'=>'claude','security'=>'claude'][$kind]??'george';
+ if($kind==='teacher')$id=str_starts_with($title,'Try')?'bruno':'george';
+ return 'assets/images/characters/push/'.$id.'.png?v=1';
+}
 const PUSH_DEFAULT=['daily'=>1,'hour'=>16,'teacher'=>1,'lessons'=>1,'weekends'=>0];
 function push_prefs(array $row):array{$p=json_decode((string)($row['prefs']??''),true);return array_merge(PUSH_DEFAULT,is_array($p)?$p:[]);}
 /** Pupil actions from the phone: subscribe, change choices, turn off. JSON in, JSON out. */
 function push_action(string $action):void{
- $u=require_role('pupil');header('Content-Type: application/json');if(!push_ready()){echo json_encode(['ok'=>false,'error'=>'Reminders are not set up on this site yet.']);exit;}
+ $u=require_role('pupil','teacher');header('Content-Type: application/json');if(!push_ready()){echo json_encode(['ok'=>false,'error'=>'Reminders are not set up on this site yet.']);exit;}
  $ep=trim((string)($_POST['endpoint']??''));if(!preg_match('~^https://[^\s]{10,480}$~',$ep)){echo json_encode(['ok'=>false,'error'=>'Bad subscription.']);exit;}
  $hash=hash('sha256',$ep);if(!empty($_SERVER['HTTP_HOST']))q("INSERT IGNORE INTO settings(setting_key,setting_value) VALUES('push_contact',?)",['https://'.$_SERVER['HTTP_HOST']]);
  if($action==='push_subscribe'){$k1=(string)($_POST['p256dh']??'');$k2=(string)($_POST['auth']??'');if(strlen(b64u_dec($k1))!==65||strlen(b64u_dec($k2))<16){echo json_encode(['ok'=>false,'error'=>'Bad keys.']);exit;}
@@ -82,6 +88,6 @@ function push_action(string $action):void{
  if(!$row){echo json_encode(['ok'=>false,'error'=>'Turn reminders on first.']);exit;}
  if($action==='push_prefs'){$p=push_prefs($row);foreach(['daily','teacher','lessons','weekends'] as $k)if(isset($_POST[$k]))$p[$k]=$_POST[$k]==='1'?1:0;if(isset($_POST['hour']))$p['hour']=max(6,min(20,(int)$_POST['hour']));
   q('UPDATE push_subscriptions SET prefs=? WHERE id=?',[json_encode($p),(int)$row['id']]);$row['prefs']=json_encode($p);}
- if($action==='push_test'){$code=push_send($row,['title'=>'BULIG reminders are on!','body'=>'This is how a reminder looks. See you at reading time!','url'=>'?page=dashboard','tag'=>'bulig-test']);echo json_encode(['ok'=>$code>=200&&$code<300,'status'=>$code,'prefs'=>push_prefs($row)]);exit;}
+ if($action==='push_test'){$code=push_send($row,['title'=>'BULIG reminders are on!','body'=>'This is how a reminder looks. See you at reading time!','url'=>'?page=dashboard','tag'=>'bulig-test','icon'=>push_icon($u['role']==='pupil'?'daily':'lessons')]);echo json_encode(['ok'=>$code>=200&&$code<300,'status'=>$code,'prefs'=>push_prefs($row)]);exit;}
  echo json_encode(['ok'=>true,'prefs'=>push_prefs($row)]);exit;
 }

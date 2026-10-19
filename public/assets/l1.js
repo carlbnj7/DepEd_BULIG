@@ -65,7 +65,13 @@
   const can=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
   function fallback(msg){state='off';go.hidden=true;label.textContent='Say your answer out loud to your teacher.';sub.textContent=msg;heardB.hidden=false;}
   if(!can)fallback('This device cannot record here.');
-  function ui(s){state=s;rec.dataset.state=s;go.classList.toggle('on',s==='rec');go.setAttribute('aria-label',s==='rec'?'Stop recording':'Tap and say your answer');
+  /* Level 4: Roxanne the Timekeeper times the reading (v164) */
+  const rx=rec.classList.contains('l4-rec')&&rec.parentElement?rec.parentElement.querySelector('[data-rx]'):null;
+  function rxSay(s){if(!rx)return;const im=rx.querySelector('img'),t=rx.querySelector('[data-rx-say]');rx.dataset.state=s;
+   if(s==='rec'){im.src=rx.dataset.go;t.textContent='Ready, set, read! I am timing you. Tap the button when you finish.';}
+   else if(s==='done'){im.src=rx.dataset.done;t.textContent='Tick, tock! You read it in '+fmt(secs)+'. Great reading!';}
+   else if(s==='idle'){im.src=rx.dataset.time;t.textContent='I will time your reading. Tap the microphone when you are ready!';}}
+  function ui(s){rxSay(s);state=s;rec.dataset.state=s;go.classList.toggle('on',s==='rec');go.setAttribute('aria-label',s==='rec'?'Stop recording':'Tap and say your answer');
    go.hidden=s==='done';playBox.hidden=s!=='done';if(again)again.hidden=s!=='done';if(send)send.hidden=s!=='done';
    if(s==='idle'){label.textContent=startLabel;sub.textContent='';}
    if(s==='rec'){label.textContent='0:00';sub.textContent=rec.classList.contains('l4-rec')?(listen?'Read now. BULIG is listening. Tap the button when you finish.':'Read now. Tap the button when you finish.'):'Speak now. Tap the button to stop.';}

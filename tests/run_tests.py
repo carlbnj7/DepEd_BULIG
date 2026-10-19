@@ -216,6 +216,12 @@ def run_pages(acc):
     page_ok(anon, '?page=credits', 'Credits page opens')
     status, url, _ = anon.req('?page=dashboard')
     check('Signed-out visitor is sent to the sign-in page', 'page=login' in url or status in (302, 401, 403), url)
+    _, _, text = anon.req('?page=login')
+    m = re.search(r'data-lfx-pairs="([^"]+)"', text)
+    pairs = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')) if m else []
+    pics = ' '.join(p['a'] + ' ' + p['b'] for p in pairs)
+    check('Sign-in page: all 10 friends take turns, two at a time, with no name tags',
+          len(pairs) == 5 and all(k in pics for k in ('george', 'toby', 'max', 'dracs', 'bruno', 'mia', 'zion', 'arah', 'roxanne', 'claude')) and 'lfx-who' not in text, pics[:160])
     _, _, text = anon.req('bulig-check.php')
     bad = len(re.findall(r'class="bad"', text))
     check('bulig-check.php finds no missing or changed files and no missing tables', bad == 0 and 'BULIG' in text, f'{bad} problems listed')
@@ -266,6 +272,7 @@ def run_pages(acc):
     test_ratings_pupil(p)
     test_george(p)
     test_friends(p)
+    test_notifications(p)
     test_level4_scoring()
 
     section('6. Pupil started at Level 6 (Grade 3): reader level head start')
@@ -422,21 +429,67 @@ def test_george(p):
 def test_friends(p):
     """Meet your BULIG friends: George and 8 friends, shown once; Claude's safety tip on Home."""
     section('5c2. Meet your BULIG friends')
-    poses = {'max': 'mic', 'dracs': 'book', 'bruno': 'tryagain', 'mia': 'blocks', 'toby': 'flag', 'zion': 'emblem', 'arah': 'calendar'}
+    poses = {'max': 'mic', 'dracs': 'book', 'bruno': 'tryagain', 'mia': 'blocks', 'toby': 'flag', 'zion': 'emblem', 'arah': 'calendar', 'roxanne': 'time'}
     missing = [f'{k}-{x}' for k, sp in poses.items() for x in ('hello', 'point', 'thumbs', 'cheer', sp)
                if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'{k}-{x}.webp'))]
     missing += [f'claude-{x}' for x in ('hello', 'thumbs', 'shield', 'worried', 'sad')
                 if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'claude-{x}.webp'))]
-    check('All 40 pictures of the 8 friends are in place', not missing, missing)
+    check('All 45 pictures of the 9 friends are in place', not missing, missing)
     _, _, text = p.req('?page=dashboard')
     m = re.search(r'<meta name="bulig-friends" content="([^"]+)"', text)
     data = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&').replace('&#039;', "'")) if m else {}
     names = [f.get('name') for f in data.get('friends', [])]
-    check('A pupil who has not met the friends gets the introduction: George first, then 8 friends', names[:1] == ['George'] and len(names) == 9 and 'assets/friends' in text, names)
+    check('A pupil who has not met the friends gets the introduction: George first, then 9 friends', names[:1] == ['George'] and len(names) == 10 and 'Roxanne' in names and 'assets/friends' in text, names)
     check('Claude the Protector gives a safety tip on the pupil Home page', 'class="cl-tip"' in text and 'claude-' in text)
+    check('Roxanne the Timekeeper is on Today’s goal', 'class="rx-goal"' in text and 'roxanne-' in text)
+    m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', text)
+    tour = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')) if m else {}
+    pics = ' '.join([str(tour.get('char')), str(tour.get('hi'))] + list((tour.get('pals') or {}).values()))
+    check('Outside the ladder and the lesson map, friends stand in for the pupil’s boy or girl picture',
+          'george-' in pics and 'toby-' in pics and 'claude-' in pics and 'roxanne-' in pics and 'boy' not in pics and 'girl' not in pics, pics[:200])
+    _, _, cal = p.req('?page=calendar')
+    _, _, ach = p.req('?page=achievements')
+    _, _, brd = p.req('?page=board')
+    _, _, st = p.req('?page=settings')
+    check('Each friend is on their own page: Arah on My calendar, Zion and Toby on My achievements, Toby on the board, Claude in Settings',
+          'fs-say fs-arah' in cal and 'fs-say fs-zion' in ach and 'fs-say fs-toby' in ach and 'fs-say fs-toby' in brd and 'fs-say fs-claude' in st)
+    check('The rank emblems are the new ones (loaded fresh)', 'images/ranks/' in ach and '.webp?v=2' in ach)
+    missing = [x for x in ('roxanne', 'arah', 'george', 'bruno', 'zion', 'dracs', 'claude', 'max', 'toby') if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters/push', x + '.png'))]
+    sw = open(os.path.join(ROOT, 'public/sw.js')).read()
+    check('Phone notifications show the friend: 9 friend icons, and the service worker uses the icon sent', not missing and 'icon:d.icon||' in sw, missing)
     _, _, r = p.req('index.php', {'action': 'friends_met', 'csrf': p.token('?page=dashboard')}, accept_json=True)
     _, _, text = p.req('?page=dashboard')
     check('The introduction shows only once (it is remembered)', jget(r).get('ok') and 'name="bulig-friends"' not in text, r[:120])
+
+
+def test_notifications(p):
+    """Notifications page: All / Unread, mark one as read or unread, delete one, mark all as read, delete all read."""
+    section('5c3. Notifications page')
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    uid = q("SELECT id FROM users WHERE role='pupil' ORDER BY id LIMIT 1")
+    _, _, text = p.req('?page=dashboard')
+    me = re.search(r'name="bulig-uid" content="(\d+)"', text)
+    uid = me.group(1) if me else uid
+    q(f"DELETE FROM notifications WHERE user_id={int(uid)}")
+    q(f"INSERT INTO notifications(user_id,kind,title) VALUES({int(uid)},'badge','Test one'),({int(uid)},'note','Test two'),({int(uid)},'note','Test three')")
+    ids = q(f"SELECT GROUP_CONCAT(id ORDER BY id) FROM notifications WHERE user_id={int(uid)}").split(',')
+    _, _, text = p.req('?page=notifications')
+    check('Notifications is in the pupil menu, with All and Unread', 'href="?page=notifications"' in text and 'class="nt-tabs"' in text and 'Mark as read' in text and 'Delete' in text)
+    tok = lambda: p.token('?page=notifications')
+    p.req('index.php', {'action': 'notif_mark', 'id': ids[0], 'to': 'read', 'csrf': tok()})
+    check('Mark as read', q(f'SELECT read_at IS NOT NULL FROM notifications WHERE id={int(ids[0])}') == '1')
+    p.req('index.php', {'action': 'notif_mark', 'id': ids[0], 'to': 'unread', 'csrf': tok()})
+    check('Mark as unread', q(f'SELECT read_at IS NULL FROM notifications WHERE id={int(ids[0])}') == '1')
+    p.req('index.php', {'action': 'notif_delete', 'id': ids[1], 'csrf': tok()})
+    check('Delete one', q(f'SELECT COUNT(*) FROM notifications WHERE id={int(ids[1])}') == '0')
+    other = q("SELECT id FROM notifications WHERE user_id<>%d LIMIT 1" % int(uid))
+    if other:
+        p.req('index.php', {'action': 'notif_delete', 'id': other, 'csrf': tok()})
+        check('Someone else’s notification cannot be deleted', q(f'SELECT COUNT(*) FROM notifications WHERE id={int(other)}') == '1')
+    p.req('index.php', {'action': 'notif_read_all', 'csrf': tok()})
+    check('Mark all as read', q(f'SELECT COUNT(*) FROM notifications WHERE user_id={int(uid)} AND read_at IS NULL') == '0')
+    p.req('index.php', {'action': 'notif_delete_read', 'csrf': tok()})
+    check('Delete all read', q(f'SELECT COUNT(*) FROM notifications WHERE user_id={int(uid)}') == '0')
 
 
 def test_delete_pupil(t):
