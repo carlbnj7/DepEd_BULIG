@@ -8,8 +8,8 @@ self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.add
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&k!==FRESH&&!k.startsWith('bulig-off-')&&k!=='bulig-who'&&k!=='bulig-login').map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 
 /* The Level 2A, 2B, 3, 4, 5, 6 and 7 pictures were redrawn but kept their file names. Browsers keep pictures for up to 7 days,
-   so each one is fetched fresh from BULIG once (cache "bulig-fresh-2" remembers which), then used normally. */
-const FRESH='bulig-fresh-2';
+   so each one is fetched fresh from BULIG once (cache "bulig-fresh-3" remembers which; a new name when more pictures are redrawn), then used normally. */
+const FRESH='bulig-fresh-3';
 async function freshOnce(r){const c=await caches.open(FRESH),k=new URL(r.url);k.search='';
  if(await c.match(k.href))return fetch(r);
  const res=await fetch(r.url,{cache:'reload',credentials:'same-origin'});if(res.ok)await c.put(k.href,new Response(''));return res;}

@@ -127,7 +127,7 @@ The root `.htaccess` blocks `app/`, `config/`, `database/`, `storage/`, `tools/`
   George's hello wait while the "menu has a new order" note is showing.
 - **Redrawn pictures** keep their file names and are saved as WebP (quality 82, longest side at most 1200 px).
   Browsers keep pictures for up to 7 days, so `public/sw.js` fetches each redrawn picture fresh once (the
-  `level(2[ab]|[3-7])` rule, cache `bulig-fresh-2`). Add a level to that rule when its pictures are redrawn.
+  `level(2[ab]|[3-7])` rule, cache `bulig-fresh-3`). Add a level to that rule when its pictures are redrawn. Change the cache name (bulig-fresh-N) whenever more pictures are redrawn, so devices fetch them again.
 - **Account IDs** (`app/account_ids.php`): make every new ID with `new_account_id('pupil'|'teacher'|'admin')`
   inside the transaction that creates the account (Pupil PCES260001, Teacher PCEST0001, Admin A260001; numbers per
   school code in `id_sequences`). IDs never change after they are made. Old IDs live in `account_id_history` and
