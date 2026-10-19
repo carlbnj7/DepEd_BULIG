@@ -5659,3 +5659,9 @@ html.dark .leave-box{background:#16231b}html.dark .leave-tx h2{color:#e8f0ea!imp
  .fa-faces{flex-wrap:nowrap;gap:0;justify-content:space-between}.fa-faces img{width:25px;height:36px;min-width:0;flex:0 1 25px}
  .rt-pcard .btn{width:100%;justify-content:center}
  .me-page>.fs-float img{height:78px}.me-page>.fs-float{bottom:84px}}
+/* v170: on phones George is back at the bottom right (above the tab bar), not inside the greeting card */
+@media(max-width:740px){
+ .role-pupil .pf-buddy{position:fixed;top:auto;bottom:84px;right:6px;z-index:40}
+ .role-pupil .pf-buddy-george .pf-helper{width:76px}
+ .role-pupil .pf-bubble{right:68px;bottom:80px;top:auto;max-width:150px;font-size:.76rem;border-radius:16px 16px 4px 16px}
+ .role-pupil .identity-banner .identity-copy{padding-right:0}}
