@@ -5,7 +5,7 @@ function icon(string $name,string $class=''):string{
 }
 function avatar(array $u):string{
  $path=(string)($u['avatar_path']??'');
- return $path&&local_image_file($path)?'<img class="avatar" src="'.e($path).'" alt="Profile photo of '.e($u['name']).'">':'<img class="avatar default-avatar" src="assets/design/default-avatar.svg" alt="Default profile picture for '.e($u['name']).'">';
+ return $path&&local_image_file($path)?'<img class="avatar" src="'.e($path).(str_starts_with($path,'assets/avatars/')?'?v=2':'').'" alt="Profile photo of '.e($u['name']).'">':'<img class="avatar default-avatar" src="assets/design/default-avatar.svg" alt="Default profile picture for '.e($u['name']).'">';
 }
 /** Style and script files get a short fingerprint in their file name (theme-1a2b3c4d5e.css), so a CDN that
     ignores "?v=" can never serve an old copy. The copy is made automatically the first time it is needed. */
@@ -321,11 +321,11 @@ function pupil_profile_view(array $u):void{
  $p=one('SELECT grade_level,section FROM pupils WHERE user_id=?',[$u['id']]);$detail=$p?'Grade '.$p['grade_level'].' · '.$p['section']:'Pupil';
  $days=array_column(rows('SELECT day FROM learning_days WHERE pupil_id=? AND day>=?',[$u['id'],date('Y-m-d',strtotime('-6 days'))]),'day');$week='';$n=0;
  for($i=6;$i>=0;$i--){$d=date('Y-m-d',strtotime('-'.$i.' days'));$on=in_array($d,$days);$n+=$on?1:0;$week.='<div class="weekday '.($on?'active':'').'"><span>'.date('D',strtotime($d)).'</span>'.icon($on?'check':'clock').'</div>';}
- echo '<div class="me-page"><section class="card me-hero"><a class="me-setbtn" href="?page=settings">'.icon('settings').'Settings</a><div class="me-av">'.avatar($u).'</div><div class="me-who"><span class="eyebrow">MY PROFILE</span><h1>'.e($u['name']).'</h1><p class="muted">'.e($u['public_id']).' · '.e($detail).'</p></div>'
+ echo '<div class="me-page">'.friend_say('sofie','mirror','Pick the picture that looks just like you! You can change it any time.').'<section class="card me-hero"><a class="me-setbtn" href="?page=settings">'.icon('settings').'Settings</a><div class="me-av">'.avatar($u).'</div><div class="me-who"><span class="eyebrow">MY PROFILE</span><h1>'.e($u['name']).'</h1><p class="muted">'.e($u['public_id']).' · '.e($detail).'</p></div>'
   .'<div class="me-week"><b>This week</b><div class="weekdays">'.$week.'</div><small>'.($n?$n.' '.($n===1?'day':'days').' of learning this week':'A day counts when you finish a meaningful answer or activity.').'</small></div></section>';
  $choices=profile_avatar_choices();$selected='';foreach($choices as $key=>$v)if(($u['avatar_path']??'')==='assets/avatars/'.$key.'.png')$selected=$key;
- echo '<section class="card avatar-picker me-pic"><span class="eyebrow">CHOOSE A CHARACTER</span><h2>My picture</h2><p class="muted">Pick a character you like, or use your own photo.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="choose_avatar"><fieldset><legend>Choose one of six characters</legend><div class="avatar-options">';
- foreach($choices as $key=>$v)echo '<label class="avatar-option"><input type="radio" name="avatar_key" value="'.$key.'" '.($selected===$key?'checked':'').' required><span class="avatar-option-picture"><img src="assets/avatars/'.$key.'.png" alt="'.e($v[0]).'" width="120" height="120"><span class="avatar-picked">'.icon('check').'</span></span><span class="avatar-option-label">'.e(explode(' · ',$v[0])[0]).'</span></label>';
+ echo '<section class="card avatar-picker me-pic"><span class="eyebrow">CHOOSE A CHARACTER</span><h2>My picture</h2><p class="muted">Pick a character you like, or use your own photo.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="choose_avatar"><fieldset><legend>Choose a character</legend><div class="avatar-options">';
+ foreach($choices as $key=>$v)echo '<label class="avatar-option"><input type="radio" name="avatar_key" value="'.$key.'" '.($selected===$key?'checked':'').' required><span class="avatar-option-picture"><img src="assets/avatars/'.$key.'.png?v=2" alt="'.e($v[0]).'" width="120" height="120"><span class="avatar-picked">'.icon('check').'</span></span><span class="avatar-option-label">'.e(explode(' · ',$v[0])[0]).'</span></label>';
  echo '</div></fieldset><button class="btn primary">Use this picture</button></form>'
   .'<form method="post" enctype="multipart/form-data" class="me-upl">'.csrf_field().'<input type="hidden" name="action" value="profile"><b>Or use your own photo</b><small>PNG, JPEG or WebP, up to 4 MB</small><label class="btn secondary me-file">'.icon('camera').'Upload a photo<input name="avatar" type="file" accept="image/png,image/jpeg,image/webp" required data-upload-auto></label><button class="btn primary me-save">Save photo</button></form></section></div>';
 }
@@ -477,8 +477,8 @@ function pupil_details_fields(array $p):string{
 }
 function avatar_picker(array $u):void{
  $choices=profile_avatar_choices();$selected='';foreach($choices as $key=>$v)if(($u['avatar_path']??'')==='assets/avatars/'.$key.'.png')$selected=$key;
- echo '<section class="card avatar-picker"><span class="eyebrow">A LITTLE PICTURE OF YOU</span><h2>Choose your profile picture</h2><p>Pick a character you like, or upload your own photo below.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="choose_avatar"><fieldset><legend>Choose one of six characters</legend><div class="avatar-options">';
- foreach($choices as $key=>$v)echo '<label class="avatar-option"><input type="radio" name="avatar_key" value="'.$key.'" '.($selected===$key?'checked':'').' required><span class="avatar-option-picture"><img src="assets/avatars/'.$key.'.png" alt="'.e($v[0]).'" width="120" height="120"><span class="avatar-picked">'.icon('check').'</span></span><span class="avatar-option-label">'.e(explode(' · ',$v[0])[0]).'</span></label>';
+ echo '<section class="card avatar-picker"><span class="eyebrow">A LITTLE PICTURE OF YOU</span><h2>Choose your profile picture</h2><p>Pick a character you like, or upload your own photo below.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="choose_avatar"><fieldset><legend>Choose a character</legend><div class="avatar-options">';
+ foreach($choices as $key=>$v)echo '<label class="avatar-option"><input type="radio" name="avatar_key" value="'.$key.'" '.($selected===$key?'checked':'').' required><span class="avatar-option-picture"><img src="assets/avatars/'.$key.'.png?v=2" alt="'.e($v[0]).'" width="120" height="120"><span class="avatar-picked">'.icon('check').'</span></span><span class="avatar-option-label">'.e(explode(' · ',$v[0])[0]).'</span></label>';
  echo '</div></fieldset><button class="btn primary">Use this picture</button></form></section>';
 }
 

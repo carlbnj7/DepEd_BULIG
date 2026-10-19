@@ -220,8 +220,8 @@ def run_pages(acc):
     m = re.search(r'data-lfx-pairs="([^"]+)"', text)
     pairs = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')) if m else []
     pics = ' '.join(p['a'] + ' ' + p['b'] for p in pairs)
-    check('Sign-in page: all 10 friends take turns, two at a time, with no name tags',
-          len(pairs) == 5 and all(k in pics for k in ('george', 'toby', 'max', 'dracs', 'bruno', 'mia', 'zion', 'arah', 'roxanne', 'claude')) and 'lfx-who' not in text, pics[:160])
+    check('Sign-in page: all 12 friends take turns, two at a time, with no name tags',
+          len(pairs) == 6 and all(k in pics for k in ('george', 'toby', 'max', 'dracs', 'bruno', 'mia', 'zion', 'arah', 'roxanne', 'kai', 'sofie', 'claude')) and 'lfx-who' not in text, pics[:160])
     _, _, text = anon.req('bulig-check.php')
     bad = len(re.findall(r'class="bad"', text))
     check('bulig-check.php finds no missing or changed files and no missing tables', bad == 0 and 'BULIG' in text, f'{bad} problems listed')
@@ -429,17 +429,17 @@ def test_george(p):
 def test_friends(p):
     """Meet your BULIG friends: George and 8 friends, shown once; Claude's safety tip on Home."""
     section('5c2. Meet your BULIG friends')
-    poses = {'max': 'mic', 'dracs': 'book', 'bruno': 'tryagain', 'mia': 'blocks', 'toby': 'flag', 'zion': 'emblem', 'arah': 'calendar', 'roxanne': 'time'}
+    poses = {'max': 'mic', 'dracs': 'book', 'bruno': 'tryagain', 'mia': 'blocks', 'toby': 'flag', 'zion': 'emblem', 'arah': 'calendar', 'roxanne': 'time', 'kai': 'letter', 'sofie': 'mirror'}
     missing = [f'{k}-{x}' for k, sp in poses.items() for x in ('hello', 'point', 'thumbs', 'cheer', sp)
                if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'{k}-{x}.webp'))]
     missing += [f'claude-{x}' for x in ('hello', 'thumbs', 'shield', 'worried', 'sad')
                 if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'claude-{x}.webp'))]
-    check('All 45 pictures of the 9 friends are in place', not missing, missing)
+    check('All 55 pictures of the 11 friends are in place', not missing, missing)
     _, _, text = p.req('?page=dashboard')
     m = re.search(r'<meta name="bulig-friends" content="([^"]+)"', text)
     data = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&').replace('&#039;', "'")) if m else {}
     names = [f.get('name') for f in data.get('friends', [])]
-    check('A pupil who has not met the friends gets the introduction: George first, then 9 friends', names[:1] == ['George'] and len(names) == 10 and 'Roxanne' in names and 'assets/friends' in text, names)
+    check('A pupil who has not met the friends gets the introduction: George first, then 11 friends', names[:1] == ['George'] and len(names) == 12 and 'Kai' in names and 'Sofie' in names and 'assets/friends' in text, names)
     check('Claude the Protector gives a safety tip on the pupil Home page', 'class="cl-tip"' in text and 'claude-' in text)
     check('Roxanne the Timekeeper is on Today’s goal', 'class="rx-goal"' in text and 'roxanne-' in text)
     m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', text)
@@ -451,12 +451,12 @@ def test_friends(p):
     _, _, ach = p.req('?page=achievements')
     _, _, brd = p.req('?page=board')
     _, _, st = p.req('?page=settings')
-    check('Each friend is on their own page: Arah on My calendar, Zion and Toby on My achievements, Toby on the board, Claude in Settings',
-          'fs-say fs-arah' in cal and 'fs-say fs-zion' in ach and 'fs-say fs-toby' in ach and 'fs-say fs-toby' in brd and 'fs-say fs-claude' in st)
+    check('Each friend is on their own page: Arah on My calendar, Zion and Toby on My achievements, Toby on the board, Claude in Settings, Kai on Notifications, Sofie on My profile',
+          'fs-say fs-arah' in cal and 'fs-say fs-zion' in ach and 'fs-say fs-toby' in ach and 'fs-say fs-toby' in brd and 'fs-say fs-claude' in st and 'fs-say fs-kai' in p.req('?page=notifications')[2] and 'fs-say fs-sofie' in p.req('?page=profile')[2])
     check('The rank emblems are the new ones (loaded fresh)', 'images/ranks/' in ach and '.webp?v=2' in ach)
-    missing = [x for x in ('roxanne', 'arah', 'george', 'bruno', 'zion', 'dracs', 'claude', 'max', 'toby') if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters/push', x + '.png'))]
+    missing = [x for x in ('roxanne', 'arah', 'george', 'bruno', 'zion', 'dracs', 'claude', 'max', 'toby', 'kai', 'sofie') if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters/push', x + '.png'))]
     sw = open(os.path.join(ROOT, 'public/sw.js')).read()
-    check('Phone notifications show the friend: 9 friend icons, and the service worker uses the icon sent', not missing and 'icon:d.icon||' in sw, missing)
+    check('Phone notifications show the friend: 11 friend icons, and the service worker uses the icon sent', not missing and 'icon:d.icon||' in sw, missing)
     _, _, r = p.req('index.php', {'action': 'friends_met', 'csrf': p.token('?page=dashboard')}, accept_json=True)
     _, _, text = p.req('?page=dashboard')
     check('The introduction shows only once (it is remembered)', jget(r).get('ok') and 'name="bulig-friends"' not in text, r[:120])

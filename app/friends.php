@@ -15,6 +15,8 @@ const BULIG_FRIENDS=[
  ['zion','Zion','the Rank Keeper',false,'#c62828','emblem','Ranks and stars',"Hello! I am Zion the Rank Keeper. Earn your stars, and I will give you a new rank emblem!",.85,.93,'cheer'],
  ['arah','Arah','the Streak Keeper',true,'#e2508f','calendar','Your reading streak and calendar',"Hi! I am Arah the Streak Keeper. Read a little every day, and I will keep your flame burning!",1.22,1.0,'cheer'],
  ['roxanne','Roxanne','the Timekeeper',true,'#e58a00','time','Reading time and breaks',"Tick, tock! I am Roxanne the Timekeeper. I time your reading, I count your goal for today, and I tell you when it is time for a short break.",1.45,1.08,'cheer'],
+ ['kai','Kai','the Messenger',false,'#2f5fd0','letter','Notifications and messages',"Special delivery! I am Kai the Messenger. When there is news for you, I bring it to you right away. Look for me on the bell!",1.05,1.06,'cheer'],
+ ['sofie','Sofie','the Stylist',true,'#0ea5c6','mirror','Your profile and picture',"Hi! I am Sofie the Stylist. On your profile page, I help you pick a picture that looks just like you!",1.4,1.0,'cheer'],
  ['claude','Claude','the Protector',false,'#1d2f5c','shield','Keeping your account safe',"Hello! I am Claude the Protector. I keep your account safe. Never share your password with anyone!",.78,.9,'thumbs'],
 ];
 
@@ -36,16 +38,20 @@ function friends_tour_fix(?array $cu,array $m):array{
 }
 /** The sign-in page: the friends take turns, two at a time (assets/login.js). */
 function login_friend_pairs():array{
- $p=[['toby','cheer','george','hello'],['max','hello','dracs','hello'],['bruno','thumbs','mia','hello'],['zion','cheer','arah','hello'],['roxanne','hello','claude','thumbs']];
+ $p=[['toby','cheer','george','hello'],['max','hello','dracs','hello'],['bruno','thumbs','mia','hello'],['zion','cheer','arah','hello'],['roxanne','hello','claude','thumbs'],['kai','hello','sofie','hello']];
  return array_map(fn($x)=>['a'=>friend_img($x[0],$x[1]),'b'=>friend_img($x[2],$x[3])],$p);
 }
 /** A friend says something on their own page (v166): Arah on My calendar, Zion and Toby on My achievements, Toby on
-   the reading board, Claude in Settings, Bruno after a wrong answer, and on each lesson's first screen the friend of
+   the reading board, Claude in Settings, Kai on Notifications, Sofie on My profile (v169), Bruno after a wrong answer, and on each lesson's first screen the friend of
    that level (Max: Level 1, Mia: Levels 2A-3, Roxanne: Level 4, Dracs: Levels 5-7). */
 function friend_say(string $id,string $pose,string $text,bool $float=true):string{
  $f=null;foreach(BULIG_FRIENDS as $x)if($x[0]===$id)$f=$x;if(!$f)return '';
  /* like George: the whole friend, no box; on a page the friend stands at the bottom right (tap for the message again) */
  return '<aside class="fs-say fs-'.$id.' '.($float?'fs-float':'fs-inline').'"'.($float?' data-fs':'').'><img src="'.e(friend_img($id,$pose)).'" alt="" width="120" height="150" loading="lazy"><div class="fs-bub" role="status"><b>'.e($f[1].' '.$f[2]).'</b><span>'.e($text).'</span></div></aside>';
+}
+/** Kai on the Notifications page: how many new notes there are. */
+function kai_say(int $n):string{
+ return friend_say('kai',$n?'letter':'thumbs',$n?'Special delivery! You have '.$n.' new '.($n===1?'note':'notes').'. Tap one to open it.':'You are all caught up! I will bring you new notes when they come.');
 }
 function level_friend(int $lv):string{
  if($lv===1)return friend_say('max','mic','Hi! I am Max the Listener. In Level 1 we listen and speak. When you see the microphone, tap it and talk to me!');
