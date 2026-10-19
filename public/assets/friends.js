@@ -74,3 +74,21 @@
  window.buligFriendsStart=function(done){finish=done;layer=el('div','fr-layer');layer.setAttribute('role','dialog');layer.setAttribute('aria-modal','true');layer.setAttribute('aria-label','Meet your BULIG friends');
   document.body.append(layer);document.body.classList.add('fr-on');document.addEventListener('keydown',keys,true);setTimeout(intro,500);};
 })();
+
+/* Roxanne the Timekeeper: after 30 minutes of learning in one sitting, a gentle "time for a short break" note (v164).
+   The sitting starts at the first page opened in this browser tab session; the note comes again after another 30 minutes. */
+(function(){
+ 'use strict';
+ let me=null;try{me=JSON.parse((document.querySelector('meta[name="bulig-tour"]')||{}).content||'null');}catch(e){}
+ if(!me||me.role!=='pupil'||!me.pals||!me.pals.rest)return;
+ const MIN=30*60*1000,K='bulig-rest-'+me.id;let s=null;try{s=JSON.parse(sessionStorage.getItem(K)||'null');}catch(e){}
+ if(!s||typeof s.from!=='number'){s={from:Date.now()};try{sessionStorage.setItem(K,JSON.stringify(s));}catch(e){}}
+ const busy=()=>document.querySelector('.fr-layer,.tour-layer,.tour-offer,.pw-overlay:not([hidden]),.dl-ov,.rm-ov,.rx-rest');
+ function show(){if(busy())return;const d=document.createElement('div');d.className='rx-rest';d.setAttribute('role','status');
+  const im=new Image();im.src=me.pals.rest;im.alt='';const tx=document.createElement('div');const b=document.createElement('b');b.textContent='Time for a short break, '+me.name+'!';
+  const p=document.createElement('span');p.textContent='You have been learning for 30 minutes. Great work! Rest your eyes, stretch, and drink some water.';tx.append(b,p);
+  const ok=document.createElement('button');ok.type='button';ok.className='btn primary';ok.textContent='Okay, Roxanne!';ok.onclick=()=>{d.classList.add('out');setTimeout(()=>d.remove(),300);};
+  d.append(im,tx,ok);document.body.append(d);s.from=Date.now();try{sessionStorage.setItem(K,JSON.stringify(s));}catch(e){}}
+ const check=()=>{if(Date.now()-s.from>=MIN)show();};
+ setTimeout(check,4000);setInterval(check,60000);
+})();

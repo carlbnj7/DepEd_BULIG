@@ -118,7 +118,7 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
   if($reading&&$c&&$c['audio_path'])echo '<div class="l1-mine"><span>Your reading</span><audio controls preload="none" src="?page=recording&amp;id='.(int)$c['id'].'"></audio></div>';
   $sc=$reading&&$c?l4_saved_score($c):null;if($sc&&!empty($sc['auto']))echo l4_result_card($a,$sc);
  }elseif($reading){
-  echo '<div class="l1-rec l4-rec" data-l1-rec data-max="600"><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
+  echo roxanne_timer().'<div class="l1-rec l4-rec" data-l1-rec data-max="600"><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
    .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my reading">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
    .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button></div>';
  }

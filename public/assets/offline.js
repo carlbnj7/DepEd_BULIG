@@ -15,7 +15,7 @@
  async function cacheLogin(){try{
   const urls=new Set(),add=v=>{if(!v||v.startsWith('data:'))return;const u=new URL(v,base);if(u.origin===location.origin)urls.add(u.href);};
   document.querySelectorAll('link[rel="stylesheet"][href],script[src],img[src],link[rel="icon"][href],link[rel="preload"][href],link[rel="manifest"][href]').forEach(n=>add(n.getAttribute('src')||n.getAttribute('href')));
-  ['assets/bulig-logo.png','assets/images/characters/boy.webp','assets/images/characters/girl.webp','assets/images/characters/boy-cheer.webp','assets/images/characters/girl-cheer.webp','assets/fonts/poppins-latin-400-normal.woff2','assets/fonts/poppins-latin-500-normal.woff2','assets/fonts/poppins-latin-600-normal.woff2','assets/fonts/poppins-latin-700-normal.woff2'].forEach(add);
+  ['assets/bulig-logo.png','assets/images/characters/george-cheer.webp','assets/images/characters/toby-hello.webp','assets/images/characters/boy.webp','assets/images/characters/girl.webp','assets/images/characters/boy-cheer.webp','assets/images/characters/girl-cheer.webp','assets/fonts/poppins-latin-400-normal.woff2','assets/fonts/poppins-latin-500-normal.woff2','assets/fonts/poppins-latin-600-normal.woff2','assets/fonts/poppins-latin-700-normal.woff2'].forEach(add);
   (store('bulig-saved')||[]).forEach(x=>{if(x&&x.img)add(x.img);});
   const c=await caches.open('bulig-login'),sig=[...urls].sort().join('|');
   if(store('bulig-login-sig')===sig&&await c.match(abs('?page=login')))return;
@@ -189,7 +189,8 @@
   if(!todo.length&&!old.length){if(!run)dlDone();return;}
   const upd=!todo.length,cur=levels.find(l=>l.current&&(!have[l.level]||stale(have[l.level]))),need=todo.concat(old),all=need.reduce((t,l)=>t+l.bytes,0);
   const ov=el('div','dl-ov'),sh=el('div','dl-sheet');ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label',upd?'Update saved lessons':'Download lessons');
-  if(me.char){const im=el('img','dl-art');im.src=me.char;im.alt='';sh.append(im);}
+  const pal=k=>(me.pals&&me.pals[k])||me.char;   // pupils: Toby saves the lessons (v164)
+  if(pal('dl')){const im=el('img','dl-art');im.src=pal('dl');im.alt='';sh.append(im);}
   if(upd){const tag=el('span','dl-new');tag.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg>BULIG has new things';sh.append(tag,el('h3','','Update your saved lessons'),el('p','','Your offline lessons are from an older BULIG. Update them to get the new things offline too.'));}
   else sh.append(el('h3','','Learn even without internet!'),el('p','','Save your lessons on this '+(innerWidth<741?'phone':'device')+' so they open anytime, even without internet.'));
   const opts=[];
@@ -235,7 +236,7 @@
   if(!online()){run.paused=true;paint();window.addEventListener('online',()=>{if(run){run.paused=false;next();}},{once:true});return;}
   (run.names=run.names||[]).push(l.title);run.q.shift();store(DLQ,run.q);run.doneBytes+=l.bytes||1;run.frac=0;run.ready++;
   if(row){row.classList.add('ok');row.querySelector('.dl-pb i').style.width='100%';row.querySelector('.dl-st').textContent='Ready';}paint();renderPage();next();}
- function celebrate(n){const ov=el('div','dl-ov dl-done');const c=el('div','dl-sheet');if(me.char){const im=el('img','dl-art');im.src=me.char;im.alt='';c.append(im);}
+ function celebrate(n){const ov=el('div','dl-ov dl-done');const c=el('div','dl-sheet'),art=(me.pals&&me.pals.dlDone)||me.char;if(art){const im=el('img','dl-art');im.src=art;im.alt='';c.append(im);}
   c.append(el('span','dl-ok',n+' '+(n===1?'level':'levels')+' ready offline'),el('h3','','All set'+(me.name?', '+me.name:'')+'!'),el('p','','You can learn even without internet. Your answers will upload when you are back online.'));
   const b=el('button','btn primary dl-go','Let’s learn!');b.type='button';b.addEventListener('click',()=>{ov.remove();dlDone();});c.append(b);ov.append(c);document.body.append(ov);requestAnimationFrame(()=>ov.classList.add('on'));}
  if(online()&&me.role==='pupil'){

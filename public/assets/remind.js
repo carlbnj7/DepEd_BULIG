@@ -39,10 +39,10 @@
   if(window.pfOverlayOpen&&window.pfOverlayOpen())await wait('pf:overlays-done');
   if(window.buligDlPending)await wait('bulig:dl-done');
   /* Wait until nothing else is on screen (tour offer, download box, celebrations), then ask. */
-  const busy=()=>document.querySelector('.tour-offer,.tour-layer,.tour-toast,.dl-ov,.dl-panel.on,.pw-overlay:not([hidden]),.qs-sheet.on,.bdg-ov');
+  const busy=()=>document.querySelector('.fr-layer,.tour-offer,.tour-layer,.tour-toast,.dl-ov,.dl-panel.on,.pw-overlay:not([hidden]),.qs-sheet.on,.bdg-ov');
   const nap=ms=>new Promise(r=>setTimeout(r,ms));let calm=0;for(let i=0;i<360&&calm<3;i++){await nap(500);calm=busy()?0:calm+1;}if(busy()||get(ASK))return;
   const ov=el('div','rm-ov'),box=el('div','rm-box');ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-labelledby','rm-title');
-  if(me.hi||me.char){const im=el('img','rm-art');im.src=me.hi||me.char;im.alt='';box.append(im);}
+  const art=(me.pals&&me.pals.remind)||me.hi||me.char;if(art){const im=el('img','rm-art');im.src=art;im.alt='';box.append(im);}   // pupils: Roxanne the Timekeeper (v164)
   const h=el('h3','','Can BULIG remind you?');h.id='rm-title';box.append(h,el('p','','We’ll send a short, friendly note. Never more than one a day.'));
   const ex=el('div','rm-ex');[['fire','Time to read! Keep your streak'],['msg','Your teacher left you a note'],['key','A new lesson is open']].forEach(([i,t])=>{const d=el('div','rm-x rm-'+i);d.append(el('span','rm-ic'),el('span','',t));ex.append(d);});box.append(ex);
   const yes=el('button','btn primary rm-yes','Yes, remind me'),no=el('button','btn secondary rm-no','Not now');yes.type=no.type='button';box.append(yes,no);ov.append(box);document.body.append(ov);
