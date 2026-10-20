@@ -39,6 +39,18 @@ function teacher_ticket_html(array $t,?string $key,?string $pw,int $n):string{
   .'<div class="tk-stub"><span class="lc-qr tk-qr" data-qr="'.e($qr).'" aria-hidden="true"></span><span class="tk-scan">'.($key&&$pw!==null?'SCAN TO<br>SIGN IN':'SCAN TO<br>OPEN BULIG').'</span>'.($pw!==null?'<span class="tk-must">Make your own password after you sign in</span>':'').'<span class="tk-no">No. '.str_pad((string)$n,3,'0',STR_PAD_LEFT).'</span></div></article>';
 }
 
+/** Admin Pass (v172): the administrator's own card. Its QR code only fills in the admin ID on the sign-in page; the
+    password and the PIN are always typed, so a lost Admin Pass never signs anyone in. */
+function admin_pass_view(array $u):void{
+ $n=0;echo '<div class="pageheading ws-head no-print"><div><span class="eyebrow">PRINT & DOWNLOAD</span><h1>Admin Pass</h1><p class="muted">Scan it on the sign-in page of a phone to fill in your administrator ID. You still type your password and PIN.</p></div><div class="ws-btns"><a class="btn secondary" href="?page=print">'.icon('arrow','flip').'Back</a></div></div>';
+ echo '<div class="lc-tools no-print card"><button type="button" class="btn primary" data-lc-print>'.icon('download').'<span data-lc-print-label>Print pass</span></button></div><div class="lc-sheet tk-sheet" data-lc-sheet data-tk-word="pass">';
+ foreach(rows("SELECT id,name,public_id FROM users WHERE role='admin' AND active=1 AND id=?",[(int)$u['id']]) as $a){$n++;$qr='?page=login&id='.rawurlencode((string)$a['public_id']);
+  echo '<div class="tk-wrap" data-tk><article class="tk tk-teacher tk-admin"><div class="tk-main"><img class="tk-bgimg" src="assets/images/ticket-bg.webp?v=1" alt="" aria-hidden="true"><div class="tk-band"><img class="tk-logo" src="assets/bulig-logo.png" alt="BULIG"><b>ADMIN PASS</b></div><div class="tk-info"><strong class="tk-name">'.e($a['name']).'</strong><span class="tk-sec"><span class="tk-lvl">ADMINISTRATOR</span></span><span class="tk-lab">Admin ID</span><span class="tk-id">'.e($a['public_id']).'</span>'
+   .'<span class="tk-pass"><span class="tk-lab">Password and PIN</span><span class="tk-pw tk-own">Type them yourself</span></span></div><img class="tk-kid" src="'.e(char_src(tf_is_male((int)$a['id'])?'admin-male':'admin-female','hello')).'" alt=""></div>'
+   .'<div class="tk-stub"><span class="lc-qr tk-qr" data-qr="'.e($qr).'" aria-hidden="true"></span><span class="tk-scan">SCAN TO<br>FILL IN MY ID</span><span class="tk-no">No. '.str_pad((string)$n,3,'0',STR_PAD_LEFT).'</span></div></article><div class="tk-bar no-print"><label class="tk-sel"><input type="checkbox" data-tk-pick checked> Print</label></div></div>';}
+ echo '</div><script src="'.asset_url('qrcode.js').'" defer></script><script src="'.asset_url('cards.js').'" defer></script>';
+}
+
 /** Right after the admin adds a teacher: a window with the new account and its Teacher Pass, ready to print. */
 function new_teacher_overlay(int $tid):string{
  $t=one("SELECT id,name,public_id FROM users WHERE id=? AND role='teacher'",[$tid]);if(!$t||!cards_ready())return '';

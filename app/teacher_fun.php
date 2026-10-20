@@ -108,3 +108,139 @@ function tf_sky():string{
  foreach([130,150,196,214] as $x)$s.='<rect class="'.($p==='e'?'pf-window':'').'" x="'.$x.'" y="58" width="12" height="11" fill="'.$win.'" stroke="#fff" stroke-width="1.5"/>';
  return $s.'<path d="M175 24V6" stroke="#6b5a45" stroke-width="2"/><path class="tf-flag" d="M176 6h16l-4 4 4 4h-16z" fill="#2f74c4"/><rect x="250" y="70" width="3" height="20" fill="#7a5230"/><circle cx="251" cy="66" r="11" fill="'.$tr[0].'"/><rect x="90" y="74" width="3" height="18" fill="#7a5230"/><circle cx="91" cy="70" r="10" fill="'.$tr[1].'"/></svg>';
 }
+
+/** Top 10 pupils (v172) on Teacher Home, for the grade and section chosen above it. Ranked by BULIG's average score on
+    checked activities (each activity counts once, its best try), then by activities done, then by XP. A pupil needs
+    at least one checked activity to be listed. The board is one picture (an SVG drawn like the reading ladder: sky,
+    hills and a podium of level blocks), so it can be saved as a picture (leaderboard.js) or printed. Phones also get
+    a simple list under it. Filters: one level (only that level's activities count) or all levels, and all time, this
+    month or this week (?lb_level=, ?lb_period=). */
+const TF_TOP_PERIODS=['all'=>'All time','month'=>'This month','week'=>'This week'];
+function tf_top_rows(array $ids,int $level=0,string $period='all'):array{
+ if(!$ids)return [];$since=['month'=>date('Y-m-01 00:00:00'),'week'=>date('Y-m-d 00:00:00',strtotime('monday this week'))][$period]??null;
+ $w=($level?' AND m.level_id='.$level:'').($since?' AND c.submitted_at>=?':'');
+ return rows('SELECT u.id,u.name,u.avatar_path,u.role,pa.level_id,ROUND(100*SUM(c.score)/SUM(c.max_score)) pct,COUNT(*) done,
+   (SELECT COALESCE(SUM(x.amount),0) FROM xp_transactions x WHERE x.pupil_id=u.id) xp
+  FROM activity_completion c JOIN users u ON u.id=c.pupil_id AND u.active=1 LEFT JOIN pupil_level_assignments pa ON pa.pupil_id=u.id
+  JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id
+  WHERE c.pupil_id IN('.tf_in($ids).") AND c.status IN ('completed','approved') AND c.max_score>0".$w."
+  GROUP BY u.id,u.name,u.avatar_path,u.role,pa.level_id ORDER BY pct DESC,done DESC,xp DESC,u.name LIMIT 10",$since?[$since]:[]);
+}
+/** The filter row: level and period, keeping the grade and section chosen above. */
+function tf_top_filter(int $level,string $period):string{
+ $keep='';foreach(['grade_level','section_id'] as $k)if(isset($_GET[$k]))$keep.='<input type="hidden" name="'.$k.'" value="'.(int)$_GET[$k].'">';
+ $lv='<option value="0">All levels</option>';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $l)$lv.='<option value="'.(int)$l['id'].'"'.($level===(int)$l['id']?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';
+ $pd='';foreach(TF_TOP_PERIODS as $k=>$t)$pd.='<option value="'.$k.'"'.($period===$k?' selected':'').'>'.$t.'</option>';
+ return '<form method="get" action="#tf-top" class="lb-filter"><input type="hidden" name="page" value="dashboard">'.$keep
+  .'<label>Level<select name="lb_level" data-autosubmit>'.$lv.'</select></label><label>Time<select name="lb_period" data-autosubmit>'.$pd.'</select></label><button class="btn secondary pg-go">Show</button></form>';
+}
+function tf_leaderboard(array $ids,string $label=''):string{
+ $level=max(0,(int)($_GET['lb_level']??0));$period=isset(TF_TOP_PERIODS[$_GET['lb_period']??''])?(string)$_GET['lb_period']:'all';
+ $rows=tf_top_rows($ids,$level,$period);$label=implode(' · ',array_filter([$label,$level?level_label($level):'All levels',$period!=='all'?TF_TOP_PERIODS[$period]:'']));
+ $h='<section class="card tf-top" id="tf-top"><div class="section-heading"><h2>'.icon('star').'Top 10 pupils</h2><small>By BULIG’s average score</small></div>'.tf_top_filter($level,$period);
+ if(!$rows)return $h.'<p class="muted">'.($level||$period!=='all'?'No checked activities here yet. Choose another level or time.':'The board fills in when pupils finish activities that BULIG checks.').'</p></section>';
+ $h.='<div class="lb-tools"><button type="button" class="btn secondary" data-lb-save>'.icon('download').'Save as picture</button><button type="button" class="btn secondary" data-lb-print>'.icon('print').'Print</button></div>';
+ $h.='<div class="lb-art" id="lb-art">'.tf_leaderboard_svg($rows,$label).'</div><ol class="lb-list">';
+ foreach($rows as $i=>$r){$n=$i+1;
+  $h.='<li class="lb-row'.($n<=3?' lb-p'.$n:'').'"><span class="lb-n">'.$n.'</span>'.avatar($r).'<a class="lb-name" href="?page=pupil&amp;id='.(int)$r['id'].'">'.e($r['name']).'</a>'
+   .'<small class="lb-meta">'.e($r['level_id']?level_label((int)$r['level_id']):'No level yet').' · '.(int)$r['done'].' '.((int)$r['done']===1?'activity':'activities').' · '.number_format((int)$r['xp']).' XP</small>'
+   .'<b class="lb-pct">'.(int)$r['pct'].'%</b></li>';}
+ return $h.'</ol><script src="'.asset_url('leaderboard.js').'" defer></script></section>';
+}
+/** The gold crown on the 1st place (base centred on $x,$y): five points with gold balls, a band with jewels, a shine
+    and two sparkles; tilted a little, like a crown just put on. */
+function tf_crown(float $x,float $y):string{
+ $tips=[[-40,-34],[-20,-46],[0,-56],[20,-46],[40,-34]];
+ $g='<g transform="translate('.$x.' '.$y.') rotate(-8)"><ellipse cx="0" cy="4" rx="40" ry="5" fill="#000" opacity=".12"/>'
+  .'<path d="M-36 0 L-40 -34 L-29 -13 L-20 -46 L-10 -19 L0 -56 L10 -19 L20 -46 L29 -13 L40 -34 L36 0Z" fill="url(#lbCrown)" stroke="#b07d00" stroke-width="2.5" stroke-linejoin="round"/>'
+  .'<path d="M-33 -4 L-36 -27 L-28 -11 L-20 -38 L-14 -19Z" fill="#fff" opacity=".35"/>';
+ foreach($tips as [$tx,$ty])$g.='<circle cx="'.$tx.'" cy="'.$ty.'" r="5.5" fill="#fff3b0" stroke="#b07d00" stroke-width="2"/>';
+ $g.='<rect x="-39" y="-12" width="78" height="16" rx="5" fill="url(#lbCrownBand)" stroke="#b07d00" stroke-width="2.5"/>'
+  .'<ellipse cx="0" cy="-4" rx="6" ry="5" fill="#e2374a" stroke="#fff" stroke-width="1.5"/><ellipse cx="-20" cy="-4" rx="4.2" ry="3.6" fill="#2a6cc0" stroke="#fff" stroke-width="1.2"/><ellipse cx="20" cy="-4" rx="4.2" ry="3.6" fill="#2fa04f" stroke="#fff" stroke-width="1.2"/>'
+  .'<path d="M0 -36 l3 5 -3 5 -3 -5Z" fill="#e2374a" stroke="#fff" stroke-width="1"/>'
+  .'<circle cx="-2" cy="-6" r="1.6" fill="#fff" opacity=".8"/></g>';
+ $spark=fn($sx,$sy,$k,$c)=>'<path transform="translate('.$sx.' '.$sy.') scale('.$k.')" d="M0 -10 Q1.5 -1.5 10 0 Q1.5 1.5 0 10 Q-1.5 1.5 -10 0 Q-1.5 -1.5 0 -10Z" fill="'.$c.'"/>';
+ return $g.$spark($x-58,$y-44,1.1,'#ffd23f').$spark($x+56,$y-58,.8,'#fff').$spark($x+50,$y-20,.6,'#ffd23f');
+}
+/** The board picture: 1200 x 820, drawn with the reading ladder's own scenery (app.js, "My reading board"): the meadow
+    and sky, the smiling sun, mountains, clouds, birds, trees, flowers and books, the Reading Castle, the 3D level
+    blocks on a sandy stone base, a wooden sign and ribbon medals. */
+function tf_leaderboard_svg(array $rows,string $label):string{
+ $x=fn($s)=>htmlspecialchars((string)$s,ENT_QUOTES|ENT_XML1,'UTF-8');
+ $cut=fn($s,$n)=>mb_strlen($s)>$n?mb_substr($s,0,$n-1).'…':$s;
+ $img=fn($r)=>$x(($r['avatar_path']??'')!==''&&local_image_file((string)$r['avatar_path'])?$r['avatar_path']:'assets/design/default-avatar.svg');
+ $W=1200;$H=820;$C=RB_COLORS;
+ /* the ladder's scenery pieces */
+ $tree=fn($tx,$ty,$k,$c1)=>'<g transform="translate('.$tx.' '.$ty.') scale('.$k.')"><ellipse cx="4" cy="20" rx="26" ry="7" fill="#2a5a2a" opacity=".18"/><rect x="-6" y="-8" width="12" height="28" rx="4" fill="#8a5527"/><circle cx="0" cy="-30" r="26" fill="#3e9a4a"/><circle cx="-16" cy="-16" r="18" fill="#3e9a4a"/><circle cx="16" cy="-16" r="18" fill="#3e9a4a"/><circle cx="-4" cy="-34" r="20" fill="'.$c1.'"/><circle cx="-14" cy="-20" r="12" fill="'.$c1.'"/><circle cx="-10" cy="-42" r="8" fill="#fff" opacity=".22"/></g>';
+ $pine=fn($tx,$ty,$k)=>'<g transform="translate('.$tx.' '.$ty.') scale('.$k.')"><ellipse cx="3" cy="16" rx="20" ry="6" fill="#2a5a2a" opacity=".18"/><rect x="-4" y="2" width="8" height="14" fill="#7a4a22"/><path d="M0 -58 L-22 -20 H22Z" fill="#2f8a4b"/><path d="M0 -40 L-26 4 H26Z" fill="#267a40"/></g>';
+ $flower=function($fx,$fy,$c){$p='';foreach([0,72,144,216,288] as $an)$p.='<circle cx="'.round(cos(deg2rad($an))*5,1).'" cy="'.round(-18+sin(deg2rad($an))*5,1).'" r="4.2" fill="'.$c.'"/>';return '<g transform="translate('.$fx.' '.$fy.')"><path d="M0 0v-14" stroke="#3e9a4a" stroke-width="2.5"/>'.$p.'<circle cx="0" cy="-18" r="3" fill="#ffd23f"/></g>';};
+ $bush=fn($bx,$by)=>'<g transform="translate('.$bx.' '.$by.')"><circle cx="-14" cy="0" r="13" fill="#3e9a4a"/><circle cx="6" cy="-5" r="16" fill="#4cae5e"/><circle cx="23" cy="2" r="11" fill="#3e9a4a"/><circle cx="2" cy="-8" r="3" fill="#e2463a"/><circle cx="14" cy="-2" r="3" fill="#e2463a"/></g>';
+ $books=fn($bx,$by)=>'<g transform="translate('.$bx.' '.$by.')"><rect x="-22" y="-8" width="44" height="10" rx="2" fill="#d6452f"/><rect x="-18" y="-18" width="40" height="10" rx="2" fill="#2a6cc0"/><rect x="-20" y="-28" width="38" height="10" rx="2" fill="#f6c02c"/></g>';
+ $shroom=fn($mx,$my)=>'<g transform="translate('.$mx.' '.$my.')"><rect x="-3" y="-8" width="6" height="10" rx="2" fill="#fff4dc"/><path d="M-11 -8q11-16 22 0z" fill="#e2463a"/><circle cx="-4" cy="-12" r="2" fill="#fff"/></g>';
+ $cloud=fn($cx,$cy,$k)=>'<path transform="translate('.$cx.' '.$cy.') scale('.$k.')" d="M0 14a10 10 0 0 1 16-9 13 13 0 0 1 24 3 8 8 0 0 1 2 16H4a9 9 0 0 1-4-10z" fill="#fff"/>';
+ $ribbon=function($cx,$cy,$k,$col){$pts='';for($i=0;$i<32;$i++){$r=($i%2?20:24)*$k;$t=$i*M_PI/16;$pts.=round($cx+$r*cos($t),1).','.round($cy+$r*sin($t),1).' ';}
+  return '<path d="M'.($cx-12*$k).' '.($cy+10*$k).'l-8 '.(26*$k).' 8-5 6 8 6-'.(28*$k).'z" fill="'.$col[1].'"/><path d="M'.($cx+12*$k).' '.($cy+10*$k).'l8 '.(26*$k).'-8-5-6 8-6-'.(28*$k).'z" fill="'.$col[0].'"/><polygon points="'.trim($pts).'" fill="#ffd23f" stroke="#c99400" stroke-width="1.5"/><circle cx="'.$cx.'" cy="'.$cy.'" r="'.(15*$k).'" fill="'.$col[0].'" stroke="#fff" stroke-width="2"/>'
+   .'<path d="M'.$cx.' '.($cy-9*$k).'l'.(2.6*$k).' '.(5.6*$k).' '.(6*$k).' '.(.7*$k).'-'.(4.5*$k).' '.(4.1*$k).' '.(1.2*$k).' '.(6*$k).'-'.(5.3*$k).'-'.(3*$k).'-'.(5.3*$k).' '.(3*$k).' '.(1.2*$k).'-'.(6*$k).'-'.(4.5*$k).'-'.(4.1*$k).' '.(6*$k).'-'.(.7*$k).'z" fill="#fff"/>';};
+ /* a 3D level block, exactly like the ladder's */
+ $block=fn($bx,$by,$bw,$bh,$col)=>'<path d="M'.$bx.' '.$by.'L'.($bx+12).' '.($by-10).'H'.($bx+$bw+12).'L'.($bx+$bw).' '.$by.'Z" fill="'.$col[0].'" opacity=".75"/><rect x="'.$bx.'" y="'.$by.'" width="'.$bw.'" height="'.$bh.'" fill="'.$col[0].'"/><path d="M'.($bx+$bw).' '.$by.'L'.($bx+$bw+12).' '.($by-10).'V'.($by+$bh-10).'L'.($bx+$bw).' '.($by+$bh).'Z" fill="'.$col[1].'"/><rect x="'.$bx.'" y="'.$by.'" width="'.$bw.'" height="'.round($bh*.18).'" fill="#fff" opacity=".18"/>';
+ $g='<svg id="lb-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 '.$W.' '.$H.'" width="'.$W.'" height="'.$H.'" role="img" aria-label="Top 10 pupils leaderboard" font-family="Poppins, Segoe UI, Arial, sans-serif">'
+  .'<defs><linearGradient id="lbSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe8ff"/><stop offset="1" stop-color="#eaf8ff"/></linearGradient>'
+  .'<linearGradient id="lbGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9f2c4"/><stop offset=".5" stop-color="#c8eab0"/><stop offset="1" stop-color="#b7e09c"/></linearGradient>'
+  .'<linearGradient id="lbStone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1cc"/><stop offset="1" stop-color="#f2d9a0"/></linearGradient>'
+  .'<linearGradient id="lbMtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8d7a0"/><stop offset="1" stop-color="#cde9c0"/></linearGradient>'
+  .'<linearGradient id="lbCastle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff8e8"/><stop offset="1" stop-color="#ead9b4"/></linearGradient>'
+  .'<radialGradient id="lbSun" cx="40%" cy="35%" r="65%"><stop offset="0" stop-color="#fff6b0"/><stop offset=".6" stop-color="#ffd23f"/><stop offset="1" stop-color="#f6a700"/></radialGradient>'
+  .'<pattern id="lbTuft" width="60" height="44" patternUnits="userSpaceOnUse"><path d="M10 30q2-8 4 0q2-10 4 0M40 12q2-7 4 0q2-9 4 0" stroke="#9fd284" stroke-width="2" fill="none" stroke-linecap="round"/></pattern>'
+  .'<linearGradient id="lbCrown" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1a8"/><stop offset=".45" stop-color="#ffd23f"/><stop offset="1" stop-color="#e9a90f"/></linearGradient>'
+  .'<linearGradient id="lbCrownBand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6c02c"/><stop offset="1" stop-color="#c99400"/></linearGradient>'
+  .'<clipPath id="lbC0" clipPathUnits="objectBoundingBox"><circle cx=".5" cy=".5" r=".5"/></clipPath></defs>';
+ /* meadow, sky, sun, mountains, clouds, birds */
+ $g.='<rect width="'.$W.'" height="'.$H.'" fill="url(#lbGrass)"/><rect width="'.$W.'" height="'.$H.'" fill="url(#lbTuft)" opacity=".7"/><rect width="'.$W.'" height="200" fill="url(#lbSky)"/>';
+ $g.='<g transform="translate(96 84) scale(1.1)">';for($k=0;$k<12;$k++)$g.='<rect x="-3" y="-56" width="6" height="16" rx="3" fill="#ffd23f" transform="rotate('.($k*30).')"/>';
+ $g.='<circle r="32" fill="url(#lbSun)"/><circle cx="-10" cy="-4" r="3.4" fill="#5a3a12"/><circle cx="10" cy="-4" r="3.4" fill="#5a3a12"/><path d="M-11 8q11 10 22 0" stroke="#5a3a12" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="-18" cy="6" r="5" fill="#ff8fab" opacity=".6"/><circle cx="18" cy="6" r="5" fill="#ff8fab" opacity=".6"/></g>';
+ $g.='<path d="M0 200 L144 100 L288 175 L456 82 L624 188 L792 112 L960 178 L1104 106 L1200 162 V225 H0Z" fill="url(#lbMtn)"/><path d="M438 100 L456 82 L474 100Z M778 126 L792 112 L806 126Z M1090 120 L1104 106 L1118 120Z" fill="#fff"/><path d="M0 212 Q300 162 600 200 T1200 194 V262 H0Z" fill="#c8eab0"/>';
+ $g.=$cloud(230,24,1.6).$cloud(880,40,1.3).$cloud(1010,128,.9);
+ $g.='<g transform="translate(300 60)">'.implode('',array_map(fn($b)=>'<path d="M'.$b[0].' '.$b[1].'q5-5 10 0q5-5 10 0" stroke="#3b5d74" stroke-width="2" fill="none" stroke-linecap="round"/>',[[0,10],[22,0],[40,14]])).'</g>';
+ /* the Reading Castle on the hill (the goal of the ladder) */
+ $g.='<g transform="translate(1086 168) scale(.78)"><path d="M-90 70 Q0 30 90 70Z" fill="#9fd284"/><rect x="-56" y="-10" width="112" height="80" fill="url(#lbCastle)" stroke="#c9b48a" stroke-width="2"/><rect x="-70" y="-40" width="34" height="110" fill="url(#lbCastle)" stroke="#c9b48a" stroke-width="2"/><rect x="36" y="-40" width="34" height="110" fill="url(#lbCastle)" stroke="#c9b48a" stroke-width="2"/><path d="M-74 -40 L-53 -72 L-32 -40Z M32 -40 L53 -72 L74 -40Z" fill="#2a6cc0"/><path d="M-60 -10 L0 -50 L60 -10Z" fill="#d6452f"/><rect x="-14" y="30" width="28" height="40" rx="14" fill="#8a5527"/><path d="M0 -50 V-82" stroke="#6b5a45" stroke-width="3"/><path d="M1 -82h24l-6 6 6 6H1z" fill="#f6c02c"/></g>';
+ /* the title: a wooden sign like the ladder's START HERE sign */
+ $sub=trim(($label!==''?$label.' · ':'').date('F j, Y'));
+ $g.='<rect x="430" y="118" width="10" height="70" fill="#8a5527"/><rect x="760" y="118" width="10" height="70" fill="#8a5527"/>'
+  .'<rect x="320" y="16" width="560" height="112" rx="18" fill="#fff8e8" stroke="#b08a4e" stroke-width="4"/><text x="600" y="70" text-anchor="middle" font-size="44" font-weight="800" fill="#17633a" letter-spacing="1">TOP 10 PUPILS</text>'
+  .'<text x="600" y="104" text-anchor="middle" font-size="16" font-weight="700" fill="#6b5a45">'.$x($cut($sub,64)).'</text>'
+  .'<image href="assets/bulig-logo.png" x="1000" y="12" width="182" height="76" preserveAspectRatio="xMidYMid meet"/>';
+ /* scenery around the podium and the list */
+ $g.=$pine(48,330,.85).$tree(660,300,.62,'#6fcf7b').$pine(40,470,.7).$books(668,420).$bush(664,560);
+ $fl=['#ff8fab','#9ad0ff','#ffd23f','#c3a2ff','#ff9f5a'];
+ foreach(range(0,15) as $k){$fx=150+$k*68;$fy=760+(($k*37)%3)*16;$g.=$k%4===0?$bush($fx,$fy):($k%5===2?$shroom($fx,$fy):$flower($fx,$fy,$fl[$k%5]));}
+ /* the podium: three level blocks on a stone base (2nd, 1st, 3rd) */
+ $g.='<rect x="112" y="690" width="548" height="44" rx="6" fill="url(#lbStone)" stroke="#b08a4e" stroke-width="2"/><path d="M112 728H660" stroke="#d9bd84" stroke-width="4" stroke-dasharray="2 12"/><path d="M106 740H666" stroke="#7a5a2a" stroke-opacity=".18" stroke-width="10" stroke-linecap="round"/>';
+ $pod=[[1,135,150,522,$C[6],'2ND'],[0,305,162,440,$C[1],'1ST'],[2,487,150,560,$C[2],'3RD']];
+ foreach($pod as [$i,$bx,$bw,$top,$col,$place]){if(!isset($rows[$i]))continue;$r=$rows[$i];$bh=690-$top;$mx=$bx+$bw/2;
+  $g.=$block($bx,$top,$bw,$bh,$col)
+   .'<text x="'.$mx.'" y="'.($top+62).'" text-anchor="middle" font-size="54" font-weight="900" fill="#fff" stroke="'.$col[1].'" stroke-width="1">'.($i+1).'</text>'
+   .'<text x="'.$mx.'" y="'.($top+84).'" text-anchor="middle" font-size="14" font-weight="800" fill="#fff" letter-spacing="1">'.$place.' PLACE</text>'
+   .'<rect x="'.($mx-48).'" y="'.($top+93).'" width="96" height="34" rx="17" fill="#fffdf6"/><text x="'.$mx.'" y="'.($top+117).'" text-anchor="middle" font-size="22" font-weight="900" fill="#17633a">'.(int)$r['pct'].'%</text>';
+  $rad=$i===0?50:42;$cx=$mx+6;$cy=$top-56-$rad;
+  $g.='<ellipse cx="'.$cx.'" cy="'.($cy+$rad+8).'" rx="'.($rad*.9).'" ry="'.($rad*.22).'" fill="#000" opacity=".14"/><circle cx="'.$cx.'" cy="'.($cy+5).'" r="'.($rad+6).'" fill="'.$col[1].'"/><circle cx="'.$cx.'" cy="'.$cy.'" r="'.($rad+6).'" fill="'.$col[0].'" stroke="#fff" stroke-width="4"/>'
+   .'<image href="'.$img($r).'" x="'.($cx-$rad).'" y="'.($cy-$rad).'" width="'.(2*$rad).'" height="'.(2*$rad).'" clip-path="url(#lbC0)" preserveAspectRatio="xMidYMid slice"/>';
+  if($i===0)$g.=tf_crown($cx,$cy-$rad-2);
+  $g.=$ribbon($cx+$rad*.82,$cy+$rad*.55,.78,$col);
+  $g.='<rect x="'.($mx-88).'" y="'.($top-44).'" width="176" height="32" rx="12" fill="#fff8e8" stroke="#b08a4e" stroke-width="2.5"/><text x="'.$mx.'" y="'.($top-22).'" text-anchor="middle" font-size="17" font-weight="800" fill="#17633a">'.$x($cut((string)$r['name'],17)).'</text>';}
+ /* 4th to 10th: signs on a stone step, each with a small level block */
+ $g.='<rect x="700" y="232" width="470" height="486" rx="18" fill="url(#lbStone)" stroke="#b08a4e" stroke-width="3"/><path d="M700 710H1170" stroke="#d9bd84" stroke-width="4" stroke-dasharray="2 12"/>'
+  .'<text x="935" y="266" text-anchor="middle" font-size="18" font-weight="800" fill="#17633a" letter-spacing="2">MORE READING STARS</text>';
+ $more=array_slice($rows,3,7,true);
+ if(!$more)$g.='<text x="935" y="470" text-anchor="middle" font-size="19" font-weight="700" fill="#6b5a45">Keep reading to join the board!</text>';
+ $y=280;foreach($more as $i=>$r){$n=$i+1;$col=$C[($n-1)%7+1];
+  $g.='<rect x="716" y="'.$y.'" width="438" height="54" rx="12" fill="#fffdf6" stroke="#d9bd84" stroke-width="2"/>'
+   .$block(726,$y+8,36,38,$col).'<text x="744" y="'.($y+36).'" text-anchor="middle" font-size="22" font-weight="900" fill="#fff" stroke="'.$col[1].'" stroke-width="1">'.$n.'</text>'
+   .'<circle cx="806" cy="'.($y+27).'" r="21" fill="'.$col[0].'" stroke="#fff" stroke-width="3"/><image href="'.$img($r).'" x="787" y="'.($y+8).'" width="38" height="38" clip-path="url(#lbC0)" preserveAspectRatio="xMidYMid slice"/>'
+   .'<text x="838" y="'.($y+25).'" font-size="18" font-weight="800" fill="#0e3b28">'.$x($cut((string)$r['name'],22)).'</text>'
+   .'<text x="838" y="'.($y+44).'" font-size="13" font-weight="600" fill="#6b5a45">'.$x(($r['level_id']?level_label((int)$r['level_id']):'No level yet').' · '.(int)$r['done'].' activities').'</text>'
+   .'<text x="1140" y="'.($y+36).'" text-anchor="end" font-size="24" font-weight="900" fill="#17633a">'.(int)$r['pct'].'%</text>';$y+=62;}
+ /* Toby the Trailblazer with his flag, like on the ladder */
+ $g.='<image href="'.$x(friend_img('toby','flag')).'" x="0" y="560" width="128" height="230" preserveAspectRatio="xMidYMax meet"/>'
+  .'<text x="600" y="812" text-anchor="middle" font-size="14" font-weight="700" fill="#17633a">BULIG · Building Up Literacy, Inspiring Growth</text>';
+ return $g.'</svg>';
+}

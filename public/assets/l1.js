@@ -44,9 +44,10 @@
   const again=$('[data-rec-again]'),send=$('#submit-answer'),audioIn=$('#l1-audio'),heardIn=$('#l1-heard'),startLabel=label.textContent;
   const MAX=+rec.dataset.max||60,fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   let mr=null,stream=null,chunks=[],t0=0,tick=null,secs=0,url='',player=null,state='idle';
-  /* Level 4: BULIG listens while the pupil reads (the browser's speech recognition) and sends what it heard, so the
-     reading is scored with the module's miscue table. Without it (some phones, no internet) only the recording is sent. */
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition,listen=rec.classList.contains('l4-rec')&&!!SR,saidIn=$('#transcript');
+  /* BULIG listens while the pupil speaks or reads (the browser's speech recognition) and sends what it heard: Level 4
+     readings are scored with the module's miscue table, Level 1 answers with the talk and pronunciation check (v172).
+     Without it (some phones, no internet) only the recording is sent. */
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition,listen=!!SR,saidIn=$('#transcript');/* v172: every Level 1 recording too (pronunciation and talk check) */
   let sr=null,srOn=false,said=[];
   function srStart(){if(!listen)return;said=[];srOn=true;const make=()=>{sr=new SR();sr.lang='en-US';sr.continuous=true;sr.interimResults=false;
     sr.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)said.push(e.results[i][0].transcript);if(saidIn)saidIn.value=said.join(' ').trim();};
