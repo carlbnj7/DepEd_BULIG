@@ -353,6 +353,10 @@
    [['.tc-pw'],'Passwords','Who still uses a starter password. A teacher makes their own password the first time they sign in.']],
   teacher_import:[
    [['.import-card'],'Add many teachers','Download the template, fill it in, upload it and check every row before the accounts are made.']],
+  schools:[
+   ['.ws-kpis','Your schools','How many schools, teachers, pupils and sections BULIG has.'],
+   [['.sc-card'],'One card per school','Its code, name and the IDs it gives: pupils like PCES260001, teachers like PCEST0001. Open Edit to change the name, code or logo.'],
+   ['#add-school','Add a school','Type the name and a short code (3 to 10 letters). New teachers of that school get its code in their IDs.']],
   checkup:[
    ['.ws-kpis','At a glance','Red needs action now. Yellow is worth a look. Green is all good.'],
    [['.ck-card'],'Things to fix','Each problem has its fix next to it: unlock, compare, place in a section or tell the teacher.'],

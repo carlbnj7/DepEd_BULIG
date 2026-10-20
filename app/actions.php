@@ -72,11 +72,13 @@ function action():void{
  if(str_starts_with($action,'import_')){import_actions($action);return;}
  if(in_array($action,CHECKUP_ACTIONS,true))checkup_action($action);
  if(in_array($action,ACCOUNT_ID_ACTIONS,true))account_ids_action($action);
+ if(in_array($action,SCHOOL_ACTIONS,true))school_actions($action);
  if(in_array($action,TEACHER_ACCOUNT_ACTIONS,true))teacher_account_action($action);
  if(in_array($action,ADMIN_ACTIONS,true)){admin_actions($action);return;}
  if(in_array($action,['admin_pin','admin_pin_create','admin_pin_cancel','change_admin_pin'],true)){admin_pin_actions($action);return;}
  if($action==='create_account'){
-  $u=require_role('admin','teacher');$role=$u['role']==='admin'?'teacher':'pupil';$nm=name_input();$name=$nm['name'];$password=$role==='pupil'?'12345678':(string)($_POST['password']??'');
+  $u=require_role('admin','teacher');$role=$u['role']==='admin'?'teacher':'pupil';$nm=name_input();
+  if($role==='teacher'&&isset($_POST['school_id']))school_use((int)$_POST['school_id']);/* v174: the new teacher's school */$name=$nm['name'];$password=$role==='pupil'?'12345678':(string)($_POST['password']??'');
   if($role==='teacher'&&cards_ready()){
    $sx=(string)($_POST['teacher_sex']??'');if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Use a name of 2–150 characters.');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');
    db()->beginTransaction();try{$c=teacher_create($name,$sx);name_parts_save($c['id'],$nm['parts']);audit('create_teacher',$c['public']);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
@@ -85,7 +87,7 @@ function action():void{
   if(strlen($name)<2||strlen($name)>150||strlen($password)<8||strlen($password)>72)fail('Use a name of 2–150 characters and a password of 8–72 characters.');
   db()->beginTransaction();try{
    $public=new_account_id($role);
-   q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();name_parts_save($id,$nm['parts']);
+   q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();name_parts_save($id,$nm['parts']);school_mark_user($id);
    if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');}else{
     $section=section_from_post((int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level(1,true);$details=pupil_details_input();
     q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);$password=new_pupil_password($id);
