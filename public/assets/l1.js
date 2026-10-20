@@ -10,6 +10,18 @@
 (function(){
  'use strict';
  const $=(s,r)=>(r||document).querySelector(s),$$=(s,r)=>[...(r||document).querySelectorAll(s)];
+ /* iPhone, iPad and Safari on a Mac: one microphone job at a time (v173) */
+ const APPLE=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)||(/Safari\//.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/.test(navigator.userAgent));
+ /* The pupil's own words for the blank: what they said, without the words of the sentence around the blank.
+    "My name is Maria." for "My name is ___." gives "Maria"; while they are still saying "My name", nothing yet. */
+ function gapWords(g,t){const p=g.parentElement;let before='',after='',seen=false;p.childNodes.forEach(n=>{if(n===g){seen=true;return;}const x=n.textContent||'';if(seen)after+=' '+x;else before+=' '+x;});
+  const norm=w=>w.toLowerCase().replace(/[^a-z0-9']/g,''),tw=String(t).split(/\s+/).filter(w=>norm(w)),bw=before.split(/\s+/).map(norm).filter(Boolean),aw=after.split(/\s+/).map(norm).filter(Boolean);
+  if(!tw.length)return '';
+  for(let j=0;j<bw.length;j++)if(j+tw.length<=bw.length&&tw.every((w,i)=>bw[j+i]===norm(w)))return '';
+  let a=0,b=tw.length;
+  for(let k=Math.min(bw.length,tw.length);k>0;k--)if(bw.slice(-k).every((w,i)=>norm(tw[i])===w)){a=k;break;}
+  for(let k=Math.min(aw.length,b-a);k>0;k--)if(aw.slice(0,k).every((w,i)=>norm(tw[b-k+i])===w)){b-=k;break;}
+  let ws=tw.slice(a,b);if(ws.length>6)ws=ws.slice(0,6).concat('…');return ws.join(' ').replace(/[.,!?;:]+$/,'');}
  if(!$('.l1-app,#l1-demo'))return;
  const synth=window.speechSynthesis;
  const voice=()=>{if(!synth)return null;const vs=synth.getVoices();let pref=null;try{pref=localStorage.getItem('bulig-voice');}catch(e){}
@@ -48,13 +60,24 @@
      readings are scored with the module's miscue table, Level 1 answers with the talk and pronunciation check (v172).
      Without it (some phones, no internet) only the recording is sent. */
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition,listen=!!SR,saidIn=$('#transcript');/* v172: every Level 1 recording too (pronunciation and talk check) */
-  let sr=null,srOn=false,said=[];
-  function srStart(){if(!listen)return;said=[];srOn=true;const make=()=>{sr=new SR();sr.lang='en-US';sr.continuous=true;sr.interimResults=false;
-    sr.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)said.push(e.results[i][0].transcript);if(saidIn)saidIn.value=said.join(' ').trim();};
-    sr.onerror=e=>{if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
-    sr.onend=()=>{if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
+  /* v173: iPhones, iPads and Safari cannot record and listen at the same time (the recording stops or stays silent).
+     There BULIG only listens: the words it hears are the answer, with no voice recording. */
+  let solo=listen&&APPLE;
+  let sr=null,srOn=false,said=[],part='',srErr='';
+  const heardText=()=>(said.join(' ')+' '+part).replace(/\s+/g,' ').trim();
+  function srStart(){if(!listen)return;said=[];part='';srErr='';srOn=true;const make=()=>{sr=new SR();sr.lang='en-US';sr.continuous=true;sr.interimResults=true;
+    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();if(saidIn)saidIn.value=said.join(' ').trim();live(t,false);};
+    sr.onerror=e=>{srErr=e.error||'';if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
+    sr.onend=()=>{if(part){said.push(part);part='';}if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
    make();try{sr.start();}catch(e){srOn=false;}}
   function srStop(){srOn=false;try{sr&&sr.stop();}catch(e){}}
+  /* What BULIG hears shows under the question, and in "Finish the sentence" cards it goes into the blank (v173). */
+  const gap=$('.l1-gap'),qBox=gap?gap.closest('.l1-q')||gap.parentElement:$('.l1-q');let heardLine=null;
+  function live(t,done){if(!t&&!done)return;if(gap){const w=gapWords(gap,t);gap.textContent=w||'?';gap.classList.toggle('live',!done&&!!w);gap.classList.toggle('done',!!done&&!!w);}
+   if(!heardLine&&qBox){heardLine=document.createElement('p');heardLine.className='l1-said';heardLine.setAttribute('aria-live','polite');qBox.after(heardLine);}
+   if(heardLine){heardLine.hidden=!t;heardLine.classList.toggle('on',!done);heardLine.replaceChildren();const a=document.createElement('span');a.textContent=done?'BULIG heard: ':'BULIG is listening: ';const b=document.createElement('b');b.textContent='\u201c'+t+(done?'':'\u2026')+'\u201d';heardLine.append(a,b);
+    if(done){const c=document.createElement('small');c.textContent='Not right? Tap Try again and say it again.';heardLine.append(c);}}}
+  function liveClear(){if(gap){gap.textContent='?';gap.classList.remove('live','done');}if(heardLine)heardLine.hidden=true;}
  /* Microphone: ask with clean-sound settings, then plain audio (some iPhones refuse the first). */
  async function getMic(){const md=navigator.mediaDevices;try{return await md.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}
   catch(e){if(e&&(e.name==='NotAllowedError'||e.name==='SecurityError'))throw e;await new Promise(r=>setTimeout(r,350));return await md.getUserMedia({audio:true});}}
@@ -77,15 +100,21 @@
    if(s==='idle'){label.textContent=startLabel;sub.textContent='';}
    if(s==='rec'){label.textContent='0:00';sub.textContent=rec.classList.contains('l4-rec')?(listen?'Read now. BULIG is listening. Tap the button when you finish.':'Read now. Tap the button when you finish.'):'Speak now. Tap the button to stop.';}
    if(s==='done'){label.textContent='Listen to your answer';sub.textContent='Happy with it? Tap Send. Or tap Try again.';}}
-  function reset(){if(player){player.pause();player=null;}if(url){URL.revokeObjectURL(url);url='';}audioIn.value='';heardIn.value='';if(saidIn&&listen)saidIn.value='';bar.style.setProperty('--p','0');}
+  function reset(){if(player){player.pause();player=null;}if(url){URL.revokeObjectURL(url);url='';}audioIn.value='';heardIn.value='';if(saidIn&&listen)saidIn.value='';bar.style.setProperty('--p','0');liveClear();}
   async function start(){if(state==='starting'||state==='rec')return;state='starting';rec.dataset.state='starting';go.classList.add('busy');stopSay();reset();
+   if(solo){srStart();if(!srOn){solo=false;}else{go.classList.remove('busy');t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=MAX)stop();
+     if(!srOn&&srErr){clearInterval(tick);if(srErr==='not-allowed'){ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg({name:'NotAllowedError'});heardB.hidden=false;}else if(!heardText()){solo=false;state='idle';start();}else stop();}},250);return;}}
    srStart();try{stream=await getMic();}
    catch(err){srStop();go.classList.remove('busy');ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(err);heardB.hidden=false;return;}
    const type=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
    try{mr=new MediaRecorder(stream,type?{mimeType:type,audioBitsPerSecond:32000}:undefined);}catch(e){mr=new MediaRecorder(stream);}
    chunks=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};mr.onstop=finish;mr.start(500);
    go.classList.remove('busy');t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=MAX)stop();},250);}
-  function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;srStop();if(mr&&mr.state!=='inactive')mr.stop();if(stream)stream.getTracks().forEach(t=>t.stop());}
+  function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;srStop();if(solo){state='starting';setTimeout(finishSolo,900);return;}if(mr&&mr.state!=='inactive')mr.stop();if(stream)stream.getTracks().forEach(t=>t.stop());
+   if(listen)setTimeout(()=>{const t=heardText();if(t)live(t,true);},900);}
+  /* listening only (iPhone): the words are the answer */
+  function finishSolo(){const t=heardText();if(saidIn)saidIn.value=t;if(!t||secs<.6){ui('idle');liveClear();sub.textContent='I could not hear anything. Tap the microphone and try again.';return;}
+   const sIn=$('#l1-secs');if(sIn)sIn.value=String(Math.round(secs));audioIn.value='';heardIn.value='1';ui('done');playBox.hidden=true;label.textContent=rec.classList.contains('l4-rec')?'BULIG heard your reading':'BULIG heard your answer';live(t,true);if(send)send.focus({preventScroll:true});}
   function finish(){const kind=((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/'),blob=new Blob(chunks,{type:kind});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Tap the microphone and try again.';return;}
    url=URL.createObjectURL(blob);len.textContent=fmt(secs);const sIn=$('#l1-secs');if(sIn)sIn.value=String(Math.round(secs));
@@ -99,6 +128,7 @@
    player.currentTime=0;player.play().then(()=>listenB.classList.add('on')).catch(()=>{});});
   if(again)again.addEventListener('click',()=>{ui('idle');start();});
   heardB.addEventListener('click',()=>{audioIn.value='';heardIn.value='1';form.requestSubmit();});
+  if(gap&&listen)gap.setAttribute('title','Say the whole sentence. BULIG writes your words here.');
   /* After the answer is saved: only Next is left. */
   const fb=$('#answer-feedback');
   if(fb)new MutationObserver(()=>{if(fb.classList.contains('success')){if(again)again.hidden=true;go.hidden=true;heardB.hidden=true;sub.textContent='';label.textContent=state==='done'?'Your answer':'';}}).observe(fb,{attributes:true,attributeFilter:['class']});

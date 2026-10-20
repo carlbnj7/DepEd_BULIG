@@ -353,7 +353,9 @@ function l1_review_media(array $r):string{
  return $k.l1_review_media_only($r);
 }
 function l1_review_media_only(array $r):string{
- if(empty($r['audio_path']))return str_starts_with((string)$r['response'],'Answered out loud')?'<p class="rv-l1-heard">'.l1_icon('ear').'Answered out loud, marked Done (no recording).</p>':'';
+ if(empty($r['audio_path'])){$resp=(string)$r['response'];
+  if(str_starts_with($resp,'Said: ')||str_starts_with($resp,'Read aloud (BULIG listened)'))return '<p class="rv-l1-heard">'.l1_icon('ear').'BULIG listened (no recording on this device) and heard: “'.e(trim((string)($r['transcript']??''))?:substr($resp,6)).'”</p>';
+  return str_starts_with($resp,'Answered out loud')?'<p class="rv-l1-heard">'.l1_icon('ear').'Answered out loud, marked Done (no recording).</p>':'';}
  return '<div class="rv-l1-audio"><span>'.l1_icon('mic').'Pupil’s recording</span><audio controls preload="metadata" src="?page=recording&amp;id='.(int)$r['id'].'"></audio></div>';
 }
 
