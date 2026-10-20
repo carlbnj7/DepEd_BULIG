@@ -58,3 +58,18 @@
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
  new MutationObserver(function(){if(d.classList.contains('dark')&&document.body)scan(document.body);}).observe(d,{attributes:true,attributeFilter:['class']});
 })();
+/* Every voice says BULIG as one word, "buh-league", not B-U-L-I-G (v172). The word highlighting still follows the
+   text on screen: the voice's word positions are moved back to where they are in the original text. */
+(function(){
+ var s=window.speechSynthesis;if(!s||!s.speak||s.__bulig)return;s.__bulig=1;
+ var say='Buh-league',speak=s.speak.bind(s);
+ s.speak=function(u){
+  try{var t=String(u.text||''),re=/\bbulig\b/gi,m,out='',at=0,cut=[];
+   while((m=re.exec(t))){out+=t.slice(at,m.index);cut.push([out.length,m.index]);out+=say;at=m.index+m[0].length;}
+   if(cut.length){out+=t.slice(at);u.text=out;
+    var back=function(i){var d=0;for(var k=0;k<cut.length;k++){if(i<cut[k][0])break;if(i<cut[k][0]+say.length)return cut[k][1];d=cut[k][0]+say.length-(cut[k][1]+5);}return i-d;};
+    var ob=u.onboundary;if(ob)u.onboundary=function(e){ob.call(u,{name:e.name,charIndex:back(e.charIndex),charLength:e.charLength,elapsedTime:e.elapsedTime,utterance:u,target:u});};}
+  }catch(e){}
+  return speak(u);
+ };
+})();
