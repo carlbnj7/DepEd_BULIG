@@ -185,7 +185,7 @@ function section_report_view(array $u):void{
  if($level!==5)$parts=array_values(array_diff($parts,['irl']));
  $month=preg_match('~^\d{4}-\d{2}$~',(string)($_GET['month']??''))?(string)$_GET['month']:date('Y-m');
  $D=sr_data($sec,$level,$tid,$month);$t=(string)$u['name'];
- $logos=function_exists('admin_setting')&&admin_setting('logo_division','')!==''&&admin_setting('logo_school','')!=='';
+ $logos=division_logo()!==''&&admin_setting('logo_school','')!=='';
  echo '<div class="no-print rc-actions"><div><span class="eyebrow">SECTION DATA REPORT</span><h1>Grade '.$D['grade'].' – '.e($sec['name']).' · '.e(level_label($level)).'</h1><p class="muted">'.count($D['pupils']).' '.(count($D['pupils'])===1?'pupil':'pupils').' · '.count($parts).' '.(count($parts)===1?'page':'pages').'. Check the pages, then print or save as PDF. Sign the summary after printing.</p>'
   .(!$logos?'<p class="rc-tip">'.icon('info').'The Division and school logos print in the circles once your administrator uploads them in Settings → School info.</p>':'').'</div>'
   .'<div class="rc-btns"><a class="btn quiet" href="?page=print#pc-sd">'.icon('arrow','flip').'Back</a><button type="button" class="btn primary" data-print>'.icon('download').'Print or save as PDF</button></div></div>';

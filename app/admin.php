@@ -3,10 +3,11 @@
 
 /* ---------------------------------------------------------------- small helpers */
 function admin_setting(string $key,string $default=''):string{
+ if(function_exists('school_setting')&&($sv=school_setting($key))!==null)return $sv!==''?$sv:$default;/* the school in use (v174) */
  try{$v=val('SELECT setting_value FROM settings WHERE setting_key=?',[$key]);}catch(Throwable $e){return $default;}
  return $v===null||$v===false?$default:(string)$v;
 }
-function admin_set(string $key,string $value):void{q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[$key,$value]);}
+function admin_set(string $key,string $value):void{if(function_exists('school_setting_save')&&school_setting_save($key,$value))return;q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[$key,$value]);}
 function admin_when(?string $dt):string{
  if(!$dt)return 'Never';$t=strtotime($dt);$d=(int)floor((strtotime(date('Y-m-d'))-strtotime(date('Y-m-d',$t)))/86400);
  if($d===0)return 'Today, '.date('g:i A',$t);if($d===1)return 'Yesterday, '.date('g:i A',$t);if($d<7)return date('D, g:i A',$t);return date('M j, Y',$t);
@@ -20,10 +21,10 @@ function admin_heading(string $eyebrow,string $title,string $sub,string $buttons
  echo '<div class="pageheading ws-head"><div><span class="eyebrow">'.e($eyebrow).'</span><h1>'.e($title).'</h1><p class="muted">'.e($sub).'</p></div>'.($buttons?'<div class="ws-btns">'.$buttons.'</div>':'').'</div>';
 }
 function admin_last_logins():array{static $m;if($m===null){$m=[];foreach(rows("SELECT actor_id,MAX(created_at) t FROM audit_log WHERE action='login' AND actor_id IS NOT NULL GROUP BY actor_id") as $r)$m[(int)$r['actor_id']]=$r['t'];}return $m;}
-function admin_live_sections_sql():string{return sections_archive_supported()?' AND s.archived_at IS NULL':'';}
+function admin_live_sections_sql(bool $school=true):string{return (sections_archive_supported()?' AND s.archived_at IS NULL':'').($school&&function_exists('school_sections_sql')?school_sections_sql():'');}
 function admin_school_year():string{$y=(int)date('Y');if((int)date('n')<6)$y--;$s=trim(admin_setting('school_year',''));return $s!==''?$s:$y.'–'.($y+1);}
 function admin_inactive_pupils(int $days=7):int{
- return (int)val("SELECT COUNT(*) FROM users u WHERE u.role='pupil' AND u.active=1 AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?)",[date('Y-m-d',strtotime('-'.($days-1).' days'))]);
+ return (int)val("SELECT COUNT(*) FROM users u WHERE u.role='pupil' AND u.active=1".school_users_sql()." AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?)",[date('Y-m-d',strtotime('-'.($days-1).' days'))]);
 }
 function admin_announcements(bool $activeOnly=false):array{
  $list=json_decode(admin_setting('announcements','[]'),true);$list=is_array($list)?$list:[];
@@ -41,10 +42,11 @@ function admin_overview():void{admin_home(current_user());}
 /* ---------------------------------------------------------------- Teachers */
 function admin_teachers_view(array $u):void{
  $logins=admin_last_logins();$q=trim((string)($_GET['q']??''));$status=(string)($_GET['status']??'all');$grade=(int)($_GET['grade']??0);
- $list=rows("SELECT u.*,(SELECT COUNT(*) FROM teacher_pupils t JOIN users p ON p.id=t.pupil_id AND p.active=1 WHERE t.teacher_id=u.id) pupils FROM users u WHERE u.role='teacher' ORDER BY u.name");
+ $list=rows("SELECT u.*,(SELECT COUNT(*) FROM teacher_pupils t JOIN users p ON p.id=t.pupil_id AND p.active=1 WHERE t.teacher_id=u.id) pupils FROM users u WHERE u.role='teacher'".school_users_sql()." ORDER BY u.name");$multi=count(school_rows())>1;
  $secs=[];foreach(rows('SELECT s.*,(SELECT COUNT(*) FROM pupil_sections ps WHERE ps.section_id=s.id) n FROM sections s WHERE 1'.admin_live_sections_sql().' ORDER BY s.grade_level,s.name') as $s)$secs[(int)$s['teacher_id']][]=$s;
  $cards=cards_ready();$starter=teacher_starter_ids();
  admin_heading('TEACHERS','Your teaching team.','Add teachers, print their Teacher Pass, give a new starter password, and move pupils when a teacher transfers.','<a class="btn secondary" href="?page=teacher_cards">'.icon('key').'Teacher Passes</a><a class="btn primary" href="?page=add_teachers">'.icon('useredit').'Add teachers</a>');
+ echo school_filter_bar('accounts');
  echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="accounts"><input name="q" value="'.e($q).'" placeholder="Search name or ID"><select name="grade"><option value="0">All grades</option>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';
  echo '</select><select name="status">';foreach(['all'=>'All statuses','active'=>'Active','idle'=>'Inactive 14+ days','off'=>'Turned off'] as $k=>$v)echo '<option value="'.$k.'" '.($status===$k?'selected':'').'>'.$v.'</option>';echo '</select><button class="btn secondary">Filter</button>';
  $shown=array_values(array_filter($list,function($t)use($q,$status,$grade,$logins,$secs){
@@ -53,19 +55,19 @@ function admin_teachers_view(array $u):void{
   if($status==='active'&&(!$t['active']||$idle))return false;if($status==='idle'&&(!$t['active']||!$idle))return false;if($status==='off'&&$t['active'])return false;
   if($grade&&!array_filter($secs[(int)$t['id']]??[],fn($s)=>(int)$s['grade_level']===$grade))return false;return true;}));
  echo '<span class="ws-sp muted">'.count($shown).' of '.count($list).' teachers</span></form>';
- echo '<section class="card"><div class="tablewrap"><table class="ws-table"><thead><tr><th>Teacher</th><th>Sections</th><th>Pupils</th><th>Last sign-in</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+ echo '<section class="card"><div class="tablewrap"><table class="ws-table"><thead><tr><th>Teacher</th>'.($multi?'<th>School</th>':'').'<th>Sections</th><th>Pupils</th><th>Last sign-in</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
  foreach($shown as $t){$last=$logins[(int)$t['id']]??null;$days=admin_days_since($last);
   [$cls,$label]=!$t['active']?['off','Turned off']:(($days??999)>=14?['warn',$last?'Inactive '.$days.' days':'Never signed in']:['ok','Active']);
   $sl=$secs[(int)$t['id']]??[];
-  echo '<tr><td><strong>'.e($t['name']).'</strong><small>'.e($t['public_id']).'</small></td><td>'.($sl?e(implode(', ',array_map(fn($s)=>'Grade '.$s['grade_level'].' · '.$s['name'],$sl))):'—').'</td><td><b>'.(int)$t['pupils'].'</b></td><td>'.e(admin_when($last)).'</td><td><span class="ws-pill '.$cls.'">'.$label.'</span>'.(in_array((int)$t['id'],$starter,true)?'<span class="ws-pill warn tc-st">Starter password</span>':'').'</td><td><div class="ws-acts">';
+  echo '<tr><td><strong>'.e($t['name']).'</strong><small>'.e($t['public_id']).'</small></td>'.school_teacher_cell($t).'<td>'.($sl?e(implode(', ',array_map(fn($s)=>'Grade '.$s['grade_level'].' · '.$s['name'],$sl))):'—').'</td><td><b>'.(int)$t['pupils'].'</b></td><td>'.e(admin_when($last)).'</td><td><span class="ws-pill '.$cls.'">'.$label.'</span>'.(in_array((int)$t['id'],$starter,true)?'<span class="ws-pill warn tc-st">Starter password</span>':'').'</td><td><div class="ws-acts">';
   if($cards)echo '<a href="?page=teacher_cards&amp;t='.(int)$t['id'].'">'.icon('key').'Teacher Pass</a><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_teacher_starter"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="Make a new starter password for '.e($t['name']).'? Their old password and QR code stop working, and they make a new password at the next sign-in.">'.icon('replay').'New starter password</button></form>';
   else echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_reset_password"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="Make a new password for '.e($t['name']).'?">'.icon('key').'Reset password</button></form>';
   echo '<a href="?page=accounts&amp;from=t'.$t['id'].'#move">'.icon('swap').'Move pupils</a>';
   echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_toggle_teacher"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="'.($t['active']?'Turn off '.e($t['name']).'? They will not be able to sign in.':'Turn on '.e($t['name']).'?').'">'.icon('lock').($t['active']?'Turn off':'Turn on').'</button></form>';
   echo !$t['pupils']&&!($secs[(int)$t['id']]??[])?delete_box('delete_teacher',(int)$t['id'],$t['name'],'teacher',true):'<span class="del-off" title="Move this teacher’s pupils and remove their sections first">'.icon('close').'Delete</span>';
-  echo '<details class="ws-more"><summary>'.icon('edit').'Edit name &amp; sex</summary><form method="post" class="ws-inline">'.csrf_field().'<input type="hidden" name="action" value="admin_rename_teacher"><input type="hidden" name="id" value="'.$t['id'].'"><input name="name" value="'.e($t['name']).'" required maxlength="150"><select name="teacher_sex" aria-label="Sex">'.(function($m){return '<option value="female"'.(!$m?' selected':'').'>Female</option><option value="male"'.($m?' selected':'').'>Male</option>';})(tf_is_male((int)$t['id'])).'</select><button class="btn primary small">Save</button></form></details>';
+  echo '<details class="ws-more"><summary>'.icon('edit').'Edit name &amp; sex</summary><form method="post" class="ws-inline">'.csrf_field().'<input type="hidden" name="action" value="admin_rename_teacher"><input type="hidden" name="id" value="'.$t['id'].'"><input name="name" value="'.e($t['name']).'" required maxlength="150"><select name="teacher_sex" aria-label="Sex">'.(function($m){return '<option value="female"'.(!$m?' selected':'').'>Female</option><option value="male"'.($m?' selected':'').'>Male</option>';})(tf_is_male((int)$t['id'])).'</select><button class="btn primary small">Save</button></form></details>'.school_teacher_move($t);
   echo '</div></td></tr>';}
- if(!$shown)echo '<tr><td colspan="6">No teachers match this filter.</td></tr>';
+ if(!$shown)echo '<tr><td colspan="'.($multi?7:6).'">No teachers match this filter.</td></tr>';
  echo '</tbody></table></div></section>';
  // move pupils
  $from=(string)($_GET['from']??'');
@@ -119,9 +121,9 @@ function admin_pct($v):string{return $v===null||$v===false?'—':(int)$v.'%';}
 function admin_reports_view():void{
  [$period,$start,$plabel]=admin_period();$grade=(int)($_GET['grade']??0);$section=(int)($_GET['section']??0);$rows=admin_report_rows($start,$grade,$section);
  $qs='period='.$period.'&amp;grade='.$grade.'&amp;section='.$section;
- admin_heading('SCHOOL REPORTS','See the whole school at a glance.','Progress by grade and section · '.$plabel.' · ready to print for the principal or the division.','<a class="btn secondary" href="?page=report_csv&amp;'.$qs.'">'.icon('download').'Download Excel (CSV)</a><button type="button" class="btn primary" data-print>'.icon('book').'Print / Save as PDF</button>');
+ echo '';admin_heading('SCHOOL REPORTS',school_filter_id()?'See '.admin_setting('school_code','the school').' at a glance.':'See the whole school at a glance.','Progress by grade and section · '.$plabel.' · ready to print for the principal or the division.','<a class="btn secondary" href="?page=report_csv&amp;'.$qs.'">'.icon('download').'Download Excel (CSV)</a><button type="button" class="btn primary" data-print>'.icon('book').'Print / Save as PDF</button>');
  $school=admin_setting('school_name','');echo '<div class="ws-print-head"><strong>'.e($school?:'BULIG reading program').'</strong><span>'.e(trim(admin_setting('school_district','').' · School year '.admin_school_year(),' ·')).' · '.e($plabel).' · Printed '.date('M j, Y').'</span></div>';
- echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="reports"><select name="period">';foreach(['month'=>'This month','quarter'=>'Last 3 months','year'=>'This school year','all'=>'All time'] as $k=>$v)echo '<option value="'.$k.'" '.($period===$k?'selected':'').'>'.$v.'</option>';
+ echo school_filter_bar('reports');echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="reports"><select name="period">';foreach(['month'=>'This month','quarter'=>'Last 3 months','year'=>'This school year','all'=>'All time'] as $k=>$v)echo '<option value="'.$k.'" '.($period===$k?'selected':'').'>'.$v.'</option>';
  echo '</select><select name="grade"><option value="0">All grades</option>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';echo '</select><select name="section"><option value="0">All sections</option>';
  foreach(rows('SELECT s.* FROM sections s WHERE 1'.admin_live_sections_sql().($grade?' AND s.grade_level='.$grade:'').' ORDER BY s.grade_level,s.name') as $s)echo '<option value="'.$s['id'].'" '.($section===(int)$s['id']?'selected':'').'>Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';
  echo '</select><button class="btn secondary">Show</button></form>';
@@ -228,7 +230,8 @@ function admin_settings_view(array $u):void{
  echo '<nav class="ws-tabs">';foreach($tabs as $k=>$v)echo '<a class="'.($tab===$k?'on':'').'" href="?page=settings&amp;tab='.$k.'">'.e($v).'</a>';echo '</nav>';
  if($tab==='security'){echo '<div class="ws-g2">';admin_pin_settings($u);
   echo '<section class="card"><div class="ws-hd"><h2>'.icon('lock').' Sign-in rules</h2></div><div class="ws-chk y">'.icon('check').'<span>Lock an ID after 8 wrong passwords</span><span class="ws-sp">15 minutes</span></div><div class="ws-chk y">'.icon('check').'<span>Lock admin sign-in after 3 wrong PINs</span><span class="ws-sp">15 minutes</span></div><div class="ws-chk y">'.icon('check').'<span>Sign out after no activity</span><span class="ws-sp">2 hours</span></div><div class="ws-chk y">'.icon('check').'<span>Pupil passwords</span><span class="ws-sp">'.(cards_ready()?'Own starter password + QR ticket':'12345678').'</span></div></section></div>';}
- if($tab==='school'){echo '<section class="card"><div class="ws-hd"><h2>'.icon('book').' School info</h2><small class="muted">Printed at the top of reports</small></div><form method="post" class="ws-formrow">'.csrf_field().'<input type="hidden" name="action" value="admin_school_info">';
+ if($tab==='school'){if(count(school_rows())>1)echo school_filter_bar('settings','&amp;tab=school').'<p class="muted">'.icon('info').' These details are for <b>'.e(admin_setting('school_code','')).'</b>. Each school has its own: choose it above, or open <a href="?page=schools">Schools</a>.</p>';
+  echo '<section class="card"><div class="ws-hd"><h2>'.icon('book').' School info</h2><small class="muted">Printed at the top of reports</small></div><form method="post" class="ws-formrow">'.csrf_field().'<input type="hidden" name="action" value="admin_school_info">';
   foreach(['school_name'=>['School name','e.g. Malaybalay Central Elementary School'],'school_id'=>['School ID','e.g. 128001'],'school_district'=>['District / Division','e.g. Malaybalay City Division'],'school_head'=>['School head','Name of the principal'],'school_year'=>['School year',admin_school_year()]] as $k=>[$l,$ph])echo '<label>'.$l.'<input name="'.$k.'" maxlength="150" value="'.e(admin_setting($k,'')).'" placeholder="'.e($ph).'"></label>';
   echo '<button class="btn primary">Save school info</button></form></section>'.(function_exists('rc_logo_settings')?rc_logo_settings():'');}
  if($tab==='announcements'){echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('mega').' Announcements</h2><small class="muted">Shown on every teacher’s Overview</small></div>';

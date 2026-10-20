@@ -8,6 +8,8 @@ require (getenv('BULIG_APP_ROOT')?:__DIR__.'/..').'/app/bootstrap.php';
 [$what,$pid]=[$argv[1]??'',(int)($argv[2]??0)];
 $out=match($what){
  'reader'=>rl_info($pid,true)+['headstart_all'=>array_sum(rl_headstart($pid,true)),'headstart_now'=>rl_headstart_now($pid,true)],
+ /* Schools (v174): the next IDs a school gives (nothing is saved): php tests/probe.php school_ids <school id> */
+ 'school_ids'=>(function()use($pid):array{school_use($pid);db()->beginTransaction();$o=['pupil'=>new_account_id('pupil'),'teacher'=>new_account_id('teacher'),'name'=>admin_setting('school_name',''),'code'=>school_code()];db()->rollBack();return $o;})(),
  'xp'=>['xp'=>(int)val('SELECT COALESCE(total,0) FROM pupil_xp WHERE pupil_id=?',[$pid]),'rows'=>(int)val('SELECT COUNT(*) FROM xp_transactions WHERE pupil_id=?',[$pid])],
  /* The first activities of the first lesson of a level (and grade): php tests/probe.php first_activities <level id> <grade> */
  'first_activities'=>rows("SELECT a.id,a.lesson_id,a.xp_reward,a.response_mode FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND (m.grade_level IS NULL OR m.grade_level=?) AND a.published=1 AND l.published=1 AND l.id=(SELECT l2.id FROM lessons l2 JOIN modules m2 ON m2.id=l2.module_id WHERE m2.level_id=? AND (m2.grade_level IS NULL OR m2.grade_level=?) AND l2.published=1 ORDER BY l2.position,l2.id LIMIT 1) ORDER BY FIELD(a.phase,'pre','learn','post'),a.position LIMIT 3",[$pid,(int)($argv[3]??1),$pid,(int)($argv[3]??1)]),

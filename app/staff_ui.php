@@ -13,7 +13,7 @@ function staff_nav_list(array $u):array{
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
    ['g','TEACHING'],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
- return [['dashboard','home','Home'],['g','PEOPLE'],['accounts','people','Teachers'],['add_teachers','useredit','Add teachers'],['checkup','shield','Account check'],
+ return [['dashboard','home','Home'],['g','PEOPLE'],['schools','school','Schools'],['accounts','people','Teachers'],['add_teachers','useredit','Add teachers'],['checkup','shield','Account check'],
   ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['activity_log','clock','Activity log'],['settings','settings','Settings'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
 }
 /** The number of new notifications beside Notifications in the menu. */
@@ -49,7 +49,7 @@ function staff_find_list(string $role):array{
   ['Print progress reports','Print centre › Progress reports','?page=print#pc-progress','print'],['Print certificates','Print centre › Certificates','?page=print#pc-certs','print'],['Print class progress sheet','Print centre › Class progress sheet','?page=print#pc-sheet','print'],['Print reading check results','Print centre › Reading check results','?page=rcheck_print','print'],
   ['Notifications','Messages and help requests','?page=notifications','bell'],['My profile and password','Photo, character, dark mode, password','?page=profile','user'],['Rate BULIG','My profile › Rate BULIG · 5 quick questions','?page=rate','star'],['Where things are now','What moved in the new menu','?page=moved','info']];
  return [
-  ['Home','Things that need you, quick tasks','?page=dashboard','home'],['Teachers','Your teaching team','?page=accounts','people'],['Add a teacher','Add teachers › One teacher','?page=add_teachers','useredit'],['Add many teachers','Add teachers › Many teachers (Excel list)','?page=add_teachers&mode=many','excel'],
+  ['Home','Things that need you, quick tasks','?page=dashboard','home'],['Schools','Each school’s code, name and logo · Add a school','?page=schools','school'],['Teachers','Your teaching team','?page=accounts','people'],['Add a teacher','Add teachers › One teacher','?page=add_teachers','useredit'],['Add many teachers','Add teachers › Many teachers (Excel list)','?page=add_teachers&mode=many','excel'],
   ['Teacher Passes','Print & download › Teacher Passes','?page=teacher_cards','print'],['Reset a teacher’s password','Teachers › New starter password','?page=accounts','key'],['Move pupils to another teacher','Teachers › Move pupils','?page=accounts#move','move'],['Account check','Accounts to fix','?page=checkup','shield'],
   ['App ratings','How pupils and teachers rate BULIG','?page=ratings','star'],['School reports','Progress by grade and section','?page=reports','chart'],
   ['Print & download','Every print and download','?page=print','print'],['Download a backup','Print & download › Backup','?page=print#pc-backup','download'],['Activity log','Who did what, and when','?page=activity_log','clock'],
@@ -158,25 +158,26 @@ function add_pupils_view(array $u):void{
 /* ---------------- administrator: Add teachers (one, or many) ---------------- */
 function add_teachers_view(array $u):void{
  $mode=($_GET['mode']??'')==='many'||isset($_GET['step'])||($_GET['page']??'')==='teacher_import'?'many':'one';
- admin_heading('PEOPLE','Add teachers','Add one teacher, or the whole teaching team at once from an Excel list. BULIG makes each Teacher ID and starter password.','<a class="btn secondary" href="?page=teacher_cards">'.icon('print').'Print Teacher Passes</a>');
- echo ap_choice($mode,['useredit','One teacher','Type the name of the teacher'],['excel','Many teachers','Upload an Excel list of the whole team'],'add_teachers');
+ admin_heading('PEOPLE','Add teachers','Add one teacher, or the whole teaching team at once: type the list or upload an Excel file. BULIG makes each Teacher ID and starter password.','<a class="btn secondary" href="?page=teacher_cards">'.icon('print').'Print Teacher Passes</a>');
+ echo ap_choice($mode,['useredit','One teacher','Type the name of the teacher'],['excel','Many teachers','Type the list or upload Excel'],'add_teachers');
  if($mode==='many'){ob_start();teacher_import_view();$h=(string)ob_get_clean();echo preg_replace('~^.*?(<section)~s','$1',$h,1);return;}
  $nt=(int)($_SESSION['new_teacher']??0);unset($_SESSION['new_teacher']);if($nt)echo new_teacher_overlay($nt);
- echo '<section class="card ap-one"><h2>Add one teacher</h2><form class="ws-formrow" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account"><input type="hidden" name="back" value="add_teachers">'.name_fields().''.(cards_ready()?'':'<label>Password (8–72 characters)<input name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password"></label>').'<label>Sex<select name="teacher_sex" required><option value="">Choose Male or Female</option><option value="female">Female</option><option value="male">Male</option></select></label><button class="btn primary">'.icon('check').'Create teacher account</button></form><p class="muted ap-note">'.icon('info').'After saving, BULIG shows the new Teacher Pass with the Teacher ID and starter password, ready to print.</p></section>'.names_script();
+ echo '<section class="card ap-one"><h2>Add one teacher</h2><form class="ws-formrow" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account"><input type="hidden" name="back" value="add_teachers">'.school_pick_field().name_fields().''.(cards_ready()?'':'<label>Password (8–72 characters)<input name="password" type="password" required minlength="8" maxlength="72" autocomplete="new-password"></label>').'<label>Sex<select name="teacher_sex" required><option value="">Choose Male or Female</option><option value="female">Female</option><option value="male">Male</option></select></label><button class="btn primary">'.icon('check').'Create teacher account</button></form><p class="muted ap-note">'.icon('info').'After saving, BULIG shows the new Teacher Pass with the Teacher ID and starter password, ready to print.</p></section>'.names_script();
 }
 
 /* ---------------- administrator: Home ---------------- */
 function admin_home(array $u):void{
- $pupils=(int)val("SELECT COUNT(*) FROM users WHERE role='pupil' AND active=1");$newPupils=(int)val("SELECT COUNT(*) FROM users WHERE role='pupil' AND created_at>=?",[date('Y-m-01')]);
- $teachers=rows("SELECT id,name,active FROM users WHERE role='teacher' ORDER BY name");$logins=admin_last_logins();
+ $su=school_users_sql();$pupils=(int)val("SELECT COUNT(*) FROM users u WHERE role='pupil' AND active=1$su");$newPupils=(int)val("SELECT COUNT(*) FROM users u WHERE role='pupil' AND created_at>=?$su",[date('Y-m-01')]);
+ $teachers=rows("SELECT id,name,active FROM users u WHERE role='teacher'$su ORDER BY name");$logins=admin_last_logins();
  $idle=array_values(array_filter($teachers,fn($t)=>$t['active']&&(admin_days_since($logins[(int)$t['id']]??null)??999)>=14));
  $sections=(int)val('SELECT COUNT(*) FROM sections s WHERE 1'.admin_live_sections_sql());$grades=rows('SELECT DISTINCT grade_level g FROM sections s WHERE 1'.admin_live_sections_sql().' ORDER BY g');
- $week=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=?',[date('Y-m-d H:i:s',strtotime('-7 days'))]);$prev=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=? AND submitted_at<?',[date('Y-m-d H:i:s',strtotime('-14 days')),date('Y-m-d H:i:s',strtotime('-7 days'))]);
+ $sp=school_filter_id()?' AND pupil_id IN (SELECT id FROM users WHERE school_id='.school_filter_id().')':'';$week=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=?'.$sp,[date('Y-m-d H:i:s',strtotime('-7 days'))]);$prev=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=? AND submitted_at<?'.$sp,[date('Y-m-d H:i:s',strtotime('-14 days')),date('Y-m-d H:i:s',strtotime('-7 days'))]);
  $trend=$prev?(($week>=$prev?'+':'').round(($week-$prev)/$prev*100).'% vs last week'):($week?'first week of activity':'');
  echo staff_moved_note($u);
  admin_heading('ADMINISTRATOR HOME','What would you like to do today?','School year '.admin_school_year().' · Things that need you come first.','<a class="btn secondary" href="?page=print">'.icon('print').'Print &amp; download</a><a class="btn secondary" href="?page=settings&amp;tab=announcements">'.icon('mega').'Post announcement</a><a class="btn primary" href="?page=add_teachers">'.icon('useredit').'Add teachers</a>');
  echo function_exists('account_ids_admin_notice')?account_ids_admin_notice():'';
- $inactive=admin_inactive_pupils(7);$top=one("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN sections s ON s.id=ps.section_id WHERE u.role='pupil' AND u.active=1 AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?) GROUP BY s.id ORDER BY c DESC LIMIT 1",[date('Y-m-d',strtotime('-6 days'))]);
+ echo school_filter_bar('dashboard').school_compare_cards();
+ $inactive=admin_inactive_pupils(7);$top=one("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN sections s ON s.id=ps.section_id WHERE u.role='pupil' AND u.active=1".school_users_sql()." AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?) GROUP BY s.id ORDER BY c DESC LIMIT 1",[date('Y-m-d',strtotime('-6 days'))]);
  $bk=admin_setting('last_backup_at','');$oldBackup=$bk===''||admin_days_since($bk)>7;
  $failed=(int)val("SELECT COUNT(*) FROM audit_log WHERE action IN ('login_failed','admin_pin_failed') AND created_at>=?",[date('Y-m-d 00:00:00')]);
  echo '<p class="hm-sub">Needs you today</p><div class="hm-todo">'
@@ -192,11 +193,11 @@ function admin_home(array $u):void{
   .hm_task('mega','Post an announcement','All teachers see it','?page=settings&tab=announcements').'</div>'.claude_tip($u);
  echo '<p class="hm-sub">School at a glance</p>';
  echo admin_kpis([['people',number_format($pupils),'Pupils',$newPupils?'+'.$newPupils.' this month':'',false],['user',count($teachers),'Teachers',$idle?count($idle).' inactive 14+ days':'all active',(bool)$idle],['book',$sections,'Sections',$grades?'Grades '.implode(', ',array_column($grades,'g')):'none yet',false],['check',number_format($week),'Activities this week',$trend,$prev&&$week<$prev]]);
- $levels=[];foreach(rows("SELECT GREATEST(a.level_id,COALESCE((SELECT MAX(m.level_id) FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)) lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1") as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;$max=max([1]+$levels);
+ $levels=[];foreach(rows("SELECT GREATEST(a.level_id,COALESCE((SELECT MAX(m.level_id) FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)) lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1".school_users_sql()) as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;$max=max([1]+$levels);
  echo '<div class="ws-g3 hm-g3"><section class="card"><div class="ws-hd"><h2>Pupils at each level</h2><a href="?page=reports">View report '.icon('arrow').'</a></div><div class="ws-bars">';
  foreach(rows('SELECT id FROM bulig_levels ORDER BY id') as $l){$n=$levels[(int)$l['id']]??0;echo '<div class="ws-bar"><span>'.e(level_label((int)$l['id'])).'</span><u><i class="w-'.(int)(round($n/$max*20)*5).'"></i></u><b>'.$n.'</b></div>';}
  echo '</div></section><section class="card"><div class="ws-hd"><h2>Most active sections</h2><small class="muted">last 30 days</small></div><div class="ws-list">';
- $act=rows("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM activity_completion c JOIN pupil_sections ps ON ps.pupil_id=c.pupil_id JOIN sections s ON s.id=ps.section_id WHERE c.submitted_at>=? GROUP BY s.id ORDER BY c DESC LIMIT 3",[date('Y-m-d',strtotime('-30 days'))]);
+ $act=rows("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM activity_completion c JOIN pupil_sections ps ON ps.pupil_id=c.pupil_id JOIN sections s ON s.id=ps.section_id WHERE c.submitted_at>=?".admin_live_sections_sql()." GROUP BY s.id ORDER BY c DESC LIMIT 3",[date('Y-m-d',strtotime('-30 days'))]);
  foreach($act as $a)echo '<div class="ws-li">'.icon('star').'<span>'.e($a['n']).'</span><span class="ws-sp ws-pill ok">'.number_format((int)$a['c']).'</span></div>';if(!$act)echo '<p class="muted">No activity in the last 30 days yet.</p>';
  echo '</div></section><section class="card"><div class="ws-hd"><h2>Announcement</h2><a href="?page=settings&amp;tab=announcements">Edit</a></div>';
  $ann=admin_announcements(true);if($ann){$a=$ann[0];echo '<div class="ws-ann"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · Shown to all teachers'.($a['until']?' until '.e(date('M j',strtotime($a['until']))):'').'</small></div>';}else echo '<p class="muted">No announcement. Post one for all teachers in Settings.</p>';
@@ -343,3 +344,11 @@ function class_glance(array $u):void{
  $badgeWeek=array_flip(array_map('intval',array_column(rows('SELECT DISTINCT pupil_id FROM pupil_badges WHERE pupil_id IN('.tf_in($ids).') AND earned_at>=?',[date('Y-m-d H:i:s',strtotime('-7 days'))]),'pupil_id')));
  echo tf_defs().'<p class="hm-sub" id="glance">Class at a glance</p>'.tf_chart($ids).'<div class="tf-grid">'.tf_tree($pupils,$stats,$badgeWeek).tf_feed($ids).'</div>';
 }
+
+/** Once after each sign-in, on a phone: Kai the Messenger reminds teachers and administrators that BULIG is easier
+    on a laptop or computer (v174). The browser shows it only on small touch screens (assets/staff.js). */
+function staff_pc_tip(array $u):string{
+ if(!empty($_SESSION['pc_tip']))return '';$_SESSION['pc_tip']=1;$first=explode(' ',trim((string)$u['name']))[0];
+ return '<template id="pc-tip" data-img="'.e(friend_img('kai','letter')).'" data-hi="'.e(($u['role']==='admin'?'Hi, ':'Hi, Teacher ').$first.'!').'"></template>';
+}
+

@@ -5769,3 +5769,73 @@ html.dark .lb-filter select{background:#1b2a21;border-color:#2c4033;color:#e8f0e
 html.dark .l1-said{color:#d6e6db}
 @media (prefers-reduced-motion:no-preference){.l1-said.on::before{content:'';width:8px;height:8px;border-radius:50%;background:#5aa0e8;align-self:center;animation:l1SaidDot 1s ease-in-out infinite}}
 @keyframes l1SaidDot{50%{opacity:.25;transform:scale(.7)}}
+
+/* ---------- v174: more than one school (Schools page, the school filter, the school tags) ---------- */
+.sc-filter{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 18px;padding:8px 10px 8px 16px;background:var(--sf,#fff);border:1px solid var(--ln,#e3e8e0);border-radius:999px;width:max-content;max-width:100%;box-shadow:0 6px 18px rgba(20,60,30,.06)}
+.sc-filter>span{font-weight:700;color:var(--mu,#5f6f64);font-size:.9rem}
+.sc-seg{display:flex;gap:6px;flex-wrap:wrap}
+.sc-seg a{padding:8px 16px;border-radius:999px;font-weight:800;font-size:.9rem;text-decoration:none;color:var(--tx,#24352a);background:var(--sf2,#eef4ec)}
+.sc-seg a.on{background:linear-gradient(180deg,#22895a,#16683f);color:#fff}
+.sc-tag{display:inline-flex;align-items:center;font-weight:800;letter-spacing:.06em;font-size:.78rem;padding:4px 10px;border-radius:999px;background:#17633a;color:#ffd23f;white-space:nowrap}
+.sc-tag.c1{background:#1f4f9c;color:#fff}.sc-tag.c2{background:#8a3b9e;color:#fff}.sc-tag.c3{background:#b5540f;color:#fff}
+.sc-compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:18px}
+.sc-cmp{display:block;border-radius:18px;padding:16px;background:var(--sf,#fff);border:1px solid var(--ln,#e3e8e0);color:var(--tx,#24352a);text-decoration:none}
+.sc-cmp:hover{border-color:#22895a}
+.sc-cmp h4{margin:0 0 8px;display:flex;gap:8px;align-items:center;font-size:1.05rem}
+.sc-cmp small,.sc-cmp p{color:var(--mu,#5f6f64);font-weight:600}.sc-cmp p{margin:8px 0 0;font-size:.88rem}
+.sc-bar{display:block;height:12px;border-radius:999px;background:var(--sf2,#e6efe3);overflow:hidden;margin:6px 0 2px}
+.sc-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#22895a,#3fbf6f)}
+.sc-cmp.c1 .sc-bar i{background:linear-gradient(90deg,#2f6cc4,#5aa0e8)}.sc-cmp.c2 .sc-bar i{background:linear-gradient(90deg,#8a3b9e,#c07ad0)}.sc-cmp.c3 .sc-bar i{background:linear-gradient(90deg,#b5540f,#f09a4a)}
+.sc-bar i.w-0{width:0%}.sc-bar i.w-5{width:5%}.sc-bar i.w-10{width:10%}.sc-bar i.w-15{width:15%}.sc-bar i.w-20{width:20%}.sc-bar i.w-25{width:25%}.sc-bar i.w-30{width:30%}.sc-bar i.w-35{width:35%}.sc-bar i.w-40{width:40%}.sc-bar i.w-45{width:45%}.sc-bar i.w-50{width:50%}.sc-bar i.w-55{width:55%}.sc-bar i.w-60{width:60%}.sc-bar i.w-65{width:65%}.sc-bar i.w-70{width:70%}.sc-bar i.w-75{width:75%}.sc-bar i.w-80{width:80%}.sc-bar i.w-85{width:85%}.sc-bar i.w-90{width:90%}.sc-bar i.w-95{width:95%}.sc-bar i.w-100{width:100%}
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin:18px 0}
+.sc-card{display:flex;flex-direction:column;gap:14px}
+.sc-top{display:flex;gap:14px;align-items:center}.sc-top>div{flex:1;min-width:0}
+.sc-top h3{margin:0 0 4px;font-size:1.1rem;line-height:1.25}.sc-top small{color:var(--mu,#5f6f64);font-weight:600}
+.sc-logo{width:60px;height:60px;border-radius:50%;flex:none;object-fit:cover;border:3px solid #ffd23f;background:#fff}
+span.sc-logo{display:grid;place-items:center;font-weight:900;color:#fff;font-size:.9rem;background:linear-gradient(135deg,#1e7a45,#0f4f2a)}
+span.sc-logo.c1{background:linear-gradient(135deg,#2f6cc4,#1a3f7a)}span.sc-logo.c2{background:linear-gradient(135deg,#a24cb5,#5e2370)}span.sc-logo.c3{background:linear-gradient(135deg,#d06a1d,#8a3d08)}
+.sc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sc-stats div{background:var(--sf2,#f4f8f2);border-radius:14px;padding:10px;text-align:center}
+.sc-stats b{display:block;font-size:1.3rem;color:#17633a}.sc-stats span{font-size:.8rem;color:var(--mu,#5f6f64);font-weight:600}
+.sc-ids{font-size:.9rem;background:#fff8dc;color:#3a2a00;border:1px dashed #e8c75a;border-radius:12px;padding:10px 12px;line-height:1.6}
+.sc-ids code{font-weight:800;color:#17633a;background:none;font-size:.95rem}
+.sc-edit summary{cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.sc-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.sc-form label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.92rem}
+.sc-form .sc-full,.sc-form button{grid-column:1/-1}.sc-form button{justify-self:start}
+.sc-prev{margin:0;font-weight:700;color:#17633a;background:#e9f6ec;border-radius:12px;padding:10px 12px}
+.sc-logorow{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--ln,#e3e8e0)}
+.sc-add{border:2px dashed #9cc7a8}
+.sc-pick{display:flex;flex-direction:column;gap:6px;font-weight:700;grid-column:1/-1;max-width:520px}
+.sc-pick select{border:2px solid #22895a;font-weight:700}
+.sc-idprev{font-weight:700;color:#17633a;background:#e9f6ec;border-radius:12px;padding:8px 12px}
+.sc-idprev:empty{display:none}
+html.dark .sc-ids{background:#2b2612;color:#f4e6b0;border-color:#6b5a1e}html.dark .sc-ids code,html.dark .sc-stats b{color:#7fd69a}
+html.dark .sc-prev,html.dark .sc-idprev{background:#173323;color:#9be0b1}
+@media(max-width:700px){.sc-form{grid-template-columns:1fr}.sc-filter{border-radius:18px;width:auto}}
+/* ---------- v174: Kai's reminder on phones (teachers and administrators) ---------- */
+.pc-tip{position:fixed;inset:0;z-index:4000;display:flex;align-items:flex-end;justify-content:center;padding:16px;background:rgba(10,30,18,.55);backdrop-filter:blur(3px);animation:pcIn .25s ease}
+.pc-tip.out{opacity:0;transition:opacity .25s}
+.pc-tip-card{position:relative;width:100%;max-width:420px;background:#fff;color:#1d2a22;border-radius:26px;padding:84px 22px 22px;box-shadow:0 20px 50px rgba(0,0,0,.3);text-align:center;margin-bottom:max(8px,env(safe-area-inset-bottom));animation:pcUp .35s cubic-bezier(.2,.9,.3,1.2)}
+.pc-tip-kai{position:absolute;left:50%;top:-86px;transform:translateX(-50%);width:150px;height:160px;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.25))}
+.pc-tip-name{display:inline-block;background:#1f4f9c;color:#fff;font-weight:800;font-size:.75rem;letter-spacing:.06em;border-radius:999px;padding:3px 12px;margin-bottom:8px}
+.pc-tip h2{margin:0 0 8px;font-size:1.35rem;color:#17633a}
+.pc-tip p{margin:0 0 12px;line-height:1.5;font-size:1rem}
+.pc-tip ul{list-style:none;margin:0 0 16px;padding:0;text-align:left;display:flex;flex-direction:column;gap:8px}
+.pc-tip li{background:#f1f7f1;border-radius:12px;padding:9px 12px 9px 36px;position:relative;font-weight:600;font-size:.92rem}
+.pc-tip li::before{content:'';position:absolute;left:12px;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:#2fa04f;box-shadow:inset 0 0 0 3px #d6f0dc}
+.pc-tip li:first-child::before{background:#1f4f9c;box-shadow:inset 0 0 0 3px #d7e4f7}
+.pc-tip .pc-tip-ok{width:100%;min-height:52px;font-size:1.05rem}
+html.pc-tip-open{overflow:hidden}
+html.dark .pc-tip-card{background:#16231b;color:#e8f0ea}html.dark .pc-tip li{background:#1f3127}html.dark .pc-tip h2{color:#7fd69a}
+@keyframes pcIn{from{opacity:0}}@keyframes pcUp{from{transform:translateY(40px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.pc-tip,.pc-tip-card{animation:none}}
+/* v174: the Division and school logos on the passes */
+.tk-logos{margin-left:auto;display:flex;align-items:center;gap:calc(1mm*var(--u,1));flex:none}
+.tk-sl{height:calc(7.5mm*var(--u,1));width:calc(7.5mm*var(--u,1));border-radius:50%;object-fit:contain;background:#fff;box-shadow:0 0 0 calc(.35mm*var(--u,1)) #fff,0 calc(.3mm*var(--u,1)) calc(1mm*var(--u,1)) rgba(0,0,0,.25);display:block}
+.tk-scode{display:grid;place-items:center;font-weight:900;font-size:calc(4.2pt*var(--u,1));letter-spacing:-.02em;color:#fff;background:linear-gradient(135deg,#1e7a45,#0f4f2a);line-height:1;text-align:center;overflow:hidden}
+.tk-scode.c1{background:linear-gradient(135deg,#2f6cc4,#1a3f7a)}.tk-scode.c2{background:linear-gradient(135deg,#a24cb5,#5e2370)}.tk-scode.c3{background:linear-gradient(135deg,#d06a1d,#8a3d08)}
+@media print{.tk-sl,.tk-scode{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* Add many teachers: "Type the list" (same grid as the pupils' list) */
+.bk-tgrid .c-gr{width:120px}.bk-tgrid th small{font-size:.62rem;letter-spacing:0;text-transform:none;font-weight:600;color:#5d7464}
+.bk-top .sc-pick{max-width:420px}
