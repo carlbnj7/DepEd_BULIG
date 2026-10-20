@@ -161,28 +161,44 @@
  ins.forEach(i=>i.addEventListener('change',()=>open(i)));
 })();
 
-/* v170: leaving an activity in the middle. Once the pupil has started (typed, tapped an answer, recorded), the close (X)
-   button, the menu, the bottom tabs and the top bar ask first: Bruno the Helper says "Keep going" or "Leave".
-   Links inside the activity (Next, Try again) are not stopped. */
+/* v172: "Why are you leaving?" On an activity that is not finished yet (the form has data-open), the close (X) button,
+   the menu, the bottom tabs and the top bar always ask first. Bruno the Helper gives choices; each one gets a kind
+   answer, and "It is too hard" / "Something is not working" can open "I need help" for the teacher. A finished activity
+   never asks ("Try it again" is a new, open try). Links inside the activity (Next, Try again) are not stopped. */
 (function(){
- const main=document.querySelector('body.activity-page .activity-main');if(!main)return;let started=false,ok=false;
- const mark=e=>{if(e.target.closest('form,[data-l1],[data-rec],.l2-card,.l1-card,button,label,input,textarea,select'))started=true;};
- main.addEventListener('input',()=>{started=true;},true);main.addEventListener('change',()=>{started=true;},true);main.addEventListener('pointerdown',mark,true);
- document.addEventListener('submit',()=>{started=false;},true);
+ const main=document.querySelector('body.activity-page .activity-main');if(!main)return;
+ if(!main.querySelector('#activity-form[data-open]'))return;let ok=false;
+ document.addEventListener('submit',e=>{if(main.contains(e.target))ok=true;},true);
  const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+ const btn=(c,x)=>{const b=el('button','btn '+c,x);b.type='button';return b;};
+ const pic=p=>'assets/images/characters/bruno-'+p+'.webp?v=2';
+ const WHY=[
+  ['hard','It is too hard','tryagain','That is okay! Hard things get easier when we practise. Your teacher can help you.',true],
+  ['tired','I am tired','thumbs','Rest a little, then come back. You can finish it anytime.'],
+  ['later','I will finish it later','thumbs','Okay! Your activity will wait for you. Come back soon.'],
+  ['broken','Something is not working','tryagain','Sorry about that! Tell your teacher so they can fix it.',true],
+  ['oops','I tapped it by mistake','cheer','No problem! Let’s keep going.']];
  function ask(go){
+  const help=document.querySelector('[data-help-open]');
   const ov=el('div','leave-ov'),box=el('div','leave-box');box.setAttribute('role','alertdialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-labelledby','leave-h');
-  const img=el('img','leave-pal');img.src='assets/images/characters/bruno-thumbs.webp?v=1';img.alt='';img.width=110;img.height=150;
-  const h=el('h2',null,'Leave this activity?');h.id='leave-h';const p=el('p',null,'You have not finished it yet. Stay a little longer, you can do it!');
-  const who=el('small','leave-who','Bruno the Helper');
-  const stay=el('button','btn primary','Keep going');stay.type='button';const bye=el('button','btn secondary','Leave');bye.type='button';
-  const acts=el('div','leave-acts');acts.append(stay,bye);const tx=el('div','leave-tx');tx.append(who,h,p,acts);box.append(img,tx);ov.append(box);
+  const img=el('img','leave-pal');img.src=pic('hello');img.alt='';img.width=110;img.height=150;
+  const who=el('small','leave-who','Bruno the Helper'),h=el('h2',null,'Why are you leaving?');h.id='leave-h';
+  const p=el('p',null,'You have not finished this activity yet. Tell me why:');
+  const list=el('div','leave-why'),acts=el('div','leave-acts'),stay=btn('primary','Keep going');acts.append(stay);
+  const tx=el('div','leave-tx');tx.append(who,h,p,list,acts);box.append(img,tx);ov.append(box);
   const close=()=>{ov.remove();document.removeEventListener('keydown',key);};const key=e=>{if(e.key==='Escape')close();};
-  stay.onclick=close;bye.onclick=()=>{ok=true;close();go();};ov.addEventListener('click',e=>{if(e.target===ov)close();});
+  const leave=()=>{ok=true;close();go();};
+  WHY.forEach(([id,label,pose,reply,needHelp])=>{const b=btn('leave-pick',label);b.dataset.why=id;list.append(b);
+   b.onclick=()=>{img.src=pic(pose);h.textContent=label;p.textContent=reply;list.remove();acts.textContent='';
+    if(id==='oops'){const go2=btn('primary','Keep going');go2.onclick=close;acts.append(go2);go2.focus();return;}
+    if(needHelp&&help){const hb=btn('primary','Ask my teacher');hb.onclick=()=>{close();help.click();};acts.append(hb);}
+    else{const kb=btn('primary','Keep going');kb.onclick=close;acts.append(kb);}
+    const bye=btn('secondary','Leave');bye.onclick=leave;acts.append(bye);(acts.firstChild).focus();};});
+  stay.onclick=close;ov.addEventListener('click',e=>{if(e.target===ov)close();});
   document.body.append(ov);document.addEventListener('keydown',key);requestAnimationFrame(()=>ov.classList.add('on'));stay.focus();
  }
  document.addEventListener('click',e=>{
-  if(!started||ok||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey)return;
+  if(ok||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey)return;
   const a=e.target.closest('a[href]');if(!a||main.contains(a)||a.target==='_blank'||a.hasAttribute('download')||a.hasAttribute('data-no-leave-check'))return;
   const h=a.getAttribute('href');if(!h||h.charAt(0)==='#'||/^(javascript|mailto|tel):/i.test(h))return;
   e.preventDefault();e.stopImmediatePropagation();ask(()=>{location.href=a.href;});

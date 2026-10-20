@@ -5684,3 +5684,10 @@ body:not(.l1-demo-page) .l2-card .l2-pics.n1 .l2-pic img{height:auto!important;m
 .fr-host-end{left:auto;right:12px;height:clamp(96px,26%,150px)}
 @keyframes jv-in{from{opacity:0;transform:translateX(-30px) rotate(-8deg)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.fr-host{animation:none}}
+/* v172: "Why are you leaving?" reason buttons */
+.leave-why{display:flex;flex-direction:column;gap:7px;margin:0 0 12px}
+.leave-why .leave-pick{justify-content:flex-start;text-align:left;min-height:44px;padding:9px 14px;border-radius:14px;border:2px solid #f2d36b;background:#fff7d6;color:#5a4300;font-weight:800;font-size:.92rem;box-shadow:none}
+.leave-why .leave-pick:hover,.leave-why .leave-pick:focus-visible{background:#ffe98f;border-color:#e2b928}
+html.dark .leave-why .leave-pick{background:#3a3214;border-color:#8a7426;color:#ffe9a6!important}
+html.dark .leave-why .leave-pick:hover{background:#4a3f17}
+@media(max-width:420px){.leave-why .leave-pick{justify-content:center;text-align:center}}
