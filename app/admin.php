@@ -1,5 +1,5 @@
 <?php
-/** Administrator workspace: Overview, Teachers, Reports, Activity log, System health, Settings. */
+/** Administrator workspace: Overview, Teachers, Reports, Activity log, Settings. Backups are in Print & download. */
 
 /* ---------------------------------------------------------------- small helpers */
 function admin_setting(string $key,string $default=''):string{
@@ -188,37 +188,8 @@ function admin_log_csv():never{
  foreach(rows("SELECT a.*,u.name,u.public_id,u.role FROM audit_log a LEFT JOIN users u ON u.id=a.actor_id WHERE $where ORDER BY a.id DESC LIMIT 20000",$args) as $r)fputcsv($h,[$r['created_at'],$r['name']??'',$r['public_id']??'',$r['role']??'',$labels[$r['action']][1]??$r['action'],admin_log_detail($r)],',','"','\\');exit;
 }
 
-/* ---------------------------------------------------------------- System health + backup */
-const ADMIN_EXPECTED_MIGRATIONS=['007_level2_content','009_level3_content','010_level4_content','011_level5_content','012_level6_content','013_level7_content','014_admin_pin','015_admin_tools','016_saved_logins','024_notifications','025_help_requests','026_more_badges','028_reading_check','029_app_ratings'];
+/* ---------------------------------------------------------------- Backup (in Print & download) */
 function admin_backup_note():string{$b=admin_setting('last_backup_at','');if(!$b)return 'No backup downloaded yet';$d=admin_days_since($b);return 'Last backup '.($d===0?'today':($d===1?'yesterday':$d.' days ago'));}
-function admin_count_files(string $dir,string $pattern):int{
- if(!is_dir($dir))return 0;$n=0;$it=new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir,FilesystemIterator::SKIP_DOTS));foreach($it as $f)if(preg_match($pattern,$f->getFilename()))$n++;return $n;
-}
-/** [label, ok, detail] for each check. */
-function admin_health_checks():array{
- static $c;if($c!==null)return $c;$c=[];$root=__DIR__.'/..';
- $c[]=['Database connection',true,'Connected · PHP '.PHP_VERSION];
- $mig=array_column(rows('SELECT version FROM schema_migrations'),'version');$missing=array_values(array_diff(ADMIN_EXPECTED_MIGRATIONS,$mig));
- $c[]=['Database updates',!$missing,$missing?'Import: '.implode(', ',$missing):count($mig).' applied · newest '.end($mig)];
- $empty=[];$total=0;foreach(rows('SELECT b.id,b.published,(SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=b.id AND l.published=1) n FROM bulig_levels b ORDER BY b.id') as $l){$total+=(int)$l['n'];if($l['published']&&!$l['n'])$empty[]=level_label((int)$l['id']);}
- $c[]=['Level 1–7 content installed',!$empty,$empty?'No lessons in '.implode(', ',$empty):number_format($total).' published lessons'];
- $pics=admin_count_files($root.'/public/assets/images','/\.(webp|png|jpe?g)$/i');$c[]=['Activity pictures',$pics>0,number_format($pics).' picture files · use Picture check for missing ones'];
- $pdf=admin_count_files($root.'/storage','/\.pdf$/i');$pages=admin_count_files($root.'/storage','/^page-\d+\.webp$/');$c[]=['Module PDFs and page images',$pdf>0,$pdf.' PDFs · '.number_format($pages).' page images'];
- $b=admin_setting('last_backup_at','');$c[]=['Recent backup',$b!==''&&admin_days_since($b)<=7,admin_backup_note().($b===''||admin_days_since($b)>7?' · download one below':'')];
- try{$noPin=(int)val("SELECT COUNT(*) FROM users u LEFT JOIN admin_security s ON s.user_id=u.id WHERE u.role='admin' AND u.active=1 AND (s.pin_hash IS NULL)");$c[]=['Admin PIN',$noPin===0,$noPin?$noPin.' admin(s) will create a PIN at next sign-in':'Set for all admins'];}catch(Throwable $e){$c[]=['Admin PIN',false,'Import 014_admin_pin.sql'];}
- $https=(!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=='off')||($_SERVER['HTTP_X_FORWARDED_PROTO']??'')==='https';$c[]=['HTTPS (secure connection)',$https,$https?'On':'Off · turn on SSL in hPanel'];
- $chk=is_file($root.'/public/bulig-check.php');$c[]=['Setup check file removed',!$chk,$chk?'Delete public/bulig-check.php after installing':'Removed'];
- $c[]=['Excel import support',class_exists('ZipArchive'),class_exists('ZipArchive')?'Available':'Ask hosting to enable the PHP zip extension'];
- return $c;
-}
-function admin_health_view():void{
- $checks=admin_health_checks();$ok=count(array_filter($checks,fn($c)=>$c[1]));
- admin_heading('SYSTEM HEALTH',$ok===count($checks)?'Everything in good shape.':'A few things to check.','Install checks, pictures, database updates and backups in one place.','<a class="btn primary" href="?page=health">'.icon('heart').'Run all checks</a>');
- echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>Checks</h2><span class="ws-pill '.($ok===count($checks)?'ok':'warn').'">'.$ok.' of '.count($checks).' OK</span></div>';
- foreach($checks as [$label,$good,$detail])echo '<div class="ws-chk '.($good?'y':'n').'">'.icon($good?'check':'alert').'<span>'.e($label).'</span><span class="ws-sp">'.e($detail).'</span></div>';
- echo '</section><div class="ws-stack"><section class="card" id="backup"><div class="ws-hd"><h2>'.icon('db').' Backup</h2><small class="muted">'.e(admin_backup_note()).'</small></div><p class="muted">Download pupils, teachers, sections and results. Keep a copy on a USB drive or Google Drive every week.</p><div class="ws-btns"><a class="btn primary" href="?page=backup_csv">'.icon('download').'Download backup (Excel)</a><a class="btn secondary" href="?page=backup_sql">'.icon('db').'Full database (SQL)</a></div></section>';
- echo '<section class="card"><div class="ws-hd"><h2>'.icon('image').' Picture check</h2></div><p class="muted">Finds activities whose pictures are missing on the server.</p><div class="ws-btns"><a class="btn secondary" href="?page=visual_audit">Run picture check</a></div></section></div></div>';
-}
 function admin_backup_csv():never{
  $u=require_role('admin');@set_time_limit(300);
  $sheets=[
@@ -252,8 +223,8 @@ function bulig_sql_dump(callable $write):void{
 
 /* ---------------------------------------------------------------- Settings */
 function admin_settings_view(array $u):void{
- $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','badges'=>'Badges & rewards','year'=>'School year','schedule'=>'Level schedule','ids'=>'Account IDs'];if(!isset($tabs[$tab]))$tab='security';
- admin_heading('SETTINGS','Your BULIG workspace.','Security, school details, announcements, badges and the end of the school year.');
+ $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','year'=>'School year','schedule'=>'Level schedule','ids'=>'Account IDs'];if(!isset($tabs[$tab]))$tab='security';
+ admin_heading('SETTINGS','Your BULIG workspace.','Security, school details, announcements and the end of the school year.');
  echo '<nav class="ws-tabs">';foreach($tabs as $k=>$v)echo '<a class="'.($tab===$k?'on':'').'" href="?page=settings&amp;tab='.$k.'">'.e($v).'</a>';echo '</nav>';
  if($tab==='security'){echo '<div class="ws-g2">';admin_pin_settings($u);
   echo '<section class="card"><div class="ws-hd"><h2>'.icon('lock').' Sign-in rules</h2></div><div class="ws-chk y">'.icon('check').'<span>Lock an ID after 8 wrong passwords</span><span class="ws-sp">15 minutes</span></div><div class="ws-chk y">'.icon('check').'<span>Lock admin sign-in after 3 wrong PINs</span><span class="ws-sp">15 minutes</span></div><div class="ws-chk y">'.icon('check').'<span>Sign out after no activity</span><span class="ws-sp">2 hours</span></div><div class="ws-chk y">'.icon('check').'<span>Pupil passwords</span><span class="ws-sp">'.(cards_ready()?'Own starter password + QR ticket':'12345678').'</span></div></section></div>';}
@@ -264,7 +235,6 @@ function admin_settings_view(array $u):void{
   $list=admin_announcements();if(!$list)echo '<p class="muted">No announcements yet.</p>';
   foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
   echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
- if($tab==='badges')settings_view();
  if($tab==='ids')account_ids_settings_view($u);
  if($tab==='schedule')schedule_admin_view();
  if($tab==='year'){$b=admin_setting('last_backup_at','');$fresh=$b!==''&&admin_days_since($b)<1;

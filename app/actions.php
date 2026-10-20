@@ -159,6 +159,8 @@ function action():void{
  if($action==='finish_lesson'){
   $u=require_role('pupil');$lid=(int)($_POST['lesson_id']??0);db()->beginTransaction();try{q('SELECT id FROM users WHERE id=? FOR UPDATE',[$u['id']]);finish_lesson((int)$u['id'],$lid);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=lesson&id='.$lid.'&finished=1');
  }
+ /* Story time: a pupil looked at a page of the comic (XP the first time, app/story.php) */
+ if($action==='story_seen'){$u=require_role('pupil');header('Content-Type: application/json');echo json_encode(story_mark((int)$u['id'],(int)($_POST['p']??-1)));exit;}
  /* BULIG checks one card right away (v172): right, or one more wrong try (a third of the card's points each, no limit) */
  if($action==='card_check'){
   $u=require_role('pupil');$aid=(int)($_POST['activity_id']??0);$n=(int)($_POST['card']??0);$g=mb_substr(trim((string)($_POST['answer']??'')),0,2000);

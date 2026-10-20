@@ -45,14 +45,14 @@ function login_eye_button():string{
 }
 /** "Forgot your password?", right under the password box. */
 function login_forgot_link():string{return '<button type="button" class="lgn-forgot-link lgn-under-pw" data-lgn-forgot>'.icon('key').'Forgot your password?</button>';}
-/** The Credits link, and the sheet that "Forgot your password?" opens. */
+/** The sheet that "Forgot your password?" opens (v172: no Credits link on the sign-in page; Credits is in Settings › About). */
 function login_foot(string $role):string{
  $pupil=$role==='pupil';
- if($role==='any')return '<div class="lgn-foot"><a class="login-credits" href="?page=credits">'.icon('star').'Credits</a></div>'
+ if($role==='any')return ''
   .'<dialog class="lgn-sheet" data-lgn-sheet aria-labelledby="lgn-sheet-t"><form method="dialog"><span class="lgn-grab" aria-hidden="true"></span><div class="lgn-sheet-hd"><img src="'.e(char_src('teacher-female','hello')).'" alt=""><div><h3 id="lgn-sheet-t">Forgot your password?</h3><p>That’s okay! Someone can help.</p></div></div><ol class="lgn-steps"><li><b>1</b><span>Pupils: tell your teacher. Your teacher prints a new Reading Pass with a new password.</span></li><li><b>2</b><span>Teachers: tell your BULIG administrator. They make a new password for you.</span></li><li><b>3</b><span>Sign in with your ID and the new password.</span></li></ol><button class="btn primary full lgn-ok">Okay!</button></form></dialog>';
  $steps=$pupil?['Tell your teacher.','Your teacher prints a new Reading Pass with a new password.','Scan the pass with a phone, or type your Pupil ID and the new password.']:['Tell your BULIG administrator.','The administrator makes a new password for you.','Sign in, then change it in My profile.'];
  $li='';foreach($steps as $i=>$t)$li.='<li><b>'.($i+1).'</b><span>'.e($t).'</span></li>';
- return '<div class="lgn-foot"><a class="login-credits" href="?page=credits">'.icon('star').'Credits</a></div>'
+ return ''
   .'<dialog class="lgn-sheet" data-lgn-sheet aria-labelledby="lgn-sheet-t"><form method="dialog"><span class="lgn-grab" aria-hidden="true"></span><div class="lgn-sheet-hd"><img src="'.e(char_src($pupil?'teacher-female':'admin-female','hello')).'" alt=""><div><h3 id="lgn-sheet-t">Forgot your password?</h3><p>'.($pupil?'That’s okay! Your teacher can help.':'That’s okay! Your administrator can help.').'</p></div></div><ol class="lgn-steps">'.$li.'</ol><button class="btn primary full lgn-ok">Okay!</button></form></dialog>';
 }
 
