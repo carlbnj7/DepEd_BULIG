@@ -190,8 +190,10 @@ function action():void{
    $l4read=$mode==='answer'&&lesson_level((int)$a['lesson_id'])===5&&level4_passage_parts($a)!==null;
    $oral=$mode==='answer'&&!$exact&&(lesson_level((int)$a['lesson_id'])===1||$l4read);$apath=null;
    if($oral){if($audio===''&&!$heard)fail('Record your answer first.');$secs=max(0,min(3600,(int)($_POST['secs']??0)));
-    if($l4read)$answer=($audio!==''?'Read aloud (voice recording)':'Answered out loud. Done.').($audio!==''&&$secs?' · time '.intdiv($secs,60).':'.sprintf('%02d',$secs%60):'');
-    elseif($answer==='')$answer=$audio!==''?'Spoken answer (voice recording)':'Answered out loud. Done.';if($audio!==''&&l1_audio_supported())$apath=l1_save_audio($audio,$pid,$aid);}
+    /* v173: on iPhones BULIG only listens (no recording), so the words it heard are the answer */
+    $heardOnly=$audio===''&&$transcript!=='';
+    if($l4read)$answer=($audio!==''?'Read aloud (voice recording)':($heardOnly?'Read aloud (BULIG listened)':'Answered out loud. Done.')).(($audio!==''||$heardOnly)&&$secs?' · time '.intdiv($secs,60).':'.sprintf('%02d',$secs%60):'');
+    elseif($answer==='')$answer=$audio!==''?'Spoken answer (voice recording)':($heardOnly?'Said: '.mb_substr($transcript,0,2000):'Answered out loud. Done.');if($audio!==''&&l1_audio_supported())$apath=l1_save_audio($audio,$pid,$aid);}
    if(in_array($mode,['answer','drawing'],true)&&$answer===''&&$drawing==='')fail('Draw it, upload a photo, or tell about your drawing before continuing.');
    if($mode==='answer'&&$answer==='')fail('Speak or type an answer first.');
    $ok=true;$score=null;$max=null;$outcome=['none'=>'viewed','perform'=>'performed','drawing'=>'recorded','answer'=>'recorded'][$mode];
