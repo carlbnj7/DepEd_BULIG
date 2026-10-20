@@ -19,7 +19,7 @@ function asset_url(string $f):string{static $c=[];if(isset($c[$f]))return $c[$f]
 /** The automatic tour is offered once per account (kept on the server, so it does not return after signing in again). */
 function tour_seen(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings WHERE setting_key=?',['tour_seen_'.$uid]);}catch(Throwable $e){return false;}}
 /** George the Explorer introduces herself once per account (people who already saw the tour meet her with a short hello). */
-/** J.A.R.V.I.S the Robot (v171) guides every tour; he says hello once to people who met George as the guide before. */
+/** Jarvis the Robot (v171) guides every tour; he says hello once to people who met George as the guide before. */
 function jarvis_met(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings WHERE setting_key=?',['jarvis_met_'.$uid]);}catch(Throwable $e){return false;}}
 function jarvis_img(string $pose):string{return 'assets/images/characters/jarvis-'.$pose.'.webp?v=1';}
 function george_met(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings WHERE setting_key=?',['george_met_'.$uid]);}catch(Throwable $e){return false;}}
