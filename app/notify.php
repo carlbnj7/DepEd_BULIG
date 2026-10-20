@@ -3,8 +3,7 @@
    - Saved notifications (table notifications, database/migrations/024_notifications.sql): made when something happens
      (a teacher's note, "do it again", a new badge, a finished level, a new account). On the Notifications page each one
      can be marked as read or unread, or deleted; "Mark all as read" and "Delete all read" do all at once.
-   - "Needs you now" items are counted live when the page opens (answers waiting, pupils who need a check-in,
-     System health). They go away by themselves once the work is done.
+   - "Needs you now" items are counted live when the page opens (answers waiting, pupils who need a check-in). They go away by themselves once the work is done.
    Without the table the app works as before: the bell shows only the live items. */
 
 function notif_ready():bool{static $r=null;if($r===null){try{$r=(bool)one("SHOW TABLES LIKE 'notifications'");}catch(Throwable $e){$r=false;}}return $r;}
@@ -41,7 +40,6 @@ function notif_live(array $u):array{
   if($need)$items[]=['people',count($need).' '.(count($need)===1?'pupil needs':'pupils need').' a check-in',implode(', ',array_slice($need,0,4)).(count($need)>4?' and '.(count($need)-4).' more':'').' had no learning in the past 7 days.','?page=dashboard','See pupils'];
  }
  if($u['role']==='admin'){
-  if(function_exists('admin_health_checks'))foreach(admin_health_checks() as [$label,$good,$detail])if(!$good)$items[]=['alert',$label,(string)$detail,'?page=health','System health'];
   $new=(int)val("SELECT COUNT(*) FROM users WHERE role='pupil' AND created_at>=?",[date('Y-m-d H:i:s',strtotime('-7 days'))]);
   if($new)$items[]=['people',$new.' new pupil '.($new===1?'account':'accounts').' this week','Teachers added them to their sections.','?page=reports','Reports'];
  }
