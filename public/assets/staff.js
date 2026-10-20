@@ -25,3 +25,34 @@
  addEventListener('resize',()=>{if(!out.hidden)place();});
  const sb=box.closest('.sidebar');if(sb)sb.addEventListener('scroll',()=>{if(!out.hidden)place();},{passive:true});
 })();
+
+/* Once after signing in, on a phone: Kai the Messenger says BULIG is easier on a laptop or computer (v174). */
+(function(){
+ const t=document.getElementById('pc-tip');if(!t)return;
+ const phone=window.matchMedia('(max-width: 820px)').matches&&window.matchMedia('(pointer: coarse)').matches;if(!phone)return;
+ const show=()=>{
+  const box=document.createElement('div');box.className='pc-tip';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-labelledby','pc-tip-h');
+  box.innerHTML='<div class="pc-tip-card"><img class="pc-tip-kai" alt="" src=""><span class="pc-tip-name">Kai the Messenger</span><h2 id="pc-tip-h"></h2>'
+   +'<p>BULIG works best on a <b>laptop or computer</b>. The bigger screen makes reports, printing, Class Demo and adding pupils much easier.</p>'
+   +'<ul><li>Use a laptop or computer for reports, printing and Class Demo</li><li>Your phone is fine for quick checks and notifications</li></ul>'
+   +'<button type="button" class="btn primary pc-tip-ok">Okay, got it</button></div>';
+  box.querySelector('img').src=t.dataset.img;box.querySelector('h2').textContent=t.dataset.hi||'Hi!';
+  document.body.appendChild(box);document.documentElement.classList.add('pc-tip-open');
+  const ok=box.querySelector('.pc-tip-ok');const close=()=>{box.classList.add('out');document.documentElement.classList.remove('pc-tip-open');setTimeout(()=>box.remove(),250);};
+  ok.addEventListener('click',close);box.addEventListener('click',e=>{if(e.target===box)close();});document.addEventListener('keydown',function k(e){if(e.key==='Escape'){close();document.removeEventListener('keydown',k);}});
+  setTimeout(()=>ok.focus({preventScroll:true}),60);};
+ /* after the sign-in welcome screen (.boot) has gone */
+ const wait=(n)=>{if(document.documentElement.classList.contains('bulig-boot')&&n<48){setTimeout(()=>wait(n+1),250);return;}setTimeout(show,n?500:400);};
+ if(document.readyState==='complete')wait(0);else addEventListener('load',()=>wait(0));
+})();
+
+/* Schools (v174): the IDs a school will give, as its code is typed or chosen. */
+(function(){
+ const yy=String(new Date().getFullYear()).slice(-2);
+ document.querySelectorAll('[data-sc-code]').forEach(inp=>{const form=inp.closest('form'),prev=form&&form.querySelector('[data-sc-prev]');if(!prev)return;
+  const upd=()=>{const c=(inp.value||'').toUpperCase().replace(/[^A-Z]/g,'');inp.value=c;prev.innerHTML='';const code=c||'CODE';prev.append('Pupils of this school will get IDs like ');const a=document.createElement('b');a.textContent=code+yy+'0001';prev.append(a,'. Teachers like ');const b=document.createElement('b');b.textContent=code+'T0001';prev.append(b,'.');};
+  inp.addEventListener('input',upd);upd();});
+ document.querySelectorAll('[data-sc-pick]').forEach(sel=>{const out=sel.parentElement.querySelector('[data-sc-idprev]');if(!out)return;
+  const upd=()=>{const c=sel.selectedOptions[0]?sel.selectedOptions[0].dataset.code:'';out.textContent=c?'New teacher IDs here look like '+c+'T0001. Their pupils get IDs like '+c+(out.dataset.yy||yy)+'0001.':'';};
+  sel.addEventListener('change',upd);upd();});
+})();

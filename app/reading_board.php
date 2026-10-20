@@ -105,7 +105,7 @@ function rc_tribal(int $h,string $id):string{
 }
 /** A logo uploaded in Settings > School info ('division' or 'school'), or an empty circle. */
 function rc_logo(string $which):string{
- $f=function_exists('admin_setting')?admin_setting('logo_'.$which,''):'';
+ $f=$which==='division'?division_logo():(function_exists('admin_setting')?admin_setting('logo_'.$which,''):'');
  if($f!==''&&is_file(__DIR__.'/../public/'.$f))return '<img class="rc-logo" src="'.e($f).'" alt="'.($which==='division'?'Division':'School').' logo">';
  return '<span class="rc-slot"><span>'.($which==='division'?'Division':'School').'<br>logo</span></span>';
 }
@@ -152,7 +152,7 @@ function rc_view(array $u):void{
  $tid=(int)$u['id'];$sid=(int)($_GET['section']??0);$pid=(int)($_GET['id']??0);
  if($sid){$s=owned_section($sid,$tid);$ids=array_map('intval',array_column(rows('SELECT u.id FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN teacher_pupils t ON t.pupil_id=u.id AND t.teacher_id=? WHERE ps.section_id=? AND u.active=1 ORDER BY u.name',[$tid,$sid]),'id'));$title='Grade '.(int)$s['grade_level'].' – '.$s['name'];$back='?page=sections';}
  else{own_pupil($pid);$ids=[$pid];$title=(string)val('SELECT name FROM users WHERE id=?',[$pid]);$back='?page=pupil&id='.$pid;}
- $logos=function_exists('admin_setting')&&admin_setting('logo_division','')!==''&&admin_setting('logo_school','')!=='';
+ $logos=division_logo()!==''&&admin_setting('logo_school','')!=='';
  echo '<div class="no-print rc-actions"><div><span class="eyebrow">READING PROGRESS REPORT CARD</span><h1>'.e($title).'</h1><p class="muted">'.($sid?count($ids).' '.(count($ids)===1?'card':'cards').', one page each.':'One page, A4.').' Remarks, dates and the ladder come from BULIG. Sign the cards after printing.</p>'
   .(!$logos?'<p class="rc-tip">'.icon('info').'The Division and school logos print in the circles once your administrator uploads them in Settings → School info.</p>':'').'</div>'
   .'<div class="rc-btns"><a class="btn quiet" href="'.e($back).'">'.icon('arrow','flip').'Back</a>'.($ids?'<button type="button" class="btn primary" data-print>'.icon('download').'Print or save as PDF</button>':'').'</div></div>';
@@ -164,8 +164,9 @@ function rc_view(array $u):void{
 function rc_logo_settings():string{
  $h='<section class="card rc-logoset"><div class="ws-hd"><h2>'.icon('image').' Report card logos</h2><small class="muted">Printed at the top of every Reading Progress Report Card</small></div><div class="rc-logo-grid">';
  foreach(['division'=>'Division logo','school'=>'School logo'] as $w=>$label){$f=admin_setting('logo_'.$w,'');$has=$f!==''&&is_file(__DIR__.'/../public/'.$f);
-  $h.='<div class="rc-logo-row">'.($has?'<img src="'.e($f).'" alt="'.e($label).'">':'<span class="rc-slot"><span>'.e($label).'</span></span>').'<div><b>'.e($label).'</b><form method="post" enctype="multipart/form-data" class="inline-form">'.csrf_field().'<input type="hidden" name="action" value="admin_logo"><input type="hidden" name="which" value="'.$w.'"><input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required><button class="btn secondary small">'.($has?'Replace':'Upload').'</button></form>'
-   .($has?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_logo_remove"><input type="hidden" name="which" value="'.$w.'"><button class="btn quiet small">Remove</button></form>':'<small class="muted">PNG, JPEG or WebP, smaller than 4 MB. A square picture looks best.</small>').'</div></div>';}
+  $own=!$has&&$w==='division'&&division_logo()!=='';   // no upload: the Sangay ng Bukidnon logo that comes with BULIG
+  $h.='<div class="rc-logo-row">'.($has||$own?'<img src="'.e($has?$f:division_logo()).'" alt="'.e($label).'">':'<span class="rc-slot"><span>'.e($label).'</span></span>').'<div><b>'.e($label).'</b><form method="post" enctype="multipart/form-data" class="inline-form">'.csrf_field().'<input type="hidden" name="action" value="admin_logo"><input type="hidden" name="which" value="'.$w.'"><input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required><button class="btn secondary small">'.($has?'Replace':'Upload').'</button></form>'
+   .($has?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_logo_remove"><input type="hidden" name="which" value="'.$w.'"><button class="btn quiet small">Remove</button></form>':'<small class="muted">'.($own?'Using the Sangay ng Bukidnon logo that comes with BULIG. Upload only to use another one. ':'').'PNG, JPEG or WebP, smaller than 4 MB. A square picture looks best.</small>').'</div></div>';}
  return $h.'</div></section>';
 }
 function rc_logo_action(string $action):void{
