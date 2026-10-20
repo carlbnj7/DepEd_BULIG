@@ -417,13 +417,15 @@ def test_george(p):
     check('George is the reading buddy on the pupil Overview', 'pf-buddy-george' in text and 'george-hello.webp' in text, '')
     m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', text)
     meta = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')) if m else {}
-    check('The tour has George’s poses', set((meta.get('guide') or {}).keys()) >= {'hello', 'point', 'map', 'thumbs', 'cheer'}, str(meta)[:160])
+    check('J.A.R.V.I.S the Robot guides the tour', set((meta.get('guide') or {}).keys()) >= {'hello', 'point', 'map', 'thumbs', 'cheer'} and 'jarvis-' in str(meta.get('guide')) and 'jarvis-head' in str(meta.get('helpface')), str(meta)[:160])
+    for n in ('hello', 'point', 'idea', 'thumbs', 'cheer', 'head'):
+        check(f'J.A.R.V.I.S picture "{n}" is in place', os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'jarvis-{n}.webp')))
     tok = p.token('?page=dashboard')
-    _, _, text = p.req('index.php', {'action': 'george_met', 'csrf': tok}, accept_json=True)
+    _, _, text = p.req('index.php', {'action': 'jarvis_met', 'csrf': tok}, accept_json=True)
     _, _, page = p.req('?page=dashboard')
     m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', page)
     met = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')).get('met') if m else None
-    check('George says hello only once (it is remembered)', jget(text).get('ok') and met is True, text[:120])
+    check('J.A.R.V.I.S says hello only once (it is remembered)', jget(text).get('ok') and met is True, text[:120])
 
 
 def test_friends(p):

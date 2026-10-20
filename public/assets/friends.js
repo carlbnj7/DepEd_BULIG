@@ -8,6 +8,8 @@
  const meta=document.querySelector('meta[name="bulig-friends"]');if(!meta)return;
  const page=new URLSearchParams(location.search).get('page')||'dashboard';if(page!=='dashboard'||!navigator.onLine)return;
  let D;try{D=JSON.parse(meta.content);}catch(e){return;}const F=D.friends||[];if(!F.length)return;
+ /* J.A.R.V.I.S the Robot hosts (v171): he opens, stands beside each friend, and closes, in a jolly robot voice. */
+ const H=D.host||null;if(H)[H.hello,H.point,H.cheer].forEach(x=>{const i=new Image();i.src=x;});
  F.forEach(f=>[f.hello,f.special,f.last].forEach(s=>{const i=new Image();i.src=s;}));
  const SVG={next:'<path d="M5 12h14M13 6l6 6-6 6"/>',again:'<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>',on:'<path d="m11 4-5 4H3v8h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>',off:'<path d="m11 4-5 4H3v8h3l5 4z"/><path d="m16 9 6 6m0-6-6 6"/>',star:'<path d="m12 2 3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z" fill="currentColor" stroke="none"/>'};
  const svg=k=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+SVG[k]+'</svg>';
@@ -22,13 +24,16 @@
   const good=x=>(/natural|neural|premium|enhanced|online/i.test(x.name)?2:0)+(/google/i.test(x.name)?1:0);v.sort((a,b)=>good(b)-good(a));
   const isF=x=>FEM.test(x.name)&&!/\bmale\b/i.test(x.name.replace(/female/ig,''));
   return{f:v.filter(isF),m:v.filter(x=>!isF(x)&&MAL.test(x.name)),all:v};}
- function voiceFor(f){const V=pool(),list=f.girl?V.f:V.m,same=F.filter(x=>x.girl===f.girl);if(list.length)return list[same.indexOf(f)%list.length];return V.all[0]||null;}
+ function robotVoice(){const V=pool();const sc=v=>(/guy|davis|ryan|daniel|christopher|andrew|brian|eric|uk english male|\bmale\b|alex|aaron|james|william|liam/i.test(v.name)?50:0)+(/natural|neural|online|google/i.test(v.name)?10:0);return V.m[0]||V.all.slice().sort((x,y)=>sc(y)-sc(x))[0]||null;}
+ let actx=null;function beep(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;actx=actx||new C();if(actx.state==='suspended')actx.resume();const t=actx.currentTime;
+  [[740,0],[988,.09],[1319,.18]].forEach(([f,d])=>{const o=actx.createOscillator(),g=actx.createGain();o.type='square';o.frequency.value=f;g.gain.setValueAtTime(.0001,t+d);g.gain.exponentialRampToValueAtTime(.045,t+d+.012);g.gain.exponentialRampToValueAtTime(.0001,t+d+.08);o.connect(g);g.connect(actx.destination);o.start(t+d);o.stop(t+d+.09);});}catch(e){}}
+ function voiceFor(f){if(f&&f.robot)return robotVoice();const V=pool(),list=f.girl?V.f:V.m,same=F.filter(x=>x.girl===f.girl);if(list.length)return list[same.indexOf(f)%list.length];return V.all[0]||null;}
  let words=[],timer=0,box=null,talk=0;   // talk: which speech is current (a stopped one must not touch the next friend's words)
  function lightAll(){words.forEach(w=>w.el.classList.add('on'));}
  function hush(){talk++;if(synth)synth.cancel();clearInterval(timer);if(box)box.classList.remove('fr-talking');}
  function say(f,text){hush();
   if(!talkOn||!synth){let i=0;box.classList.add('fr-talking');timer=setInterval(()=>{if(words[i])words[i++].el.classList.add('on');else{clearInterval(timer);box&&box.classList.remove('fr-talking');}},210);return;}
-  const me=++talk;const run=()=>{if(me!==talk)return;const u=new SpeechSynthesisUtterance(text),v=voiceFor(f);if(v){u.voice=v;u.lang=v.lang;}else u.lang='en-US';u.pitch=f.pitch||1;u.rate=f.rate||.95;
+  const me=++talk;const run=()=>{if(me!==talk)return;if(f.robot)beep();const u=new SpeechSynthesisUtterance(text),v=voiceFor(f);if(v){u.voice=v;u.lang=v.lang;}else u.lang='en-US';u.pitch=f.pitch||1;u.rate=f.rate||.95;
    /* v170: many voices (the Google ones) send no word events, so the words also light up on a clock that follows the
       friend's speed; a real word event takes over from the clock. */
    let real=false,t0=0;const cps=13.5*(u.rate||1);
@@ -43,17 +48,20 @@
  const tint=(node,c)=>{node.style.setProperty('--fr-c',c);};
  function frame(cls){layer.innerHTML='';const p=el('div','fr-panel '+(cls||''));layer.append(p);box=p;return p;}
  function keys(e){if(!layer)return;if(e.key==='Escape'){e.preventDefault();end();}}
- function intro(){const g=F[0],p=frame('fr-start');tint(p,g.c);
+ const JV={robot:true,pitch:1.6,rate:1.02};
+ function intro(){const g=F[0],p=frame('fr-start');tint(p,H?'#e53935':g.c);
   p.append(el('div','fr-stage',''),el('div','fr-side',''));
-  const img=el('img','fr-kid fr-in');img.src=g.hello;img.alt='';p.firstChild.append(el('div','fr-rays'),img);
-  const s=p.lastChild;s.append(el('span','fr-eyebrow','NEW FRIENDS'));const h=el('h2');h.textContent='Hi, '+D.name+'!';s.append(h);
-  const t=el('p','fr-lead');t.textContent='George and her friends want to meet you. Each one will help you in BULIG.';s.append(t);
+  const img=el('img','fr-kid fr-in');img.src=H?H.hello:g.hello;img.alt='';p.firstChild.append(el('div','fr-rays'),img);
+  const s=p.lastChild;s.append(el('span','fr-eyebrow',H?'BEEP BOOP! NEW FRIENDS':'NEW FRIENDS'));const h=el('h2');h.textContent='Hi, '+D.name+'!';s.append(h);
+  const lead=H?'I am J.A.R.V.I.S the Robot, your tour guide. Let me introduce the '+F.length+' BULIG friends. Each one will help you in BULIG!':'George and her friends want to meet you. Each one will help you in BULIG.';
+  const t=el('p','fr-lead');t.textContent=lead;s.append(t);if(H)setTimeout(()=>{if(idx<0)say(JV,'Beep boop! Hi, '+D.name+'! '+lead);},700);
   const team=el('div','fr-dots');F.forEach(f=>{const i=el('i');const m=new Image();m.src=f.hello;m.alt='';i.append(m);team.append(i);});s.append(team);
   const a=el('div','fr-actions');const go=el('button','btn primary fr-next','Meet my friends'+svg('next'));go.type='button';go.onclick=()=>show(0);a.append(go);s.append(a);
   const sk=el('button','fr-skip','Skip');sk.type='button';sk.onclick=end;s.append(sk);setTimeout(()=>go.focus({preventScroll:true}),80);}
  function show(n){hush();clearTimeout(swap);idx=n;if(n>=F.length)return last();const f=F[n],text=f.line.replace('{n}',D.name),p=frame();tint(p,f.c);
   const stage=el('div','fr-stage');const img=el('img','fr-kid fr-in');img.src=f.hello;img.alt=f.name+' '+f.title;
   stage.append(el('div','fr-rays'),el('span','fr-count','FRIEND '+(n+1)+' OF '+F.length),img);
+  if(H){const r=el('img','fr-host');r.src=H.point;r.alt='';stage.append(r);}
   const s=el('div','fr-side');s.append(el('span','fr-eyebrow','MEET YOUR BULIG FRIENDS'));
   const plate=el('div','fr-plate');plate.append(el('i','fr-dot'));const h=el('h2');h.textContent=f.name;const sub=el('span');sub.textContent=f.title;h.append(sub);plate.append(h);s.append(plate);
   const b=el('div','fr-bubble');b.setAttribute('aria-live','polite');words=[];let at=0;text.split(' ').forEach(w=>{const sp=el('span','fr-w');sp.textContent=w+' ';b.append(sp);words.push({el:sp,at});at+=w.length+1;});s.append(b);
@@ -68,9 +76,10 @@
  function last(){hush();const p=frame('fr-final');tint(p,'#16842f');const stage=el('div','fr-stage');stage.append(el('div','fr-rays'));const team=el('div','fr-team');
   F.forEach((f,k)=>{const m=new Image();m.src=f.last;m.alt=f.name;m.className='fr-t'+k;team.append(m);});stage.append(team);
   const s=el('div','fr-side');s.append(el('span','fr-eyebrow','YOUR BULIG FRIENDS'));const h=el('h2');h.textContent='We are all here to help you read, '+D.name+'!';s.append(h);
-  s.append(el('p','fr-lead',D.tour?'Look for us on every page. George will show you around next.':'Look for us on every page. Tap the yellow ? anytime and George will show you around.'));
+  s.append(el('p','fr-lead',H?(D.tour?'Look for us on every page. I, J.A.R.V.I.S, will show you around next!':'Look for us on every page. Tap the yellow ? with my face anytime and I will show you around!'):(D.tour?'Look for us on every page. George will show you around next.':'Look for us on every page. Tap the yellow ? anytime and George will show you around.')));
+  if(H){const r=el('img','fr-host fr-host-end');r.src=H.cheer;r.alt='';stage.append(r);}
   const a=el('div','fr-actions');const ok=el('button','btn primary fr-next','Let’s read!'+svg('next'));ok.type='button';ok.onclick=end;a.append(ok);s.append(a);p.append(stage,s);
-  const g=F[0];words=[];say({girl:true,pitch:g.pitch,rate:g.rate},'We are all here to help you read, '+D.name+'! Let’s read together!');setTimeout(()=>ok.focus({preventScroll:true}),80);}
+  const g=F[0];words=[];say(H?JV:{girl:true,pitch:g.pitch,rate:g.rate},(H?'Beep boop! ':'')+'We are all here to help you read, '+D.name+'! Let’s read together!');setTimeout(()=>ok.focus({preventScroll:true}),80);}
  function saved(){window.buligFriendsMet=true;try{const fd=new FormData();fd.set('csrf',(document.querySelector('meta[name="csrf"]')||{}).content||'');fd.set('action','friends_met');fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
  function end(){hush();clearTimeout(swap);saved();document.removeEventListener('keydown',keys,true);document.body.classList.remove('fr-on');
   if(layer){const l=layer;layer=null;l.classList.add('fr-out');setTimeout(()=>l.remove(),300);}box=null;const f=finish;finish=null;if(f)setTimeout(f,320);}
