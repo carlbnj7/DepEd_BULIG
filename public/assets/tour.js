@@ -161,7 +161,7 @@
    [['.me-week .weekdays'],'This week','The days you learned this week have a check.'],
    ['.me-pic','Your picture','Choose a character, or upload your own photo.'],
    [['.me-setbtn','.sidebar nav a[href="?page=settings"]'],'Settings','Sound, colours, offline lessons, your password and About BULIG are in Settings.']]:[
-   ['.char-pick','Your teacher character','Choose the character that greets you after you sign in. J.A.R.V.I.S the Robot guides your tours.'],
+   ['.char-pick','Your teacher character','Choose the character that greets you after you sign in. Jarvis the Robot guides your tours.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
    ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']]
@@ -366,7 +366,7 @@
    [['.rt-box'],'Pupils','The average stars, and how many pupils gave 5, 4, 3, 2 or 1 star.'],
    [['.rt-box:nth-child(2)'],'Teachers','The average, each of the five questions, and what teachers said.']],
   profile:[
-   [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in. J.A.R.V.I.S the Robot guides your tours.'],
+   [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in. Jarvis the Robot guides your tours.'],
     ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']],
@@ -390,7 +390,7 @@
   try{const fd=new FormData();fd.set('csrf',(document.querySelector('meta[name="csrf"]')||{}).content||'');fd.set('action','tour_seen');fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
 
  /* ---------- UI ---------- */
- /* J.A.R.V.I.S the Robot guides every tour (pupils, teachers and admins, v171). He points, has a bright idea, gives a thumbs up,
+ /* Jarvis the Robot guides every tour (pupils, teachers and admins, v171). He points, has a bright idea, gives a thumbs up,
     and cheers on the last step. He talks in a jolly robot voice, with a little beep-boop first. */
  const G=me.guide||{},pose=p=>G[p]||me.char;
  const charImg=(p)=>{const i=document.createElement('img');i.src=pose(p||'point');i.alt='';i.className='tour-george';i.width=62;i.height=84;return i;};
@@ -466,8 +466,8 @@ if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeo
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Skip for now</button></div></div>';
   o.querySelector('.tour-offer-card').prepend(charImg('hello'));if(big)o.classList.add('tour-offer-george');
   const hi=pupil?'Hi, '+me.name+'!':me.role==='admin'?'Hello, '+me.name+'!':'Hello, Teacher '+me.name+'!';
-  o.querySelector('b').textContent=big?(window.buligFriendsMet?'Ready, '+me.name+'?':hi+' I am J.A.R.V.I.S the Robot.'):(pupil?'New here?':'New page');
-  o.querySelector('.tour-offer-txt span').textContent=big?(pupil?(window.buligFriendsMet?'Now let me show you around BULIG. It only takes a minute!':'Beep boop! I am your tour guide. Do you want me to show you around BULIG?'):'I am BULIG’s guide. Would you like me to show you around your '+(me.role==='admin'?'admin area':'workspace')+'?'):'J.A.R.V.I.S can show you how this page works.';
+  o.querySelector('b').textContent=big?(window.buligFriendsMet?'Ready, '+me.name+'?':hi+' I am Jarvis the Robot.'):(pupil?'New here?':'New page');
+  o.querySelector('.tour-offer-txt span').textContent=big?(pupil?(window.buligFriendsMet?'Now let me show you around BULIG. It only takes a minute!':'Beep boop! I am your tour guide. Do you want me to show you around BULIG?'):'I am BULIG’s guide. Would you like me to show you around your '+(me.role==='admin'?'admin area':'workspace')+'?'):'Jarvis can show you how this page works.';
   o.querySelector('.tour-yes').textContent=big?'Yes, show me!':'Show me';
   o.querySelector('.tour-yes').onclick=()=>{o.remove();markDone();if(big)metGeorge();start();};
   o.querySelector('.tour-no').onclick=()=>{o.remove();markDone();if(big)metGeorge();toast(pupil?'Okay! Tap the yellow ? anytime to see the tour.':'You can open the tour anytime with the ? button.');};
@@ -491,18 +491,18 @@ if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeo
 
  /* Someone who already answered the offer on this device (older BULIG kept it per page) is told to the server, not asked again. */
  const answeredHere=()=>{try{for(let i=0;i<localStorage.length;i++)if((localStorage.key(i)||'').indexOf('bulig-tour-'+me.id+'-')===0)return true;}catch(e){}return false;};
- /* Already took the tour before J.A.R.V.I.S arrived: he says hello once (on the dashboard). */
+ /* Already took the tour before Jarvis arrived: he says hello once (on the dashboard). */
  function meet(){if(document.querySelector('.tour-offer')||document.querySelector('.hm-moved'))return;
-  const o=document.createElement('div');o.className='tour-offer tour-offer-big tour-offer-george tour-meet';o.setAttribute('role','dialog');o.setAttribute('aria-label','Meet J.A.R.V.I.S the Robot');
+  const o=document.createElement('div');o.className='tour-offer tour-offer-big tour-offer-george tour-meet';o.setAttribute('role','dialog');o.setAttribute('aria-label','Meet Jarvis the Robot');
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><small class="tour-new">NEW FRIEND</small><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Show me around</button></div></div>';
   o.querySelector('.tour-offer-card').prepend(charImg('hello'));
-  o.querySelector('b').textContent=(pupil?'Hi, '+me.name+'!':me.role==='admin'?'Hello, '+me.name+'!':'Hello, Teacher '+me.name+'!')+' I am J.A.R.V.I.S the Robot.';
+  o.querySelector('b').textContent=(pupil?'Hi, '+me.name+'!':me.role==='admin'?'Hello, '+me.name+'!':'Hello, Teacher '+me.name+'!')+' I am Jarvis the Robot.';
   o.querySelector('.tour-offer-txt span').textContent='Beep boop! I am BULIG’s new tour guide. Tap the ? button anytime and I will show you around.';
-  o.querySelector('.tour-yes').textContent=pupil?'Hi, J.A.R.V.I.S!':'Nice to meet you!';
+  o.querySelector('.tour-yes').textContent=pupil?'Hi, Jarvis!':'Nice to meet you!';
   o.querySelector('.tour-yes').onclick=()=>{o.remove();metGeorge();};
   o.querySelector('.tour-no').onclick=()=>{o.remove();metGeorge();start();};
   document.body.append(o);setTimeout(()=>o.querySelector('.tour-yes').focus({preventScroll:true}),80);}
- const ready=()=>{if(key!=='dashboard')return;if(window.buligFriendsMet)me.met=true;   // J.A.R.V.I.S already said hello in "Meet your BULIG friends"
+ const ready=()=>{if(key!=='dashboard')return;if(window.buligFriendsMet)me.met=true;   // Jarvis already said hello in "Meet your BULIG friends"
  if(me.seen){if(!me.met&&me.guide)setTimeout(meet,900);return;}if(answeredHere())markDone();else setTimeout(offer,900);};
  if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',ready,{once:true});else ready();
 })();

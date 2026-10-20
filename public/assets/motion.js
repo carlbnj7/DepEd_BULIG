@@ -42,8 +42,9 @@
  document.addEventListener('pointerdown',e=>{
   if(e.button>0||!e.target.closest)return;const t=e.target.closest(TAP);if(!t||t.disabled||t.closest('[aria-disabled=true],.tour-layer'))return;
   const r=t.getBoundingClientRect(),x=e.clientX,y=e.clientY;
-  /* 1. Ring */
-  const ring=at('ck-ring'+(kid?'':' ck-soft'),x,y);ring.style.setProperty('--s',Math.round(Math.min(150,Math.max(54,Math.max(r.width,r.height)*.9)))+'px');setTimeout(()=>ring.remove(),600);
+  /* 1. Ring (v172: none on the teacher and admin navigation) */
+  const navTap=!kid&&!!t.closest('.sidebar,.topbar');
+  if(!navTap){const ring=at('ck-ring'+(kid?'':' ck-soft'),x,y);ring.style.setProperty('--s',Math.round(Math.min(150,Math.max(54,Math.max(r.width,r.height)*.9)))+'px');setTimeout(()=>ring.remove(),600);}
   /* 2. Stars and dots for pupils */
   if(kid&&!lesson&&t.matches(BIG)){const box=at('ck-burst',x,y),n=8;
    for(let i=0;i<n;i++){const p=document.createElement('i'),a=(i/n)*Math.PI*2+Math.random()*.5,d=38+Math.random()*30;p.className=i%2?'dt':'st';

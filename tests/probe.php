@@ -17,13 +17,20 @@ $out=match($what){
    $right[]='Card '.$n.': '.$w;$wrong[]='Card '.$n.': zzz';}
   return ['keyed'=>$a&&ac_keyed($a),'right'=>"BULIG card answers\n".implode("\n",$right),'wrong'=>"BULIG card answers\n".implode("\n",$wrong),'cards'=>count($key)];})(),
  /* Level 4: BULIG's miscue count on a sample reading, and a perfect reading of every Level 4 passage (php tests/probe.php l4) */
+ /* Wrong tries (v172): card 1 answered right after 0, 1, 2 and 3 wrong tries */
+ 'tries'=>(function():array{
+  foreach(rows("SELECT * FROM activities WHERE phase='learn' ORDER BY id") as $a){if(!key_checks_cards($a))continue;$k=(activity_key($a)??[])[1]??null;if(!$k||!in_array($k['t']??'',['choice','card'],true))continue;
+   $want=explode(' or ',key_want($k))[0];$base="BULIG card answers\nCard 1: ".$want;if(!key_check_card($a,1,$want)['ok'])continue;$pts=[];
+   foreach(['',"\nTries: 1=1","\nTries: 1=2","\nTries: 1=3"] as $t)$pts[]=key_score($a,$base.$t)['cards'][1]['pts'];
+   return ['ok'=>true,'aid'=>(int)$a['id'],'pts'=>$pts];}
+  return ['ok'=>false];})(),
  'l4'=>(function():array{
   $w=preg_split('/\s+/','The Cat The cat is small and white. It likes to sleep on the mat. The cat plays with a ball. It runs fast in the yard.');
   $r=l4_miscues($w,'the cat the cat is small and with it like to sleep on the the mat the cat play with ball it runs in fast the yard');
   $rev=l4_miscues(['I','saw','a','cat'],'i was a cat');$n=0;$bad=[];
   foreach(rows("SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=5 AND a.type='reading' AND a.published=1 AND l.published=1") as $a){
    $ws=l4_words($a);if(!$ws)continue;$n++;$s=l4_auto($a,implode(' ',$ws),60);if(!$s||$s['score']!=100)$bad[]=$a['id'];}
-  return ['sample'=>$r['m'],'reversal'=>$rev['m'][6],'too_little'=>l4_auto(one("SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=5 AND a.type='reading' LIMIT 1")?:[],'the',30)===null,'passages'=>$n,'not_100'=>$bad];})(),
+  return ['sample'=>$r['m'],'reversal'=>$rev['m'][6],'too_little'=>(function(){$a=one("SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=5 AND a.type='reading' LIMIT 1")?:[];$one=l4_auto($a,'the',30);return l4_auto($a,'',30)===null&&$one!==null&&$one['score']<30;})(),'passages'=>$n,'not_100'=>$bad];})(),
  'migrations'=>array_column(rows('SELECT version FROM schema_migrations ORDER BY version'),'version'),
  'tables'=>array_column(rows('SHOW TABLES'),array_key_first(rows('SHOW TABLES')[0]??['x'=>0])),
  /* Blanks: one line per missing letter in Levels 2A, 2B and 3 (blank_letters, blank_html), and every such card in the content. */
