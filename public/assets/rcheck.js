@@ -47,7 +47,7 @@
    if(res.err==='audio-capture'&&R)together=false;
    heard.value=res.alts.join('|');audio.value=data;
    if(res.alts.length){put('said: '+res.alts[0]);label.textContent='Thank you!';sub.textContent='Tap the microphone to say it again.';}
-   else if(data){put('(voice recording)');label.textContent='Thank you!';sub.textContent='Your teacher will listen.';}
+   else if(data){put('(voice recording)');label.textContent='Thank you!';sub.textContent='BULIG saved your answer.';}
    else{label.textContent='Tap and say the word';sub.textContent='I could not hear you. Try again in a quiet place.';}}
   go.addEventListener('click',async()=>{if(busy){finish();return;}busy=true;hush();go.classList.add('on');label.textContent='Listening…';sub.textContent='Say the word, then wait.';
    L=SR?listener(false):null;const ok=L&&L.start();if(!ok)L=null;R=(!L||together)?recorder():null;if(R&&!(await R.start()))R=null;

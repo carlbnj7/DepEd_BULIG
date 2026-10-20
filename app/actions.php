@@ -50,7 +50,7 @@ function action():void{
  }
  if($action==='forget_login'){if(saved_login_ready())saved_login_forget((string)($_POST['token']??''));saved_login_json(['ok'=>true]);}
  if($action==='friends_met'){$u=current_user();if($u)friends_mark_met((int)$u['id']);header('Content-Type: application/json');echo '{"ok":true}';exit;}
- if($action==='tour_seen'||$action==='george_met'){$u=current_user();if($u)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[($action==='george_met'?'george_met_':'tour_seen_').(int)$u['id'],date('Y-m-d H:i:s')]);saved_login_json(['ok'=>(bool)$u]);}
+ if($action==='tour_seen'||$action==='george_met'||$action==='jarvis_met'){$u=current_user();if($u)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[($action==='jarvis_met'?'jarvis_met_':($action==='george_met'?'george_met_':'tour_seen_')).(int)$u['id'],date('Y-m-d H:i:s')]);saved_login_json(['ok'=>(bool)$u]);}
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
  if($action==='delete_section'){sections_action($action);return;}
  if($action==='delete_pupil'||$action==='delete_teacher'){account_delete_action($action);return;}

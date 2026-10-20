@@ -72,7 +72,7 @@ function push_queue(int $pid,string $kind,string $title,string $body,string $url
 function push_icon(string $kind,string $title=''):string{
  $id=['daily'=>'roxanne','streak'=>'arah','lessons'=>'george','rank'=>'zion','help'=>'kai','certificate'=>'george','reading'=>'max','account'=>'claude','security'=>'claude'][$kind]??'kai';
  if($kind==='teacher')$id=str_starts_with($title,'Try')?'bruno':'kai';   // Kai the Messenger brings the teacher's notes (v169)
- return 'assets/images/characters/push/'.$id.'.png?v=1';
+ return 'assets/images/characters/push/'.$id.'.png?v=2';
 }
 const PUSH_DEFAULT=['daily'=>1,'hour'=>16,'teacher'=>1,'lessons'=>1,'weekends'=>0];
 function push_prefs(array $row):array{$p=json_decode((string)($row['prefs']??''),true);return array_merge(PUSH_DEFAULT,is_array($p)?$p:[]);}
