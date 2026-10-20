@@ -11,7 +11,9 @@
  if(!document.body.classList.contains('rk-page'))return;
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
  const canRec=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
- let together=true;/* false once a phone shows it cannot listen and record at the same time */
+ /* iPhone, iPad and Safari on a Mac: one microphone job at a time (v173) */
+ const APPLE=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)||(/Safari\//.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/.test(navigator.userAgent));
+ let together=!APPLE;/* false once a phone shows it cannot listen and record at the same time (iPhones and Safari: from the start, v173) */
  const norm=t=>String(t||'').toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
  const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
  const hush=()=>{try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e){}};

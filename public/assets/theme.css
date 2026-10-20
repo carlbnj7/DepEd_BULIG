@@ -5759,3 +5759,13 @@ html.dark .ck-msg.ok .ck-bub b{color:#7fd1b4!important}html.dark .ck-msg.no .ck-
 .lb-filter select{min-height:42px;min-width:170px;border-radius:12px;border:1.5px solid #d9e8d4;background:#fff;padding:0 12px;font-weight:700;color:#0e3b28}
 html.dark .lb-filter select{background:#1b2a21;border-color:#2c4033;color:#e8f0ea}html.dark .lb-filter label{color:#7fd1b4}
 @media(max-width:520px){.lb-filter label{flex:1 1 140px}.lb-filter select{min-width:0;width:100%}}
+/* v173: what BULIG hears goes into the blank (Level 1 "Finish the sentence") and shows under the question */
+.l1-gap{transition:background .2s,color .2s}
+.l1-gap.live{color:#1f63b5;border-bottom:4px dashed #5aa0e8;background:#eaf3ff;border-radius:8px 8px 0 0;padding:0 .3em;min-width:3em;font-style:italic}
+.l1-gap.done{color:#17633a;border-bottom-color:#2fa04f;background:#e6f6ea;border-radius:8px 8px 0 0;padding:0 .35em}
+.l1-said{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:10px 4px 0;font-weight:600;color:#3d5246;font-size:1rem}
+.l1-said b{color:#17633a}.l1-said.on b{color:#1f63b5}
+.l1-said small{flex-basis:100%;color:#5a6b60;font-weight:600;font-size:.88rem}
+html.dark .l1-said{color:#d6e6db}
+@media (prefers-reduced-motion:no-preference){.l1-said.on::before{content:'';width:8px;height:8px;border-radius:50%;background:#5aa0e8;align-self:center;animation:l1SaidDot 1s ease-in-out infinite}}
+@keyframes l1SaidDot{50%{opacity:.25;transform:scale(.7)}}
