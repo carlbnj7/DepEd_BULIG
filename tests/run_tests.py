@@ -281,6 +281,7 @@ def run_pages(acc):
     test_ratings_pupil(p)
     test_george(p)
     test_friends(p)
+    test_story(p)
     test_notifications(p)
     test_level4_scoring()
 
@@ -346,7 +347,7 @@ def run_pages(acc):
             units = []
         check('Class Demo can be saved for offline (list of levels)', status == 200 and units and all(u.get('pages') for u in units),
               f'status {status}, {len(units)} demos')
-        status, _, _ = t.req('?page=health')
+        status, _, _ = t.req('?page=checkup')
         check('A teacher cannot open an admin page', status == 403, f'status {status}')
 
     section('8. Admin (with PIN)')
@@ -355,10 +356,15 @@ def run_pages(acc):
     tok = a.token('?page=login&role=admin&confirm=1')
     status, url, _ = a.req('index.php', {'action': 'admin_pin', 'pin': acc['admin']['pin'], 'csrf': tok})
     if check('Admin can sign in with password and PIN', 'dashboard' in url, url):
-        for pg in ('dashboard', 'accounts', 'reports', 'activity_log', 'health', 'checkup', 'settings', 'teacher_cards',
+        for pg in ('dashboard', 'accounts', 'reports', 'activity_log', 'checkup', 'settings', 'teacher_cards',
                    'teacher_import', 'guide', 'profile', 'notifications', 'visual_audit', 'add_teachers',
-                   'add_teachers&mode=many', 'print', 'moved', 'admin_pass'):
+                   'add_teachers&mode=many', 'print', 'moved', 'admin_pass', 'story'):
             page_ok(a, f'?page={pg}', f'Admin page opens: {pg}')
+        _, url, _ = a.req('?page=health')
+        _, _, text = a.req('?page=settings')
+        _, _, home = a.req('?page=dashboard')
+        check('System health and Badges & rewards are gone: old link goes to Print & download, no menu link, no Settings tab',
+              'page=print' in url and 'href="?page=health' not in home and 'System health' not in home and 'tab=badges' not in text, url)
         _, url, text = a.req('?page=content')
         check('The Lesson studio is gone: its old link goes to Admin Home and the menu has no Lesson studio',
               'page=dashboard' in url and 'Lesson studio' not in text and 'href="?page=content"' not in text, url)
@@ -436,6 +442,31 @@ def test_george(p):
     m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', page)
     met = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')).get('met') if m else None
     check('Jarvis says hello only once (it is remembered)', jget(text).get('ok') and met is True, text[:120])
+
+
+def test_story(p):
+    """Story time: the comic How the BULIG Friends Met, and its XP (once per page, bonus at the end)."""
+    section('5c1. Story time')
+    page_ok(p, '?page=story', 'Story time opens (cover)')
+    _, _, text = p.req('?page=story&p=6')
+    check('A story page shows its picture, lines and page turns', 'Bruno the Helper' in text and '<svg class="cm-scene"' in text and 'data-story-go="7"' in text and 'class="cm-script"' in text, '')
+    _, _, text = p.req('?page=story_data')
+    try:
+        data = json.loads(text)
+    except ValueError:
+        data = []
+    check('All 16 story pages load for turning pages', len(data) == 16 and all('<svg' in d.get('html', '') for d in data), f'{len(data)} pages')
+    page_ok(p, '?page=story&print=1', 'The print version of the story opens')
+    _, _, home = p.req('?page=dashboard')
+    check('The pupil Overview has the Story time card', 'class="cm-card' in home and 'href="?page=story' in home, '')
+    tok = p.token('?page=story')
+    gains = []
+    for n in list(range(16)) + [3]:
+        _, _, r = p.req('index.php', {'action': 'story_seen', 'p': str(n), 'csrf': tok}, accept_json=True)
+        gains.append(jget(r).get('gained', -1))
+    check('Story XP: +3 for each new page, +15 on the last one, nothing for a page seen again', gains[:15] == [3] * 15 and gains[15] == 15 and gains[16] == 0, str(gains))
+    _, _, text = p.req('?page=story')
+    check('The story shows it is finished', 'Story finished' in text, '')
 
 
 def test_friends(p):

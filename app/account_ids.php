@@ -140,7 +140,7 @@ function account_ids_switch(string $code,bool $ownBackup):array{
  if(!account_ids_ready())throw new RuntimeException('Import 027_account_ids.sql in phpMyAdmin first.');
  $backup='';
  account_ids_match_collation();
- try{$backup=account_ids_backup('before-new-ids');}catch(Throwable $e){if(!$ownBackup)throw new RuntimeException('BULIG could not save a backup copy ('.$e->getMessage().'), so nothing was changed. Download a backup from System health (or export the database in phpMyAdmin), then tick “I already saved a backup” and try again.');}
+ try{$backup=account_ids_backup('before-new-ids');}catch(Throwable $e){if(!$ownBackup)throw new RuntimeException('BULIG could not save a backup copy ('.$e->getMessage().'), so nothing was changed. Download a backup from Print & download › Backup (or export the database in phpMyAdmin), then tick “I already saved a backup” and try again.');}
  db()->beginTransaction();
  try{
   /* rows left from a switch that was later reversed by restoring a backup: that account has its old ID again */
@@ -184,7 +184,7 @@ function account_ids_action(string $action):never{
   if(!valid_school_code($c)){flash('Use 3 to 10 letters (A–Z) for the school code, for example PCES.');go($back);}
   admin_set('school_code',$c);audit('school_code',$c);flash('School code saved: '.$c.'. New pupils get IDs like '.account_id_format('pupil',$c,date('y'),1).'.');go($back);}
  if($action==='admin_ids_backup'){
-  try{$f=account_ids_backup('manual');flash('Backup saved: '.$f.'.');}catch(Throwable $e){flash('The backup could not be saved here: '.$e->getMessage().' Use “Download backup” in System health instead.');}go($back.'#ids-backups');}
+  try{$f=account_ids_backup('manual');flash('Backup saved: '.$f.'.');}catch(Throwable $e){flash('The backup could not be saved here: '.$e->getMessage().' Use “Download backup” in Print & download › Backup instead.');}go($back.'#ids-backups');}
  if($action==='admin_ids_switch'){
   $c=strtoupper(trim((string)($_POST['school_code']??'')));if(!valid_school_code($c)){flash('Save a school code (3 to 10 letters) first.');go($back);}
   try{$r=account_ids_switch($c,isset($_POST['own_backup']));}catch(Throwable $e){flash($e->getMessage());go($back.'#switch-ids');}
