@@ -146,7 +146,7 @@ function lesson_view(array $u):void{
   if(!$native&&$passage===null&&$sheet===null)render_activity_visuals($a);
 
   if($a['feedback'])echo '<div class="feedback"><div><strong>A note from your teacher</strong><p>'.e($a['feedback']).'</p></div></div>';
-  echo '<form method="post" id="activity-form" class="activity-form" data-mode="'.e($mode).'" data-draft="'.($readonly?'off':'on').'">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value="'.e($transcript).'"><input type="hidden" name="drawing" id="drawing-data" value="'.e($drawing).'"><input type="hidden" id="expected-text" value="'.e($a['expected_text']??'').'">';
+  echo '<form method="post" id="activity-form" class="activity-form"'.($readonly?'':' data-open="1"').' data-mode="'.e($mode).'" data-draft="'.($readonly?'off':'on').'">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value="'.e($transcript).'"><input type="hidden" name="drawing" id="drawing-data" value="'.e($drawing).'"><input type="hidden" id="expected-text" value="'.e($a['expected_text']??'').'">';
   if($native)render_level2_pupil($native,$response,$readonly,$mode);
   elseif($mode==='answer'&&$a['type']==='sentence')echo '<div class="answer-card sentence-card"><label for="response">'.e($a['prompt']).'</label><input id="response" name="response" value="'.e($response).'" maxlength="12000" placeholder="Your answer" autocomplete="off" '.($readonly?'readonly':'required').'></div>';
   else{
