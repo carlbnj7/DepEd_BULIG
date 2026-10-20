@@ -2,7 +2,7 @@
 /* Reading check and starting level (Grades 1-6).
    A pupil with no starting level takes the reading check the first time they sign in. Pupils who already have a
    level never see it. The check has 7 parts, one for each BULIG level, made from the module pre-tests:
-     1 Talk and listen ......... Level 1 pre-test (5 questions, recorded; the teacher rates it with the module rubric)
+     1 Talk and listen ......... Level 1 pre-test (5 questions, recorded; BULIG rates it with the module rubric from how much the pupil said)
      2 Sound games ............. Level 2A pretests (one item from each of the 10 pretest skills)
      3 Word parts .............. Level 2B "Pre-Test: Phonological Awareness" (30 items, module pages 14-17)
      4 Read the words .......... Level 3 Pre-Assessment Toolkit (4 word lists)
@@ -17,7 +17,8 @@
    Grades 1-3 start at Part 1 and go up. Grades 4-6 start at Part 5 (the grade's story, like Phil-IRI) and go down
    when it is hard or up when it is easy. The first part not passed gives the starting level; all parts passed: Level 7.
    Reading aloud is scored with the browser's speech recognition; the recording is kept so the teacher can listen.
-   When BULIG cannot hear the reading, the part is "Please listen" and the pupil starts at that part's level for now.
+   When BULIG cannot hear the reading, those answers are not counted and the part is decided from what it heard; the
+   recording is kept. Everything is decided by BULIG: the teacher only looks if they want to (v171).
    Table: database/migrations/028_reading_check.sql. */
 
 const RC_PARTS=[
@@ -141,15 +142,27 @@ function rc_pages(int $p,array $part):int{return match($p){1=>1,2=>2,3=>5,4=>cou
 /** Record one answer and keep the "5 wrong in a row" count (an unknown answer does not count either way). */
 function rc_mark(array &$P,array $a):void{$P['ans'][]=$a;if($a['ok']===null){$P['unknown']+=$a['of']??1;return;}$pts=$a['pts']??($a['ok']?1:0);$P['right']+=$pts;$P['total']+=$a['of']??1;$P['streak']=$pts>0?0:$P['streak']+1;}
 
+/** Part 1, rated by BULIG (v171): the module rubric has 4 rows of 1-3 points (12 in all, "Good" = 9). Each of the 5
+    answers earns 0-3 by how much the pupil said (heard words; a recording BULIG could not hear, e.g. on a device without
+    speech recognition, counts as a fair answer so the device never holds the pupil back), and the rubric rows follow
+    the answered share. */
+function rc_talk_auto(array $P):array{
+ $pts=0;foreach($P['ans'] as $a){$g=trim((string)($a['got']??''));$ph=(bool)preg_match('/^(\(voice recording\)|Spoken answer \(voice recording\)|Answered out loud\. Done\.)$/u',$g);
+  $w=$ph?0:count(array_filter(preg_split('/\s+/u',$g)));$rec=$ph||!empty($a['audio']);
+  $pts+=$w>=6?3:($w>=3||$rec?2:($w>=1?1:0));}
+ $n=max(1,count($P['ans']));$share=$pts/($n*3);$row=max(1,min(3,(int)round(1+2*$share)));
+ $tot=max(4,min(12,(int)round(4+8*$share)));$v=[$row,$row,$row,$row];$d=$tot-4*$row;for($i=0;$d!==0&&$i<8;$i++){$k=$i%4;if($d>0&&$v[$k]<3){$v[$k]++;$d--;}elseif($d<0&&$v[$k]>1){$v[$k]--;$d++;}}
+ return $v;
+}
 /** Decide a part when it can be decided; returns true when the part is over. */
 function rc_decide(int $p,array &$P,bool $last,array $s):bool{
- if($p===1){$P['st']='rate';return true;}
+ if($p===1){$r=rc_talk_auto($P);$P['auto']=$r;$P['st']=array_sum($r)>=9?'pass':'fail';return true;}
  if($P['streak']>=5){$P['st']='fail';$P['note']='Stopped after 5 wrong answers in a row.';return true;}
  if($p===2){$need=8;$max=count(RC_SOUNDS);}elseif($p===3){$need=24;$max=count(RC_DIAG);}elseif($p===6||$p===7){$need=$P['need'];$max=$P['max'];}else return false;
  $done=$P['total']+$P['unknown'];$left=$max-$done;
  if($P['right']>=$need){$P['st']='pass';return true;}
  if($P['right']+$P['unknown']+$left<$need){$P['st']='fail';return true;}
- if($last){$P['st']=$P['right']+$P['unknown']>=$need?'listen':'fail';return true;}
+ if($last){$P['st']='fail';if($P['unknown'])$P['note']='BULIG could not hear some answers, so they were not counted.';return true;}
  return false;
 }
 
@@ -173,9 +186,9 @@ function rc_submit(array $u):void{
   $P['tasks'][$step]=['label'=>$label,'right'=>$right,'unknown'=>$unk,'of'=>count($words),'need'=>$need];
   if($P['streak']>=5){$P['st']='fail';$P['note']='Stopped after 5 wrong words in a row.';}
   elseif($right>=$need){if($step+1>=count(RC_WORD_TASKS))$P['st']='pass';}
-  elseif($right+$unk+(count($words)-$seen)>=$need&&$unk)$P['st']='listen';else $P['st']='fail';}
+  else{$P['st']='fail';if($unk)$P['note']='BULIG could not hear some words, so they were not counted.';}}
  elseif($p===5){$st=rc_story($g);$h=$heard('0');$au=$audio('0');$secs=max(0,min(1800,(int)($_POST['secs']??0)));$sr=(string)($_POST['sr']??'off');
-  if($h===''&&$sr!=='ok'){$P['st']='listen';$P['ans'][]=['q'=>'Story','got'=>'','ok'=>null,'audio'=>$au,'secs'=>$secs];}
+  if($h===''&&$sr!=='ok'){$P['st']='fail';$P['note']='BULIG could not hear the reading on this device.';$P['ans'][]=['q'=>'Story','got'=>'','ok'=>null,'audio'=>$au,'secs'=>$secs];}
   else{$pct=$st?rc_accuracy($st[1],$h):0.0;$band=rc_band($pct);$P['pct']=$pct;$P['band']=$band;$P['secs']=$secs;$P['words']=$st?count($st[1]):0;$P['st']=$band==='Independent'?'pass':'fail';
    $P['ans'][]=['q'=>'Story','got'=>$h,'ok'=>$band==='Independent','audio'=>$au,'secs'=>$secs];}}
  else{$act=$P['acts'][$step]??null;$a=$act?one('SELECT * FROM activities WHERE id=?',[$act['aid']]):null;
@@ -187,6 +200,7 @@ function rc_submit(array $u):void{
  unset($P);
  if($over)rc_after_part($s,$p);else $s['step']=$step+1;
  $s['token']=bin2hex(random_bytes(6));rc_save((int)$row['id'],$s);
+ if($p===1&&!empty($s['parts'][1]['auto'])&&$row['talk_rating']===null)q('UPDATE reading_checks SET talk_rating=? WHERE id=?',[implode(',',$s['parts'][1]['auto']),(int)$row['id']]);
  if(!empty($s['result']))rc_finish(rc_row($pid),$s);
  rc_reply(true,'Saved!');
 }
@@ -218,10 +232,11 @@ function rc_finish(array $row,array $s):void{
  audit('reading_check',$pid.' → '.level_label($lv));
 }
 
-/** What the teacher still needs to do: 'listen' (recordings to hear or Part 1 to rate) and 'check' (official result does not match). */
+/** What the teacher still needs to do: 'check' (official result does not match). Since v171 BULIG rates Part 1 and
+    decides every part itself; 'listen' only comes from checks taken before that. */
 function rc_flags(?array $row):array{
  if(!$row||$row['status']!=='done')return [];$s=rc_state($row);$f=[];
- if(empty($s['confirmed'])){foreach($s['parts'] as $p=>$P){if($P['st']==='listen'||($p===1&&$P['st']==='rate'&&$row['talk_rating']===null)){$f[]='listen';break;}}}
+ if(empty($s['confirmed'])){foreach($s['parts'] as $p=>$P){if($P['st']==='listen'||($p===1&&$P['st']==='rate'&&$row['talk_rating']===null)){$f[]='listen';break;}}}   // checks taken before v171 only
  if($row['official_result']&&!in_array((int)$row['placed_level'],RC_OFFICIAL[$row['official_tool']][$row['official_result']]??[],true)&&empty($s['official_ok']))$f[]='check';
  return $f;
 }
@@ -246,7 +261,7 @@ function rc_part_chip(int $p,array $P):array{
  $label=['Talk','Sounds','Word parts','Words','Story','Listen','Understand'][$p-1];
  $score=match(true){$p===1=>'',$p===5&&isset($P['pct'])=>$P['pct'].'% '.$P['band'],$p===4&&!empty($P['tasks'])=>array_sum(array_column($P['tasks'],'right')).'/'.array_sum(array_column($P['tasks'],'of')),default=>$P['total']+$P['unknown']?$P['right'].'/'.($p===2?count(RC_SOUNDS):($p===3?count(RC_DIAG):($P['max']??$P['total']))):''};
  $cls=['pass'=>'ok','fail'=>'no','listen'=>'ear','rate'=>'ear','run'=>'na'][$P['st']]??'na';
- if($p===1)$score=$P['st']==='rate'?'please rate':'';
+ if($p===1)$score=$P['st']==='rate'?'please rate':(isset($P['auto'])?array_sum($P['auto']).'/12':'');
  if($P['st']==='listen')$score='please listen';
  return [$cls,$label.($score!==''?' · '.$score:'')];
 }
@@ -450,7 +465,7 @@ function rc_rules_view():void{
   .'<tr><td>6 Listen and learn words</td><td>Level 5 · Listening Comprehension and Vocabulary</td><td>The grade’s Level 5 pre-test (its first pages, about 30 points)</td><td>Phil-IRI comprehension Independent: 80–100% <span class="rk-src">(Phil-IRI; the module has no pass mark)</span></td></tr>'
   .'<tr><td>7 Read and understand</td><td>Level 6 · Graded Reading Comprehension</td><td>The grade’s Level 6 reading comprehension test (about 30 points)</td><td>Phil-IRI comprehension Independent: 80–100% <span class="rk-src">(Phil-IRI; the module has no pass mark)</span></td></tr>'
   .'</tbody></table></div><p class="muted">Grades 1–3 start at Part 1 and go up. Grades 4–6 start at Part 5 (the grade’s story, like Phil-IRI): Independent goes up to Parts 6 and 7; Instructional starts at Level 4; Frustration goes down to Parts 4, 3, 2 and 1. The first part not passed gives the starting level. All parts passed: Level 7. A part also stops after 5 wrong answers in a row (Level 2B module, Annex A: discontinue rule).</p>'
-  .'<p class="muted">Reading aloud (Parts 3, 4 and 5) is scored with the browser’s speech recognition and recorded. When BULIG cannot hear the reading (no internet, no microphone), the part shows “Please listen” and the pupil starts at that part’s level for now. Part 1 is always rated by you; until then the check goes on.</p></section>';
+  .'<p class="muted">Reading aloud (Parts 3, 4 and 5) is scored with the browser’s speech recognition and recorded. When BULIG cannot hear the reading (no internet, no microphone), those answers are not counted and the recording is kept for you. Part 1 is rated by BULIG with the module rubric from how much the pupil said. You never have to check anything; you can still listen and change the level.</p></section>';
  echo '<section class="card"><h2>2 · Checked against the official result</h2><div class="rk-rules"><div><h3>Grades 1–3 · CRLA</h3><table><tr><th>CRLA profile</th><th>BULIG level</th></tr><tr><td>Low / High Emerging</td><td>Level 1 or 2</td></tr><tr><td>Developing</td><td>Level 2 or 3</td></tr><tr><td>Transitioning</td><td>Level 3, 4 or 5</td></tr><tr><td>Grade Ready</td><td>Level 5 or 6</td></tr><tr><td>Advanced pupils</td><td>Level 7</td></tr></table></div><div><h3>Grades 4–6 · Phil-IRI</h3><table><tr><th>Phil-IRI level</th><th>BULIG level</th></tr><tr><td>Frustration</td><td>Level 1, 2 or 3</td></tr><tr><td>Instructional</td><td>Level 4 or 5</td></tr><tr><td>Independent</td><td>Level 5 or 6</td></tr><tr><td>Advanced pupils</td><td>Level 7</td></tr></table></div></div><p class="muted">Type each pupil’s BOSY CRLA or Phil-IRI result on their reading check page. If BULIG’s level is not in the matching row, the pupil shows “Please check”. The guide says the group is the official result plus the teacher’s observation, so you can always change the level.</p></section>';
 }
 

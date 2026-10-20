@@ -6,7 +6,7 @@
 
 /* id, name, title, girl, colour, special pose, job, hello line ({n} = the pupil's first name), voice pitch, voice speed, last-screen pose */
 const BULIG_FRIENDS=[
- ['george','George','the Explorer',true,'#0f8a83','map','Your guide on every page',"Hi, {n}! I am George the Explorer, your reading buddy. I want you to meet my friends. They will help you on every page of BULIG!",1.12,.95,'cheer'],
+ ['george','George','the Explorer',true,'#0f8a83','map','Your guide on every page',"Hi, {n}! I am George the Explorer, your reading buddy. I will go with you in every lesson. Let’s explore together!",1.12,.95,'cheer'],
  ['max','Max','the Listener',false,'#1e7fd6','mic','Listening and speaking',"Hello! I am Max the Listener. When you see me, tap the microphone and read to me. I love to listen!",1.25,1.02,'cheer'],
  ['dracs','Dracs','the Storyteller',true,'#7a4fc9','book','Stories, Levels 4 to 7',"Hi there! I am Dracs the Storyteller. I will open every story with you. Stories are full of magic!",1.0,.9,'cheer'],
  ['bruno','Bruno','the Helper',false,'#4d9f86','tryagain','Try again after a mistake',"Hey, friend! I am Bruno the Helper. Made a mistake? That is okay! We will try again together.",1.15,.88,'cheer'],
@@ -20,11 +20,11 @@ const BULIG_FRIENDS=[
  ['claude','Claude','the Protector',false,'#1d2f5c','shield','Keeping your account safe',"Hello! I am Claude the Protector. I keep your account safe. Never share your password with anyone!",.78,.9,'thumbs'],
 ];
 
-function friend_img(string $id,string $pose):string{return $id==='george'?char_src('george',$pose):'assets/images/characters/'.$id.'-'.$pose.'.webp?v=1';}
+function friend_img(string $id,string $pose):string{return $id==='george'?char_src('george',$pose):'assets/images/characters/'.$id.'-'.$pose.'.webp?v=2';}
 function friends_met(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings WHERE setting_key=?',['friends_met_'.$uid]);}catch(Throwable $e){return true;}}
 /** Met: the friends, and George too (she says hello first). */
 function friends_mark_met(int $uid):void{
- foreach(['friends_met_','george_met_'] as $k)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[$k.$uid,date('Y-m-d H:i:s')]);
+ foreach(['friends_met_','george_met_','jarvis_met_'] as $k)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[$k.$uid,date('Y-m-d H:i:s')]);
 }
 
 /** The pupil's own boy or girl picture is only on the reading ladder and the lesson map. Everywhere else a friend shows up:
@@ -91,7 +91,9 @@ function friends_meta(?array $cu):string{
  if(!$cu||$cu['role']!=='pupil'||(!$again&&friends_met((int)$cu['id'])))return '';
  $list=array_map(fn($f)=>['id'=>$f[0],'name'=>$f[1],'title'=>$f[2],'girl'=>$f[3],'c'=>$f[4],'job'=>$f[6],'line'=>$f[7],'pitch'=>$f[8],'rate'=>$f[9],
   'hello'=>friend_img($f[0],'hello'),'special'=>friend_img($f[0],$f[5]),'last'=>friend_img($f[0],$f[10])],BULIG_FRIENDS);
- return '<meta name="bulig-friends" content="'.e(json_encode(['name'=>explode(' ',trim((string)$cu['name']))[0],'tour'=>!tour_seen((int)$cu['id']),'friends'=>$list])).'">';
+ /* J.A.R.V.I.S the Robot (v171) hosts it: he opens, presents each friend and closes, in a jolly robot voice. */
+ $host=['name'=>'J.A.R.V.I.S','title'=>'the Robot','hello'=>jarvis_img('hello'),'point'=>jarvis_img('point'),'idea'=>jarvis_img('idea'),'cheer'=>jarvis_img('cheer'),'thumbs'=>jarvis_img('thumbs')];
+ return '<meta name="bulig-friends" content="'.e(json_encode(['name'=>explode(' ',trim((string)$cu['name']))[0],'tour'=>!tour_seen((int)$cu['id']),'host'=>$host,'friends'=>$list])).'">';
 }
 
 /** Claude the Protector's safety tip on each Home page: a different tip and pose each day. */
