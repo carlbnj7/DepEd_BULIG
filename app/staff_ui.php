@@ -1,7 +1,7 @@
 <?php
 /* The menus and the "where is it?" pages for teachers, the administrator and pupils.
    - Menus are grouped under yellow words (MY CLASS, TEACHING, PRINT; PEOPLE, REPORTS & PRINT, SYSTEM;
-     LEARN, MY PROGRESS, ABOUT ME). Teachers and the administrator also get a "Find a page" box (assets/staff.js).
+     LEARN, MY PROGRESS, ABOUT ME). Teachers and the administrator also get a Search box (assets/staff.js; v172: the box just says "Search").
    - Teacher pages: Home (what needs you first, then quick tasks), Print centre (every printout), Add pupils
      (one pupil or a whole class), and "Where things are now".
    - Administrator pages: Home, Print & download, Add teachers (one or many).
@@ -58,7 +58,7 @@ function staff_find_list(string $role):array{
 }
 function staff_find_box(string $role):string{
  $items=array_map(fn($x)=>[$x[0],$x[1],$x[2],icon($x[3])],staff_find_list($role));
- return '<div class="nv-find" data-find=\''.e(json_encode($items,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'\'>'.icon('search').'<input type="search" placeholder="Find a page… try “print”" aria-label="Find a page" autocomplete="off" data-find-input><div class="nv-results" role="listbox" aria-label="Pages found" data-find-out hidden></div></div>';
+ return '<div class="nv-find" data-find=\''.e(json_encode($items,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'\'>'.icon('search').'<input type="search" placeholder="Search" aria-label="Search" autocomplete="off" data-find-input><div class="nv-results" role="listbox" aria-label="Pages found" data-find-out hidden></div></div>';
 }
 
 /* ---------------- shared pieces of the new pages ---------------- */
@@ -230,18 +230,18 @@ function moved_view(array $u):void{
  if(!staff_seen((int)$u['id'],'moved'))staff_mark_seen((int)$u['id'],'moved');
  $r=fn($a,$b,$s='',$new=false)=>'<tr><td>'.$a.'</td><td>'.icon('arrow').'</td><td>'.$b.($new?'<span class="wm-new">NEW</span>':'').($s!==''?'<small>'.$s.'</small>':'').'</td></tr>';
  $tbl=fn($rows)=>'<div class="tablewrap"><table class="wm-tbl"><thead><tr><th>Before</th><th></th><th>Now</th></tr></thead><tbody>'.$rows.'</tbody></table></div>';
- echo hm_head('WHAT MOVED','Where things are now','The pages are the same. Only the menu order and some names changed. Old links still work and open the new place. Type in <b>Find a page</b> at the top of the menu if you cannot find something.');
+ echo hm_head('WHAT MOVED','Where things are now','The pages are the same. Only the menu order and some names changed. Old links still work and open the new place. Type in <b>Search</b> at the top of the menu if you cannot find something.');
  $t='<section class="card"><h2>'.icon('people').' Teachers</h2>'.$tbl($r('Overview','Home','Things that need you are first, then quick tasks')
   .$r('“Certificates” button on Overview','Print centre › Certificates').$r('Print sign-in tickets (bottom of My pupils › Accounts)','Print centre › Sign-in tickets','Also: My pupils, tick pupils › Print sign-in tickets')
   .$r('Report card (pupil page, My sections)','Print centre › Report cards','Also: each pupil’s page').$r('Progress report (Activity history, pupil page)','Print centre › Progress reports','Also: each pupil’s page')
   .$r('My pupils › Learning and › Accounts (two lists)','My pupils › Pupil list','One list: open, edit, tick many').$r('My pupils › Accounts (create, import)','Add pupils','In the menu: one pupil, or a whole class from Excel')
   .$r('My pupils › Progress','My pupils › Class progress').$r('My sections','Sections','Under MY CLASS').$r('Check answers (and Activity history)','Nothing to check','BULIG checks every answer. To see one, change a score or write a note: open a pupil › Answers and scores',true).$r('Check answers › Missed questions (and Question check)','Class results','Under TEACHING')
-  .$r('—','Reading check','Starting levels from the reading check',true).$r('—','Find a page','Type what you need, for example “print”',true)).'</section>';
+  .$r('—','Reading check','Starting levels from the reading check',true).$r('—','Search','Type what you need, for example “print”',true)).'</section>';
  $a='<section class="card"><h2>'.icon('shield').' Administrator</h2>'.$tbl($r('Overview','Home','Things that need you are first, then quick tasks')
   .$r('Teacher Passes (Teachers page)','Print &amp; download › Teacher Passes','Also: Teachers page').$r('Reports › Print / Excel','Print &amp; download › School report','Also: School reports')
   .$r('Download backup (System health)','Print &amp; download › Backup','Also: System health').$r('Activity log › Download CSV','Print &amp; download › Activity log','Also: Activity log')
   .$r('Teachers › Add a teacher / Add many teachers','Add teachers','In the menu: one teacher, or the whole team from Excel')
-  .$r('Reports','School reports','Under REPORTS &amp; PRINT').$r('—','Print &amp; download','Every print and download in one place',true).$r('—','Find a page','Type what you need, for example “backup”',true)).'</section>';
+  .$r('Reports','School reports','Under REPORTS &amp; PRINT').$r('—','Print &amp; download','Every print and download in one place',true).$r('—','Search','Type what you need, for example “backup”',true)).'</section>';
  $p='<section class="card"><h2>'.icon('star').' Pupils</h2><p class="muted">Pupils keep the same pages and names. Their menu now has yellow group words: <b>Learn</b>, <b>My progress</b> and <b>About me</b>. On the phone, pupils keep their bottom bar. A new pupil with no starting level takes the <b>reading check</b> at first sign-in.</p></section>';
  echo '<div class="wm-cols">'.($u['role']==='admin'?$a.$t:$t.$a).'</div>'.$p;
  if($u['role']==='teacher')echo '<section class="card" id="help"><h2>'.HELP_HAND.' Asked for help</h2><p class="muted">When a pupil taps “I need help” in a lesson, at school or at home, it shows on Home under <b>Needs you today</b> and in the bell. Tap <b>See pupil</b>, help them, then <b>Mark as helped</b>.</p></section>';
