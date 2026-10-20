@@ -6,6 +6,8 @@
 (function(){
  'use strict';
  const $=(s,r)=>(r||document).querySelector(s),$$=(s,r)=>[...(r||document).querySelectorAll(s)];
+ /* iPhone, iPad and Safari on a Mac: one microphone job at a time (v173) */
+ const APPLE=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)||(/Safari\//.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/.test(navigator.userAgent));
  /* Build a Word (Level 3): tap the module's letter boxes; each letter flies onto the next blank line.
     A full word is checked: right turns green, wrong shakes and clears. The answer keeps the earlier tries for the teacher.
     The same boxes work on Class Demo slides (data-l3-demo): they are wired when the slide is shown. */
@@ -148,27 +150,36 @@
   let mr=null,st=null,ch=[],t0=0,tick=null,secs=0,url='',pl=null;const rd=!!r.dataset.max;
   /* v172: BULIG listens while the pupil speaks (the browser's speech recognition) and keeps what it heard, so the
      words can be checked (pronunciation). Without it (some phones, no internet) only the recording is kept. */
-  const SRC=window.SpeechRecognition||window.webkitSpeechRecognition;let sr=null,srOn=false,said=[];
-  function srStart(){if(!SRC)return;said=[];srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=false;
-    sr.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)said.push(e.results[i][0].transcript);};
-    sr.onerror=e=>{if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
-    sr.onend=()=>{if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
+  const SRC=window.SpeechRecognition||window.webkitSpeechRecognition;let sr=null,srOn=false,said=[],part='',srErr='';
+  /* v173: iPhones, iPads and Safari cannot record and listen at the same time, so there BULIG only listens and the
+     words it hears are the answer (no voice recording). What it hears shows under the microphone as the pupil speaks. */
+  let solo=!!SRC&&APPLE;const heardText=()=>(said.join(' ')+' '+part).replace(/\s+/g,' ').trim();
+  function srStart(){if(!SRC)return;said=[];part='';srErr='';srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=true;
+    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();if(t&&r.dataset.state==='rec')sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';};
+    sr.onerror=e=>{srErr=e.error||'';if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
+    sr.onend=()=>{if(part){said.push(part);part='';}if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
    make();try{sr.start();}catch(e){srOn=false;}}
   function srStop(){srOn=false;try{sr&&sr.stop();}catch(e){}}const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   const ui=s=>{r.dataset.state=s;go.classList.toggle('on',s==='rec');go.hidden=s==='done';play.hidden=s!=='done';
    label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(rd?'Tap and read the story aloud':'Tap and say it');sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
-  if(!canRec){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
+  if(!canRec&&!solo){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
   async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
+   if(solo){srStart();if(srOn){t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();
+     if(!srOn&&srErr){clearInterval(tick);if(srErr==='not-allowed'){ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg({name:'NotAllowedError'});if(heard)heard.hidden=false;}else if(!heardText()){solo=false;r.dataset.state='idle';start();}else stop();}},250);return;}solo=false;}
    try{st=await getMic();}catch(e){r.dataset.state='idle';label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(e);if(heard)heard.hidden=false;return;}
    const type=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
    try{mr=new MediaRecorder(st,type?{mimeType:type,audioBitsPerSecond:32000}:undefined);}catch(e){mr=new MediaRecorder(st);}
    ch=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data);};mr.onstop=fin;mr.start(500);t0=Date.now();ui('rec');srStart();tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();},250);}
-  function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;srStop();if(mr&&mr.state!=='inactive')mr.stop();if(st)st.getTracks().forEach(t=>t.stop());}
+  function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;srStop();if(solo){r.dataset.state='starting';setTimeout(finSolo,900);return;}if(mr&&mr.state!=='inactive')mr.stop();if(st)st.getTracks().forEach(t=>t.stop());}
+  /* listening only (iPhone): the words are the answer */
+  function finSolo(){const w=heardText();if(!w||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
+   inp.value='';ui('done');play.hidden=true;label.textContent=rd?'BULIG heard your reading':'BULIG heard your answer';sub.textContent='BULIG heard: \u201c'+w+'\u201d';
+   set(c,p,(rd?'(read aloud · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(spoken answer)')+' said: '+w);}
   function fin(){const blob=new Blob(ch,{type:((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/')});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
    url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');const base=rd?'(voice recording · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(voice recording)';set(c,p,base);
     /* the last words BULIG heard arrive a moment after the recording stops */
-    setTimeout(()=>{const w=said.join(' ').replace(/\s+/g,' ').trim();if(w&&r.dataset.state==='done'){set(c,p,base+' said: '+w);sub.textContent='BULIG heard: '+w;}},800);};fr.readAsDataURL(blob);}
+    setTimeout(()=>{const w=heardText();if(w&&r.dataset.state==='done'){set(c,p,base+' said: '+w);sub.textContent='BULIG heard: \u201c'+w+'\u201d';}},800);};fr.readAsDataURL(blob);}
   go.addEventListener('click',()=>{if(r.dataset.state==='rec'){if(Date.now()-t0<700)return;stop();}else if(r.dataset.state!=='starting')start();});
   again.addEventListener('click',()=>{if(pl){pl.pause();pl=null;}set(c,p,'');start();});
   lis.addEventListener('click',()=>{if(!url)return;if(pl&&!pl.paused){pl.pause();return;}if(!pl){pl=new Audio(url);pl.addEventListener('timeupdate',()=>bar.style.setProperty('--p',String(Math.min(1,pl.currentTime/(secs||1)))));pl.addEventListener('ended',()=>lis.classList.remove('on'));}pl.currentTime=0;pl.play().then(()=>lis.classList.add('on')).catch(()=>{});});
