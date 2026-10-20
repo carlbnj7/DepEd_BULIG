@@ -7,7 +7,8 @@
      writes down what it hears; l4_miscues() lines that up with the passage and counts the miscues by type, then the
      Oral Reading Score, Reading Level (Ind 98-100, Ins 90-96, Frus 89 below) and Reading Speed (words per minute).
      The pupil sees the result at once; the teacher sees the same table filled in, listens, and can change any number.
-     Without speech recognition (some phones, no internet) the teacher scores from the recording, as before. */
+     Without speech recognition (some phones, no internet) BULIG cannot hear the reading: the recording is kept and the
+     activity is done without a score; the teacher never has to score it (v172). */
 
 const L4_MISCUES=['Mispronunciation','Omission','Substitution','Insertion','Repetition','Transposition','Reversal'];
 
@@ -61,12 +62,12 @@ function l4_miscues(array $words,string $heard):array{
  }
  return ['m'=>$cnt,'marks'=>$marks,'extra'=>$extra,'heard'=>$m];
 }
-/** BULIG's score for one reading, in the shape the teacher's table saves ('auto' => 1). Null when the recognizer heard
-    too little to judge (under a third of the passage): then the teacher scores it from the recording. */
+/** BULIG's score for one reading, in the shape the teacher's table saves ('auto' => 1). Words BULIG did not hear count
+    as omissions (v172: also when only part was read). Null only when the recognizer heard no word at all. */
 function l4_auto(array $a,string $said,int $secs):?array{
  $w=l4_words($a);$p=level4_passage_parts($a);if(!$w||!$p)return null;$words=(int)$p['words']?:count($w);
  $said=trim(mb_substr($said,0,8000));$heard=count(array_filter(array_map('l4_norm',preg_split('/\s+/u',$said)),'strlen'));
- if($heard<max(3,count($w)/3))return null;
+ if($heard<1)return null;
  $r=l4_miscues($w,$said);$tot=min($words,array_sum($r['m']));$score=round(($words-$tot)/$words*100,1);
  return ['m'=>$r['m'],'total'=>$tot,'words'=>$words,'score'=>$score,'level'=>l4_level($score),'secs'=>$secs,'wpm'=>$secs?(int)round(($words-$tot)/$secs*60):0,
   'auto'=>1,'marks'=>$r['marks'],'extra'=>$r['extra'],'said'=>$said];
@@ -103,7 +104,7 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
  $doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));
  head(level_label($lv).' · '.$lesson['subtitle'],'activity-page l1-page l4-page');
  echo '<div class="l1-app l4-app">'.lesson_head($lesson,$all,$a,'?page=lessons&level='.$lv.'#level'.$lv.'-path').'<main class="l1-main activity-main">';notice();
- echo '<form method="post" id="activity-form" class="activity-form l1-form l4-form" data-mode="'.($reading?'answer':'none').'" data-kind="'.($reading?'read':'look').'" data-draft="off">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><input type="hidden" name="secs" id="l1-secs" value=""><span id="draft-status" hidden></span>';
+ echo '<form method="post" id="activity-form" class="activity-form l1-form l4-form"'.($readonly?'':' data-open="1"').' data-mode="'.($reading?'answer':'none').'" data-kind="'.($reading?'read':'look').'" data-draft="off">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><input type="hidden" name="secs" id="l1-secs" value=""><span id="draft-status" hidden></span>';
  if($a['feedback'])echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
  echo '<span class="l1-tag">'.e(l4_tag($a,$lesson)).'</span>';
  if($reading){

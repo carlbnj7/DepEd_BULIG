@@ -8,7 +8,7 @@
  const meta=document.querySelector('meta[name="bulig-friends"]');if(!meta)return;
  const page=new URLSearchParams(location.search).get('page')||'dashboard';if(page!=='dashboard'||!navigator.onLine)return;
  let D;try{D=JSON.parse(meta.content);}catch(e){return;}const F=D.friends||[];if(!F.length)return;
- /* J.A.R.V.I.S the Robot hosts (v171): he opens, stands beside each friend, and closes, in a jolly robot voice. */
+ /* Jarvis the Robot hosts (v171): he opens, stands beside each friend, and closes, in a jolly robot voice. */
  const H=D.host||null;if(H)[H.hello,H.point,H.cheer].forEach(x=>{const i=new Image();i.src=x;});
  F.forEach(f=>[f.hello,f.special,f.last].forEach(s=>{const i=new Image();i.src=s;}));
  const SVG={next:'<path d="M5 12h14M13 6l6 6-6 6"/>',again:'<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>',on:'<path d="m11 4-5 4H3v8h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/>',off:'<path d="m11 4-5 4H3v8h3l5 4z"/><path d="m16 9 6 6m0-6-6 6"/>',star:'<path d="m12 2 3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z" fill="currentColor" stroke="none"/>'};
@@ -53,7 +53,7 @@
   p.append(el('div','fr-stage',''),el('div','fr-side',''));
   const img=el('img','fr-kid fr-in');img.src=H?H.hello:g.hello;img.alt='';p.firstChild.append(el('div','fr-rays'),img);
   const s=p.lastChild;s.append(el('span','fr-eyebrow',H?'BEEP BOOP! NEW FRIENDS':'NEW FRIENDS'));const h=el('h2');h.textContent='Hi, '+D.name+'!';s.append(h);
-  const lead=H?'I am J.A.R.V.I.S the Robot, your tour guide. Let me introduce the '+F.length+' BULIG friends. Each one will help you in BULIG!':'George and her friends want to meet you. Each one will help you in BULIG.';
+  const lead=H?'I am Jarvis the Robot, your tour guide. Let me introduce the '+F.length+' BULIG friends. Each one will help you in BULIG!':'George and her friends want to meet you. Each one will help you in BULIG.';
   const t=el('p','fr-lead');t.textContent=lead;s.append(t);if(H)setTimeout(()=>{if(idx<0)say(JV,'Beep boop! Hi, '+D.name+'! '+lead);},700);
   const team=el('div','fr-dots');F.forEach(f=>{const i=el('i');const m=new Image();m.src=f.hello;m.alt='';i.append(m);team.append(i);});s.append(team);
   const a=el('div','fr-actions');const go=el('button','btn primary fr-next','Meet my friends'+svg('next'));go.type='button';go.onclick=()=>show(0);a.append(go);s.append(a);
@@ -76,7 +76,7 @@
  function last(){hush();const p=frame('fr-final');tint(p,'#16842f');const stage=el('div','fr-stage');stage.append(el('div','fr-rays'));const team=el('div','fr-team');
   F.forEach((f,k)=>{const m=new Image();m.src=f.last;m.alt=f.name;m.className='fr-t'+k;team.append(m);});stage.append(team);
   const s=el('div','fr-side');s.append(el('span','fr-eyebrow','YOUR BULIG FRIENDS'));const h=el('h2');h.textContent='We are all here to help you read, '+D.name+'!';s.append(h);
-  s.append(el('p','fr-lead',H?(D.tour?'Look for us on every page. I, J.A.R.V.I.S, will show you around next!':'Look for us on every page. Tap the yellow ? with my face anytime and I will show you around!'):(D.tour?'Look for us on every page. George will show you around next.':'Look for us on every page. Tap the yellow ? anytime and George will show you around.')));
+  s.append(el('p','fr-lead',H?(D.tour?'Look for us on every page. I, Jarvis, will show you around next!':'Look for us on every page. Tap the yellow ? with my face anytime and I will show you around!'):(D.tour?'Look for us on every page. George will show you around next.':'Look for us on every page. Tap the yellow ? anytime and George will show you around.')));
   if(H){const r=el('img','fr-host fr-host-end');r.src=H.cheer;r.alt='';stage.append(r);}
   const a=el('div','fr-actions');const ok=el('button','btn primary fr-next','Let’s read!'+svg('next'));ok.type='button';ok.onclick=end;a.append(ok);s.append(a);p.append(stage,s);
   const g=F[0];words=[];say(H?JV:{girl:true,pitch:g.pitch,rate:g.rate},(H?'Beep boop! ':'')+'We are all here to help you read, '+D.name+'! Let’s read together!');setTimeout(()=>ok.focus({preventScroll:true}),80);}

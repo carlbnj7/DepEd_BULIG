@@ -91,8 +91,8 @@ function friends_meta(?array $cu):string{
  if(!$cu||$cu['role']!=='pupil'||(!$again&&friends_met((int)$cu['id'])))return '';
  $list=array_map(fn($f)=>['id'=>$f[0],'name'=>$f[1],'title'=>$f[2],'girl'=>$f[3],'c'=>$f[4],'job'=>$f[6],'line'=>$f[7],'pitch'=>$f[8],'rate'=>$f[9],
   'hello'=>friend_img($f[0],'hello'),'special'=>friend_img($f[0],$f[5]),'last'=>friend_img($f[0],$f[10])],BULIG_FRIENDS);
- /* J.A.R.V.I.S the Robot (v171) hosts it: he opens, presents each friend and closes, in a jolly robot voice. */
- $host=['name'=>'J.A.R.V.I.S','title'=>'the Robot','hello'=>jarvis_img('hello'),'point'=>jarvis_img('point'),'idea'=>jarvis_img('idea'),'cheer'=>jarvis_img('cheer'),'thumbs'=>jarvis_img('thumbs')];
+ /* Jarvis the Robot (v171) hosts it: he opens, presents each friend and closes, in a jolly robot voice. */
+ $host=['name'=>'Jarvis','title'=>'the Robot','hello'=>jarvis_img('hello'),'point'=>jarvis_img('point'),'idea'=>jarvis_img('idea'),'cheer'=>jarvis_img('cheer'),'thumbs'=>jarvis_img('thumbs')];
  return '<meta name="bulig-friends" content="'.e(json_encode(['name'=>explode(' ',trim((string)$cu['name']))[0],'tour'=>!tour_seen((int)$cu['id']),'host'=>$host,'friends'=>$list])).'">';
 }
 

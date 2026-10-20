@@ -15,12 +15,12 @@ function login_lock_seconds(string $key):int{
 }
 /** A wrong ID or password (or too many tries): back to the sign-in form with the ID kept and a popup. */
 function login_back(string $role,string $id,string $key):void{
- $role=in_array($role,['pupil','teacher','admin'],true)?$role:'pupil';$id=preg_match('/^[A-Za-z0-9-]{1,30}$/',$id)?$id:'';
+ $role=in_array($role,['pupil','teacher','admin'],true)?$role:'auto';$id=preg_match('/^[A-Za-z0-9-]{1,30}$/',$id)?$id:'';
  $used=login_tries_used($key);$secs=login_lock_seconds($key);
  $_SESSION['login_fail']=['role'=>$role,'id'=>$id,'used'=>min(LOGIN_MAX_TRIES,$used),'until'=>$secs?time()+$secs:0];
- go($role==='admin'?'?page=login&role=admin&confirm=1':'?page=login&role='.$role.'&form=1');
+ go('?page=login&form=1');
 }
-function login_fail_take(string $role):?array{$f=$_SESSION['login_fail']??null;unset($_SESSION['login_fail']);return is_array($f)&&($f['role']??'')===$role?$f:null;}
+function login_fail_take(string $role):?array{$f=$_SESSION['login_fail']??null;unset($_SESSION['login_fail']);return is_array($f)?$f:null;}
 
 /** Morning 5-11, afternoon 12-16, evening otherwise (the same hours as the pupil home page sky). */
 function login_daypart():string{$h=(int)date('G');return $h>=5&&$h<12?'m':($h>=12&&$h<17?'a':'e');}
@@ -37,8 +37,8 @@ function login_role_cards(string $role):string{
 }
 /** Phones with a camera only: login.js shows it. */
 function login_scan_block(string $role='pupil'):string{
- if($role!=='pupil'&&$role!=='teacher')return '';$t=$role==='teacher';
- return '<div class="lgn-scan-wrap" data-lgn-scan-wrap hidden><button type="button" class="lgn-scan" data-lgn-scan data-pass="'.($t?'Teacher Pass':'Reading Pass').'" data-jsqr="'.e(asset_url('jsqr.js')).'"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.5M14 21h3M21 18v3h-1"/></svg>Scan my '.($t?'Teacher Pass':'Reading Pass').'</button><div class="lgn-or">or type your '.($t?'Teacher':'Pupil').' ID</div></div>';
+ if(!in_array($role,['pupil','teacher','any'],true))return '';$t=$role==='teacher';$any=$role==='any';
+ return '<div class="lgn-scan-wrap" data-lgn-scan-wrap hidden><button type="button" class="lgn-scan" data-lgn-scan data-pass="'.($any?'pass':($t?'Teacher Pass':'Reading Pass')).'" data-jsqr="'.e(asset_url('jsqr.js')).'"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.5M14 21h3M21 18v3h-1"/></svg>Scan my '.($any?'pass (QR code)':($t?'Teacher Pass':'Reading Pass')).'</button><div class="lgn-or">or type your '.($any?'':($t?'Teacher ':'Pupil ')).'ID</div></div>';
 }
 function login_eye_button():string{
  return '<button type="button" class="show-password lgn-eye" data-password="password" aria-label="Show password" aria-pressed="false" title="Show password"><svg class="lgn-eye-on" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="lgn-eye-off" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button>';
@@ -48,6 +48,8 @@ function login_forgot_link():string{return '<button type="button" class="lgn-for
 /** The Credits link, and the sheet that "Forgot your password?" opens. */
 function login_foot(string $role):string{
  $pupil=$role==='pupil';
+ if($role==='any')return '<div class="lgn-foot"><a class="login-credits" href="?page=credits">'.icon('star').'Credits</a></div>'
+  .'<dialog class="lgn-sheet" data-lgn-sheet aria-labelledby="lgn-sheet-t"><form method="dialog"><span class="lgn-grab" aria-hidden="true"></span><div class="lgn-sheet-hd"><img src="'.e(char_src('teacher-female','hello')).'" alt=""><div><h3 id="lgn-sheet-t">Forgot your password?</h3><p>That’s okay! Someone can help.</p></div></div><ol class="lgn-steps"><li><b>1</b><span>Pupils: tell your teacher. Your teacher prints a new Reading Pass with a new password.</span></li><li><b>2</b><span>Teachers: tell your BULIG administrator. They make a new password for you.</span></li><li><b>3</b><span>Sign in with your ID and the new password.</span></li></ol><button class="btn primary full lgn-ok">Okay!</button></form></dialog>';
  $steps=$pupil?['Tell your teacher.','Your teacher prints a new Reading Pass with a new password.','Scan the pass with a phone, or type your Pupil ID and the new password.']:['Tell your BULIG administrator.','The administrator makes a new password for you.','Sign in, then change it in My profile.'];
  $li='';foreach($steps as $i=>$t)$li.='<li><b>'.($i+1).'</b><span>'.e($t).'</span></li>';
  return '<div class="lgn-foot"><a class="login-credits" href="?page=credits">'.icon('star').'Credits</a></div>'
@@ -56,8 +58,8 @@ function login_foot(string $role):string{
 
 /** The popup after a wrong ID or password, or after too many tries. */
 function login_fail_popup(?array $f,string $role):string{
- if(!$f)return '';$who=['pupil'=>'Pupil ID','teacher'=>'Teacher ID','admin'=>'administrator ID'][$role];$helper=$role==='pupil'?'your teacher':'your administrator';
- $until=(int)($f['until']??0);$left=max(0,LOGIN_MAX_TRIES-(int)$f['used']);$back=$role==='admin'?'?page=login&role=admin&confirm=1':'?page=login&role='.$role.'&form=1'.($f['id']!==''?'&id='.rawurlencode($f['id']):'');
+ if(!$f)return '';$who=['pupil'=>'Pupil ID','teacher'=>'Teacher ID','admin'=>'administrator ID','auto'=>'ID'][$role]??'ID';$helper=$role==='pupil'?'your teacher':($role==='auto'?'your teacher or administrator':'your administrator');
+ $until=(int)($f['until']??0);$left=max(0,LOGIN_MAX_TRIES-(int)$f['used']);$back='?page=login&form=1'.($f['id']!==''?'&id='.rawurlencode($f['id']):'');
  $close='<a class="btn primary full lgn-again" href="'.e($back).'" data-lgn-close>'.icon('replay').'Try again</a>';
  if($until>time()){
   $secs=$until-time();$c=2*M_PI*64;

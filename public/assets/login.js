@@ -38,7 +38,7 @@
  const camOK=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)&&window.isSecureContext!==false;
  if(!wrap||!btn||!phone||!camOK)return;
  wrap.hidden=false;
- const PASS=btn.dataset.pass||'Reading Pass',ROLE=(($('input[name="role"]',card)||{}).value)||'pupil',WHO=ROLE==='teacher'?'the administrator':'your teacher';
+ const PASS=btn.dataset.pass||'Reading Pass',ROLE=(($('input[name="role"]',card)||{}).value)||'pupil',WHO=ROLE==='teacher'?'the administrator':ROLE==='auto'?'your teacher or administrator':'your teacher',ANY=ROLE==='auto';
  const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
  const svg=(d,w)=>'<svg viewBox="0 0 24 24" width="'+(w||24)+'" height="'+(w||24)+'" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>';
  let ov=null,stream=null,timer=0,busy=false,done=false,detector=null,canvas=null,ctx=null;
@@ -54,7 +54,7 @@
    +'<div class="lgn-cam-top"><button type="button" class="lgn-cam-x" aria-label="Close">'+svg('<path d="M6 6l12 12M18 6 6 18"/>',22)+'</button><b>Scan my '+PASS+'</b><span></span></div>'
    +'<div class="lgn-cam-frame"><i></i><i></i><i></i><i></i><span class="lgn-cam-line"></span></div>'
    +'<div class="lgn-cam-msg" role="status">Starting the camera…</div><div class="lgn-cam-sub"></div><div class="lgn-cam-found" hidden></div>'
-   +'<button type="button" class="lgn-cam-alt">Type my '+(ROLE==='teacher'?'Teacher':'Pupil')+' ID instead</button>';
+   +'<button type="button" class="lgn-cam-alt">Type my '+(ANY?'':ROLE==='teacher'?'Teacher ':'Pupil ')+'ID instead</button>';
   document.body.appendChild(ov);document.documentElement.classList.add('lgn-cam-on');
   $('.lgn-cam-x',ov).addEventListener('click',close);$('.lgn-cam-alt',ov).addEventListener('click',typeInstead);
   ov.addEventListener('keydown',e=>{if(e.key==='Escape')close();});$('.lgn-cam-x',ov).focus();
@@ -64,7 +64,7 @@
   const v=$('.lgn-cam-video',ov);v.srcObject=stream;try{await v.play();}catch(e){}
   say('Hold your '+PASS+' inside the box','The QR code is on the right side of the pass.');
   try{if('BarcodeDetector' in window){const f=await BarcodeDetector.getSupportedFormats();if(f.includes('qr_code'))detector=new BarcodeDetector({formats:['qr_code']});}}catch(e){detector=null;}
-  if(!detector){try{await loadJsQR();}catch(e){say('Scanning does not work on this phone.','Type your '+(ROLE==='teacher'?'Teacher':'Pupil')+' ID instead.');return;}canvas=document.createElement('canvas');ctx=canvas.getContext('2d',{willReadFrequently:true});}
+  if(!detector){try{await loadJsQR();}catch(e){say('Scanning does not work on this phone.','Type your '+(ANY?'':ROLE==='teacher'?'Teacher ':'Pupil ')+'ID instead.');return;}canvas=document.createElement('canvas');ctx=canvas.getContext('2d',{willReadFrequently:true});}
   loop(v);
  }
  async function loop(v){
@@ -82,13 +82,13 @@
   if(!ours){say('This is not a BULIG '+PASS+'.','Try the QR code on your BULIG '+PASS+'.');setTimeout(()=>{busy=false;},1600);return;}
   const key=u.searchParams.get('key'),id=u.searchParams.get('id'),qRole=u.searchParams.get('role')||ROLE;
   if(navigator.vibrate)try{navigator.vibrate(60);}catch(e){}
-  if(!key&&id&&/^[A-Za-z0-9-]{1,30}$/.test(id)){done=true;stop();if(qRole!==ROLE){location.href='?page=login&role='+encodeURIComponent(qRole)+'&form=1&id='+encodeURIComponent(id);return;}if(idIn)idIn.value=id;close();if(pw)setTimeout(()=>pw.focus(),120);return;}
+  if(!key&&id&&/^[A-Za-z0-9-]{1,30}$/.test(id)){done=true;stop();if(qRole!==ROLE&&!ANY){location.href='?page=login&role='+encodeURIComponent(qRole)+'&form=1&id='+encodeURIComponent(id);return;}if(idIn)idIn.value=id;close();if(pw)setTimeout(()=>pw.focus(),120);return;}
   if(!key){say('This pass cannot sign you in.','Ask '+WHO+' for a new '+PASS+'.');setTimeout(()=>{busy=false;},1800);return;}
   let who=null;try{const r=await fetch('?page=login&key='+encodeURIComponent(key)+'&peek=1',{credentials:'same-origin',headers:{Accept:'application/json'}});who=await r.json();}catch(e){who=null;}
   if(!ov)return;
   if(!who||!who.ok){say('This '+PASS+' no longer works.','Ask '+WHO+' for a new one, or type your ID.');setTimeout(()=>{busy=false;},2200);return;}
   /* A teacher who already made their own password: the pass only fills in the Teacher ID. */
-  if(who.fill){done=true;stop();if(who.role!==ROLE){location.href='?page=login&role='+encodeURIComponent(who.role)+'&form=1&id='+encodeURIComponent(who.fill);return;}if(idIn)idIn.value=who.fill;close();if(pw)setTimeout(()=>pw.focus(),120);return;}
+  if(who.fill){done=true;stop();if(who.role!==ROLE&&!ANY){location.href='?page=login&role='+encodeURIComponent(who.role)+'&form=1&id='+encodeURIComponent(who.fill);return;}if(idIn)idIn.value=who.fill;close();if(pw)setTimeout(()=>pw.focus(),120);return;}
   done=true;clearTimeout(timer);const vv=$('.lgn-cam-video',ov);if(vv)try{vv.pause();}catch(e){}ov.classList.add('lgn-cam-ok');
   const fd=$('.lgn-cam-found',ov);fd.innerHTML='<img alt="" src=""><span><b></b><small>Signing you in…</small></span><i>'+svg('<path d="M5 12l5 5 9-10"/>',18)+'</i>';$('img',fd).src=who.img;$('b',fd).textContent='Found you, '+who.first+'!';fd.hidden=false;say('','');
   if(window.buligSfx)try{window.buligSfx.play('correct');}catch(e){}

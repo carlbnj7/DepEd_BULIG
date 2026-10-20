@@ -2,7 +2,9 @@
 /* Level 1 (oral language). Pupils answer by speaking, never by typing:
    - one clean screen per activity: the question, its picture, one big button;
    - voice recordings are kept in storage/recordings (outside the public folder) and only the pupil and their teacher can play them;
-   - teachers score each answer with the module's own rubric (lessons 7–11 have no rubric, so their lesson-plan checklist is used);
+   - BULIG checks each answer itself (v172): while the pupil speaks it listens (speech recognition) and scores how much
+     was said, or how many of the words to read were said right (l1_auto_score). Teachers may still look, listen and use
+     the module's own rubric, but they never have to;
    - the Level 1 Class Demo shows the same screens as big projector slides. */
 
 const L1_SCALE=[4=>'Excellent',3=>'Good',2=>'Satisfactory',1=>'Needs Improvement'];
@@ -217,7 +219,7 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  head('Level 1 · '.$lesson['subtitle'],'activity-page l1-page');
  echo '<div class="l1-app l1-k-'.$kind.'">'.lesson_head($lesson,$all,$a,'?page=lessons&level=1#level1-path');
  echo '<main class="l1-main activity-main">';notice();
- echo '<form method="post" id="activity-form" class="activity-form l1-form" data-mode="'.e($mode).'" data-kind="'.$kind.'" data-draft="'.(!$readonly&&$kind==='draw'?'on':'off').'">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value="'.e($kind==='draw'?(string)($a['drawing']??''):'').'"><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><span id="draft-status" hidden></span>';
+ echo '<form method="post" id="activity-form" class="activity-form l1-form"'.($readonly?'':' data-open="1"').' data-mode="'.e($mode).'" data-kind="'.$kind.'" data-draft="'.(!$readonly&&$kind==='draw'?'on':'off').'">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value="'.e($kind==='draw'?(string)($a['drawing']??''):'').'"><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><span id="draft-status" hidden></span>';
  if($a['feedback'])echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
  if($tag!=='')echo '<span class="l1-tag">'.e($tag).'</span>';
  if($kind==='do'){

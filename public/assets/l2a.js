@@ -12,7 +12,7 @@
  const still=matchMedia('(prefers-reduced-motion: reduce)').matches,sfx=n=>{try{window.buligSfx&&window.buligSfx.play(n);}catch(e){}};
  const OK='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
  const STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z"/></svg>';
- function wireBuild(b,keep){b.dataset.wired='1';const word=b.dataset.word||'',tiles=$$('.l3-bt',b),lines=$$('.l3-bl',b),msg=$('.l3-bmsg',b);
+ function wireBuild(b,keep,hook){b.dataset.wired='1';const word=b.dataset.word||'',tiles=$$('.l3-bt',b),lines=$$('.l3-bl',b),msg=$('.l3-bmsg',b);
   const put=lines.map(()=>null),tries=[];let right=false,busy=false;
   const nextLine=()=>put.indexOf(null);
   const paint=()=>{const n=nextLine();lines.forEach((l,i)=>{l.textContent=put[i]===null?'':tiles[put[i]].textContent;l.classList.toggle('f',put[i]!==null);l.classList.toggle('nx',!right&&i===n);});
@@ -23,8 +23,9 @@
    for(let k=0;k<12;k++){const s=document.createElement('span');s.className='l3-star';s.innerHTML=STAR;const a=k/12*6.283;
     s.style.left=(l.left-r.left+l.width/2)+'px';s.style.top=(l.top-r.top+l.height/2)+'px';s.style.setProperty('--dx',Math.round(Math.cos(a)*120)+'px');s.style.setProperty('--dy',Math.round(Math.sin(a)*70)+'px');b.append(s);setTimeout(()=>s.remove(),950);}};
   const check=()=>{const w=put.map(i=>tiles[i].textContent).join('');
-   if(w===word){right=true;b.classList.add('ok');say('ok','Great job! '+w);stars();sfx('correct');save(w);paint();return;}
-   tries.push(w);save('');b.classList.add('no');say('no','Not yet. Look at the picture and try again.');sfx('tryagain');busy=true;
+   if(w===word){right=true;b.classList.add('ok');say('ok','Great job! '+w);stars();sfx('correct');save(w);paint();if(hook)hook(true,w);return;}
+   tries.push(w);save('');b.classList.add('no');sfx('tryagain');busy=true;
+   if(hook&&hook(false,w)){right=true;b.classList.add('out');say('no','The word is '+word+'.');}else say('no','Not yet. Look at the picture and try again.');
    setTimeout(()=>{b.classList.remove('no');put.fill(null);busy=false;paint();},1300);};
   const land=(n,i)=>{put[n]=i;paint();if(nextLine()<0)setTimeout(check,250);};
   b.addEventListener('click',e=>{if(right||busy)return;const t=e.target.closest('.l3-bt'),l=e.target.closest('.l3-bl');
@@ -50,16 +51,54 @@
  function cardAnswer(c){const kinds=(c.dataset.kinds||'').split(' ').filter(Boolean);if(!kinds.length||kinds.every(k=>k==='look'))return '(seen)';
   return kinds.map((k,p)=>k==='look'?'':(val.get(key(c,p))||'')).filter(Boolean).join(' · ');}
  function needs(c){return (c.dataset.kinds||'').split(' ').some(k=>k&&k!=='look');}
- function collect(){if(ro)return;out.value='BULIG card answers\n'+cards.map(c=>'Card '+c.dataset.n+(c.dataset.t?' (no. '+c.dataset.t+')':'')+': '+cardAnswer(c)).join('\n');paintDots();}
+ function collect(){if(ro)return;out.value='BULIG card answers\n'+cards.map(c=>'Card '+c.dataset.n+(c.dataset.t?' (no. '+c.dataset.t+')':'')+': '+cardAnswer(c)).join('\n')+triesLine();paintDots();}
  function set(c,p,v){val.set(key(c,p),v);collect();}
+
+ /* ---------- BULIG checks each card right away (v172) ----------
+    Lesson activities with an answer key (data-ck): a Check button on each marked card (letter blanks and Build a Word
+    check themselves). Right: the card turns green and stays, and Bruno cheers. Wrong: Bruno says "Not yet, try again";
+    the pupil may try as many times as they like, and each wrong try takes away a third of the card's points (down to 0).
+    Offline, the cards are checked at Done. */
+ const CK=!ro&&deck.dataset.ck==='1',tries={},cst={},aid=form?((form.querySelector('[name=activity_id]')||{}).value||''):'';
+ function triesLine(){const t=Object.keys(tries).filter(n=>tries[n]>0).sort((a,b)=>a-b).map(n=>n+'='+tries[n]);return t.length?'\nTries: '+t.join(', '):'';}
+ const keyed=c=>CK&&c.dataset.keyed==='1';
+ const autoOnly=c=>{const k=(c.dataset.kinds||'').split(' ').filter(x=>x&&x!=='look');return k.length>0&&(k.every(x=>x==='build')||(k.every(x=>x==='tiles')&&!!$('[data-gap][data-n]',c)));};
+ function ckRow(c){let r=$('.ck-row',c);if(r)return r;r=document.createElement('div');r.className='ck-row';
+  const b=document.createElement('button');b.type='button';b.className='l1-btn ck-go';b.textContent='Check';b.hidden=autoOnly(c);b.addEventListener('click',()=>checkCard(c));
+  const m=document.createElement('p');m.className='ck-msg';m.setAttribute('role','status');m.setAttribute('aria-live','polite');r.append(b,m);c.append(r);return r;}
+ /* Bruno the Helper says it: cheers when right, "try again" when not */
+ const BRUNO={ok:'cheer',no:'tryagain',out:'thumbs'};
+ function ckSay(c,k,t){const m=$('.ck-msg',ckRow(c));m.className='ck-msg'+(k?' '+k:'');m.textContent='';
+  if(k&&BRUNO[k]){const i=document.createElement('img');i.className='ck-pal';i.alt='';i.src='assets/images/characters/bruno-'+BRUNO[k]+'.webp?v=2';
+   const tx=document.createElement('span');tx.className='ck-bub';const who=document.createElement('small');who.textContent='Bruno the Helper';const w=document.createElement('b');w.textContent=t;tx.append(who,w);m.append(i,tx);}
+  else m.textContent=t;}
+ function lock(c,how){cst[c.dataset.n]=how;c.classList.add(how==='ok'?'ck-ok':'ck-out');$$('.l2-ans',c).forEach(x=>x.classList.add('locked'));const b=$('.ck-go',c);if(b)b.hidden=true;paintDots();}
+ function ask(n,g){const fd=new FormData();fd.set('action','card_check');fd.set('csrf',(form.querySelector('[name=csrf]')||{}).value||'');fd.set('activity_id',aid);fd.set('card',n);fd.set('answer',g);
+  return fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'}}).then(r=>r.ok?r.json():null).catch(()=>null);}
+ async function checkCard(c){const n=c.dataset.n;if(!keyed(c)||cst[n])return true;const g=cardAnswer(c);if(!g){ckSay(c,'no','Answer first, then tap Check.');return false;}
+  const b=$('.ck-go',c);if(b)b.disabled=true;const j=await ask(n,g);if(b)b.disabled=false;
+  if(!j){cst[n]='later';ckSay(c,'','Saved. BULIG will check it when you finish.');paintDots();return true;}
+  if(!j.keyed||j.ok){lock(c,'ok');ckSay(c,'ok',['Great job! You got it!','Yes! That is right!','Correct! Well done!','You did it! Great work!'][Math.floor(Math.random()*4)]);sfx('correct');return true;}
+  tries[n]=j.tries;collect();sfx('tryagain');
+  ckSay(c,'no',['Not yet. Try again! You can do it!','Oops! Look again and try once more.','Almost! Try again, I know you can.'][Math.min(2,(j.tries||1)-1)]);c.classList.remove('ck-shake');void c.offsetWidth;c.classList.add('ck-shake');
+  if(c._ckClear)c._ckClear();return false;}
+ /* Build a Word: right or one more try (the server counts it too) */
+ function buildTry(c,ok,w){const n=c.dataset.n;if(ok){lock(c,'ok');return false;}tries[n]=Math.min(3,(tries[n]||0)+1);collect();ask(n,w);
+  ckSay(c,'no','Not yet. Try again! You can do it!');return false;}
+ if(CK)cards.forEach(c=>{if(keyed(c))ckRow(c);});
  /* letter tiles */
  $$('[data-kind="tiles"]',deck).forEach(t=>{const c=t.closest('.l2-card'),p=t.dataset.part,box=$('[data-gap]',c)||$('[data-out]',t),tok=[];
   /* "n _ t": one line per missing letter (data-n); the letters go on the lines in order (a blend tile like "fr" fills two),
      extra letters get a line of their own */
-  const show=()=>{if(box.dataset.n){const ch=[...tok.join('')],want=Math.max(+box.dataset.n,ch.length);while(box.children.length<want)box.append(document.createElement('i'));while(box.children.length>want)box.lastElementChild.remove();[...box.children].forEach((x,i)=>{x.textContent=ch[i]||'';});}else box.textContent=tok.join('');
+  const show=q=>{if(box.dataset.n){const ch=[...tok.join('')],want=Math.max(+box.dataset.n,ch.length);while(box.children.length<want)box.append(document.createElement('i'));while(box.children.length>want)box.lastElementChild.remove();[...box.children].forEach((x,i)=>{x.textContent=ch[i]||'';});}else box.textContent=tok.join('');
    box.classList.toggle('f',tok.length>0);set(c,p,tok.join('').trim());};
-  t.addEventListener('click',e=>{const k=e.target.closest('[data-key]'),er=e.target.closest('[data-erase]');if(k){if(tok.length<40)tok.push(k.dataset.key);show();}else if(er){tok.pop();show();}});});
- $$('[data-kind="build"]',deck).forEach(b=>{const c=b.closest('.l2-card'),p=b.dataset.part;wireBuild(b,v=>set(c,p,v));});
+  const cap=+(box.dataset.n||0),len=()=>[...tok.join('')].length;/* v172: a blank takes only its missing letters */
+  c._ckClear=()=>{tok.length=0;show(true);};
+  t.addEventListener('click',e=>{if(cst[c.dataset.n])return;const k=e.target.closest('[data-key]'),er=e.target.closest('[data-erase]');
+   if(k){if(cap&&len()+[...k.dataset.key].length>cap){box.classList.remove('full');void box.offsetWidth;box.classList.add('full');return;}if(tok.length<40)tok.push(k.dataset.key);show();
+    if(cap&&len()===cap&&keyed(c)&&autoOnly(c))setTimeout(()=>checkCard(c),300);}
+   else if(er){tok.pop();show();}});});
+ $$('[data-kind="build"]',deck).forEach(b=>{const c=b.closest('.l2-card'),p=b.dataset.part;wireBuild(b,v=>set(c,p,v),keyed(c)?(ok,w)=>buildTry(c,ok,w):null);});
  /* chips and numbers */
  $$('[data-kind="chip"],[data-kind="chips"],[data-kind="num"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,multi=g.dataset.kind==='chips';
   g.addEventListener('click',e=>{const b=e.target.closest('button[data-val]');if(!b)return;const on=b.getAttribute('aria-pressed')!=='true';
@@ -106,7 +145,16 @@
   return 'The microphone could not start. Tap it to try again.';}
  const canRec=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
  $$('[data-l2-rec]',deck).forEach(r=>{const c=r.closest('.l2-card'),p=r.dataset.part,go=$('[data-rec-go]',r),label=$('[data-rec-label]',r),sub=$('[data-rec-sub]',r),play=$('[data-rec-play]',r),lis=$('[data-rec-listen]',r),bar=$('.l1-bar i',r),len=$('[data-rec-len]',r),again=$('[data-rec-again]',r),heard=$('[data-rec-heard]',r),inp=$('[data-audio]',r);
-  let mr=null,st=null,ch=[],t0=0,tick=null,secs=0,url='',pl=null;const rd=!!r.dataset.max;const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+  let mr=null,st=null,ch=[],t0=0,tick=null,secs=0,url='',pl=null;const rd=!!r.dataset.max;
+  /* v172: BULIG listens while the pupil speaks (the browser's speech recognition) and keeps what it heard, so the
+     words can be checked (pronunciation). Without it (some phones, no internet) only the recording is kept. */
+  const SRC=window.SpeechRecognition||window.webkitSpeechRecognition;let sr=null,srOn=false,said=[];
+  function srStart(){if(!SRC)return;said=[];srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=false;
+    sr.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)said.push(e.results[i][0].transcript);};
+    sr.onerror=e=>{if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
+    sr.onend=()=>{if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
+   make();try{sr.start();}catch(e){srOn=false;}}
+  function srStop(){srOn=false;try{sr&&sr.stop();}catch(e){}}const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   const ui=s=>{r.dataset.state=s;go.classList.toggle('on',s==='rec');go.hidden=s==='done';play.hidden=s!=='done';
    label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(rd?'Tap and read the story aloud':'Tap and say it');sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
   if(!canRec){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
@@ -114,11 +162,13 @@
    try{st=await getMic();}catch(e){r.dataset.state='idle';label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(e);if(heard)heard.hidden=false;return;}
    const type=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
    try{mr=new MediaRecorder(st,type?{mimeType:type,audioBitsPerSecond:32000}:undefined);}catch(e){mr=new MediaRecorder(st);}
-   ch=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data);};mr.onstop=fin;mr.start(500);t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();},250);}
-  function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;if(mr&&mr.state!=='inactive')mr.stop();if(st)st.getTracks().forEach(t=>t.stop());}
+   ch=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data);};mr.onstop=fin;mr.start(500);t0=Date.now();ui('rec');srStart();tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();},250);}
+  function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;srStop();if(mr&&mr.state!=='inactive')mr.stop();if(st)st.getTracks().forEach(t=>t.stop());}
   function fin(){const blob=new Blob(ch,{type:((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/')});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
-   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');set(c,p,rd?'(voice recording · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(voice recording)');};fr.readAsDataURL(blob);}
+   url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');const base=rd?'(voice recording · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(voice recording)';set(c,p,base);
+    /* the last words BULIG heard arrive a moment after the recording stops */
+    setTimeout(()=>{const w=said.join(' ').replace(/\s+/g,' ').trim();if(w&&r.dataset.state==='done'){set(c,p,base+' said: '+w);sub.textContent='BULIG heard: '+w;}},800);};fr.readAsDataURL(blob);}
   go.addEventListener('click',()=>{if(r.dataset.state==='rec'){if(Date.now()-t0<700)return;stop();}else if(r.dataset.state!=='starting')start();});
   again.addEventListener('click',()=>{if(pl){pl.pause();pl=null;}set(c,p,'');start();});
   lis.addEventListener('click',()=>{if(!url)return;if(pl&&!pl.paused){pl.pause();return;}if(!pl){pl=new Audio(url);pl.addEventListener('timeupdate',()=>bar.style.setProperty('--p',String(Math.min(1,pl.currentTime/(secs||1)))));pl.addEventListener('ended',()=>lis.classList.remove('on'));}pl.currentTime=0;pl.play().then(()=>lis.classList.add('on')).catch(()=>{});});
@@ -126,15 +176,18 @@
  /* ---------- moving between cards ---------- */
  const dots=document.createElement('div');dots.className='l2-cdots';
  if(cards.length>1){cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.textContent=String(i+1);b.setAttribute('aria-label','Card '+(i+1));b.addEventListener('click',()=>show(i));dots.append(b);});deck.before(dots);}
- function paintDots(){$$('button',dots).forEach((b,i)=>{b.classList.toggle('cur',i===at);b.classList.toggle('ok',!ro&&needs(cards[i])&&cardAnswer(cards[i])!=='');});}
+ function paintDots(){$$('button',dots).forEach((b,i)=>{b.classList.toggle('cur',i===at);b.classList.toggle('ok',!ro&&needs(cards[i])&&cardAnswer(cards[i])!=='');b.classList.toggle('ck-out',cst[cards[i].dataset.n]==='out');});}
  function show(i){at=Math.max(0,Math.min(cards.length-1,i));cards.forEach((c,k)=>c.hidden=k!==at);window.speechSynthesis&&speechSynthesis.cancel();
   const last=at===cards.length-1,saved=fb&&fb.classList.contains('success');prev.hidden=at===0||saved;
   if(next)next.hidden=last||saved;if(send&&!saved)send.hidden=!last;if(done&&ro)done.hidden=!last;paintDots();
   const top=$('.l2-dir');if(top&&i!==undefined&&top.getBoundingClientRect().top<0)top.scrollIntoView({block:'start',behavior:'smooth'});}
- prev.addEventListener('click',()=>show(at-1));if(next)next.addEventListener('click',()=>show(at+1));
+ prev.addEventListener('click',()=>show(at-1));
+ if(next)next.addEventListener('click',async()=>{const c=cards[at];if(keyed(c)&&!autoOnly(c)&&!cst[c.dataset.n]&&cardAnswer(c)!==''&&!await checkCard(c))return;show(at+1);});
  /* Submit: say which cards are still empty first. */
  let sure=false;
- form.addEventListener('submit',e=>{if(ro||sure)return;collect();const empty=cards.filter(c=>needs(c)&&cardAnswer(c)==='');if(!empty.length)return;
+ form.addEventListener('submit',e=>{if(ro||sure)return;collect();
+  const unchecked=cards.find(c=>keyed(c)&&!autoOnly(c)&&!cst[c.dataset.n]&&cardAnswer(c)!=='');
+  if(unchecked){e.preventDefault();e.stopImmediatePropagation();show(cards.indexOf(unchecked));checkCard(unchecked).then(ok=>{if(ok)form.requestSubmit();});return;}const empty=cards.filter(c=>needs(c)&&cardAnswer(c)==='');if(!empty.length)return;
   e.preventDefault();e.stopImmediatePropagation();const n=empty[0].dataset.n;fb.className='answer-feedback l1-fb tryagain';fb.replaceChildren();
   const t=document.createElement('strong');t.textContent=empty.length===1?'Card '+n+' has no answer yet.':empty.length+' cards have no answer yet.';
   const row=document.createElement('div');row.className='l2-row';const g=document.createElement('button'),a=document.createElement('button');g.type=a.type='button';g.className='l1-btn2';a.className='l1-btn2';g.textContent='Go to card '+n;a.textContent='Submit anyway';
