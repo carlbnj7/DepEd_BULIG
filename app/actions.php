@@ -14,9 +14,14 @@ function action():void{
  if($action==='login'){
   $id=trim((string)($_POST['public_id']??''));$role=(string)($_POST['role']??'pupil');$key=hash('sha256',strtolower($id));
   if(login_tries_used($key)>=LOGIN_MAX_TRIES){audit('login_locked',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
-  $u=one('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
-  if(!$u&&($moved=account_id_moved($id))&&$moved['role']===$role&&(int)$moved['active'])$u=$moved;   // an ID from before the switch to the new IDs
-  if(!$u||!password_verify((string)($_POST['password']??''),$u['password_hash'])){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
+  /* One sign-in form for everyone (v172): BULIG finds the account by its ID and knows if it is a pupil, a teacher or
+     the administrator (an old link may still send a role; then only that role is tried). */
+  $pw=(string)($_POST['password']??'');$any=!in_array($role,['pupil','teacher','admin'],true);
+  $cands=$any?rows('SELECT * FROM users WHERE public_id=? AND active=1',[$id]):rows('SELECT * FROM users WHERE public_id=? AND role=? AND active=1',[$id,$role]);
+  if(!$cands&&($moved=account_id_moved($id))&&($any||$moved['role']===$role)&&(int)$moved['active'])$cands=[$moved];   // an ID from before the switch to the new IDs
+  $u=null;foreach($cands as $c)if(password_verify($pw,$c['password_hash'])){$u=$c;break;}
+  if($u)$role=$u['role'];elseif($any)$role='auto';
+  if(!$u){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
   q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if(strcasecmp($id,(string)$u['public_id'])!==0)flash('Your '.$role.' ID is now '.$u['public_id'].'. Your old ID still works, but please use the new one.');if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil'){$_SESSION['pupil_welcome']=1;$_SESSION['dl_offer']=1;}if($role==='teacher')$_SESSION['teacher_welcome']=1;if($role!=='admin'){$_SESSION['offer_save']=1;$_SESSION['hello']=1;}audit('login',$role);go('?page=dashboard');
  }
  if($action==='key_login'){
@@ -154,13 +159,22 @@ function action():void{
  if($action==='finish_lesson'){
   $u=require_role('pupil');$lid=(int)($_POST['lesson_id']??0);db()->beginTransaction();try{q('SELECT id FROM users WHERE id=? FOR UPDATE',[$u['id']]);finish_lesson((int)$u['id'],$lid);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=lesson&id='.$lid.'&finished=1');
  }
+ /* BULIG checks one card right away (v172): right, or one more wrong try (a third of the card's points each, no limit) */
+ if($action==='card_check'){
+  $u=require_role('pupil');$aid=(int)($_POST['activity_id']??0);$n=(int)($_POST['card']??0);$g=mb_substr(trim((string)($_POST['answer']??'')),0,2000);
+  $a=allowed_activity((int)$u['id'],$aid);header('Content-Type: application/json');
+  if(!key_checks_cards($a)||$n<1){echo json_encode(['keyed'=>false,'ok'=>true]);exit;}
+  $r=key_check_card($a,$n,$g);$t=(int)($_SESSION['ck'][$aid][$n]??0);
+  if($r['keyed']&&!$r['ok']&&$t<999)$_SESSION['ck'][$aid][$n]=++$t;
+  echo json_encode(['keyed'=>$r['keyed'],'ok'=>$r['ok'],'tries'=>$t],JSON_UNESCAPED_UNICODE);exit;
+ }
  if(in_array($action,['draft','submit'],true)){
   $u=require_role('pupil');$pid=(int)$u['id'];$aid=(int)($_POST['activity_id']??0);$answer=trim((string)($_POST['response']??''));$drawing=(string)($_POST['drawing']??'');$transcript=trim((string)($_POST['transcript']??''));
   if(strlen($answer)>12000||strlen($transcript)>12000||strlen($drawing)>1500000)fail('This response is too large.');
   if($drawing!==''&&!preg_match('~^data:image/(png|jpeg);base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
   $audio=$action==='submit'?(string)($_POST['audio']??''):'';if(isset($_POST['audio_card'])&&!is_array($_POST['audio_card']))fail('Invalid recording.');$heard=($_POST['heard']??'')==='1';if(strlen($audio)>12500000)fail('This recording is too long. Please record again.');
   db()->beginTransaction();try{
-   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a))$drawing='';$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
+   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a))$drawing='';if($action==='submit'&&function_exists('key_merge_tries'))$answer=key_merge_tries($answer,$aid);$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
    if(completion_ok($old)){
     /* "Try it again" (v151): practice on a finished card activity; BULIG keeps the best score, no extra XP */
     if($action==='submit'&&!empty($_POST['again'])&&function_exists('ac_keyed')&&ac_keyed($a)&&$answer!==''){$pr=ac_practice($pid,$a,$old,$answer);db()->commit();submission_reply($a,true,$pr['message'],0,$pr['card']);}
@@ -190,6 +204,7 @@ function action():void{
    if($apath)q('UPDATE activity_completion SET audio_path=? WHERE pupil_id=? AND activity_id=?',[$apath,$pid,$aid]);
    if(offline_answer_time())q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$pid,'offline_answer','activity '.$aid.' at '.$when]);
    $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);key_save_score($cid);
+   if($oral&&!$l4read&&function_exists('l1_auto_score'))q('UPDATE activity_completion SET score=?,max_score=1 WHERE id=?',[l1_auto_score($a,$transcript,$apath!==null||$audio!==''),$cid]);/* Level 1: BULIG checks the talk and pronunciation (v172) */
    /* Level 4: BULIG scores the reading from what the speech recognizer heard (the module's miscue table). */
    $l4s=$l4read&&$transcript!==''?l4_auto($a,$transcript,(int)($_POST['secs']??0)):null;if($l4s)q('UPDATE activity_completion SET rubric_scores=?,score=?,max_score=100 WHERE id=?',[json_encode(['l4'=>$l4s],JSON_UNESCAPED_UNICODE),$l4s['score'],$cid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
    q('INSERT INTO pupil_progress(pupil_id,lesson_id,last_activity_id) VALUES(?,?,?) ON DUPLICATE KEY UPDATE last_activity_id=VALUES(last_activity_id)',[$pid,$a['lesson_id'],$aid]);

@@ -5691,3 +5691,71 @@ body:not(.l1-demo-page) .l2-card .l2-pics.n1 .l2-pic img{height:auto!important;m
 html.dark .leave-why .leave-pick{background:#3a3214;border-color:#8a7426;color:#ffe9a6!important}
 html.dark .leave-why .leave-pick:hover{background:#4a3f17}
 @media(max-width:420px){.leave-why .leave-pick{justify-content:center;text-align:center}}
+/* v172: teachers and admins: no glow, moving shine or ring when the navigation is touched (the glass stays, still) */
+body:is(.role-teacher,.role-admin) :is(.sidebar,.topbar,.lg-bubble).lg-g{--lg-shine:radial-gradient(150% 115% at 26% 0%,rgba(255,255,255,.46),rgba(255,255,255,0) 52%);animation:none!important}
+html.dark body:is(.role-teacher,.role-admin) :is(.sidebar,.topbar,.lg-bubble).lg-g{--lg-shine:radial-gradient(150% 115% at 26% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 52%)}
+/* v172: Top 10 pupils on Teacher Home */
+.tf-top .section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.tf-top h2{display:flex;align-items:center;gap:8px}.tf-top h2 .icon{color:#e2a400;width:22px;height:22px}
+.tf-top .section-heading small{color:#6b7c71;font-weight:700}
+.lb-list{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}
+.lb-row{display:grid;grid-template-columns:30px 40px 1fr auto;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding:8px 12px;border-radius:14px;background:#f7faf5;border:1px solid #e3ece0}
+.lb-row .avatar{grid-row:1/3;grid-column:2;width:40px;height:40px;border-radius:50%;object-fit:cover}
+.lb-n{grid-row:1/3;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e6efe3;color:#24543a;font-weight:900;font-size:.85rem}
+.lb-name{grid-column:3;font-weight:800;color:#0e3b28;text-decoration:none;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lb-name:hover{text-decoration:underline}
+.lb-meta{grid-column:3;color:#6b7c71;font-size:.78rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-pct{grid-column:4;grid-row:1/3;font-size:1.15rem;font-weight:900;color:#1c7a50}
+.lb-p1{background:linear-gradient(135deg,#fff6d1,#ffe9a3);border-color:#f2cf5b}.lb-p1 .lb-n{background:#f6c02c;color:#4a3600}
+.lb-p2{background:#f2f4f6;border-color:#d7dde3}.lb-p2 .lb-n{background:#c9d1d9;color:#2f3a44}
+.lb-p3{background:#fbefe4;border-color:#ecc9a6}.lb-p3 .lb-n{background:#dfa36d;color:#4a2a0c}
+@media(max-width:900px){.lb-list{grid-template-columns:1fr}}
+html.dark .lb-row{background:#1b2a21;border-color:#2c4033}html.dark .lb-name{color:#e8f0ea!important}html.dark .lb-meta,html.dark .tf-top .section-heading small{color:#a9bcb0!important}
+html.dark .lb-n{background:#2c4033;color:#d8eadf}html.dark .lb-pct{color:#7fd1b4!important}
+html.dark .lb-p1{background:#3a3214;border-color:#8a7426}html.dark .lb-p2{background:#262d33;border-color:#4a5560}html.dark .lb-p3{background:#3a2a1c;border-color:#7a5636}
+html.dark .lb-p1 .lb-n{background:#f6c02c;color:#2a1f00}
+/* v172: BULIG checks each card right away */
+.ck-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:14px}
+.ck-row .ck-go{min-height:46px;padding:0 26px;border-radius:999px;border:0;background:linear-gradient(180deg,#22895a,#16683f);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #0f4e2f}
+.ck-row .ck-go:disabled{opacity:.6}.ck-row .ck-go:active{transform:translateY(2px);box-shadow:0 2px 0 #0f4e2f}
+.ck-msg{margin:0;font-weight:800;font-size:1rem;color:#4b6352;min-height:1.2em}
+.ck-msg.ok{color:#1c7a50}.ck-msg.no{color:#b5452e}.ck-msg.out{color:#7a4d00;background:#fff3cc;border:1px solid #f2cf5b;border-radius:12px;padding:6px 12px}
+.l2-card.ck-ok{box-shadow:0 0 0 3px #3fb47a inset,0 10px 30px rgba(28,122,80,.12)}
+.l2-card.ck-out{box-shadow:0 0 0 3px #f2cf5b inset}
+.l2-card.ck-ok .l2-ans.locked,.l2-card.ck-out .l2-ans.locked{opacity:1}
+@keyframes ck-shake{0%,100%{transform:none}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.l2-card.ck-shake .l2-ans,.l2-gap.full{animation:ck-shake .45s}
+@media(prefers-reduced-motion:reduce){.l2-card.ck-shake .l2-ans,.l2-gap.full{animation:none}}
+.l2-cdots button.ck-out{background:#ffe9a3;border-color:#e2b928}
+html.dark .ck-msg{color:#a9bcb0}html.dark .ck-msg.ok{color:#7fd1b4!important}html.dark .ck-msg.no{color:#ff9f8a!important}
+html.dark .ck-msg.out{background:#3a3214;border-color:#8a7426;color:#ffe9a6!important}
+@media(max-width:520px){.lb-meta{white-space:normal}}
+/* v172: Bruno the Helper says "try again" (or cheers) under the card */
+.ck-msg:has(.ck-pal){display:flex;align-items:flex-end;gap:10px;flex:1 1 260px}
+.ck-pal{width:66px;height:auto;flex:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.15));animation:ck-pop .35s ease-out}
+.ck-bub{position:relative;display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-radius:16px;background:#fff;border:2px solid #d9e8d4;box-shadow:0 4px 12px rgba(0,0,0,.06);margin-bottom:12px}
+.ck-bub::before{content:"";position:absolute;left:-9px;bottom:12px;border:8px solid transparent;border-right-color:inherit;border-left:0}
+.ck-bub small{font-size:.7rem;font-weight:800;letter-spacing:.03em;color:#3f8a73}
+.ck-bub b{font-size:1.02rem;line-height:1.3}
+.ck-msg.ok .ck-bub{border-color:#7fd1a6;color:#1c7a50}.ck-msg.no .ck-bub{border-color:#f3b6a6;color:#a2391f}
+@keyframes ck-pop{from{transform:translateY(10px) scale(.85);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.ck-pal{animation:none}}
+html.dark .ck-bub{background:#1b2a21;border-color:#2c4033}html.dark .ck-bub small{color:#7fd1b4!important}
+html.dark .ck-msg.ok .ck-bub b{color:#7fd1b4!important}html.dark .ck-msg.no .ck-bub b{color:#ff9f8a!important}
+/* v172: Top 10 board picture (like the reading ladder), Save as picture and Print */
+.lb-tools{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+.lb-art{border-radius:20px;overflow:hidden;border:3px solid #fff;box-shadow:0 10px 30px rgba(14,59,40,.14);line-height:0}
+.lb-art svg{display:block;width:100%;height:auto}
+.tf-top .lb-list{display:none}
+@media(max-width:740px){.lb-art{display:none}.tf-top .lb-list{display:grid}}
+#lb-print-box{display:none}
+@media print{
+ html.lb-print body>*:not(#lb-print-box){display:none!important}
+ html.lb-print #lb-print-box{display:block!important}
+ html.lb-print #lb-print-box svg{display:block;width:100%;height:auto}
+}
+/* v172: Top 10 filters (level, time) */
+.lb-filter{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 14px;margin:6px 0 10px}
+.lb-filter label{display:flex;flex-direction:column;gap:4px;font-size:.78rem;font-weight:800;color:#3f8a73;letter-spacing:.03em}
+.lb-filter select{min-height:42px;min-width:170px;border-radius:12px;border:1.5px solid #d9e8d4;background:#fff;padding:0 12px;font-weight:700;color:#0e3b28}
+html.dark .lb-filter select{background:#1b2a21;border-color:#2c4033;color:#e8f0ea}html.dark .lb-filter label{color:#7fd1b4}
+@media(max-width:520px){.lb-filter label{flex:1 1 140px}.lb-filter select{min-width:0;width:100%}}

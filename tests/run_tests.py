@@ -230,6 +230,15 @@ def run_pages(acc):
         lock.login('pupil', 'nobody-test', 'wrong-password')
     _, _, text = lock.login('pupil', 'nobody-test', 'wrong-password')
     check('8 wrong passwords lock the sign-in for 15 minutes', re.search(r'locked|15 minutes|wait', text, re.I))
+    _, _, page = Client().req('?page=login')
+    check('Sign-in page: one form for everyone (no pupil or teacher cards, no Admin button)',
+          'name="role" value="auto"' in page and 'lgn-roles' not in page and 'admin-pill' not in page)
+    _, url, text = Client().login('auto', acc['teacher']['id'], acc['teacher']['pw'])
+    check('One form: BULIG knows a teacher from the ID', 'dashboard' in url and 'role-teacher' in text, url)
+    _, url, text = Client().login('auto', acc['admin']['id'], acc['admin']['pw'])
+    check('One form: BULIG knows the administrator from the ID and asks for the PIN', 'data-pin-form' in text, url)
+    r = php_cli('probe.php', 'tries', 0)
+    check('Each wrong try takes away a third of the card (1 wrong try: 0.67, 2: 0.33, 3: 0)', r.get('ok') and r.get('pts') == [1, 0.67, 0.33, 0], str(r))
 
     section('5. Pupil (Level 1, Grade 1)')
     p = Client()
@@ -297,11 +306,12 @@ def run_pages(acc):
         for pg in ('dashboard', 'manage', 'accounts', 'progress', 'review', 'sections', 'class_demo', 'notifications', 'cards',
                    'qcheck', 'guide', 'profile', f'pupil&id={uid}', f'report&id={uid}', f'report_card&id={uid}', 'certificates&level=1',
                    'print', 'moved', 'rcheck', 'rcheck_rules', 'rcheck_print', f'pupil&id={uid}&tab=answers', f'pupil&id={uid}&tab=rcheck',
-                   f'pupil&id={uid}&tab=badges', f'pupil&id={uid}&tab=account', 'progress&section=0&level=1'):
+                   f'pupil&id={uid}&tab=badges', f'pupil&id={uid}&tab=account', 'progress&section=0&level=1', 'dashboard&lb_level=2&lb_period=week'):
             page_ok(t, f'?page={pg}', f'Teacher page opens: {pg}')
         status, _, text = t.req('?page=dashboard')
         check('Teacher Home has the grouped menu (MY CLASS, TEACHING, PRINT) and "Find a page"',
               all(g in text for g in ('>MY CLASS<', '>TEACHING<', '>PRINT<')) and 'data-find-input' in text and 'Needs you today' in text)
+        check('Teacher Home shows the Top 10 pupils', 'Top 10 pupils' in text and 'id="tf-top"' in text)
         check('Nothing waits for the teacher: no "Check answers", BULIG checks every answer, Class results in the menu',
               'Check answers' not in text and 'Answers to check' not in text and 'BULIG checks every answer' in text and 'href="?page=qcheck"' in text)
         _, url, _ = t.req(f"?page=review&pupil={acc['pupil1']['uid']}")
@@ -347,7 +357,7 @@ def run_pages(acc):
     if check('Admin can sign in with password and PIN', 'dashboard' in url, url):
         for pg in ('dashboard', 'accounts', 'reports', 'activity_log', 'health', 'checkup', 'settings', 'teacher_cards',
                    'teacher_import', 'guide', 'profile', 'notifications', 'visual_audit', 'add_teachers',
-                   'add_teachers&mode=many', 'print', 'moved'):
+                   'add_teachers&mode=many', 'print', 'moved', 'admin_pass'):
             page_ok(a, f'?page={pg}', f'Admin page opens: {pg}')
         _, url, text = a.req('?page=content')
         check('The Lesson studio is gone: its old link goes to Admin Home and the menu has no Lesson studio',
@@ -527,7 +537,7 @@ def test_level4_scoring():
     r = php_cli('probe.php', 'l4', 0)
     check('A sample reading gives the right miscues (2 mispronunciations, 1 omission, 1 substitution, 1 repetition, 1 transposition)', r.get('sample') == [2, 1, 1, 0, 1, 1, 0], str(r.get('sample')))
     check('"was" for "saw" is a reversal', r.get('reversal') == 1, str(r.get('reversal')))
-    check('Too little heard: the teacher scores it instead', r.get('too_little') is True, str(r.get('too_little')))
+    check('Part of a reading heard: BULIG still scores it (unheard words are omissions); nothing heard: no score', r.get('too_little') is True, str(r.get('too_little')))
     check('A perfect reading of every Level 4 passage (Grades 1-6) scores 100%', r.get('passages', 0) >= 60 and not r.get('not_100'), f"{r.get('passages')} passages, not 100%: {r.get('not_100')}")
 
 

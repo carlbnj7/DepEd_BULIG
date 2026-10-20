@@ -26,7 +26,7 @@ function activity_key(array $a):?array{$id=activity_key_id($a);return $id?(answe
 
 /** The pupil's answer for each card, from "BULIG card answers / Card n (no. t): ...". */
 function card_answers(string $response):array{
- $r=str_replace(["\r\n","\r"],"\n",$response);$out=[];if(!str_starts_with($r,"BULIG card answers\n"))return $out;
+ $r=card_strip_tries(str_replace(["\r\n","\r"],"\n",$response));$out=[];if(!str_starts_with($r,"BULIG card answers\n"))return $out;
  foreach(preg_split('/\n(?=Card [0-9]+(?: \(no\. [0-9]+\))?:)/',substr($r,19)) as $line)if(preg_match('/^Card ([0-9]+)(?: \(no\. [0-9]+\))?:\s?(.*)$/s',$line,$m))$out[(int)$m[1]]=trim($m[2]);
  return $out;
 }
@@ -70,6 +70,78 @@ function key_want(array $k):string{
 /** True when the pupil gave an answer to a card (spoken, drawn, written or tapped). */
 function key_answered(string $g):bool{return $g!==''&&$g!=='(seen)';}
 
+/** Points for one card: [points, out of, the right answer, key type]. A card without a key counts as right when answered. */
+function key_card_points(?array $k,string $g):array{
+ $pts=0;$of=1;$want='';$t=$k['t']??'open';
+ if(!$k){$pts=key_answered($g)?1:0;$want='Any answer';}
+ elseif($t==='card'){$pts=key_card_ok($k,$g)?1:0;$want=key_want($k);}
+ elseif($t==='choice'){$ok=array_merge([$k['a']],$k['alt']??[]);$want=key_want($k);$pts=$g!==''&&in_array(key_norm($g),array_map('key_norm',$ok),true)?1:0;}
+ elseif($t==='match'){$of=count($k['a']);$have=[];if(preg_match_all('~(\d+)\s*-\s*([a-z])~i',$g,$mm,PREG_SET_ORDER))foreach($mm as $m)$have[$m[1]]=strtolower($m[2]);
+  foreach($k['a'] as $i=>$l)if(($have[(string)$i]??'')===$l)$pts++;$want=key_want($k);}
+ elseif($t==='order'){$of=count($k['a']);$have=[];foreach(explode(' · ',$g) as $part)if(($p=strrpos($part,' = '))!==false)$have[key_norm(substr($part,0,$p))]=trim(substr($part,$p+3));
+  foreach($k['a'] as $lab=>$num)if(($have[key_norm((string)$lab)]??'')===(string)$num)$pts++;$want=implode(' · ',array_map(fn($l,$v)=>$v,array_keys($k['a']),$k['a']));}
+ return [$pts,$of,$want,$t];
+}
+
+/* Pronunciation check (v172). On a "say it" card BULIG listens while the pupil records (the browser's speech
+   recognition) and the answer becomes "(voice recording) said: …". When the card shows what to say (a word list or a
+   sentence to read, or a blend "/p/ /e/ /n/ → pen"), the card's point is the share of those words BULIG heard said
+   right. Single sounds and open answers cannot be checked this way: they count when answered. When the device could
+   not listen (no "said:"), the recording counts, so a phone without speech recognition never lowers a score. */
+function say_expected(array $cd,string $dir):array{
+ if(!in_array('say',$cd['ui']['answer']??[],true))return [];$t=trim(preg_replace('~\s+~u',' ',(string)($cd['text']??'')));if($t==='')return [];
+ if(preg_match('~→\s*([\p{L}\']+)~u',$t,$m))return [key_letters($m[1])];
+ if(empty($cd['ui']['max'])&&!preg_match('~\bread\b|review the words~i',$dir)&&!(trim($dir)===''&&!str_contains($t,'?')))return [];
+ if(($i=mb_strrpos($t,':'))!==false)$t=mb_substr($t,$i+1);if(preg_match('~/[a-z]+/~i',$t))return [];/* sounds, not words */
+ $w=array_values(array_filter(array_map('key_letters',preg_split('~[\s,;.!?"“”()]+~u',$t)),'strlen'));
+ return count($w)>=1&&count($w)<=400?$w:[];
+}
+/** Picture cards ("say the word for the picture"): the words, from database/say-words.json ("a|b": either is right). */
+function say_words():array{static $w;if($w===null){$f=__DIR__.'/../database/say-words.json';$w=is_file($f)?((json_decode((string)file_get_contents($f),true)['words'])??[]):[];}return $w;}
+/** What BULIG heard on a recorded answer, or null when the device did not listen. */
+function key_said(string $g):?string{return preg_match('~\)\s*said:\s*(.+)$~su',$g,$m)?trim($m[1]):null;}
+/** Share of the expected words heard (each heard word counts once), 0 to 1. */
+function say_match(array $exp,string $heard):float{
+ if(!$exp)return 1.0;$h=array_count_values(array_filter(array_map('key_letters',preg_split('~\s+~u',$heard)),'strlen'));$ok=0;
+ foreach($exp as $w)foreach(explode('|',$w) as $alt){$alt=key_letters($alt);if(($h[$alt]??0)>0){$h[$alt]--;$ok++;break;}}
+ return round($ok/count($exp),2);
+}
+/** Level 1 (oral) answers, checked by BULIG (v172): 0 to 1. With the words to say (expected_text): the share BULIG heard
+    said right. Otherwise how much the pupil said: 3 or more words 1, 1-2 words 2/3. A recording the device could not
+    listen to, or an answer said aloud in class, counts as 1. */
+function l1_auto_score(array $a,string $transcript,bool $recorded):float{
+ $said=trim($transcript);
+ if($said!==''&&trim((string)($a['expected_text']??''))!==''){$exp=array_values(array_filter(array_map('key_letters',preg_split('~\s+~u',(string)$a['expected_text'])),'strlen'));return say_match($exp,$said);}
+ if($said!==''){$n=count(array_filter(preg_split('~\s+~u',$said),'strlen'));return $n>=3?1.0:0.67;}
+ return 1.0;
+}
+
+/* Wrong tries (v172). In lessons BULIG checks each card right away (action card_check) and the pupil may try again as
+   many times as they like. Each wrong try takes away a third of the card's points (after KEY_TRIES wrong tries the card
+   is worth 0, but the pupil can still finish it). The tries are kept as a last line of the answer, "Tries: 2=1, 5=4"
+   (card = wrong tries); the server counts them too and keeps the higher number. Pre-tests and post-tests are not
+   checked card by card. */
+const KEY_TRIES=3;
+function card_tries(string $response):array{
+ if(!preg_match('/\nTries: ([0-9=, ]*)\s*$/',$response,$m))return [];$t=[];
+ foreach(explode(',',$m[1]) as $p)if(preg_match('/^\s*(\d+)=(\d+)\s*$/',$p,$x))$t[(int)$x[1]]=min(999,(int)$x[2]);return $t;
+}
+function card_strip_tries(string $r):string{return preg_replace('/\nTries: [0-9=, ]*\s*$/','',$r);}
+function card_tries_line(array $t):string{$t=array_filter($t);ksort($t);return $t?"\nTries: ".implode(', ',array_map(fn($n,$v)=>$n.'='.$v,array_keys($t),$t)):'';}
+/** At "Done": add the tries BULIG counted on this device's session (the higher count wins). */
+function key_merge_tries(string $answer,int $aid):string{
+ $mine=$_SESSION['ck'][$aid]??[];unset($_SESSION['ck'][$aid]);if(!str_starts_with($answer,"BULIG card answers\n"))return $answer;
+ $t=card_tries($answer);foreach($mine as $n=>$v)$t[(int)$n]=max($t[(int)$n]??0,min(999,(int)$v));
+ return card_strip_tries($answer).card_tries_line($t);
+}
+/** True when card checking is on for this activity: a lesson activity (not a pre-test or post-test) with an answer key. */
+function key_checks_cards(array $a):bool{return ($a['phase']??'learn')==='learn'&&function_exists('ac_keyed')&&ac_keyed($a);}
+/** One card checked right away: ['keyed'=>, 'ok'=>, 'want'=>]. */
+function key_check_card(array $a,int $n,string $g):array{
+ $key=activity_key($a)??[];$k=$key[$n]??$key[(string)$n]??null;if(!$k)return ['keyed'=>false,'ok'=>true,'want'=>''];
+ [$pts,$of,$want]=key_card_points($k,$g);return ['keyed'=>true,'ok'=>$pts>=$of,'want'=>$want];
+}
+
 /** Score one answer: ['right'=>, 'total'=>, 'cards'=>[n=>['got','want','pts','of','t','fix']]], or null for an activity
     with nothing to answer. Cards with a key are marked; every other card the pupil answers counts as right (t "open"). */
 function key_score(array $a,string $response):?array{
@@ -80,15 +152,13 @@ function key_score(array $a,string $response):?array{
  $got=card_answers($response);$right=0;$total=0;$cards=[];
  $ask=[];foreach($set['cards'] as $i=>$cd)if(array_diff($cd['ui']['answer']??[],['look']))$ask[]=$i+1;
  $nums=array_values(array_unique(array_merge(array_map('intval',array_keys($key)),$ask)));sort($nums);
- foreach($nums as $n){$k=$key[$n]??null;$g=(string)($got[$n]??'');$pts=0;$of=1;$want='';$t=$k['t']??'open';
-  if(!$k){$pts=key_answered($g)?1:0;$want='Any answer';}
-  elseif($t==='card'){$pts=key_card_ok($k,$g)?1:0;$want=key_want($k);}
-  elseif($t==='choice'){$ok=array_merge([$k['a']],$k['alt']??[]);$want=key_want($k);$pts=$g!==''&&in_array(key_norm($g),array_map('key_norm',$ok),true)?1:0;}
-  elseif($t==='match'){$of=count($k['a']);$have=[];if(preg_match_all('~(\d+)\s*-\s*([a-z])~i',$g,$mm,PREG_SET_ORDER))foreach($mm as $m)$have[$m[1]]=strtolower($m[2]);
-   foreach($k['a'] as $i=>$l)if(($have[(string)$i]??'')===$l)$pts++;$want=key_want($k);}
-  elseif($t==='order'){$of=count($k['a']);$have=[];foreach(explode(' · ',$g) as $part)if(($p=strrpos($part,' = '))!==false)$have[key_norm(substr($part,0,$p))]=trim(substr($part,$p+3));
-   foreach($k['a'] as $lab=>$num)if(($have[key_norm((string)$lab)]??'')===(string)$num)$pts++;$want=implode(' · ',array_map(fn($l,$v)=>$v,array_keys($k['a']),$k['a']));}
-  $right+=$pts;$total+=$of;$cards[$n]=['got'=>$g,'want'=>$want,'pts'=>$pts,'of'=>$of,'t'=>$t,'fix'=>!empty($k['fix'])];}
+ $tries=card_tries($response);
+ $dir=(string)($set['instruction']??'');
+ foreach($nums as $n){$k=$key[$n]??null;$g=(string)($got[$n]??'');[$pts,$of,$want,$t]=key_card_points($k,$g);
+  if(!$k&&($exp=say_words()[activity_key_id($a).':'.$n]??say_expected($set['cards'][$n-1]??[],$dir))){$t='say';$want=implode(', ',array_map(fn($x)=>explode('|',$x)[0],$exp));$h=key_said($g);if($h!==null)$pts=say_match($exp,$h);}/* pronunciation (v172) */
+  $ok=$pts>=$of;$tr=$k?($tries[$n]??0):0;
+  if($tr)$pts=round($pts*max(0,1-$tr/KEY_TRIES),2);/* each wrong try takes away a third (v172) */
+  $right+=$pts;$total+=$of;$cards[$n]=['got'=>$g,'want'=>$want,'pts'=>$pts,'of'=>$of,'t'=>$t,'fix'=>!empty($k['fix']),'ok'=>$ok,'tries'=>$tr];}
  return $total?['right'=>$right,'total'=>$total,'cards'=>$cards]:null;
 }
 
@@ -136,7 +206,7 @@ function ac_keyed(array $a):bool{static $c=[];$id=(int)$a['id'];if(isset($c[$id]
 /** What the pupil missed, in words a child can read: [[number, what, the right answer, 'goes with'|'is'], ...]. */
 function ac_misses(array $a,array $s):array{
  $set=l2a_set($a);$key=activity_key($a)??[];if(!$set)return [];$bc=l2a_blank_counts($a,$set,lesson_level((int)$a['lesson_id']));$out=[];
- foreach($s['cards'] as $n=>$c){if($c['t']==='open'||$c['pts']>=$c['of'])continue;$q=$set['cards'][$n-1]??[];$k=$key[$n]??null;if(!$k)continue;
+ foreach($s['cards'] as $n=>$c){if($c['t']==='open'||($c['ok']??$c['pts']>=$c['of']))continue;$q=$set['cards'][$n-1]??[];$k=$key[$n]??null;if(!$k)continue;
   if($c['t']==='match'){$m=$q['match']??$q;$left=[];foreach(preg_split('/\n/',(string)($m['text']??'')) as $l)if(preg_match('/^\s*(\d+)\s*[.)]\s*(.*)$/',trim($l),$mm))$left[$mm[1]]=trim($mm[2]);
    $right=[];foreach(($m['choices']??[]) as $ch)if(preg_match('/^\s*([a-zA-Z])\s*[.)]\s*(.*)$/s',(string)$ch,$mm))$right[strtolower($mm[1])]=strtolower($mm[1]).'. '.trim($mm[2]);
    $have=[];if(preg_match_all('~(\d+)\s*-\s*([a-z])~i',$c['got'],$g,PREG_SET_ORDER))foreach($g as $x)$have[$x[1]]=strtolower($x[2]);

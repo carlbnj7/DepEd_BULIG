@@ -1,0 +1,218 @@
+{
+    "about": "Words a pupil says on \"say it\" picture cards, for BULIG's pronunciation check (v172). Key: activity key id + \":\" + card number. \"a|b\" means either word is right. Not shown to pupils.",
+    "words": {
+        "4:0:11:learn:1:1": [
+            "tank",
+            "mask"
+        ],
+        "4:0:12:learn:1:1": [
+            "blue|splash",
+            "bread"
+        ],
+        "4:0:13:learn:1:1": [
+            "clip|clips",
+            "cry|crying"
+        ],
+        "4:0:14:learn:1:1": [
+            "drone"
+        ],
+        "4:0:15:learn:1:1": [
+            "flag",
+            "frog"
+        ],
+        "4:0:16:learn:1:1": [
+            "glue",
+            "grass"
+        ],
+        "4:0:17:learn:1:1": [
+            "plane|airplane",
+            "pray|praying"
+        ],
+        "4:0:18:learn:1:1": [
+            "star",
+            "straw"
+        ],
+        "4:0:19:learn:1:1": [
+            "ship",
+            "sleep|sleeping"
+        ],
+        "4:0:20:learn:1:1": [
+            "spider",
+            "spray",
+            "splash"
+        ],
+        "4:0:21:learn:1:1": [
+            "train"
+        ],
+        "4:0:2:learn:1:1": [
+            "bat",
+            "cat"
+        ],
+        "4:0:2:learn:5:1": [
+            "car|van|cab"
+        ],
+        "4:0:2:learn:5:10": [
+            "cat"
+        ],
+        "4:0:2:learn:5:2": [
+            "sad"
+        ],
+        "4:0:2:learn:5:3": [
+            "fan"
+        ],
+        "4:0:2:learn:5:4": [
+            "man|dad"
+        ],
+        "4:0:2:learn:5:5": [
+            "map"
+        ],
+        "4:0:2:learn:5:6": [
+            "bat"
+        ],
+        "4:0:2:learn:5:7": [
+            "fat"
+        ],
+        "4:0:2:learn:5:8": [
+            "bag"
+        ],
+        "4:0:2:learn:5:9": [
+            "cap|hat"
+        ],
+        "4:0:3:learn:1:1": [
+            "net",
+            "ten"
+        ],
+        "4:0:3:learn:5:1": [
+            "net"
+        ],
+        "4:0:3:learn:5:10": [
+            "wet"
+        ],
+        "4:0:3:learn:5:2": [
+            "ten"
+        ],
+        "4:0:3:learn:5:3": [
+            "red|crayon"
+        ],
+        "4:0:3:learn:5:4": [
+            "vet"
+        ],
+        "4:0:3:learn:5:5": [
+            "web"
+        ],
+        "4:0:3:learn:5:6": [
+            "bed"
+        ],
+        "4:0:3:learn:5:7": [
+            "pen"
+        ],
+        "4:0:3:learn:5:8": [
+            "jet"
+        ],
+        "4:0:3:learn:5:9": [
+            "leg|legs"
+        ],
+        "4:0:4:learn:1:1": [
+            "zip|zipper",
+            "bin"
+        ],
+        "4:0:4:learn:5:1": [
+            "bib"
+        ],
+        "4:0:4:learn:5:10": [
+            "sim|chip"
+        ],
+        "4:0:4:learn:5:2": [
+            "zip|zipper"
+        ],
+        "4:0:4:learn:5:3": [
+            "bin"
+        ],
+        "4:0:4:learn:5:4": [
+            "pin"
+        ],
+        "4:0:4:learn:5:5": [
+            "lip|lips"
+        ],
+        "4:0:4:learn:5:6": [
+            "sit"
+        ],
+        "4:0:4:learn:5:7": [
+            "tip"
+        ],
+        "4:0:4:learn:5:8": [
+            "dig"
+        ],
+        "4:0:4:learn:5:9": [
+            "sip"
+        ],
+        "4:0:5:learn:1:1": [
+            "dog",
+            "jog|run"
+        ],
+        "4:0:5:learn:5:1": [
+            "fox"
+        ],
+        "4:0:5:learn:5:10": [
+            "hot"
+        ],
+        "4:0:5:learn:5:2": [
+            "dog"
+        ],
+        "4:0:5:learn:5:3": [
+            "jog|run"
+        ],
+        "4:0:5:learn:5:4": [
+            "log"
+        ],
+        "4:0:5:learn:5:5": [
+            "mom|mum|mother"
+        ],
+        "4:0:5:learn:5:6": [
+            "box"
+        ],
+        "4:0:5:learn:5:7": [
+            "mop"
+        ],
+        "4:0:5:learn:5:8": [
+            "hop|jump"
+        ],
+        "4:0:5:learn:5:9": [
+            "pot"
+        ],
+        "4:0:6:learn:1:1": [
+            "mug|cup",
+            "bun|bread"
+        ],
+        "4:0:6:learn:5:1": [
+            "hug"
+        ],
+        "4:0:6:learn:5:10": [
+            "bus"
+        ],
+        "4:0:6:learn:5:2": [
+            "hut"
+        ],
+        "4:0:6:learn:5:3": [
+            "gum"
+        ],
+        "4:0:6:learn:5:4": [
+            "bug"
+        ],
+        "4:0:6:learn:5:5": [
+            "mug|cup"
+        ],
+        "4:0:6:learn:5:6": [
+            "bun|bread"
+        ],
+        "4:0:6:learn:5:7": [
+            "run"
+        ],
+        "4:0:6:learn:5:8": [
+            "sun"
+        ],
+        "4:0:6:learn:5:9": [
+            "nut|nuts"
+        ]
+    }
+}

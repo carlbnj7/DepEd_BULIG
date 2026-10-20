@@ -2,7 +2,9 @@
 /* Level 1 (oral language). Pupils answer by speaking, never by typing:
    - one clean screen per activity: the question, its picture, one big button;
    - voice recordings are kept in storage/recordings (outside the public folder) and only the pupil and their teacher can play them;
-   - teachers score each answer with the module's own rubric (lessons 7–11 have no rubric, so their lesson-plan checklist is used);
+   - BULIG checks each answer itself (v172): while the pupil speaks it listens (speech recognition) and scores how much
+     was said, or how many of the words to read were said right (l1_auto_score). Teachers may still look, listen and use
+     the module's own rubric, but they never have to;
    - the Level 1 Class Demo shows the same screens as big projector slides. */
 
 const L1_SCALE=[4=>'Excellent',3=>'Good',2=>'Satisfactory',1=>'Needs Improvement'];

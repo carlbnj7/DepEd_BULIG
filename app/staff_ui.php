@@ -99,7 +99,7 @@ function teacher_home(array $u):void{
   .hm_task('print','Print report cards','One pupil or a whole section','?page=print#pc-reportcards',true).hm_task('star','Print certificates','For pupils who finished a level','?page=print#pc-certs',true)
   .'</div>'.claude_tip($u);   // the other tasks are in the menu (My pupils, Class Demo, Class results)
  echo '<p class="hm-sub" id="tf-class">My class</p>';section_filter($u,'dashboard',$sid,$grade);
- echo tf_stats($ids,$pending,(int)val('SELECT COUNT(*) FROM lessons WHERE published=1'));
+ echo tf_stats($ids,$pending,(int)val('SELECT COUNT(*) FROM lessons WHERE published=1'));$sn=$sid?(string)val('SELECT name FROM sections WHERE id=?',[$sid]):'';echo tf_leaderboard($ids,'Grade '.$grade.($sn!==''?' · '.$sn:''));
  echo '<section class="card tf-table tf-list"><div class="section-heading"><h2>My pupils</h2><a href="?page=manage">All pupils '.icon('arrow').'</a></div>';
  if(!$pupils)echo '<p class="muted">No pupils in this selection yet. Choose another section or add pupils.</p>';
  else{echo '<div class="cl-list">';
@@ -210,6 +210,7 @@ function admin_print_view(array $u):void{
  admin_heading('PRINT & DOWNLOAD','Everything you can print or download','Choose one. Print items open a preview first; download items save an Excel file you can open on any computer.');
  echo '<div class="pc-grid">';
  echo print_card('pc-passes',$img('teacher-passes'),'Teacher Passes','Each teacher’s ID, starter password and a QR code to sign in. Up to 10 on one A4 sheet.','<div class="pc-btns"><a class="btn primary" href="?page=teacher_cards">'.icon('print').'Print '.$tc.' passes</a></div>','Also on the Teachers page.');
+ echo print_card('pc-apass','icon:shield','My Admin Pass','Your administrator ID with a QR code. Scan it on a phone’s sign-in page to fill in your ID; you still type your password and PIN.','<div class="pc-btns"><a class="btn primary" href="?page=admin_pass">'.icon('print').'Print my pass</a></div>');
  echo print_card('pc-report',$img('school-report'),'School report','Progress by grade and section, ready for the principal or the division.','<form method="get" class="pc-form"><input type="hidden" name="page" value="reports">'.print_select('Period','period',['year'=>'This school year','month'=>'This month','3m'=>'Last 3 months','all'=>'All time']).'<div class="pc-btns"><button class="btn primary">'.icon('print').'Open to print</button><a class="btn secondary" href="?page=report_csv">'.icon('excel').'Excel</a></div></form>','Also on the School reports page.');
  echo print_card('pc-backup','icon:db','Backup','A copy of all BULIG records. Keep it on a USB drive or in Google Drive once a month.','<div class="pc-btns"><a class="btn primary" href="?page=backup_csv">'.icon('download').'Excel backup</a><a class="btn secondary" href="?page=backup_sql">'.icon('db').'Full database</a></div>','Also on the System health page.',admin_setting('last_backup_at','')===''?'NOT DONE YET':'');
  echo print_card('pc-log','icon:clock','Activity log','Sign-ins, wrong passwords and every change to accounts and lessons.','<div class="pc-btns"><a class="btn primary" href="?page=log_csv">'.icon('excel').'Download Excel</a></div>','Also on the Activity log page.');
