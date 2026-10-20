@@ -94,7 +94,7 @@ function l4_result_card(array $a,array $s):string{
  $h.='<div class="l4a-stat"><small>Reading level</small><b class="lv '.$cls.'">'.e($lv).'</b><span>'.e($say).'</span></div>';
  $h.='<div class="l4a-stat"><small>Reading speed</small><b>'.($s['wpm']?(int)$s['wpm']:'—').'</b><span>words per minute</span></div></div>';
  $h.='<div class="l4a-mis">';foreach(L4_MISCUES as $i=>$n){$c=(int)($s['m'][$i]??0);$h.='<span class="k-'.L4_KINDS[$i].($c?' on':'').'"><b>'.$c.'</b>'.e($n).'</span>';}$h.='</div>';
- return $h.l4_marked($a,$s,false).'<p class="l4a-note">'.l1_icon('teacher').'Your teacher will listen to your reading too.</p></section>';
+ return $h.l4_marked($a,$s,false).'<p class="l4a-note">'.l1_icon('teacher').'BULIG checked your reading. Your teacher can listen too.</p></section>';
 }
 
 function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
