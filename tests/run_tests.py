@@ -376,6 +376,7 @@ def run_pages(acc):
               and '4.2' in text and 'More practice for Level 3, please.' in text and not PHP_ERROR.search(text), f'status {status}')
         test_delete_teacher(a)
         test_account_ids(a, acc)
+        test_schools(a, acc)
 
 
 def jget(text):
@@ -712,6 +713,61 @@ def test_reading_check(t, acc):
     check('Teacher can change the starting level (now Level 2B)', lv == '3', lv)
     status, _, text = t.req('?page=rcheck_pupil&id=' + str(acc['pupil6']['uid']))
     check('A pupil who did not take the check shows a clear message, not an error', status in (200, 302, 303) and not PHP_ERROR.search(text), f'status {status}')
+
+
+def test_schools(a, acc):
+    """More than one school (v174): each school's own IDs, the school filter, moving a teacher, Kai's phone tip."""
+    section('9b. Schools')
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    page_ok(a, '?page=schools', 'Admin page opens: schools')
+    a.req('index.php', {'action': 'school_add', 'name': 'Second Test School', 'code': 'twoes', 'school_no': '999001', 'district': 'Test District', 'head': 'Head Two', 'csrf': a.token('?page=schools')})
+    two = q("SELECT id FROM schools WHERE code='TWOES'")
+    check('An administrator can add a school (the code is saved in capital letters)', two != '', two)
+    ids = php_cli('probe.php', 'school_ids', two)
+    yy = time.strftime('%y')
+    check('A new school gives its own IDs from number 1: pupils TWOES' + yy + '0001, teachers TWOEST0001',
+          ids['pupil'] == f'TWOES{yy}0001' and ids['teacher'] == 'TWOEST0001' and ids['name'] == 'Second Test School', str(ids))
+    first = q('SELECT MIN(id) FROM schools')
+    one = php_cli('probe.php', 'school_ids', first)
+    check('The first school keeps its own code and name', one['code'] != 'TWOES' and one['name'] != 'Second Test School', str(one))
+    a.req('index.php', {'action': 'school_add', 'name': 'Copy School', 'code': 'TWOES', 'csrf': a.token('?page=schools')})
+    check('Two schools cannot share a code', q("SELECT COUNT(*) FROM schools WHERE code='TWOES'") == '1')
+    a.req('index.php', {'action': 'create_account', 'role': 'teacher', 'school_id': two, 'first_name': 'Tess', 'last_name': 'Two', 'teacher_sex': 'female', 'password': 'TessTwo4242!', 'back': 'add_teachers', 'csrf': a.token('?page=add_teachers')})
+    got = q("SELECT CONCAT(public_id,'/',school_id) FROM users WHERE name='Tess Two'")
+    check('A teacher added to the second school gets its code and belongs to it', got == f'TWOEST0001/{two}', got)
+    _, _, text = a.req(f'?page=accounts&school={two}')
+    others = q("SELECT public_id FROM users WHERE role='teacher' AND (school_id IS NULL OR school_id<>%s) LIMIT 1" % int(two))
+    at = text.find(others) if others else -1
+    check('The school filter shows only that school\'s teachers', 'Tess Two' in text and others != '' and at < 0 and 'sc-filter' in text,
+          f"others={others!r} tess={'Tess Two' in text} filter={'sc-filter' in text} near={text[max(0, at - 160):at + 40]!r}")
+    _, _, home = a.req('?page=dashboard&school=0')
+    check('Home with all schools shows each school side by side', home.count('class="sc-cmp') == 2)
+    tid = q("SELECT id FROM users WHERE name='Tess Two'")
+    a.req('index.php', {'action': 'teacher_school', 'id': tid, 'school_id': first, 'csrf': a.token('?page=accounts')})
+    check('A teacher can be moved to another school (their ID stays)', q(f'SELECT CONCAT(public_id,"/",school_id) FROM users WHERE id={int(tid)}') == f'TWOEST0001/{first}')
+    # Add many teachers › Type the list (like the pupils' list): a row with a mistake saves nothing, a right list makes every account
+    _, _, grid = a.req('?page=add_teachers&mode=many')
+    check('Add many teachers has the two ways: Type the list and Upload a file', 'data-who="teacher"' in grid and 'how=file' in grid and 'name="t[grade][0]"' in grid)
+    typed = {'action': 'timport_typed', 'school_id': two, 'csrf': a.token('?page=add_teachers&mode=many'),
+             't[last][0]': 'Lista', 't[first][0]': 'Ana', 't[sex][0]': 'F', 't[grade][0]': '2', 't[section][0]': 'Typed Sampaguita',
+             't[last][1]': 'Lista', 't[first][1]': 'Ben', 't[section][1]': 'No Grade'}
+    a.req('index.php', typed)
+    check('A typed teacher list with a mistake saves nothing (no sex, section without a grade)', q("SELECT COUNT(*) FROM users WHERE name LIKE '% Lista'") == '0')
+    typed.update({'csrf': a.token('?page=add_teachers&mode=many'), 't[sex][1]': 'M', 't[section][1]': ''})
+    a.req('index.php', typed)
+    made = q("SELECT GROUP_CONCAT(CONCAT(public_id,'/',school_id) ORDER BY name) FROM users WHERE role='teacher' AND name LIKE '% Lista'")
+    sec = q("SELECT COUNT(*) FROM sections s JOIN users u ON u.id=s.teacher_id WHERE u.name='Ana Lista' AND s.name='Typed Sampaguita' AND s.grade_level=2")
+    check('The typed teacher list makes each account with the school\'s IDs, and the section typed for a teacher', made == f'TWOEST0002/{two},TWOEST0003/{two}' and sec == '1', f'{made} sec={sec}')
+    for n in ('Ana Lista', 'Ben Lista'):
+        a.req('index.php', {'action': 'delete_teacher', 'id': q(f"SELECT id FROM users WHERE name='{n}'"), 'confirm': 'DELETE', 'csrf': a.token('?page=accounts')})
+    pupils_ok = q("SELECT COUNT(*) FROM users WHERE role='pupil' AND (school_id IS NULL OR school_id NOT IN (SELECT id FROM schools))")
+    check('Every pupil belongs to a school', pupils_ok == '0', pupils_ok)
+    a.req('index.php', {'action': 'delete_teacher', 'id': tid, 'confirm': 'DELETE', 'csrf': a.token('?page=accounts')})
+    k = Client()
+    _, _, p1 = k.login('auto', acc['teacher']['id'], acc['teacher']['pw'])
+    _, _, p2 = k.req('?page=dashboard')
+    check("Kai's \"use a laptop or computer\" tip comes once after signing in (the browser shows it on phones only)",
+          'id="pc-tip"' in p1 and 'kai-letter' in p1 and 'id="pc-tip"' not in p2)
 
 
 def test_account_ids(a, acc):

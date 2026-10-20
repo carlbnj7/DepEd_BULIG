@@ -3,7 +3,7 @@
    with a QR code. The first scan signs the teacher in; then BULIG asks for their own password before anything else.
    After that the QR code only fills in the Teacher ID, so a lost pass cannot open a teacher's pupils.
    Admins can also add a whole list of teachers from a CSV or Excel file. Uses the table from 018_pupil_cards.sql. */
-const TEACHER_ACCOUNT_ACTIONS=['first_password','admin_teacher_starter','timport_preview','timport_confirm','timport_cancel'];
+const TEACHER_ACCOUNT_ACTIONS=['first_password','admin_teacher_starter','timport_preview','timport_confirm','timport_typed','timport_cancel'];
 
 /** Still on the starter password: the teacher makes their own before using BULIG. */
 function teacher_must_change(?array $u):bool{return $u!==null&&$u['role']==='teacher'&&card_has_starter((int)$u['id']);}
@@ -24,7 +24,7 @@ function teacher_sections_label(int $id):string{
 /** A new teacher: a Teacher ID (PCEST0001), a starter password and a Teacher Pass key. Call inside a transaction. */
 function teacher_create(string $name,string $sex):array{
  $public=new_account_id('teacher');
- q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,'teacher',$name,password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();
+ q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,'teacher',$name,password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();school_mark_user($id);
  q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sex);
  $card=card_issue($id,true);
  notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');
@@ -34,7 +34,7 @@ function teacher_create(string $name,string $sex):array{
 /** One Teacher Pass: the same ticket as the pupils' Reading Pass, for a teacher. */
 function teacher_ticket_html(array $t,?string $key,?string $pw,int $n):string{
  $qr=$key?'?page=login&key='.rawurlencode($key):teacher_login_url($t);$sec=(string)($t['sections']??'');
- return '<article class="tk tk-teacher"><div class="tk-main"><img class="tk-bgimg" src="assets/images/ticket-bg.webp?v=1" alt="" aria-hidden="true"><div class="tk-band"><img class="tk-logo" src="assets/bulig-logo.png" alt="BULIG"><b>TEACHER PASS</b></div><div class="tk-info"><strong class="tk-name">'.e($t['name']).'</strong><span class="tk-sec">'.($sec!==''?'<span>'.e($sec).'</span>':'').'<span class="tk-lvl">TEACHER</span></span><span class="tk-lab">Teacher ID</span><span class="tk-id">'.e($t['public_id']).'</span>'
+ return '<article class="tk tk-teacher"><div class="tk-main"><img class="tk-bgimg" src="assets/images/ticket-bg.webp?v=1" alt="" aria-hidden="true"><div class="tk-band"><img class="tk-logo" src="assets/bulig-logo.png" alt="BULIG"><b>TEACHER PASS</b>'.pass_logos((int)$t['id'],'teacher').'</div><div class="tk-info"><strong class="tk-name">'.e($t['name']).'</strong><span class="tk-sec">'.($sec!==''?'<span>'.e($sec).'</span>':'').'<span class="tk-lvl">TEACHER</span></span><span class="tk-lab">Teacher ID</span><span class="tk-id">'.e($t['public_id']).'</span>'
   .'<span class="tk-pass">'.($pw!==null?'<span class="tk-lab">Starter password</span><span class="tk-pw">'.e($pw).'</span>':'<span class="tk-lab">Password</span><span class="tk-pw tk-own">Your own password</span>').'</span></div><img class="tk-kid" src="'.teacher_char((int)$t['id']).'" alt=""></div>'
   .'<div class="tk-stub"><span class="lc-qr tk-qr" data-qr="'.e($qr).'" aria-hidden="true"></span><span class="tk-scan">'.($key&&$pw!==null?'SCAN TO<br>SIGN IN':'SCAN TO<br>OPEN BULIG').'</span>'.($pw!==null?'<span class="tk-must">Make your own password after you sign in</span>':'').'<span class="tk-no">No. '.str_pad((string)$n,3,'0',STR_PAD_LEFT).'</span></div></article>';
 }
@@ -45,7 +45,7 @@ function admin_pass_view(array $u):void{
  $n=0;echo '<div class="pageheading ws-head no-print"><div><span class="eyebrow">PRINT & DOWNLOAD</span><h1>Admin Pass</h1><p class="muted">Scan it on the sign-in page of a phone to fill in your administrator ID. You still type your password and PIN.</p></div><div class="ws-btns"><a class="btn secondary" href="?page=print">'.icon('arrow','flip').'Back</a></div></div>';
  echo '<div class="lc-tools no-print card"><button type="button" class="btn primary" data-lc-print>'.icon('download').'<span data-lc-print-label>Print pass</span></button></div><div class="lc-sheet tk-sheet" data-lc-sheet data-tk-word="pass">';
  foreach(rows("SELECT id,name,public_id FROM users WHERE role='admin' AND active=1 AND id=?",[(int)$u['id']]) as $a){$n++;$qr='?page=login&id='.rawurlencode((string)$a['public_id']);
-  echo '<div class="tk-wrap" data-tk><article class="tk tk-teacher tk-admin"><div class="tk-main"><img class="tk-bgimg" src="assets/images/ticket-bg.webp?v=1" alt="" aria-hidden="true"><div class="tk-band"><img class="tk-logo" src="assets/bulig-logo.png" alt="BULIG"><b>ADMIN PASS</b></div><div class="tk-info"><strong class="tk-name">'.e($a['name']).'</strong><span class="tk-sec"><span class="tk-lvl">ADMINISTRATOR</span></span><span class="tk-lab">Admin ID</span><span class="tk-id">'.e($a['public_id']).'</span>'
+  echo '<div class="tk-wrap" data-tk><article class="tk tk-teacher tk-admin"><div class="tk-main"><img class="tk-bgimg" src="assets/images/ticket-bg.webp?v=1" alt="" aria-hidden="true"><div class="tk-band"><img class="tk-logo" src="assets/bulig-logo.png" alt="BULIG"><b>ADMIN PASS</b>'.pass_logos((int)$a['id'],'admin').'</div><div class="tk-info"><strong class="tk-name">'.e($a['name']).'</strong><span class="tk-sec"><span class="tk-lvl">ADMINISTRATOR</span></span><span class="tk-lab">Admin ID</span><span class="tk-id">'.e($a['public_id']).'</span>'
    .'<span class="tk-pass"><span class="tk-lab">Password and PIN</span><span class="tk-pw tk-own">Type them yourself</span></span></div><img class="tk-kid" src="'.e(char_src(tf_is_male((int)$a['id'])?'admin-male':'admin-female','hello')).'" alt=""></div>'
    .'<div class="tk-stub"><span class="lc-qr tk-qr" data-qr="'.e($qr).'" aria-hidden="true"></span><span class="tk-scan">SCAN TO<br>FILL IN MY ID</span><span class="tk-no">No. '.str_pad((string)$n,3,'0',STR_PAD_LEFT).'</span></div></article><div class="tk-bar no-print"><label class="tk-sel"><input type="checkbox" data-tk-pick checked> Print</label></div></div>';}
  echo '</div><script src="'.asset_url('qrcode.js').'" defer></script><script src="'.asset_url('cards.js').'" defer></script>';
@@ -73,7 +73,7 @@ function teacher_cards_view():void{
  echo '<div class="pageheading ws-head no-print"><div><span class="eyebrow">TEACHERS</span><h1>Teacher Passes</h1><p class="muted">Print, cut along the dashed lines and give each teacher their pass. Up to 10 fit on one A4 sheet.</p></div><div class="ws-btns"><a class="btn secondary" href="?page=accounts">'.icon('arrow','flip').'Back to teachers</a></div></div>';
  if(!cards_ready()){echo teacher_needs_018();return;}
  $starter=teacher_starter_ids();$logins=admin_last_logins();
- $all=rows("SELECT id,name,public_id FROM users WHERE role='teacher' AND active=1 ORDER BY name");
+ $all=rows("SELECT id,name,public_id FROM users u WHERE role='teacher' AND active=1".school_users_sql()." ORDER BY name");echo school_filter_bar('teacher_cards');
  $list=array_values(array_filter($all,fn($t)=>$one?(int)$t['id']===$one:($new?in_array((int)$t['id'],$new,true):($show!=='starter'||in_array((int)$t['id'],$starter,true)))));
  echo '<div class="lc-tools no-print card"><form method="get" class="lc-filter"><input type="hidden" name="page" value="teacher_cards"><label>Teachers<select name="show" data-autosubmit><option value="all"'.($show==='all'&&!$one&&!$new?' selected':'').'>Everyone · '.count($all).' teacher'.(count($all)===1?'':'s').'</option><option value="starter"'.($show==='starter'&&!$one&&!$new?' selected':'').'>Still on a starter password · '.count(array_intersect(array_map('intval',array_column($all,'id')),$starter)).'</option>'.($one||$new?'<option value="pick" selected>'.($one?'One teacher':'Just added · '.count($new)).'</option>':'').'</select></label><noscript><button class="btn quiet">Show</button></noscript></form>';
  echo '<label class="lc-opt"><input type="checkbox" data-lc-toggle="lc-hide-qr" checked> QR code</label><label class="lc-opt"><input type="checkbox" data-lc-toggle="lc-hide-pass" checked> Starter password</label><button type="button" class="btn primary" data-lc-print>'.icon('download').'<span data-lc-print-label>Print passes</span></button></div>';
@@ -144,19 +144,61 @@ function teacher_import_view():void{
   echo '<div class="tablewrap import-preview"><table><thead><tr><th>Line</th><th>Name</th><th>Sex</th><th>First section</th><th>Check</th></tr></thead><tbody>';
   foreach($p['rows'] as $r)echo '<tr class="row-'.$r['status'].'"><td>'.$r['line'].'</td><td>'.e($r['name']?:'—').'</td><td>'.e($r['sex']?ucfirst($r['sex']):'—').'</td><td>'.e($r['section']!==''?'Grade '.$r['grade'].' – '.$r['section']:'—').'</td><td><span class="pill '.($r['status']==='ok'?'ok':($r['status']==='skip'?'skip':'bad')).'">'.($r['status']==='ok'?'Ready':($r['status']==='skip'?'Skip':'Fix')).'</span>'.($r['notes']?'<small>'.e(implode(' ',$r['notes'])).'</small>':'').'</td></tr>';
   echo '</tbody></table></div><div class="import-actions">';
-  if($ok)echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="timport_confirm"><input type="hidden" name="token" value="'.e($p['token']).'"><button class="btn primary">'.icon('check').'Create '.$ok.' teacher account'.($ok===1?'':'s').'</button></form>';
+  if($ok)echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="timport_confirm"><input type="hidden" name="token" value="'.e($p['token']).'">'.school_pick_field('School of these teachers').'<button class="btn primary">'.icon('check').'Create '.$ok.' teacher account'.($ok===1?'':'s').'</button></form>';
   echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="timport_cancel"><button class="btn secondary">'.icon('replay').'Upload again</button></form></div></section>';return;
  }
  if($step==='done'&&$done){
   echo '<div class="section-heading"><div><span class="eyebrow">STEP 3</span><h2>'.count($done).' teacher account'.(count($done)===1?'':'s').' made</h2></div></div><p class="import-summary">Print a Teacher Pass for each teacher, or download the sign-in list. Each starter password works only until the teacher makes their own.</p>'
-   .'<div class="import-actions"><a class="btn primary" href="?page=teacher_cards&amp;new=1">'.icon('download').'Print '.count($done).' Teacher Pass'.(count($done)===1?'':'es').'</a><a class="btn secondary" href="?page=teacher_logins">'.icon('download').'Download sign-in list (CSV)</a><a class="btn secondary" href="?page=teacher_import">Upload another list</a></div>';
+   .'<div class="import-actions"><a class="btn primary" href="?page=teacher_cards&amp;new=1">'.icon('download').'Print '.count($done).' Teacher Pass'.(count($done)===1?'':'es').'</a><a class="btn secondary" href="?page=teacher_logins">'.icon('download').'Download sign-in list (CSV)</a><a class="btn secondary" href="?page=add_teachers&amp;mode=many">Add more teachers</a></div>';
   echo '<div class="tablewrap import-preview"><table><thead><tr><th>Teacher ID</th><th>Name</th><th>First section</th></tr></thead><tbody>';foreach($done as $d)echo '<tr><td><strong>'.e($d['id']).'</strong></td><td>'.e($d['name']).'</td><td>'.e($d['section']?:'—').'</td></tr>';echo '</tbody></table></div></section>';return;
  }
- echo '<div class="section-heading"><div><span class="eyebrow">STEP 1</span><h2>Upload a teacher list</h2></div><a class="btn quiet small" href="?page=teacher_template">'.icon('download').'Download template</a></div>'
+ $how=($_GET['how']??'')==='file'?'file':'type';
+ $tab=fn($k,$ic,$t)=>'<a href="?page=add_teachers&amp;mode=many&amp;how='.$k.'#import"'.($how===$k?' class="on" aria-current="page"':'').'>'.icon($ic).$t.'</a>';
+ echo '<div class="section-heading"><div><span class="eyebrow">ADD MANY TEACHERS</span><h2>'.($how==='type'?'Type the list':'Upload a teacher list').'</h2></div>'.($how==='file'?'<a class="btn quiet small" href="?page=teacher_template">'.icon('download').'Download template</a>':'').'</div>';
+ echo '<nav class="bk-tabs" aria-label="How to add the teachers">'.$tab('type','edit','Type the list').$tab('file','excel','Upload a file').'</nav>';
+ if($how==='type'){echo teacher_typed_grid().'</section>'.names_script();return;}
+ echo ''
   .'<ol class="import-steps"><li>Open the template in Excel. Fill in <strong>Last name</strong>, <strong>First name</strong>, <strong>Middle name</strong>, <strong>Extension</strong> (Jr., Sr., II … or blank) and <strong>Sex</strong> (M or F). <strong>Grade</strong> and <strong>Section</strong> are optional: BULIG adds that section for the teacher.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet. You will see every row first.</li><li>Press <strong>Create accounts</strong>, then print the Teacher Passes.</li></ol>'
   .'<div class="tablewrap import-preview tc-sample"><table><thead><tr><th>Last name</th><th>First name</th><th>Middle name</th><th>Extension <small>optional</small></th><th>Sex</th><th>Grade <small>optional</small></th><th>Section <small>optional</small></th></tr></thead><tbody><tr class="tc-what"><td>Family name</td><td>Given name</td><td>Middle name</td><td>Jr., Sr., II or blank</td><td>M or F</td><td>1 to 6</td><td>Section name</td></tr></tbody></table></div>'
   .'<form method="post" enctype="multipart/form-data" class="formgrid import-form">'.csrf_field().'<input type="hidden" name="action" value="timport_preview"><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><label class="import-file">Teacher list file (.xlsx or .csv)<input type="file" name="teacher_list" accept=".csv,.xlsx,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>'
   .'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' teachers, 2 MB. Teachers already in BULIG (same name) are skipped.</small><button class="btn primary">'.icon('check').'Check the list</button></div></form></section>';
+}
+/** "Type the list" for teachers: one row per teacher, like the pupils' list. Enter goes to the next teacher; assets/names.js
+   checks each row while typing. Rows that need fixing come back here with the server's note (nothing is saved until every row is right). */
+function teacher_typed_grid():string{
+ $back=$_SESSION['teacher_typed']??null;unset($_SESSION['teacher_typed']);$rows=$back['rows']??[];$notes=$back['notes']??[];
+ $h='<form method="post" class="bk-form" data-bk data-who="teacher" data-mode="one">'.csrf_field().'<input type="hidden" name="action" value="timport_typed">'
+  .'<div class="bk-top">'.school_pick_field('School of these teachers',(int)($back['school']??0)).'</div><p class="sx-hint">Grade and Section are optional: BULIG adds that section for the teacher. Each teacher gets a Teacher ID and a starter password.</p>';
+ $h.='<div class="bk-gridwrap"><table class="bk-grid bk-tgrid"><thead><tr><th>#</th><th>Last name</th><th>First name</th><th>Middle name</th><th class="c-ext">Ext.</th><th class="c-sex">Sex</th><th class="c-gr">Grade <small>optional</small></th><th class="c-tsec">Section <small>optional</small></th><th class="c-st"><span class="sr-only">Check</span></th></tr></thead><tbody data-bk-body>';
+ for($i=0,$n=max(10,count($rows));$i<$n;$i++)$h.=teacher_typed_row($i,$rows[$i]??[],$notes[$i]??'');
+ $h.='</tbody></table></div><template data-bk-tpl>'.teacher_typed_row(-1,[],'').'</template>';
+ return $h.'<div class="bk-foot"><small>Press <b>Enter</b> for the next teacher. Empty rows are skipped. Teachers already in BULIG (same name) are left out. <span data-bk-count aria-live="polite"></span></small><span class="bk-btns"><button type="button" class="btn secondary" data-bk-more>+ 10 more rows</button><button class="btn primary" data-bk-go>'.icon('check').'<span data-bk-label>Create teacher accounts</span></button></span></div></form>';
+}
+function teacher_typed_row(int $i,array $r,string $note):string{
+ $n=$i<0?'__':(string)$i;$v=fn($k)=>e((string)($r[$k]??''));$ext=(string)($r[3]??'');$sex=strtoupper((string)($r[4]??''));$gr=(int)($r[5]??0);
+ $in=fn($k,$col,$lab,$extra='')=>'<td data-l="'.$lab.'"><input name="t['.$col.']['.$n.']" value="'.$v($k).'" maxlength="60" autocomplete="off" aria-label="'.$lab.', teacher '.($i<0?'':$i+1).'"'.$extra.'></td>';
+ $o='<option value="">—</option>';foreach(NAME_EXTS as $x)$o.='<option value="'.$x.'"'.(name_ext_norm($ext)===$x?' selected':'').'>'.$x.'</option>';
+ $mf='';foreach(['M'=>'Male','F'=>'Female'] as $k=>$t)$mf.='<label><input type="radio" name="t[sex]['.$n.']" value="'.$k.'"'.(in_array($sex,[$k,strtoupper($t)],true)?' checked':'').' aria-label="'.$t.'"><b>'.$k.'</b></label>';
+ $g='<option value="">—</option>';for($x=1;$x<=6;$x++)$g.='<option value="'.$x.'"'.($gr===$x?' selected':'').'>Grade '.$x.'</option>';
+ return '<tr data-bk-row'.($note!==''?' class="err"':'').'><td data-bk-n>'.($i<0?'':$i+1).'</td>'.$in(0,'last','Last name',$i===0?' placeholder="Type here…"':'').$in(1,'first','First name').$in(2,'middle','Middle name')
+  .'<td class="c-ext" data-l="Ext."><select name="t[ext]['.$n.']" aria-label="Extension">'.$o.'</select></td><td class="c-sex" data-l="Sex"><span class="bk-sex">'.$mf.'</span></td>'
+  .'<td class="c-gr" data-l="Grade (optional)"><select name="t[grade]['.$n.']" aria-label="Grade">'.$g.'</select></td>'.$in(6,'section','Section (optional)').'<td class="c-st" data-bk-st>'.($note!==''?'<span class="bad">'.e($note).'</span>':'').'</td></tr>';
+}
+
+/** Make the accounts for every ready row (an uploaded file or the typed list), then show the done step. */
+function teacher_import_create(array $rows,string $file):never{
+ if(!cards_ready())fail('Import database/migrations/018_pupil_cards.sql first.');
+ $done=[];db()->beginTransaction();try{
+  $have=[];foreach(rows("SELECT name FROM users WHERE role='teacher'") as $t)$have[ck_name_key((string)$t['name'])]=1;
+  foreach($rows as $r){if($r['status']!=='ok'||isset($have[ck_name_key($r['name'])]))continue;
+   $c=teacher_create($r['name'],(string)$r['sex']);name_parts_save($c['id'],$r['parts']??null);$have[ck_name_key($r['name'])]=1;$label='';
+   if($r['section']!==''){q('INSERT INTO sections(teacher_id,grade_level,name) VALUES(?,?,?)',[$c['id'],$r['grade'],$r['section']]);$label='Grade '.$r['grade'].' – '.$r['section'];}
+   $done[]=['uid'=>$c['id'],'id'=>$c['public'],'name'=>$r['name'],'section'=>$label,'pw'=>$c['pw']];}
+  audit('import_teachers',count($done).' from '.$file);db()->commit();
+ }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+ unset($_SESSION['teacher_import']);$_SESSION['teacher_import_done']=$done;
+ $skip=count(array_filter($rows,fn($r)=>$r['status']==='skip'));
+ flash(count($done).' teacher account'.(count($done)===1?'':'s').' made.'.($skip?' '.$skip.' already in BULIG '.($skip===1?'was':'were').' left out.':'').' Print their Teacher Passes.');go('?page=teacher_import&step=done');
 }
 
 function teacher_import_download(string $page):never{
@@ -214,20 +256,28 @@ function teacher_account_action(string $action):never{
   $_SESSION['teacher_import']=['token'=>bin2hex(random_bytes(16)),'file'=>mb_substr(basename((string)$f['name']),0,120),'rows'=>$checked];unset($_SESSION['teacher_import_done']);
   go('?page=teacher_import&step=check');
  }
+ if($action==='timport_typed'){
+  if(!cards_ready())fail('Import database/migrations/018_pupil_cards.sql first.');
+  if(isset($_POST['school_id']))school_use((int)$_POST['school_id']);
+  $t=(array)($_POST['t']??[]);$keys=['last','first','middle','ext','sex','grade','section'];$n=0;foreach($keys as $k)foreach(array_keys((array)($t[$k]??[])) as $i)$n=max($n,(int)$i+1);
+  if($n>IMPORT_MAX_ROWS)fail('Type up to '.IMPORT_MAX_ROWS.' teachers at a time.');
+  $typed=[];$list=[['Last name','First name','Middle name','Extension','Sex','Grade','Section']];
+  for($i=0;$i<$n;$i++){$r=[];foreach($keys as $k)$r[]=mb_substr(trim((string)(((array)($t[$k]??[]))[$i]??'')),0,80);
+   if($r[0].$r[1].$r[2].$r[6]===''){$r=array_fill(0,7,'');}   // only M/F or a grade picked: an empty row
+   $typed[]=$r;$list[]=$r;}
+  if(!array_filter($typed,fn($r)=>implode('',$r)!==''))fail('Type at least one teacher first.');
+  $checked=teacher_import_check($list);
+  foreach($checked as &$c){$c['line']--;$c['notes']=array_map(fn($x)=>preg_replace_callback('/line (\d+) in this file/',fn($m)=>'row '.((int)$m[1]-1).' of this list',$x),$c['notes']);}unset($c);   // row numbers of the list, not of a file
+  $bad=array_filter($checked,fn($r)=>$r['status']==='error');
+  if($bad){$_SESSION['teacher_typed']=['rows'=>$typed,'notes'=>array_column(array_map(fn($r)=>[$r['line']-1,implode(' ',$r['notes'])],$bad),1,0),'school'=>(int)($_POST['school_id']??0)];
+   flash(count($bad).' '.(count($bad)===1?'row needs':'rows need').' fixing. Nothing was saved yet: fix the rows marked in red, then press Create again.');go('?page=add_teachers&mode=many&how=type#import');}
+  unset($_SESSION['teacher_typed']);teacher_import_create($checked,'the typed list');
+ }
  if($action==='timport_cancel'){unset($_SESSION['teacher_import']);flash('Cancelled. No accounts were made.');go('?page=teacher_import');}
- if($action==='timport_confirm'){
+ if($action==='timport_confirm'){if(isset($_POST['school_id']))school_use((int)$_POST['school_id']);
   $p=$_SESSION['teacher_import']??null;if(!$p||!hash_equals($p['token'],(string)($_POST['token']??'')))fail('This list has expired. Upload it again.');
   if(!cards_ready())fail('Import database/migrations/018_pupil_cards.sql first.');
-  $done=[];db()->beginTransaction();try{
-   $have=[];foreach(rows("SELECT name FROM users WHERE role='teacher'") as $t)$have[ck_name_key((string)$t['name'])]=1;
-   foreach($p['rows'] as $r){if($r['status']!=='ok'||isset($have[ck_name_key($r['name'])]))continue;
-    $c=teacher_create($r['name'],(string)$r['sex']);name_parts_save($c['id'],$r['parts']??null);$have[ck_name_key($r['name'])]=1;$label='';
-    if($r['section']!==''){q('INSERT INTO sections(teacher_id,grade_level,name) VALUES(?,?,?)',[$c['id'],$r['grade'],$r['section']]);$label='Grade '.$r['grade'].' – '.$r['section'];}
-    $done[]=['uid'=>$c['id'],'id'=>$c['public'],'name'=>$r['name'],'section'=>$label,'pw'=>$c['pw']];}
-   audit('import_teachers',count($done).' from '.$p['file']);db()->commit();
-  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
-  unset($_SESSION['teacher_import']);$_SESSION['teacher_import_done']=$done;
-  flash(count($done).' teacher account'.(count($done)===1?'':'s').' made. Print their Teacher Passes.');go('?page=teacher_import&step=done');
+  teacher_import_create($p['rows'],$p['file']);
  }
  fail('Unknown action.');
 }

@@ -51,10 +51,11 @@ function account_id_taken(string $id):bool{
 }
 /** The highest number an account made before v2 will keep when it is switched (pupil 20260005 → PCES260005,
     teacher T2026001 → PCEST0001), so accounts made before the switch never take that number. */
-function account_id_reserved(string $role,string $yy):int{
- $m=0;
- if($role==='pupil')foreach(rows("SELECT public_id FROM users WHERE role='pupil' AND public_id LIKE ?",['20'.$yy.'%']) as $r){if(preg_match('/^20'.$yy.'(\d{4,})$/D',$r['public_id'],$x))$m=max($m,(int)$x[1]);}
- if($role==='teacher')foreach(rows("SELECT public_id FROM users WHERE role='teacher' AND public_id LIKE 'T20%'") as $r){if(preg_match('/^T20\d\d(\d+)$/D',$r['public_id'],$x))$m=max($m,(int)$x[1]);}
+function account_id_reserved(string $role,string $yy,?string $code=null):int{
+ $m=0;$in='';$a=[];/* v174: only accounts of the school with this code keep their number (each school counts from 1) */
+ if($code!==null&&function_exists('schools_ready')&&schools_ready()){$in=' AND school_id IN (SELECT id FROM schools WHERE code=?)';$a=[$code];}
+ if($role==='pupil')foreach(rows("SELECT public_id FROM users WHERE role='pupil' AND public_id LIKE ?$in",array_merge(['20'.$yy.'%'],$a)) as $r){if(preg_match('/^20'.$yy.'(\d{4,})$/D',$r['public_id'],$x))$m=max($m,(int)$x[1]);}
+ if($role==='teacher')foreach(rows("SELECT public_id FROM users WHERE role='teacher' AND public_id LIKE 'T20%'$in",$a) as $r){if(preg_match('/^T20\d\d(\d+)$/D',$r['public_id'],$x))$m=max($m,(int)$x[1]);}
  return $m;
 }
 /** A new, unique ID for a pupil, teacher or admin. Call inside the transaction that creates the account. */
@@ -62,7 +63,7 @@ function new_account_id(string $role,?string $code=null,?string $yy=null):string
  if(!in_array($role,['pupil','teacher','admin'],true))throw new InvalidArgumentException('Unknown role.');
  if(!db()->inTransaction())throw new LogicException('new_account_id() must run inside a transaction.');
  $code=$code??school_code();$yy=$yy??date('y');$kind=account_id_kind($role,$code,$yy);
- q('INSERT IGNORE INTO id_sequences(kind,next_value) VALUES(?,?)',[$kind,account_id_reserved($role,$yy)+1]);
+ q('INSERT IGNORE INTO id_sequences(kind,next_value) VALUES(?,?)',[$kind,account_id_reserved($role,$yy,$code)+1]);
  $n=max(1,(int)val('SELECT next_value FROM id_sequences WHERE kind=? FOR UPDATE',[$kind]));
  while(account_id_taken(account_id_format($role,$code,$yy,$n)))$n++;
  q('UPDATE id_sequences SET next_value=? WHERE kind=?',[$n+1,$kind]);
@@ -93,12 +94,13 @@ function account_ids_plan(string $code):array{
   if($u['role']==='pupil'&&preg_match('/^20(\d\d)(\d{4,})$/D',$old,$m)){$yy=$m[1];$pref=(int)$m[2];}
   elseif($u['role']==='teacher'&&preg_match('/^T20\d\d(\d+)$/D',$old,$m))$pref=(int)$m[1];
   $yy=$yy??date('y',strtotime((string)$u['created_at'])?:time());
-  $plan[]=['id'=>(int)$u['id'],'role'=>(string)$u['role'],'name'=>(string)$u['name'],'old'=>$old,'yy'=>$yy,'pref'=>$pref,'n'=>0,'new'=>''];}
- foreach($plan as &$p){if($p['pref']<1)continue;$c=account_id_format($p['role'],$code,$p['yy'],$p['pref']);if(!isset($taken[$c])){$p['new']=$c;$p['n']=$p['pref'];$taken[$c]=1;}}unset($p);
+  $sc=function_exists('school_row')?school_row(user_school_id((int)$u['id'])):null;/* v174: each account takes its own school's code */
+  $plan[]=['id'=>(int)$u['id'],'role'=>(string)$u['role'],'name'=>(string)$u['name'],'old'=>$old,'yy'=>$yy,'pref'=>$pref,'n'=>0,'new'=>'','code'=>$sc&&$u['role']!=='admin'?(string)$sc['code']:$code];}
+ foreach($plan as &$p){if($p['pref']<1)continue;$c=account_id_format($p['role'],$p['code'],$p['yy'],$p['pref']);if(!isset($taken[$c])){$p['new']=$c;$p['n']=$p['pref'];$taken[$c]=1;}}unset($p);
  $next=[];
- foreach($plan as &$p){if($p['new']!=='')continue;$k=account_id_kind($p['role'],$code,$p['yy']);$n=$next[$k]??1;
-  while(isset($taken[account_id_format($p['role'],$code,$p['yy'],$n)]))$n++;
-  $p['n']=$n;$p['new']=account_id_format($p['role'],$code,$p['yy'],$n);$taken[$p['new']]=1;$next[$k]=$n+1;}unset($p);
+ foreach($plan as &$p){if($p['new']!=='')continue;$k=account_id_kind($p['role'],$p['code'],$p['yy']);$n=$next[$k]??1;
+  while(isset($taken[account_id_format($p['role'],$p['code'],$p['yy'],$n)]))$n++;
+  $p['n']=$n;$p['new']=account_id_format($p['role'],$p['code'],$p['yy'],$n);$taken[$p['new']]=1;$next[$k]=$n+1;}unset($p);
  return $plan;
 }
 
@@ -152,7 +154,7 @@ function account_ids_switch(string $code,bool $ownBackup):array{
    q('DELETE FROM account_id_history WHERE old_id=? AND user_id=?',[$p['old'],$p['id']]);
    if(!q('UPDATE users SET public_id=? WHERE id=? AND public_id=?',[$p['new'],$p['id'],$p['old']])->rowCount())throw new RuntimeException('An account changed while switching. Nothing was changed; please try again.');
    q('INSERT INTO account_id_history(user_id,old_id,new_id) VALUES(?,?,?)',[$p['id'],$p['old'],$p['new']]);
-   $k=account_id_kind($p['role'],$code,$p['yy']);$max[$k]=max($max[$k]??0,$p['n']);}
+   $k=account_id_kind($p['role'],$p['code']??$code,$p['yy']);$max[$k]=max($max[$k]??0,$p['n']);}
   /* new accounts continue after the numbers now in use */
   foreach($max as $k=>$n)q('INSERT INTO id_sequences(kind,next_value) VALUES(?,?) ON DUPLICATE KEY UPDATE next_value=GREATEST(next_value,VALUES(next_value))',[$k,$n+1]);
   admin_set('school_code',$code);

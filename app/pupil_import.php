@@ -4,7 +4,7 @@ const IMPORT_MAX_ROWS=300;
 
 function create_pupil_account(array $teacher,string $name,array $section,int $level,array $details,?array $parts=null):string{
  $public=new_account_id('pupil');
- q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,'pupil',$name,password_hash('12345678',PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();name_parts_save($id,$parts);
+ q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,'pupil',$name,password_hash('12345678',PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();name_parts_save($id,$parts);school_mark_user($id,user_school_id((int)$teacher['id'])?:null);
  q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,(int)$section['grade_level'],$section['name']]);save_pupil_details($id,$details);
  q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$teacher['id'],$id]);
  if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$teacher['id']]);

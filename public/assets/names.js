@@ -36,15 +36,15 @@
 
  const grid=document.querySelector('[data-bk]');if(!grid)return;
  const body=grid.querySelector('[data-bk-body]'),tpl=grid.querySelector('[data-bk-tpl]'),count=grid.querySelector('[data-bk-count]'),label=grid.querySelector('[data-bk-label]'),go=grid.querySelector('[data-bk-go]');
- const MAX=300,rows=()=>[...body.querySelectorAll('[data-bk-row]')];
+ const MAX=300,rows=()=>[...body.querySelectorAll('[data-bk-row]')],who=grid.dataset.who||'pupil';   // the pupils' list, or the admin's teacher list
  const cell=(tr,k)=>tr.querySelector('[name^="t['+k+']"]');
  const many=()=>grid.dataset.mode==='many',lvAll=grid.querySelector('[data-bk-lvall]'),topSec=grid.querySelector('.bk-onesec [data-sx-select]');
  function check(tr){
-  const last=cell(tr,'last').value.trim(),first=cell(tr,'first').value.trim(),mid=cell(tr,'middle').value.trim(),lrn=cell(tr,'lrn').value.replace(/[\s\-]/g,'');
+  const last=cell(tr,'last').value.trim(),first=cell(tr,'first').value.trim(),mid=cell(tr,'middle').value.trim(),lrn=cell(tr,'lrn')?cell(tr,'lrn').value.replace(/[\s\-]/g,''):'',tsec=cell(tr,'section')?cell(tr,'section').value.trim():'',gr=cell(tr,'grade');
   const sex=tr.querySelector('[name^="t[sex]"]:checked'),st=tr.querySelector('[data-bk-st]');
-  if(!last&&!first&&!mid&&!lrn){tr.classList.remove('err');tr.dataset.state='';delete st.dataset.server;st.textContent='';return '';}
+  if(!last&&!first&&!mid&&!lrn&&!tsec){tr.classList.remove('err');tr.dataset.state='';delete st.dataset.server;st.textContent='';return '';}
   if(many()&&!cell(tr,'sec').value){const up=rows().slice(0,rows().indexOf(tr)).reverse().find(r=>cell(r,'sec').value);if(up)cell(tr,'sec').value=cell(up,'sec').value;}   // same section as the pupil above
-  const need=!first?'Type the first name':!last?'Type the last name':!sex?'Choose M or F':many()&&!cell(tr,'sec').value?'Choose a section':lrn&&!/^\d{12}$/.test(lrn)?'LRN needs 12 digits':'';
+  const need=!first?'Type the first name':!last?'Type the last name':!sex?'Choose M or F':many()&&!cell(tr,'sec').value?'Choose a section':lrn&&!/^\d{12}$/.test(lrn)?'LRN needs 12 digits':tsec&&gr&&!gr.value?'Choose the grade of the section':'';
   if(st.dataset.server&&!need)return tr.dataset.state='bad';   // the server's note stays until the row is changed
   delete st.dataset.server;tr.classList.toggle('err',!!need);tr.dataset.state=need?'bad':'ok';
   st.innerHTML=need?'<span class="bad"></span>':'<span class="ok">✓ Ready</span>';if(need)st.firstChild.textContent=need;
@@ -53,15 +53,15 @@
  function tally(){
   let ok=0,bad=0;rows().forEach(tr=>{const s=tr.dataset.state;if(s==='ok')ok++;else if(s==='bad')bad++;});
   count.textContent=ok||bad?ok+' ready'+(bad?' · '+bad+' to fix':''):'';
-  label.textContent=ok?'Create '+ok+' pupil account'+(ok===1?'':'s'):'Create pupil accounts';
+  label.textContent=ok?'Create '+ok+' '+who+' account'+(ok===1?'':'s'):'Create '+who+' accounts';
   go.disabled=!ok||bad>0;
  }
  function more(n){
   const have=rows().length;for(let i=have;i<Math.min(MAX,have+n);i++){
    const tr=tpl.content.firstElementChild.cloneNode(true);
    tr.querySelectorAll('[name]').forEach(el=>{el.name=el.name.replace('[__]','['+i+']');});
-   tr.querySelectorAll('input:not([type=radio])').forEach(el=>{el.setAttribute('aria-label',el.getAttribute('aria-label').replace(/pupil $/,'pupil '+(i+1)));});
-   tr.querySelector('[data-bk-n]').textContent=i+1;const lv=cell(tr,'level');if(lvAll&&[...lv.options].some(o=>o.value===lvAll.value))lv.value=lvAll.value;body.appendChild(tr);}
+   tr.querySelectorAll('input:not([type=radio])').forEach(el=>{el.setAttribute('aria-label',el.getAttribute('aria-label').replace(/(pupil|teacher) $/,'$1 '+(i+1)));});
+   tr.querySelector('[data-bk-n]').textContent=i+1;const lv=cell(tr,'level');if(lv&&lvAll&&[...lv.options].some(o=>o.value===lvAll.value))lv.value=lvAll.value;body.appendChild(tr);}
   grid.querySelector('[data-bk-more]').hidden=rows().length>=MAX;
  }
  /* one section for everyone, or a section on each row */
@@ -81,7 +81,7 @@
   const tr=el.closest('[data-bk-row]'),all=rows(),i=all.indexOf(tr);const col=el.type==='radio'?'sex':(el.name.match(/^t\[(\w+)\]/)||[])[1];
   if(i===all.length-1)more(10);const next=rows()[i+1];if(!next)return;
   // a new pupil starts at the Last name; inside a column Enter keeps to that column
-  const target=['lrn','sex','sec','level'].includes(col)?cell(next,'last'):cell(next,col)||cell(next,'last');target.focus();if(target.select)target.select();
+  const target=['lrn','sex','sec','level','grade','section'].includes(col)?cell(next,'last'):cell(next,col)||cell(next,'last');target.focus();if(target.select)target.select();
  });
  grid.querySelector('[data-bk-more]').addEventListener('click',()=>{const n=rows().length;more(10);const r=rows()[n];if(r)cell(r,'last').focus();});
  grid.addEventListener('submit',e=>{if(go.disabled){e.preventDefault();const bad=rows().find(tr=>tr.dataset.state==='bad');if(bad)cell(bad,'last').focus();}});
