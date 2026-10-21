@@ -5842,3 +5842,15 @@ html.dark .pc-tip-card{background:#16231b;color:#e8f0ea}html.dark .pc-tip li{bac
 /* Teachers page: batch delete bar */
 .tbulk{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--g50);border:1px solid var(--g100);border-radius:14px;padding:8px 12px;margin:0 0 12px}.tbulk>span{font-weight:600;font-size:.85rem}.tbulk .btn{min-height:38px;padding:6px 12px;font-size:.82rem}.tbulk small{flex-basis:100%}
 .ws-table td.mp-c,.ws-table th.mp-c{width:34px;text-align:center}
+/* Passes: long names shrink so the ID and password always fit (tk_name_fit in views.php) */
+.tk-name.tk-n1{font-size:calc(10pt*var(--u,1))}.tk-name.tk-n2{font-size:calc(8.8pt*var(--u,1))}.tk-name.tk-n3{font-size:calc(7.8pt*var(--u,1))}.tk-name.tk-n4{font-size:calc(7pt*var(--u,1))}
+.tk-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:normal;word-break:normal}
+.tk-name.tk-n2+.tk-sec,.tk-name.tk-n3+.tk-sec,.tk-name.tk-n4+.tk-sec{margin-bottom:calc(.6mm*var(--u,1))}
+.tk.tk-tight .tk-info{padding-top:calc(1mm*var(--u,1));padding-bottom:calc(1mm*var(--u,1))}.tk.tk-tight .tk-sec{margin:0 0 calc(.4mm*var(--u,1))}.tk.tk-tight .tk-id{font-size:calc(13pt*var(--u,1));margin:0 0 calc(.5mm*var(--u,1))}.tk.tk-tight .tk-lab{line-height:1.15}.tk.tk-tight .tk-pw{margin-top:calc(.2mm*var(--u,1));padding-top:calc(.5mm*var(--u,1));padding-bottom:calc(.5mm*var(--u,1))}
+.import-card table:not(.bk-grid) td:nth-child(3){white-space:nowrap}
+.imp-lvall{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 12px;font-weight:700}.imp-lvall svg{width:18px;height:18px}.imp-lvall select{width:auto;min-width:220px}.imp-lvall small{font-weight:400;color:var(--muted,#5b6b5f)}.import-preview select.imp-lv{min-width:150px;padding:6px 8px;font-size:.92rem}
+.import-card label.imp-lvall{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;text-align:left;padding:10px 14px;border-radius:14px;background:rgba(21,128,61,.07);border:1px solid rgba(21,128,61,.18)}.import-card label.imp-lvall select{margin:0}
+.hp-opt.hp-bug{border-style:dashed}.hp-what{display:grid;gap:6px;margin:6px 0 10px;font-weight:700;font-size:.95rem}.hp-what textarea{width:100%;resize:vertical;min-height:58px;font:inherit;font-weight:400;padding:8px 10px;border-radius:12px}
+.bug-table td:nth-child(1){white-space:nowrap}.bug-table td:nth-child(3){min-width:280px}.bug-card .bk-tabs{margin-bottom:12px}.bug-empty{padding:18px 4px}
+.bug-acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.bug-acts form{margin:0}
+.tk-save{margin-left:auto}@media print{.tk-save{display:none!important}}

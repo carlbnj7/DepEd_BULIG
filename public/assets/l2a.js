@@ -50,7 +50,8 @@
  /* ---------- one value per answer part ---------- */
  const val=new Map();
  const key=(c,p)=>c.dataset.n+':'+p;
- function cardAnswer(c){const kinds=(c.dataset.kinds||'').split(' ').filter(Boolean);if(!kinds.length||kinds.every(k=>k==='look'))return '(seen)';
+ const skip=new Set();   // pages skipped with "Something is not working" (v176): no score
+ function cardAnswer(c){if(skip.has(c.dataset.n))return '(skipped)';const kinds=(c.dataset.kinds||'').split(' ').filter(Boolean);if(!kinds.length||kinds.every(k=>k==='look'))return '(seen)';
   return kinds.map((k,p)=>k==='look'?'':(val.get(key(c,p))||'')).filter(Boolean).join(' · ');}
  function needs(c){return (c.dataset.kinds||'').split(' ').some(k=>k&&k!=='look');}
  function collect(){if(ro)return;out.value='BULIG card answers\n'+cards.map(c=>'Card '+c.dataset.n+(c.dataset.t?' (no. '+c.dataset.t+')':'')+': '+cardAnswer(c)).join('\n')+triesLine();paintDots();}
@@ -193,6 +194,14 @@
   if(next)next.hidden=last||saved;if(send&&!saved)send.hidden=!last;if(done&&ro)done.hidden=!last;paintDots();
   const top=$('.l2-dir');if(top&&i!==undefined&&top.getBoundingClientRect().top<0)top.scrollIntoView({block:'start',behavior:'smooth'});}
  prev.addEventListener('click',()=>show(at-1));
+ /* "I need help › Something is not working": report it and skip only this page; the other pages keep their answers (v176). */
+ const hf=$('.hp-sheet form');
+ if(hf&&!ro)hf.addEventListener('submit',async e=>{if(!hf.querySelector('input[name="reason"][value="bug"]:checked'))return;e.preventDefault();
+  const c=cards[at],fd=new FormData(hf);fd.set('card',c.dataset.n);fd.set('ajax','1');
+  try{await fetch(location.href,{method:'POST',body:fd,credentials:'same-origin',headers:{'Accept':'application/json'}});}catch(_){}
+  skip.add(c.dataset.n);cst[c.dataset.n]='skip';c.classList.add('l2-skipped');collect();const d=hf.closest('dialog');if(d&&d.close)d.close();
+  const t=document.createElement('div');t.className='hp-toast';t.setAttribute('role','status');t.textContent=at<cards.length-1?'Thank you! You told the BULIG team. This page is skipped. Here is the next one.':'Thank you! You told the BULIG team. This page is skipped. Tap Done to finish.';
+  document.body.appendChild(t);setTimeout(()=>t.classList.add('hp-gone'),6000);if(at<cards.length-1)show(at+1);else show(at);},true);
  if(next)next.addEventListener('click',async()=>{const c=cards[at];if(keyed(c)&&!autoOnly(c)&&!cst[c.dataset.n]&&cardAnswer(c)!==''&&!await checkCard(c))return;show(at+1);});
  /* Submit: say which cards are still empty first. */
  let sure=false;
