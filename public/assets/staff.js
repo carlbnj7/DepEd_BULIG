@@ -62,3 +62,20 @@ window.addEventListener('click',e=>{const b=e.target.closest('[data-need-tick]')
  if(!n){e.preventDefault();e.stopImmediatePropagation();alert('Tick at least one first.');return;}
  const who=b.value==='delete_pupils'?(n===1?'pupil':'pupils'):(n===1?'teacher':'teachers');
  if(!b.dataset.base)b.dataset.base=b.dataset.confirm;b.dataset.confirm='Delete '+n+' ticked '+who+'? '+b.dataset.base.replace(/^Delete the ticked [a-z]+ for good\? /,'');},true);
+/* Passes: if a long name still pushes the ID or password out of the pass, first tighten the spacing, then shrink the name a little (never below 70%). */
+(function(){const over=(i,m)=>i.getBoundingClientRect().bottom>m.getBoundingClientRect().bottom-2;
+ const fit=()=>document.querySelectorAll('.tk').forEach(t=>{const m=t.querySelector('.tk-main'),i=t.querySelector('.tk-info'),n=t.querySelector('.tk-name');if(!m||!i||!n)return;
+  t.classList.remove('tk-tight');n.style.fontSize='';if(!over(i,m))return;t.classList.add('tk-tight');
+  const f0=parseFloat(getComputedStyle(n).fontSize);let f=f0;while(over(i,m)&&f>f0*0.7){f*=0.94;n.style.fontSize=f+'px';}});
+ if(document.querySelector('.tk')){fit();window.addEventListener('load',fit);window.addEventListener('beforeprint',fit);document.addEventListener('click',e=>{if(e.target.closest('[data-tk-size],button'))setTimeout(fit,60);});}})();
+/* Class list import: "Starting level for every pupil" sets each pupil's level box (each can still be changed). */
+document.addEventListener('change',e=>{const a=e.target.closest('[data-lv-all]');if(!a||a.value==='')return;document.querySelectorAll('select[data-lv]').forEach(s=>{s.value=a.value;});});
+/* Passes: "Save as image" saves every pass on the page as a PNG named after its ID (v176). */
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-tk-save]');if(!b||b.disabled)return;
+ const passes=[...document.querySelectorAll('.tk')];if(!passes.length)return;const label=b.innerHTML;b.disabled=true;b.textContent='Saving…';
+ try{if(!window.html2canvas)await new Promise((ok,no)=>{const s=document.createElement('script');s.src=b.dataset.src;s.onload=ok;s.onerror=no;document.head.appendChild(s);});
+  for(const t of passes){const c=await window.html2canvas(t,{scale:3,backgroundColor:'#ffffff',useCORS:true,logging:false});
+   const a=document.createElement('a');a.download=((t.querySelector('.tk-id')||{}).textContent||'pass').trim().replace(/[^A-Za-z0-9_-]+/g,'')+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+   await new Promise(r=>setTimeout(r,350));}
+ }catch(_){alert('The pass could not be saved as an image. Please try again.');}
+ b.disabled=false;b.innerHTML=label;});

@@ -1,5 +1,5 @@
 <?php
-/** Bulk pupil import: read a class list (CSV or Excel .xlsx), check every row, then create the accounts. */
+/** Bulk pupil import: read a class list (CSV, Excel .xlsx or .xls such as the DepEd SF1 from LIS), check every row, then create the accounts. */
 const IMPORT_MAX_ROWS=300;
 
 function create_pupil_account(array $teacher,string $name,array $section,int $level,array $details,?array $parts=null):string{
@@ -12,12 +12,12 @@ function create_pupil_account(array $teacher,string $name,array $section,int $le
  return $public;
 }
 
-/** Rows of cell strings from an uploaded .csv or .xlsx file. */
+/** Rows of cell strings from an uploaded .csv, .xlsx or .xls file. */
 function import_read_file(string $path,string $original):array{
  $ext=strtolower(pathinfo($original,PATHINFO_EXTENSION));
- if($ext==='xls')fail('This is an old Excel file (.xls). In Excel choose File → Save As → Excel Workbook (.xlsx) or CSV, then upload again.');
+ if($ext==='xls'){require_once __DIR__.'/xls_reader.php';return xls_read($path,IMPORT_MAX_ROWS);}
  if($ext==='xlsx')return import_read_xlsx($path);
- if(!in_array($ext,['csv','txt'],true))fail('Upload a CSV file or an Excel file (.xlsx).');
+ if(!in_array($ext,['csv','txt'],true))fail('Upload a CSV file or an Excel file (.xlsx or .xls).');
  $text=(string)file_get_contents($path);
  if(str_starts_with($text,"\xFF\xFE")||str_starts_with($text,"\xFE\xFF"))$text=mb_convert_encoding(substr($text,2),'UTF-8',str_starts_with($text,"\xFF\xFE")?'UTF-16LE':'UTF-16BE');
  $text=preg_replace('/^\xEF\xBB\xBF/','',$text);
@@ -67,26 +67,45 @@ function import_columns(array $header):array{
   elseif(!isset($cols['sex'])&&preg_match('/^(sex|gender)\b/',$k))$cols['sex']=$i;}
  return $cols;
 }
-function import_name_case(string $s):string{$s=trim(preg_replace('/\s+/',' ',$s));return $s!==''&&($s===mb_strtoupper($s)||$s===mb_strtolower($s))?mb_convert_case(mb_strtolower($s),MB_CASE_TITLE,'UTF-8'):$s;}
+function import_name_case(string $s):string{$s=trim(preg_replace('/\s+/',' ',$s));return $s!==''&&(str_replace('ñ','Ñ',$s)===mb_strtoupper($s)||$s===mb_strtolower($s))?mb_convert_case(mb_strtolower($s),MB_CASE_TITLE,'UTF-8'):$s;}
 function import_level(string $v,int $default):?int{
  $v=strtoupper(trim(str_ireplace('level','',$v)));if($v==='')return $default;if(in_array($v,['BULIG','CHECK','READING CHECK','?'],true)&&function_exists('rc_ready')&&rc_ready())return 0;
  $map=['1'=>1,'2A'=>2,'2B'=>3,'3'=>4,'4'=>5,'5'=>6,'6'=>7,'7'=>8];return $map[$v]??null;
+}
+
+/** DepEd SF1 (School Register): the grade and section are written once above the table ("Grade Level  Grade 6", "Section  ROSE"). */
+function import_sheet_class(array $rows,int $headerRow):array{
+ $out=[];foreach(array_slice($rows,0,$headerRow) as $r){$r=array_values($r);foreach($r as $i=>$c){$k=strtolower(trim(preg_replace('/\s+/',' ',$c)));$key=$k==='grade level'||$k==='grade level:'?'grade':($k==='section'||$k==='section:'?'section':null);
+  if($key&&!isset($out[$key]))for($j=$i+1;$j<count($r);$j++)if(trim($r[$j])!==''){$out[$key]=trim($r[$j]);break;}}}
+ if(isset($out['grade'])){$g=(int)preg_replace('/\D/','',$out['grade']);$out['grade']=$g>=1&&$g<=6?$g:0;}
+ return $out;
+}
+/** SF1 names: "DELA CRUZ,JUAN JR., SANTOS" (last, first, middle). Returns [first, middle, last, extension]. */
+function import_sf1_name(string $name):?array{
+ $p=array_map('trim',explode(',',$name));if(count($p)<3||$p[0]===''||$p[1]==='')return null;
+ [$last,$first]=$p;$middle=trim(implode(' ',array_slice($p,2)));$ext='';
+ if(preg_match('/^(.*\S)\s+(JR\.?|SR\.?|II|III|IV)$/i',$first,$m)){$first=$m[1];$ext=(string)name_ext_norm($m[2]);}
+ return [import_name_case($first),import_name_case($middle),import_name_case($last),$ext];
 }
 
 /** Check every row; nothing is saved yet. */
 function import_check(array $rows,array $teacher,int $defaultSection,int $defaultLevel):array{
  $hi=null;foreach(array_slice($rows,0,10,true) as $i=>$r){$c=import_columns($r);if(isset($c['name'])||isset($c['last'])||isset($c['first'])){$hi=$i;$cols=$c;break;}}
  if($hi===null)fail('No header row found. The first row must have column names such as Name (or Last name and First name), LRN, Sex and Section. Download the template to see the format.');
+ $sheet=isset($cols['section'])?[]:import_sheet_class($rows,$hi);$sf1=isset($sheet['section']);
  $sections=teacher_sections((int)$teacher['id']);$default=null;foreach($sections as $s)if((int)$s['id']===$defaultSection)$default=$s;
- $out=[];$seenLrn=[];$seenName=[];
+ $out=[];$seenLrn=[];$seenName=[];$newSeen=[];
  foreach(array_slice($rows,$hi+1) as $n=>$r){
   $get=fn($k)=>isset($cols[$k])?trim((string)($r[$cols[$k]]??'')):'';
   if(!array_filter($r,fn($c)=>trim((string)$c)!==''))continue;
+  if($sf1&&preg_match('/^list and code/i',trim((string)($r[0]??''))))break;   // SF1: the legend and signatures come after the pupils
+  if(str_starts_with($get('name'),'<==')||($sf1&&$get('name')===''))continue;     // SF1: "<=== TOTAL MALE" lines
   if(count($out)>=IMPORT_MAX_ROWS)fail('A class list can have up to '.IMPORT_MAX_ROWS.' pupils per upload. Split the file and upload it in parts.');
-  $name=$get('name');
+  $name=$get('name');$sfName=$name!==''?import_sf1_name($name):null;
   if($name!==''&&substr_count($name,',')===1){[$l,$f]=array_map('trim',explode(',',$name));if($l!==''&&$f!=='')$name=$f.' '.$l;}   // "DELA CRUZ, JUAN S." -> "JUAN S. DELA CRUZ"
   $ext=name_ext_norm($get('ext'));$parts=null;$full='';
-  if($name===''){[$f,$m,$l]=[import_name_case($get('first')),import_name_case($get('middle')),import_name_case($get('last'))];$name=name_compose($f,$m,$l,(string)$ext);$full=trim(preg_replace('/\s+/',' ',"$f $m $l $ext"));if($f!==''&&$l!=='')$parts=[$f,$m,$l,(string)$ext];}
+  if($sfName){[$f,$m,$l,$x]=$sfName;$ext=$ext?:$x;$name=name_compose($f,$m,$l,(string)$ext);$full=trim(preg_replace('/\s+/',' ',"$f $m $l $ext"));$parts=[$f,$m,$l,(string)$ext];}
+  elseif($name===''){[$f,$m,$l]=[import_name_case($get('first')),import_name_case($get('middle')),import_name_case($get('last'))];$name=name_compose($f,$m,$l,(string)$ext);$full=trim(preg_replace('/\s+/',' ',"$f $m $l $ext"));if($f!==''&&$l!=='')$parts=[$f,$m,$l,(string)$ext];}
   else $name=trim(import_name_case($name).' '.$ext);
   $name=trim(preg_replace('/\s+/',' ',$name));
   $lrn=preg_replace('/[\s\-\'’]/','',$get('lrn'));$sexRaw=strtolower($get('sex'));
@@ -99,11 +118,11 @@ function import_check(array $rows,array $teacher,int $defaultSection,int $defaul
   if(!$sex)$err($sexRaw===''?'Sex is missing (M or F).':'Sex must be M or F.');
   if($lrn!==''&&!preg_match('/^[0-9]{12}$/D',$lrn))$err('LRN must be 12 digits (or leave it blank).');
   $grade=$get('grade');$grade=$grade!==''?(int)preg_replace('/\D/','',$grade):0;
-  $secName=$get('section');
+  $secName=$get('section');if($secName===''&&!$default&&$sf1){$secName=$sheet['section'];$grade=$grade?:(int)($sheet['grade']??0);}   // SF1: the class written above the table
   if($secName!==''){
    $match=null;foreach($sections as $s)if(strcasecmp(trim($s['name']),$secName)===0&&(!$grade||(int)$s['grade_level']===$grade))$match=$s;
    if($match)$row['section']=$match;
-   elseif($grade>=1&&$grade<=6){$row['new_section']=['name'=>mb_substr(import_name_case($secName),0,80),'grade_level'=>$grade];$row['notes'][]='New section “'.import_name_case($secName).'” (Grade '.$grade.') will be added.';}
+   elseif($grade>=1&&$grade<=6){$row['new_section']=['name'=>mb_substr($sf1?$secName:import_name_case($secName),0,80),'grade_level'=>$grade];$nk=mb_strtolower($secName).'|'.$grade;if(!isset($newSeen[$nk])){$newSeen[$nk]=1;$row['notes'][]='New section “'.($sf1?$secName:import_name_case($secName)).'” (Grade '.$grade.') will be added.';}}
    elseif($default)$err('Section “'.$secName.'” is not one of your sections. Add a Grade column or create the section first.');
    else $err('Section “'.$secName.'” is not one of your sections. Add a Grade column or create the section first.');
   }elseif($default)$row['section']=$default;
@@ -139,7 +158,9 @@ function import_actions(string $action):void{
  if($action==='import_confirm'){
   $u=require_role('teacher');$p=$_SESSION['pupil_import']??null;
   if(!$p||!hash_equals($p['token'],(string)($_POST['token']??''))||(int)$p['teacher']!==(int)$u['id'])fail('This import has expired. Upload the class list again.');
-  import_create($p['rows'],$u,$p['file']);
+  $rows=$p['rows'];$lv=(array)($_POST['lv']??[]);$rc=function_exists('rc_ready')&&rc_ready();   // the starting level the teacher chose for each pupil
+  foreach($rows as $i=>&$r)if($r['status']==='ok'&&isset($lv[$i])){$v=(int)$lv[$i];if(($v===0&&$rc)||($v>0&&val('SELECT id FROM bulig_levels WHERE id=?',[$v])))$r['level']=$v;}unset($r);
+  import_create($rows,$u,$p['file']);
  }
  if($action==='import_typed'){
   $u=require_role('teacher');$tid=(int)$u['id'];$many=($_POST['sec_mode']??'')==='many';$level=selected_start_level(1,true);
@@ -201,10 +222,13 @@ function import_card(array $u):void{
   $ok=count(array_filter($p['rows'],fn($r)=>$r['status']==='ok'));$skip=count(array_filter($p['rows'],fn($r)=>$r['status']==='skip'));$bad=count(array_filter($p['rows'],fn($r)=>$r['status']==='error'));
   echo '<p class="import-summary"><strong>'.e($p['file']).'</strong> · <span class="pill ok">'.$ok.' ready</span> <span class="pill skip">'.$skip.' already in BULIG</span> <span class="pill bad">'.$bad.' need fixing</span></p>';
   if($bad)echo '<p class="muted">Rows that need fixing will be left out. Fix them in your file and upload again, or import the ready rows now and add the rest later.</p>';
+  $rc=function_exists('rc_ready')&&rc_ready();$lvs=array_map('intval',array_column(rows('SELECT id FROM bulig_levels ORDER BY id'),'id'));
+  $opts=fn(int $sel)=>($rc?'<option value="0"'.($sel===0?' selected':'').'>Reading check</option>':'').implode('',array_map(fn($id)=>'<option value="'.$id.'"'.($sel===$id?' selected':'').'>'.e(level_label($id)).'</option>',$lvs));
+  if($ok)echo '<label class="imp-lvall">'.icon('edit').'Starting level for every pupil<select data-lv-all><option value="">Choose to set all…</option>'.$opts(-1).'</select><small>You can still change any pupil below.</small></label>';
   echo '<div class="tablewrap import-preview"><table><thead><tr><th>Line</th><th>Name</th><th>LRN</th><th>Sex</th><th>Section</th><th>Start</th><th>Check</th></tr></thead><tbody>';
-  foreach($p['rows'] as $r){$sec=$r['section']??$r['new_section'];echo '<tr class="row-'.$r['status'].'"><td>'.$r['line'].'</td><td>'.e($r['name']?:'—').'</td><td>'.e($r['lrn']?:'—').'</td><td>'.e($r['sex']?ucfirst($r['sex']):'—').'</td><td>'.e($sec?'Grade '.$sec['grade_level'].' · '.$sec['name']:'—').'</td><td>'.e((int)$r['level']?level_label((int)$r['level']):'Reading check').'</td><td><span class="pill '.($r['status']==='ok'?'ok':($r['status']==='skip'?'skip':'bad')).'">'.($r['status']==='ok'?'Ready':($r['status']==='skip'?'Skip':'Fix')).'</span>'.($r['notes']?'<small>'.e(implode(' ',$r['notes'])).'</small>':'').'</td></tr>';}
+  foreach($p['rows'] as $i=>$r){$sec=$r['section']??$r['new_section'];echo '<tr class="row-'.$r['status'].'"><td>'.$r['line'].'</td><td>'.e($r['name']?:'—').'</td><td>'.e($r['lrn']?:'—').'</td><td>'.e($r['sex']?ucfirst($r['sex']):'—').'</td><td>'.e($sec?'Grade '.$sec['grade_level'].' · '.$sec['name']:'—').'</td><td>'.($r['status']==='ok'?'<select class="imp-lv" name="lv['.$i.']" form="imp-confirm" data-lv aria-label="Starting level for '.e($r['name']).'">'.$opts((int)$r['level']).'</select>':e((int)$r['level']?level_label((int)$r['level']):'Reading check')).'</td><td><span class="pill '.($r['status']==='ok'?'ok':($r['status']==='skip'?'skip':'bad')).'">'.($r['status']==='ok'?'Ready':($r['status']==='skip'?'Skip':'Fix')).'</span>'.($r['notes']?'<small>'.e(implode(' ',$r['notes'])).'</small>':'').'</td></tr>';}
   echo '</tbody></table></div><div class="import-actions">';
-  if($ok)echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="import_confirm"><input type="hidden" name="token" value="'.e($p['token']).'"><button class="btn primary">'.icon('check').'Create '.$ok.' pupil account'.($ok===1?'':'s').'</button></form>';
+  if($ok)echo '<form method="post" id="imp-confirm">'.csrf_field().'<input type="hidden" name="action" value="import_confirm"><input type="hidden" name="token" value="'.e($p['token']).'"><button class="btn primary">'.icon('check').'Create '.$ok.' pupil account'.($ok===1?'':'s').'</button></form>';
   echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="import_cancel"><button class="btn secondary">Cancel</button></form></div></section>';return;
  }
  if($mode==='done'&&$done){
@@ -214,9 +238,9 @@ function import_card(array $u):void{
  $tab=fn($k,$ic,$t)=>'<a href="?page=accounts&amp;mode=class&amp;how='.$k.'#import"'.($how===$k?' class="on" aria-current="page"':'').'>'.icon($ic).$t.'</a>';
  echo '<nav class="bk-tabs" aria-label="How to add the class">'.$tab('type','edit','Type the list').$tab('file','excel','Upload a file').'</nav>';
  if($how==='type'){echo import_typed_grid($sections).'</section>'.names_script();return;}
- echo '<ol class="import-steps"><li>Open your class list in Excel (or the DepEd SF1). Keep a header row with <strong>Name</strong> (or Last name, First name, Middle name, Extension), <strong>LRN</strong>, <strong>Sex</strong> and, if you like, <strong>Grade</strong>, <strong>Section</strong> and <strong>Starting level</strong>.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet — you will see every row first.</li><li>Press <strong>Create accounts</strong>, then download the login list to give each pupil their ID.</li></ol>';
- echo '<form method="post" enctype="multipart/form-data" class="formgrid import-form">'.csrf_field().'<input type="hidden" name="action" value="import_preview"><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><label class="import-file">Class list file (.xlsx or .csv)<input type="file" name="class_list" accept=".csv,.xlsx,.txt,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>';
- echo '<label>Section for pupils without one<select name="section_id"><option value="0">Use the Section column</option>';foreach($sections as $s)echo '<option value="'.$s['id'].'">Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';echo '</select></label>'.starting_level_field(function_exists('rc_ready')&&rc_ready()?0:1).'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' pupils, 2 MB. Sections not found are added when the file has a Grade column. Pupils already in BULIG (same LRN) are skipped.</small><button class="btn primary">'.icon('arrow').'Check the list</button></div></form></section>';
+ echo '<ol class="import-steps"><li><strong>Have the DepEd SF1 (School Register) from LIS?</strong> Upload it just as it is — BULIG takes the LRN, name, sex, grade and section from it and leaves the rest. Using your own list? Keep a header row with <strong>Name</strong> (or Last name, First name, Middle name, Extension), <strong>LRN</strong>, <strong>Sex</strong> and, if you like, <strong>Grade</strong>, <strong>Section</strong> and <strong>Starting level</strong>.</li><li>Upload the file (.xls, .xlsx or .csv). Nothing is saved yet — you will see every row first.</li><li>Press <strong>Create accounts</strong>, then download the login list to give each pupil their ID.</li></ol>';
+ echo '<form method="post" enctype="multipart/form-data" class="formgrid import-form">'.csrf_field().'<input type="hidden" name="action" value="import_preview"><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><label class="import-file">Class list file (SF1 .xls, .xlsx or .csv)<input type="file" name="class_list" accept=".csv,.xlsx,.xls,.txt,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>';
+ echo '<label>Section for pupils without one<select name="section_id"><option value="0">Use the Section column (or the SF1 section)</option>';foreach($sections as $s)echo '<option value="'.$s['id'].'">Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';echo '</select></label>'.starting_level_field(function_exists('rc_ready')&&rc_ready()?0:1).'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' pupils, 2 MB. Sections not found are added when the file has a Grade column. Pupils already in BULIG (same LRN) are skipped.</small><button class="btn primary">'.icon('arrow').'Check the list</button></div></form></section>';
 }
 
 /** "Type the list": one row per pupil. Enter goes to the next pupil; assets/names.js checks each row while typing.

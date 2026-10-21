@@ -2,17 +2,18 @@
 /* The "I need help" button on every lesson screen. Table: database/migrations/025_help_requests.sql (without it the button stays hidden). */
 
 function help_ready():bool{static $r=null;if($r===null){try{$r=(bool)one("SHOW TABLES LIKE 'help_requests'");}catch(Throwable $e){$r=false;}}return $r;}
-const HELP_REASONS=['question'=>'I don’t understand the question','sound'=>'I can’t hear the sound','answer'=>'I don’t know how to answer'];
+const HELP_REASONS=['question'=>'I don’t understand the question','sound'=>'I can’t hear the sound','answer'=>'I don’t know how to answer','bug'=>'Something is not working'];   // bug: goes to the administrator (Bug reports), v176
 /** The button and its sheet on every lesson screen (added by foot()). */
 function help_widget():string{
  $u=current_user();if(!$u||$u['role']!=='pupil'||($_GET['page']??'')!=='lesson'||!help_ready())return '';
  $lid=(int)($_GET['id']??0);$aid=(int)($_GET['activity']??0);if(!$lid)return '';
- $ic=['question'=>'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"/>','sound'=>'<path d="m11 4-5 4H3v8h3l5 4zm5 5 6 6m0-6-6 6"/>','answer'=>'<path d="M4 20h4L19 9l-4-4L4 16z"/>'];
+ $ic=['question'=>'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"/>','sound'=>'<path d="m11 4-5 4H3v8h3l5 4zm5 5 6 6m0-6-6 6"/>','answer'=>'<path d="M4 20h4L19 9l-4-4L4 16z"/>','bug'=>'<path d="M8 8a4 4 0 0 1 8 0v1H8z"/><rect x="7" y="9" width="10" height="11" rx="5"/><path d="M12 13v7M3 13h4m10 0h4M4 7l3 2m13-2-3 2M4 20l3-3m13 3-3-3"/>'];
  $h='';if(isset($_SESSION['help_toast'])){$h.='<div class="hp-toast" role="status">'.icon('check').'<span>'.e((string)$_SESSION['help_toast']).'</span></div>';unset($_SESSION['help_toast']);}
  $h.='<button type="button" class="hp-open" data-help-open aria-label="I need help">'.'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V6a1.5 1.5 0 0 1 3 0v4m0-1V4.5a1.5 1.5 0 0 1 3 0V10m0-4.5a1.5 1.5 0 0 1 3 0V11m0-3a1.5 1.5 0 0 1 3 0v6a7 7 0 0 1-7 7h-1a7 7 0 0 1-5.6-2.8L4 15.5a1.6 1.6 0 0 1 2.5-2L8 15"/></svg>'.'<span>I need help</span></button>';
  $h.='<dialog class="hp-sheet" aria-labelledby="hp-title"><form method="post" class="hp-card">'.csrf_field().'<input type="hidden" name="action" value="help_request"><input type="hidden" name="lesson_id" value="'.$lid.'"><input type="hidden" name="activity_id" value="'.$aid.'"><input type="hidden" name="back" value="'.e('?'.(string)($_SERVER['QUERY_STRING']??'')).'">';
  $h.='<h2 id="hp-title">I need help</h2><p>Tell your teacher what is hard. Your teacher gets your message, in class or at home.</p>';
- foreach(HELP_REASONS as $k=>$t)$h.='<label class="hp-opt"><input type="radio" name="reason" value="'.$k.'"'.($k==='question'?' checked':'').'><i><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.$ic[$k].'</svg></i><span>'.e($t).'</span></label>';
+ foreach(HELP_REASONS as $k=>$t)$h.='<label class="hp-opt'.($k==='bug'?' hp-bug':'').'"><input type="radio" name="reason" value="'.$k.'"'.($k==='question'?' checked':'').'><i><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.$ic[$k].'</svg></i><span>'.e($t).'</span></label>';
+ $h.='<label class="hp-what" data-bug-what hidden>What is not working? (you can skip this)<textarea name="note" maxlength="200" rows="2" placeholder="Example: the button does not work, the picture is missing"></textarea></label>';
  $h.='<p class="hp-off" data-help-off hidden>You are offline, so your message can’t be sent yet. In class, raise your hand. At home, ask a grown-up near you.</p><button class="btn primary hp-send">Tell my teacher</button><button type="button" class="btn quiet hp-cancel" data-help-close>Cancel</button></form></dialog>';
  return $h;
 }
@@ -22,7 +23,8 @@ function help_request(array $u):void{
  $lid=(int)($_POST['lesson_id']??0);$aid=(int)($_POST['activity_id']??0);
  if($lid&&!lesson_available($pid,$lid))go($back);
  /* One request per lesson every 5 minutes, so a tap-happy pupil does not flood the teacher. */
- if(val('SELECT 1 FROM help_requests WHERE pupil_id=? AND COALESCE(lesson_id,0)=? AND created_at>?',[$pid,$lid,date('Y-m-d H:i:s',time()-300)])){$_SESSION['help_toast']='Your teacher already got your message. They will help you as soon as they can.';go($back);}
+ if($r==='bug'){help_bug($u,$pid,$lid,$aid,$back);return;}
+ if(val('SELECT 1 FROM help_requests WHERE pupil_id=? AND COALESCE(lesson_id,0)=? AND reason<>? AND created_at>?',[$pid,$lid,'bug',date('Y-m-d H:i:s',time()-300)])){$_SESSION['help_toast']='Your teacher already got your message. They will help you as soon as they can.';go($back);}
  q('INSERT INTO help_requests(pupil_id,lesson_id,activity_id,reason) VALUES(?,?,?,?)',[$pid,$lid?:null,$aid?:null,$r]);
  /* where: the lesson and the activity ("Beginning blends › Your turn · sheet 2") */
  $l=$lid?one('SELECT title,subtitle FROM lessons WHERE id=?',[$lid]):null;$ln=$l?(trim((string)$l['subtitle'])!==''?trim((string)$l['subtitle']):(string)$l['title']):'';
@@ -30,6 +32,70 @@ function help_request(array $u):void{
  $first=explode(' ',trim((string)$u['name']))[0];
  notify_teachers($pid,'help',$first.' needs help',HELP_REASONS[$r].($where!==''?' · '.$where:'').($lid?' · '.level_label(lesson_level($lid)):''),'?page=pupil&id='.$pid);
  $_SESSION['help_toast']='Your teacher got your message. They will help you as soon as they can. While you wait, tap the speaker to listen again, or ask a grown-up near you.';go($back);
+}
+
+/** "Something is not working": saved for the administrator's Bug reports page (one notification per administrator,
+   so "Mark as fixed" works like the bell). It says where it happened and on which device. */
+function help_bug(array $u,int $pid,int $lid,int $aid,string $back):never{
+ if(val('SELECT COUNT(*) FROM help_requests WHERE pupil_id=? AND reason=? AND created_at>?',[$pid,'bug',date('Y-m-d H:i:s',time()-600)])>=3){if(!empty($_POST['ajax'])){header('Content-Type: application/json');echo json_encode(['ok'=>true,'dup'=>true]);exit;}$_SESSION['help_toast']='Thank you! We already got your reports. Your teacher can tell us more.';go($back);}
+ $card=max(0,min(999,(int)($_POST['card']??0)));$ajax=!empty($_POST['ajax']);   // card: the page of a card activity; only that page is skipped (in the browser)
+ if($lid&&!$aid&&($na=next_activity($pid,$lid)))$aid=(int)$na['id'];   // on the lesson screen: the activity the pupil is on now
+ q('INSERT INTO help_requests(pupil_id,lesson_id,activity_id,reason) VALUES(?,?,?,?)',[$pid,$lid?:null,$aid?:null,'bug']);
+ $skipped=$lid&&$aid&&!$card?help_bug_skip($pid,$lid,$aid):false;
+ $l=$lid?one('SELECT title,subtitle FROM lessons WHERE id=?',[$lid]):null;$a=$aid?one('SELECT title FROM activities WHERE id=?',[$aid]):null;
+ $where=($lid?level_label(lesson_level($lid)).' · ':'').($l?lesson_home_name($l):'').($a?' › '.$a['title']:'').($card?' › page '.$card:'').($lid?' (lesson '.$lid.($aid?', activity '.$aid:'').')':'');
+ $note=trim(preg_replace('/\s+/',' ',(string)($_POST['note']??'')));$note=mb_substr($note,0,200);
+ $body=($note!==''?'“'.$note.'” · ':'').$where.' · '.help_device((string)($_SERVER['HTTP_USER_AGENT']??'')).($skipped?' · Skipped for this pupil':($card?' · Page '.$card.' skipped for this pupil':''));
+ $title='Bug report from '.$u['name'].' ('.$u['public_id'].')';
+ foreach(rows("SELECT id FROM users WHERE role='admin' AND active=1") as $ad)notify((int)$ad['id'],'bug',$title,$body,'?page=bugs');
+ audit('bug_report',mb_substr($where.($note!==''?' · '.$note:''),0,250));
+ if($ajax){header('Content-Type: application/json');echo json_encode(['ok'=>true]);exit;}
+ if($skipped){$n=next_activity($pid,$lid);$_SESSION['help_toast']='Thank you! You told the BULIG team. You can skip this part for now. Here is the next one.';go('?page=lesson&id='.$lid.($n?'&activity='.(int)$n['id']:''));}
+ $_SESSION['help_toast']='Thank you! You told the BULIG team. They will fix it. You can try again, or go to another activity.';go($back);
+}
+/** A bug report skips the activity for this pupil, so they can go on: it counts as done, with no score (it does not lower their results). */
+function help_bug_skip(int $pid,int $lid,int $aid):bool{
+ $a=one('SELECT * FROM activities WHERE id=? AND lesson_id=? AND published=1',[$aid,$lid]);if(!$a||!lesson_available($pid,$lid))return false;
+ if(completion_ok(one('SELECT status FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid])))return false;
+ q("INSERT INTO activity_completion(pupil_id,activity_id,response,prompt_snapshot,activity_revision,status,score,max_score,feedback,submitted_at,reviewed_at) VALUES(?,?,?,?,?,'completed',NULL,NULL,?,NOW(),NOW())
+    ON DUPLICATE KEY UPDATE status='completed',score=NULL,max_score=NULL,feedback=VALUES(feedback),reviewed_at=NOW()",[$pid,$aid,'[Skipped: bug reported]',(string)($a['prompt']??''),(int)($a['revision']??1),'Skipped because the pupil reported that something was not working.']);
+ return true;
+}
+/** "Android phone · Chrome" from the browser's user agent. */
+function help_device(string $ua):string{
+ $os=preg_match('/iPhone|iPad|iPod/i',$ua)?(stripos($ua,'iPad')!==false?'iPad':'iPhone'):(preg_match('/Android/i',$ua)?(preg_match('/Mobile/i',$ua)?'Android phone':'Android tablet'):(preg_match('/Windows/i',$ua)?'Windows computer':(preg_match('/Macintosh/i',$ua)?'Mac':(preg_match('/CrOS/i',$ua)?'Chromebook':(preg_match('/Linux/i',$ua)?'Linux computer':'Device')))));
+ $br=preg_match('/Edg\//',$ua)?'Edge':(preg_match('/SamsungBrowser/',$ua)?'Samsung Internet':(preg_match('/OPR\/|Opera/',$ua)?'Opera':(preg_match('/Firefox|FxiOS/',$ua)?'Firefox':(preg_match('/Chrome|CriOS/',$ua)?'Chrome':(preg_match('/Safari/',$ua)?'Safari':'browser')))));
+ return $os.' · '.$br;
+}
+/** Administrator: Bug reports from pupils (?page=bugs). */
+function bugs_view(array $u):void{
+ $f=($_GET['show']??'')==='fixed'?'fixed':'open';
+ $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=? AND kind='bug' AND read_at IS ".($f==='open'?'NULL':'NOT NULL')." ORDER BY created_at DESC,id DESC LIMIT 200",[(int)$u['id']]):[];
+ $open=notif_ready()?(int)val("SELECT COUNT(*) FROM notifications WHERE user_id=? AND kind='bug' AND read_at IS NULL",[(int)$u['id']]):0;
+ $dl='<a class="btn secondary" href="?page=bugs_csv&amp;show='.$f.'">'.icon('arrow').'Download '.($f==='open'?'open':'fixed').' reports (CSV)</a><a class="btn quiet" href="?page=bugs_csv&amp;show=all">Download all</a>';
+ admin_heading('SYSTEM · BUG REPORTS','Bug reports from pupils.','When something does not work, pupils tap I need help › Something is not working. Each report says where it happened and on which device. The pupil skips that activity and goes on to the next one (it gets no score).','<div class="bug-acts">'.$dl.($open?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn secondary" data-confirm="Mark all '.$open.' open reports as fixed?">'.icon('check').'Mark all as fixed</button></form>':'').'</div>');
+ echo '<section class="card bug-card"><nav class="bk-tabs" aria-label="Show"><a href="?page=bugs"'.($f==='open'?' class="on" aria-current="page"':'').'>'.icon('alert').'Open ('.$open.')</a><a href="?page=bugs&amp;show=fixed"'.($f==='fixed'?' class="on" aria-current="page"':'').'>'.icon('check').'Fixed</a></nav>';
+ if(!$list){echo '<p class="muted bug-empty">'.($f==='open'?'No open bug reports. Well done!':'No fixed reports yet.').'</p></section>';return;}
+ echo '<div class="tablewrap"><table class="bug-table"><thead><tr><th>When</th><th>Pupil</th><th>What and where</th><th></th></tr></thead><tbody>';
+ foreach($list as $n){$who=preg_replace('/^Bug report from /','',(string)$n['title']);
+  echo '<tr><td>'.e(date('M j, g:i A',strtotime((string)$n['created_at']))).'</td><td>'.e($who).'</td><td>'.e((string)$n['body']).'</td><td>'.($f==='open'?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed"><input type="hidden" name="id" value="'.(int)$n['id'].'"><button class="btn primary small">'.icon('check').'Fixed</button></form>':'<small class="muted">Fixed '.e(date('M j',strtotime((string)$n['read_at']))).'</small>').'</td></tr>';}
+ echo '</tbody></table></div></section>';
+}
+/** Bug reports as a CSV file (opens in Excel): the open ones, the fixed ones or all. */
+function bugs_csv(array $u):never{
+ $f=(string)($_GET['show']??'all');$w=$f==='open'?' AND read_at IS NULL':($f==='fixed'?' AND read_at IS NOT NULL':'');
+ $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=? AND kind='bug'".$w." ORDER BY created_at DESC,id DESC",[(int)$u['id']]):[];
+ header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-bug-reports-'.date('Y-m-d').'.csv"');
+ $h=fopen('php://output','w');fwrite($h,"\xEF\xBB\xBF");fputcsv($h,['Date and time','Pupil','What the pupil wrote','Where','Device','Status','Fixed on'],',','"','\\');
+ foreach($list as $n){$b=(string)$n['body'];$note='';if(preg_match('/^“(.*?)” · (.*)$/su',$b,$m)){$note=$m[1];$b=$m[2];}
+  $b=preg_replace('/ · Skipped for this pupil$/','',$b,1,$sk);$parts=explode(' · ',$b);$dev=count($parts)>=2?implode(' · ',array_splice($parts,-2)):'';
+  fputcsv($h,[date('Y-m-d H:i',strtotime((string)$n['created_at'])),preg_replace('/^Bug report from /','',(string)$n['title']),$note,implode(' · ',$parts).($sk?' (skipped for this pupil)':''),$dev,$n['read_at']?'Fixed':'Open',$n['read_at']?date('Y-m-d',strtotime((string)$n['read_at'])):''],',','"','\\');}
+ exit;
+}
+function bug_fixed(array $u,bool $all):never{
+ if(notif_ready()){if($all)q("UPDATE notifications SET read_at=NOW() WHERE user_id=? AND kind='bug' AND read_at IS NULL",[(int)$u['id']]);
+  else q("UPDATE notifications SET read_at=COALESCE(read_at,NOW()) WHERE id=? AND user_id=? AND kind='bug'",[(int)($_POST['id']??0),(int)$u['id']]);}
+ flash($all?'All reports marked as fixed.':'Marked as fixed.');go('?page=bugs');
 }
 
 /** Teacher Overview: "Asked for help". The pupils who tapped "I need help" in the past 7 days, waiting ones first.
