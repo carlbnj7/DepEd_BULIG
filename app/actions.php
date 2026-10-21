@@ -59,6 +59,7 @@ function action():void{
  if($action==='logout'){$_SESSION=[];session_destroy();go('?page=login');}
  if($action==='delete_section'){sections_action($action);return;}
  if($action==='delete_pupil'||$action==='delete_teacher'){account_delete_action($action);return;}
+ if($action==='delete_pupils'||$action==='delete_teachers')account_delete_many($action);
  if($action==='save_section'){
   $u=require_role('teacher');$sid=(int)($_POST['id']??0);$name=import_name_case(mb_substr((string)($_POST['name']??''),0,80));$grade=(int)($_POST['grade_level']??0);
   if(!$name||strlen($name)>80||$grade<1||$grade>6)fail('Enter a section name and grade from 1 to 6.');

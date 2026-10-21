@@ -153,7 +153,7 @@ class Client:
 
     def req(self, path, data=None, accept_json=False):
         headers = {'Accept': 'application/json'} if accept_json else {}
-        body = urllib.parse.urlencode(data).encode() if data is not None else None
+        body = urllib.parse.urlencode(data, doseq=True).encode() if data is not None else None
         r = urllib.request.Request(BASE + path, data=body, headers=headers)
         try:
             resp = self.op.open(r, timeout=60)
@@ -549,6 +549,17 @@ def test_delete_pupil(t):
     _, _, text = t.req('index.php', {'action': 'delete_pupil', 'id': pid, 'confirm': 'delete', 'csrf': t.token('?page=dashboard')})
     left = q(f"SELECT (SELECT COUNT(*) FROM users WHERE id={int(pid)})+(SELECT COUNT(*) FROM pupils WHERE user_id={int(pid)})+(SELECT COUNT(*) FROM pupil_sections WHERE pupil_id={int(pid)})+(SELECT COUNT(*) FROM teacher_pupils WHERE pupil_id={int(pid)})+(SELECT COUNT(*) FROM learning_days WHERE pupil_id={int(pid)})")
     check('Typing DELETE deletes the pupil and everything that belongs to them', left == '0' and 'was deleted' in text, left)
+    # batch delete: tick several pupils on My pupils, then "Delete ticked pupils"
+    sid = q("SELECT ps.section_id FROM pupil_sections ps JOIN users u ON u.id=ps.pupil_id WHERE u.name LIKE '% Tan Sr.' LIMIT 1")
+    rows = {'action': 'import_typed', 'section_id': sid, 'level_id': '1', 'csrf': t.token('?page=accounts&mode=class')}
+    for i, (f, x) in enumerate([('Bea', 'F'), ('Ben', 'M')]):
+        rows.update({f't[last][{i}]': 'Batchdel', f't[first][{i}]': f, f't[sex][{i}]': x})
+    t.req('index.php', rows)
+    ids = q("SELECT GROUP_CONCAT(id) FROM users WHERE name LIKE '% Batchdel'").split(',')
+    _, _, text = t.req('?page=manage')
+    check('My pupils has a "Delete ticked pupils" button', 'value="delete_pupils"' in text)
+    _, _, text = t.req('index.php', {'action': 'delete_pupils', 'pupils[]': ids, 'csrf': t.token('?page=manage')})
+    check('Ticking 2 pupils and pressing Delete removes both at once', len(ids) == 2 and q("SELECT COUNT(*) FROM users WHERE name LIKE '% Batchdel'") == '0' and '2 pupils were deleted' in text, f'{ids} {text[:0]}')
 
 
 def test_delete_teacher(a):
@@ -561,6 +572,14 @@ def test_delete_teacher(a):
     tid = q("SELECT id FROM users WHERE name='Temp Delete' AND role='teacher'")
     _, _, text = a.req('index.php', {'action': 'delete_teacher', 'id': tid, 'confirm': 'DELETE', 'csrf': a.token('?page=accounts')})
     check('A teacher with no pupils and no sections can be deleted', tid != '' and q(f"SELECT COUNT(*) FROM users WHERE name='Temp Delete'") == '0' and 'was deleted' in text, tid)
+    # batch delete: ticked teachers go together; a teacher who still has pupils is skipped and named
+    for f in ('Batch', 'Batcha'):
+        a.req('index.php', {'action': 'create_account', 'role': 'teacher', 'first_name': f, 'last_name': 'Gone', 'teacher_sex': 'male', 'password': 'TempDelete42!', 'back': 'add_teachers', 'csrf': a.token('?page=add_teachers')})
+    ids = q("SELECT GROUP_CONCAT(id) FROM users WHERE role='teacher' AND name LIKE '% Gone'").split(',')
+    _, _, text = a.req('?page=accounts')
+    check('The Teachers page has tick boxes and "Delete ticked teachers"', 'name="teachers[]"' in text and 'value="delete_teachers"' in text)
+    _, _, text = a.req('index.php', {'action': 'delete_teachers', 'teachers[]': ids + [busy], 'csrf': a.token('?page=accounts')})
+    check('Ticked teachers are deleted together; one who still has pupils is kept and named', len(ids) == 2 and q("SELECT COUNT(*) FROM users WHERE name LIKE '% Gone'") == '0' and q(f'SELECT COUNT(*) FROM users WHERE id={int(busy)}') == '1' and '2 teachers were deleted' in text and 'still have pupils' in text, ids)
 
 
 def test_level4_scoring():
