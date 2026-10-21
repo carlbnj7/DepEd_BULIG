@@ -5853,3 +5853,4 @@ html.dark .pc-tip-card{background:#16231b;color:#e8f0ea}html.dark .pc-tip li{bac
 .hp-opt.hp-bug{border-style:dashed}.hp-what{display:grid;gap:6px;margin:6px 0 10px;font-weight:700;font-size:.95rem}.hp-what textarea{width:100%;resize:vertical;min-height:58px;font:inherit;font-weight:400;padding:8px 10px;border-radius:12px}
 .bug-table td:nth-child(1){white-space:nowrap}.bug-table td:nth-child(3){min-width:280px}.bug-card .bk-tabs{margin-bottom:12px}.bug-empty{padding:18px 4px}
 .bug-acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.bug-acts form{margin:0}
+.tk-save{margin-left:auto}@media print{.tk-save{display:none!important}}

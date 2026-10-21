@@ -265,6 +265,8 @@ function settings_view():void{
 function pupil_detail():void{pupil_page_view(current_user());}
 /** One sign-in ticket ("Reading Pass"): name, class, Pupil ID, starter password and the QR stub. */
 /** Long names get a smaller font on the passes, so the name keeps to two lines and the ID and password still fit (any ticket size). */
+/** "Save as image" for Reading Passes and Teacher Passes: each pass is saved as its own PNG (assets/html2canvas.min.js, loaded only when pressed). */
+function tk_save_button():string{return '<button type="button" class="btn secondary tk-save" data-tk-save data-src="'.e(asset_url('html2canvas.min.js')).'">'.icon('arrow').'Save as image</button>';}
 function tk_name_fit(string $name):string{$n=mb_strlen($name);return $n>30?' tk-n4':($n>24?' tk-n3':($n>18?' tk-n2':($n>13?' tk-n1':'')));}
 function pupil_ticket_html(array $p,?string $key,?string $pw,int $n):string{
  $qr=$key?'?page=login&key='.rawurlencode($key):'?page=login&role=pupil&form=1&id='.rawurlencode((string)$p['public_id']);
@@ -302,7 +304,7 @@ function login_cards_view(array $u):void{
  if(!$ready)echo '<p class="lc-note no-print">To give each pupil an own starter password and a one-scan QR code, the administrator needs to import database/migrations/018_pupil_cards.sql.</p>';
  else echo '<p class="lc-note no-print">One scan of the QR code signs the pupil in. Lost a ticket? Tap “New ticket”: the old QR code stops working and the pupil gets a new starter password.</p>';
  echo '<div class="lc-pick no-print card"><span class="lc-count" data-tk-count>'.count($list).' of '.count($list).' tickets selected</span><button type="button" class="btn secondary" data-tk-all>Select all</button><button type="button" class="btn secondary" data-tk-none>Select none</button>'
-  .'<span class="lc-size">Ticket size<span class="st-seg" role="radiogroup" aria-label="Ticket size"><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="s">Small<small>21 per page</small></button><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="m">Medium<small>10 per page</small></button><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="l">Large<small>8 per page</small></button></span></span></div>';
+  .'<span class="lc-size">Ticket size<span class="st-seg" role="radiogroup" aria-label="Ticket size"><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="s">Small<small>21 per page</small></button><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="m">Medium<small>10 per page</small></button><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="l">Large<small>8 per page</small></button></span></span>'.tk_save_button().'</div>';
  echo '<div class="lc-sheet tk-sheet" data-lc-sheet>';$n=0;
  foreach($list as $p){$n++;$pid=(int)$p['id'];$info=$ready?card_info($pid):['key'=>null,'pw'=>null];$pw=$info['pw']??(in_array($pid,$old,true)?'12345678':null);
   $qr=$info['key']?'?page=login&key='.rawurlencode($info['key']):'?page=login&role=pupil&form=1&id='.rawurlencode((string)$p['public_id']);
