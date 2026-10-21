@@ -64,6 +64,26 @@ function delete_box(string $action,int $id,string $name,string $what,bool $small
   .'<button class="btn danger">'.icon('close').'Delete '.e($name).'</button></form></details>';
 }
 
+/** Batch delete: the ticked pupils (their teacher, or the administrator) or the ticked teachers (the administrator).
+   Teachers who still have pupils or sections are skipped and named, so nothing is lost by mistake. */
+function account_delete_many(string $action):never{
+ $u=require_role('teacher','admin');$ids=array_values(array_unique(array_filter(array_map('intval',(array)($_POST[$action==='delete_pupils'?'pupils':'teachers']??[])))));
+ $back=$action==='delete_pupils'?($u['role']==='admin'?'?page=checkup#ck-off':'?page=manage'):'?page=accounts';
+ if(!$ids){flash('Tick at least one '.($action==='delete_pupils'?'pupil':'teacher').' first.');go($back);}
+ if($action==='delete_pupils'){
+  if($u['role']==='teacher')foreach($ids as $id)own_pupil($id);
+  $list=rows("SELECT id,name,public_id,avatar_path FROM users WHERE role='pupil' AND id IN(".implode(',',$ids).")");
+  db()->beginTransaction();try{foreach($list as $p)delete_pupil((int)$p['id']);audit('delete_pupil',count($list).' pupils: '.implode(', ',array_column($list,'public_id')));db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  foreach($list as $p)del_files($p['avatar_path'],(int)$p['id'],true);
+  flash(count($list).' '.(count($list)===1?'pupil was':'pupils were').' deleted.');go($back);
+ }
+ $u=require_role('admin');$list=rows("SELECT u.id,u.name,u.public_id,u.avatar_path,(SELECT COUNT(*) FROM teacher_pupils tp WHERE tp.teacher_id=u.id)+(SELECT COUNT(*) FROM sections s WHERE s.teacher_id=u.id) busy FROM users u WHERE u.role='teacher' AND u.id IN(".implode(',',$ids).")");
+ $go=array_values(array_filter($list,fn($t)=>!(int)$t['busy']));$kept=array_values(array_filter($list,fn($t)=>(int)$t['busy']));
+ db()->beginTransaction();try{foreach($go as $t)delete_teacher((int)$t['id'],(int)$u['id']);if($go)audit('delete_teacher',count($go).' teachers: '.implode(', ',array_column($go,'public_id')));db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+ foreach($go as $t)del_files($t['avatar_path'],(int)$t['id'],false);
+ flash(count($go).' '.(count($go)===1?'teacher was':'teachers were').' deleted.'.($kept?' Not deleted, because they still have pupils or sections (move them first): '.implode(', ',array_column($kept,'name')).'.':''));go($back);
+}
+
 function account_delete_action(string $action):void{
  $u=require_role('teacher','admin');$id=(int)($_POST['id']??0);
  if(strtoupper(trim((string)($_POST['confirm']??'')))!==DELETE_WORD)fail('Type '.DELETE_WORD.' in the box to confirm.');

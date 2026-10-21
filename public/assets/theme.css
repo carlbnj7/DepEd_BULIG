@@ -5839,3 +5839,6 @@ html.dark .pc-tip-card{background:#16231b;color:#e8f0ea}html.dark .pc-tip li{bac
 /* Add many teachers: "Type the list" (same grid as the pupils' list) */
 .bk-tgrid .c-gr{width:120px}.bk-tgrid th small{font-size:.62rem;letter-spacing:0;text-transform:none;font-weight:600;color:#5d7464}
 .bk-top .sc-pick{max-width:420px}
+/* Teachers page: batch delete bar */
+.tbulk{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--g50);border:1px solid var(--g100);border-radius:14px;padding:8px 12px;margin:0 0 12px}.tbulk>span{font-weight:600;font-size:.85rem}.tbulk .btn{min-height:38px;padding:6px 12px;font-size:.82rem}.tbulk small{flex-basis:100%}
+.ws-table td.mp-c,.ws-table th.mp-c{width:34px;text-align:center}
