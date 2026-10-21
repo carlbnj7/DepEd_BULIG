@@ -47,6 +47,9 @@ $out=match($what){
    foreach($set['cards'] as $i=>$c){$t=(string)$c['text'];if(preg_match_all('~_{2,}~',$t)!==1||preg_match('~[.,!?;"“”]~u',$t))continue;$cards++;if(($bc[$i]??0)<1)$left[]=$a['id'].'#'.($i+1).' '.$t;}}
   return ['wrong'=>$wrong,'html'=>$h,'cards'=>$cards,'left'=>array_slice($left,0,5),'left_count'=>count($left)];
  })(),
+ /* DepEd SF1 as LIS gives it (.xls): php tests/probe.php sf1 0 */
+ 'sf1'=>(function():array{$rows=import_read_file(__DIR__.'/fixtures/sf1-sample.xls','sf1-sample.xls');$h=4;
+  return ['class'=>import_sheet_class($rows,$h),'cols'=>import_columns($rows[$h]),'names'=>array_values(array_filter(array_map(fn($r)=>($r[2]??'')!==''&&!str_starts_with($r[2],'<==')&&preg_match('/^\d{12}$/',$r[0]??'')?[$r[0],import_sf1_name($r[2])]:null,array_slice($rows,$h+1))))];})(),
  default=>['error'=>'unknown probe']
 };
 echo json_encode($out),"\n";

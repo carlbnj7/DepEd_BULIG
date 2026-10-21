@@ -527,6 +527,8 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  document.querySelector('[data-help-open]')?.addEventListener('click',()=>{const off=!navigator.onLine;dlg.querySelector('[data-help-off]').hidden=!off;dlg.querySelector('.hp-send').disabled=off;if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');});
  dlg.querySelector('[data-help-close]')?.addEventListener('click',()=>dlg.close?dlg.close():dlg.removeAttribute('open'));
  dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
+ /* "Something is not working" goes to the BULIG team, not the teacher: show the box for what happened (v176) */
+ dlg.addEventListener('change',()=>{const bug=!!dlg.querySelector('input[name="reason"][value="bug"]:checked'),w=dlg.querySelector('[data-bug-what]'),b=dlg.querySelector('.hp-send');if(w)w.hidden=!bug;if(b)b.textContent=bug?'Tell the BULIG team':'Tell my teacher';});
  const t=document.querySelector('.hp-toast');if(t)setTimeout(()=>t.classList.add('hp-gone'),8000);
 })();
 

@@ -154,7 +154,8 @@ function key_score(array $a,string $response):?array{
  $nums=array_values(array_unique(array_merge(array_map('intval',array_keys($key)),$ask)));sort($nums);
  $tries=card_tries($response);
  $dir=(string)($set['instruction']??'');
- foreach($nums as $n){$k=$key[$n]??null;$g=(string)($got[$n]??'');[$pts,$of,$want,$t]=key_card_points($k,$g);
+ foreach($nums as $n){if(($got[$n]??'')==='(skipped)')continue;   // a page skipped with a bug report: not scored (v176)
+  $k=$key[$n]??null;$g=(string)($got[$n]??'');[$pts,$of,$want,$t]=key_card_points($k,$g);
   if(!$k&&($exp=say_words()[activity_key_id($a).':'.$n]??say_expected($set['cards'][$n-1]??[],$dir))){$t='say';$want=implode(', ',array_map(fn($x)=>explode('|',$x)[0],$exp));$h=key_said($g);if($h!==null)$pts=say_match($exp,$h);}/* pronunciation (v172) */
   $ok=$pts>=$of;$tr=$k?($tries[$n]??0):0;
   if($tr)$pts=round($pts*max(0,1-$tr/KEY_TRIES),2);/* each wrong try takes away a third (v172) */
