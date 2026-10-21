@@ -56,3 +56,9 @@
   const upd=()=>{const c=sel.selectedOptions[0]?sel.selectedOptions[0].dataset.code:'';out.textContent=c?'New teacher IDs here look like '+c+'T0001. Their pupils get IDs like '+c+(out.dataset.yy||yy)+'0001.':'';};
   sel.addEventListener('change',upd);upd();});
 })();
+/* Batch delete (My pupils, Teachers): count the ticked rows in the confirm message; nothing ticked = no delete. Runs before app.js's confirm (window capture comes before document capture). */
+window.addEventListener('click',e=>{const b=e.target.closest('[data-need-tick]');if(!b)return;
+ const f=b.form;const n=f?[...document.querySelectorAll('input[type=checkbox][name$="[]"]:checked')].filter(c=>c.form===f).length:0;
+ if(!n){e.preventDefault();e.stopImmediatePropagation();alert('Tick at least one first.');return;}
+ const who=b.value==='delete_pupils'?(n===1?'pupil':'pupils'):(n===1?'teacher':'teachers');
+ if(!b.dataset.base)b.dataset.base=b.dataset.confirm;b.dataset.confirm='Delete '+n+' ticked '+who+'? '+b.dataset.base.replace(/^Delete the ticked [a-z]+ for good\? /,'');},true);
