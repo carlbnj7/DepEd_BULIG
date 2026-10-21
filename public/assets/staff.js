@@ -68,3 +68,5 @@ window.addEventListener('click',e=>{const b=e.target.closest('[data-need-tick]')
   t.classList.remove('tk-tight');n.style.fontSize='';if(!over(i,m))return;t.classList.add('tk-tight');
   const f0=parseFloat(getComputedStyle(n).fontSize);let f=f0;while(over(i,m)&&f>f0*0.7){f*=0.94;n.style.fontSize=f+'px';}});
  if(document.querySelector('.tk')){fit();window.addEventListener('load',fit);window.addEventListener('beforeprint',fit);document.addEventListener('click',e=>{if(e.target.closest('[data-tk-size],button'))setTimeout(fit,60);});}})();
+/* Class list import: "Starting level for every pupil" sets each pupil's level box (each can still be changed). */
+document.addEventListener('change',e=>{const a=e.target.closest('[data-lv-all]');if(!a||a.value==='')return;document.querySelectorAll('select[data-lv]').forEach(s=>{s.value=a.value;});});

@@ -124,3 +124,12 @@ html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-overlay,.rt-ov,.crop-ov,.le
 /* v170: the phone top bar buttons (bell, light/dark, sign out) are yellow like the ? button, in light and dark mode */
 html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m),html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m).lg-g{background:var(--lg-gold,linear-gradient(#ffd84d,#f2b10c))!important;color:#0e3b28!important;border-color:rgba(255,255,255,.75)!important;box-shadow:inset 1px 1.5px 0 rgba(255,255,255,.8),0 4px 12px rgba(150,100,0,.35)!important}
 html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m) :is(svg,.icon){color:#0e3b28!important;stroke:currentColor}
+/* I need help: the chosen option turns green, and every option and button darkens while pressed (v176) */
+html body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked){background:#dcfce7!important;border-color:#16a34a!important;box-shadow:0 0 0 3px rgba(22,163,74,.22)!important}
+html body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked) i{background:#16a34a!important;color:#fff!important}
+html body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked) span{color:#14532d!important}
+html.dark body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked){background:#14532d!important;border-color:#4ade80!important}
+html.dark body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked) span{color:#ecfdf5!important}
+html body:not(.demo-page) .hp-sheet .hp-opt:active{transform:scale(.98);background:#bbf7d0!important}
+html body:not(.demo-page) .hp-sheet .btn:active{transform:scale(.97);filter:brightness(.88)}
+.l2-card.l2-skipped{opacity:.75}

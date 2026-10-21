@@ -239,6 +239,11 @@ def run_pages(acc):
     check('One form: BULIG knows the administrator from the ID and asks for the PIN', 'data-pin-form' in text, url)
     r = php_cli('probe.php', 'tries', 0)
     check('Each wrong try takes away a third of the card (1 wrong try: 0.67, 2: 0.33, 3: 0)', r.get('ok') and r.get('pts') == [1, 0.67, 0.33, 0], str(r))
+    r = php_cli('probe.php', 'sf1', 0)
+    check('DepEd SF1 (.xls from LIS): grade and section are read from above the table', r.get('class') == {'grade': 3, 'section': 'SAMPAGUITA'}, str(r.get('class')))
+    check('DepEd SF1: the LRN, Name and Sex columns are found', r.get('cols', {}).get('lrn') == 0 and r['cols'].get('name') == 2 and r['cols'].get('sex') == 6, str(r.get('cols')))
+    check('DepEd SF1: "LAST,FIRST JR, MIDDLE" names are split; total lines and the legend are left out',
+          r.get('names') == [['100000000001', ['Juan', 'Santos', 'Dela Cruz', 'Jr.']], ['100000000002', ['Pedro', 'Reyes', 'Santos', '']], ['100000000003', ['Maria Clara', '', 'Cañon', '']]], str(r.get('names')))
 
     section('5. Pupil (Level 1, Grade 1)')
     p = Client()
