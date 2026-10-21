@@ -5842,3 +5842,8 @@ html.dark .pc-tip-card{background:#16231b;color:#e8f0ea}html.dark .pc-tip li{bac
 /* Teachers page: batch delete bar */
 .tbulk{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--g50);border:1px solid var(--g100);border-radius:14px;padding:8px 12px;margin:0 0 12px}.tbulk>span{font-weight:600;font-size:.85rem}.tbulk .btn{min-height:38px;padding:6px 12px;font-size:.82rem}.tbulk small{flex-basis:100%}
 .ws-table td.mp-c,.ws-table th.mp-c{width:34px;text-align:center}
+/* Passes: long names shrink so the ID and password always fit (tk_name_fit in views.php) */
+.tk-name.tk-n1{font-size:calc(10pt*var(--u,1))}.tk-name.tk-n2{font-size:calc(8.8pt*var(--u,1))}.tk-name.tk-n3{font-size:calc(7.8pt*var(--u,1))}.tk-name.tk-n4{font-size:calc(7pt*var(--u,1))}
+.tk-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:normal;word-break:normal}
+.tk-name.tk-n2+.tk-sec,.tk-name.tk-n3+.tk-sec,.tk-name.tk-n4+.tk-sec{margin-bottom:calc(.6mm*var(--u,1))}
+.tk.tk-tight .tk-info{padding-top:calc(1mm*var(--u,1));padding-bottom:calc(1mm*var(--u,1))}.tk.tk-tight .tk-sec{margin:0 0 calc(.4mm*var(--u,1))}.tk.tk-tight .tk-id{font-size:calc(13pt*var(--u,1));margin:0 0 calc(.5mm*var(--u,1))}.tk.tk-tight .tk-lab{line-height:1.15}.tk.tk-tight .tk-pw{margin-top:calc(.2mm*var(--u,1));padding-top:calc(.5mm*var(--u,1));padding-bottom:calc(.5mm*var(--u,1))}

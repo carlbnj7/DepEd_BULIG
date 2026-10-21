@@ -62,3 +62,9 @@ window.addEventListener('click',e=>{const b=e.target.closest('[data-need-tick]')
  if(!n){e.preventDefault();e.stopImmediatePropagation();alert('Tick at least one first.');return;}
  const who=b.value==='delete_pupils'?(n===1?'pupil':'pupils'):(n===1?'teacher':'teachers');
  if(!b.dataset.base)b.dataset.base=b.dataset.confirm;b.dataset.confirm='Delete '+n+' ticked '+who+'? '+b.dataset.base.replace(/^Delete the ticked [a-z]+ for good\? /,'');},true);
+/* Passes: if a long name still pushes the ID or password out of the pass, first tighten the spacing, then shrink the name a little (never below 70%). */
+(function(){const over=(i,m)=>i.getBoundingClientRect().bottom>m.getBoundingClientRect().bottom-2;
+ const fit=()=>document.querySelectorAll('.tk').forEach(t=>{const m=t.querySelector('.tk-main'),i=t.querySelector('.tk-info'),n=t.querySelector('.tk-name');if(!m||!i||!n)return;
+  t.classList.remove('tk-tight');n.style.fontSize='';if(!over(i,m))return;t.classList.add('tk-tight');
+  const f0=parseFloat(getComputedStyle(n).fontSize);let f=f0;while(over(i,m)&&f>f0*0.7){f*=0.94;n.style.fontSize=f+'px';}});
+ if(document.querySelector('.tk')){fit();window.addEventListener('load',fit);window.addEventListener('beforeprint',fit);document.addEventListener('click',e=>{if(e.target.closest('[data-tk-size],button'))setTimeout(fit,60);});}})();
