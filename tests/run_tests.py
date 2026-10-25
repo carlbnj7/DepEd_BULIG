@@ -239,6 +239,10 @@ def run_pages(acc):
     check('One form: BULIG knows the administrator from the ID and asks for the PIN', 'data-pin-form' in text, url)
     r = php_cli('probe.php', 'tries', 0)
     check('Each wrong try takes away a third of the card (1 wrong try: 0.67, 2: 0.33, 3: 0)', r.get('ok') and r.get('pts') == [1, 0.67, 0.33, 0], str(r))
+    r = php_cli('probe.php', 'level3ab', 0)
+    check('Levels climb 1, 2A, 2B, 3A, 3B, 4, 5, 6, 7 (Level 3B comes before Level 4)', r.get('order') == [1, 2, 3, 4, 9, 5, 6, 7, 8] and r.get('labels') == ['Level 3A', 'Level 3B'] and r.get('next4') == 9 and r.get('next9') == 5, str(r.get('order')))
+    check('Level 3A has the pre-test, CVC and word family lessons and its post-test; 3B has the blends and sight words', r.get('l3a') == list(range(1, 12)) + [27] and r.get('l3b') == [1] + list(range(12, 27)) + [27], str(r.get('l3a')) + ' / ' + str(r.get('l3b')))
+    check('Level 3B pre-test: Task 1 Consonant Blends, Task 2 Sight Words; its cards and answer keys are found', r.get('pre3b') == ['Task 1: Consonant Blends', 'Task 2: Sight Words'] and (r.get('key3b') or {}).get('key', '').startswith('4:0:12:') and (r.get('key3b') or {}).get('cards', 0) > 0, str(r.get('pre3b')) + ' ' + str(r.get('key3b')))
     r = php_cli('probe.php', 'sf1', 0)
     check('DepEd SF1 (.xls from LIS): grade and section are read from above the table', r.get('class') == {'grade': 3, 'section': 'SAMPAGUITA'}, str(r.get('class')))
     check('DepEd SF1: the LRN, Name and Sex columns are found', r.get('cols', {}).get('lrn') == 0 and r['cols'].get('name') == 2 and r['cols'].get('sex') == 6, str(r.get('cols')))
@@ -288,6 +292,7 @@ def run_pages(acc):
     test_friends(p)
     test_story(p)
     test_notifications(p)
+    test_whats_new(p)
     test_level4_scoring()
 
     section('6. Pupil started at Level 6 (Grade 3): reader level head start')
@@ -382,6 +387,7 @@ def run_pages(acc):
         test_delete_teacher(a)
         test_account_ids(a, acc)
         test_schools(a, acc)
+        test_bug_reports(a)
 
 
 def jget(text):
@@ -461,16 +467,16 @@ def test_story(p):
         data = json.loads(text)
     except ValueError:
         data = []
-    check('All 16 story pages load for turning pages', len(data) == 16 and all('<svg' in d.get('html', '') for d in data), f'{len(data)} pages')
+    check('All 17 story pages load for turning pages (Bob the Builder is page 15)', len(data) == 17 and all('<svg' in d.get('html', '') for d in data), f'{len(data)} pages')
     page_ok(p, '?page=story&print=1', 'The print version of the story opens')
     _, _, home = p.req('?page=dashboard')
     check('The pupil Overview has the Story time card', 'class="cm-card' in home and 'href="?page=story' in home, '')
     tok = p.token('?page=story')
     gains = []
-    for n in list(range(16)) + [3]:
+    for n in list(range(17)) + [3]:
         _, _, r = p.req('index.php', {'action': 'story_seen', 'p': str(n), 'csrf': tok}, accept_json=True)
         gains.append(jget(r).get('gained', -1))
-    check('Story XP: +3 for each new page, +15 on the last one, nothing for a page seen again', gains[:15] == [3] * 15 and gains[15] == 15 and gains[16] == 0, str(gains))
+    check('Story XP: +3 for each new page, +15 on the last one, nothing for a page seen again', gains[:16] == [3] * 16 and gains[16] == 15 and gains[17] == 0, str(gains))
     _, _, text = p.req('?page=story')
     check('The story shows it is finished', 'Story finished' in text, '')
 
@@ -478,17 +484,17 @@ def test_story(p):
 def test_friends(p):
     """Meet your BULIG friends: George and 8 friends, shown once; Claude's safety tip on Home."""
     section('5c2. Meet your BULIG friends')
-    poses = {'max': 'mic', 'dracs': 'book', 'bruno': 'tryagain', 'mia': 'blocks', 'toby': 'flag', 'zion': 'emblem', 'arah': 'calendar', 'roxanne': 'time', 'kai': 'letter', 'sofie': 'mirror'}
+    poses = {'max': 'mic', 'dracs': 'book', 'bruno': 'tryagain', 'mia': 'blocks', 'toby': 'flag', 'zion': 'emblem', 'arah': 'calendar', 'roxanne': 'time', 'kai': 'letter', 'sofie': 'mirror', 'bob': 'blueprint'}
     missing = [f'{k}-{x}' for k, sp in poses.items() for x in ('hello', 'point', 'thumbs', 'cheer', sp)
                if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'{k}-{x}.webp'))]
     missing += [f'claude-{x}' for x in ('hello', 'thumbs', 'shield', 'worried', 'sad')
                 if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'claude-{x}.webp'))]
-    check('All 55 pictures of the 11 friends are in place', not missing, missing)
+    check('All 60 pictures of the 12 friends are in place (Bob the Builder too)', not missing, missing)
     _, _, text = p.req('?page=dashboard')
     m = re.search(r'<meta name="bulig-friends" content="([^"]+)"', text)
     data = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&').replace('&#039;', "'")) if m else {}
     names = [f.get('name') for f in data.get('friends', [])]
-    check('A pupil who has not met the friends gets the introduction: George first, then 11 friends', names[:1] == ['George'] and len(names) == 12 and 'Kai' in names and 'Sofie' in names and 'assets/friends' in text, names)
+    check('A pupil who has not met the friends gets the introduction: George first, then 12 friends (Bob last)', names[:1] == ['George'] and len(names) == 13 and names[-1] == 'Bob' and 'Kai' in names and 'Sofie' in names and 'assets/friends' in text, names)
     check('Claude the Protector gives a safety tip on the pupil Home page', 'class="cl-tip"' in text and 'claude-' in text)
     check('Roxanne the Timekeeper is on Today’s goal', 'class="rx-goal"' in text and 'roxanne-' in text)
     m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', text)
@@ -509,6 +515,25 @@ def test_friends(p):
     _, _, r = p.req('index.php', {'action': 'friends_met', 'csrf': p.token('?page=dashboard')}, accept_json=True)
     _, _, text = p.req('?page=dashboard')
     check('The introduction shows only once (it is remembered)', jget(r).get('ok') and 'name="bulig-friends"' not in text, r[:120])
+
+
+def test_whats_new(p):
+    """Bob the Builder's "There's a new update" popup: once per account, then on the bell, and again with ?whatsnew=1."""
+    section('5c4. New update popup (Bob the Builder)')
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    _, _, text = p.req('?page=dashboard')
+    me = re.search(r'name="bulig-uid" content="(\d+)"', text)
+    uid = int(me.group(1)) if me else int(q("SELECT id FROM users WHERE role='pupil' ORDER BY id LIMIT 1"))
+    q(f"INSERT IGNORE INTO settings(setting_key,setting_value) VALUES('friends_met_{uid}',NOW())")
+    q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
+    q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
+    _, _, text = p.req('?page=dashboard')
+    check('The first page after the update shows Bob the Builder’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Level 3A and Level 3B' in text)
+    _, _, text = p.req('?page=dashboard')
+    check('The popup comes only once', 'data-wn' not in text)
+    check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')
+    _, _, text = p.req('?page=dashboard&whatsnew=1')
+    check('The bell link opens the popup again', 'data-wn' in text)
 
 
 def test_notifications(p):
@@ -737,6 +762,27 @@ def test_reading_check(t, acc):
     check('Teacher can change the starting level (now Level 2B)', lv == '3', lv)
     status, _, text = t.req('?page=rcheck_pupil&id=' + str(acc['pupil6']['uid']))
     check('A pupil who did not take the check shows a clear message, not an error', status in (200, 302, 303) and not PHP_ERROR.search(text), f'status {status}')
+
+
+def test_bug_reports(a):
+    """Bug reports stay open until the administrator taps Fixed, even when they were read on the bell (v178)."""
+    section('9c. Bug reports')
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    aid = int(q("SELECT id FROM users WHERE role='admin' ORDER BY id LIMIT 1"))
+    q(f"DELETE FROM notifications WHERE user_id={aid} AND kind IN ('bug','bugfixed')")
+    q(f"INSERT INTO notifications(user_id,kind,title,body,url) VALUES({aid},'bug','Bug report from Test Pupil (T1)','Level 5 · test page','?page=bugs')")
+    nid = q(f"SELECT id FROM notifications WHERE user_id={aid} AND kind='bug' ORDER BY id DESC LIMIT 1")
+    a.req('?page=notifications')
+    a.req('index.php', {'action': 'notif_read_all', 'csrf': a.token('?page=notifications')})
+    table = lambda h: m.group(0) if (m := re.search(r'<section class="card bug-card">.*?</section>', h, re.S)) else ''
+    _, _, text = a.req('?page=bugs')
+    check('A bug report read on the bell (Mark all as read) is still open on Bug reports', 'Test Pupil' in table(text) and 'value="bug_fixed"' in table(text), '')
+    a.req('index.php', {'action': 'bug_fixed', 'id': nid, 'csrf': a.token('?page=bugs')})
+    _, _, text = a.req('?page=bugs')
+    _, _, fixed = a.req('?page=bugs&show=fixed')
+    text, fixed = table(text), table(fixed)
+    check('Only Fixed moves it to Fixed', 'Test Pupil' not in text and 'Test Pupil' in fixed and 'Fixed ' in fixed,
+          'kind=' + q(f"SELECT kind FROM notifications WHERE id={int(nid)}") + ' open-has=' + str('Test Pupil' in text) + ' fixed-has=' + str('Test Pupil' in fixed))
 
 
 def test_schools(a, acc):

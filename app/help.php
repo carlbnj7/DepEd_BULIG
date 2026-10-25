@@ -67,34 +67,41 @@ function help_device(string $ua):string{
  $br=preg_match('/Edg\//',$ua)?'Edge':(preg_match('/SamsungBrowser/',$ua)?'Samsung Internet':(preg_match('/OPR\/|Opera/',$ua)?'Opera':(preg_match('/Firefox|FxiOS/',$ua)?'Firefox':(preg_match('/Chrome|CriOS/',$ua)?'Chrome':(preg_match('/Safari/',$ua)?'Safari':'browser')))));
  return $os.' · '.$br;
 }
+/* v178: a report stays open until the administrator taps Fixed. Reading it on the bell or in Notifications
+   (or "Mark all as read") no longer moves it to Fixed: Fixed changes its kind to 'bugfixed', and the day it was
+   fixed is kept in settings (bug_fixed_<id>). */
+function bug_open_count(int $uid):int{return notif_ready()?(int)val("SELECT COUNT(*) FROM notifications WHERE user_id=? AND kind='bug'",[$uid]):0;}
+function bug_fixed_on(array $n):string{$d='';try{$d=(string)val('SELECT setting_value FROM settings WHERE setting_key=?',['bug_fixed_'.(int)$n['id']]);}catch(Throwable $e){}return $d!==''?$d:(string)($n['read_at']??'');}
 /** Administrator: Bug reports from pupils (?page=bugs). */
 function bugs_view(array $u):void{
  $f=($_GET['show']??'')==='fixed'?'fixed':'open';
- $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=? AND kind='bug' AND read_at IS ".($f==='open'?'NULL':'NOT NULL')." ORDER BY created_at DESC,id DESC LIMIT 200",[(int)$u['id']]):[];
- $open=notif_ready()?(int)val("SELECT COUNT(*) FROM notifications WHERE user_id=? AND kind='bug' AND read_at IS NULL",[(int)$u['id']]):0;
+ $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=? AND kind=? ORDER BY created_at DESC,id DESC LIMIT 200",[(int)$u['id'],$f==='open'?'bug':'bugfixed']):[];
+ $open=bug_open_count((int)$u['id']);
  $dl='<a class="btn secondary" href="?page=bugs_csv&amp;show='.$f.'">'.icon('arrow').'Download '.($f==='open'?'open':'fixed').' reports (CSV)</a><a class="btn quiet" href="?page=bugs_csv&amp;show=all">Download all</a>';
  admin_heading('SYSTEM · BUG REPORTS','Bug reports from pupils.','When something does not work, pupils tap I need help › Something is not working. Each report says where it happened and on which device. The pupil skips that activity and goes on to the next one (it gets no score).','<div class="bug-acts">'.$dl.($open?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn secondary" data-confirm="Mark all '.$open.' open reports as fixed?">'.icon('check').'Mark all as fixed</button></form>':'').'</div>');
  echo '<section class="card bug-card"><nav class="bk-tabs" aria-label="Show"><a href="?page=bugs"'.($f==='open'?' class="on" aria-current="page"':'').'>'.icon('alert').'Open ('.$open.')</a><a href="?page=bugs&amp;show=fixed"'.($f==='fixed'?' class="on" aria-current="page"':'').'>'.icon('check').'Fixed</a></nav>';
  if(!$list){echo '<p class="muted bug-empty">'.($f==='open'?'No open bug reports. Well done!':'No fixed reports yet.').'</p></section>';return;}
  echo '<div class="tablewrap"><table class="bug-table"><thead><tr><th>When</th><th>Pupil</th><th>What and where</th><th></th></tr></thead><tbody>';
  foreach($list as $n){$who=preg_replace('/^Bug report from /','',(string)$n['title']);
-  echo '<tr><td>'.e(date('M j, g:i A',strtotime((string)$n['created_at']))).'</td><td>'.e($who).'</td><td>'.e((string)$n['body']).'</td><td>'.($f==='open'?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed"><input type="hidden" name="id" value="'.(int)$n['id'].'"><button class="btn primary small">'.icon('check').'Fixed</button></form>':'<small class="muted">Fixed '.e(date('M j',strtotime((string)$n['read_at']))).'</small>').'</td></tr>';}
+  echo '<tr><td>'.e(date('M j, g:i A',strtotime((string)$n['created_at']))).'</td><td>'.e($who).'</td><td>'.e((string)$n['body']).'</td><td>'.($f==='open'?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed"><input type="hidden" name="id" value="'.(int)$n['id'].'"><button class="btn primary small">'.icon('check').'Fixed</button></form>':'<small class="muted">Fixed '.e(date('M j',strtotime(bug_fixed_on($n)?:'now'))).'</small>').'</td></tr>';}
  echo '</tbody></table></div></section>';
 }
 /** Bug reports as a CSV file (opens in Excel): the open ones, the fixed ones or all. */
 function bugs_csv(array $u):never{
- $f=(string)($_GET['show']??'all');$w=$f==='open'?' AND read_at IS NULL':($f==='fixed'?' AND read_at IS NOT NULL':'');
- $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=? AND kind='bug'".$w." ORDER BY created_at DESC,id DESC",[(int)$u['id']]):[];
+ $f=(string)($_GET['show']??'all');$w=$f==='open'?" AND kind='bug'":($f==='fixed'?" AND kind='bugfixed'":" AND kind IN ('bug','bugfixed')");
+ $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=?".$w." ORDER BY created_at DESC,id DESC",[(int)$u['id']]):[];
  header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-bug-reports-'.date('Y-m-d').'.csv"');
  $h=fopen('php://output','w');fwrite($h,"\xEF\xBB\xBF");fputcsv($h,['Date and time','Pupil','What the pupil wrote','Where','Device','Status','Fixed on'],',','"','\\');
  foreach($list as $n){$b=(string)$n['body'];$note='';if(preg_match('/^“(.*?)” · (.*)$/su',$b,$m)){$note=$m[1];$b=$m[2];}
   $b=preg_replace('/ · Skipped for this pupil$/','',$b,1,$sk);$parts=explode(' · ',$b);$dev=count($parts)>=2?implode(' · ',array_splice($parts,-2)):'';
-  fputcsv($h,[date('Y-m-d H:i',strtotime((string)$n['created_at'])),preg_replace('/^Bug report from /','',(string)$n['title']),$note,implode(' · ',$parts).($sk?' (skipped for this pupil)':''),$dev,$n['read_at']?'Fixed':'Open',$n['read_at']?date('Y-m-d',strtotime((string)$n['read_at'])):''],',','"','\\');}
+  fputcsv($h,[date('Y-m-d H:i',strtotime((string)$n['created_at'])),preg_replace('/^Bug report from /','',(string)$n['title']),$note,implode(' · ',$parts).($sk?' (skipped for this pupil)':''),$dev,$n['kind']==='bugfixed'?'Fixed':'Open',$n['kind']==='bugfixed'&&($fd=bug_fixed_on($n))!==''?date('Y-m-d',strtotime($fd)):''],',','"','\\');}
  exit;
 }
 function bug_fixed(array $u,bool $all):never{
- if(notif_ready()){if($all)q("UPDATE notifications SET read_at=NOW() WHERE user_id=? AND kind='bug' AND read_at IS NULL",[(int)$u['id']]);
-  else q("UPDATE notifications SET read_at=COALESCE(read_at,NOW()) WHERE id=? AND user_id=? AND kind='bug'",[(int)($_POST['id']??0),(int)$u['id']]);}
+ if(notif_ready()){$ids=$all?array_map('intval',array_column(rows("SELECT id FROM notifications WHERE user_id=? AND kind='bug'",[(int)$u['id']]),'id'))
+   :array_map('intval',array_column(rows("SELECT id FROM notifications WHERE id=? AND user_id=? AND kind='bug'",[(int)($_POST['id']??0),(int)$u['id']]),'id'));
+  foreach($ids as $id){q("UPDATE notifications SET kind='bugfixed',read_at=COALESCE(read_at,NOW()) WHERE id=?",[$id]);
+   q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['bug_fixed_'.$id,date('Y-m-d H:i:s')]);}}
  flash($all?'All reports marked as fixed.':'Marked as fixed.');go('?page=bugs');
 }
 

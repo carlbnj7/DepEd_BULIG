@@ -25,7 +25,7 @@ function schedule_wait(int $pid):?array{
  $s=schedule_get();if(!$s['on'])return null;
  $start=pupil_start_level($pid);if(!$start)return null;
  $prev=$start;
- for($l=$start+1;$l<=8;$l++){
+ foreach(array_slice(LEVEL_ORDER,level_rank($start)+1) as $l){
   if(!level_progress_ready($pid,$l))return null;
   if(($d=level_opens_on($l))!==null)return ['level'=>$l,'prev'=>$prev,'opens'=>$d];
   $prev=$l;
@@ -57,7 +57,7 @@ function schedule_open_check_pupil(int $pid):void{
   if($d>$today||$d<date('Y-m-d',strtotime('-14 days')))continue;
   $title=level_label($l).' is open now!';
   if(val("SELECT 1 FROM notifications WHERE user_id=? AND kind='schedule' AND title=?",[$pid,$title]))continue;
-  $start=pupil_start_level($pid);if(!$start||$l<=$start||!level_progress_ready($pid,$l))continue;
+  $start=pupil_start_level($pid);if(!$start||level_rank($l)<=level_rank($start)||!level_progress_ready($pid,$l))continue;
   if(val('SELECT 1 FROM pupil_progress p JOIN lessons ls ON ls.id=p.lesson_id JOIN modules m ON m.id=ls.module_id WHERE p.pupil_id=? AND m.level_id=? AND p.completed_at IS NOT NULL',[$pid,$l]))continue;
   notify($pid,'schedule',$title,'Your class starts '.level_label($l).' today. Let’s go!','?page=lessons&level='.$l.'#level'.$l.'-path');
  }
@@ -82,7 +82,7 @@ function schedule_pupil_note(int $pid):string{
 
 /* ---------- Administrator: Settings › Level schedule ---------- */
 function schedule_admin_view():void{
- $s=schedule_get();$today=date('Y-m-d');$levels=rows('SELECT id,title FROM bulig_levels ORDER BY id');
+ $s=schedule_get();$today=date('Y-m-d');$levels=rows('SELECT id,title FROM bulig_levels ORDER BY '.level_order_sql('id'));
  $first=$s['dates'][1]??($s['dates']?min($s['dates']):date('Y-m-d',strtotime('monday this week')));
  echo '<section class="card sch-card"><form method="post" class="sch-form" data-sch-form>'.csrf_field().'<input type="hidden" name="action" value="admin_level_schedule">';
  echo '<div class="sch-head"><div><h2>'.icon('cal').' Level schedule</h2><p class="muted">Choose when each level opens. Pupils who finish early wait for the opening date, so the whole class moves together.</p></div><label class="sch-switch"><input type="checkbox" name="on" value="1"'.($s['on']?' checked':'').'><i aria-hidden="true"></i><span>Schedule on</span></label></div>';
@@ -96,8 +96,8 @@ function schedule_admin_view():void{
 }
 function schedule_admin_save():void{
  require_role('admin');$dates=[];
- foreach((array)($_POST['date']??[]) as $k=>$v){$k=(int)$k;$v=trim((string)$v);if($k>=1&&$k<=8&&preg_match('/^\d{4}-\d{2}-\d{2}$/',$v)&&strtotime($v))$dates[$k]=$v;}
- ksort($dates);$prev='';foreach($dates as $k=>$v){if($prev!==''&&$v<$prev)fail(level_label($k).' cannot open before the level above it. Check the dates.');$prev=$v;}
+ foreach((array)($_POST['date']??[]) as $k=>$v){$k=(int)$k;$v=trim((string)$v);if(in_array($k,LEVEL_ORDER,true)&&preg_match('/^\d{4}-\d{2}-\d{2}$/',$v)&&strtotime($v))$dates[$k]=$v;}
+ uksort($dates,fn($a,$b)=>level_rank($a)<=>level_rank($b));$prev='';foreach($dates as $k=>$v){if($prev!==''&&$v<$prev)fail(level_label($k).' cannot open before the level above it. Check the dates.');$prev=$v;}
  $on=!empty($_POST['on']);
  q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['level_schedule',json_encode(['on'=>$on,'dates'=>$dates])]);
  audit('admin_level_schedule',$on?'on':'off');flash($on?'Level schedule saved. Levels open on their dates.':'Level schedule saved and turned off. Levels open as soon as pupils finish the level before.');go('?page=settings&tab=schedule');

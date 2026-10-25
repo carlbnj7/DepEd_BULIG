@@ -67,7 +67,7 @@ function pf_lesson_celebration(int $lid,int $pid,bool $finished):string{
 /* 2 + 3 · Badge and level celebrations, shown once each */
 function pf_seen(int $pid):?array{$v=val('SELECT setting_value FROM settings WHERE setting_key=?',['pupil_seen_'.$pid]);return $v===null||$v===false?null:(json_decode((string)$v,true)?:['b'=>[],'l'=>[]]);}
 function pf_save_seen(int $pid,array $s):void{q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['pupil_seen_'.$pid,json_encode(['b'=>array_values(array_unique(array_map('intval',$s['b']))),'l'=>array_values(array_unique(array_map('intval',$s['l']))),'c'=>array_values(array_unique(array_map('intval',$s['c']??[]))),'r'=>(int)($s['r']??0),'h'=>(int)($s['h']??0)])]);}
-function pf_available_levels(int $pid):array{$ids=[];foreach(rows('SELECT id FROM bulig_levels ORDER BY id') as $l)if(level_available($pid,(int)$l['id']))$ids[]=(int)$l['id'];return $ids;}
+function pf_available_levels(int $pid):array{$ids=[];foreach(rows('SELECT id FROM bulig_levels ORDER BY '.level_order_sql('id')) as $l)if(level_available($pid,(int)$l['id']))$ids[]=(int)$l['id'];return $ids;}
 function pupil_celebrations(array $u):string{
  $pid=(int)$u['id'];award_badges($pid);$badges=rows('SELECT b.* FROM pupil_badges p JOIN badges b ON b.id=p.badge_id WHERE p.pupil_id=? ORDER BY p.earned_at,b.id',[$pid]);$levels=pf_available_levels($pid);
  $seen=pf_seen($pid);

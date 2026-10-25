@@ -58,7 +58,7 @@ function level_downloadable(int $pid,int $level):bool{
 function offline_levels(array $u):never{
  $pid=(int)$u['id'];$g=pupil_grade($pid);header('Content-Type: application/json');header('Cache-Control: no-store');
  $next=next_learning_lesson($pid);$cur=(int)($next['level_id']??0);$out=[];$root=__DIR__.'/../public/';
- foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $lv){$id=(int)$lv['id'];if(!level_downloadable($pid,$id))continue;
+ foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $lv){$id=(int)$lv['id'];if(!level_downloadable($pid,$id))continue;
   $acts=rows('SELECT a.*,l.position lesson_position FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND a.published=1'.GRADE_SQL,[$id,$g]);if(!$acts)continue;
   $files=[];foreach($acts as $a)foreach(activity_images($a) as $src){$p=resolved_image_path((string)$src);if($p)$files[strtok($p,'?')]=1;}
   $bytes=0;foreach(array_keys($files) as $f)if(is_file($root.$f))$bytes+=filesize($root.$f);
@@ -89,7 +89,7 @@ function demo_offline_info(array $u):never{
  header('Content-Type: application/json');header('Cache-Control: no-store');
  $tid=(int)$u['id'];$grades=array_values(array_unique(array_map(fn($s)=>(int)$s['grade_level'],teacher_sections($tid))));sort($grades);
  $units=[];
- foreach(rows('SELECT b.id,b.title FROM bulig_levels b WHERE b.published=1 ORDER BY b.id') as $lv){$level=(int)$lv['id'];
+ foreach(rows('SELECT b.id,b.title FROM bulig_levels b WHERE b.published=1 ORDER BY '.level_order_sql('b.id')) as $lv){$level=(int)$lv['id'];
   if(per_grade_level($level)){
    foreach(rows('SELECT DISTINCT m.grade_level g FROM modules m JOIN lessons l ON l.module_id=m.id AND l.published=1 JOIN activities a ON a.lesson_id=l.id AND a.published=1 WHERE m.level_id=? AND m.grade_level IS NOT NULL ORDER BY g',[$level]) as $g){$grade=(int)$g['g'];
     $units[]=['key'=>$level.'-'.$grade,'level'=>$level,'grade'=>$grade,'title'=>module_label($level,$grade),'name'=>$lv['title'],

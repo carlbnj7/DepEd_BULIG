@@ -7,14 +7,14 @@ function level2_card_manifest():array{
 }
 function level2_activity_context(array $a):?array{
  static $lessons=null;
- if($lessons===null){$lessons=[];foreach(rows('SELECT l.id,l.position,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (2,3,4,6,7,8)') as $l)$lessons[(int)$l['id']]=$l;}
+ if($lessons===null){$lessons=[];foreach(rows('SELECT l.id,l.position,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (2,3,4,9,6,7,8)') as $l)$lessons[(int)$l['id']]=$l;}
  return $lessons[(int)($a['lesson_id']??0)]??null;
 }
 function level2_card_set(array $a):?array{
  $l=level2_activity_context($a);if(!$l)return null;
  // Level 5 story pages (nothing to answer) are shown as cards too: the pictures one by one, the text as text
  if(($a['response_mode']??'none')==='none'&&(int)$l['level_id']!==6)return null;
- if((int)$l['level_id']===4)return level3_manifest()['cards'][(int)$l['position'].':'.$a['phase'].':'.(int)$a['position']]??null;
+ if(level_family((int)$l['level_id'])===4)return level3_manifest()['cards'][(int)$l['position'].':'.$a['phase'].':'.(int)$a['position']]??null;
  if((int)$l['level_id']===7){$d=level6_cards()[lesson_grade((int)$a['lesson_id']).':'.(int)$l['position'].':'.(int)$a['position']]??null;return $d?['title'=>$a['title'],'instruction'=>$d['instruction']?:$a['instructions']]+$d:null;}
  if((int)$l['level_id']===8){$d=level7_cards()[lesson_grade((int)$a['lesson_id']).':'.(int)$l['position'].':'.(int)$a['position']]??null;return $d?['title'=>$a['title'],'instruction'=>$d['instruction']?:$a['instructions']]+$d:null;}
  if((int)$l['level_id']===6){$d=level5_cards()[lesson_grade((int)$a['lesson_id']).':'.(int)$a['source_page']]??null;return $d?['title'=>$a['title'],'instruction'=>$d['instruction']?:$a['instructions']]+$d:null;}
@@ -25,7 +25,7 @@ function level2_card_set(array $a):?array{
 function level2_native_images(array $a):?array{
  $l=level2_activity_context($a);if(!$l)return null;
  $set=level2_card_set($a);
- if(in_array((int)$l['level_id'],[4,6,7,8],true)){if(!$set)return null;$imgs=[];foreach($set['cards'] as $c)foreach($c['images'] as $im)$imgs[]=$im['src'];return array_values(array_unique($imgs));}
+ if(in_array((int)$l['level_id'],[4,9,6,7,8],true)){if(!$set)return null;$imgs=[];foreach($set['cards'] as $c)foreach($c['images'] as $im)$imgs[]=$im['src'];return array_values(array_unique($imgs));}
  if(!$set){
   $key=$l['level_id']==2?'2a':'2b';$meta=level2_manifest()['levels'][(string)$l['level_id']];
   foreach($meta['lessons'] as $lesson)if((int)$lesson['position']===(int)$l['position']){
