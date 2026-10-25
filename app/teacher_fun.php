@@ -129,7 +129,7 @@ function tf_top_rows(array $ids,int $level=0,string $period='all'):array{
 /** The filter row: level and period, keeping the grade and section chosen above. */
 function tf_top_filter(int $level,string $period):string{
  $keep='';foreach(['grade_level','section_id'] as $k)if(isset($_GET[$k]))$keep.='<input type="hidden" name="'.$k.'" value="'.(int)$_GET[$k].'">';
- $lv='<option value="0">All levels</option>';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $l)$lv.='<option value="'.(int)$l['id'].'"'.($level===(int)$l['id']?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';
+ $lv='<option value="0">All levels</option>';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)$lv.='<option value="'.(int)$l['id'].'"'.($level===(int)$l['id']?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';
  $pd='';foreach(TF_TOP_PERIODS as $k=>$t)$pd.='<option value="'.$k.'"'.($period===$k?' selected':'').'>'.$t.'</option>';
  return '<form method="get" action="#tf-top" class="lb-filter"><input type="hidden" name="page" value="dashboard">'.$keep
   .'<label>Level<select name="lb_level" data-autosubmit>'.$lv.'</select></label><label>Time<select name="lb_period" data-autosubmit>'.$pd.'</select></label><button class="btn secondary pg-go">Show</button></form>';
@@ -208,7 +208,7 @@ function tf_leaderboard_svg(array $rows,string $label):string{
  $g.='<rect x="430" y="118" width="10" height="70" fill="#8a5527"/><rect x="760" y="118" width="10" height="70" fill="#8a5527"/>'
   .'<rect x="320" y="16" width="560" height="112" rx="18" fill="#fff8e8" stroke="#b08a4e" stroke-width="4"/><text x="600" y="70" text-anchor="middle" font-size="44" font-weight="800" fill="#17633a" letter-spacing="1">TOP 10 PUPILS</text>'
   .'<text x="600" y="104" text-anchor="middle" font-size="16" font-weight="700" fill="#6b5a45">'.$x($cut($sub,64)).'</text>'
-  .'<image href="assets/bulig-logo.png" x="1000" y="12" width="182" height="76" preserveAspectRatio="xMidYMid meet"/>';
+  .'<image href="assets/brand/bulig-gamified.webp" x="1000" y="12" width="182" height="76" preserveAspectRatio="xMidYMid meet"/>';
  /* scenery around the podium and the list */
  $g.=$pine(48,330,.85).$tree(660,300,.62,'#6fcf7b').$pine(40,470,.7).$books(668,420).$bush(664,560);
  $fl=['#ff8fab','#9ad0ff','#ffd23f','#c3a2ff','#ff9f5a'];

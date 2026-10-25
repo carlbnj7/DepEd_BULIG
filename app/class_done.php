@@ -82,12 +82,12 @@ function class_done_demo_panel(array $u,int $level,int $grade,string $label):str
 /** Learning path with "Done in class" marking and undo. With $acts, each lesson also lists its activities. */
 function class_done_path(int $pid,string $back='',bool $acts=false):string{
  $g=pupil_grade($pid);$start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);if($back==='')$back='?page=pupil&id='.$pid.'#learning-path';
- $levels=rows('SELECT b.id,b.title FROM bulig_levels b WHERE b.published=1 AND EXISTS(SELECT 1 FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=b.id AND l.published=1'.GRADE_SQL.') ORDER BY b.id',[$g]);
+ $levels=rows('SELECT b.id,b.title FROM bulig_levels b WHERE b.published=1 AND EXISTS(SELECT 1 FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=b.id AND l.published=1'.GRADE_SQL.') ORDER BY '.level_order_sql('b.id'),[$g]);
  $h='<section class="card cd-path" id="learning-path"><h2>Learning path</h2><p class="muted">Tick the '.($acts?'lessons or activities':'lessons').' you did together in class, then choose <strong>Mark as done in class</strong>. The pupil’s next lesson or level opens right away.</p>';
  $openDone=false;
  foreach($levels as $lv){$lvid=(int)$lv['id'];
   $ls=rows('SELECT l.id,l.position,l.subtitle,p.completed_at,(SELECT COUNT(*) FROM activities a WHERE a.lesson_id=l.id AND a.published=1) total,(SELECT COUNT(*) FROM activities a JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=l.id AND a.published=1 AND c.status IN (\'approved\',\'completed\')) ok,(SELECT COUNT(*) FROM activities a JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=l.id AND c.prompt_snapshot=?) marked FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL.' ORDER BY l.position,l.id',[$pid,$pid,CLASS_DONE_MARK,$pid,$lvid,$g]);
-  $done=count(array_filter($ls,fn($l)=>(bool)$l['completed_at']));$all=count($ls);$avail=level_available($pid,$lvid);$skipped=$start&&$lvid<$start;
+  $done=count(array_filter($ls,fn($l)=>(bool)$l['completed_at']));$all=count($ls);$avail=level_available($pid,$lvid);$skipped=$start&&level_rank($lvid)<level_rank($start);
   $open=!$openDone&&$avail&&!$skipped&&$done<$all;if($open)$openDone=true;
   $state=$done===$all?'Complete':($skipped?'Skipped · optional':($avail?'Open':'Locked'));
   $acRows=[];if($acts&&$ls){foreach(rows("SELECT a.id,a.lesson_id,a.phase,a.title,c.status,c.prompt_snapshot FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE m.level_id=? AND a.published=1 AND l.published=1".GRADE_SQL." ORDER BY FIELD(a.phase,'pre','learn','post'),a.position,a.id",[$pid,$lvid,$g]) as $a)$acRows[(int)$a['lesson_id']][]=$a;}

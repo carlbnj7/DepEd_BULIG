@@ -1936,7 +1936,7 @@ html.bulig-boot .boot{display:flex}
 html.bulig-boot.boot-out .boot{opacity:0}
 html.bulig-boot body{overflow:hidden}
 .boot-glow{position:absolute;width:min(520px,90vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,214,77,.42),rgba(255,214,77,0) 65%);animation:boot-glow 2.4s ease-in-out infinite}
-.boot-logo{position:relative;width:min(360px,62vw);aspect-ratio:2048/873;background:url(bulig-logo.png) center/contain no-repeat;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));animation:boot-pop .7s cubic-bezier(.2,1.5,.4,1) both}
+.boot-logo{position:relative;width:min(360px,62vw);aspect-ratio:1000/488;background:url(brand/bulig-gamified-mark.webp) center/contain no-repeat;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));animation:boot-pop .7s cubic-bezier(.2,1.5,.4,1) both}
 .boot-bar{position:relative;margin-top:22px;width:min(200px,44vw);height:9px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden}
 .boot-bar i{display:block;height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,#ffe066,#f2b10c);animation:boot-bar 1.1s ease-in-out infinite}
 .boot-l{position:absolute;font:800 2rem var(--font-body,Poppins),sans-serif;color:rgba(255,255,255,.15);animation:boot-float 4s ease-in-out infinite}
@@ -5037,7 +5037,7 @@ html:not(.dark) body.login-page:not(.admin-mode):not(.key-page) .login-credits{c
 html.bulig-boot.boot-out .boot{opacity:0;transform:scale(1.03)}
 .boot-glow{width:min(620px,95vw);background:radial-gradient(circle,rgba(255,214,90,.32),rgba(255,214,90,0) 62%)}
 .boot-logo{width:min(420px,70vw);filter:drop-shadow(0 14px 26px rgba(0,0,0,.45));animation:boot-pop .8s cubic-bezier(.2,1.4,.4,1) both,boot-breathe 3s .9s ease-in-out infinite}
-.boot-logo::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%) -150% 0/60% 100% no-repeat;-webkit-mask:url(bulig-logo.png) center/contain no-repeat;mask:url(bulig-logo.png) center/contain no-repeat;animation:boot-shine 1.2s .8s ease-in-out both}
+.boot-logo::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%) -150% 0/60% 100% no-repeat;-webkit-mask:url(brand/bulig-gamified-mark.webp) center/contain no-repeat;mask:url(brand/bulig-gamified-mark.webp) center/contain no-repeat;animation:boot-shine 1.2s .8s ease-in-out both}
 .boot-tag{position:relative;margin-top:14px;font:700 clamp(1.05rem,2.6vw,1.45rem)/1.2 Poppins,sans-serif;letter-spacing:-.02em;color:#fff;opacity:0;animation:boot-up .6s .55s ease-out forwards}
 .boot-tag em{font-style:normal;background:linear-gradient(92deg,#fff3b0,#ffd84d 45%,#f7c127);-webkit-background-clip:text;background-clip:text;color:transparent}
 .boot-bar{margin-top:26px;width:min(300px,64vw);height:8px;background:rgba(255,255,255,.14);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
@@ -5691,9 +5691,9 @@ body:not(.l1-demo-page) .l2-card .l2-pics.n1 .l2-pic img{height:auto!important;m
 html.dark .leave-why .leave-pick{background:#3a3214;border-color:#8a7426;color:#ffe9a6!important}
 html.dark .leave-why .leave-pick:hover{background:#4a3f17}
 @media(max-width:420px){.leave-why .leave-pick{justify-content:center;text-align:center}}
-/* v172: teachers and admins: no glow, moving shine or ring when the navigation is touched (the glass stays, still) */
-body:is(.role-teacher,.role-admin) :is(.sidebar,.topbar,.lg-bubble).lg-g{--lg-shine:radial-gradient(150% 115% at 26% 0%,rgba(255,255,255,.46),rgba(255,255,255,0) 52%);animation:none!important}
-html.dark body:is(.role-teacher,.role-admin) :is(.sidebar,.topbar,.lg-bubble).lg-g{--lg-shine:radial-gradient(150% 115% at 26% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 52%)}
+/* v172 (teachers, admins), v177 every dashboard: no glow, moving shine or ring when the navigation is touched (the glass stays, still) */
+body.workspace :is(.sidebar,.topbar,.lg-bubble,.pupil-tabbar).lg-g{--lg-shine:radial-gradient(150% 115% at 26% 0%,rgba(255,255,255,.46),rgba(255,255,255,0) 52%);animation:none!important}
+html.dark body.workspace :is(.sidebar,.topbar,.lg-bubble,.pupil-tabbar).lg-g{--lg-shine:radial-gradient(150% 115% at 26% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 52%)}
 /* v172: Top 10 pupils on Teacher Home */
 .tf-top .section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .tf-top h2{display:flex;align-items:center;gap:8px}.tf-top h2 .icon{color:#e2a400;width:22px;height:22px}
@@ -5854,3 +5854,38 @@ html.dark .pc-tip-card{background:#16231b;color:#e8f0ea}html.dark .pc-tip li{bac
 .bug-table td:nth-child(1){white-space:nowrap}.bug-table td:nth-child(3){min-width:280px}.bug-card .bk-tabs{margin-bottom:12px}.bug-empty{padding:18px 4px}
 .bug-acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.bug-acts form{margin:0}
 .tk-save{margin-left:auto}@media print{.tk-save{display:none!important}}
+.ks-a.ks-long{grid-column:1/-1;font-weight:500;line-height:1.55;background:#fffdf5;border:1px solid #efe6c8;border-radius:10px;padding:10px 12px;max-height:420px;overflow:auto;white-space:normal}
+/* v177: Level 3B (id 9) cover */
+.level-cover.cover-9{background-image:url(images/covers/level-9.webp)!important}.ft-9{background-image:url(images/covers/level-9.webp)}.lesson-load.cv-9{background-image:url(images/covers/level-9.webp)}.dl-cv.cv-9{background-image:url(images/covers/level-9.webp)}
+/* v177: Administrator · School directory */
+.dir-card .bk-tabs{margin-bottom:12px}.dir-filters{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:flex-end;margin:0 0 12px}.dir-filters label{display:grid;gap:4px;font-size:.85rem;font-weight:700;color:var(--muted,#5b6b5f)}.dir-filters select{min-width:150px}
+.dir-q{flex:1 1 240px;display:flex!important;flex-direction:row!important;align-items:center;gap:8px;border:1px solid var(--ivory-line,#e9e2cc);border-radius:14px;padding:4px 12px;background:#fff}.dir-q input{border:0!important;box-shadow:none!important;padding:8px 0!important;width:100%;background:transparent}.dir-q svg{width:18px;height:18px;flex:none}
+.dir-count{margin:0 0 10px;color:var(--muted,#5b6b5f)}.dir-empty{padding:14px 4px}
+.dir-table td small{display:block;color:var(--muted,#5b6b5f);font-size:.8rem}.dir-table td{vertical-align:top}
+.dir-teachers{display:grid;gap:10px}.dir-t{border:1px solid var(--ivory-line,#e9e2cc);border-radius:16px;background:#fff;padding:0}.dir-t summary{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:12px 16px;cursor:pointer;list-style:none}.dir-t summary::-webkit-details-marker{display:none}
+.dir-tn{display:grid;min-width:200px}.dir-tn small{color:var(--muted,#5b6b5f)}.dir-ts{flex:1;color:#33473b;font-size:.92rem}.dir-t[open] summary{border-bottom:1px solid #edf2ee}
+.dir-pl{margin:10px 16px 6px 34px;columns:2 260px;gap:24px}.dir-pl li{margin:0 0 4px;break-inside:avoid}.dir-pl small{color:var(--muted,#5b6b5f)}.dir-t>.btn{margin:4px 16px 14px}
+html.dark .dir-t,html.dark .dir-q{background:var(--sf2,#1c2620)}
+/* v178: Bob the Builder's "There's a new update" popup (construction sign) */
+.wn-shade{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:16px;background:rgba(10,30,18,.55);animation:wn-in .3s ease-out}
+.wn-shade[hidden]{display:none}
+.wn-box{position:relative;width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#fffbea;border:4px solid #1d1d1b;border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:grid;grid-template-columns:150px 1fr;align-items:end}
+.wn-tape{grid-column:1/-1;height:22px;background:repeating-linear-gradient(-45deg,#ffd23f 0 18px,#1d1d1b 18px 36px);border-bottom:3px solid #1d1d1b}
+.wn-tape-b{border-bottom:0;border-top:3px solid #1d1d1b}
+.wn-bob{width:150px;height:auto;align-self:end;margin:10px 0 0 4px;animation:wn-bob 2.4s ease-in-out infinite}
+.wn-body{padding:16px 18px 18px 6px;color:#1d1d1b}
+.wn-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#ffd23f;border:2px solid #1d1d1b;font-weight:800;font-size:.75rem;letter-spacing:.08em}
+.wn-badge svg{width:14px;height:14px}
+.wn-body h2{margin:10px 0 6px;font-size:1.35rem;line-height:1.2;color:#17633a}
+.wn-say{margin:0 0 10px;font-size:.92rem;color:#3d3a2a}
+.wn-list{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px}
+.wn-list li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;background:#fff;border:2px dashed #e0b400;border-radius:12px}
+.wn-list b{display:block;font-size:.95rem}.wn-list small{display:block;color:#5b5b4e;font-size:.82rem;line-height:1.3}
+.wn-ic{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#ff7a1a;color:#fff;border:2px solid #1d1d1b}
+.wn-ic svg{width:18px;height:18px}
+.wn-ok{width:100%;justify-content:center}
+@keyframes wn-in{from{opacity:0}to{opacity:1}}
+@keyframes wn-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media (max-width:520px){.wn-box{grid-template-columns:76px 1fr;align-items:start}.wn-bob{width:76px;margin:14px 0 0 6px;align-self:start}.wn-body{padding:12px 12px 14px 4px}.wn-body h2{font-size:1.15rem}.wn-ok,.wn-list{margin-left:-80px;width:calc(100% + 80px)}}
+@media (prefers-reduced-motion:reduce){.wn-bob,.wn-shade{animation:none}}
+html.dark .wn-box{background:#fffbea}html.dark .wn-body,html.dark .wn-list b{color:#1d1d1b}html.dark .wn-body h2{color:#17633a}

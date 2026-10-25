@@ -142,7 +142,7 @@ function action():void{
     else $aids=class_done_activities($pid,$scope,$scope==='level'?$level:(int)($_POST[$scope==='activity'?'aid':'lid']??0));
     $n=class_done_apply($tid,$pid,$aids);$marked+=$n;
     if($n)push_queue($pid,'lessons','Your next lesson is open!','Your class did it together. Your next step in BULIG is ready.','?page=dashboard');
-    if($n)class_done_note_set($pid,$scope==='level'?'Your teacher marked '.level_label($level).' as done.'.(level_available($pid,$level+1)?' '.level_label($level+1).' is open now.':''):'Your teacher marked '.($scope==='activity'?'an activity':'your lesson').' as done. Your next step is ready.');
+    if($n)class_done_note_set($pid,$scope==='level'?'Your teacher marked '.level_label($level).' as done.'.(($nx=level_next($level))&&level_available($pid,$nx)?' '.level_label($nx).' is open now.':''):'Your teacher marked '.($scope==='activity'?'an activity':'your lesson').' as done. Your next step is ready.');
    }
    audit('class_done',$what.' for '.count($pupils).' pupils, '.$marked.' activities');db()->commit();
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
@@ -175,7 +175,7 @@ function action():void{
  }
  if(in_array($action,['draft','submit'],true)){
   $u=require_role('pupil');$pid=(int)$u['id'];$aid=(int)($_POST['activity_id']??0);$answer=trim((string)($_POST['response']??''));$drawing=(string)($_POST['drawing']??'');$transcript=trim((string)($_POST['transcript']??''));
-  if(strlen($answer)>12000||strlen($transcript)>12000||strlen($drawing)>1500000)fail('This response is too large.');
+  /* v177: room for long writing (editorials, copyreading); the column holds 65,535 bytes */if(strlen($answer)>60000||strlen($transcript)>12000||strlen($drawing)>1500000)fail('This response is too large.');
   if($drawing!==''&&!preg_match('~^data:image/(png|jpeg);base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
   $audio=$action==='submit'?(string)($_POST['audio']??''):'';if(isset($_POST['audio_card'])&&!is_array($_POST['audio_card']))fail('Invalid recording.');$heard=($_POST['heard']??'')==='1';if(strlen($audio)>12500000)fail('This recording is too long. Please record again.');
   db()->beginTransaction();try{
@@ -207,7 +207,7 @@ function action():void{
    }
    $status=$ok?'completed':'retry';$when=offline_answer_time()??date('Y-m-d H:i:s');
    q('INSERT INTO activity_completion(pupil_id,activity_id,response,drawing,transcript,prompt_snapshot,activity_revision,status,submitted_at,outcome,score,max_score) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript),prompt_snapshot=VALUES(prompt_snapshot),activity_revision=VALUES(activity_revision),status=VALUES(status),submitted_at=VALUES(submitted_at),outcome=VALUES(outcome),score=VALUES(score),max_score=VALUES(max_score)',[$pid,$aid,$answer,$drawing?:null,$transcript?:null,level2_prompt_snapshot($a),$a['revision'],$status,$when,$outcome,$score,$max]);
-   if(!empty($_POST['audio_card'])&&is_array($_POST['audio_card'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,7],true)&&l2a_audio_supported()&&($ap=l2a_save_audios($_POST['audio_card'],$pid,$aid)))q('UPDATE activity_completion SET audio_paths=? WHERE pupil_id=? AND activity_id=?',[json_encode($ap),$pid,$aid]);
+   if(!empty($_POST['audio_card'])&&is_array($_POST['audio_card'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,9,7],true)&&l2a_audio_supported()&&($ap=l2a_save_audios($_POST['audio_card'],$pid,$aid)))q('UPDATE activity_completion SET audio_paths=? WHERE pupil_id=? AND activity_id=?',[json_encode($ap),$pid,$aid]);
    if($apath)q('UPDATE activity_completion SET audio_path=? WHERE pupil_id=? AND activity_id=?',[$apath,$pid,$aid]);
    if(offline_answer_time())q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$pid,'offline_answer','activity '.$aid.' at '.$when]);
    $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);key_save_score($cid);

@@ -5,7 +5,7 @@
 function lesson_is_skipped(int $pid,int $lid):bool{
  static $c=[];$k=$pid.':'.$lid;if(isset($c[$k]))return $c[$k];
  $start=pupil_start_level($pid);
- return $c[$k]=$start>0&&lesson_level($lid)<$start;
+ return $c[$k]=$start>0&&level_rank(lesson_level($lid))<level_rank($start);
 }
 /** On the lesson start screen: the three parts, and in a skipped level a list to start anywhere. */
 function lesson_parts(array $lesson,array $all,array $count):string{

@@ -15,7 +15,7 @@
  async function cacheLogin(){try{
   const urls=new Set(),add=v=>{if(!v||v.startsWith('data:'))return;const u=new URL(v,base);if(u.origin===location.origin)urls.add(u.href);};
   document.querySelectorAll('link[rel="stylesheet"][href],script[src],img[src],link[rel="icon"][href],link[rel="preload"][href],link[rel="manifest"][href]').forEach(n=>add(n.getAttribute('src')||n.getAttribute('href')));
-  ['assets/bulig-logo.png','assets/images/characters/george-cheer.webp','assets/images/characters/toby-hello.webp','assets/images/characters/boy.webp','assets/images/characters/girl.webp','assets/images/characters/boy-cheer.webp','assets/images/characters/girl-cheer.webp','assets/fonts/poppins-latin-400-normal.woff2','assets/fonts/poppins-latin-500-normal.woff2','assets/fonts/poppins-latin-600-normal.woff2','assets/fonts/poppins-latin-700-normal.woff2'].forEach(add);
+  ['assets/bulig-logo.png','assets/brand/bulig-gamified.webp','assets/images/characters/george-cheer.webp','assets/images/characters/toby-hello.webp','assets/images/characters/boy.webp','assets/images/characters/girl.webp','assets/images/characters/boy-cheer.webp','assets/images/characters/girl-cheer.webp','assets/fonts/poppins-latin-400-normal.woff2','assets/fonts/poppins-latin-500-normal.woff2','assets/fonts/poppins-latin-600-normal.woff2','assets/fonts/poppins-latin-700-normal.woff2'].forEach(add);
   (store('bulig-saved')||[]).forEach(x=>{if(x&&x.img)add(x.img);});
   const c=await caches.open('bulig-login'),sig=[...urls].sort().join('|');
   if(store('bulig-login-sig')===sig&&await c.match(abs('?page=login')))return;

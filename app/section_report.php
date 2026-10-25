@@ -56,7 +56,7 @@ function sr_data(array $sec,int $level,int $tid,string $month):array{
 function sr_head(array $D,string $title,string $sub,string $teacher):string{
  $set=fn($k,$d='')=>function_exists('admin_setting')?admin_setting($k,$d):$d;$div=trim($set('division_name','Division of Bukidnon'))?:'Division of Bukidnon';
  return '<div class="rc-band">'.rc_logo('division').'<div class="rc-mid">Republic of the Philippines<b>Department of Education · Region X</b>'.e($div).'</div>'.rc_logo('school').'</div>'.rc_tribal(10,'srt'.substr(md5($title),0,6))
-  .'<div class="sd-title"><img src="assets/bulig-logo.png" alt="BULIG"><div><h2>'.e($title).'</h2><p>'.e($sub).'</p></div></div>'
+  .'<div class="sd-title"><img src="assets/brand/bulig-gamified.webp" alt="BULIG"><div><h2>'.e($title).'</h2><p>'.e($sub).'</p></div></div>'
   .'<div class="sd-info"><span><small>LEVEL</small><b>'.e(level_label($D['level'])).'</b></span><span><small>GRADE &amp; SECTION</small><b>Grade '.$D['grade'].' – '.e($D['sec']['name']).'</b></span><span><small>READING TEACHER</small><b>'.e($teacher).'</b></span><span><small>SCHOOL YEAR</small><b>'.e(function_exists('admin_school_year')?admin_school_year():'').'</b></span><span><small>PRINTED</small><b>'.date('F j, Y').'</b></span></div>';
 }
 function sr_page(string $inner,array $D,string $title,string $sub,string $teacher):string{return '<section class="sd-page">'.sr_head($D,$title,$sub,$teacher).$inner.'<div class="sd-foot"><span>BULIG · Building Up Literacy, Inspiring Growth</span><span class="sd-pn"></span></div></section>';}
@@ -195,7 +195,7 @@ function section_report_view(array $u):void{
 /** The Print centre card. */
 function section_report_card(array $secs,callable $img):string{
  if(!$secs)return '';
- $lv='';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $l)$lv.='<option value="'.(int)$l['id'].'">'.e(level_label((int)$l['id'])).'</option>';
+ $lv='';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)$lv.='<option value="'.(int)$l['id'].'">'.e(level_label((int)$l['id'])).'</option>';
  $sc='';foreach($secs as $s)$sc.='<option value="'.(int)$s['id'].'">Grade '.(int)$s['grade_level'].' · '.e($s['name']).'</option>';
  $mo='';for($i=0;$i<3;$i++){$m=date('Y-m',strtotime(date('Y-m-01').' -'.$i.' month'));$mo.='<option value="'.$m.'">'.date('F Y',strtotime($m.'-01')).'</option>';}
  $help=['sum'=>'Every pupil: lessons, pre-test, post-test, passed','pp'=>'How much each pupil improved','irl'=>'Level 4 only: miscues, score, reading level','rt'=>'Least-learned skills and hardest lessons','help'=>'Intervention list with next steps','act'=>'Days active, activities, last sign-in'];

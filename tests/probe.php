@@ -50,6 +50,12 @@ $out=match($what){
  /* DepEd SF1 as LIS gives it (.xls): php tests/probe.php sf1 0 */
  'sf1'=>(function():array{$rows=import_read_file(__DIR__.'/fixtures/sf1-sample.xls','sf1-sample.xls');$h=4;
   return ['class'=>import_sheet_class($rows,$h),'cols'=>import_columns($rows[$h]),'names'=>array_values(array_filter(array_map(fn($r)=>($r[2]??'')!==''&&!str_starts_with($r[2],'<==')&&preg_match('/^\d{12}$/',$r[0]??'')?[$r[0],import_sf1_name($r[2])]:null,array_slice($rows,$h+1))))];})(),
+ /* Level 3A and 3B (v177): order, labels and where the lessons are. php tests/probe.php level3ab 0 */
+ 'level3ab'=>['order'=>array_map('intval',array_column(rows('SELECT id FROM bulig_levels ORDER BY '.level_order_sql('id')),'id')),'labels'=>[level_label(4),level_label(9)],'next4'=>level_next(4),'next9'=>level_next(9),
+  'l3a'=>array_map('intval',array_column(rows('SELECT l.position FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=4 ORDER BY l.position'),'position')),
+  'l3b'=>array_map('intval',array_column(rows('SELECT l.position FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=9 ORDER BY l.position'),'position')),
+  'pre3b'=>array_column(rows("SELECT a.title FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=9 AND l.position=1 ORDER BY a.position"),'title'),
+  'key3b'=>(function(){foreach(rows("SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=9 AND l.position=12 ORDER BY a.position") as $a)if(($s=l2a_set($a))&&$s['cards']&&activity_key($a))return ['key'=>activity_key_id($a),'cards'=>count($s['cards'])];return null;})()],
  default=>['error'=>'unknown probe']
 };
 echo json_encode($out),"\n";

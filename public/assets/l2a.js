@@ -133,7 +133,12 @@
  /* letter puzzle (app.js marks the letters): the marked letters, row by row */
  $$('[data-kind="lgrid"]',deck).forEach(g=>{const c=g.closest('.l2-card');g.addEventListener('click',()=>setTimeout(()=>{const v=$$('tr',g).map((tr,i)=>{const m=$$('.grid-cell.found',tr).map(b=>b.textContent).join('');return m?'Row '+(i+1)+': '+m:'';}).filter(Boolean).join('; ');set(c,g.dataset.part,v);},0));});
  /* typed answer (Level 6: "write the name...", "copy the word...") */
- $$('[data-kind="write"]',deck).forEach(g=>{const c=g.closest('.l2-card'),t=$('textarea',g);t.addEventListener('input',()=>set(c,g.dataset.part,t.value.replace(/\s+/g,' ').trim()));});
+ /* v177: paragraphs are kept (editorials, copyreading), the copyreading article comes ready to edit, and what is typed is kept on this device until it is sent */
+ const drafts=[],wfill=[],wnorm=v=>v.replace(/\r/g,'').replace(/[ \t]+/g,' ').replace(/ *\n */g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+ $$('[data-kind="write"]',deck).forEach(g=>{const c=g.closest('.l2-card'),t=$('textarea',g),dk='bulig-w:'+aid+':'+c.dataset.n+':'+g.dataset.part;
+  if(!ro){try{const d=localStorage.getItem(dk);if(d)t.value=d;}catch(_){}drafts.push(dk);}
+  if(t.value.trim()!=='')wfill.push(()=>set(c,g.dataset.part,wnorm(t.value)));
+  t.addEventListener('input',()=>{set(c,g.dataset.part,wnorm(t.value));try{localStorage.setItem(dk,t.value);}catch(_){}});});
  /* matching board (app.js draws the lines and writes "1-c, 2-a" in the box) */
  $$('[data-kind="match"]',deck).forEach(g=>{const c=g.closest('.l2-card'),box=$('.native-answer',g);box.addEventListener('input',()=>set(c,g.dataset.part,box.value));});
  $$('[data-kind="paper"]',deck).forEach(b=>{const c=b.closest('.l2-card');b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on?'true':'false');set(c,b.dataset.part,on?'done with my teacher or on paper':'');});});
@@ -212,6 +217,6 @@
   const t=document.createElement('strong');t.textContent=empty.length===1?'Card '+n+' has no answer yet.':empty.length+' cards have no answer yet.';
   const row=document.createElement('div');row.className='l2-row';const g=document.createElement('button'),a=document.createElement('button');g.type=a.type='button';g.className='l1-btn2';a.className='l1-btn2';g.textContent='Go to card '+n;a.textContent='Submit anyway';
   g.addEventListener('click',()=>{fb.replaceChildren();fb.className='answer-feedback l1-fb';show(+n-1);});a.addEventListener('click',()=>{fb.replaceChildren();fb.className='answer-feedback l1-fb';sure=true;form.requestSubmit();sure=false;});row.append(g,a);fb.append(t,row);},true);
- if(fb)new MutationObserver(()=>{if(fb.classList.contains('success')){prev.hidden=true;if(next)next.hidden=true;dots.remove();$$('.l2-ans',deck).forEach(x=>x.classList.add('locked'));}}).observe(fb,{attributes:true,attributeFilter:['class']});
- collect();show(0);
+ if(fb)new MutationObserver(()=>{if(fb.classList.contains('success')){drafts.forEach(k=>{try{localStorage.removeItem(k);}catch(_){}});prev.hidden=true;if(next)next.hidden=true;dots.remove();$$('.l2-ans',deck).forEach(x=>x.classList.add('locked'));}}).observe(fb,{attributes:true,attributeFilter:['class']});
+ wfill.forEach(f=>f());collect();show(0);
 })();

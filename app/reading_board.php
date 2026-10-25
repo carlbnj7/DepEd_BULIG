@@ -8,8 +8,8 @@
      A4, one page per pupil, for one pupil or a whole section. The LRN comes from pupil_details; the school name, school
      head and school year from Settings > School info; the Division and school logos are uploaded there too. */
 
-/** The board's steps: board number => [[BULIG level id, part label, name], ...]. Level 2 is 2a and 2b. */
-const RB_STEPS=[1=>[[1,'','Oral Language']],2=>[[2,'2a','Phonological Awareness'],[3,'2b','Phonological Awareness']],3=>[[4,'','Word Recognition']],4=>[[5,'','Fluency']],5=>[[6,'','Vocabulary Development & Listening Comprehension']],6=>[[7,'','Graded Reading Comprehension']],7=>[[8,'','Genuine Love for Reading & Writing']]];
+/** The board's steps: board number => [[BULIG level id, part label, name], ...]. Level 2 is 2a and 2b; Level 3 is 3a and 3b (v177). */
+const RB_STEPS=[1=>[[1,'','Oral Language']],2=>[[2,'2a','Phonological Awareness'],[3,'2b','Phonological Awareness']],3=>[[4,'3a','Word Recognition'],[9,'3b','Word Recognition']],4=>[[5,'','Fluency']],5=>[[6,'','Vocabulary Development & Listening Comprehension']],6=>[[7,'','Graded Reading Comprehension']],7=>[[8,'','Genuine Love for Reading & Writing']]];
 /** Board colours of the steps (block, shade, text). */
 const RB_COLORS=[1=>['#f6c02c','#c99400','#a77a00'],2=>['#f28c28','#c4650f','#d9690f'],3=>['#e2457a','#b3275a','#c92a62'],4=>['#3d9be0','#2470b0','#1f78c8'],5=>['#7a4bc0','#55308f','#6a3cb0'],6=>['#19a7a0','#0f7a75','#0f8f88'],7=>['#2fa04f','#1d7a3c','#1d8a40']];
 
@@ -18,11 +18,11 @@ const RB_COLORS=[1=>['#f6c02c','#c99400','#a77a00'],2=>['#f28c28','#c4650f','#d9
 function rb_levels(int $pid):array{
  static $c=[];if(isset($c[$pid]))return $c[$pid];
  $start=pupil_start_level($pid);$fin=function_exists('finished_levels')?finished_levels($pid):[];$grade=pupil_grade($pid);$out=[];$cur=0;
- foreach([1,2,3,4,5,6,7,8] as $L){$pub=level_published($L);
+ foreach(LEVEL_ORDER as $L){$pub=level_published($L);
   $n=$pub?one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$L,$grade]):['total'=>0,'done'=>0];
   $pct=(int)$n['total']?(int)floor(100*(int)$n['done']/(int)$n['total']):0;
   $pt=function_exists('pt_result')&&$pub?pt_result($pid,$L):['n'=>0];$post=$pt['n']&&($pt['done']??0)>=$pt['n']?(int)$pt['pct']:null;
-  if(isset($fin[$L]))$s='done';elseif($start&&$L<$start)$s='skip';elseif($start&&!$cur&&$pub&&(int)$n['total']){$s='cur';$cur=$L;}else $s='lock';
+  if(isset($fin[$L]))$s='done';elseif($start&&level_rank($L)<level_rank($start))$s='skip';elseif($start&&!$cur&&$pub&&(int)$n['total']){$s='cur';$cur=$L;}else $s='lock';
   $out[$L]=['s'=>$s,'date'=>$fin[$L]??null,'pct'=>$pct,'post'=>$post,'retry'=>$s==='cur'&&(int)$n['total']&&(int)$n['done']>=(int)$n['total']&&$post!==null&&$post<(function_exists('pt_passed')?PT_PASS:80)];}
  return $c[$pid]=$out;
 }
@@ -41,7 +41,7 @@ function rb_data(int $pid):array{
   $tiers[]=$t;}
  return ['tiers'=>$tiers,'kid'=>char_src((string)val('SELECT sex FROM pupil_details WHERE pupil_id=?',[$pid])==='female'?'girl':'boy','cheer'),'ribbons'=>$ribbons,'left'=>$left,'now'=>$now];
 }
-function rb_label(array $now):string{return 'Level '.($now['k']?:$now['n']).' · '.$now['t'];}
+function rb_label(array $now):string{return 'Level '.(strtoupper($now['k'])?:$now['n']).' · '.$now['t'];}
 
 /** A colour mixed with white (0 = the colour, 1 = white). */
 function rb_mix(string $hex,float $w):string{$h=ltrim($hex,'#');$o='#';for($i=0;$i<3;$i++){$v=hexdec(substr($h,$i*2,2));$o.=sprintf('%02x',(int)round($v+(255-$v)*$w));}return $o;}
@@ -66,7 +66,7 @@ function rb_mini(int $pid):string{
  $svg.='<rect x="0" y="'.$base.'" width="300" height="'.(260-$base).'" fill="#b7e09c"/><path d="M'.($x0-4).' '.$base.'H280" stroke="#7a5a2a" stroke-opacity=".2" stroke-width="5" stroke-linecap="round"/>';
  foreach([[30,250,'#ff8fab'],[96,252,'#ffd23f'],[170,249,'#9ad0ff'],[250,252,'#c3a2ff']] as [$fx,$fy,$fc])$svg.='<g transform="translate('.$fx.' '.$fy.')"><path d="M0 0v-7" stroke="#3e9a4a" stroke-width="2"/><circle cx="0" cy="-9" r="3.6" fill="'.$fc.'"/><circle cx="0" cy="-9" r="1.5" fill="#fff"/></g>';
  $svg.=$kid;
- $where=$now?'Level '.($now['k']?:$now['n']):($d['left']?'Not started':'All done!');
+ $where=$now?'Level '.(strtoupper($now['k'])?:$now['n']):($d['left']?'Not started':'All done!');
  $label='My reading board. '.$d['ribbons'].' '.($d['ribbons']===1?'ribbon':'ribbons').'. '.($now?'You are on '.rb_label($now).'.':'').' Open my reading board.';
  return '<a class="adventure-art lb-mini-art" href="?page=board" aria-label="'.e($label).'"><span class="lb-mini"><svg viewBox="0 0 300 260" font-family="Poppins,sans-serif" aria-hidden="true">'.$svg.'</svg></span><span class="lb-mini-cap"><b>'.$d['ribbons'].' '.($d['ribbons']===1?'ribbon':'ribbons').'</b><span>'.e($where).'</span><span class="lb-mini-go">My reading board '.icon('arrow').'</span></span></a>';
 }
@@ -92,7 +92,7 @@ function rb_view(array $u):void{
  $pid=(int)$u['id'];$d=rb_data($pid);$first=explode(' ',trim((string)$u['name']))[0];$now=$d['now'];
  echo pf_defs().'<div class="pageheading"><div><span class="eyebrow">MY READING PROGRESS BOARD</span><h1>Climb the reading ladder, '.e($first).'!</h1><p class="muted">'
   .($now?'You are on '.e(rb_label($now)).'. '.($now['retry']?'Answer the post-test again to earn its ribbon.':'Finish a level to earn its ribbon!'):($d['left']?'Your teacher will choose your starting level soon.':'You finished every level. You reached the Reading Castle!')).'</p></div></div>'.friend_say('toby','flag',$d['left']?'Every level you finish, we climb higher together. Keep going!':'You reached the top! I planted our flag at the Reading Castle!');
- echo '<div class="lb-sum"><div><b>'.$d['ribbons'].'</b><small>'.($d['ribbons']===1?'ribbon':'ribbons').' earned</small></div><div><b>'.($now?'Level '.e($now['k']?:(string)$now['n']):($d['left']?'—':'Done!')).'</b><small>where you are now</small></div><div><b>'.$d['left'].'</b><small>'.($d['left']===1?'level':'levels').' to the castle</small></div></div>';
+ echo '<div class="lb-sum"><div><b>'.$d['ribbons'].'</b><small>'.($d['ribbons']===1?'ribbon':'ribbons').' earned</small></div><div><b>'.($now?'Level '.e(strtoupper($now['k'])?:(string)$now['n']):($d['left']?'—':'Done!')).'</b><small>where you are now</small></div><div><b>'.$d['left'].'</b><small>'.($d['left']===1?'level':'levels').' to the castle</small></div></div>';
  echo '<div class="lb-box" data-lb="'.e(json_encode($d,JSON_UNESCAPED_SLASHES)).'"><ol class="lb-list">';
  foreach($d['tiers'] as $t)foreach($t['parts'] as $p)echo '<li class="lb-'.e($p['s']).'"><b>Level '.$t['n'].e($p['k']?' '.$p['k']:'').'</b> '.e($p['t']).' · '.e(['done'=>$p['note']??'Finished','skip'=>$p['note']??'Started higher','cur'=>'You are here · '.$p['pct'].'% done','lock'=>'Locked'][$p['s']]).'</li>';
  echo '</ol></div><div class="lb-legend"><span><i class="g"></i>Finished</span><span><i class="y"></i>You are here</span><span><i class="k"></i>Locked</span><span><i class="r"></i>Ribbon: a level you finished'.(in_array('skip',array_merge(...array_map(fn($t)=>array_column($t['parts'],'s'),$d['tiers'])),true)?' or started above':'').'</span></div>';
@@ -136,7 +136,7 @@ function rc_card(int $pid,string $teacher):string{
  $tr='';foreach($rows as $r)$tr.='<tr class="'.$r['state'].'"><td class="ds"><b>'.e($r['name']).'</b>'.($r['sub']!==''?'<small>'.e($r['sub']).'</small>':'').'</td><td>'.$r['rem'].'</td><td class="dt">'.e($r['date']).'</td><td><span class="sig"></span></td></tr>';
  $now=null;foreach(RB_STEPS as $n=>$parts)foreach($parts as [$L,$kk,$name])if($lv[$L]['s']==='cur')$now=['n'=>$n,'k'=>$kk,'t'=>$name,'pct'=>$lv[$L]['pct']];
  $allDone=!array_filter($lv,fn($x)=>$x['s']==='cur'||$x['s']==='lock');
- $nowText=$now?'Now on <b>Level '.e($now['k']?:(string)$now['n']).' · '.e($now['t']).'</b> ('.$now['pct'].'% of its lessons done).':($allDone?'<b>Finished every level of BULIG.</b>':'The starting level is not set yet.');
+ $nowText=$now?'Now on <b>Level '.e(strtoupper($now['k'])?:(string)$now['n']).' · '.e($now['t']).'</b> ('.$now['pct'].'% of its lessons done).':($allDone?'<b>Finished every level of BULIG.</b>':'The starting level is not set yet.');
  $head=trim($set('school_head',''));
  return '<article class="rc-page"><div class="rc-band">'.rc_logo('division').'<div class="rc-mid">Republic of the Philippines<b>Department of Education · Region X</b>'.e($div).'</div>'.rc_logo('school').'</div>'.rc_tribal(14,'rct'.$k.'a')
   .'<div class="rc-title"><img src="assets/bulig-logo.png" alt="BULIG"><h1>Reading Progress Report Card<small>BEGINNING READING · ENGLISH</small></h1></div>'

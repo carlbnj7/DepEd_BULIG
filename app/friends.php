@@ -18,6 +18,8 @@ const BULIG_FRIENDS=[
  ['kai','Kai','the Messenger',false,'#2f5fd0','letter','Notifications and messages',"Special delivery! I am Kai the Messenger. When there is news for you, I bring it to you right away. Look for me on the bell!",1.05,1.06,'cheer'],
  ['sofie','Sofie','the Stylist',true,'#0ea5c6','mirror','Your profile and picture',"Hi! I am Sofie the Stylist. On your profile page, I help you pick a picture that looks just like you!",1.4,1.0,'cheer'],
  ['claude','Claude','the Protector',false,'#1d2f5c','shield','Keeping your account safe',"Hello! I am Claude the Protector. I keep your account safe. Never share your password with anyone!",.78,.9,'thumbs'],
+ /* v178 */
+ ['bob','Bob','the Builder',false,'#f2a900','blueprint','New updates in BULIG',"Hi, {n}! I am Bob the Builder. When BULIG gets something new, I build it and I tell you about it first!",.9,1.0,'cheer'],
 ];
 
 function friend_img(string $id,string $pose):string{return $id==='george'?char_src('george',$pose):'assets/images/characters/'.$id.'-'.$pose.'.webp?v=2';}
@@ -54,6 +56,7 @@ function kai_say(int $n):string{
  return friend_say('kai',$n?'letter':'thumbs',$n?'Special delivery! You have '.$n.' new '.($n===1?'note':'notes').'. Tap one to open it.':'You are all caught up! I will bring you new notes when they come.');
 }
 function level_friend(int $lv):string{
+ $lv=level_family($lv);   // 3B: Mia, like 3A
  if($lv===1)return friend_say('max','mic','Hi! I am Max the Listener. In Level 1 we listen and speak. When you see the microphone, tap it and talk to me!');
  if(in_array($lv,[2,3,4],true))return friend_say('mia','blocks','Hi! I am Mia the Builder. Let’s build words, one sound at a time!');
  if($lv===5)return friend_say('roxanne','time','Tick, tock! I am Roxanne the Timekeeper. Read the passage out loud and I will time your reading.');

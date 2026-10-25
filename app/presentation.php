@@ -5,7 +5,7 @@ function lesson_display_label(int $level,int $position):string{
  if($level===8)return 'Activity '.($position%100);
  if($level===7){$kind=intdiv($position,100)%10;$n=$position%100;return [1=>'Pre-test',3=>'Post-test',5=>'Formative assessment'][$kind]??'Activity '.$n;}
  if($level===6){$kind=intdiv($position,100)%10;$n=$position%100;return [1=>'Pre-test',3=>'Post-test',4=>'Activity '.$n.' · second set'][$kind]??'Activity '.$n;}
- if(in_array($level,[2,3,4],true)){
+ if(in_array(level_family($level),[2,3,4],true)){
   $lessons=module_source_meta($level)['lessons']??[];
   foreach($lessons as $lesson)if((int)$lesson['position']===$position){
    if($lesson['phase']==='pre')return 'Pre-assessment';
@@ -21,7 +21,7 @@ function lesson_count_label(int $level,int $total):string{
  if($level===6)return $total.' activities and tests';
  if($level===7)return $total.' stories and tests';
  if($level===8)return $total.' activities';
- return in_array($level,[2,3,4],true)&&$total>2?($total-2).' lessons + pre/post assessments':$total.' lessons';
+ return in_array(level_family($level),[2,3,4],true)&&$total>2?($total-2).' lessons + pre/post assessments':$total.' lessons';
 }
 function level1_visual_manifest():array{
  static $m=null;if($m===null){$f=__DIR__.'/../database/level1-visuals-v11.json';$m=is_file($f)?json_decode(file_get_contents($f),true):[];}return $m??[];
