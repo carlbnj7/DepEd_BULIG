@@ -51,6 +51,6 @@ self.addEventListener('fetch',e=>{
 
 /* Reminders (Web Push): show the note, and open BULIG at the right page when it is tapped. */
 self.addEventListener('push',e=>{let d={};try{d=e.data?e.data.json():{};}catch(x){d={body:e.data?e.data.text():''};}
- e.waitUntil(self.registration.showNotification(d.title||'BULIG',{body:d.body||'',icon:d.icon||'assets/brand/bulig-app-medium.png?v=3',badge:'assets/brand/bulig-tab-big.png?v=3',tag:d.tag||'bulig',data:{url:d.url||'?page=dashboard'}}));});
+ e.waitUntil(self.registration.showNotification(d.title||'BULIG',{body:d.body||'',icon:d.icon||'assets/brand/bulig-app-medium.png?v=8',badge:'assets/brand/bulig-tab-big.png?v=8',tag:d.tag||'bulig',data:{url:d.url||'?page=dashboard'}}));});
 self.addEventListener('notificationclick',e=>{e.notification.close();const url=new URL((e.notification.data&&e.notification.data.url)||'?page=dashboard',self.registration.scope).href;
  e.waitUntil(clients.matchAll({type:'window',includeUncontrolled:true}).then(list=>{for(const c of list){if(c.url.startsWith(self.registration.scope)&&'focus' in c){if('navigate' in c)c.navigate(url).catch(()=>{});return c.focus();}}return clients.openWindow(url);}));});
