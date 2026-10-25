@@ -20,7 +20,7 @@ function answer_keys():array{static $k;if($k===null){$k=['keys'=>[],'notes'=>[]]
 function activity_key_id(array $a):?string{
  static $c=[];$id=(int)$a['id'];if(array_key_exists($id,$c))return $c[$id];
  $r=one('SELECT a.phase,a.position,l.position lpos,IFNULL(m.grade_level,0) g,m.level_id lv FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE a.id=?',[$id]);
- return $c[$id]=$r?$r['lv'].':'.$r['g'].':'.$r['lpos'].':'.$r['phase'].':'.$r['position']:null;
+ return $c[$id]=$r?level_family((int)$r['lv']).':'.$r['g'].':'.$r['lpos'].':'.$r['phase'].':'.$r['position']:null;
 }
 function activity_key(array $a):?array{$id=activity_key_id($a);return $id?(answer_keys()['keys'][$id]??null):null;}
 
@@ -147,7 +147,7 @@ function key_check_card(array $a,int $n,string $g):array{
 function key_score(array $a,string $response):?array{
  if(!isset($a['lesson_id']))$a=one('SELECT * FROM activities WHERE id=?',[(int)$a['id']])??$a;
  $lv=isset($a['lesson_id'])?lesson_level((int)$a['lesson_id']):0;$key=activity_key($a)??[];
- $set=in_array($lv,[2,3,4,6,7,8],true)?l2a_set($a):null;
+ $set=in_array($lv,[2,3,4,9,6,7,8],true)?l2a_set($a):null;
  if(!$set){if(!$key)return ($a['response_mode']??'answer')==='none'?null:['right'=>key_answered(trim($response))?1:0,'total'=>1,'cards'=>[]];$set=['cards'=>[]];}
  $got=card_answers($response);$right=0;$total=0;$cards=[];
  $ask=[];foreach($set['cards'] as $i=>$cd)if(array_diff($cd['ui']['answer']??[],['look']))$ask[]=$i+1;
@@ -177,7 +177,7 @@ function key_review(array $r):string{
  $open=count(array_filter($s['cards'],fn($c)=>$c['t']==='open'));
  $h='<div class="ks"><p class="ks-sum">'.l1_icon('ok').'<b>Auto score: '.$s['right'].' / '.$s['total'].'</b><span>'.($open?'Answers with one right answer are marked with the answer key. Spoken, drawn and written answers count when the pupil answered; change the score if you need to.':'Every answer is marked with the answer key.').'</span></p><ol class="ks-list">';
  foreach($s['cards'] as $n=>$c){$q=$set['cards'][$n-1]??[];$text=blank_plain(trim(preg_replace('~\s+~u',' ',(string)($q['text']??''))),$bc[$n-1]??0);if($text===''&&$c['t']==='match')$text='Matching';if($text===''&&$c['t']==='order')$text='Number the events';if($text===''&&($ch=array_values($q['ui']['opts'][0]??$q['choices']??[])))$text=implode(' / ',array_map('strval',$ch));if($text==='')$text=($q['images']??[])?'Picture card':'Card';
-  $ok=$c['pts']===$c['of'];$h.='<li class="'.($ok?'ok':($c['pts']?'part':'no')).'"><span class="ks-q">Card '.$n.' · '.e(mb_strimwidth($text,0,110,'…')).'</span><span class="ks-a">'.($c['got']!==''?e(mb_strimwidth($c['got'],0,160,'…')):'<i>No answer</i>').'</span><span class="ks-r">'.($ok?l1_icon('ok').($c['t']==='open'?'Answered':'Right'):($c['of']>1?$c['pts'].' / '.$c['of']:($c['t']==='open'?'No answer':'Wrong'))).(!$ok&&$c['t']!=='open'?' · Answer: '.e($c['want']):'').'</span></li>';}
+  $ok=$c['pts']===$c['of'];$h.='<li class="'.($ok?'ok':($c['pts']?'part':'no')).'"><span class="ks-q">Card '.$n.' · '.e(mb_strimwidth($text,0,110,'…')).'</span><span class="ks-a'.($c['t']==='open'&&mb_strlen($c['got'])>160?' ks-long':'').'">'.($c['got']!==''?($c['t']==='open'?nl2br(e($c['got'])):e(mb_strimwidth($c['got'],0,160,'…'))):'<i>No answer</i>').'</span><span class="ks-r">'.($ok?l1_icon('ok').($c['t']==='open'?'Answered':'Right'):($c['of']>1?$c['pts'].' / '.$c['of']:($c['t']==='open'?'No answer':'Wrong'))).(!$ok&&$c['t']!=='open'?' · Answer: '.e($c['want']):'').'</span></li>';}
  return $h.'</ol></div>';
 }
 function key_score_text(array $r):string{if($r['max_score']===null||(float)$r['max_score']<=0)return '';return rtrim(rtrim(number_format((float)$r['score'],2),'0'),'.').' / '.rtrim(rtrim(number_format((float)$r['max_score'],2),'0'),'.');}
@@ -190,7 +190,7 @@ function key_fully_auto(int $aid):bool{
 }
 /** Answers waiting for review that the answer key marked fully right, with nothing else to read. */
 function key_perfect_ids(int $tid,int $pupil=0):array{
- $out=[];foreach(rows("SELECT c.id,c.activity_id FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE t.teacher_id=? AND m.level_id IN (2,3,4,6,7,8) AND c.status IN ('completed','approved') AND c.reviewed_at IS NULL AND c.max_score>0 AND c.score>=c.max_score AND c.drawing IS NULL".($pupil?' AND c.pupil_id=?':''),$pupil?[$tid,$pupil]:[$tid]) as $r)if(key_fully_auto((int)$r['activity_id']))$out[]=(int)$r['id'];
+ $out=[];foreach(rows("SELECT c.id,c.activity_id FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE t.teacher_id=? AND m.level_id IN (2,3,4,9,6,7,8) AND c.status IN ('completed','approved') AND c.reviewed_at IS NULL AND c.max_score>0 AND c.score>=c.max_score AND c.drawing IS NULL".($pupil?' AND c.pupil_id=?':''),$pupil?[$tid,$pupil]:[$tid]) as $r)if(key_fully_auto((int)$r['activity_id']))$out[]=(int)$r['id'];
  return $out;
 }
 
@@ -203,7 +203,7 @@ function key_perfect_ids(int $tid,int $pupil=0):array{
 /** True when the activity is a card activity with an answer key, so BULIG can show a score. */
 function ac_keyed(array $a):bool{static $c=[];$id=(int)$a['id'];if(isset($c[$id]))return $c[$id];
  if(!isset($a['lesson_id'],$a['title'],$a['prompt']))$a=one('SELECT * FROM activities WHERE id=?',[$id])??$a;
- return $c[$id]=isset($a['lesson_id'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,6,7,8],true)&&activity_key($a)&&l2a_set($a);}
+ return $c[$id]=isset($a['lesson_id'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,9,6,7,8],true)&&activity_key($a)&&l2a_set($a);}
 /** What the pupil missed, in words a child can read: [[number, what, the right answer, 'goes with'|'is'], ...]. */
 function ac_misses(array $a,array $s):array{
  $set=l2a_set($a);$key=activity_key($a)??[];if(!$set)return [];$bc=l2a_blank_counts($a,$set,lesson_level((int)$a['lesson_id']));$out=[];

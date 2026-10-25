@@ -17,7 +17,7 @@ function level_finished_at(int $pid,int $level):?string{
 /** Every level the pupil has finished: [level id => finish date]. */
 function finished_levels(int $pid):array{
  /* One query for all levels (it was one per level, for every pupil on the teacher's pages). */
- $out=[];foreach(rows('SELECT m.level_id,COUNT(*) total,COUNT(p.completed_at) done,MAX(p.completed_at) last FROM lessons l JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.published=1'.GRADE_SQL.' GROUP BY m.level_id ORDER BY m.level_id',[$pid,pupil_grade($pid)]) as $r)if((int)$r['total']>0&&(int)$r['total']===(int)$r['done']&&(!function_exists('pt_passed')||pt_passed($pid,(int)$r['level_id'])))$out[(int)$r['level_id']]=(string)$r['last'];
+ $out=[];foreach(rows('SELECT m.level_id,COUNT(*) total,COUNT(p.completed_at) done,MAX(p.completed_at) last FROM lessons l JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.published=1'.GRADE_SQL.' GROUP BY m.level_id ORDER BY '.level_order_sql('m.level_id'),[$pid,pupil_grade($pid)]) as $r)if((int)$r['total']>0&&(int)$r['total']===(int)$r['done']&&(!function_exists('pt_passed')||pt_passed($pid,(int)$r['level_id'])))$out[(int)$r['level_id']]=(string)$r['last'];
  return $out;
 }
 function level_cover(int $level):string{$f='assets/images/covers/level-'.$level.'.webp';return is_file(__DIR__.'/../public/'.$f)?$f:'assets/bulig-logo.png';}
@@ -96,8 +96,8 @@ function progress_view(array $u):void{
  if(!$sections){echo '<section class="card empty-state"><p>Add a section and pupils first. Then their progress shows here.</p></section>';return;}
  $sec=(int)($_GET['section']??0);$S=null;foreach($sections as $s)if((int)$s['id']===$sec)$S=$s;if(!$S)$S=$sections[0];$sec=(int)$S['id'];$grade=(int)$S['grade_level'];
  $pupils=rows('SELECT u.id,u.name,a.level_id FROM pupil_sections ps JOIN users u ON u.id=ps.pupil_id JOIN teacher_pupils t ON t.pupil_id=u.id AND t.teacher_id=? LEFT JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE ps.section_id=? AND u.active=1 ORDER BY u.name',[$tid,$sec]);
- $levels=rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id');
- $level=(int)($_GET['level']??0);if(!$level){$starts=array_filter(array_map(fn($p)=>(int)$p['level_id'],$pupils));$level=$starts?min($starts):1;}
+ $levels=rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id'));
+ $level=(int)($_GET['level']??0);if(!$level){$starts=array_filter(array_map(fn($p)=>(int)$p['level_id'],$pupils));$level=1;if($starts){usort($starts,fn($x,$y)=>level_rank($x)<=>level_rank($y));$level=$starts[0];}}
  $lessons=level_lessons($level,$grade);
  echo '<form method="get" class="card pg-filter"><input type="hidden" name="page" value="progress"><label>Section<select name="section" data-autosubmit>';foreach($sections as $s)echo '<option value="'.(int)$s['id'].'"'.((int)$s['id']===$sec?' selected':'').'>Grade '.(int)$s['grade_level'].' · '.e($s['name']).'</option>';
  echo '</select></label><label>Level<select name="level" data-autosubmit>';foreach($levels as $l)echo '<option value="'.(int)$l['id'].'"'.((int)$l['id']===$level?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';echo '</select></label><button class="btn secondary pg-go">Show</button></form>';
@@ -114,7 +114,7 @@ function progress_view(array $u):void{
    if(isset($done[$k])){$c='d';$t='Done';$n++;}elseif(isset($last[$k])){$c=$last[$k]<$stale?'s':'h';$t=$c==='s'?'Started, no work for 7+ days':'Started';}else{$c='z';$t='Not yet';}
    $cells.='<td class="pg-c pg-'.$c.'" title="'.e($p['name'].' · '.$l['subtitle'].': '.$t).'"><span class="sr-only">'.e($t).'</span></td>';}
   if($n===count($lessons))$finished++;
-  echo '<tr><th class="pg-name"><a href="?page=pupil&amp;id='.$id.'">'.e($p['name']).'</a>'.((int)$p['level_id']>$level?'<small>starts at '.e(level_label((int)$p['level_id'])).'</small>':'').'</th>'.$cells.'<td class="pg-sum">'.$n.'/'.count($lessons).'</td></tr>';}
+  echo '<tr><th class="pg-name"><a href="?page=pupil&amp;id='.$id.'">'.e($p['name']).'</a>'.(level_rank((int)$p['level_id'])>level_rank($level)?'<small>starts at '.e(level_label((int)$p['level_id'])).'</small>':'').'</th>'.$cells.'<td class="pg-sum">'.$n.'/'.count($lessons).'</td></tr>';}
  echo '</tbody></table></div><div class="pg-legend"><span><i class="pg-d"></i>Done</span><span><i class="pg-h"></i>Started</span><span><i class="pg-s"></i>No work for 7+ days</span><span><i class="pg-z"></i>Not yet</span></div></section>';
  $table=ob_get_clean();
  echo '<div class="pg-acts"><button type="button" class="btn secondary" data-print>'.icon('print').'Print</button>'.($finished?'<a class="btn secondary" href="?page=certificates&amp;level='.$level.'&amp;section='.$sec.'">'.icon('download').'Certificates ('.$finished.')</a>':'').'</div></div>'.$table;

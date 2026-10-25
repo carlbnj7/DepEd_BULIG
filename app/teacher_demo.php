@@ -6,7 +6,7 @@ function class_demo_view(array $u):void{
  if(!$level){
   shell($u,'class_demo');
   echo '<div class="pageheading"><div><span class="eyebrow">LEARN TOGETHER</span><h1>Class Demo</h1><p>Choose a level to present on your TV or projector. Every available activity is open. Discuss answers together, then choose Next.</p></div></div><section class="card dm-off" data-demo-off-card hidden></section><div class="level-card-grid demo-catalog">';
-  foreach(rows('SELECT b.*,COUNT(a.id) slide_count FROM bulig_levels b LEFT JOIN modules m ON m.level_id=b.id LEFT JOIN lessons l ON l.module_id=m.id AND l.published=1 LEFT JOIN activities a ON a.lesson_id=l.id AND a.published=1 GROUP BY b.id,b.title,b.published ORDER BY b.id') as $l){
+  foreach(rows('SELECT b.*,COUNT(a.id) slide_count FROM bulig_levels b LEFT JOIN modules m ON m.level_id=b.id LEFT JOIN lessons l ON l.module_id=m.id AND l.published=1 LEFT JOIN activities a ON a.lesson_id=l.id AND a.published=1 GROUP BY b.id,b.title,b.published ORDER BY '.level_order_sql('b.id')) as $l){
    $ready=(bool)$l['published']&&(int)$l['slide_count']>0;
    echo '<article class="level-card '.($ready?'available':'unavailable').'"><div class="level-cover has-cover cover-'.(int)$l['id'].'"><span class="level-number">'.e(str_replace('Level ','',level_label((int)$l['id']))).'</span><span class="cover-symbol">'.icon($ready?'book':'clock').'</span></div><div class="level-card-content"><h2>'.e(level_label((int)$l['id'])).'</h2><p>'.e($ready?$l['title']:'Content is being prepared.').'</p>';
    if($ready)echo '<small>'.(per_grade_level((int)$l['id'])?'A separate module for each grade · Choose a grade':$l['slide_count'].' activities · All activities open').'</small><a class="btn primary" href="?page=class_demo&amp;level='.$l['id'].'">'.(per_grade_level((int)$l['id'])?'Choose a grade':'Start class demo').' '.icon('arrow').'</a><div class="off-slot dm-slot" '.(per_grade_level((int)$l['id'])?'data-demo-off-level':'data-demo-off').'="'.(int)$l['id'].'"></div>';
@@ -17,7 +17,7 @@ function class_demo_view(array $u):void{
  }
  $info=one('SELECT * FROM bulig_levels WHERE id=? AND published=1',[$level]);
  if(!$info)fail('This level has no published demo content yet.',404);
- if($level>=2&&$level<=4){l2a_demo_view($u,$level);return;}
+ if($level>=2&&$level<=4||$level===9){l2a_demo_view($u,$level);return;}
  $grade=(int)($_GET['grade']??0);
  if(per_grade_level($level)&&!$grade){
   shell($u,'class_demo');

@@ -129,7 +129,7 @@ function tf_top_rows(array $ids,int $level=0,string $period='all'):array{
 /** The filter row: level and period, keeping the grade and section chosen above. */
 function tf_top_filter(int $level,string $period):string{
  $keep='';foreach(['grade_level','section_id'] as $k)if(isset($_GET[$k]))$keep.='<input type="hidden" name="'.$k.'" value="'.(int)$_GET[$k].'">';
- $lv='<option value="0">All levels</option>';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $l)$lv.='<option value="'.(int)$l['id'].'"'.($level===(int)$l['id']?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';
+ $lv='<option value="0">All levels</option>';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)$lv.='<option value="'.(int)$l['id'].'"'.($level===(int)$l['id']?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';
  $pd='';foreach(TF_TOP_PERIODS as $k=>$t)$pd.='<option value="'.$k.'"'.($period===$k?' selected':'').'>'.$t.'</option>';
  return '<form method="get" action="#tf-top" class="lb-filter"><input type="hidden" name="page" value="dashboard">'.$keep
   .'<label>Level<select name="lb_level" data-autosubmit>'.$lv.'</select></label><label>Time<select name="lb_period" data-autosubmit>'.$pd.'</select></label><button class="btn secondary pg-go">Show</button></form>';

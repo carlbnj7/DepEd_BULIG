@@ -52,7 +52,8 @@ const RC_DIAG=[
  ['count','I run.',2],['count','She sits.',2],['count','The cat jumps.',3],['count','We eat cake.',3],['count','My mom reads.',3],['count','The big dog barks.',4],
 ];
 const RC_DIAG_DIR=['rhyme'=>'Do the two words rhyme? Tap Yes or No.','first'=>'What is the first sound in the word? Tap the letter.','blend'=>'Put the parts together. Say the word.','same'=>'Do the words start with the same sound? Tap Yes or No.','count'=>'How many words are in the sentence?'];
-/* Part 4: Level 3 Pre-Assessment Toolkit: tasks (activity positions 2-5) and how many words pass each task. */
+/* Part 4: Level 3 Pre-Assessment Toolkit: tasks (activity positions 2-5) and how many words pass each task.
+   v177: positions 2-3 are the Level 3A pre-test (level id 4), positions 4-5 the Level 3B pre-test (level id 9). */
 const RC_WORD_TASKS=[[2,8,'Short vowel words'],[3,8,'Word family words'],[4,15,'Words with blends'],[5,8,'Sight words']];
 /* Official results the teacher may type, and the BULIG levels the guide puts with each (BULIG Assessment and Grouping). */
 const RC_OFFICIAL=[
@@ -178,7 +179,7 @@ function rc_submit(array $u):void{
    rc_mark($P,['q'=>$dir,'got'=>$gv,'want'=>$k?key_want($k):'','ok'=>$sc?$sc[0]===$sc[1]:false,'pts'=>$sc[0]??0,'of'=>$sc[1]??1]);}}
  elseif($p===3){foreach(range($step*6,$step*6+5) as $j=>$i){$n=$j+1;$gv=(string)($got[$n]??'');$h=$heard((string)$n);$ok=rc_diag_ok($i,$gv,$h);$d=RC_DIAG[$i];
    rc_mark($P,['q'=>$d[1],'got'=>$h!==''?'said: '.explode('|',$h)[0]:$gv,'want'=>is_array($d[2])?implode(' or ',$d[2]):(string)$d[2],'ok'=>$ok,'audio'=>$d[0]==='blend'?$audio((string)$n):null]);}}
- elseif($p===4){[$pos,$need,$label]=RC_WORD_TASKS[$step];$a=rc_act(4,$g,1,'pre',$pos);$words=$a?l3_list((string)$a['expected_text']):[];$right=0;$unk=0;$seen=0;
+ elseif($p===4){[$pos,$need,$label]=RC_WORD_TASKS[$step];$a=($pos>=4?rc_act(9,$g,1,'pre',$pos):null)??rc_act(4,$g,1,'pre',$pos);$words=$a?l3_list((string)$a['expected_text']):[];$right=0;$unk=0;$seen=0;
   foreach($words as $i=>$w){$k=(string)$i;if(!isset($_POST['heard'][$k])&&!isset($_POST['audio'][$k]))break;$seen++;$h=$heard($k);$ok=null;
    if($h==='-'){$ok=false;$h='';}elseif($h!==''){$ok=false;foreach(explode('|',$h) as $alt)if(in_array(key_letters($w),array_map('key_letters',preg_split('/\s+/u',$alt)),true)){$ok=true;break;}}elseif(($_POST['sr']??'off')==='ok')$ok=false;
    $au=$ok===true?null:$audio($k);
@@ -292,11 +293,11 @@ function rc_intro_page(array $u):void{
 function rc_result_page(array $u,array $row):void{
  $s=rc_state($row);$lv=(int)($row['placed_level']?:$row['bulig_level']);$first=explode(' ',trim((string)$u['name']))[0];
  head('Reading check','activity-page l1-page rk-page');
- echo '<div class="l1-app l1-start-app">'.rc_head('All done!').'<main class="l1-main l1-start activity-main"><div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-'.min(8,max(1,$lv)).'.webp" alt=""><div><span class="l1-tag">READING CHECK DONE</span><h1>Great reading, '.e($first).'!</h1></div></div>';
+ echo '<div class="l1-app l1-start-app">'.rc_head('All done!').'<main class="l1-main l1-start activity-main"><div class="l1-start-in"><div class="l1-start-top"><img class="l1-cover" src="'.e(level_cover(max(1,$lv))).'" alt=""><div><span class="l1-tag">READING CHECK DONE</span><h1>Great reading, '.e($first).'!</h1></div></div>';
  echo '<div class="rk-big"><span class="l1-lab">YOU START AT</span><span class="lvl">'.e(level_label($lv)).'</span><span class="lvlname">'.e(rc_level_name($lv)).'</span></div>';
  echo '<div class="rk-why"><b>Why '.e(level_label($lv)).'?</b>'.e($row['changed_by']?'Your teacher chose this level for you.':rc_why($s)).'</div><ul class="rk-parts">';
- for($i=1;$i<=8;$i++){if($i>$lv+1&&$i<8)continue;if($i===8&&$lv<7){echo '<li class="lock"><i>'.l1_icon('star').'</i><span>'.e(level_label($lv+2<=8?$lv+2:8)).' to Level 7<small>Open one by one</small></span></li>';break;}
-  echo '<li class="'.($i<$lv?'done':($i===$lv?'now':'lock')).'"><i>'.($i<$lv?l1_icon('ok'):e(str_replace('Level ','',level_label($i)))).'</i><span>'.e(level_label($i).' · '.rc_level_name($i)).'<small>'.($i<$lv?'Done well · you can still practise':($i===$lv?'Start here':'Opens after '.level_label($lv))).'</small></span></li>';}
+ $r=level_rank($lv);foreach(LEVEL_ORDER as $k=>$i){if($k>$r+1&&$i!==8)continue;if($i===8&&$r<level_rank(7)){echo '<li class="lock"><i>'.l1_icon('star').'</i><span>'.e(level_label(LEVEL_ORDER[$r+2]??8)).' to Level 7<small>Open one by one</small></span></li>';break;}   // in the level order (v177: 3A, 3B)
+  echo '<li class="'.($k<$r?'done':($k===$r?'now':'lock')).'"><i>'.($k<$r?l1_icon('ok'):e(str_replace('Level ','',level_label($i)))).'</i><span>'.e(level_label($i).' · '.rc_level_name($i)).'<small>'.($k<$r?'Done well · you can still practise':($i===$lv?'Start here':'Opens after '.level_label($lv))).'</small></span></li>';}
  echo '</ul><a class="l1-big l1-go" href="?page=lessons">Go to my lessons '.l1_icon('next').'</a></div></main></div>';foot();
 }
 /** Card screens (Parts 1, 2, 3, 6 and 7): the same cards as the lessons, answered on the card. */
@@ -331,7 +332,7 @@ function rc_deck_page(array $u,array $row,array $s):void{
 function rc_skip_page(array $row,array $s):never{$p=(int)$s['part'];$P=&$s['parts'][$p];$last=(int)$s['step']+1>=rc_pages($p,$P);if(rc_decide($p,$P,$last,$s)||$last){if($P['st']==='run')$P['st']='fail';unset($P);rc_after_part($s,$p);}else{unset($P);$s['step']++;}rc_save((int)$row['id'],$s);if(!empty($s['result']))rc_finish(rc_row((int)$row['pupil_id']),$s);go('?page=rcheck');}
 /** Part 4: read each word aloud. BULIG listens to one word at a time (rcheck.js), then the next word comes. */
 function rc_words_page(array $u,array $row,array $s):void{
- $g=(int)$s['grade'];$step=(int)$s['step'];[$pos,$need,$label]=RC_WORD_TASKS[$step];$a=rc_act(4,$g,1,'pre',$pos);$words=$a?l3_list((string)$a['expected_text']):[];
+ $g=(int)$s['grade'];$step=(int)$s['step'];[$pos,$need,$label]=RC_WORD_TASKS[$step];$a=($pos>=4?rc_act(9,$g,1,'pre',$pos):null)??rc_act(4,$g,1,'pre',$pos);$words=$a?l3_list((string)$a['expected_text']):[];
  head('Reading check','activity-page l1-page l2-page rk-page');
  echo '<div class="l1-app l2-app">'.rc_head('Read the words',$s).'<main class="l1-main activity-main">';notice();
  $dir='Here are some words I would like you to read. Do not spell the words, just read them.';
@@ -425,7 +426,7 @@ function rc_teacher_pupil(array $u):void{
  $flags=rc_flags($row);
  echo '<div class="rk-cols"><section class="card"><h2>'.icon('ladder').' Starting level</h2><form method="post" class="formgrid rk-levelform">'.csrf_field().'<input type="hidden" name="action" value="rc_level"><input type="hidden" name="id" value="'.$pid.'">';
  if($row&&$row['bulig_level']){$tool=$row['official_tool'];echo '<p class="rk-hint"><b>BULIG check:</b> '.e(level_label((int)$row['bulig_level']).' · '.rc_level_name((int)$row['bulig_level'])).'.'.($row['official_result']?'<br><b>Guide:</b> '.e($tool.' '.$row['official_result']).' → '.e(implode(', ',array_map(fn($x)=>str_replace('Level ','',level_label($x)),RC_OFFICIAL[$tool][$row['official_result']]??[]))).' (BULIG Assessment and Grouping).':'').'</p>';}
- echo '<label>New starting level<select name="level_id">';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $l)echo '<option value="'.(int)$l['id'].'"'.((int)$l['id']===($lv?:(int)($row['bulig_level']??1))?' selected':'').'>'.e(level_label((int)$l['id']).' · '.rc_level_name((int)$l['id'])).'</option>';echo '</select></label>';
+ echo '<label>New starting level<select name="level_id">';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)echo '<option value="'.(int)$l['id'].'"'.((int)$l['id']===($lv?:(int)($row['bulig_level']??1))?' selected':'').'>'.e(level_label((int)$l['id']).' · '.rc_level_name((int)$l['id'])).'</option>';echo '</select></label>';
  echo '<label>Your observation (why)<textarea name="note" rows="3" maxlength="1000" placeholder="For example: has difficulty blending two consonant sounds: reads “flag” as “falag”.">'.e((string)($row['teacher_note']??'')).'</textarea></label><p class="muted">Work already done is kept. Levels before the new starting level become free practice.</p><button class="btn primary">'.icon('check').'Save level</button></form>';
  if($flags)echo '<form method="post" class="rk-confirm">'.csrf_field().'<input type="hidden" name="action" value="rc_confirm"><input type="hidden" name="id" value="'.$pid.'"><button class="btn secondary">'.icon('check').'I checked it · keep '.e(level_label($lv)).'</button></form>';
  echo '</section>';

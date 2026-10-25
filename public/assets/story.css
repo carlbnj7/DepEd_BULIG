@@ -94,3 +94,7 @@ html.cm-print body{background:#fdf6e3}
 .cm-card-go{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#17633a;color:#fff;border:3px solid #1d1d1b;flex:none}
 .cm-card-go svg{width:22px;height:22px}
 .cm-card.done{background:linear-gradient(135deg,#e7f8e7,#c9efcf)}
+/* v177: dark mode keeps this card light, so its words stay dark (the title was white on yellow) */
+html.dark a.cm-card,html.dark a.cm-card span b,html.dark a.cm-card b{color:#1d1d1b!important;-webkit-text-fill-color:#1d1d1b}
+html.dark a.cm-card span small,html.dark a.cm-card small{color:#17633a!important;-webkit-text-fill-color:#17633a}
+html.dark a.cm-card span em,html.dark a.cm-card em{color:#5a4a1e!important;-webkit-text-fill-color:#5a4a1e}

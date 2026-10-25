@@ -56,7 +56,7 @@
  function pool(){if(!synth)return{f:[],m:[],all:[]};const v=synth.getVoices().filter(x=>/^en/i.test(x.lang)&&!ODD.test(x.name));
   const good=x=>(/natural|neural|premium|enhanced|online/i.test(x.name)?2:0)+(/google/i.test(x.name)?1:0);v.sort((a,b)=>good(b)-good(a));
   const isF=x=>FEM.test(x.name)&&!/\bmale\b/i.test(x.name.replace(/female/ig,''));return{f:v.filter(isF),m:v.filter(x=>!isF(x)&&MAL.test(x.name)),all:v};}
- const BOYS=['Max','Bruno','Toby','Zion','Kai','Claude'];
+ const BOYS=['Max','Bruno','Toby','Zion','Kai','Claude','Bob'];
  function voice(who){const V=pool();
   if(who==='Jarvis'||who==='Robot')return{v:V.m[0]||V.all[0]||null,pitch:1.6,rate:1.02};
   if(who==='Narrator')return{v:V.f[0]||V.all[0]||null,pitch:1.05,rate:.9};

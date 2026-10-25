@@ -46,7 +46,7 @@ function rk_star1():string{return '<svg class="rk-s1" viewBox="0 0 24 24" aria-h
 function rl_headstart(int $pid,bool $fresh=false):array{
  static $c=[];if(!$fresh&&isset($c[$pid]))return $c[$pid];$out=[];
  $start=pupil_start_level($pid);
- if($start>1)foreach(rows('SELECT m.level_id,COALESCE(SUM(a.xp_reward),0) xp FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN xp_transactions x ON x.activity_id=a.id AND x.pupil_id=? WHERE a.published=1 AND l.published=1 AND m.level_id<? AND x.activity_id IS NULL'.GRADE_SQL.' GROUP BY m.level_id ORDER BY m.level_id',[$pid,$start,pupil_grade($pid)]) as $r)if((int)$r['xp']>0)$out[(int)$r['level_id']]=(int)$r['xp'];
+ if($start>1)foreach(rows('SELECT m.level_id,COALESCE(SUM(a.xp_reward),0) xp FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN xp_transactions x ON x.activity_id=a.id AND x.pupil_id=? WHERE a.published=1 AND l.published=1 AND '.level_order_sql('m.level_id').'<'.level_order_sql('?').' AND x.activity_id IS NULL'.GRADE_SQL.' GROUP BY m.level_id ORDER BY '.level_order_sql('m.level_id'),[$pid,$start,pupil_grade($pid)]) as $r)if((int)$r['xp']>0)$out[(int)$r['level_id']]=(int)$r['xp'];
  return $c[$pid]=$out;
 }
 /** How far the pupil is through their own levels (the starting level and up), from 0 to 1: the XP of the activities they

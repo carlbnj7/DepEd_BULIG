@@ -165,7 +165,15 @@ function resolved_image_path(string $path):?string{
  }
  return null;
 }
-function level_label(int $id):string{return [1=>'Level 1',2=>'Level 2A',3=>'Level 2B',4=>'Level 3',5=>'Level 4',6=>'Level 5',7=>'Level 6',8=>'Level 7'][$id]??'Level '.$id;}
+function level_label(int $id):string{return [1=>'Level 1',2=>'Level 2A',3=>'Level 2B',4=>'Level 3A',9=>'Level 3B',5=>'Level 4',6=>'Level 5',7=>'Level 6',8=>'Level 7'][$id]??'Level '.$id;}
+/* v177: Level 3 is two levels, as in the module: 3A (id 4: short vowels and word families) and 3B (id 9: consonant blends and sight words).
+   Level ids stay as they were, so progress, answers and keys keep working; LEVEL_ORDER is the order pupils climb them. */
+const LEVEL_ORDER=[1,2,3,4,9,5,6,7,8];
+function level_rank(int $id):int{$i=array_search($id,LEVEL_ORDER,true);return $i===false?($id<=0?-1:100+$id):$i;}
+/** The level whose screens and content a level uses: 3B is built like Level 3 (3A). */
+function level_family(int $id):int{return $id===9?4:$id;}
+function level_order_sql(string $col):string{return 'FIELD('.$col.','.implode(',',LEVEL_ORDER).')';}
+function level_next(int $id):?int{return LEVEL_ORDER[level_rank($id)+1]??null;}
 function selected_start_level(int $fallback=1,bool $check=false):int{
  $id=(int)($_POST['level_id']??$fallback);
  if($id===0&&$check&&function_exists('rc_ready')&&rc_ready())return 0;/* 0: no level yet, the pupil takes the reading check */
@@ -206,7 +214,7 @@ function level_progress_check(int $pid,int $level):bool{
  $start=pupil_start_level($pid);
  if(!$start)return false;
  if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$level,pupil_grade($pid)]))return false;
- foreach(rows('SELECT id,published FROM bulig_levels WHERE id>=? AND id<? ORDER BY id',[$start,$level]) as $prior){
+ foreach(rows('SELECT id,published FROM bulig_levels WHERE '.level_order_sql('id').'>='.level_order_sql('?').' AND '.level_order_sql('id').'<'.level_order_sql('?').' ORDER BY '.level_order_sql('id'),[$start,$level]) as $prior){
   if(!$prior['published'])return false;
   $counts=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$prior['id'],pupil_grade($pid)]);
   if(!$counts['total']||$counts['total']!=$counts['done'])return false;
@@ -234,17 +242,17 @@ function module_source_meta(int $level,?int $grade=null):?array{
  if($level===7)return $grade?(level6_manifest()['grades'][(string)$grade]??null):null;
  if($level===8)return $grade?(level7_manifest()['grades'][(string)$grade]??null):null;
  if(in_array($level,[2,3],true))return level2_manifest()['levels'][(string)$level]+['folder'=>$level===2?'2a':'2b'];
- if($level===4)return level3_manifest()+['folder'=>'3'];
+ if(level_family($level)===4)return level3_manifest()+['folder'=>'3'];
  return null;
 }
 function next_learning_lesson(int $pid):?array{
- foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id JOIN pupil_level_assignments assigned ON assigned.pupil_id=? LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=assigned.pupil_id WHERE m.level_id>=assigned.level_id AND l.published=1 AND p.completed_at IS NULL'.GRADE_SQL.' ORDER BY m.level_id,l.position',[$pid,pupil_grade($pid)]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
+ foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id JOIN pupil_level_assignments assigned ON assigned.pupil_id=? LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=assigned.pupil_id WHERE '.level_order_sql('m.level_id').'>='.level_order_sql('assigned.level_id').' AND l.published=1 AND p.completed_at IS NULL'.GRADE_SQL.' ORDER BY '.level_order_sql('m.level_id').',l.position',[$pid,pupil_grade($pid)]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
  return null;
 }
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools'];
+const BULIG_PARTS=['whats_new','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','directory'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
  if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}

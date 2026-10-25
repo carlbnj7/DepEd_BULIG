@@ -70,7 +70,7 @@ function import_columns(array $header):array{
 function import_name_case(string $s):string{$s=trim(preg_replace('/\s+/',' ',$s));return $s!==''&&(str_replace('ñ','Ñ',$s)===mb_strtoupper($s)||$s===mb_strtolower($s))?mb_convert_case(mb_strtolower($s),MB_CASE_TITLE,'UTF-8'):$s;}
 function import_level(string $v,int $default):?int{
  $v=strtoupper(trim(str_ireplace('level','',$v)));if($v==='')return $default;if(in_array($v,['BULIG','CHECK','READING CHECK','?'],true)&&function_exists('rc_ready')&&rc_ready())return 0;
- $map=['1'=>1,'2A'=>2,'2B'=>3,'3'=>4,'4'=>5,'5'=>6,'6'=>7,'7'=>8];return $map[$v]??null;
+ $map=['1'=>1,'2A'=>2,'2B'=>3,'3'=>4,'3A'=>4,'3B'=>9,'4'=>5,'5'=>6,'6'=>7,'7'=>8];return $map[$v]??null;
 }
 
 /** DepEd SF1 (School Register): the grade and section are written once above the table ("Grade Level  Grade 6", "Section  ROSE"). */
@@ -128,7 +128,7 @@ function import_check(array $rows,array $teacher,int $defaultSection,int $defaul
   }elseif($default)$row['section']=$default;
   else $err('Section is missing. Add a Section column or choose a section for the whole list.');
   $sec=$row['section']??$row['new_section'];if($sec)$row['grade']=(int)$sec['grade_level'];
-  $lv=import_level($get('level'),$defaultLevel);if($lv===null||($lv!==0&&!val('SELECT id FROM bulig_levels WHERE id=?',[$lv])))$err('Starting level “'.$get('level').'” is not a BULIG level (use 1, 2A, 2B, 3, 4, 5, 6 or 7).');else $row['level']=$lv;
+  $lv=import_level($get('level'),$defaultLevel);if($lv===null||($lv!==0&&!val('SELECT id FROM bulig_levels WHERE id=?',[$lv])))$err('Starting level “'.$get('level').'” is not a BULIG level (use 1, 2A, 2B, 3A, 3B, 4, 5, 6 or 7).');else $row['level']=$lv;
   if($row['status']==='ok'){
    if($lrn!==''&&isset($seenLrn[$lrn]))$err('Same LRN as line '.$seenLrn[$lrn].' in this file.');
    elseif($lrn!==''&&val('SELECT pupil_id FROM pupil_details WHERE lrn=?',[$lrn])){$row['status']='skip';$row['notes'][]='Already in BULIG (same LRN).';}
@@ -169,7 +169,7 @@ function import_actions(string $action):void{
   if(!$many){if(($_POST['section_id']??'')==='new')$newSec=section_new_input();else{$sid=(int)($_POST['section_id']??0);if(!$sid)fail('Choose the section for this list.');owned_section($sid,$tid);}}
   $t=(array)($_POST['t']??[]);$keys=['last','first','middle','ext','sex','lrn','sec','level'];$n=0;foreach($keys as $k)foreach(array_keys((array)($t[$k]??[])) as $i)$n=max($n,(int)$i+1);
   if($n>IMPORT_MAX_ROWS)fail('Type up to '.IMPORT_MAX_ROWS.' pupils at a time.');
-  $codes=[0=>'BULIG',1=>'1',2=>'2A',3=>'2B',4=>'3',5=>'4',6=>'5',7=>'6',8=>'7'];
+  $codes=[0=>'BULIG',1=>'1',2=>'2A',3=>'2B',4=>'3A',9=>'3B',5=>'4',6=>'5',7=>'6',8=>'7'];
   $typed=[];$list=[];
   for($i=0;$i<$n;$i++){$r=[];foreach($keys as $k)$r[]=mb_substr(trim((string)(((array)($t[$k]??[]))[$i]??'')),0,80);
    if($r[0].$r[1].$r[2].$r[5]===''){$typed[]=array_fill(0,8,'');$list[]=array_fill(0,9,'');continue;}   // only M or F picked: an empty row
@@ -222,7 +222,7 @@ function import_card(array $u):void{
   $ok=count(array_filter($p['rows'],fn($r)=>$r['status']==='ok'));$skip=count(array_filter($p['rows'],fn($r)=>$r['status']==='skip'));$bad=count(array_filter($p['rows'],fn($r)=>$r['status']==='error'));
   echo '<p class="import-summary"><strong>'.e($p['file']).'</strong> · <span class="pill ok">'.$ok.' ready</span> <span class="pill skip">'.$skip.' already in BULIG</span> <span class="pill bad">'.$bad.' need fixing</span></p>';
   if($bad)echo '<p class="muted">Rows that need fixing will be left out. Fix them in your file and upload again, or import the ready rows now and add the rest later.</p>';
-  $rc=function_exists('rc_ready')&&rc_ready();$lvs=array_map('intval',array_column(rows('SELECT id FROM bulig_levels ORDER BY id'),'id'));
+  $rc=function_exists('rc_ready')&&rc_ready();$lvs=array_map('intval',array_column(rows('SELECT id FROM bulig_levels ORDER BY '.level_order_sql('id')),'id'));
   $opts=fn(int $sel)=>($rc?'<option value="0"'.($sel===0?' selected':'').'>Reading check</option>':'').implode('',array_map(fn($id)=>'<option value="'.$id.'"'.($sel===$id?' selected':'').'>'.e(level_label($id)).'</option>',$lvs));
   if($ok)echo '<label class="imp-lvall">'.icon('edit').'Starting level for every pupil<select data-lv-all><option value="">Choose to set all…</option>'.$opts(-1).'</select><small>You can still change any pupil below.</small></label>';
   echo '<div class="tablewrap import-preview"><table><thead><tr><th>Line</th><th>Name</th><th>LRN</th><th>Sex</th><th>Section</th><th>Start</th><th>Check</th></tr></thead><tbody>';
@@ -271,6 +271,6 @@ function import_typed_row(int $i,array $r,string $note,array $sections,int $leve
 function import_typed_choices(string $n,array $r,array $sections,int $level):string{
  $sec=(int)($r[6]??0);$lv=($r[7]??'')===''?$level:(int)$r[7];
  $o='<option value="">Choose</option>';foreach($sections as $s)$o.='<option value="'.$s['id'].'"'.((int)$s['id']===$sec?' selected':'').'>'.e('Gr. '.(int)$s['grade_level'].' · '.$s['name']).'</option>';
- $l=(function_exists('rc_ready')&&rc_ready()?'<option value="0"'.($lv===0?' selected':'').'>BULIG finds it</option>':'');foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $x)$l.='<option value="'.$x['id'].'"'.((int)$x['id']===$lv?' selected':'').'>'.e(level_label((int)$x['id'])).'</option>';
+ $l=(function_exists('rc_ready')&&rc_ready()?'<option value="0"'.($lv===0?' selected':'').'>BULIG finds it</option>':'');foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $x)$l.='<option value="'.$x['id'].'"'.((int)$x['id']===$lv?' selected':'').'>'.e(level_label((int)$x['id'])).'</option>';
  return '<td class="c-sec" data-l="Section"><select name="t[sec]['.$n.']" aria-label="Section">'.$o.'</select></td><td class="c-lv" data-l="Starting level"><select name="t[level]['.$n.']" aria-label="Starting level" data-bk-lv'.($lv!==$level?' class="chg" data-own="1"':'').'>'.$l.'</select></td>';
 }

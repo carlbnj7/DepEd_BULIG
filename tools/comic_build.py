@@ -560,7 +560,35 @@ def s14(p):
     g+=sfx('KRAKOOM!',930,330,58,-8,'#fff59a')
     g+=bubble(['Stay close, friends.','I will keep','everyone safe.'],240,330,470,470,23,'Claude')
     return g
-# ===================== PAGE 15 · The lamp shines =====================
+# ===================== PAGE 15 · Bob (v178) =====================
+def cone(x,y,s=1):
+    return (f'<g transform="translate({x} {y}) scale({s})"><path d="M-26 0 L-8 -64 L8 -64 L26 0Z" fill="#ff7a1a" stroke="#1d1d1b" stroke-width="3"/>'
+            f'<path d="M-18 -26 L18 -26 L14 -40 L-14 -40Z" fill="#fff"/><rect x="-34" y="-6" width="68" height="10" rx="3" fill="#ff7a1a" stroke="#1d1d1b" stroke-width="3"/></g>')
+def barrier(x,y,w):
+    st=''.join(f'<path d="M{x+i} {y} l20 0 l-20 26 l-20 0z" fill="#1d1d1b"/>' for i in range(10,w,40))
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="26" fill="#ffd23f" stroke="#1d1d1b" stroke-width="3"/>{st}'
+            f'<rect x="{x+12}" y="{y+26}" width="10" height="44" fill="#6b4a2a"/><rect x="{x+w-22}" y="{y+26}" width="10" height="44" fill="#6b4a2a"/>')
+def rainbow(cx,cy,r):
+    return ''.join(f'<path d="M{cx-r+i*14} {cy} A{r-i*14} {r-i*14} 0 0 1 {cx+r-i*14} {cy}" stroke="{c}" stroke-width="14" fill="none" opacity=".55"/>' for i,c in enumerate(['#ff6b6b','#ffa94d','#ffd43b','#69db7c','#4dabf7','#9775fa']))
+def s15b(p):
+    g=sky(p,'Day')+rainbow(860,470,330)+cloud(p,160,90,.9)+cloud(p,1040,80,.7,'cloudStorm')
+    g+=castle(p,760,440,.42,'dim')
+    g+=f'<path d="M0 520 Q600 480 1200 520 V760 H0Z" fill="url(#{p}hillA)"/><path d="M0 520 Q600 480 1200 520 V760 H0Z" fill="url(#{p}grass)"/>'
+    g+=f'<path d="M560 760 C600 650 640 600 700 560 L860 560 C800 600 780 660 800 760Z" fill="#4aa3df" stroke="#2a6cc0" stroke-width="4"/>'
+    g+=''.join(f'<path d="M{x} {y} q12 -7 24 0 q12 7 24 0" stroke="#e8f6ff" stroke-width="4" fill="none" stroke-linecap="round"/>' for x,y in [(650,640),(700,700),(720,600)])
+    planks=''.join(f'<rect x="{560+i*34}" y="{596-i*2}" width="30" height="22" rx="3" fill="#b07a3c" stroke="#1d1d1b" stroke-width="3" transform="rotate(-4 {575+i*34} {607-i*2})"/>' for i in range(6))
+    g+=f'<rect x="548" y="616" width="230" height="10" fill="#6b4a2a"/>'+planks
+    g+=f'<rect x="776" y="574" width="34" height="22" rx="3" fill="#d9a35b" stroke="#1d1d1b" stroke-width="3" stroke-dasharray="6 5" transform="rotate(-14 793 585)"/>'
+    g+=cone(470,720,1)+cone(900,700,.9)+cone(1080,740,1.1)+barrier(60,640,220)
+    g+=friend('bob-blueprint',330,750,360)+friend('jarvis-hello',1000,750,280,True)+friend('claude-thumbs',1120,750,250,True)
+    g+=sparkle(700,520,1.2,'#fff3b0')+sparkle(560,470,.9)
+    g+=f'<rect width="{W}" height="{H}" fill="url(#{p}vig)" opacity=".45"/>'
+    g+=narr(['The storm broke the bridge to the castle.','Then a new friend came: Bob the Builder!'],34,30,24)
+    g+=sfx('BANG! BANG!',640,430,50,-8,'#ffd23f')
+    g+=bubble(['Do not worry!','I have a plan. I will build it','again, better than before!'],330,250,330,390,22,'Bob')
+    g+=bubble(['Hooray! Now we can','reach the great lamp!'],1010,270,1000,500,22,'Jarvis')
+    return g
+# ===================== PAGE 16 · The lamp shines =====================
 def s15(p):
     g=f'<rect width="{W}" height="{H}" fill="url(#{p}skyNight)"/>'+stars(80,15,400,True)
     g+=firework(200,170,70,'#ff8fab')+firework(1000,150,80,'#ffd23f')+firework(820,260,50,'#7ac0ff')+firework(370,290,45,'#9ad386')
@@ -570,7 +598,7 @@ def s15(p):
     g+=confetti(15,70,520)
     row=[('george-cheer',80),('max-cheer',180),('dracs-cheer',280),('bruno-cheer',380),('mia-cheer',820),('toby-cheer',920),('zion-cheer',1020),('arah-cheer',1120)]
     for n,x in row:g+=friend(n,x,700,200,x>600)
-    row2=[('roxanne-cheer',140),('kai-cheer',260),('sofie-cheer',940),('claude-thumbs',1060)]
+    row2=[('roxanne-cheer',140),('kai-cheer',260),('bob-cheer',360),('sofie-cheer',940),('claude-thumbs',1060)]
     for n,x in row2:g+=friend(n,x,760,220,x>600)
     g+=friend('girl-cheer',470,760,190)+friend('boy-cheer',730,760,190,True)+friend('jarvis-cheer',600,760,260)
     g+=f'<rect width="{W}" height="{H}" fill="url(#{p}vig)" opacity=".4"/>'
@@ -582,7 +610,7 @@ def s15(p):
 PAGES=[('0','How the BULIG Friends Met',s0),('1','The Sleeping Castle',s1),('2','A Robot Wakes Up',s2),('3','George the Explorer',s3),
  ('4','Max the Listener',s4),('5','Dracs the Storyteller',s5),('6','Bruno the Helper',s6),('7','Mia the Builder',s7),('8','Toby the Trailblazer',s8),
  ('9','Zion the Rank Keeper',s9),('10','Arah the Streak Keeper',s10),('11','Roxanne the Timekeeper',s11),('12','Kai the Messenger',s12),
- ('13','Sofie the Stylist',s13),('14','Claude the Protector',s14),('15','The Lamp Shines Again',s15)]
+ ('13','Sofie the Stylist',s13),('14','Claude the Protector',s14),('15','Bob the Builder',s15b),('16','The Lamp Shines Again',s15)]
 if __name__=='__main__':
     out=[]
     for n,title,fn in PAGES:

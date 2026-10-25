@@ -13,8 +13,8 @@ function staff_nav_list(array $u):array{
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
    ['g','TEACHING'],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
- return [['dashboard','home','Home'],['g','PEOPLE'],['schools','school','Schools'],['accounts','people','Teachers'],['add_teachers','useredit','Add teachers'],['checkup','shield','Account check'],
-  ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=(int)val("SELECT COUNT(*) FROM notifications WHERE user_id=? AND kind='bug' AND read_at IS NULL",[(int)$u['id']]))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['settings','settings','Settings'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
+ return [['dashboard','home','Home'],['g','PEOPLE'],['schools','school','Schools'],['accounts','people','Teachers'],['directory','search','School directory'],['add_teachers','useredit','Add teachers'],['checkup','shield','Account check'],
+  ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=bug_open_count((int)$u['id']))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['settings','settings','Settings'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
 }
 /** The number of new notifications beside Notifications in the menu. */
 function staff_notif_badge(array $u):array{$n=function_exists('notif_count')?notif_count($u):0;return $n?['count'=>$n]:[];}
@@ -121,8 +121,8 @@ function print_centre_view(array $u):void{
  $pupOpts=[];foreach($pupils as $p)$pupOpts[(int)$p['id']]=$p['name'].($p['section']?' · Grade '.(int)$p['grade_level'].' · '.$p['section']:'');
  $rcOpts=[];foreach($secs as $s)$rcOpts['s'.(int)$s['id']]='Whole section: Grade '.(int)$s['grade_level'].' · '.$s['name'];foreach($pupils as $p)$rcOpts['p'.(int)$p['id']]='One pupil: '.$p['name'];
  $ready=[];foreach($pupils as $p)foreach(finished_levels((int)$p['id']) as $l=>$d)$ready[$l]=($ready[$l]??0)+1;
- $certOpts=[];foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $l)$certOpts[(int)$l['id']]=level_label((int)$l['id']).' · '.($ready[(int)$l['id']]??0).' ready';
- $levOpts=[];foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id') as $l)$levOpts[(int)$l['id']]=level_label((int)$l['id']);
+ $certOpts=[];foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)$certOpts[(int)$l['id']]=level_label((int)$l['id']).' · '.($ready[(int)$l['id']]??0).' ready';
+ $levOpts=[];foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)$levOpts[(int)$l['id']]=level_label((int)$l['id']);
  $btn=fn($t)=>'<div class="pc-btns"><button class="btn primary">'.icon('print').e($t).'</button></div>';$f=fn($page,$inner)=>'<form method="get" action="" class="pc-form"><input type="hidden" name="page" value="'.$page.'">'.$inner.'</form>';
  $img=fn($n)=>is_file(__DIR__.'/../public/assets/images/print/'.$n.'.webp')?'assets/images/print/'.$n.'.webp':'icon:print';
  echo hm_head('PRINT CENTRE','Everything you can print','Choose what to print and for whom. Each one opens a preview first, with a green <b>Print or save as PDF</b> button.');
@@ -193,9 +193,9 @@ function admin_home(array $u):void{
   .hm_task('mega','Post an announcement','All teachers see it','?page=settings&tab=announcements').'</div>'.claude_tip($u);
  echo '<p class="hm-sub">School at a glance</p>';
  echo admin_kpis([['people',number_format($pupils),'Pupils',$newPupils?'+'.$newPupils.' this month':'',false],['user',count($teachers),'Teachers',$idle?count($idle).' inactive 14+ days':'all active',(bool)$idle],['book',$sections,'Sections',$grades?'Grades '.implode(', ',array_column($grades,'g')):'none yet',false],['check',number_format($week),'Activities this week',$trend,$prev&&$week<$prev]]);
- $levels=[];foreach(rows("SELECT GREATEST(a.level_id,COALESCE((SELECT MAX(m.level_id) FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)) lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1".school_users_sql()) as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;$max=max([1]+$levels);
+ $levels=[];foreach(rows("SELECT ELT(GREATEST(".level_order_sql('a.level_id').",COALESCE((SELECT MAX(".level_order_sql('m.level_id').") FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)),".implode(',',LEVEL_ORDER).") lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1".school_users_sql()) as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;$max=max([1]+$levels);
  echo '<div class="ws-g3 hm-g3"><section class="card"><div class="ws-hd"><h2>Pupils at each level</h2><a href="?page=reports">View report '.icon('arrow').'</a></div><div class="ws-bars">';
- foreach(rows('SELECT id FROM bulig_levels ORDER BY id') as $l){$n=$levels[(int)$l['id']]??0;echo '<div class="ws-bar"><span>'.e(level_label((int)$l['id'])).'</span><u><i class="w-'.(int)(round($n/$max*20)*5).'"></i></u><b>'.$n.'</b></div>';}
+ foreach(rows('SELECT id FROM bulig_levels ORDER BY '.level_order_sql('id')) as $l){$n=$levels[(int)$l['id']]??0;echo '<div class="ws-bar"><span>'.e(level_label((int)$l['id'])).'</span><u><i class="w-'.(int)(round($n/$max*20)*5).'"></i></u><b>'.$n.'</b></div>';}
  echo '</div></section><section class="card"><div class="ws-hd"><h2>Most active sections</h2><small class="muted">last 30 days</small></div><div class="ws-list">';
  $act=rows("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM activity_completion c JOIN pupil_sections ps ON ps.pupil_id=c.pupil_id JOIN sections s ON s.id=ps.section_id WHERE c.submitted_at>=?".admin_live_sections_sql()." GROUP BY s.id ORDER BY c DESC LIMIT 3",[date('Y-m-d',strtotime('-30 days'))]);
  foreach($act as $a)echo '<div class="ws-li">'.icon('star').'<span>'.e($a['n']).'</span><span class="ws-sp ws-pill ok">'.number_format((int)$a['c']).'</span></div>';if(!$act)echo '<p class="muted">No activity in the last 30 days yet.</p>';
@@ -262,7 +262,7 @@ function pupil_list_view(array $u):void{
  echo pupils_tabs('manage',count($pupils));
  if(!$pupils){echo '<section class="empty">'.icon('people').'<h2>No pupils yet.</h2><p>Add one pupil, or a whole class from an Excel list.</p><a class="btn primary" href="?page=accounts">'.icon('useredit').'Add pupils</a></section>';return;}
  $groups=[];foreach($pupils as $p)$groups[$p['section']?'Grade '.$p['grade_level'].' · '.$p['section']:'No section']['rows'][]=$p;
- $secs=teacher_sections($tid);$levels=rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id');
+ $secs=teacher_sections($tid);$levels=rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id'));
  echo '<section class="card mp-list"><div class="mp-bar"><select aria-label="Show section" data-mp-section><option value="">All sections</option>';foreach(array_keys($groups) as $g)echo '<option>'.e($g).'</option>';echo '</select><input type="search" placeholder="Search a name or Pupil ID" aria-label="Search pupils" data-mp-search></div>';
  echo '<form method="post" class="mp-form">'.csrf_field().'<input type="hidden" name="back" value="?page=manage">';
  echo '<div class="mp-bulk" role="group" aria-label="With the ticked pupils"><span>With the ticked pupils:</span>';
@@ -299,7 +299,7 @@ function pupil_page_view(array $u):void{
  echo '<nav class="pupil-tabs pp-tabs" aria-label="'.e($p['name']).'">';foreach($tabs as $k=>[$ic,$label])echo '<a class="pt-tab'.($tab===$k?' on':'').'" href="?page=pupil&amp;id='.$pid.($k==='path'?'':'&amp;tab='.$k).'"'.($tab===$k?' aria-current="page"':'').'>'.icon($ic).$label.'</a>';echo '</nav>';
  if($tab==='path'){
   echo (function_exists('schedule_pupil_note')?schedule_pupil_note($pid):'');
-  $levels=rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY id');
+  $levels=rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id'));
   echo '<section class="card mp-start"><div class="section-heading"><h2>'.icon('ladder').' Starting level</h2>'.($lv?'<span class="status">'.e(level_label($lv)).'</span>':'<span class="status status-warn">Reading check</span>').'</div><p class="muted">Levels before the starting level become free practice. The pupil can begin right away at the level you choose.'.(!$lv?' '.e($first).' takes the reading check at the next sign-in, or choose a level now.':'').'</p><form method="post" class="mp-startform">'.csrf_field().'<input type="hidden" name="action" value="set_start_level"><input type="hidden" name="pupil" value="'.$pid.'"><input type="hidden" name="back" value="?page=pupil&amp;id='.$pid.'"><label>Starting level<select name="level_id">';
   foreach($levels as $l)echo '<option value="'.(int)$l['id'].'"'.((int)$l['id']===$lv?' selected':'').'>'.e(level_label((int)$l['id']).' · '.(function_exists('rc_level_name')?rc_level_name((int)$l['id']):'')).'</option>';
   echo '</select></label><button class="btn primary">'.icon('check').'Save starting level</button></form></section>';

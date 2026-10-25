@@ -29,10 +29,10 @@ function pt_passed(int $pid,int $level):bool{$r=pt_result($pid,$level);return !$
 /** Levels the pupil finished but did not pass (from the starting level up). */
 function pt_blocked(int $pid):array{
  $start=pupil_start_level($pid);if(!$start)return [];$out=[];
- foreach(rows('SELECT id FROM bulig_levels WHERE id>=? AND published=1 ORDER BY id',[$start]) as $l){$L=(int)$l['id'];$r=pt_result($pid,$L);if($r['n']&&$r['done']>=$r['n']&&$r['pct']<PT_PASS)$out[$L]=$r;}
+ foreach(rows('SELECT id FROM bulig_levels WHERE '.level_order_sql('id').'>='.level_order_sql('?').' AND published=1 ORDER BY '.level_order_sql('id'),[$start]) as $l){$L=(int)$l['id'];$r=pt_result($pid,$L);if($r['n']&&$r['done']>=$r['n']&&$r['pct']<PT_PASS)$out[$L]=$r;}
  return $out;
 }
-function pt_next_level(int $level):?int{$n=val('SELECT id FROM bulig_levels WHERE id>? AND published=1 ORDER BY id LIMIT 1',[$level]);return $n?(int)$n:null;}
+function pt_next_level(int $level):?int{$n=val('SELECT id FROM bulig_levels WHERE '.level_order_sql('id').'>'.level_order_sql('?').' AND published=1 ORDER BY '.level_order_sql('id').' LIMIT 1',[$level]);return $n?(int)$n:null;}
 
 /** After a post-test answer is saved: tell the pupil the result once the whole post-test is answered. */
 function pt_after_answer(int $pid,array $a):void{
@@ -77,7 +77,7 @@ function pt_lesson_note(int $pid,int $lid):string{
 /** Teacher: the pupil's post-test score for each level they finished (pupil page). */
 function pt_teacher_rows(int $pid):string{
  $start=pupil_start_level($pid);if(!$start)return '';$h='';
- foreach(rows('SELECT id FROM bulig_levels WHERE id>=? AND published=1 ORDER BY id',[$start]) as $l){$L=(int)$l['id'];$r=pt_result($pid,$L);if(!$r['n']||!$r['done'])continue;
+ foreach(rows('SELECT id FROM bulig_levels WHERE '.level_order_sql('id').'>='.level_order_sql('?').' AND published=1 ORDER BY '.level_order_sql('id'),[$start]) as $l){$L=(int)$l['id'];$r=pt_result($pid,$L);if(!$r['n']||!$r['done'])continue;
   $fin=$r['done']>=$r['n'];$h.='<tr><td>'.e(level_label($L)).'</td><td>'.$r['done'].' of '.$r['n'].'</td><td>'.($fin?'<b>'.$r['pct'].'%</b>':'—').'</td><td>'.($fin?($r['pct']>=PT_PASS?'<span class="pg-ok">'.icon('check').'Passed</span>':'<span class="pg-no">Below '.PT_PASS.'% · trying again</span>'):'In progress').'</td></tr>';}
  return $h?'<section class="card pg-teacher"><h2>Post-tests</h2><p class="muted">A pupil opens the next level after scoring at least '.PT_PASS.'% on the post-test. Below that, they answer the missed activities again.</p><div class="tablewrap"><table><thead><tr><th>Level</th><th>Answered</th><th>Score</th><th>Result</th></tr></thead><tbody>'.$h.'</tbody></table></div></section>':'';
 }

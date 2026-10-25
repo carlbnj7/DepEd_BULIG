@@ -7,11 +7,11 @@
 
 /* Level 2A (level id 2) and Level 2B (level id 3) share these screens. */
 function l2a_ui():array{static $u=null;if($u===null){$u=['lessons'=>[],'pages'=>[]];foreach(['2a','2b'] as $k){$f=__DIR__.'/../database/level'.$k.'-ui.json';$j=is_file($f)?(json_decode((string)file_get_contents($f),true)?:[]):[];$u['lessons']+=$j['lessons']??[];foreach($j['pages']??[] as $pk=>$pv)$u['pages'][$k.':'.$pk]=$pv;}}return $u;}
-function l2a_is(int $lid):bool{return in_array(lesson_level($lid),[2,3,4],true);}
+function l2a_is(int $lid):bool{return in_array(lesson_level($lid),[2,3,4,9],true);}
 function l2a_lesson_info(int $lid):?array{return l2a_ui()['lessons'][(string)$lid]??null;}
-function l2a_code(int $level):string{return $level===8?'7':($level===7?'6':($level===6?'5':($level===5?'4':($level===4?'3':($level===3?'2B':'2A')))));}
+function l2a_code(int $level):string{return $level===8?'7':($level===7?'6':($level===6?'5':($level===5?'4':($level===9?'3B':($level===4?'3A':($level===3?'2B':'2A'))))));}
 function l2a_key(array $a):string{$k=(lesson_level((int)$a['lesson_id'])===3?'2b':'2a').':'.(int)$a['source_page'];if($k==='2b:42'&&level2_activity_context($a)&&(int)level2_activity_context($a)['position']===12)$k.=':continuation';return $k;}
-function l2a_set(array $a):?array{if(lesson_level((int)$a['lesson_id'])===4)return l3_set($a);if(lesson_level((int)$a['lesson_id'])===6)return l5_set($a);if(in_array(lesson_level((int)$a['lesson_id']),[7,8],true))return l6_set($a);$s=level2_card_set($a);if(!$s)return null;$u=l2a_ui()['pages'][l2a_key($a)]??['title'=>$s['title'],'cards'=>[]];$s['module_title']=$u['title'];foreach($s['cards'] as $i=>&$c){$c['ui']=($u['cards'][$i]??[])+['answer'=>['tiles']];if(isset($c['ui']['text']))$c['text']=$c['ui']['text'];if(isset($c['ui']['choices']))$c['choices']=$c['ui']['choices'];}unset($c);return $s;}
+function l2a_set(array $a):?array{if(level_family(lesson_level((int)$a['lesson_id']))===4)return l3_set($a);if(lesson_level((int)$a['lesson_id'])===6)return l5_set($a);if(in_array(lesson_level((int)$a['lesson_id']),[7,8],true))return l6_set($a);$s=level2_card_set($a);if(!$s)return null;$u=l2a_ui()['pages'][l2a_key($a)]??['title'=>$s['title'],'cards'=>[]];$s['module_title']=$u['title'];foreach($s['cards'] as $i=>&$c){$c['ui']=($u['cards'][$i]??[])+['answer'=>['tiles']];if(isset($c['ui']['text']))$c['text']=$c['ui']['text'];if(isset($c['ui']['choices']))$c['choices']=$c['ui']['choices'];}unset($c);return $s;}
 /* ---------------- Level 3 (Word Recognition, level id 4): the same card screens ----------------
    Titles and directions come from database/level3-ui.json (the module's own words, made by tools/level3/build_ui.py).
    Word lists and sentences are read aloud into the microphone; pictures are named, words are chosen, letters are written. */
@@ -71,7 +71,8 @@ function l5_set(array $a):?array{
   elseif(preg_match('~\(([a-z][a-z ]{0,20}),\s*([a-z][a-z ]{0,20})\)~i',$t,$m)&&!str_contains($t,'_')){$c['choices']=[trim($m[1]),trim($m[2])];$c['ui']=['answer'=>['chip']];}
   elseif($title==='Puzzle'||preg_match('~^(Write each|Find |Draw )~i',$t)){$c['ui']=['answer'=>['paper']];}
   elseif($bank&&str_contains($t,'__')){$c['choices']=array_values(array_unique($bank));$c['ui']=['answer'=>['chip']];}
-  else{$c['ui']=['answer'=>['tiles']];}
+  elseif(preg_match('~\bCircle and list\b~i',$t)){$c['ui']=['answer'=>['write']];}   // a list of words (v177: the Grade 6 pre-test word hunt)
+  else{$c['ui']=['answer'=>['tiles']]+(preg_match('~\bnumber\b~i',$t)?['tiles'=>array_merge(str_split('abcdefghijklmnopqrstuvwxyz'),str_split('0123456789'))]:[]);}   // "Write the number: seven" -> 7 (v177)
   $out[]=$c;}
  $s['cards']=$out;return $s;
 }
@@ -84,7 +85,7 @@ function l6_set(array $a):?array{
  $s=level2_card_set($a);if(!$s)return null;$s['module_title']=$s['title'];$out=[];$l7=lesson_level((int)$a['lesson_id'])===8;
  /* Every Level 6 direction is the module's own: always shown. Level 7 Grades 1-2 print no direction: the app's default is not shown. */
  if($l7&&trim((string)$s['instruction'])==='Read the story carefully, then answer the questions.')$s['instruction']='';
- $aloud=str_contains((string)$s['instruction'],'aloud as quickly and correctly');$vocab=$s['vocab']??null;
+ $aloud=str_contains((string)$s['instruction'],'aloud as quickly and correctly');$vocab=$s['vocab']??null;$lastRead='';
  foreach($s['cards'] as $c){$t=trim((string)($c['text']??''));$title=(string)($c['title']??'');$ch=$c['choices']??[];
   if($title==='Read'&&$t===''&&empty($c['images']))continue;
   $h=trim((string)($c['heading']??''));if($h!==''&&!preg_match('~^(Pre|Post)-?test$~i',$h))$c['story']=$h;
@@ -105,7 +106,10 @@ function l6_set(array $a):?array{
   elseif($title==='Puzzle'){$c['ui']=['answer'=>['paper']];}
   elseif($l7?preg_match('~^\s*draw\b~i',$t)&&!preg_match('~describe it here~i',$t):preg_match('~\b(draw|shade|encircle|underline|box the|in a square|square around|rectangle around|label the picture)\b~i',$t)){$c['ui']=['answer'=>['paper']];}
   /* Level 7 writing tasks (news, editorial, feature, column...): a big box. */
-  else{$c['ui']=['answer'=>['write']]+($title==='Write'&&preg_match('~\b(article|editorial|story|column|report|coverage|paragraphs?|news|feature|opinion|summary|corrections?|copyread)\b~i',$t)?['long'=>true]:[]);}
+  else{$c['ui']=['answer'=>['write']]+($title==='Write'&&preg_match('~\b(article|editorial|story|column|report|coverage|paragraphs?|news|feature|opinion|summary|corrections?|copyread)\b~i',$t)?['long'=>true]:[]);
+   /* Copyreading (v177): the article is in the box, ready to correct, so the pupil edits it instead of typing it again. */
+   if($l7&&$lastRead!==''&&preg_match('~\b(copyread the article|write the copyread article|write your corrections)\b~i',$t))$c['ui']+=['long'=>true,'prefill'=>$lastRead];}
+  if($title==='Read'&&$t!=='')$lastRead=trim(preg_replace(['~^\s*Directions?:[^\n]*\n+~i','~^\s*Article \d+:\s*~i'],'',$t));
   $out[]=$c;}
  /* The page's word list, under the story (or on the first card). */
  if($vocab&&$out){$i=0;foreach($out as $k=>$c)if(($c['title']??'')==='Read'){$i=$k;break;}$out[$i]['words']=$vocab['words'];$out[$i]['words_label']=$vocab['label'];}
@@ -147,7 +151,7 @@ function blank_letters(string $text,string $answer):int{
 /** Levels 2A, 2B and 3 are about letters and sounds: each card's blank shows one short line per missing letter,
     counted from the answer key. A card with no key takes the count most cards of its activity have. Other levels: none. */
 function l2a_blank_counts(array $a,array $set,int $level):array{
- if($level<2||$level>4)return [];$keys=activity_key($a)??[];$out=[];
+ $level=level_family($level);if($level<2||$level>4)return [];$keys=activity_key($a)??[];$out=[];
  foreach($set['cards'] as $i=>$c){$k=$keys[$i+1]??null;$out[$i]=$k?blank_letters((string)$c['text'],key_want($k)):-1;}
  $count=array_count_values(array_filter($out,fn($n)=>$n>0));arsort($count);$most=(int)(array_key_first($count)??0);
  foreach($out as $i=>$n)if($n<0)$out[$i]=$most?blank_letters((string)$set['cards'][$i]['text'],str_repeat('0',$most)):0;
@@ -192,7 +196,7 @@ function l2a_answer(array $c,int $n,bool $readonly):string{
    foreach($c['grid'] as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.=$ch===' '||$ch==='.'?'<td class="blank"></td>':'<td><button type="button" class="grid-cell" aria-pressed="false">'.e($ch).'</button></td>';$h.='</tr>';}
    $h.='</table></div><p class="l2-how">Tap the letters of each word you find to mark them. Tap again to undo.</p>';}
   elseif($kind==='speed'){$w=(int)$c['ui']['words'];$h.='<div class="l2-speed" data-part="'.$p.'" data-kind="speed" data-words="'.$w.'"><p class="l2-how">Reading for speed · '.$w.' words. Tap <b>Start</b> when your teacher says “Go”, read the story, then tap <b>Done</b>.</p><div class="l2-speed-row"><button type="button" class="l1-btn2" data-sp-start>'.l1_icon('play').'Start</button><output class="l2-speed-clock" data-sp-clock aria-live="off">0:00</output><button type="button" class="l1-btn2" data-sp-done hidden>'.l1_icon('ok').'Done</button></div><p class="l2-speed-res" data-sp-res role="status"></p></div>';}
-  elseif($kind==='write')$h.='<label class="l2-write'.(!empty($c['ui']['long'])?' long':'').'" data-part="'.$p.'" data-kind="write"><span class="sr-only">Your answer</span><textarea rows="'.(!empty($c['ui']['long'])?8:2).'" maxlength="'.(!empty($c['ui']['long'])?8000:300).'" autocomplete="off" autocapitalize="sentences" placeholder="Type your answer"></textarea></label>';
+  elseif($kind==='write')$h.='<label class="l2-write'.(!empty($c['ui']['long'])?' long':'').'" data-part="'.$p.'" data-kind="write"><span class="sr-only">Your answer</span><textarea rows="'.(!empty($c['ui']['long'])?8:2).'" maxlength="'.(!empty($c['ui']['long'])?8000:300).'" autocomplete="off" autocapitalize="sentences" placeholder="Type your answer">'.e((string)($c['ui']['prefill']??'')).'</textarea></label>';
   elseif($kind==='paper')$h.='<button type="button" class="l2-paper" data-part="'.$p.'" data-kind="paper" aria-pressed="false">'.l1_icon('ok').'Done with my teacher or on paper</button>';
  }
  return $h?'<div class="l2-ans">'.$h.'</div>':'';
@@ -236,7 +240,7 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
   if(!empty($c['words']))echo '<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
   if(in_array('look',$kinds,true)||in_array('paper',$kinds,true)||$readonly){if($c['choices']&&!array_intersect($kinds,['chip','chips']))echo '<div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['choices'])).'</div>';}
   echo l2a_answer($c,$n,$readonly);
-  if($readonly){$ans=$saved[$n]??'';echo '<div class="l2-saved">'.l1_icon('ok').'<span>'.($ans!==''?e($ans):'Saved').'</span></div>';if(!empty($aud[(string)$n]))echo '<div class="l1-mine"><audio controls preload="none" src="?page=recording&amp;id='.(int)$a['completion_id'].'&amp;n='.$n.'"></audio></div>';}
+  if($readonly){$ans=$saved[$n]??'';echo '<div class="l2-saved">'.l1_icon('ok').'<span>'.($ans!==''?nl2br(e($ans)):'Saved').'</span></div>';if(!empty($aud[(string)$n]))echo '<div class="l1-mine"><audio controls preload="none" src="?page=recording&amp;id='.(int)$a['completion_id'].'&amp;n='.$n.'"></audio></div>';}
   echo '</section>';}
  echo '</div><div class="l1-end"><div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns"><button type="button" class="l1-btn2" data-l2-prev hidden>'.l1_icon('prev').'Back</button>';
  if(!$readonly)echo '<button type="button" class="l1-big" data-l2-next'.($N<2?' hidden':'').'>Next card '.l1_icon('next').'</button><button id="submit-answer" class="l1-big" type="submit"'.($N>1?' hidden':'').'>Submit '.l1_icon('ok').'</button>';

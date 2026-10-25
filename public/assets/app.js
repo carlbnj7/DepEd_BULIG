@@ -212,9 +212,9 @@ document.addEventListener('input',event=>{const box=event.target.closest('.fluen
 // Matching cards: the letter chosen for each Column A item fills that card's answer ("1-b, 2-a").
 document.addEventListener('change',event=>{const sel=event.target.closest('select[data-match]');if(!sel)return;const card=sel.closest('.native-card');const box=card&&card.querySelector('.native-answer');if(!box)return;box.value=[...card.querySelectorAll('select[data-match]')].filter(s=>s.value).map(s=>s.dataset.match+'-'+s.value).join(', ');box.dispatchEvent(new Event('input',{bubbles:true}));});
 
-// Matching boards: tap (or drag) from a Column A item to a Column B choice to draw a connecting line.
+// Matching boards: tap a Column A item, then its Column B choice, to draw a connecting line.
 (()=>{const NS='http://www.w3.org/2000/svg',COLORS=['#1b7a3a','#d80006','#001db5','#c77700','#7b2cbf','#0b8a8a','#b5179e','#5a5a00','#e85d04','#3a5a40','#9d0208','#023e8a','#6a4c93','#2b9348','#bc6c25'];
-function setup(board){if(board.dataset.ready)return;board.dataset.ready='1';const svg=board.querySelector('.match-lines'),pairs=new Map();let pick=null,drag=null;
+function setup(board){if(board.dataset.ready)return;board.dataset.ready='1';const svg=board.querySelector('.match-lines'),pairs=new Map();let pick=null;
  const card=board.closest('.native-card,.l2-match'),box=card&&card.querySelector('.native-answer'),readonly=board.dataset.answer!=='on'&&!!box;
  const item=n=>board.querySelector('.match-item[data-num="'+n+'"]'),choice=l=>board.querySelector('.match-choice[data-letter="'+l+'"]');
  function pt(el,side){const b=board.getBoundingClientRect(),r=el.getBoundingClientRect();return side==='r'?[r.right-b.left,r.top+r.height/2-b.top]:[r.left-b.left,r.top+r.height/2-b.top];}
@@ -224,7 +224,7 @@ function setup(board){if(board.dataset.ready)return;board.dataset.ready='1';cons
    for(const [x,y] of [[x1,y1],[x2,y2]]){const d=document.createElementNS(NS,'circle');d.setAttribute('cx',x);d.setAttribute('cy',y);d.setAttribute('r',7);d.setAttribute('fill',col);svg.append(d);}
    a.style.setProperty('--pair',col);c.style.setProperty('--pair',col);}
   board.querySelectorAll('.match-item,.match-choice').forEach(el=>el.classList.toggle('paired',[...pairs.keys()].includes(el.dataset.num)||[...pairs.values()].includes(el.dataset.letter)));
-  if(drag){const l=document.createElementNS(NS,'line');l.setAttribute('x1',drag.x1);l.setAttribute('y1',drag.y1);l.setAttribute('x2',drag.x2);l.setAttribute('y2',drag.y2);l.setAttribute('class','match-line temp');svg.append(l);}}
+}
  function save(){if(box&&board.dataset.answer==='on'){box.value=[...pairs].sort((a,b)=>a[0]-b[0]).map(([n,l])=>n+'-'+l).join(', ');box.dispatchEvent(new Event('input',{bubbles:true}));board.querySelectorAll('select[data-match]').forEach(s=>{s.value=pairs.get(s.dataset.match)||'';});}}
  function connect(n,l){for(const [k,v] of pairs)if(v===l)pairs.delete(k);pairs.set(n,l);save();draw();}
  function clearPick(){pick=null;board.querySelectorAll('.picking').forEach(e=>e.classList.remove('picking'));}
@@ -232,13 +232,9 @@ function setup(board){if(board.dataset.ready)return;board.dataset.ready='1';cons
   if(!pick){if(isA&&pairs.has(key)){pairs.delete(key);save();draw();return;}if(!isA){for(const [k,v] of pairs)if(v===key){pairs.delete(k);save();draw();return;}}pick={isA,key};el.classList.add('picking');return;}
   if(pick.isA===isA){clearPick();pick={isA,key};el.classList.add('picking');return;}
   const n=isA?key:pick.key,l=isA?pick.key:key;clearPick();connect(n,l);}
- board.addEventListener('click',e=>{const el=e.target.closest('.match-item,.match-choice');if(el&&!board.dataset.dragged)tap(el);delete board.dataset.dragged;});
+ board.addEventListener('click',e=>{const el=e.target.closest('.match-item,.match-choice');if(el)tap(el);});
  board.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('.match-item,.match-choice')){e.preventDefault();tap(e.target);}});
- board.addEventListener('pointerdown',e=>{const el=e.target.closest('.match-item,.match-choice');if(!el||readonly||e.target.closest('select'))return;const [x,y]=pt(el,el.classList.contains('match-item')?'r':'l');drag={from:el,x1:x,y1:y,x2:x,y2:y,moved:false};});
- window.addEventListener('pointermove',e=>{if(!drag)return;const b=board.getBoundingClientRect();drag.x2=e.clientX-b.left;drag.y2=e.clientY-b.top;if(Math.hypot(drag.x2-drag.x1,drag.y2-drag.y1)>25){drag.moved=true;e.preventDefault();draw();}});
- const end=e=>{if(!drag)return;const d=drag;drag=null;if(d.moved){board.dataset.dragged='1';const t=document.elementFromPoint(e.clientX,e.clientY),to=t&&t.closest('.match-item,.match-choice');
-  if(to&&to.parentElement!==d.from.parentElement&&board.contains(to)){const a=d.from.classList.contains('match-item')?d.from:to,c=a===d.from?to:d.from;clearPick();connect(a.dataset.num,c.dataset.letter);}}draw();};
- window.addEventListener('pointerup',end);window.addEventListener('pointercancel',()=>{if(drag){drag=null;draw();}});
+ /* v177: tap only. Dragging was dropped: a long choice made the line miss, and scrolling past it on a phone cancelled the tap. */
  if(box&&box.value)for(const m of box.value.matchAll(/(\d+)\s*-\s*([a-z])/gi))pairs.set(m[1],m[2].toLowerCase());
  board.addEventListener('redraw',draw);board.addEventListener('dragstart',e=>e.preventDefault());board.querySelectorAll('img').forEach(i=>i.draggable=false);new ResizeObserver(draw).observe(board);board.querySelectorAll('img').forEach(i=>i.addEventListener('load',draw));draw();}
 function scan(root){(root||document).querySelectorAll('[data-match-board]').forEach(setup);}
@@ -693,3 +689,11 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  }
  build();let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,120);});
 })();
+
+// v178: Bob the Builder's "There's a new update" popup: close with the button, the shade or Escape.
+(()=>{const box=document.querySelector('[data-wn]');if(!box)return;const close=()=>{box.hidden=true;};
+ box.addEventListener('click',e=>{if(e.target===box||e.target.closest('[data-wn-close]'))close();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!box.hidden)close();});
+ const b=box.querySelector('[data-wn-close]'),open=()=>{box.hidden=false;if(b)setTimeout(()=>b.focus({preventScroll:true}),300);};
+ /* a pupil's welcome sheet comes first; Bob waits until it is closed */
+ if(window.pfOverlayOpen&&window.pfOverlayOpen()){box.hidden=true;document.addEventListener('pf:overlays-done',open,{once:true});}else open();})();
