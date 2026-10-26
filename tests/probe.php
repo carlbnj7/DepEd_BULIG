@@ -19,6 +19,25 @@ $out=match($what){
    $right[]='Card '.$n.': '.$w;$wrong[]='Card '.$n.': zzz';}
   return ['keyed'=>$a&&ac_keyed($a),'right'=>"BULIG card answers\n".implode("\n",$right),'wrong'=>"BULIG card answers\n".implode("\n",$wrong),'cards'=>count($key)];})(),
  /* Level 4: BULIG's miscue count on a sample reading, and a perfect reading of every Level 4 passage (php tests/probe.php l4) */
+ /* Cycles (v182): lessons 2 and up of the pupil's level open in 10 days; lesson 1 stays open. Settings are put back after. */
+ 'cycle_check'=>(function()use($pid):array{$L=pupil_start_level($pid);$old=val("SELECT setting_value FROM settings WHERE setting_key='lesson_cycles'");
+  $d=date('Y-m-d',strtotime('+10 days'));q("INSERT INTO settings(setting_key,setting_value) VALUES('lesson_cycles',?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)",[json_encode(['on'=>true,'levels'=>[(string)$L=>[['from'=>2,'to'=>cycle_level_size($L),'date'=>$d]]]])]);
+  $mod=(int)val('SELECT m.id FROM modules m WHERE m.level_id=? AND (m.grade_level IS NULL OR m.grade_level=?) ORDER BY m.id LIMIT 1',[$L,pupil_grade($pid)]);$no=cycle_numbers($mod)['no'];$one=array_search(1,$no,true);$two=array_search(2,$no,true);
+  $o=['one'=>lesson_cycle_opens((int)$one),'two'=>lesson_cycle_opens((int)$two),'date'=>$d,'locked'=>lesson_cycle_locked($pid,(int)$two,$L)];
+  if($old===null||$old===false)q("DELETE FROM settings WHERE setting_key='lesson_cycles'");else q("UPDATE settings SET setting_value=? WHERE setting_key='lesson_cycles'",[$old]);return $o;})(),
+ /* Reading Castle (v182): mark every Level 7 lesson finished for the pupil and forget that the castle was seen */
+ 'castle_setup'=>(function()use($pid):array{$n=0;foreach(level_lessons(CASTLE_LEVEL,pupil_grade($pid)) as $l){q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=NOW()',[$pid,$l['id']]);$n++;}
+  q('DELETE FROM settings WHERE setting_key=?',[castle_key($pid)]);friends_mark_met($pid);return ['lessons'=>$n,'open'=>castle_open($pid)];})(),
+ /* Stars (v181): a lesson activity with an answer key the pupil can open now (earlier steps marked done), with right and wrong answers */
+ 'star_setup'=>(function()use($pid):array{$L=pupil_start_level($pid);
+  foreach(rows("SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND (m.grade_level IS NULL OR m.grade_level=?) AND a.phase='learn' AND a.published=1 AND l.published=1 ORDER BY l.position,a.position",[$L,pupil_grade($pid)]) as $a){
+   if(!key_checks_cards($a))continue;$lid=(int)$a['lesson_id'];$mod=(int)val('SELECT module_id FROM lessons WHERE id=?',[$lid]);$pos=(int)val('SELECT position FROM lessons WHERE id=?',[$lid]);
+   foreach(rows('SELECT id FROM lessons WHERE module_id=? AND position<? AND published=1',[$mod,$pos]) as $l)q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=NOW()',[$pid,$l['id']]);
+   foreach(rows("SELECT id FROM activities WHERE lesson_id=? AND published=1 AND (phase='pre' OR (phase='learn' AND position<?))",[$lid,$a['position']]) as $x)q("INSERT INTO activity_completion(pupil_id,activity_id,response,status,submitted_at,score,max_score) VALUES(?,?,'done','completed',NOW(),1,1) ON DUPLICATE KEY UPDATE status='completed',score=1,max_score=1",[$pid,$x['id']]);
+   if(!lesson_available($pid,$lid)||!phase_available($pid,$lid,'learn'))continue;
+   $key=activity_key($a)??[];$right=[];$wrong=[];foreach(range(1,count(l2a_set($a)['cards'])) as $n){$k=$key[$n]??null;$w=!$k?'(done)':match($k['t']){'card'=>explode(' or ',key_want($k))[0],'choice'=>(string)$k['a'],'match'=>implode(', ',array_map(fn($i,$l)=>$i.'-'.$l,array_keys($k['a']),$k['a'])),default=>implode(' · ',array_map(fn($l,$v)=>$l.' = '.$v,array_keys($k['a']),$k['a']))};$right[]='Card '.$n.': '.$w;$wrong[]='Card '.$n.': '.($k?'zzz':'(done)');}
+   return ['id'=>(int)$a['id'],'lesson_id'=>$lid,'right'=>"BULIG card answers\n".implode("\n",$right),'wrong'=>"BULIG card answers\n".implode("\n",$wrong)];}
+  return [];})(),
  /* Wrong tries (v172): card 1 answered right after 0, 1, 2 and 3 wrong tries */
  'tries'=>(function():array{
   foreach(rows("SELECT * FROM activities WHERE phase='learn' ORDER BY id") as $a){if(!key_checks_cards($a))continue;$k=(activity_key($a)??[])[1]??null;if(!$k||!in_array($k['t']??'',['choice','card'],true))continue;

@@ -68,3 +68,5 @@
 2:0:22:post:10 | 2=/t/;heart 3=/c/;cat 4=/r/;tree 5=/l/;pearl|/s/;spear 6=/s/;stick 7=/s/;spear 8=/h/;heat 9=/r/;grapes 10=/p/;plate 11=/l/;blow 12=/c/;clip
 2:0:22:post:11 | 1=E 2=E 3=B 4=E 5=B 6=B 7=E 8=B 9=B 10=B
 2:0:22:post:12 | 1=bag 2=bat 3=car 4=can 5=cam            # card 5: camera, "cam"
+# v180: Phoneme Jumping, how many sounds each word has (hen, pit, Bert, food, band)
+2:0:15:learn:2 | 2=3;3;3;3;4

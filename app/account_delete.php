@@ -1,7 +1,8 @@
 <?php
 /** Delete an account for good: a pupil (by their teacher or the administrator) or a teacher (by the administrator).
-   A pupil's work, recordings, badges, XP and sign-in tickets go with them. A teacher can be deleted only when they have
-   no pupils and no sections left (move them first); the pupils they checked keep their scores.
+   A pupil's work, recordings, badges, XP and sign-in tickets go with them. A teacher who still has pupils or sections
+   is deleted from their own row: the administrator chooses who gets them, and they move first. The ticked-teachers
+   button skips such teachers. The pupils they checked keep their scores.
    The person deleting types DELETE to confirm. Turning an account off (it can be turned on again) stays the gentle choice. */
 
 const DELETE_WORD='DELETE';
@@ -56,10 +57,11 @@ function del_user_rows(int $id):void{
 }
 
 /** The red "Delete" box: type DELETE, then press the button. */
-function delete_box(string $action,int $id,string $name,string $what,bool $small=false):string{
+/** $extra: more fields before the DELETE box (a teacher with pupils: who gets them). */
+function delete_box(string $action,int $id,string $name,string $what,bool $small=false,string $extra=''):string{
  return '<details class="del-box'.($small?' small':'').'"><summary>'.icon('close').'Delete'.($small?'':' this '.$what).'</summary><form method="post" class="del-form">'.csrf_field()
   .'<input type="hidden" name="action" value="'.$action.'"><input type="hidden" name="id" value="'.$id.'">'
-  .'<p><b>Delete '.e($name).' for good?</b> '.($what==='pupil'?'Their answers, recordings, badges, XP and sign-in ticket are removed too.':'Their account and Teacher Pass are removed. The pupils they checked keep their scores.').' This cannot be undone.</p>'
+  .'<p><b>Delete '.e($name).' for good?</b> '.($what==='pupil'?'Their answers, recordings, badges, XP and sign-in ticket are removed too.':'Their account and Teacher Pass are removed. The pupils they checked keep their scores.').' This cannot be undone.</p>'.$extra
   .'<label>Type '.DELETE_WORD.' to confirm<input name="confirm" required autocomplete="off" autocapitalize="characters" pattern="[Dd][Ee][Ll][Ee][Tt][Ee]" placeholder="'.DELETE_WORD.'"></label>'
   .'<button class="btn danger">'.icon('close').'Delete '.e($name).'</button></form></details>';
 }
@@ -95,8 +97,8 @@ function account_delete_action(string $action):void{
   go($u['role']==='admin'?'?page=checkup#ck-off':'?page=manage');
  }
  if($action==='delete_teacher'){
-  $u=require_role('admin');$t=admin_teacher($id);
-  db()->beginTransaction();try{delete_teacher($id,(int)$u['id']);audit('delete_teacher',$t['public_id'].' '.$t['name']);db()->commit();}catch(Throwable $e){db()->rollBack();throw $e;}
-  del_files($t['avatar_path'],$id,false);flash($t['name'].' was deleted.');go('?page=accounts');
+  $u=require_role('admin');$t=admin_teacher($id);$to=(int)($_POST['to']??0);$moved=0;
+  db()->beginTransaction();try{if($to)$moved=admin_move_all($t,admin_move_target($t,$to));delete_teacher($id,(int)$u['id']);audit('delete_teacher',$t['public_id'].' '.$t['name']);db()->commit();}catch(Throwable $e){db()->rollBack();throw $e;}
+  del_files($t['avatar_path'],$id,false);flash($t['name'].' was deleted.'.($moved?' Their '.$moved.' '.($moved===1?'pupil':'pupils').' moved to '.one('SELECT name FROM users WHERE id=?',[$to])['name'].'.':''));go('?page=accounts');
  }
 }

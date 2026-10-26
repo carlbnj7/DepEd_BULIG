@@ -1,5 +1,5 @@
 /* BULIG reminders on the phone (Web Push)
-   - After BULIG is added to the home screen, a friendly box asks first. Only "Yes, remind me" opens the phone's own question.
+   - Teachers: after BULIG is added to the home screen, a friendly box asks first (pupils: Settings only). Only "Yes, remind me" opens the phone's own question.
    - "Not now" is remembered on this device; reminders can be turned on later in Settings.
    - Settings: turn each reminder on or off, pick the reading-time hour, send a test, or turn reminders off. */
 (function(){
@@ -33,7 +33,7 @@
  /* ---------- the friendly question (once, from the home screen) ---------- */
  const wait=n=>new Promise(r=>document.addEventListener(n,r,{once:true}));
  async function ask(){
-  if(!can||!homeScreen||Notification.permission!=='default'||get(ASK)||!navigator.onLine)return;
+  if(!T||!can||!homeScreen||Notification.permission!=='default'||get(ASK)||!navigator.onLine)return;   // pupils turn reminders on in Settings; no pop-up (v180)
   if(new URLSearchParams(location.search).get('page')!=='dashboard')return;
   if(window.buligHelloOpen&&window.buligHelloOpen())await wait('bulig:hello-done');
   if(window.pfOverlayOpen&&window.pfOverlayOpen())await wait('pf:overlays-done');

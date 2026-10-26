@@ -131,8 +131,18 @@ function tf_top_filter(int $level,string $period):string{
  $keep='';foreach(['grade_level','section_id'] as $k)if(isset($_GET[$k]))$keep.='<input type="hidden" name="'.$k.'" value="'.(int)$_GET[$k].'">';
  $lv='<option value="0">All levels</option>';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)$lv.='<option value="'.(int)$l['id'].'"'.($level===(int)$l['id']?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';
  $pd='';foreach(TF_TOP_PERIODS as $k=>$t)$pd.='<option value="'.$k.'"'.($period===$k?' selected':'').'>'.$t.'</option>';
- return '<form method="get" action="#tf-top" class="lb-filter"><input type="hidden" name="page" value="dashboard">'.$keep
+ $pg=($_GET['page']??'')==='leaderboard'?'leaderboard':'dashboard';
+ return '<form method="get" action="#tf-top" class="lb-filter"><input type="hidden" name="page" value="'.$pg.'">'.$keep
   .'<label>Level<select name="lb_level" data-autosubmit>'.$lv.'</select></label><label>Time<select name="lb_period" data-autosubmit>'.$pd.'</select></label><button class="btn secondary pg-go">Show</button></form>';
+}
+/** Teacher › Leaderboard (v181): its own page in the menu. The top 10 of the class chosen with the grade and section tabs,
+    for one level or all levels, all time, this month or this week. */
+function tf_leaderboard_view(array $u):void{
+ [$grade,$sid]=teacher_class_selection($u);$tid=(int)$u['id'];
+ $ids=array_map('intval',array_column(rows('SELECT u.id FROM users u JOIN pupils p ON p.user_id=u.id JOIN teacher_pupils t ON t.pupil_id=u.id WHERE t.teacher_id=? AND p.grade_level=? AND (?=0 OR u.id IN(SELECT pupil_id FROM pupil_sections WHERE section_id=?))',[$tid,$grade,$sid,$sid]),'id'));
+ echo '<div class="pageheading"><div><span class="eyebrow">MY CLASS</span><h1>Leaderboard</h1><p class="muted">The top 10 pupils of your class by BULIG’s average score. Choose a level, or all levels.</p></div></div>';
+ section_filter($u,'leaderboard',$sid,$grade);$sn=$sid?(string)val('SELECT name FROM sections WHERE id=?',[$sid]):'';
+ echo $ids?tf_leaderboard($ids,'Grade '.$grade.($sn!==''?' · '.$sn:'')):'<section class="card"><p class="muted">No pupils in this class yet. <a href="?page=accounts">Add pupils</a></p></section>';
 }
 function tf_leaderboard(array $ids,string $label=''):string{
  $level=max(0,(int)($_GET['lb_level']??0));$period=isset(TF_TOP_PERIODS[$_GET['lb_period']??''])?(string)$_GET['lb_period']:'all';

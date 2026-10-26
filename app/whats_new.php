@@ -1,32 +1,30 @@
 <?php
-/* What's new (v178): Bob the Builder's popup. Each account sees it once, on the first page after signing in, after
+/* What's new (v178, list v181): Bob the Builder's popup. Each account sees it once, on the first page after signing in, after
    BULIG is updated: a construction sign with Bob and the new things for their role. Closing it keeps a copy on the
    bell (Notifications), and ?whatsnew=1 opens it again. Seen is kept in settings (whatsnew_<update>_<id>), no SQL.
    For a new update: change WHATS_NEW_ID and the lists below. */
-const WHATS_NEW_ID='v178';
+const WHATS_NEW_ID='v181';
 const WHATS_NEW=[
  'pupil'=>[
-  ['phone','New BULIG app icon','Ask a grown-up to delete BULIG from your home screen, then add it again to see the new icon.'],
-  ['ladder','Level 3 is now Level 3A and Level 3B','Just like your module. Your progress is kept.'],
-  ['match','Matching is easier','Tap a word, then tap its answer. No more dragging.'],
-  ['edit','Your writing stays','What you type is kept, even if you close the page.'],
-  ['comic','Meet Bob the Builder!','Read his new page in Story time.'],
+  ['star','Win stars!','Every activity gives you up to 3 stars. Get 2 stars to go on to the next one. See your stars floating over each stop on your road map!'],
+  ['star','Post-test stars','Post-tests give up to 5 stars. Get 4 stars to open the next level.'],
+  ['edit','Draw and type in BULIG','Puzzles, word boxes, crosswords and drawings are now done right here, not on paper.'],
+  ['check','Save me when you sign out','Saving your account now asks when you sign out, not when you sign in.'],
+  ['comic','Bob is on the comic cover','Find Bob the Builder with all the BULIG friends in Story time.'],
  ],
  'teacher'=>[
-  ['phone','New BULIG app icon','BULIG has a new app icon. If BULIG is on your home screen, delete it, then add BULIG to your home screen again to get the new icon.'],
-  ['ladder','Level 3A and Level 3B','Level 3 is split like the module. Every pupil keeps their answers and progress.'],
-  ['edit','Full answers','See your pupils\' whole editorials and long answers, with their paragraphs.'],
-  ['book','Copyreading','The article is already in the answer box, ready to correct.'],
-  ['match','Tap matching','Pupils tap a word, then its answer. Long choices connect now.'],
-  ['check','Level 5 fixes','Pre-tests and post-tests of Grades 1, 5 and 6 answer and score correctly.'],
+  ['star','Stars and the 80% rule','Every lesson activity gives up to 3 stars, shown over each stop on the pupil\'s road map. A pupil needs 2 stars (80%) to go on; below that the activity opens again. Post-tests give 5 stars and still need 80% to open the next level. Pre-tests have no stars.'],
+  ['ladder','Leaderboard page','The top 10 of your class has its own page in the menu (My class › Leaderboard). Choose one level or all levels.'],
+  ['edit','No more “on paper” cards','Word boxes, crosswords, word searches, letter boxes, drawings and “underline the answer” are all answered in BULIG and checked.'],
+  ['match','Matching boards','Pupils see how many pairs are right and can go on, so no one is stuck.'],
+  ['check','A pupil is stuck?','If the microphone misheard, raise the score to 80% or more on the pupil\'s answer: the activity opens for them.'],
  ],
  'admin'=>[
-  ['phone','New BULIG app icon','BULIG has a new app icon. If BULIG is on your home screen, delete it, then add BULIG to your home screen again to get the new icon.'],
-  ['search','School directory','Every pupil and teacher, with search and filters, under People.'],
-  ['ladder','Level 3A and Level 3B','Level 3 is split like the module. Progress is kept.'],
-  ['star','New Gamified BULIG logo','On the sign-in page and the loading screen.'],
-  ['alert','Bug reports stay open','A report stays in Open until you tap Fixed, even after you read it on the bell.'],
-  ['check','Fixes','Level 5 tests, Level 7 writing and copyreading, and matching.'],
+  ['star','Stars and the 80% rule','Lesson activities give up to 3 stars (2 stars = 80% needed to go on). Post-tests give 5 stars and still need 80%.'],
+  ['edit','Rename and delete teachers','Teachers › Edit name & sex has First, Middle, Last and Extension. Delete works for every teacher: choose who gets their pupils.'],
+  ['ladder','Teacher leaderboard','Teachers have a Leaderboard page with a level filter.'],
+  ['edit','No more “on paper” cards','Every activity is answered in BULIG now, with drawings saved for the teacher.'],
+  ['check','Fixes','Print page clicks, phone layout of long answers, and pupil pop-ups.'],
  ],
 ];
 function wn_key(int $uid):string{return 'whatsnew_'.WHATS_NEW_ID.'_'.$uid;}

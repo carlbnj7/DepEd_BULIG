@@ -49,3 +49,16 @@
 6:5:36414:learn:1 | 2=People 3=Objects 4=Objects 5=Objects 6=People|Objects   # "follow" is neither a person nor an object, so either is right
 6:4:19216:learn:1 | 2=ant 3=bug 4=kitten 5=everybody 6=deer 7=animal 8=world 9=home 10=teeth 11=tongue 12=umbrella 13=company   # spelling, the word is read aloud
 6:6:17216:learn:1 | 1=everybody 2=company 3=absence 4=ache 5=accomplish 6=athlete 7=occasion 8=restaurant 9=city 10=middle 11=moment 12=frightened 13=exclaimed 14=several 15=lonely 16=drew 17=since 18=straight   # spelling dictated, the word is read aloud
+# v180: puzzles answered in the app (they were "on paper"). Hidden Letters: the word, when every row is right.
+6:4:6204:learn:1 | 1=children 2=neighbour 3=people 4=himself 5=family 6=brother 7=mother 8=friend 9=queen 10=miss 11=king
+6:6:5204:learn:1 | 1=million 2=opposite 3=various 4=addition 5=weight 6=island 7=doesn't 8=race 9=born 10=cattle 11=sense 12=dead 13=kind 14=brother
+# Link the Letters: the word hidden in each letter box
+6:4:8206:learn:1 | 1=beans|bean 2=banana 3=leaf 4=leaves 5=plants|plant 6=peas|pea 7=gift 8=gold 9=radio
+6:4:8206:learn:2 | 1=rock|rocks
+6:6:7206:learn:1 | 1=attention 2=type 3=action 4=west 5=meat 6=cause 7=love 8=beyond 9=deal 10=pass
+# Crossword (Grade 5): every answer in its boxes
+6:5:31409:learn:1 | 2=has:follow,garage,shadow,captain,thumb
+# Underline / circle the answer (now tapped)
+7:5:12500:post:4 | 3=has:father 4=mother and the children
+7:5:18216:learn:1 | 4=clusters
+8:2:43243:learn:1 | 5=monday 6=friday

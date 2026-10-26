@@ -1,7 +1,7 @@
 """Builds the comic "How the BULIG Friends Met" (app/story_pages.json).
 Each page is one big SVG scene drawn here (sky, hills, castle, props) with the BULIG friends' pictures placed on it.
 Run:  python3 tools/comic_build.py   (then python3 tools/update_checker.py)"""
-import math,html,random,json,os
+import math,html,random,json,os,re
 SCRIPT=[]   # (who, text) for every narrator box and speech bubble, in the order they are drawn
 CH='assets/images/characters/'
 V='?v=2'
@@ -85,28 +85,30 @@ def flower(x,y,c,s=1):
     return f'<g transform="translate({x} {y}) scale({s})"><path d="M0 0 Q-2 -10 0 -18" stroke="#3e9a4a" stroke-width="3" fill="none"/><path d="M0 -8 q-10 -4 -12 -10 q8 0 12 6z" fill="#4fb064"/>{pet}<circle cx="0" cy="-22" r="3.6" fill="#ffd23f" stroke="#e0a800" stroke-width="1"/></g>'
 def tuft(x,y,s=1,c='#3d8a3d'):
     return f'<g transform="translate({x} {y}) scale({s})"><path d="M-14 0 Q-12 -18 -6 -28 Q-6 -12 -2 0Z M-4 0 Q0 -26 6 -38 Q6 -16 6 0Z M4 0 Q10 -18 18 -24 Q12 -10 14 0Z" fill="{c}"/></g>'
+_CASTLE=None
+def castle_art():
+    """The Reading Castle picture from app/castle.php (castle_svg), so the comic and the Level 7 castle scene match."""
+    global _CASTLE
+    if _CASTLE is None:
+        import subprocess
+        root=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..')
+        svg=subprocess.run(['php','-r','require "app/castle.php"; echo castle_svg();'],cwd=root,capture_output=True,text=True,check=True).stdout
+        svg=re.sub(r'^<svg[^>]*>|</svg>$','',svg.strip())
+        svg=re.sub(r'<path class="rc-rays"[^>]*/>','',svg)                 # no light rays: the gate stays closed in the story
+        svg=re.sub(r'<circle class="rc-lamp(glow|dim)"[^>]*/>','',svg)          # the comic draws its own lamp light below
+        svg=svg.replace('<circle class="rc-win rc-lamp" cx="200" cy="106" r="16"/>','<circle cx="200" cy="106" r="16" fill="{win}"/>')
+        svg=svg.replace('stroke-width="1.2"/>','stroke-width="1.2"/>{lampdim}',1)
+        svg=svg.replace('class="rc-win"','fill="{win}"')
+        svg=re.sub(r' class="[^"]*"','',svg)
+        _CASTLE=svg.replace('id="rc-','id="{p}rc-').replace('url(#rc-','url(#{p}rc-')
+    return _CASTLE
 def castle(p,x,y,s,lamp='dim',night=False):
+    """The Reading Castle, its gate at (x, y). The great lamp (the round book window) is dim until the friends light it."""
     win='#fff0a8' if lamp=='bright' else ('#e6c97a' if not night else '#ffe08a')
+    dim='' if lamp=='bright' else '<circle cx="200" cy="106" r="16" fill="#3a3550" opacity=".35"/>'
     g=f'<g transform="translate({x} {y}) scale({s})">'
-    g+=f'<circle cx="0" cy="-60" r="{220 if lamp=="bright" else 120}" fill="url(#{p}{"lampGlow" if lamp=="bright" else "dimGlow"})"/>'
-    # back towers
-    for tx in (-112,112):
-        g+=f'<rect x="{tx-30}" y="-150" width="60" height="200" fill="url(#{p}stoneW)"/><rect x="{tx-30}" y="-150" width="60" height="200" fill="url(#{p}bricks)"/>'
-        g+=''.join(f'<rect x="{tx-30+i*15}" y="-166" width="10" height="18" fill="url(#{p}stoneW)"/>' for i in range(4))
-        g+=f'<path d="M{tx-38} -150 L{tx} -238 L{tx+38} -150Z" fill="url(#{p}roofB)"/><path d="M{tx} -238 L{tx+38} -150 L{tx+14} -150Z" fill="#000" opacity=".15"/>'
-        g+=f'<path d="M{tx} -238 V-276" stroke="#6b5a45" stroke-width="3"/><path d="M{tx+1} -276 q14 -6 28 0 q-8 6 0 12 q-14 6 -28 0z" fill="#f6c02c"/>'
-        g+=f'<path d="M{tx-10} -96 v-14 a10 10 0 0 1 20 0 v14z" fill="{win}" stroke="#7a5a2a" stroke-width="2.5"/>'
-    # main keep
-    g+=f'<rect x="-82" y="-110" width="164" height="160" fill="url(#{p}stoneW)"/><rect x="-82" y="-110" width="164" height="160" fill="url(#{p}bricks)"/>'
-    g+=''.join(f'<rect x="{-82+i*21}" y="-126" width="14" height="18" fill="url(#{p}stoneW)"/>' for i in range(8))
-    g+=f'<path d="M-96 -110 L0 -206 L96 -110Z" fill="url(#{p}roofR)"/><path d="M0 -206 L96 -110 L40 -110Z" fill="#000" opacity=".14"/>'
-    g+=f'<path d="M0 -206 V-250" stroke="#6b5a45" stroke-width="3"/><path d="M1 -250 q18 -7 36 0 q-10 7 0 14 q-18 7 -36 0z" fill="#2fa04f"/>'
-    # the great lamp window
-    g+=f'<circle cx="0" cy="-150" r="24" fill="#5a4a2e" stroke="#7a5a2a" stroke-width="4"/><circle cx="0" cy="-150" r="17" fill="{win}"/>'
-    if lamp!='bright':g+=f'<circle cx="0" cy="-150" r="17" fill="#3a3550" opacity=".35"/>'
-    for wx in (-48,48):g+=f'<path d="M{wx-11} -40 v-22 a11 11 0 0 1 22 0 v22z" fill="{win}" stroke="#7a5a2a" stroke-width="2.5"/>'
-    g+=f'<path d="M-26 50 v-48 a26 26 0 0 1 52 0 v48z" fill="#7a4a22" stroke="#4a2c10" stroke-width="3"/><path d="M-13 50 v-56 M0 50 v-60 M13 50 v-56" stroke="#4a2c10" stroke-width="2"/><circle cx="12" cy="20" r="3" fill="#f6c02c"/>'
-    g+=f'<path d="M-82 30 q10 -30 4 -60 q-6 20 -16 30 M82 20 q-10 -24 -2 -50" stroke="#3e9a4a" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="-80" cy="-20" r="6" fill="#4fb064"/><circle cx="-76" cy="4" r="5" fill="#4fb064"/><circle cx="80" cy="-14" r="5" fill="#4fb064"/>'
+    g+=f'<circle cx="0" cy="-150" r="{230 if lamp=="bright" else 130}" fill="url(#{p}{"lampGlow" if lamp=="bright" else "dimGlow"})"/>'
+    g+='<g transform="translate(-200 -270)">'+castle_art().replace('{p}',p).replace('{win}',win).replace('{lampdim}',dim)+'</g>'
     return g+'</g>'
 def rays(cx,cy,n,length,col,op,spread=.06,start=0,end=6.283):
     g=''
@@ -274,9 +276,9 @@ def s0(p):
     g+=f'<path d="M0 600 Q600 540 1200 600 V760 H0Z" fill="url(#{p}hillB)"/><path d="M0 600 Q600 540 1200 600 V760 H0Z" fill="url(#{p}grassDk)" opacity=".5"/>'
     g+=tree(p,60,600,1)+pine(p,150,570,.8)+tree(p,1140,600,.95)+pine(p,1060,570,.75)
     # back row (smaller), front row (bigger), Jarvis in the middle
-    back=['max-hello','dracs-book','mia-blocks','zion-emblem','roxanne-time','kai-letter']
+    back=['max-hello','dracs-book','mia-blocks','bob-thumbs','zion-emblem','roxanne-time','kai-letter']   # Bob the Builder joined in v178
     for i,n in enumerate(back):
-        x=[135,295,420,670,795,955][i];g+=ground_shadow(x+60,640,50)+img(n,x,445,120,196)
+        x=[110,250,385,665,790,915,1045][i];g+=ground_shadow(x+60,640,50)+img(n,x,445,120,196)
     front=['george-map','bruno-cheer','arah-cheer','toby-flag','sofie-mirror','claude-shield']
     xs=[40,200,360,720,880,1040]
     for x,n in zip(xs,front):g+=ground_shadow(x+70,752,60)+img(n,x,520,140,232)

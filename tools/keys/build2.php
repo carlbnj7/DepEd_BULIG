@@ -42,8 +42,8 @@ function k2_part(string $v,string $kind,array $c,int $p){
  if($kind==='pairs'){if(!preg_match_all('~(\d+)-(\d+)~',$v,$mm,PREG_SET_ORDER))return "pairs '$v'";$pr=[];foreach($mm as $m){$a=[(int)$m[1],(int)$m[2]];sort($a);if(max($a)>count($imgs))return "picture ".max($a)." does not exist";$pr[]=$a;}return [['k'=>'pairs','v'=>$pr],implode(', ',array_map(fn($x)=>$x[0].'–'.$x[1],$pr))];}
  if($kind==='num'){if(!ctype_digit($v))return "number '$v'";return [['k'=>'eq','v'=>$v],$v];}
  if($kind==='chips'){$set=[];$opt=[];foreach(explode('+',$v) as $t){$o=str_ends_with($t,'?');$t=rtrim($t,'?');$x=k2_choice($ch,$t);if($x===null)return "'$t' is not one of: ".implode(' | ',$ch);$o?$opt[]=key_norm($x):$set[]=key_norm($x);}return [['k'=>'set','req'=>$set,'opt'=>$opt,'min'=>0],str_replace('+',', ',str_replace('?','',$v))];}
- if($kind==='chip'){if(!$ch)return 'chip card without choices';$x=k2_choice($ch,$v);if($x===null)return "'$v' is not one of: ".implode(' | ',$ch);return [['k'=>'eq','v'=>key_norm($x)],$x];}
- if(in_array($kind,['tiles','write'],true)){
+ if($kind==='chip'){if(!$ch)return 'chip card without choices';$x=k2_choice($ch,$v);if($x===null)return "'$v' is not one of: ".implode(' | ',$ch);$lab=$c['ui']['labels'][$p]??'';return [['k'=>'eq','v'=>key_norm($lab!==''?$lab.' = '.$x:$x)],$lab!==''?$lab.' = '.$x:$x];}   // a labelled row (v180): "hen = 3"
+ if(in_array($kind,['tiles','write','xcells'],true)){   // xcells (v180): the word box or crossword answers, typed letter by letter
   if(preg_match('~^has(2?):(.+)$~',$v,$m)){$w=array_map('k2_text',explode(',',$m[2]));return [['k'=>'has','v'=>$w,'n'=>$m[1]==='2'?2:count($w)],($m[1]==='2'?'two of: ':'').implode(', ',explode(',',$m[2]))];}
   if(preg_match('~^words:(.+)$~',$v,$m)){$w=array_map('k2_text',explode(',',$m[1]));return [['k'=>'has','v'=>$w,'n'=>count($w)],str_replace(',',', ',$m[1])];}
   $v=preg_replace('~^(seg|sound):~','',$v);return [['k'=>'eq','v'=>k2_text($v)],$v];}

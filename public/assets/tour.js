@@ -57,7 +57,7 @@
    [['.pg-gate'],'Post-test result','You need 80% on the post-test to open the next level. Tap Try again to answer the parts you missed.'],
    ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
    [['a.off-pagelink[href="?page=board"]'],'My reading board','See all your levels as a ladder, with a ribbon for every level you finish or start above.'],
-   [['.level-card.pf-current','.level-card.available'],'Your level','Your level is always at the top. Tap "Continue learning" to open your next lesson, or "See my learning path" for the road map.'],
+   [['.level-card.pf-current','.level-card.available'],'Your level','Your level is always at the top. Tap "Continue learning" to open your road map, see your progress and play your next lesson.'],
    [['.level-fold>summary'],'Optional practice','Levels your teacher skipped are folded here. Tap to open them and practise whenever you like.'],
    [['.level-card.unavailable'],'Locked levels','A lock means you need to finish the level before it first. Tap a locked level to see what to do.'],
    offline?[['.level-card.pf-current .off-slot','.off-slot'],'Save for offline','No internet at home? Tap "Save for offline" while you have internet. The level is kept on this device so you can learn without internet.']:null,

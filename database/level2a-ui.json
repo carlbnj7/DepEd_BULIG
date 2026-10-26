@@ -935,7 +935,7 @@
     },
     {
      "answer": [
-      "paper"
+      "draw"
      ]
     }
    ]
@@ -1060,7 +1060,7 @@
    "cards": [
     {
      "answer": [
-      "paper"
+      "draw"
      ]
     }
    ]
@@ -1110,7 +1110,7 @@
     },
     {
      "answer": [
-      "paper"
+      "draw"
      ]
     }
    ]
@@ -1156,7 +1156,7 @@
     },
     {
      "answer": [
-      "paper"
+      "draw"
      ]
     }
    ]
@@ -2021,7 +2021,7 @@
     },
     {
      "answer": [
-      "paper"
+      "write"
      ]
     }
    ]
@@ -2225,7 +2225,7 @@
     },
     {
      "answer": [
-      "paper"
+      "write"
      ]
     }
    ]
@@ -2330,13 +2330,62 @@
    "cards": [
     {
      "answer": [
-      "paper"
+      "look"
      ]
     },
     {
      "answer": [
-      "paper"
-     ]
+      "chip",
+      "chip",
+      "chip",
+      "chip",
+      "chip"
+     ],
+     "opts": [
+      [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ]
+     ],
+     "labels": [
+      "hen",
+      "pit",
+      "Bert",
+      "food",
+      "band"
+     ],
+     "text": "Listen to your teacher say each word. Jump once for each sound you hear, then tap how many sounds the word has."
     },
     {
      "answer": [

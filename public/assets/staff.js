@@ -31,14 +31,14 @@
  const t=document.getElementById('pc-tip');if(!t)return;
  const phone=window.matchMedia('(max-width: 820px)').matches&&window.matchMedia('(pointer: coarse)').matches;if(!phone)return;
  const show=()=>{
-  const box=document.createElement('div');box.className='pc-tip';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-labelledby','pc-tip-h');
-  box.innerHTML='<div class="pc-tip-card"><img class="pc-tip-kai" alt="" src=""><span class="pc-tip-name">Kai the Messenger</span><h2 id="pc-tip-h"></h2>'
+  const box=document.createElement('div');box.className='kai-tip';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-labelledby','kai-tip-h');
+  box.innerHTML='<div class="kai-tip-card"><img class="kai-tip-kai" alt="" src=""><span class="kai-tip-name">Kai the Messenger</span><h2 id="kai-tip-h"></h2>'
    +'<p>BULIG works best on a <b>laptop or computer</b>. The bigger screen makes reports, printing, Class Demo and adding pupils much easier.</p>'
    +'<ul><li>Use a laptop or computer for reports, printing and Class Demo</li><li>Your phone is fine for quick checks and notifications</li></ul>'
-   +'<button type="button" class="btn primary pc-tip-ok">Okay, got it</button></div>';
+   +'<button type="button" class="btn primary kai-tip-ok">Okay, got it</button></div>';
   box.querySelector('img').src=t.dataset.img;box.querySelector('h2').textContent=t.dataset.hi||'Hi!';
-  document.body.appendChild(box);document.documentElement.classList.add('pc-tip-open');
-  const ok=box.querySelector('.pc-tip-ok');const close=()=>{box.classList.add('out');document.documentElement.classList.remove('pc-tip-open');setTimeout(()=>box.remove(),250);};
+  document.body.appendChild(box);document.documentElement.classList.add('kai-tip-open');
+  const ok=box.querySelector('.kai-tip-ok');const close=()=>{box.classList.add('out');document.documentElement.classList.remove('kai-tip-open');setTimeout(()=>box.remove(),250);};
   ok.addEventListener('click',close);box.addEventListener('click',e=>{if(e.target===box)close();});document.addEventListener('keydown',function k(e){if(e.key==='Escape'){close();document.removeEventListener('keydown',k);}});
   setTimeout(()=>ok.focus({preventScroll:true}),60);};
  /* after the sign-in welcome screen (.boot) has gone */
