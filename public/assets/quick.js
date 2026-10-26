@@ -1,6 +1,6 @@
 /* BULIG quick sign-in and friendly overlays (v1)
    - Login page: "Who's learning today?" with up to 3 accounts saved on this device; one tap signs in.
-   - After a password sign-in: offers to save the account on this device.
+   - After a password sign-in: offers to save the account on this device (teachers). Pupils are offered it when signing out.
    - Locked levels and lesson stops: a card explains what to finish first.
    - Sign out: asks "Are you sure?" first.
    The device keeps only a random sign-in key per account (never the password). */
@@ -70,10 +70,15 @@
   const art=el('div','qo-byeart'),bye=(me.pals&&me.pals.bye)||me.hi||me.char;if(bye){const i=el('img');i.src=bye;i.alt='';art.append(i);}
   const extra=[];let box=null;
   if(saved){const l=el('label','qo-check');box=el('input');box.type='checkbox';box.checked=true;l.append(box,document.createTextNode(' Keep me saved on this device'));extra.push(l);}
+  /* pupils are offered "save me" here instead of after signing in (v180) */
+  let keep=null;if(!saved&&me.role==='pupil'&&load().length<MAX&&!isOffline()){const l=el('label','qo-check');keep=el('input');keep.type='checkbox';keep.checked=true;l.append(keep,document.createTextNode(' Save me on this '+device()+'. Next time, just tap your picture.'));extra.push(l);}
   if(pending)extra.push(el('p','qo-warn',pending+' '+(pending===1?'answer is':'answers are')+' still waiting to upload. They will upload the next time you sign in on this device.'));
   overlay({cls:'qo-bye',art,title:'Leaving already, '+(me.role==='teacher'?'Teacher ':'')+me.name+'?',text:'Are you sure you want to sign out? Your work is saved.',extra,
    primary:{label:me.role==='pupil'?'Stay and learn':'Stay'},
-   secondary:{label:'Yes, sign out',danger:true,run:close=>{if(isOffline()){close();setWho('').then(()=>{location.href='?page=login';});return;}if(saved&&box&&!box.checked){store(load().filter(x=>x.token!==saved.token));post({action:'forget_login',token:saved.token}).catch(()=>{});}f.dataset.ok='1';close();setTimeout(()=>f.submit(),still?0:150);}}});
+   secondary:{label:'Yes, sign out',danger:true,run:close=>{if(isOffline()){close();setWho('').then(()=>{location.href='?page=login';});return;}if(saved&&box&&!box.checked){store(load().filter(x=>x.token!==saved.token));post({action:'forget_login',token:saved.token}).catch(()=>{});}
+     const out=()=>{f.dataset.ok='1';close();setTimeout(()=>f.submit(),still?0:150);};
+     if(keep&&keep.checked)Promise.race([post({action:'save_login',replace:''}).then(r=>{if(r.ok)store([Object.assign({},r.profile,{token:r.token,last:Date.now()})].concat(load().filter(x=>String(x.uid)!==String(r.profile.uid))));}),new Promise(r=>setTimeout(r,4000))]).catch(()=>{}).then(out);
+     else out();}}});
  },true);
 
  /* ---------- offer to save the account (first page after a password sign-in) ---------- */

@@ -55,8 +55,8 @@ function admin_teachers_view(array $u):void{
   if($status==='active'&&(!$t['active']||$idle))return false;if($status==='idle'&&(!$t['active']||!$idle))return false;if($status==='off'&&$t['active'])return false;
   if($grade&&!array_filter($secs[(int)$t['id']]??[],fn($s)=>(int)$s['grade_level']===$grade))return false;return true;}));
  echo '<span class="ws-sp muted">'.count($shown).' of '.count($list).' teachers</span></form>';
- echo '<form method="post" id="tbulk" class="tbulk">'.csrf_field().'<input type="hidden" name="action" value="delete_teachers"><span>With the ticked teachers:</span><button class="btn danger" data-confirm="Delete the ticked teachers for good? Their accounts and Teacher Passes are removed. Teachers who still have pupils or sections are skipped." data-need-tick>'.icon('close').'Delete ticked teachers</button><small class="muted">Only teachers with no pupils and no sections can be deleted. Move their pupils first.</small></form>';
- echo '<section class="card"><div class="tablewrap"><table class="ws-table"><thead><tr><th class="mp-c"><span class="sr-only">Tick</span></th><th>Teacher</th>'.($multi?'<th>School</th>':'').'<th>Sections</th><th>Pupils</th><th>Last sign-in</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+ echo '<form method="post" id="tbulk" class="tbulk">'.csrf_field().'<input type="hidden" name="action" value="delete_teachers"><span>With the ticked teachers:</span><button class="btn danger" data-confirm="Delete the ticked teachers for good? Their accounts and Teacher Passes are removed. Teachers who still have pupils or sections are skipped." data-need-tick>'.icon('close').'Delete ticked teachers</button><small class="muted">Ticked teachers with pupils or sections are skipped. To delete one of them, use Delete on their row and choose who gets their pupils.</small></form>';
+ echo '<section class="card"><div class="tablewrap"><table class="ws-table tch-table"><thead><tr><th class="mp-c"><span class="sr-only">Tick</span></th><th>Teacher</th>'.($multi?'<th>School</th>':'').'<th>Sections</th><th>Pupils</th><th>Last sign-in</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
  foreach($shown as $t){$last=$logins[(int)$t['id']]??null;$days=admin_days_since($last);
   [$cls,$label]=!$t['active']?['off','Turned off']:(($days??999)>=14?['warn',$last?'Inactive '.$days.' days':'Never signed in']:['ok','Active']);
   $sl=$secs[(int)$t['id']]??[];
@@ -66,11 +66,11 @@ function admin_teachers_view(array $u):void{
   else echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_reset_password"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="Make a new password for '.e($t['name']).'?">'.icon('key').'Reset password</button></form>';
   echo '<a href="?page=accounts&amp;from=t'.$t['id'].'#move">'.icon('swap').'Move pupils</a>';
   echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_toggle_teacher"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="'.($t['active']?'Turn off '.e($t['name']).'? They will not be able to sign in.':'Turn on '.e($t['name']).'?').'">'.icon('lock').($t['active']?'Turn off':'Turn on').'</button></form>';
-  echo !$t['pupils']&&!($secs[(int)$t['id']]??[])?delete_box('delete_teacher',(int)$t['id'],$t['name'],'teacher',true):'<span class="del-off" title="Move this teacher’s pupils and remove their sections first">'.icon('close').'Delete</span>';
-  echo '<details class="ws-more"><summary>'.icon('edit').'Edit name &amp; sex</summary><form method="post" class="ws-inline">'.csrf_field().'<input type="hidden" name="action" value="admin_rename_teacher"><input type="hidden" name="id" value="'.$t['id'].'"><input name="name" value="'.e($t['name']).'" required maxlength="150"><select name="teacher_sex" aria-label="Sex">'.(function($m){return '<option value="female"'.(!$m?' selected':'').'>Female</option><option value="male"'.($m?' selected':'').'>Male</option>';})(tf_is_male((int)$t['id'])).'</select><button class="btn primary small">Save</button></form></details>'.school_teacher_move($t);
+  echo admin_teacher_delete($t,$list,!$free);
+  echo '<details class="ws-more"><summary>'.icon('edit').'Edit name &amp; sex</summary><form method="post" class="ws-inline tn-edit">'.csrf_field().'<input type="hidden" name="action" value="admin_rename_teacher"><input type="hidden" name="id" value="'.$t['id'].'">'.name_fields(name_parts_of((int)$t['id'],$t['name'])).'<label>Sex<select name="teacher_sex">'.(function($m){return '<option value="female"'.(!$m?' selected':'').'>Female</option><option value="male"'.($m?' selected':'').'>Male</option>';})(tf_is_male((int)$t['id'])).'</select></label><button class="btn primary small">'.icon('check').'Save</button></form></details>'.school_teacher_move($t);
   echo '</div></td></tr>';}
  if(!$shown)echo '<tr><td colspan="'.($multi?8:7).'">No teachers match this filter.</td></tr>';
- echo '</tbody></table></div></section>';
+ echo '</tbody></table></div></section>'.names_script();
  // move pupils
  $from=(string)($_GET['from']??'');
  echo '<section class="card" id="move"><div class="ws-hd"><h2>'.icon('swap').' Move pupils to another teacher</h2></div><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_move_pupils"><div class="ws-formrow"><label>From<select name="from" required><option value="">Choose a class</option>';
@@ -80,6 +80,23 @@ function admin_teachers_view(array $u):void{
 }
 function admin_new_password():string{$c='abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';$p='';for($i=0;$i<10;$i++)$p.=$c[random_int(0,strlen($c)-1)];return $p;}
 function admin_teacher(int $id):array{$t=one("SELECT * FROM users WHERE id=? AND role='teacher'",[$id]);if(!$t)fail('Teacher not found.',404);return $t;}
+/** Move all of a teacher's sections and pupils to another teacher; the number of pupils moved. */
+function admin_move_all(array $src,array $to):int{$n=0;
+ foreach(rows('SELECT * FROM sections WHERE teacher_id=?',[$src['id']]) as $s)$n+=admin_move_section($s,(int)$to['id']);
+ return $n+(int)db()->exec('UPDATE teacher_pupils SET teacher_id='.(int)$to['id'].' WHERE teacher_id='.(int)$src['id']);}
+/** The teacher who takes over a deleted teacher's pupils: active, someone else, and in the same school. */
+function admin_move_target(array $src,int $to):array{$t=admin_teacher($to);
+ if((int)$t['id']===(int)$src['id']||!$t['active'])fail('Choose another active teacher to take the pupils.');
+ if(!admin_same_school($t,$src))fail('Choose a teacher from the same school.');return $t;}
+/** Two teachers of one school (an account made before schools were kept fits any school). */
+function admin_same_school(array $a,array $b):bool{$x=(int)($a['school_id']??0);$y=(int)($b['school_id']??0);return !$x||!$y||$x===$y;}
+/** The delete box of a teacher: with pupils or sections it first asks who gets them. */
+function admin_teacher_delete(array $t,array $list,bool $busy):string{
+ if(!$busy)return delete_box('delete_teacher',(int)$t['id'],$t['name'],'teacher',true);
+ $o='';foreach($list as $x)if((int)$x['id']!==(int)$t['id']&&$x['active']&&admin_same_school($x,$t))$o.='<option value="'.(int)$x['id'].'">'.e($x['name']).' · '.e($x['public_id']).'</option>';
+ if($o==='')return '<span class="del-off" title="Add another teacher first: '.e($t['name']).'’s pupils need a new teacher">'.icon('close').'Delete</span>';
+ return delete_box('delete_teacher',(int)$t['id'],$t['name'],'teacher',true,'<label>Give their '.((int)$t['pupils']?(int)$t['pupils'].' '.((int)$t['pupils']===1?'pupil':'pupils').' and sections':'sections').' to<select name="to" required><option value="">Choose a teacher</option>'.$o.'</select></label>');
+}
 /** Move one section (and its pupils) to another teacher; merges into a same-named section if the teacher already has one. */
 function admin_move_section(array $s,int $to):int{
  $pupils=array_map('intval',array_column(rows('SELECT pupil_id FROM pupil_sections WHERE section_id=?',[$s['id']]),'pupil_id'));
@@ -227,7 +244,7 @@ function bulig_sql_dump(callable $write):void{
 
 /* ---------------------------------------------------------------- Settings */
 function admin_settings_view(array $u):void{
- $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','year'=>'School year','schedule'=>'Level schedule','ids'=>'Account IDs'];if(!isset($tabs[$tab]))$tab='security';
+ $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','year'=>'School year','schedule'=>'Schedule & cycles','ids'=>'Account IDs'];if(!isset($tabs[$tab]))$tab='security';
  admin_heading('SETTINGS','Your BULIG workspace.','Security, school details, announcements and the end of the school year.');
  echo '<nav class="ws-tabs">';foreach($tabs as $k=>$v)echo '<a class="'.($tab===$k?'on':'').'" href="?page=settings&amp;tab='.$k.'">'.e($v).'</a>';echo '</nav>';
  if($tab==='security'){echo '<div class="ws-g2">';admin_pin_settings($u);
@@ -241,7 +258,7 @@ function admin_settings_view(array $u):void{
   foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
   echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
  if($tab==='ids')account_ids_settings_view($u);
- if($tab==='schedule')schedule_admin_view();
+ if($tab==='schedule'){schedule_admin_view();if(function_exists('cycle_admin_view'))cycle_admin_view();}
  if($tab==='year'){$b=admin_setting('last_backup_at','');$fresh=$b!==''&&admin_days_since($b)<1;
   $counts=[];foreach(rows("SELECT pu.grade_level g,COUNT(*) n FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 GROUP BY pu.grade_level") as $r)$counts[(int)$r['g']]=(int)$r['n'];
   echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('cal').' End of school year</h2><small class="muted">Current: '.e(admin_school_year()).'</small></div><div class="ws-steps">';
@@ -257,17 +274,17 @@ function admin_next_year():string{$cur=admin_school_year();if(preg_match('/(\d{4
 function admin_actions(string $action):void{
  $u=require_role('admin');
  if($action==='admin_level_schedule')schedule_admin_save();
+ if($action==='admin_lesson_cycles')cycle_admin_save();
  if($action==='admin_reset_password'){$t=admin_teacher((int)($_POST['id']??0));$p=admin_new_password();q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($p,PASSWORD_DEFAULT),$t['id']]);saved_login_clear((int)$t['id']);try{q("DELETE FROM remember_tokens WHERE user_id=?",[$t['id']]);}catch(Throwable $e){}
   audit('admin_reset_password',(string)$t['id']);flash('New password for '.$t['name'].' ('.$t['public_id'].'): '.$p.' — give it to the teacher privately. They can change it in My profile.');go('?page=accounts');}
  if($action==='admin_toggle_teacher'){$t=admin_teacher((int)($_POST['id']??0));q('UPDATE users SET active=1-active WHERE id=?',[$t['id']]);audit('admin_toggle_teacher',(string)$t['id']);flash($t['name'].' is now '.($t['active']?'turned off. They cannot sign in.':'turned on.'));go('?page=accounts');}
- if($action==='admin_rename_teacher'){$t=admin_teacher((int)($_POST['id']??0));$name=trim((string)($_POST['name']??''));if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Enter a name of 2–150 characters.');if($name!==$t['name'])name_parts_forget((int)$t['id']);q('UPDATE users SET name=? WHERE id=?',[$name,$t['id']]);tf_set_sex((int)$t['id'],(string)($_POST['teacher_sex']??''));audit('admin_rename_teacher',(string)$t['id']);flash('Teacher details saved.');go('?page=accounts');}
+ if($action==='admin_rename_teacher'){$t=admin_teacher((int)($_POST['id']??0));$nm=name_input();$name=$nm['name'];if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Enter a name of 2–150 characters.');if($nm['parts'])name_parts_save((int)$t['id'],$nm['parts']);elseif($name!==$t['name'])name_parts_forget((int)$t['id']);q('UPDATE users SET name=? WHERE id=?',[$name,$t['id']]);tf_set_sex((int)$t['id'],(string)($_POST['teacher_sex']??''));audit('admin_rename_teacher',(string)$t['id']);flash('Teacher details saved.');go('?page=accounts');}
  if($action==='admin_move_pupils'){
   $to=admin_teacher((int)($_POST['to']??0));if(!$to['active'])fail('Choose an active teacher.');$from=(string)($_POST['from']??'');$moved=0;
   db()->beginTransaction();try{
    if(preg_match('/^s(\d+)$/',$from,$m)){$s=one('SELECT * FROM sections WHERE id=?',[(int)$m[1]]);if(!$s)fail('Section not found.',404);if((int)$s['teacher_id']===(int)$to['id'])fail('That section already belongs to '.$to['name'].'.');$moved=admin_move_section($s,(int)$to['id']);$label='Grade '.$s['grade_level'].' · '.$s['name'];}
    elseif(preg_match('/^t(\d+)$/',$from,$m)){$src=admin_teacher((int)$m[1]);if((int)$src['id']===(int)$to['id'])fail('Choose a different teacher.');
-    foreach(rows('SELECT * FROM sections WHERE teacher_id=?',[$src['id']]) as $s)$moved+=admin_move_section($s,(int)$to['id']);
-    $moved+=(int)db()->exec('UPDATE teacher_pupils SET teacher_id='.(int)$to['id'].' WHERE teacher_id='.(int)$src['id']);$label='all of '.$src['name'].'’s pupils';}
+    $moved=admin_move_all($src,$to);$label='all of '.$src['name'].'’s pupils';}
    else fail('Choose which pupils to move.');
    audit('admin_move_pupils',$label.' → '.$to['name']);db()->commit();
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
@@ -292,4 +309,4 @@ function admin_actions(string $action):void{
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   flash('School year '.$year.' started. '.$up.' pupils moved up a grade and '.$done.' Grade 6 pupils finished BULIG. Teachers can now make new sections.');go('?page=settings&tab=year');}
 }
-const ADMIN_ACTIONS=['admin_logo','admin_logo_remove','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule'];
+const ADMIN_ACTIONS=['admin_logo','admin_logo_remove','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule','admin_lesson_cycles'];

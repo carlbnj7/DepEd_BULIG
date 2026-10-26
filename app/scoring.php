@@ -107,12 +107,12 @@ function say_match(array $exp,string $heard):float{
  return round($ok/count($exp),2);
 }
 /** Level 1 (oral) answers, checked by BULIG (v172): 0 to 1. With the words to say (expected_text): the share BULIG heard
-    said right. Otherwise how much the pupil said: 3 or more words 1, 1-2 words 2/3. A recording the device could not
+    said right. Otherwise how much the pupil said: 3 or more words 1, 1-2 words 0.8 (2 stars). A recording the device could not
     listen to, or an answer said aloud in class, counts as 1. */
 function l1_auto_score(array $a,string $transcript,bool $recorded):float{
  $said=trim($transcript);
  if($said!==''&&trim((string)($a['expected_text']??''))!==''){$exp=array_values(array_filter(array_map('key_letters',preg_split('~\s+~u',(string)$a['expected_text'])),'strlen'));return say_match($exp,$said);}
- if($said!==''){$n=count(array_filter(preg_split('~\s+~u',$said),'strlen'));return $n>=3?1.0:0.67;}
+ if($said!==''){$n=count(array_filter(preg_split('~\s+~u',$said),'strlen'));return $n>=3?1.0:0.8;}   // v181: a short answer is still an answer (2 stars), so it never blocks a young pupil
  return 1.0;
 }
 
@@ -139,7 +139,7 @@ function key_checks_cards(array $a):bool{return ($a['phase']??'learn')==='learn'
 /** One card checked right away: ['keyed'=>, 'ok'=>, 'want'=>]. */
 function key_check_card(array $a,int $n,string $g):array{
  $key=activity_key($a)??[];$k=$key[$n]??$key[(string)$n]??null;if(!$k)return ['keyed'=>false,'ok'=>true,'want'=>''];
- [$pts,$of,$want]=key_card_points($k,$g);return ['keyed'=>true,'ok'=>$pts>=$of,'want'=>$want];
+ [$pts,$of,$want]=key_card_points($k,$g);return ['keyed'=>true,'ok'=>$pts>=$of,'want'=>$want,'pts'=>$pts,'of'=>$of];
 }
 
 /** Score one answer: ['right'=>, 'total'=>, 'cards'=>[n=>['got','want','pts','of','t','fix']]], or null for an activity
@@ -216,17 +216,51 @@ function ac_misses(array $a,array $s):array{
   else{$t=blank_plain(trim(preg_replace('~\s+~u',' ',(string)($q['text']??''))),$bc[$n-1]??0);$out[]=[(string)$n,$t!==''?mb_strimwidth($t,0,90,'…'):'Card '.$n,$c['want'],'is']; }}
  return $out;
 }
+/* ---------- Stars (v181) ----------
+   Every lesson activity (all levels) gives up to 3 stars: 95% or more = 3, 80% = 2, 50% = 1. The pupil needs 2 stars
+   (80%) to go on to the next activity; below that the activity opens again for a fresh try. Post-tests give up to
+   5 stars for the level's post-test score (95% = 5, 80% = 4, 60% = 3, 40% = 2, 20% = 1) and still need 80% to open the
+   next level (app/post_gate.php). Pre-tests show the score only: they measure where the pupil starts. */
+const STAR_PASS=80;
+function star_of(string $phase):int{return $phase==='post'?5:($phase==='pre'?0:3);}
+function star_count(float $frac,string $phase):int{$p=round($frac*100,6);
+ if($phase==='pre')return 0;if($phase==='post')return $p>=95?5:($p>=80?4:($p>=60?3:($p>=40?2:($p>=20?1:0))));
+ return $p>=95?3:($p>=80?2:($p>=50?1:0));}
+function stars_html(int $n,int $of,string $cls=''):string{if($of<1)return '';$n=max(0,min($of,$n));return '<span class="ac-stars st'.$of.($cls!==''?' '.$cls:'').'" role="img" aria-label="'.$n.' of '.$of.' stars">'.str_repeat('<i></i>',$n).str_repeat('<i class="off"></i>',$of-$n).'</span>';}
+/** Road map stars (v182): for each lesson id, ['of'=>3 (lesson) | 5 (post-test) | 0 (pre-test), 'n'=>stars won so far,
+    'a'=>[[activity title, its stars], ...], 'ph'=>pre|learn|post]. An activity not done yet counts as 0; one done with no score counts as right. */
+function map_stars(int $pid,array $lids):array{
+ $lids=array_values(array_filter(array_map('intval',$lids)));if(!$lids)return [];$by=[];
+ foreach(rows('SELECT a.id,a.lesson_id,a.title,a.phase,c.status,c.score,c.max_score FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id IN ('.implode(',',$lids).') AND a.published=1 ORDER BY a.lesson_id,a.position',[$pid]) as $r)$by[(int)$r['lesson_id']][]=$r;
+ $out=[];foreach($by as $lid=>$acts){
+  /* Lessons with mixed phases (Levels 1 and 3A keep a small pre/post check inside each lesson): the stars come from the lesson activities. */
+  $phs=array_unique(array_column($acts,'phase'));$ph=in_array('learn',$phs,true)?'learn':(in_array('post',$phs,true)?'post':'pre');
+  $acts=array_values(array_filter($acts,fn($r)=>$r['phase']===$ph));$of=star_of($ph);if(!$of){$out[$lid]=['of'=>0,'n'=>0,'a'=>[],'ph'=>$ph];continue;}
+  $sum=0.0;$list=[];
+  foreach($acts as $r){$ok=completion_ok($r);$fr=$ok?(completion_frac($r)??1.0):0.0;$sum+=$fr;$list[]=[(string)$r['title'],$ok?star_count($fr,'learn'):0];}
+  $out[$lid]=['of'=>$of,'n'=>star_count($sum/count($acts),$ph),'a'=>$ph==='post'?[]:$list,'ph'=>$ph];}
+ return $out;
+}
+/** A saved answer's share right (0 to 1), or null when it has no score. */
+function completion_frac(?array $c):?float{return $c&&$c['max_score']!==null&&(float)$c['max_score']>0?max(0,min(1,(float)$c['score']/(float)$c['max_score'])):null;}
+/** The card shown when a lesson activity is below 2 stars: the stars, the score and a fresh "Try again". */
+function star_gate_card(array $a,float $frac):string{$st=star_count($frac,'learn');$pct=(int)floor($frac*100+1e-9);
+ return '<div class="ac-panel sg-panel" role="status"><div class="ac-top"><span class="ac-badge sg-badge" aria-hidden="true">'.l1_icon('again').'</span><div><b>'.($st?'You got '.$st.' star'.($st>1?'s':'').'!':'Let’s try again!').'</b><small>Your score is '.$pct.'%. You need 2 stars ('.STAR_PASS.'%) to go on.</small></div></div>'
+  .'<div class="ac-score"><strong>'.$pct.'%</strong>'.stars_html($st,3).'</div>'
+  .(function_exists('friend_say')?friend_say('bruno','tryagain','You can do it! Try this activity again and get 2 stars.',false):'')
+  .'<div class="ac-btns"><a class="ac-btn" href="?page=lesson&amp;id='.(int)$a['lesson_id'].'&amp;activity='.(int)$a['id'].'">'.l1_icon('again').'Try again</a></div></div>';}
+
 /** The result card. $c: the saved answer (response, score, max_score, rubric_scores, submitted_at).
     $o: fresh (just sent), xp, practice (a "try again" answer), best (the score that is kept). */
 function ac_card(array $a,array $c,array $o=[]):string{
  if(!ac_keyed($a))return '';$s=key_score($a,(string)($c['response']??''));if(!$s||!$s['total'])return '';
  $right=$s['right'];$total=$s['total'];$j=json_decode((string)($c['rubric_scores']??''),true);$teacher=is_array($j)&&isset($j['teacher_score'])&&empty($o['fresh']);
  if($teacher&&(float)($c['max_score']??0)>0){$right=(float)$c['score'];$total=(float)$c['max_score'];}
- $num=fn($x)=>rtrim(rtrim(number_format((float)$x,1),'0'),'.');$pct=$total?$right/$total:0;$stars=(int)round(5*$pct);if($right>0&&$stars<1)$stars=1;
+ $num=fn($x)=>rtrim(rtrim(number_format((float)$x,1),'0'),'.');$pct=$total?$right/$total:0;$ph=(string)($a['phase']??'learn');
  $title=!empty($o['practice'])?'Practice checked!':($pct>=1?'Perfect! Every answer is right.':($pct>=.8?'Great work!':($pct>=.5?'Good try!':'Let’s look again together.')));
  $sub=!empty($o['practice'])?(string)($o['best']??''):(!empty($o['fresh'])?'BULIG checked your answers.':($teacher?'Your teacher checked this.':'BULIG checked this'.(!empty($c['submitted_at'])?' on '.date('F j',strtotime((string)$c['submitted_at'])):'').'.'));
  $h='<div class="ac-panel'.($pct>=1?' ac-perfect':'').'" role="status"><div class="ac-top"><span class="ac-badge" aria-hidden="true">'.l1_icon('ok').'</span><div><b>'.e($title).'</b><small>'.e($sub).'</small></div></div>';
- $h.='<div class="ac-score"><strong>'.$num($right).' <span>of '.$num($total).' right</span></strong><span class="ac-stars" role="img" aria-label="'.$stars.' of 5 stars">'.str_repeat('<i></i>',$stars).str_repeat('<i class="off"></i>',5-$stars).'</span></div>';
+ $h.='<div class="ac-score"><strong>'.$num($right).' <span>of '.$num($total).' right</span></strong>'.($ph==='learn'?stars_html(star_count($pct,'learn'),3):'').'</div>';   // v181: 3 stars on lesson activities; post-tests get 5 stars for the whole level
  if(!empty($o['xp']))$h.='<span class="ac-xp">+'.(int)$o['xp'].' XP</span>';
  if(!$teacher&&$pct<1&&($miss=ac_misses($a,$s))){$h.='<p class="ac-lab">LOOK AGAIN</p><ul class="ac-again">';
   foreach(array_slice($miss,0,6) as [$n,$what,$want,$how])$h.='<li><em>'.e($n).'</em><span>'.($how==='goes with'?e($what).' goes with <b>'.e($want).'</b>':e($what).'<br>The answer: <b>'.e($want).'</b>').'</span></li>';

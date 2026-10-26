@@ -38,7 +38,7 @@ function l3_set(array $a):?array{
   elseif(!empty($u['grid'])){$s=['title'=>$a['title'],'instruction'=>'','cards'=>[['title'=>'1','text'=>implode("\n",$u['grid']),'images'=>$img,'choices'=>[],'ui'=>['answer'=>['say'],'grid'=>$u['grid']]]]];}
   elseif($type==='reading'&&!preg_match('~\s{2,}|\R~u',trim((string)$a['prompt']))&&$img){$s=['title'=>$a['title'],'instruction'=>(string)$a['prompt'],'cards'=>[['title'=>'1','text'=>'','images'=>$img,'choices'=>[],'ui'=>['answer'=>['say']]]]];}
   elseif($type==='reading'){$w=l3_list((string)$a['prompt']);$s=['title'=>$a['title'],'instruction'=>'Read the following words correctly.','cards'=>[['title'=>'1','text'=>implode("\n",$w),'images'=>$img,'choices'=>[],'ui'=>['answer'=>['say'],'grid'=>$w]]]];}
-  else $s=['title'=>$a['title'],'instruction'=>(string)$a['prompt'],'cards'=>[['title'=>'1','text'=>'','images'=>$img,'choices'=>[],'ui'=>['answer'=>[$type==='reference'?($u['say']??false?'say':'look'):'paper']]]]];}
+  else $s=['title'=>$a['title'],'instruction'=>(string)$a['prompt'],'cards'=>[['title'=>'1','text'=>$type==='reference'||!$img?'':'Read the words on the board aloud.','images'=>$img,'choices'=>[],'ui'=>['answer'=>[$type==='reference'?($u['say']??false?'say':'look'):($img?'say':'write')]]]]];}   // v180: class games -> read the board aloud
  if(isset($u['instruction']))$s['instruction']=$u['instruction'];
  $bank=[];if(preg_match('~^(.*?)\s*Words:\s*(.+)$~su',(string)$s['instruction'],$m)&&preg_match_all('~\d+\.\s*[^\d]+?(?=\s+\d+\.|$)~u',trim($m[2]),$mm)){$s['instruction']=trim($m[1]);$bank=array_map('trim',$mm[0]);}
  $s['module_title']=$u['title']??$s['title'];
@@ -60,16 +60,24 @@ function l5_set(array $a):?array{
  /* A word box on the page: its blanks are answered by tapping a word from the box. */
  $bank=[];foreach($s['cards'] as $c)if(!empty($c['words'])&&($c['title']??'')==='Read')$bank=array_merge($bank,$c['words']);
  foreach($s['cards'] as $c){$t=trim((string)($c['text']??''));$title=(string)($c['title']??'');$ch=$c['choices']??[];
+  /* v180: puzzles answered in the app (they were "Done with my teacher or on paper") */
+  if(!empty($c['boxes'])){$c['ui']=['answer'=>['xcells'],'xc'=>['mode'=>'word','word'=>(string)$c['word'],'rows'=>$c['boxes']]];$c['text']='';$out[]=$c;continue;}   // Hidden Letters: the module's word box
+  if(!empty($c['letters'])){$c['ui']=['answer'=>['tiles'],'box'=>$c['letters']];$out[]=$c;continue;}   // Link the Letters: find the word in the letter box
+  if(!empty($c['xword'])){$c['ui']=['answer'=>['xcells'],'xc'=>['mode'=>'xword']+$c['xword']];$out[]=$c;continue;}   // crossword
+  if(!empty($c['spin'])){$c['ui']=['answer'=>['spin','say'],'spin'=>$c['spin']];$out[]=$c;continue;}   // Spin Act: spin, read the word, tell its meaning
   if($title==='Matching'){
    /* The module's matching board (as before): tap an item in Column A, then its match in Column B, and a line joins them. */
    $say="Column A. ".preg_replace('~^\s*Column A\s*~u','',$t)."\nColumn B. ".implode('. ',$ch);
    $c['match']=$c;$c['text']='';$c['images']=[];$c['words']=[];$c['choices']=[];$c['speak']=$say;$c['ui']=['answer'=>['match']];
   }elseif($ch){$c['ui']=['answer'=>['chip']];}
+  elseif(!empty($c['grid'])){$c['text']='';$c['ui']=['answer'=>['lgrid']];}   // word search: tap the letters in the app (v180, was "on paper")
   elseif($title==='Read'||$title==='Puzzle'&&$t===''){$c['ui']=['answer'=>[$title==='Puzzle'?'paper':'look']];}
   elseif(preg_match('~\((True/False)\)~i',$t)){$c['choices']=['True','False'];$c['ui']=['answer'=>['chip']];}
   elseif(preg_match('~happy face.*sad face~i',$t)){$c['choices']=['😊 Yes','☹ No'];$c['ui']=['answer'=>['chip']];}
   elseif(preg_match('~\(([a-z][a-z ]{0,20}),\s*([a-z][a-z ]{0,20})\)~i',$t,$m)&&!str_contains($t,'_')){$c['choices']=[trim($m[1]),trim($m[2])];$c['ui']=['answer'=>['chip']];}
-  elseif($title==='Puzzle'||preg_match('~^(Write each|Find |Draw )~i',$t)){$c['ui']=['answer'=>['paper']];}
+  elseif(preg_match('~^Draw ~i',$t)){$c['ui']=['answer'=>['draw']];}
+  elseif(preg_match('~^(Write each|Find )~i',$t)){$c['ui']=['answer'=>['write']];}
+  elseif($title==='Puzzle'){$c['ui']=['answer'=>['paper']];}
   elseif($bank&&str_contains($t,'__')){$c['choices']=array_values(array_unique($bank));$c['ui']=['answer'=>['chip']];}
   elseif(preg_match('~\bCircle and list\b~i',$t)){$c['ui']=['answer'=>['write']];}   // a list of words (v177: the Grade 6 pre-test word hunt)
   else{$c['ui']=['answer'=>['tiles']]+(preg_match('~\bnumber\b~i',$t)?['tiles'=>array_merge(str_split('abcdefghijklmnopqrstuvwxyz'),str_split('0123456789'))]:[]);}   // "Write the number: seven" -> 7 (v177)
@@ -81,6 +89,16 @@ function l5_set(array $a):?array{
    a. b. c. choices, check-box conclusions, Reality or Fantasy -> tap one; "write 1, 2, 3, 4, 5 before each event" -> a number for each event;
    cause and effect matching -> tap a cause, then its effect: a line joins them; "draw ..." -> done on paper; "write / copy ..." -> type it;
    the story -> read (reading-speed exercises: read it aloud into the microphone). The page's "Vocabulary" or "Key words" sit under the story. */
+/** Card activities with a drawing pad (v180): their drawings are kept as one picture in activity_completion.drawing. */
+function l2a_draw_ok(array $a):bool{$lv=lesson_level((int)$a['lesson_id']);if(!l2a_is((int)$a['lesson_id'])&&!in_array($lv,[6,7,8],true))return false;$s=l2a_set($a);
+ foreach($s['cards']??[] as $c)if(in_array('draw',$c['ui']['answer']??[],true))return true;return false;}
+/** "Underline / circle the …" cards whose choices are printed with them: the choices to tap (v180). */
+function l6_mark_choices(string $t):array{
+ if(preg_match('~Who waited for him\? Underline~i',$t))return ['Mother','the children','mother and the children'];
+ if(preg_match('~how it blooms\? Underline~i',$t))return ['singly','pairs','clusters'];
+ if(preg_match('~(line under|circle around) the (first|last) school day~i',$t))return ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+ return [];
+}
 function l6_set(array $a):?array{
  $s=level2_card_set($a);if(!$s)return null;$s['module_title']=$s['title'];$out=[];$l7=lesson_level((int)$a['lesson_id'])===8;
  /* Every Level 6 direction is the module's own: always shown. Level 7 Grades 1-2 print no direction: the app's default is not shown. */
@@ -104,7 +122,10 @@ function l6_set(array $a):?array{
    $sp=(int)($c['speed']??0);$c['ui']=['answer'=>[$aloud?'say':($sp?'speed':'look')]]+($aloud?['max'=>300]:[])+($sp?['words'=>$sp]:[]);}
   elseif(!empty($c['grid'])){$c['text']='';$c['ui']=['answer'=>['lgrid']];}
   elseif($title==='Puzzle'){$c['ui']=['answer'=>['paper']];}
-  elseif($l7?preg_match('~^\s*draw\b~i',$t)&&!preg_match('~describe it here~i',$t):preg_match('~\b(draw|shade|encircle|underline|box the|in a square|square around|rectangle around|label the picture)\b~i',$t)){$c['ui']=['answer'=>['paper']];}
+  /* v180: no more "on paper" cards. Marking a word (underline, circle, box) -> tap it; drawing -> the drawing pad;
+     writing a word and marking it -> type the word. */
+  elseif($opts=l6_mark_choices($t)){$c['choices']=$opts;$c['ui']=['answer'=>['chip']];}
+  elseif(preg_match('~^\s*(draw|in the middle of|below the rectangle)\b~i',$t)&&!preg_match('~describe it here~i',$t)){$c['ui']=['answer'=>['draw']];}
   /* Level 7 writing tasks (news, editorial, feature, column...): a big box. */
   else{$c['ui']=['answer'=>['write']]+($title==='Write'&&preg_match('~\b(article|editorial|story|column|report|coverage|paragraphs?|news|feature|opinion|summary|corrections?|copyread)\b~i',$t)?['long'=>true]:[]);
    /* Copyreading (v177): the article is in the box, ready to correct, so the pupil edits it instead of typing it again. */
@@ -177,6 +198,23 @@ function l3_build_tiles(array $b,int $p,bool $demo=false):string{
  for($i=0;$i<$len;$i++)$h.='<button type="button" class="l3-bl" data-l="'.$i.'" aria-label="Blank '.($i+1).'"></button>';
  return $h.'</div><p class="l3-bmsg" role="status" aria-live="polite"></p></div>';
 }
+/** v180: letter boxes typed in the app. mode word: the module's Hidden Letters box ("." = a missing letter);
+    mode xword: a crossword (rows with "#" = no box, clues with number, direction and start). */
+function l2a_xcells(array $x,int $p):string{
+ $word=($x['mode']??'')==='word';$rows=$x['rows'];$nums=[];foreach($x['clues']??[] as $cl)$nums[$cl['r'].':'.$cl['c']]=$cl['n'];$W=$word?preg_split('//u',(string)$x['word'],-1,PREG_SPLIT_NO_EMPTY):[];
+ $h='<div class="l2-xc'.($word?' word':' xword').'" data-part="'.$p.'" data-kind="xcells" data-mode="'.($word?'word':'xword').'"'.($word?' data-word="'.e($x['word']).'"':' data-clues="'.e(json_encode($x['clues'])).'"').'><div class="l2-xc-scroll"><table class="l2-xc-t" aria-label="'.($word?'Word box':'Crossword').'">';
+ foreach($rows as $r=>$row){$h.='<tr>';
+  foreach(preg_split('//u',$row,-1,PREG_SPLIT_NO_EMPTY) as $c=>$ch){
+   if(!$word&&$ch==='#'){$h.='<td class="no"></td>';continue;}
+   $in=$word?$ch==='.':true;$num=$nums[$r.':'.$c]??null;
+   $h.='<td'.($num?' data-num="'.$num.'"':'').'>'.($in?'<input type="text" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false" data-r="'.$r.'" data-c="'.$c.'" aria-label="Row '.($r+1).', box '.($c+1).'">':'<span data-r="'.$r.'" data-c="'.$c.'">'.e($ch).'</span>').'</td>';}
+  $h.='</tr>';}
+ $h.='</table></div>';
+ if(!$word){$h.='<div class="l2-xc-clues">';foreach(['across'=>'Across','down'=>'Down'] as $d=>$lab){$h.='<div><b>'.$lab.'</b><ol>';foreach($x['clues'] as $cl)if($cl['dir']===$d)$h.='<li value="'.(int)$cl['n'].'">'.e($cl['clue']).' <small>('.(int)$cl['len'].' letters)</small></li>';$h.='</ol></div>';}$h.='</div>';}
+ return $h.'</div><p class="l2-how">'.($word?'Type the missing letters in every row.':'Tap a box and type. Each answer starts at its number.').'</p>';
+}
+/** Link the Letters: the module's letter box (read only). */
+function l2a_letter_box(array $rows):string{$h='<table class="l2-lbox" aria-label="Letter box">';foreach($rows as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.='<td>'.e($ch).'</td>';$h.='</tr>';}return $h.'</table>';}
 function l2a_answer(array $c,int $n,bool $readonly):string{
  if($readonly)return '';$h='';
  foreach($c['ui']['answer']??[] as $p=>$kind){
@@ -198,6 +236,9 @@ function l2a_answer(array $c,int $n,bool $readonly):string{
   elseif($kind==='speed'){$w=(int)$c['ui']['words'];$h.='<div class="l2-speed" data-part="'.$p.'" data-kind="speed" data-words="'.$w.'"><p class="l2-how">Reading for speed · '.$w.' words. Tap <b>Start</b> when your teacher says “Go”, read the story, then tap <b>Done</b>.</p><div class="l2-speed-row"><button type="button" class="l1-btn2" data-sp-start>'.l1_icon('play').'Start</button><output class="l2-speed-clock" data-sp-clock aria-live="off">0:00</output><button type="button" class="l1-btn2" data-sp-done hidden>'.l1_icon('ok').'Done</button></div><p class="l2-speed-res" data-sp-res role="status"></p></div>';}
   elseif($kind==='write')$h.='<label class="l2-write'.(!empty($c['ui']['long'])?' long':'').'" data-part="'.$p.'" data-kind="write"><span class="sr-only">Your answer</span><textarea rows="'.(!empty($c['ui']['long'])?8:2).'" maxlength="'.(!empty($c['ui']['long'])?8000:300).'" autocomplete="off" autocapitalize="sentences" placeholder="Type your answer">'.e((string)($c['ui']['prefill']??'')).'</textarea></label>';
   elseif($kind==='paper')$h.='<button type="button" class="l2-paper" data-part="'.$p.'" data-kind="paper" aria-pressed="false">'.l1_icon('ok').'Done with my teacher or on paper</button>';
+  elseif($kind==='xcells')$h.=l2a_xcells($c['ui']['xc'],$p);
+  elseif($kind==='spin'){$w=$c['ui']['spin'];$h.='<div class="l2-spin" data-part="'.$p.'" data-kind="spin" data-words="'.e(json_encode(array_values($w))).'"><output class="l2-spin-word" data-spin-word aria-live="polite">?</output><button type="button" class="l1-big l2-spin-go" data-spin-go>'.l1_icon('again').'Spin</button></div><p class="l2-how">Tap Spin. Read the word aloud, then say what it means.</p>';}
+  elseif($kind==='draw')$h.='<div class="l2-draw" data-part="'.$p.'" data-kind="draw"><div class="l2-draw-tools" role="group" aria-label="Drawing tools">'.implode('',array_map(fn($k,$nm)=>'<button type="button" class="l2-pen pen-'.$k.'" data-pen="'.$k.'" aria-label="'.$nm.'" aria-pressed="'.($k==='black'?'true':'false').'"></button>',['black','red','blue','green','yellow','erase'],['Black pen','Red pen','Blue pen','Green pen','Yellow pen','Eraser'])).'<button type="button" class="l1-btn2 l2-draw-clear" data-draw-clear>'.l1_icon('again').'Start over</button></div><canvas class="l2-canvas" width="900" height="560" aria-label="Drawing pad"></canvas></div><p class="l2-how">Draw with your finger or the mouse.</p>';
  }
  return $h?'<div class="l2-ans">'.$h.'</div>':'';
 }
@@ -238,6 +279,8 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
   elseif(in_array('match',$kinds,true))echo ((string)$c['text']!==''?l2a_text((string)$c['text'],false,'',$blanks[$i]??0):'').l2a_match_board($c,$readonly,$readonly?(string)($saved[$n]??''):'');
   else echo (in_array('words',$kinds,true)&&!$readonly?'':l2a_text((string)$c['text'],$tiles&&!$readonly,(string)($c['underline']??''),$blanks[$i]??0)).l2a_pictures($c,$n);
   if(!empty($c['words']))echo '<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
+  if(!empty($c['ui']['box']))echo l2a_letter_box($c['ui']['box']);
+  if($readonly&&in_array('draw',$kinds,true)&&str_starts_with((string)($a['drawing']??''),'data:image/')&&empty($drawShown)){$drawShown=true;echo '<div class="l1-prev l2-drawn"><img src="'.e($a['drawing']).'" alt="Your drawings"><span class="l1-ok">'.l1_icon('ok').'Your drawings</span></div>';}
   if(in_array('look',$kinds,true)||in_array('paper',$kinds,true)||$readonly){if($c['choices']&&!array_intersect($kinds,['chip','chips']))echo '<div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['choices'])).'</div>';}
   echo l2a_answer($c,$n,$readonly);
   if($readonly){$ans=$saved[$n]??'';echo '<div class="l2-saved">'.l1_icon('ok').'<span>'.($ans!==''?nl2br(e($ans)):'Saved').'</span></div>';if(!empty($aud[(string)$n]))echo '<div class="l1-mine"><audio controls preload="none" src="?page=recording&amp;id='.(int)$a['completion_id'].'&amp;n='.$n.'"></audio></div>';}
@@ -319,12 +362,15 @@ function l5_demo_card(array $a,array $set,array $c,int $n,string $pics):string{
  if(!empty($c['story']))$h.='<h2 class="l5d-story">'.e($c['story']).'</h2>';
  if(in_array('lgrid',$kinds,true)){$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll"><table class="letter-grid l5d-grid" aria-label="Letter puzzle">';foreach($c['grid'] as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.=$ch===' '||$ch==='.'?'<td class="blank"></td>':'<td>'.e($ch).'</td>';$h.='</tr>';}$h.='</table></div>';}
  elseif(in_array('match',$kinds,true))$h.=($txt!==''?'<p class="l5d-lead">'.blank_html(nl2br(e($txt)),0).'</p>':'').'<div class="l5d-scroll">'.str_replace('<img src=','<img data-src=',l2a_match_board($c,true)).'</div>';
+ elseif(in_array('xcells',$kinds,true))$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll">'.preg_replace(['~<input[^>]*>~','~<p class="l2-how">.*?</p>~s'],'',l2a_xcells($c['ui']['xc'],0)).'</div>';
+ elseif(!empty($c['ui']['box']))$h.='<p class="l1d-q">'.e($txt).'</p>'.l2a_letter_box($c['ui']['box']);
+ elseif(in_array('spin',$kinds,true))$h.='<p class="l1d-q">'.e($txt).'</p><div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['spin'])).'</div>';
  elseif(!empty($c['ui']['grid']))$h.='<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>';
  elseif($txt!=='')$h.=mb_strlen($txt)>170?'<div class="l5d-read">'.blank_html(nl2br(e($txt)),0).'</div>':'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(nl2br(e($txt)),0).'</p>';
  if(!empty($c['words']))$h.='<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
  if(!empty($c['ui']['labels'])&&count($kinds)>1){$h.='<ol class="l5d-order">';foreach($c['ui']['labels'] as $lab)$h.='<li><span class="l5d-box" aria-hidden="true"></span>'.e($lab).'</li>';$h.='</ol>';}
  elseif($c['choices']){$long=max(array_map('mb_strlen',array_map('strval',$c['choices'])))>24;$h.=$long?'<ul class="l5d-ch">'.implode('',array_map(fn($w)=>'<li>'.e($w).'</li>',$c['choices'])).'</ul>':'<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['choices'])).'</div>';}
- $how=['write'=>'Pupils write their answers.','paper'=>'Pupils do this with you or on paper.','say'=>'Pupils read this aloud.','speed'=>'Reading for speed: time the reading together.','lgrid'=>'Find the words in the puzzle together.'];
+ $how=['write'=>'Pupils write their answers.','paper'=>'Pupils do this with you or on paper.','say'=>'Pupils read this aloud.','speed'=>'Reading for speed: time the reading together.','lgrid'=>'Find the words in the puzzle together.','draw'=>'Pupils draw it on the drawing pad, or on paper.','xcells'=>'Fill in the boxes together.','spin'=>'Spin the wheel: pupils read the word and tell what it means.'];
  foreach($kinds as $k)if(isset($how[$k])){$h.='<p class="l5d-how">'.e($how[$k]).'</p>';break;}
  $key=activity_key($a)[$n]??null;
  if($key){$ans=$key['t']==='match'?implode(', ',array_map(fn($i,$l)=>$i.' – '.strtoupper($l),array_keys($key['a']),$key['a'])):key_want($key);

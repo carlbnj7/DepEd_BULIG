@@ -308,6 +308,9 @@ def run_pages(acc):
             page_ok(p6, f"?page=lesson&id={acts6[0]['lesson_id']}", 'Level 6 lesson start page opens')
             page_ok(p6, f"?page=lesson&id={acts6[0]['lesson_id']}&activity={acts6[0]['id']}", 'Level 6 activity page opens')
             test_auto_check(p6, acc, acts6[0])
+            test_star_gate(p6, acc)
+            test_castle(p6, acc)
+            test_cycles(acc)
 
     section('7. Teacher')
     t = Client()
@@ -421,6 +424,46 @@ def test_auto_check(p6, acc, act):
     check('The finished activity shows BULIG’s result card with the best score', 'Perfect! Every answer is right.' in text and 'ac-panel' in text)
 
 
+def test_star_gate(p6, acc):
+    """Stars (v181): a lesson activity below 2 stars (80%) is not finished; the pupil sees the stars and tries again."""
+    section('6c. Stars and the 80% rule')
+    st = php_cli('probe.php', 'star_setup', acc['pupil6']['uid'])
+    if not check('A lesson activity with an answer key is open for the pupil', st.get('id'), st):
+        return
+    aid, page = str(st['id']), f"?page=lesson&id={st['lesson_id']}&activity={st['id']}"
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    _, _, text = p6.req('index.php', {'action': 'submit', 'activity_id': aid, 'response': st['wrong'], 'csrf': p6.token(page)}, accept_json=True)
+    j = jget(text)
+    check('Below 2 stars the activity is not finished: stars, score and Try again', j.get('saved') is False and 'sg-panel' in j.get('check', '') and 'Try again' in j.get('check', '') and '2 stars' in j.get('message', ''), text[:300])
+    check('The activity stays open (not finished) after a low score', q(f"SELECT status FROM activity_completion WHERE pupil_id={acc['pupil6']['uid']} AND activity_id={aid}") == 'retry')
+    _, _, text = p6.req('index.php', {'action': 'submit', 'activity_id': aid, 'response': st['right'], 'csrf': p6.token(page)}, accept_json=True)
+    j = jget(text)
+    check('With 80% or more the activity is finished and shows 3 stars', j.get('saved') is True and 'aria-label="3 of 3 stars"' in j.get('check', ''), text[:300])
+    check('The finished activity counts as done', q(f"SELECT status FROM activity_completion WHERE pupil_id={acc['pupil6']['uid']} AND activity_id={aid}") == 'completed')
+
+
+def test_castle(p6, acc):
+    """Reading Castle (v182): after Level 7 the castle scene opens once; ?castle=1 opens it again."""
+    section('6d. Reading Castle after Level 7')
+    st = php_cli('probe.php', 'castle_setup', acc['pupil6']['uid'])
+    if not check('Level 7 can be marked finished for the pupil', st.get('lessons') and st.get('open'), st):
+        return
+    _, _, text = p6.req('?page=dashboard')
+    check('The next page opens the Reading Castle scene', 'data-rc' in text and 'Open the gates' in text and 'Welcome to the Reading Castle!' in text)
+    _, _, text = p6.req('?page=dashboard')
+    check('The castle opens only once', 'data-rc' not in text)
+    _, _, text = p6.req('?page=dashboard&castle=1')
+    check('?castle=1 (the castle on the Level 7 road map) opens it again', 'data-rc' in text and 'See my certificate' in text)
+
+
+def test_cycles(acc):
+    """Cycles (v182): a cycle that has not opened keeps its lessons locked; lessons outside it stay open."""
+    section('6e. Cycles inside a level')
+    st = php_cli('probe.php', 'cycle_check', acc['pupil6']['uid'])
+    check('A lesson outside the cycle is open', st.get('one') is None, st)
+    check('A lesson in a cycle that opens later shows its date and is locked', st.get('two') == st.get('date') and st.get('locked') is True, st)
+
+
 def test_ratings_pupil(p):
     """App ratings: a pupil rates BULIG with stars; "Not now" is kept."""
     section('5b. App ratings (pupil)')
@@ -528,7 +571,7 @@ def test_whats_new(p):
     q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
     q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
     _, _, text = p.req('?page=dashboard')
-    check('The first page after the update shows Bob the Builder’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Level 3A and Level 3B' in text)
+    check('The first page after the update shows Bob the Builder’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Win stars!' in text)
     _, _, text = p.req('?page=dashboard')
     check('The popup comes only once', 'data-wn' not in text)
     check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')
@@ -610,6 +653,23 @@ def test_delete_teacher(a):
     check('The Teachers page has tick boxes and "Delete ticked teachers"', 'name="teachers[]"' in text and 'value="delete_teachers"' in text)
     _, _, text = a.req('index.php', {'action': 'delete_teachers', 'teachers[]': ids + [busy], 'csrf': a.token('?page=accounts')})
     check('Ticked teachers are deleted together; one who still has pupils is kept and named', len(ids) == 2 and q("SELECT COUNT(*) FROM users WHERE name LIKE '% Gone'") == '0' and q(f'SELECT COUNT(*) FROM users WHERE id={int(busy)}') == '1' and '2 teachers were deleted' in text and 'still have pupils' in text, ids)
+    # a teacher with pupils: the administrator chooses who gets them, and the pupils move before the delete
+    a.req('index.php', {'action': 'create_account', 'role': 'teacher', 'first_name': 'Leaving', 'last_name': 'Teacher', 'teacher_sex': 'female', 'password': 'TempDelete42!', 'back': 'add_teachers', 'csrf': a.token('?page=add_teachers')})
+    lid = q("SELECT id FROM users WHERE name='Leaving Teacher'")
+    pid = q(f'SELECT pupil_id FROM teacher_pupils WHERE teacher_id={int(busy)} LIMIT 1')
+    q(f'UPDATE teacher_pupils SET teacher_id={int(lid)} WHERE pupil_id={int(pid)}')
+    _, _, text = a.req('?page=accounts')
+    check('Delete on a teacher with pupils asks who gets them', 'Give their 1 pupil and sections to' in text and 'name="to"' in text)
+    _, _, text = a.req('index.php', {'action': 'delete_teacher', 'id': lid, 'to': busy, 'confirm': 'DELETE', 'csrf': a.token('?page=accounts')})
+    check('Deleting a teacher with pupils moves them to the chosen teacher first', q(f'SELECT COUNT(*) FROM users WHERE id={int(lid)}') == '0' and q(f'SELECT teacher_id FROM teacher_pupils WHERE pupil_id={int(pid)}') == busy and '1 pupil moved to' in text, text[:0])
+    # Edit name & sex: First, Middle, Last and Extension, filled in from the saved name
+    old = q(f'SELECT name FROM users WHERE id={int(busy)}')
+    _, _, text = a.req('?page=accounts')
+    check('Edit name shows First, Middle, Last and Extension boxes', 'class="ws-inline tn-edit"' in text and 'name="middle_name"' in text and 'name="name_ext"' in text)
+    a.req('index.php', {'action': 'admin_rename_teacher', 'id': busy, 'first_name': 'maria', 'middle_name': 'Lopez', 'last_name': 'SANTOS', 'name_ext': 'Jr.', 'teacher_sex': 'female', 'csrf': a.token('?page=accounts')})
+    check('Renaming a teacher saves the parts and shows "Maria L. Santos Jr."', q(f'SELECT name FROM users WHERE id={int(busy)}') == 'Maria L. Santos Jr.' and q(f'SELECT CONCAT(first_name,"/",middle_name,"/",last_name,"/",name_ext) FROM user_names WHERE user_id={int(busy)}') == 'Maria/Lopez/Santos/Jr.')
+    q(f"UPDATE users SET name='{old}' WHERE id={int(busy)}")
+    q(f'DELETE FROM user_names WHERE user_id={int(busy)}')
 
 
 def test_level4_scoring():

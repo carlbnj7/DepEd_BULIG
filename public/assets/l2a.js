@@ -78,12 +78,15 @@
  function lock(c,how){cst[c.dataset.n]=how;c.classList.add(how==='ok'?'ck-ok':'ck-out');$$('.l2-ans',c).forEach(x=>x.classList.add('locked'));const b=$('.ck-go',c);if(b)b.hidden=true;paintDots();}
  function ask(n,g){const fd=new FormData();fd.set('action','card_check');fd.set('csrf',(form.querySelector('[name=csrf]')||{}).value||'');fd.set('activity_id',aid);fd.set('card',n);fd.set('answer',g);
   return fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'}}).then(r=>r.ok?r.json():null).catch(()=>null);}
- async function checkCard(c){const n=c.dataset.n;if(!keyed(c)||cst[n])return true;const g=cardAnswer(c);if(!g){ckSay(c,'no','Answer first, then tap Check.');return false;}
+ async function checkCard(c){const n=c.dataset.n;if(!keyed(c)||(cst[n]&&cst[n]!=='part'))return true;const g=cardAnswer(c);if(!g){ckSay(c,'no','Answer first, then tap Check.');return false;}
   const b=$('.ck-go',c);if(b)b.disabled=true;const j=await ask(n,g);if(b)b.disabled=false;
   if(!j){cst[n]='later';ckSay(c,'','Saved. BULIG will check it when you finish.');paintDots();return true;}
   if(!j.keyed||j.ok){lock(c,'ok');ckSay(c,'ok',['Great job! You got it!','Yes! That is right!','Correct! Well done!','You did it! Great work!'][Math.floor(Math.random()*4)]);sfx('correct');return true;}
   tries[n]=j.tries;collect();sfx('tryagain');
-  ckSay(c,'no',['Not yet. Try again! You can do it!','Oops! Look again and try once more.','Almost! Try again, I know you can.'][Math.min(2,(j.tries||1)-1)]);c.classList.remove('ck-shake');void c.offsetWidth;c.classList.add('ck-shake');
+  /* v180: never stuck. A matching board says how many pairs are right; after 3 wrong tries any card may go on (it keeps its lower score). */
+  const many=j.of>1,free=many||(j.tries||0)>=(j.max||3);if(free){cst[n]='part';paintDots();}
+  ckSay(c,'no',many?j.pts+' of '+j.of+' are right. Fix the others and tap Check, or tap '+(at<cards.length-1?'Next':'Submit')+' to go on.':
+   free?'Not yet. You can try again, or tap '+(at<cards.length-1?'Next':'Submit')+' to go on.':['Not yet. Try again! You can do it!','Oops! Look again and try once more.','Almost! Try again, I know you can.'][Math.min(2,(j.tries||1)-1)]);c.classList.remove('ck-shake');void c.offsetWidth;c.classList.add('ck-shake');
   if(c._ckClear)c._ckClear();return false;}
  /* Build a Word: right or one more try (the server counts it too) */
  function buildTry(c,ok,w){const n=c.dataset.n;if(ok){lock(c,'ok');return false;}tries[n]=Math.min(3,(tries[n]||0)+1);collect();ask(n,w);
@@ -142,6 +145,43 @@
  /* matching board (app.js draws the lines and writes "1-c, 2-a" in the box) */
  $$('[data-kind="match"]',deck).forEach(g=>{const c=g.closest('.l2-card'),box=$('.native-answer',g);box.addEventListener('input',()=>set(c,g.dataset.part,box.value));});
  $$('[data-kind="paper"]',deck).forEach(b=>{const c=b.closest('.l2-card');b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on?'true':'false');set(c,b.dataset.part,on?'done with my teacher or on paper':'');});});
+ /* letter boxes (v180): the module's Hidden Letters word box, or a crossword. Typing moves to the next box. */
+ $$('[data-kind="xcells"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,ins=$$('input',g),word=g.dataset.mode==='word';
+  const norm=s=>s.toLowerCase().replace(/['‘]/g,'’'),ch=e=>e?(e.tagName==='INPUT'?e.value.trim():e.textContent.trim()):'';
+  const cell=(r,k)=>g.querySelector('[data-r="'+r+'"][data-c="'+k+'"]');
+  const save=()=>{let v='';
+   if(word){const W=g.dataset.word,rows=$$('tr',g).map(tr=>$$('[data-c]',tr).map(e=>ch(e)||'_').join(''));
+    if(ins.some(i=>i.value.trim()))v=rows.every(r=>norm(r)===norm(W))?W:rows.join(' / ');}
+   else{let cl=[];try{cl=JSON.parse(g.dataset.clues);}catch(e){}
+    v=cl.map(x=>{let s='';for(let i=0;i<x.len;i++)s+=ch(cell(x.dir==='down'?x.r+i:x.r,x.dir==='down'?x.c:x.c+i))||'_';return /[^_]/.test(s)?x.n+' '+x.dir+': '+s.toLowerCase():'';}).filter(Boolean).join(' · ');}
+   set(c,p,v);};
+  ins.forEach((i,k)=>{i.addEventListener('input',()=>{i.value=i.value.slice(-1);if(i.value&&ins[k+1])ins[k+1].focus();save();});
+   i.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!i.value&&ins[k-1]){e.preventDefault();ins[k-1].focus();ins[k-1].value='';save();}});
+   i.addEventListener('focus',()=>i.select());});
+  c._ckClear=()=>{};});
+ /* Spin Act (v180): the wheel stops on a word to read aloud and explain */
+ $$('[data-kind="spin"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,out=$('[data-spin-word]',g),go=$('[data-spin-go]',g);let W=[];try{W=JSON.parse(g.dataset.words);}catch(e){}
+  go.addEventListener('click',()=>{if(go.disabled||!W.length)return;go.disabled=true;g.classList.add('spinning');let n=0,i=Math.floor(Math.random()*W.length);const steps=16+Math.floor(Math.random()*W.length);
+   const tick=()=>{i=(i+1)%W.length;out.textContent=W[i];if(++n<steps)setTimeout(tick,35+n*n*1.4);else{g.classList.remove('spinning');go.disabled=false;sfx('correct');set(c,p,'spun: '+W[i]);}};tick();});});
+ /* drawing pad (v180): every drawing of the activity is sent as one picture for the teacher */
+ const draws=[];
+ $$('[data-kind="draw"]',deck).forEach(g=>{const c=g.closest('.l2-card'),p=g.dataset.part,cv=$('canvas',g),x=cv.getContext('2d');let pen='black',down=false,last=null,ink=false;
+  const COL={black:'#1b1b1b',red:'#d93025',blue:'#1a73e8',green:'#188038',yellow:'#f9ab00'};
+  const blank=()=>{x.fillStyle='#fff';x.fillRect(0,0,cv.width,cv.height);};blank();
+  const pt=e=>{const r=cv.getBoundingClientRect();return [(e.clientX-r.left)*cv.width/r.width,(e.clientY-r.top)*cv.height/r.height];};
+  const style=()=>{x.lineCap=x.lineJoin='round';x.lineWidth=pen==='erase'?40:8;x.strokeStyle=x.fillStyle=pen==='erase'?'#fff':COL[pen];};
+  cv.addEventListener('pointerdown',e=>{if(g.closest('.locked'))return;down=true;try{cv.setPointerCapture(e.pointerId);}catch(_){}last=pt(e);style();x.beginPath();x.arc(last[0],last[1],x.lineWidth/2,0,7);x.fill();e.preventDefault();});
+  cv.addEventListener('pointermove',e=>{if(!down)return;const q=pt(e);style();x.beginPath();x.moveTo(last[0],last[1]);x.lineTo(q[0],q[1]);x.stroke();last=q;});
+  const end=()=>{if(!down)return;down=false;if(pen!=='erase')ink=true;set(c,p,ink?'drew a picture':'');compose();};
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);cv.addEventListener('pointerleave',end);
+  $$('[data-pen]',g).forEach(b=>b.addEventListener('click',()=>{pen=b.dataset.pen;$$('[data-pen]',g).forEach(o=>o.setAttribute('aria-pressed',o===b?'true':'false'));}));
+  $('[data-draw-clear]',g).addEventListener('click',()=>{blank();ink=false;set(c,p,'');compose();});
+  draws.push({c,cv,has:()=>ink});});
+ function compose(){const d=$('#drawing-data');if(!d)return;const on=draws.filter(o=>o.has());if(!on.length){d.value='';return;}
+  const W=600,head=34,hs=on.map(o=>Math.round(o.cv.height*W/o.cv.width)),k=document.createElement('canvas');k.width=W;k.height=hs.reduce((a,h)=>a+h+head,0);
+  const t=k.getContext('2d');t.fillStyle='#fff';t.fillRect(0,0,k.width,k.height);let y=0;
+  on.forEach((o,i)=>{t.fillStyle='#14532d';t.font='bold 20px sans-serif';t.fillText('Card '+o.c.dataset.n,10,y+24);y+=head;t.drawImage(o.cv,0,y,W,hs[i]);t.strokeStyle='#cfd8cf';t.strokeRect(.5,y+.5,W-1,hs[i]-1);y+=hs[i];});
+  let u=k.toDataURL('image/png');if(u.length>1400000)u=k.toDataURL('image/jpeg',.7);d.value=u;}
  /* microphone (one recording per card) */
 /* Microphone: ask with clean-sound settings, then plain audio (some iPhones refuse the first). */
  async function getMic(){const md=navigator.mediaDevices;try{return await md.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}

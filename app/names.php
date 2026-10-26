@@ -34,12 +34,26 @@ function name_parts_save(int $id,?array $p):void{
 /** The name was typed again as one line (Edit account): the old parts no longer match. */
 function name_parts_forget(int $id):void{if(names_ready())q('DELETE FROM user_names WHERE user_id=?',[$id]);}
 
-/** First, Middle, Last and Extension boxes, with "Shows as …" filled in while typing (assets/names.js). */
-function name_fields():string{
- $o='';foreach(NAME_EXTS as $x)$o.='<option value="'.$x.'">'.$x.'</option>';
- return '<div class="nm-row" data-nm><label>First name<input name="first_name" required maxlength="60" autocomplete="off" autocapitalize="words"></label>'
-  .'<label>Middle name<input name="middle_name" maxlength="60" autocomplete="off" autocapitalize="words"><small>Leave blank if none</small></label>'
-  .'<label>Last name<input name="last_name" required maxlength="60" autocomplete="off" autocapitalize="words"></label>'
+/** The parts of a saved name [first,middle,last,ext]: from user_names, or guessed from the shown name
+   ("Maria S. Santos Jr." → Maria · S · Santos · Jr.) for accounts made before the parts were kept. */
+function name_parts_of(int $id,string $name):array{
+ if(names_ready()&&($r=one('SELECT first_name,middle_name,last_name,name_ext FROM user_names WHERE user_id=?',[$id])))return [(string)$r['first_name'],(string)$r['middle_name'],(string)$r['last_name'],(string)$r['name_ext']];
+ $w=preg_split('/\s+/',trim($name),-1,PREG_SPLIT_NO_EMPTY);$x='';
+ if(count($w)>2&&($n=name_ext_norm(end($w)))){$x=$n;array_pop($w);}
+ if(count($w)<2)return [implode(' ',$w),'','',$x];
+ $last=array_pop($w);$mid='';
+ if(count($w)>1&&preg_match('/^\p{L}\.$/u',end($w)))$mid=rtrim(array_pop($w),'.');
+ return [implode(' ',$w),$mid,$last,$x];
+}
+
+/** First, Middle, Last and Extension boxes, with "Shows as …" filled in while typing (assets/names.js).
+   $v [first,middle,last,ext] fills them in (editing a saved name). */
+function name_fields(?array $v=null):string{
+ [$f,$m,$l,$xv]=$v??['','','',''];
+ $o='';foreach(NAME_EXTS as $x)$o.='<option value="'.$x.'"'.($x===$xv?' selected':'').'>'.$x.'</option>';
+ return '<div class="nm-row" data-nm><label>First name<input name="first_name" required maxlength="60" autocomplete="off" autocapitalize="words" value="'.e($f).'"></label>'
+  .'<label>Middle name<input name="middle_name" maxlength="60" autocomplete="off" autocapitalize="words" value="'.e($m).'"><small>Leave blank if none</small></label>'
+  .'<label>Last name<input name="last_name" required maxlength="60" autocomplete="off" autocapitalize="words" value="'.e($l).'"></label>'
   .'<label>Extension<select name="name_ext"><option value="">None</option>'.$o.'</select></label></div>'
   .'<p class="nm-prev" data-nm-prev hidden>Shows as <b data-nm-out></b></p>';
 }

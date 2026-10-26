@@ -58,8 +58,8 @@ function pt_retake(array $u,int $level):void{
 /** Pupil: a card for each finished level whose post-test is below 80%, with a Try again button. */
 function pt_card(int $pid,?int $only=null):string{
  $h='';foreach(pt_blocked($pid) as $L=>$r){if($only&&$L!==$only)continue;$next=pt_next_level($L);$n=count($r['missed']);
-  $h.='<section class="card pg-gate" aria-label="'.e(level_label($L)).' post-test"><div class="pg-gate-top"><span class="pg-gate-ic" aria-hidden="true">'.icon('star').'</span><div><span class="eyebrow">POST-TEST · '.e(strtoupper(level_label($L))).'</span><h2>Almost there! You got '.$r['pct'].'%.</h2>'
-   .'<p class="muted">You need '.PT_PASS.'% to open '.e($next?level_label($next):'the next level').'. Answer the '.($n===1?'activity':$n.' activities').' you missed again. You can do it!</p></div></div>'
+  $h.='<section class="card pg-gate" aria-label="'.e(level_label($L)).' post-test"><div class="pg-gate-top"><span class="pg-gate-ic" aria-hidden="true">'.icon('star').'</span><div><span class="eyebrow">POST-TEST · '.e(strtoupper(level_label($L))).'</span><h2>Almost there! You got '.$r['pct'].'%.</h2>'.(function_exists('stars_html')?stars_html(star_count($r['pct']/100,'post'),5,'pg-stars'):'')
+   .'<p class="muted">You need 4 stars ('.PT_PASS.'%) to open '.e($next?level_label($next):'the next level').'. Answer the '.($n===1?'activity':$n.' activities').' you missed again. You can do it!</p></div></div>'
    .'<div class="pg-bar" role="img" aria-label="Your score '.$r['pct'].' percent. Pass mark '.PT_PASS.' percent."><i class="pg-fill w'.(int)(round(min(100,$r['pct'])/5)*5).'"></i><span class="pg-mark" title="Pass mark"></span></div><div class="pt-legend"><span>Your score: <b>'.$r['pct'].'%</b></span><span>Pass mark: <b>'.PT_PASS.'%</b></span></div>'
    .'<form method="post" class="pg-go">'.csrf_field().'<input type="hidden" name="action" value="post_retake"><input type="hidden" name="level" value="'.$L.'"><button class="btn primary">'.icon('arrow').'Try again</button></form></section>';}
  return $h;
@@ -69,7 +69,7 @@ function pt_card(int $pid,?int $only=null):string{
 function pt_lesson_note(int $pid,int $lid):string{
  $L=lesson_level($lid);$acts=pt_acts($pid,$L);if(!$acts||!in_array($lid,array_map(fn($a)=>(int)$a['lesson_id'],$acts),true))return '';
  $r=pt_result($pid,$L,true);if($r['done']<$r['n'])return '';if($r['pct']<PT_PASS)return pt_card($pid,$L);$next=pt_next_level($L);
- return '<section class="card pg-gate pg-pass" aria-label="'.e(level_label($L)).' post-test"><div class="pg-gate-top"><span class="pg-gate-ic" aria-hidden="true">'.icon('check').'</span><div><span class="eyebrow">POST-TEST · '.e(strtoupper(level_label($L))).'</span><h2>You passed! You got '.$r['pct'].'%.</h2>'
+ return '<section class="card pg-gate pg-pass" aria-label="'.e(level_label($L)).' post-test"><div class="pg-gate-top"><span class="pg-gate-ic" aria-hidden="true">'.icon('check').'</span><div><span class="eyebrow">POST-TEST · '.e(strtoupper(level_label($L))).'</span><h2>You passed! You got '.$r['pct'].'%.</h2>'.(function_exists('stars_html')?stars_html(star_count($r['pct']/100,'post'),5,'pg-stars'):'')
   .'<p class="muted">'.($next?(val('SELECT completed_at FROM pupil_progress WHERE pupil_id=? AND lesson_id=?',[$pid,$lid])?e(level_label($next)).' is open now. Great reading!':'Tap Done, and '.e(level_label($next)).' opens for you.'):'Great reading!').'</p></div></div>'
   .'<div class="pg-bar" role="img" aria-label="Your score '.$r['pct'].' percent. Pass mark '.PT_PASS.' percent."><i class="pg-fill w'.(int)(round(min(100,$r['pct'])/5)*5).'"></i><span class="pg-mark" title="Pass mark"></span></div><div class="pt-legend"><span>Your score: <b>'.$r['pct'].'%</b></span><span>Pass mark: <b>'.PT_PASS.'%</b></span></div></section>';
 }
