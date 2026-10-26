@@ -741,3 +741,25 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
   if(Math.ceil(size/per)>rows.length)alert('That makes more than '+rows.length+' cycles. Put more lessons in each cycle.');});
  f.querySelector('[data-cyc-clear]')?.addEventListener('click',()=>{rows.forEach(r=>r.querySelectorAll('input').forEach(x=>{x.value='';}));});
 })();
+/* v183: keep the microphone just under the lesson header when it sticks to the top of the screen */
+(()=>{if(!document.querySelector('.rec-top,.spd-top'))return;const set=()=>{let b=0;document.querySelectorAll('.activity-header,.l1-top,.l1-dots').forEach(h=>{const s=getComputedStyle(h);if(s.position==='sticky'||s.position==='fixed'){const r=h.getBoundingClientRect();if(r.height)b=Math.max(b,Math.round(r.height+(parseFloat(s.top)||0)));}});document.documentElement.style.setProperty('--rec-top',(b+8)+'px');};set();addEventListener('resize',set);})();
+/* Word Hunt letters (v183): tap a letter to circle it while looking for the hidden words */
+document.addEventListener('click',e=>{const b=e.target.closest('.wh-l');if(b)b.classList.toggle('on');});
+/* Install BULIG from Settings (v183): works after the install pop-up was closed. Android/PC: the browser's install box;
+   iPhone/iPad: the Share › "Add to Home Screen" steps; other browsers: where to find "Install app" in the menu. */
+(()=>{const standalone=()=>(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+ const rows=()=>document.querySelectorAll('[data-install-open]'),cards=()=>document.querySelectorAll('[data-install-card]');
+ const show=on=>{rows().forEach(r=>r.hidden=!on);cards().forEach(c=>c.hidden=!on);};
+ if(standalone()){show(false);return;}show(true);
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.buligInstallEvt=e;show(true);});
+ window.addEventListener('appinstalled',()=>{window.buligInstallEvt=null;show(false);});
+ const ua=navigator.userAgent||'',ios=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+ const help=(title,steps)=>{const d=document.createElement('dialog');d.className='ins-dialog';d.setAttribute('aria-label',title);
+  d.innerHTML='<img src="assets/brand/bulig-app-medium.png" alt="" width="64" height="64"><h2></h2><ol></ol><form method="dialog"><button class="btn primary">Okay</button></form>';
+  d.querySelector('h2').textContent=title;const ol=d.querySelector('ol');steps.forEach(s=>{const li=document.createElement('li');li.textContent=s;ol.appendChild(li);});
+  d.addEventListener('close',()=>d.remove());document.body.appendChild(d);d.showModal?d.showModal():d.setAttribute('open','');};
+ document.addEventListener('click',e=>{if(!e.target.closest('[data-install-open]'))return;e.preventDefault();
+  const ev=window.buligInstallEvt;if(ev){ev.prompt();ev.userChoice.then(r=>{if(r&&r.outcome==='accepted')show(false);}).finally(()=>{window.buligInstallEvt=null;});return;}
+  if(ios)help('Install BULIG on this iPhone or iPad',['Open BULIG in Safari.','Tap the Share button (the square with an arrow).','Scroll down and tap “Add to Home Screen”.','Tap “Add”. BULIG is now on your home screen.']);
+  else help('Install BULIG on this device',['Open the browser menu (the ⋮ dots at the top).','Tap “Install app” or “Add to Home screen”.','Tap “Install”. BULIG is now on your home screen.']);});
+})();

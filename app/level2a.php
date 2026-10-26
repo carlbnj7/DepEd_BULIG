@@ -214,6 +214,8 @@ function l2a_xcells(array $x,int $p):string{
  return $h.'</div><p class="l2-how">'.($word?'Type the missing letters in every row.':'Tap a box and type. Each answer starts at its number.').'</p>';
 }
 /** Link the Letters: the module's letter box (read only). */
+/** Letters to hunt in (Level 5 "Word Hunt", v183): rows of letter boxes; tapping a letter circles it (just a help, the answer is written). */
+function l2a_strip(array $rows):string{$h='<div class="wh-strip" data-wh aria-label="Letters: tap to circle a word">';foreach($rows as $row){$h.='<div class="wh-row">';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.='<button type="button" class="wh-l">'.e($ch).'</button>';$h.='</div>';}return $h.'</div>';}
 function l2a_letter_box(array $rows):string{$h='<table class="l2-lbox" aria-label="Letter box">';foreach($rows as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.='<td>'.e($ch).'</td>';$h.='</tr>';}return $h.'</table>';}
 function l2a_answer(array $c,int $n,bool $readonly):string{
  if($readonly)return '';$h='';
@@ -274,15 +276,18 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
  echo '<div class="l2-deck" data-l2-deck data-total="'.$N.'"'.($readonly?' data-readonly':'').($ck?' data-ck="1"':'').'>';
  foreach($cards as $i=>$c){$n=$i+1;$kinds=$c['ui']['answer']??[];$tiles=in_array('tiles',$kinds,true);
   echo '<section class="l2-card" data-n="'.$n.'" data-t="'.e(ctype_digit((string)$c['title'])&&(string)$c['title']!==(string)$n?(string)$c['title']:'').'" data-kinds="'.e(implode(' ',$kinds)).'"'.(isset($ckKey[$n])||isset($ckKey[(string)$n])?' data-keyed="1"':'').($i?' hidden':'').'><div class="l2-cardtop"><span class="l2-cnum">'.($N>1?'Card '.$n.' of '.$N:'').'</span>'.l1_speaker(trim((string)($c['speak']??(($c['text']??'')!==''?$c['text']:$set['instruction']))),'Hear this card','sm').'</div>';
+  /* v183: the microphone (or the reading-speed Start/Done) comes first and stays on screen while the pupil scrolls and reads */
+  $recTop=!$readonly&&($kinds===['say']||$kinds===['speed']);if($recTop)echo str_replace(['class="l2-say l1-rec"','class="l2-speed"'],['class="l2-say l1-rec rec-top"','class="l2-speed spd-top"'],l2a_answer($c,$n,$readonly));
   if(!empty($c['story']))echo '<h3 class="l2-story">'.e($c['story']).'</h3>';
   if(!empty($c['ui']['grid'])){$g=$c['ui']['grid'];$lines=max(array_map('mb_strlen',$g))>14;echo '<div class="l3-grid'.($lines?' lines':'').(count($g)>12?' many':'').(!$lines&&count($g)<=10&&count($g)%2===0?' cols2':'').'">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$g)).'</div>'.l2a_pictures($c,$n);}
   elseif(in_array('match',$kinds,true))echo ((string)$c['text']!==''?l2a_text((string)$c['text'],false,'',$blanks[$i]??0):'').l2a_match_board($c,$readonly,$readonly?(string)($saved[$n]??''):'');
   else echo (in_array('words',$kinds,true)&&!$readonly?'':l2a_text((string)$c['text'],$tiles&&!$readonly,(string)($c['underline']??''),$blanks[$i]??0)).l2a_pictures($c,$n);
   if(!empty($c['words']))echo '<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
   if(!empty($c['ui']['box']))echo l2a_letter_box($c['ui']['box']);
+  if(!empty($c['strip']))echo l2a_strip($c['strip']);
   if($readonly&&in_array('draw',$kinds,true)&&str_starts_with((string)($a['drawing']??''),'data:image/')&&empty($drawShown)){$drawShown=true;echo '<div class="l1-prev l2-drawn"><img src="'.e($a['drawing']).'" alt="Your drawings"><span class="l1-ok">'.l1_icon('ok').'Your drawings</span></div>';}
   if(in_array('look',$kinds,true)||in_array('paper',$kinds,true)||$readonly){if($c['choices']&&!array_intersect($kinds,['chip','chips']))echo '<div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['choices'])).'</div>';}
-  echo l2a_answer($c,$n,$readonly);
+  if(!$recTop)echo l2a_answer($c,$n,$readonly);
   if($readonly){$ans=$saved[$n]??'';echo '<div class="l2-saved">'.l1_icon('ok').'<span>'.($ans!==''?nl2br(e($ans)):'Saved').'</span></div>';if(!empty($aud[(string)$n]))echo '<div class="l1-mine"><audio controls preload="none" src="?page=recording&amp;id='.(int)$a['completion_id'].'&amp;n='.$n.'"></audio></div>';}
   echo '</section>';}
  echo '</div><div class="l1-end"><div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns"><button type="button" class="l1-btn2" data-l2-prev hidden>'.l1_icon('prev').'Back</button>';
@@ -360,7 +365,8 @@ function l5_demo_card(array $a,array $set,array $c,int $n,string $pics):string{
  $kinds=$c['ui']['answer']??[];$txt=(string)$c['text'];$h='<div class="l1d-txt l5d-txt"><span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span>';
  if($n===1&&trim((string)$set['instruction'])!=='')$h.='<p class="l2d-dir">'.nl2br(e($set['instruction'])).'</p>';
  if(!empty($c['story']))$h.='<h2 class="l5d-story">'.e($c['story']).'</h2>';
- if(in_array('lgrid',$kinds,true)){$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll"><table class="letter-grid l5d-grid" aria-label="Letter puzzle">';foreach($c['grid'] as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.=$ch===' '||$ch==='.'?'<td class="blank"></td>':'<td>'.e($ch).'</td>';$h.='</tr>';}$h.='</table></div>';}
+ if(!empty($c['strip'])){$h.='<p class="l1d-q">'.nl2br(e($txt)).'</p>'.l2a_letter_box($c['strip']);}
+ elseif(in_array('lgrid',$kinds,true)){$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll"><table class="letter-grid l5d-grid" aria-label="Letter puzzle">';foreach($c['grid'] as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.=$ch===' '||$ch==='.'?'<td class="blank"></td>':'<td>'.e($ch).'</td>';$h.='</tr>';}$h.='</table></div>';}
  elseif(in_array('match',$kinds,true))$h.=($txt!==''?'<p class="l5d-lead">'.blank_html(nl2br(e($txt)),0).'</p>':'').'<div class="l5d-scroll">'.str_replace('<img src=','<img data-src=',l2a_match_board($c,true)).'</div>';
  elseif(in_array('xcells',$kinds,true))$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll">'.preg_replace(['~<input[^>]*>~','~<p class="l2-how">.*?</p>~s'],'',l2a_xcells($c['ui']['xc'],0)).'</div>';
  elseif(!empty($c['ui']['box']))$h.='<p class="l1d-q">'.e($txt).'</p>'.l2a_letter_box($c['ui']['box']);
