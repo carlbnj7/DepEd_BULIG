@@ -319,7 +319,7 @@ function profile_view(array $u):void{
  $m=tf_is_male((int)$u['id']);$k=$u['role']==='admin'?'admin':'teacher';$w=$k==='admin'?'admin':'teacher';
  echo '<section class="card char-pick"><h2>My '.$w.' character</h2><p class="muted">This character greets you after you sign in and guides your tours.</p><form method="post" class="char-opts">'.csrf_field().'<input type="hidden" name="action" value="teacher_character">';
  foreach(['female'=>!$m,'male'=>$m] as $sx=>$on)echo '<button name="character" value="'.$sx.'" class="char-opt'.($on?' on':'').'" aria-pressed="'.($on?'true':'false').'"><img src="'.char_src($k.'-'.$sx).'" alt="" loading="lazy"><span>'.ucfirst($sx).' '.$w.'</span>'.($on?'<small>'.icon('check').'Chosen</small>':'').'</button>';
- echo '</form></section>';
+ echo '</form></section><section class="card st-group st-install-card" data-install-card hidden><h2>Install BULIG</h2>'.install_row().'</section>';
  echo mode_card();
  if($u['role']==='teacher'&&function_exists('rate_profile_card'))echo rate_profile_card();
  password_change_form();
@@ -346,12 +346,14 @@ function pupil_settings_view(array $u):void{
   .'<label class="st-row st-sfx" hidden><span class="st-ic st-g">'.icon('sound').'</span><span class="st-t"><b>Sound effects</b><small>Little sounds when you answer and earn XP</small></span><input type="checkbox" class="rm-sw" data-sfx-switch></label>'
   .'<div class="st-row st-wrap"><span class="st-ic st-p">'.icon('moon').'</span><span class="st-t"><b>How BULIG looks</b><small>Light, dark, or like this device</small></span>'.$seg.'</div>'
   .'<label class="st-row st-glass"><span class="st-ic st-g">'.icon('eye').'</span><span class="st-t"><b>Glass look</b><small>See-through menus and buttons. Turn it off if this phone is slow.</small></span><input type="checkbox" class="rm-sw" data-glass-switch checked></label>'
-  .''.($u['role']==='pupil'?friends_again_row():'').'<a class="st-row" href="?page=offline"><span class="st-ic st-b">'.icon('download').'</span><span class="st-t"><b>Offline lessons</b><small data-off-count>Save lessons to use without internet</small></span>'.icon('chev','st-chev').'</a>'
+  .install_row().($u['role']==='pupil'?friends_again_row():'').'<a class="st-row" href="?page=offline"><span class="st-ic st-b">'.icon('download').'</span><span class="st-t"><b>Offline lessons</b><small data-off-count>Save lessons to use without internet</small></span>'.icon('chev','st-chev').'</a>'
   .'</section><section class="card push-card" data-push-card hidden></section></div><div class="st-col">'
   .'<section class="card st-group"><h2>My account</h2><details class="st-pw"><summary class="st-row"><span class="st-ic st-s">'.icon('lock').'</span><span class="st-t"><b>Password</b><small>'.(card_has_starter((int)$u['id'])?'You use the starter password from your ticket. You can make your own.':'Change your password').'</small></span>'.icon('chev','st-chev').'</summary>'
   .'<form method="post" class="formgrid st-pwform">'.csrf_field().'<input type="hidden" name="action" value="change_password"><label>Current password<input name="current_password" type="password" autocomplete="current-password" required maxlength="72"></label><label>New password<input name="new_password" type="password" autocomplete="new-password" required minlength="8" maxlength="72"></label><label>Confirm new password<input name="confirm_password" type="password" autocomplete="new-password" required minlength="8" maxlength="72"></label><button class="btn primary">Change password</button></form></details></section>'
   .'<section class="card st-group"><h2>About</h2>'.about_row().'</section></div></div>'.about_dialog();
 }
+/** "Install BULIG" (v183): add BULIG to the home screen any time, also after closing the install pop-up. Shown only when BULIG is not installed yet (app.js). */
+function install_row():string{return '<button type="button" class="st-row st-install" data-install-open hidden><span class="st-ic st-g">'.icon('download').'</span><span class="st-t"><b>Install BULIG on this phone</b><small>Put BULIG on your home screen and open it like an app</small></span>'.icon('chev','st-chev').'</button>';}
 /** A settings row that opens About BULIG. */
 function about_row():string{return '<button type="button" class="st-row st-about" data-about-open><span class="st-ic st-o">'.icon('info').'</span><span class="st-t"><b>About BULIG</b><small>Who made BULIG, and credits</small></span>'.icon('chev','st-chev').'</button>';}
 function about_dialog():string{return '<dialog class="ab-dialog" aria-label="About BULIG">'.about_card().'<form method="dialog"><button class="btn secondary ab-close">Close</button></form></dialog>';}

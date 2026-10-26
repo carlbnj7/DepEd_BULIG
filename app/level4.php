@@ -109,7 +109,12 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
  echo '<span class="l1-tag">'.e(l4_tag($a,$lesson)).'</span>';
  if($reading){
   $say='Read the following passage aloud. Tap the microphone when you start, and tap it again when you finish. BULIG listens and scores your reading.';
-  echo '<div class="l1-q sm l4-dir"><p>'.e($say).'</p>'.l1_speaker($say).'</div>';ob_start();echo level4_passage($a);
+  echo '<div class="l1-q sm l4-dir"><p>'.e($say).'</p>'.l1_speaker($say).'</div>';ob_start();
+  /* v183: the microphone sits above the passage and stays at the top of the screen while the pupil scrolls and reads */
+  if(!$readonly)echo roxanne_timer().'<div class="l1-rec l4-rec rec-top" data-l1-rec data-max="600"><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
+   .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my reading">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
+   .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button></div>';
+  echo level4_passage($a);
  }else{
   echo '<div class="l1-q sm"><p>'.nl2br(e((string)$a['prompt'])).'</p>'.l1_speaker((string)$a['prompt']).'</div>';ob_start();echo l1_pictures($a);
  }
@@ -118,10 +123,6 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
   echo '<div class="l1-done">'.l1_icon('ok').'<b>'.($reading?'Your reading is saved.'.($secs?' Time: '.intdiv($secs,60).':'.sprintf('%02d',$secs%60):''):'You saw this page.').'</b></div>';
   if($reading&&$c&&$c['audio_path'])echo '<div class="l1-mine"><span>Your reading</span><audio controls preload="none" src="?page=recording&amp;id='.(int)$c['id'].'"></audio></div>';
   $sc=$reading&&$c?l4_saved_score($c):null;if($sc&&!empty($sc['auto']))echo l4_result_card($a,$sc);
- }elseif($reading){
-  echo roxanne_timer().'<div class="l1-rec l4-rec" data-l1-rec data-max="600"><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
-   .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my reading">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
-   .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button></div>';
  }
  $card=trim((string)ob_get_clean());if($card!=='')echo '<section class="l2-card l1-card l4-card"'.($reading&&$a['phase']==='learn'&&!$readonly?' data-readalong="1"':'').'>'.$card.'</section>';
  echo '<div class="l1-end"><div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns">';

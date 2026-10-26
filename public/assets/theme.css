@@ -6053,3 +6053,37 @@ html.rc-lock,html.rc-lock body{overflow:hidden}
 .cyc-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.cyc-top p{margin:0}
 .cyc-table input[type=number]{width:84px}
 html.dark .cyc-levels a{background:#1d2b22;border-color:#33473a;color:#d9f2df}html.dark .cyc-levels a.on{background:#2f8a4b;color:#fff}
+/* v183: the microphone sits above the words to read and stays at the top of the screen while the pupil scrolls */
+.rec-top{position:sticky;top:var(--rec-top,86px);z-index:6;margin:0 0 14px!important;box-shadow:0 8px 20px -10px rgba(15,60,30,.35)}
+.l2-card:has(.rec-top),.l1-card:has(.rec-top),.l4-card:has(.rec-top){overflow:visible}
+.l4-card .rec-top{margin-bottom:16px!important}
+/* Level 5 Word Hunt letters (v183) */
+.wh-strip{display:flex;flex-direction:column;align-items:center;gap:6px;margin:12px 0}
+.wh-row{display:flex;flex-wrap:nowrap;gap:4px;max-width:100%}
+.wh-l{width:clamp(20px,6.2vw,38px);height:clamp(28px,8vw,44px);border:2px solid #cfe3d3;border-radius:8px;background:#fff;font:inherit;font-weight:800;font-size:clamp(.85rem,3.8vw,1.25rem);color:#17633a;padding:0;cursor:pointer}
+.wh-l.on{background:#ffe9a8;border-color:#e0a91c;color:#5a3d00}
+html.dark .wh-l{background:#1d2b22;border-color:#33473a;color:#d9f2df}html.dark .wh-l.on{background:#5a4510;color:#fff2c8}
+/* v183: the pinned microphone is a slim bar, so the words to read stay in view */
+.rec-top{display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:2px 12px;text-align:left!important;padding:10px 12px!important;background:#fffdf7!important;border:2px solid #f6d3c7;border-radius:20px;width:auto!important;max-width:100%}
+.rec-top .l1-mic{grid-row:1/3;grid-column:1;width:58px!important;height:58px!important;box-shadow:0 0 0 5px rgba(226,69,43,.15),0 5px 12px rgba(226,69,43,.3)!important}
+.rec-top .l1-mic svg{width:28px;height:28px}
+.rec-top .l1-rl{grid-column:2;grid-row:1;font-size:1rem!important;line-height:1.25;margin:0!important;text-align:left}
+.rec-top[data-state=rec] .l1-rl{font-size:1.25rem!important}
+.rec-top .l1-rs{grid-column:2;grid-row:2;text-align:left;margin:0}
+.rec-top .l1-heard{grid-column:3;grid-row:1/3;margin:0!important;padding:10px 14px!important;font-size:.95rem!important;align-self:center}
+.rec-top .l1-play{grid-column:1/-1;grid-row:3;margin-top:6px}
+.rec-top .l1-rlink,.rec-top .rx-hint{grid-column:1/-1}
+html.dark .rec-top{background:#1f2a22!important;border-color:#5a3a30}
+@media(max-width:380px){.rec-top{gap:2px 8px}.rec-top .l1-mic{width:50px!important;height:50px!important}.rec-top .l1-heard{padding:8px 10px!important}}
+/* v183: reading-speed Start/Done stays at the top; the Install BULIG help box */
+.spd-top{position:sticky;top:var(--rec-top,8px);z-index:6;background:#fffdf7;border:2px solid #f3e2b0;border-radius:18px;padding:10px 12px;margin:0 0 14px;box-shadow:0 8px 20px -10px rgba(15,60,30,.35)}
+.spd-top .l2-how{margin:0 0 6px;font-size:.9rem}
+.l2-card:has(.spd-top){overflow:visible}
+html.dark .spd-top{background:#1f2a22;border-color:#5a4a20}
+.ins-dialog{border:0;border-radius:24px;padding:22px 20px 18px;max-width:min(380px,92vw);text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.ins-dialog::backdrop{background:rgba(10,30,15,.55)}
+.ins-dialog img{border-radius:16px}.ins-dialog h2{margin:10px 0 8px;font-size:1.2rem}
+.ins-dialog ol{text-align:left;margin:0 0 16px;padding-left:22px;line-height:1.5}.ins-dialog li{margin:4px 0}
+.ins-dialog .btn{min-width:140px}
+html.dark .ins-dialog{background:#16211a;color:#e6f3ea}
+.l2-ans:has(> .rec-top),.l2-ans:has(> .spd-top){display:contents}
