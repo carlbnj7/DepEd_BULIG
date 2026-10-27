@@ -1,5 +1,5 @@
 <?php
-/* Story time: the comic "How the BULIG Friends Met" (cover + 16 pages, one big scene per page; Bob the Builder came in v178).
+/* Story time: the comic "How the BULIG Friends Met" (cover + 16 pages, one big scene per page; Bob the Worker came in v178).
    The pictures are drawn by tools/comic_build.py into app/story_pages.json (one SVG and the lines for each page).
    - ?page=story&p=N shows page N. Back / Next are real links, so it works without JavaScript; story.js turns pages
      without reloading (it loads ?page=story_data once), reads each page aloud with a voice for every friend
@@ -57,7 +57,7 @@ function story_view(array $u):void{
 }
 function story_seen(int $pid):array{try{$v=(string)val('SELECT setting_value FROM settings WHERE setting_key=?',['story_seen_'.$pid]);}catch(Throwable $e){$v='';}
  if($v==='')return [];if(str_starts_with($v,'v2:'))return array_map('intval',explode(',',substr($v,3)));
- /* v178: Bob the Builder's page came in as page 15, so the old page 15 (the lamp) is page 16 now. A pupil who had read the
+ /* v178: Bob the Worker's page came in as page 15, so the old page 15 (the lamp) is page 16 now. A pupil who had read the
     whole story keeps the "finished" bonus they already got (story_done_<id>); Bob's page still gives +3 XP. */
  $old=array_map('intval',explode(',',$v));$new=array_map(fn($n)=>$n>=15?$n+1:$n,$old);
  try{if(count($old)>=16)q('INSERT IGNORE INTO settings(setting_key,setting_value) VALUES(?,?)',['story_done_'.$pid,date('Y-m-d H:i:s')]);

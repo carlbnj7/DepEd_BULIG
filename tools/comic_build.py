@@ -276,7 +276,7 @@ def s0(p):
     g+=f'<path d="M0 600 Q600 540 1200 600 V760 H0Z" fill="url(#{p}hillB)"/><path d="M0 600 Q600 540 1200 600 V760 H0Z" fill="url(#{p}grassDk)" opacity=".5"/>'
     g+=tree(p,60,600,1)+pine(p,150,570,.8)+tree(p,1140,600,.95)+pine(p,1060,570,.75)
     # back row (smaller), front row (bigger), Jarvis in the middle
-    back=['max-hello','dracs-book','mia-blocks','bob-thumbs','zion-emblem','roxanne-time','kai-letter']   # Bob the Builder joined in v178
+    back=['max-hello','dracs-book','mia-blocks','bob-thumbs','zion-emblem','roxanne-time','kai-letter']   # Bob the Worker joined in v178
     for i,n in enumerate(back):
         x=[110,250,385,665,790,915,1045][i];g+=ground_shadow(x+60,640,50)+img(n,x,445,120,196)
     front=['george-map','bruno-cheer','arah-cheer','toby-flag','sofie-mirror','claude-shield']
@@ -585,9 +585,9 @@ def s15b(p):
     g+=friend('bob-blueprint',330,750,360)+friend('jarvis-hello',1000,750,280,True)+friend('claude-thumbs',1120,750,250,True)
     g+=sparkle(700,520,1.2,'#fff3b0')+sparkle(560,470,.9)
     g+=f'<rect width="{W}" height="{H}" fill="url(#{p}vig)" opacity=".45"/>'
-    g+=narr(['The storm broke the bridge to the castle.','Then a new friend came: Bob the Builder!'],34,30,24)
+    g+=narr(['The storm broke the bridge to the castle.','Then a new friend came: Bob the Worker!'],34,30,24)
     g+=sfx('BANG! BANG!',640,430,50,-8,'#ffd23f')
-    g+=bubble(['Do not worry!','I have a plan. I will build it','again, better than before!'],330,250,330,390,22,'Bob')
+    g+=bubble(['Do not worry!','I have a plan. I will fix it,','better than before!'],330,250,330,390,22,'Bob')
     g+=bubble(['Hooray! Now we can','reach the great lamp!'],1010,270,1000,500,22,'Jarvis')
     return g
 # ===================== PAGE 16 · The lamp shines =====================
@@ -612,7 +612,7 @@ def s15(p):
 PAGES=[('0','How the BULIG Friends Met',s0),('1','The Sleeping Castle',s1),('2','A Robot Wakes Up',s2),('3','George the Explorer',s3),
  ('4','Max the Listener',s4),('5','Dracs the Storyteller',s5),('6','Bruno the Helper',s6),('7','Mia the Builder',s7),('8','Toby the Trailblazer',s8),
  ('9','Zion the Rank Keeper',s9),('10','Arah the Streak Keeper',s10),('11','Roxanne the Timekeeper',s11),('12','Kai the Messenger',s12),
- ('13','Sofie the Stylist',s13),('14','Claude the Protector',s14),('15','Bob the Builder',s15b),('16','The Lamp Shines Again',s15)]
+ ('13','Sofie the Stylist',s13),('14','Claude the Protector',s14),('15','Bob the Worker',s15b),('16','The Lamp Shines Again',s15)]
 if __name__=='__main__':
     out=[]
     for n,title,fn in PAGES:

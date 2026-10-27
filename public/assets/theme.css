@@ -5874,7 +5874,7 @@ html.dark .kai-tip-card{background:#16231b;color:#e8f0ea}html.dark .kai-tip li{b
 .dir-tn{display:grid;min-width:200px}.dir-tn small{color:var(--muted,#5b6b5f)}.dir-ts{flex:1;color:#33473b;font-size:.92rem}.dir-t[open] summary{border-bottom:1px solid #edf2ee}
 .dir-pl{margin:10px 16px 6px 34px;columns:2 260px;gap:24px}.dir-pl li{margin:0 0 4px;break-inside:avoid}.dir-pl small{color:var(--muted,#5b6b5f)}.dir-t>.btn{margin:4px 16px 14px}
 html.dark .dir-t,html.dark .dir-q{background:var(--sf2,#1c2620)}
-/* v178: Bob the Builder's "There's a new update" popup (construction sign) */
+/* v178: Bob the Worker's "There's a new update" popup (construction sign) */
 .wn-shade{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:16px;background:rgba(10,30,18,.55);animation:wn-in .3s ease-out}
 .wn-shade[hidden]{display:none}
 .wn-box{position:relative;width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#fffbea;border:4px solid #1d1d1b;border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:grid;grid-template-columns:150px 1fr;align-items:end}
@@ -6168,3 +6168,25 @@ html.dark .wc-review{background:#2c2716;border-color:#6d5a22}
 .wc-hint{margin:8px 0;padding:8px 12px;border-radius:12px;background:#fff1c2;color:#7a5200;font-weight:600}
 .wc-hint[hidden]{display:none}
 html.dark .wc-w.nx{background:#3d3214}html.dark .wc-w.miss{background:#4a3214;color:#ffcf8a}html.dark .wc-hint{background:#3d3214;color:#ffd76a}
+
+/* v185: word search like a word game: each word found gets its own colour (l2a.js) */
+.ws-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 8px;font-size:.95rem;color:#17633a}
+.ws-undo{border:2px solid #cfe2cc;background:#fff;color:#17633a;border-radius:10px;padding:4px 12px;font:inherit;font-weight:800;cursor:pointer}
+.ws-box{position:relative;display:inline-block;max-width:100%;touch-action:none;user-select:none;-webkit-user-select:none}
+.l2-lgrid .ws-box{display:block}
+.ws-lines{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply}
+.ws-lines polyline{opacity:.62}.ws-lines polyline.pv{opacity:.4;stroke-dasharray:4 6}
+.ws-box .grid-cell{position:relative;z-index:1;background:transparent!important;cursor:pointer}
+.ws-box .letter-grid{background:#fff}
+.ws-box .grid-cell.ws-start{box-shadow:inset 0 0 0 3px #17633a;border-radius:50%}
+.ws-box .grid-cell.ws-pop{animation:wsPop .45s ease}@keyframes wsPop{50%{transform:scale(1.25)}}
+.ws-box.ws-no{animation:wcNudge .45s}
+.l2-bank span.ws-got{background:var(--ws)!important;border-color:var(--ws)!important;color:#1d2a20!important;text-decoration:line-through;text-decoration-thickness:2px}
+html.dark .ws-box .letter-grid{background:#f3f6f1}html.dark .ws-box .grid-cell{color:#173a24}html.dark .ws-bar{color:#9be0b4}html.dark .ws-undo{background:#22301f;color:#9be0b4;border-color:#3a4a37}
+/* v185: story cards read aloud with the Reading Coach */
+.l2-read{margin:0 0 12px}.l2-read .l2-how{margin:6px 0 0}.l2-read.l2-read-done .l2-how{color:#13612f}
+/* v185: voice check on "say it" cards: green when the right word is heard, orange to try again */
+.l1-rec.vc-ok{border-color:#2f9a55!important;background:#e7f6ea!important;box-shadow:0 0 0 3px rgba(47,154,85,.25)}
+.l1-rec.vc-ok [data-rec-sub]{color:#13612f;font-weight:800}
+.l1-rec.vc-no{border-color:#f0b35a!important;background:#fff6e5!important}.l1-rec.vc-no [data-rec-sub]{color:#8a5200;font-weight:700}
+html.dark .l1-rec.vc-ok{background:#173a22!important}html.dark .l1-rec.vc-ok [data-rec-sub]{color:#9be0b4}html.dark .l1-rec.vc-no{background:#3d3214!important}html.dark .l1-rec.vc-no [data-rec-sub]{color:#ffd76a}

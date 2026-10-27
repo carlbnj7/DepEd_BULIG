@@ -168,10 +168,10 @@
     box.innerHTML='<div class="wc-sum"><img src="'+IMG('cheer')+'" alt=""><h3>'+(practice?'Practice done!':'You read all '+N+' words!')+'</h3>'+(na||practice?'':starHtml(stars(pct),3)+'<p class="wc-pct">'+pct+'%</p>')
      +(na||practice?'':'<div class="wc-cnt"><div class="g"><b>'+first+'</b>right the first time</div><div class="y"><b>'+after+'</b>right after trying again</div><div class="r"><b>'+miss+'</b>to practise</div></div>')
      +(hard.length?'<p class="wc-hl">Words to practise (tap to hear):</p><div class="wc-chips">'+hard.map(h=>'<button type="button" class="wc-chip">'+svg.spk+esc(h)+'</button>').join('')+'</div>':'')
-     +'<div class="wc-row c">'+(hard.length&&!practice?'<button type="button" class="btn ghost wc-redo">Practise these again</button>':'')+'<button type="button" class="btn primary wc-read">'+(na||practice?svg.mic+'Now read it all':svg.ok+'Save my reading')+'</button></div></div>';
+     +'<div class="wc-row c">'+(hard.length&&!practice?'<button type="button" class="btn ghost wc-redo">Practise these again</button>':'')+'<button type="button" class="btn primary wc-read">'+((na&&rec.dataset.kind!=='read')||practice?svg.mic+'Now read it all':svg.ok+'Save my reading')+'</button></div></div>';
     box.querySelectorAll('.wc-chip').forEach(c=>c.onclick=()=>say(c.textContent,.55));
     const r=box.querySelector('.wc-redo');if(r)r.onclick=()=>{close();open(true);};
-    box.querySelector('.wc-read').onclick=()=>{close();if(!na&&!practice){saveReading(all.filter((w,i)=>got[i]>0).join(' '),secs);return;}const m=rec.querySelector('[data-rec-go]');if(m)m.focus();rec.scrollIntoView({block:'center',behavior:'smooth'});};
+    box.querySelector('.wc-read').onclick=()=>{close();if((!na||rec.dataset.kind==='read')&&!practice){saveReading(all.filter((w,i)=>got[i]>0).join(' '),secs);return;}const m=rec.querySelector('[data-rec-go]');if(m)m.focus();rec.scrollIntoView({block:'center',behavior:'smooth'});};
     if(!na&&!practice)say(pct>=80?'Great job! Your reading is done.':'Good work! Your reading is done.',.85);}
 
    if(practice){const prev=(store.get(key)||'').split('|')[1]||'';const hard=prev.split(' ').filter(Boolean);

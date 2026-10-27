@@ -150,14 +150,14 @@ function key_score(array $a,string $response):?array{
  $set=in_array($lv,[2,3,4,9,6,7,8],true)?l2a_set($a):null;
  if(!$set){if(!$key)return in_array($a['response_mode']??'answer',['none','perform','drawing'],true)?null:['right'=>key_answered(trim($response))?1:0,'total'=>1,'cards'=>[]];$set=['cards'=>[]];}
  $got=card_answers($response);$right=0;$total=0;$cards=[];
- $ask=[];foreach($set['cards'] as $i=>$cd)if(array_diff($cd['ui']['answer']??[],['look']))$ask[]=$i+1;
+ $ask=[];foreach($set['cards'] as $i=>$cd){$ui=$cd['ui']['answer']??[];if(array_diff($ui,['look','read'])||(in_array('read',$ui,true)&&key_answered(trim((string)($got[$i+1]??'')))))$ask[]=$i+1;}   // v185: a story read with the Reading Coach counts once it is read (older answers keep their score)
  $nums=array_values(array_unique(array_merge(array_map('intval',array_keys($key)),$ask)));sort($nums);
  $tries=card_tries($response);$wc=function_exists('card_coach')?card_coach($response):[];   // v184: Word Coach results
  $dir=(string)($set['instruction']??'');
  foreach($nums as $n){if(($got[$n]??'')==='(skipped)')continue;   // a page skipped with a bug report: not scored (v176)
   $k=$key[$n]??null;$g=(string)($got[$n]??'');[$pts,$of,$want,$t]=key_card_points($k,$g);
   if(!$k&&($exp=say_words()[activity_key_id($a).':'.$n]??say_expected($set['cards'][$n-1]??[],$dir))){$t='say';$want=implode(', ',array_map(fn($x)=>explode('|',$x)[0],$exp));$h=key_said($g);if($h!==null)$pts=say_match($exp,$h);}/* pronunciation (v172) */
-  $ok=$pts>=$of;$tr=$k?($tries[$n]??0):0;
+  $ok=$pts>=$of;$tr=($k||$t==='say')?($tries[$n]??0):0;   // v185: a voice check's tries count too
   if($tr)$pts=round($pts*max(0,1-$tr/KEY_TRIES),2);/* each wrong try takes away a third (v172) */
   if(isset($wc[$n])&&$wc[$n]['p']!==null)$pts=round($of*$wc[$n]['p']/100,2);/* v184: the Word Coach run is the reading: its score counts */
   $right+=$pts;$total+=$of;$cards[$n]=['got'=>$g,'want'=>$want,'pts'=>$pts,'of'=>$of,'t'=>$t,'fix'=>!empty($k['fix']),'ok'=>$ok,'tries'=>$tr];}

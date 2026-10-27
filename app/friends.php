@@ -19,7 +19,7 @@ const BULIG_FRIENDS=[
  ['sofie','Sofie','the Stylist',true,'#0ea5c6','mirror','Your profile and picture',"Hi! I am Sofie the Stylist. On your profile page, I help you pick a picture that looks just like you!",1.4,1.0,'cheer'],
  ['claude','Claude','the Protector',false,'#1d2f5c','shield','Keeping your account safe',"Hello! I am Claude the Protector. I keep your account safe. Never share your password with anyone!",.78,.9,'thumbs'],
  /* v178 */
- ['bob','Bob','the Builder',false,'#f2a900','blueprint','New updates in BULIG',"Hi, {n}! I am Bob the Builder. When BULIG gets something new, I build it and I tell you about it first!",.9,1.0,'cheer'],
+ ['bob','Bob','the Worker',false,'#f2a900','blueprint','New updates in BULIG',"Hi, {n}! I am Bob the Worker. When BULIG gets something new, I work on it and I tell you about it first!",.9,1.0,'cheer'],
 ];
 
 function friend_img(string $id,string $pose):string{return $id==='george'?char_src('george',$pose):'assets/images/characters/'.$id.'-'.$pose.'.webp?v=2';}

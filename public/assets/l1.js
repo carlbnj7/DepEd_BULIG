@@ -204,7 +204,9 @@
  /* ---------------- Stories: listen and read along (Level 4 practice passages, Levels 5 to 7) ----------------
     BULIG reads one sentence at a time: the sentence gets a soft highlight, the word being read pops in yellow,
     read words turn green. Pause keeps the place; Slow reads slower. */
- function readAlong(box){if(!box||box.dataset.ka)return;box.dataset.ka='1';
+ function readAlong(box){if(!box||box.dataset.ka)return;
+  const kaScope=box.closest('.l2-card')||box.closest('form')||document;if(kaScope.querySelector('[data-wc]'))return;   // v185: the Reading Coach reads it first, so no second read-along player
+  box.dataset.ka='1';
   const walk=document.createTreeWalker(box,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.nodeValue.trim()&&!n.parentNode.closest('button,.ra-skip,output')?1:2}),nodes=[];while(walk.nextNode())nodes.push(walk.currentNode);
   const sents=[[]];let txt=[''];
   nodes.forEach(n=>{const frag=document.createDocumentFragment();n.nodeValue.split(/(\s+)/).forEach(part=>{if(!part)return;if(/^\s+$/.test(part)){frag.append(part);return;}

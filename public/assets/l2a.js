@@ -92,6 +92,8 @@
  function buildTry(c,ok,w){const n=c.dataset.n;if(ok){lock(c,'ok');return false;}tries[n]=Math.min(3,(tries[n]||0)+1);collect();ask(n,w);
   ckSay(c,'no','Not yet. Try again! You can do it!');return false;}
  if(CK)cards.forEach(c=>{if(keyed(c))ckRow(c);});
+ /* v185: a story read aloud with the Reading Coach (coach.js sends wc:done) */
+ $$('[data-kind="read"]',deck).forEach(r=>{const c=r.closest('.l2-card');r.addEventListener('wc:done',e=>{const d=e.detail||{};r.classList.add('l2-read-done');set(c,r.dataset.part,'(read with Word Coach)'+(d.said?' said: '+d.said:''));});});
  /* letter tiles */
  $$('[data-kind="tiles"]',deck).forEach(t=>{const c=t.closest('.l2-card'),p=t.dataset.part,box=$('[data-gap]',c)||$('[data-out]',t),tok=[];
   /* "n _ t": one line per missing letter (data-n); the letters go on the lines in order (a blend tile like "fr" fills two),
@@ -134,7 +136,58 @@
   go.addEventListener('click',()=>{t0=Date.now();clearInterval(tk);tk=setInterval(()=>{clk.textContent=mmss((Date.now()-t0)/1000);},250);go.hidden=true;dn.hidden=false;res.textContent='';set(c,g.dataset.part,'');});
   dn.addEventListener('click',()=>{clearInterval(tk);const sec=Math.max(1,(Date.now()-t0)/1000),wpm=Math.round(w*60/sec);clk.textContent=mmss(sec);dn.hidden=true;go.hidden=false;go.lastChild.textContent='Again';res.textContent='Time '+mmss(sec)+' · '+wpm+' words per minute';set(c,g.dataset.part,'reading time '+mmss(sec)+' · '+wpm+' words per minute');});});
  /* letter puzzle (app.js marks the letters): the marked letters, row by row */
- $$('[data-kind="lgrid"]',deck).forEach(g=>{const c=g.closest('.l2-card');g.addEventListener('click',()=>setTimeout(()=>{const v=$$('tr',g).map((tr,i)=>{const m=$$('.grid-cell.found',tr).map(b=>b.textContent).join('');return m?'Row '+(i+1)+': '+m:'';}).filter(Boolean).join('; ');set(c,g.dataset.part,v);},0));});
+ /* v185: word search like a word game. Tap the first letter, then the last one (or slide across): a straight line
+    (across, down or slanted, either way) that spells a word from the list is found and gets its own colour, in the
+    puzzle and in the word list. Without a word list any line of 2 letters or more is kept. Undo takes back the last one. */
+ const WS_COLORS=['#ffd23f','#5ec8f2','#ff8fb1','#7ad97a','#ffa94d','#b197fc','#3fd2c7','#ff6b6b','#c0eb75','#74c0fc','#f783ac','#e8c547'];
+ const wsLev=(a,b)=>{if(Math.abs(a.length-b.length)>1)return 2;const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length];};
+ $$('[data-kind="lgrid"]',deck).forEach(g=>{const c=g.closest('.l2-card'),box=$('.ws-box',g),svgEl=$('.ws-lines',g),count=$('[data-ws-count]',g),undo=$('[data-ws-undo]',g),how=g.nextElementSibling;
+  if(!box||!svgEl){g.addEventListener('click',()=>setTimeout(()=>{const v=$$('tr',g).map((tr,i)=>{const m=$$('.grid-cell.found',tr).map(b=>b.textContent).join('');return m?'Row '+(i+1)+': '+m:'';}).filter(Boolean).join('; ');set(c,g.dataset.part,v);},0));return;}
+  const norm=w=>String(w).toLowerCase().replace(/[^a-z]/g,'');let words=[];try{words=JSON.parse(g.dataset.words||'[]');}catch(e){}
+  const wn=words.map(norm),bank=c?$$('.l2-bank span',c):[];const rows=$$('tr',box).map(tr=>$$('td',tr));
+  rows.forEach((tds,r)=>tds.forEach((td,q)=>{const b=td.querySelector('.grid-cell');if(b){b.dataset.r=r;b.dataset.q=q;b.removeAttribute('aria-pressed');}}));
+  const at=(r,q)=>{const td=rows[r]&&rows[r][q];return td?td.querySelector('.grid-cell'):null;};
+  const pos=b=>({r:+b.dataset.r,q:+b.dataset.q});
+  /* a word that is one letter off (a typing slip in the module, "cleen") still counts for words of 5 letters or more */
+  const match=t=>{const r=t.split('').reverse().join('');let i=wn.findIndex(x=>x===t||x===r);if(i<0)i=wn.findIndex(x=>x.length>=5&&(wsLev(x,t)<=1||wsLev(x,r)<=1));return i;};
+  /* puzzles whose words bend (spiral puzzles) are played letter by letter: tap each next letter beside the last one */
+  const D=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];
+  const straight=w=>{for(let r=0;r<rows.length;r++)for(let q=0;q<rows[r].length;q++)for(const [dr,dq] of D){let s='';for(let i=0;i<w.length;i++){const x=at(r+dr*i,q+dq*i);if(!x)break;s+=x.textContent;}if(s.length===w.length&&match(norm(s))===wn.indexOf(w))return true;}return false;};
+  const bent=wn.length&&wn.filter(w=>!straight(w)).length>wn.length/3;
+  if(bent){box.classList.add('ws-path');if(how&&how.classList.contains('l2-how'))how.innerHTML='Tap the letters of a word <b>one by one</b>, each next letter beside the last one (the word can turn). Tap the last letter again to take it back.';}
+  const found=[];let start=null,drag=false,moved=null,sel=[];
+  const line=(a,b)=>{const dr=b.r-a.r,dq=b.q-a.q,n=Math.max(Math.abs(dr),Math.abs(dq));if(!n||(dr&&dq&&Math.abs(dr)!==Math.abs(dq)))return null;
+   const out=[];for(let i=0;i<=n;i++){const x=at(a.r+Math.sign(dr)*i,a.q+Math.sign(dq)*i);if(!x)return null;out.push(x);}return out;};
+  const ctr=b=>{const R=box.getBoundingClientRect(),k=b.getBoundingClientRect();return {x:k.left-R.left+k.width/2,y:k.top-R.top+k.height/2,h:Math.min(k.width,k.height)};};
+  const NS='http://www.w3.org/2000/svg',nextCol=()=>WS_COLORS[found.length%WS_COLORS.length];
+  const band=(cells,col,cls)=>{const pts=cells.map(ctr),l=document.createElementNS(NS,'polyline');l.setAttribute('points',pts.map(p=>p.x+','+p.y).join(' '));l.setAttribute('fill','none');l.setAttribute('stroke',col);l.setAttribute('stroke-width',String(pts[0].h*.8));l.setAttribute('stroke-linecap','round');l.setAttribute('stroke-linejoin','round');if(cls)l.setAttribute('class',cls);return l;};
+  const draw=preview=>{const R=box.getBoundingClientRect();svgEl.setAttribute('viewBox','0 0 '+R.width+' '+R.height);svgEl.setAttribute('width',R.width);svgEl.setAttribute('height',R.height);svgEl.replaceChildren();
+   found.forEach(f=>svgEl.appendChild(band(f.cells,f.col)));const pv=preview||(sel.length?sel:null);if(pv&&pv.length)svgEl.appendChild(band(pv,nextCol(),'pv'));};
+  const paintBank=()=>{bank.forEach(s=>{const f=found.find(x=>x.w===norm(s.textContent));s.classList.toggle('ws-got',!!f);if(f)s.style.setProperty('--ws',f.col);else s.style.removeProperty('--ws');});};
+  const show=()=>{count.textContent=words.length?found.length+' of '+words.length+' words found'+(found.length===words.length?'. Great job!':''):found.length+(found.length===1?' word':' words')+' found';undo.hidden=!found.length;paintBank();draw();};
+  const save=()=>{show();set(c,g.dataset.part,found.length?'Found: '+found.map(f=>f.word).join(', ')+(words.length?' ('+found.length+' of '+words.length+')':''):'');};
+  const clearStart=()=>{if(start)start.classList.remove('ws-start');start=null;};
+  const nope=msg=>{box.classList.remove('ws-no');void box.offsetWidth;box.classList.add('ws-no');count.textContent=msg;setTimeout(show,1300);};
+  const add=(cells,quiet)=>{const s=cells.map(x=>x.textContent).join(''),t=norm(s);let w,word;
+   if(wn.length){const i=match(t);if(i<0){if(!quiet)nope('“'+s+'” is not in the word list. Try again!');return false;}w=wn[i];word=words[i];if(found.some(f=>f.w===w)){if(!quiet)nope('You already found “'+word+'”.');return false;}}
+   else{if(cells.length<2)return false;if(found.some(f=>f.cells[0]===cells[0]&&f.cells[f.cells.length-1]===cells[cells.length-1]||f.cells[0]===cells[cells.length-1]&&f.cells[f.cells.length-1]===cells[0])){if(!quiet)nope('You already marked this word.');return false;}w=t;word=s;}
+   found.push({cells,w,word,col:nextCol()});cells.forEach(x=>{x.classList.add('ws-pop');setTimeout(()=>x.classList.remove('ws-pop'),450);});save();return true;};
+  const tryLine=(a,b)=>{const p=line(pos(a),pos(b));clearStart();draw();if(!p){nope('Go in a straight line.');return;}add(p);};
+  /* letter by letter (bent words) */
+  const near=(a,b)=>{const x=pos(a),y=pos(b);return Math.max(Math.abs(x.r-y.r),Math.abs(x.q-y.q))===1;};
+  const paintSel=()=>{$$('.grid-cell',box).forEach(x=>x.classList.toggle('ws-start',sel.includes(x)));draw();};
+  const tapPath=b=>{if(sel[sel.length-1]===b){sel.pop();}else if(sel.length&&near(sel[sel.length-1],b)&&!sel.includes(b)){sel.push(b);}else sel=[b];
+   if(sel.length>=2&&add(sel.slice(),true)){sel=[];}paintSel();if(sel.length)count.textContent=sel.map(x=>x.textContent).join('')+'…';else show();};
+  box.addEventListener('pointerdown',e=>{const b=e.target.closest('.grid-cell');if(!b)return;e.preventDefault();
+   if(bent){drag=true;moved=b;tapPath(b);try{box.setPointerCapture(e.pointerId);}catch(x){}return;}
+   drag=true;moved=null;if(start&&start!==b){const a=start;drag=false;tryLine(a,b);return;}if(start===b){clearStart();drag=false;return;}start=b;b.classList.add('ws-start');try{box.setPointerCapture(e.pointerId);}catch(x){}});
+  box.addEventListener('pointermove',e=>{if(!drag)return;const el=document.elementFromPoint(e.clientX,e.clientY),b=el&&el.closest&&el.closest('.ws-box .grid-cell');if(!b||b===moved)return;
+   if(bent){if(sel.length&&near(sel[sel.length-1],b)&&!sel.includes(b)){moved=b;tapPath(b);}return;}
+   if(!start||b===start)return;moved=b;const p=line(pos(start),pos(b));draw(p);});
+  box.addEventListener('pointerup',()=>{if(!drag)return;drag=false;if(bent)return;if(moved&&start){const a=start,b=moved;moved=null;tryLine(a,b);}});
+  box.addEventListener('click',e=>{if(e.target.closest('.grid-cell'))e.preventDefault();});
+  undo.addEventListener('click',()=>{found.pop();sel=[];paintSel();save();});
+  if(window.ResizeObserver)new ResizeObserver(()=>draw()).observe(box);else window.addEventListener('resize',()=>draw());show();});
  /* typed answer (Level 6: "write the name...", "copy the word...") */
  /* v177: paragraphs are kept (editorials, copyreading), the copyreading article comes ready to edit, and what is typed is kept on this device until it is sent */
  const drafts=[],wfill=[],wnorm=v=>v.replace(/\r/g,'').replace(/[ \t]+/g,' ').replace(/ *\n */g,'\n').replace(/\n{3,}/g,'\n\n').trim();
@@ -200,8 +253,19 @@
   /* v173: iPhones, iPads and Safari cannot record and listen at the same time, so there BULIG only listens and the
      words it hears are the answer (no voice recording). What it hears shows under the microphone as the pupil speaks. */
   let solo=!!SRC&&APPLE;const heardText=()=>(said.join(' ')+' '+part).replace(/\s+/g,' ').trim();
+  /* v185: voice check. The words BULIG listens for (a picture's name, a word with an answer key, the word on the spin
+     wheel): the card turns green with a check as soon as it is said; if not, "try again" (each try counts). */
+  let vcList=[];try{vcList=JSON.parse(r.dataset.vc||'[]');}catch(e){}const spinOut=$('[data-spin-word]',c);
+  const vcN=s=>String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9']+/g,'');
+  const vcL1=(a,b)=>{if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,d=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue;}if(++d>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++;}}return d+(a.length-i)+(b.length-j)<=1;};
+  const vcWant=()=>{if(spinOut&&spinOut.textContent.trim()&&spinOut.textContent.trim()!=='?')return [spinOut.textContent.trim()];return vcList;};
+  const vcHit=t=>{const want=vcWant();if(!want.length||!t)return null;const got=t.split(/\s+/).map(vcN).filter(Boolean);
+   return want.every(e=>String(e).split('|').some(a=>{a=vcN(a);return got.some(g=>g===a||(a.length>=5&&vcL1(g,a)));}));};
+  let vcOk=false;const vcSay=(ok,w)=>{r.classList.toggle('vc-ok',ok);r.classList.toggle('vc-no',!ok);vcOk=ok;
+   sub.textContent=ok?'Great! You said it right!':'Not yet. I heard \u201c'+w+'\u201d. Tap the microphone and try again.';if(ok)sfx('correct');else sfx('tryagain');};
+  const vcEnd=w=>{const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
   function srStart(){if(!SRC)return;said=[];part='';srErr='';srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=true;
-    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();if(t&&r.dataset.state==='rec')sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';};
+    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
     sr.onerror=e=>{srErr=e.error||'';if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
     sr.onend=()=>{if(part){said.push(part);part='';}if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
    make();try{sr.start();}catch(e){srOn=false;}}
@@ -209,7 +273,7 @@
   const ui=s=>{r.dataset.state=s;go.classList.toggle('on',s==='rec');go.hidden=s==='done';play.hidden=s!=='done';
    label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(rd?'Tap and read the story aloud':'Tap and say it');sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
   if(!canRec&&!solo){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
-  async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
+  async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';vcOk=false;r.classList.remove('vc-ok','vc-no');window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
    if(solo){srStart();if(srOn){t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();
      if(!srOn&&srErr){clearInterval(tick);if(srErr==='not-allowed'){ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg({name:'NotAllowedError'});if(heard)heard.hidden=false;}else if(!heardText()){solo=false;r.dataset.state='idle';start();}else stop();}},250);return;}solo=false;}
    try{st=await getMic();}catch(e){r.dataset.state='idle';label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(e);if(heard)heard.hidden=false;return;}
@@ -220,12 +284,12 @@
   /* listening only (iPhone): the words are the answer */
   function finSolo(){const w=heardText();if(!w||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
    inp.value='';ui('done');play.hidden=true;label.textContent=rd?'BULIG heard your reading':'BULIG heard your answer';sub.textContent='BULIG heard: \u201c'+w+'\u201d';
-   set(c,p,(rd?'(read aloud · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(spoken answer)')+' said: '+w);}
+   set(c,p,(rd?'(read aloud · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(spoken answer)')+' said: '+w);vcEnd(w);}
   function fin(){const blob=new Blob(ch,{type:((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/')});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
    url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');const base=rd?'(voice recording · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(voice recording)';set(c,p,base);
     /* the last words BULIG heard arrive a moment after the recording stops */
-    setTimeout(()=>{const w=heardText();if(w&&r.dataset.state==='done'){set(c,p,base+' said: '+w);sub.textContent='BULIG heard: \u201c'+w+'\u201d';}},800);};fr.readAsDataURL(blob);}
+    setTimeout(()=>{const w=heardText();if(w&&r.dataset.state==='done'){set(c,p,base+' said: '+w);sub.textContent='BULIG heard: \u201c'+w+'\u201d';vcEnd(w);}},800);};fr.readAsDataURL(blob);}
   r.addEventListener('wc:done',e=>{const d=e.detail||{};secs=+d.secs||0;inp.value='';if(url){URL.revokeObjectURL(url);url='';}ui('done');play.hidden=true;label.textContent='Read with Max';sub.textContent='Your reading is saved.';set(c,p,'(read with Word Coach'+(rd&&secs?' · time '+fmt(secs):'')+')'+(d.said?' said: '+d.said:''));});   // v184: the Word Coach run is the reading
   go.addEventListener('click',()=>{if(r.dataset.state==='rec'){if(Date.now()-t0<700)return;stop();}else if(r.dataset.state!=='starting')start();});
   again.addEventListener('click',()=>{if(pl){pl.pause();pl=null;}set(c,p,'');start();});
