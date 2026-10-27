@@ -74,12 +74,72 @@ function wc_review(array $c):string{
 
 /** v185: Levels 5 to 7: every card that holds a story or a passage (20 words or more, nothing else to answer, or the
     reading-speed timer) gets the Reading Coach, as in Level 4: the pupil reads it aloud with Max before going on. */
-function wc_story(?array $s):?array{
+function wc_story(?array $s,?array $a=null):?array{
  if(!$s)return $s;
- foreach($s['cards'] as &$c){$k=$c['ui']['answer']??[];if(!in_array($k,[['look'],['speed']],true))continue;
-  $t=trim(preg_replace('~\s+~u',' ',(string)($c['text']??'')));if(str_word_count($t)<20)continue;
-  $c['ui']['answer'][]='read';}
+ foreach($s['cards'] as &$c){$k=$c['ui']['answer']??[];
+  /* v186: "(Read Aloud) “My Food” These are the foods I eat. … Who cooks the food in the story?": the story and the question
+     share one card (Level 5 assessments). The story is shown first with the Reading Coach to practise (no score: the
+     card's answer is what counts), then the question. */
+  if(preg_match('~^\(Read Aloud\)\s*[“"]([^”"]{2,40})[”"]\s*(.+)$~su',trim((string)($c['text']??'')),$m)){$rest=$m[2];$q=null;
+   foreach(preg_split('~(?<=[.!?])\s+~u',$rest,-1,PREG_SPLIT_OFFSET_CAPTURE) as [$x,$o])if(str_ends_with(trim($x),'?')||preg_match('~^([“"]|(Write|Circle|Choose|Draw|Tell)\b)~u',$x)){$q=$o;break;}
+   if($q&&str_word_count(substr($rest,0,$q))>=5)$c['ui']['practice']=['title'=>trim($m[1]),'story'=>trim(preg_replace('~\s+~u',' ',substr($rest,0,$q))),'q'=>trim(substr($rest,$q))];}
+  if(!in_array($k,[['look'],['speed']],true))continue;
+  $ttl=null;$t=wc_story_text((string)($c['text']??''),$ttl);if($ttl&&empty($c['story']))$c['story']=$ttl;
+  /* v186: "Listen carefully as your teacher reads the story “My Food”": the story is in the lesson's "Listen:" activity; put it here. */
+  if(str_word_count($t)<10&&$a&&$k===['look']&&preg_match('~\blisten~iu',(string)($c['text']??''))&&preg_match('~\b(story|passage|poem)\b~iu',(string)($c['text']??''))&&($t=wc_listen_story($a,implode(' ',array_column($s['cards'],'text'))))!==''){
+   $c['story']=preg_match('~\b(?:story|passage|poem)\s*[“"]([^”"]{2,60})[”"]~iu',(string)$c['text'],$m)?trim($m[1]):'';$c['text']=$t;}
+  /* "Lesson 18 – Mineral Resources Teacher reads the poem." (tests): the poem of that lesson. */
+  if(str_word_count($t)<10&&$a&&$k===['look']&&preg_match('~Lesson\s+(\d+)\s*[–-]\s*(.+?)\s+Teacher reads the (?:story|passage|poem)\.?\s*$~u',trim((string)($c['text']??'')),$m)
+   &&($lid=(int)val("SELECT l.id FROM lessons l JOIN lessons me ON me.module_id=l.module_id WHERE me.id=? AND l.title IN (?,?) LIMIT 1",[(int)$a['lesson_id'],'Activity '.$m[1],'Lesson '.$m[1]]))
+   &&($t=wc_listen_story(['lesson_id'=>$lid,'id'=>0]))!==''){$c['story']=trim($m[2]);$c['text']=$t;}
+  if(str_word_count($t)<10)continue;
+  $c['ui']['answer'][]='read';$c['ui']['wct']=$t;
+  /* v186: a story with no pictures here gets the pictures of the same story on the lesson's "Listen:" page. */
+  if(empty($c['images'])&&$a&&($x=wc_listen_card($a,$t))&&$x['images']&&$x['share']>=.6)$c['images']=$x['images'];}
  unset($c);return $s;
+}
+/** v186: the story of the lesson's "Listen: …" activity (Level 5), or ''. */
+function wc_listen_story(array $a,string $hint=''):string{return wc_listen_card($a,$hint)['t']??'';}
+/** The lesson's "Listen:" story that best fits $hint: ['t' => story, 'images' => its pictures, 'share' => 0-1 words of $hint in it]. */
+function wc_listen_card(array $a,string $hint=''):?array{
+ $wd=fn($x)=>array_unique(array_filter(preg_split('~[^\p{L}]+~u',mb_strtolower($x)),fn($w)=>mb_strlen($w)>3));$q=$wd($hint);$best=null;$top=-1;
+ foreach(rows("SELECT * FROM activities WHERE lesson_id=? AND title LIKE 'Listen:%' AND id<>? ORDER BY position",[(int)$a['lesson_id'],(int)$a['id']]) as $x){
+  $set=lesson_level((int)$x['lesson_id'])===6?l5_set($x):l6_set($x);if(!$set)continue;
+  $t=trim(implode(' ',array_filter(array_map(fn($c)=>wc_story_text((string)($c['text']??'')),$set['cards']))));if($t==='')continue;
+  /* A lesson with two "Listen" stories: the one the questions talk about. */
+  $sc=count(array_intersect($wd($t),$q));if($sc>$top){$top=$sc;$best=['t'=>$t,'images'=>array_merge(...array_map(fn($c)=>(array)($c['images']??[]),$set['cards'])),'share'=>$q?$sc/count($q):0];}}
+ return $best;
+}
+/** v186: the part of a card's text that is the story (line breaks kept), without the directions around it. */
+function wc_display(string $raw,string $story):string{
+ $w=preg_split('~\s+~u',trim($story),-1,PREG_SPLIT_NO_EMPTY);if(count($w)<3)return $story;
+ $pat=fn($ws)=>implode('[\s·•,;:–-]+',array_map(fn($x)=>preg_quote($x,'~'),$ws));
+ if(!preg_match('~'.$pat(array_slice($w,0,3)).'~u',$raw,$a,PREG_OFFSET_CAPTURE)||!preg_match_all('~'.$pat(array_slice($w,-3)).'~u',$raw,$b,PREG_OFFSET_CAPTURE))return $story;
+ $st=$a[0][1];$z=end($b[0]);$en=$z[1]+strlen($z[0]);return $en>$st?trim(substr($raw,$st,$en-$st)):$story;
+}
+/** v186: only the story or passage of a card, never its directions ("Listen carefully as your teacher reads…",
+    "Part II: Listening Comprehension", "Then, answer the questions below"). '' when no story is left. */
+function wc_story_text(string $t,?string &$title=null):string{
+ /* "Story for the teacher to read: Vegetables" on its own line: the story's title, then the story. */
+ if(preg_match('~\b(?:story|passage|poem)\b[^:\n]{0,40}:[ \t]*([^\n]{1,40})\n(.+)$~isu',$t,$m)){$title=trim($m[1]);$t=$m[2];}
+ $t=trim(preg_replace('~\s+~u',' ',$t));if($t==='')return '';
+ $how='~\b(listen|teacher|direction|instruction|answer|circle|encircle|choose|write|match|underline|questions?|part\s+[ivx]+|activity\s+\d|lesson\s+\d|assessment|items?|pupils?|learners?|students?|word bank|based on|pre-?test|post-?test|comprehension|fill in|blanks?|missing words?|missing letters?|supply)s?\b~iu';
+ /* A story in quotation marks ("Teacher reads: “…”"): that is the text. */
+ if(preg_match_all('~(?:reads\s*:?\s*["“]([^"”]{60,})["”])|(?:“([^”]{60,})”)~u',$t,$m,PREG_SET_ORDER))foreach($m as $x){$q=trim($x[2]??''?:$x[1]);$pre=mb_substr($t,0,(int)mb_strpos($t,$q));
+  if(str_word_count($q)>=20&&preg_match($how,$pre))return $q;}
+ /* "Story: …" / "Passage: …": the text after the label. */
+ if(preg_match('~\b(?:story|passage|poem)\s*:\s*(.+)$~iu',$t,$m))$t=$m[1];
+ /* Not a story: blanks to fill, word lists, crossword clues, sentences to listen to. */
+ if(preg_match('~__|\s•\s|\bAcross\s*:|\bSentence\s+\d|\bwords? in the box\b|\bword clues\b|\s\d+\.\s+\p{L}+\s+[–-]\s~iu',$t))return '';
+ /* A heading before a title in quotation marks ("Activity 1: “The Lost Lunchbox” Sarah …"); "9: Set B". */
+ if(preg_match('~^([^“"]{0,120})([“"][^”"]{3,60}[”"].*)$~u',$t,$m)&&preg_match($how,$m[1]))$t=$m[2];
+ $t=preg_replace('~^\d+\s*:\s*(Set\s+[A-Z]\b\s*)?~u','',$t);
+ /* Drop the directions before the story, and stop where the questions start. */
+ $end='~\b(answer the|answer these|questions?\s+(below|that follow)|circle the|choose the|directions?\s*:|instructions?\s*:)|\bpart\s+[ivx]+\b|^\(?\d+[.)]\s|\b(vocabulary focus|aral connection|connection|focus|skills?)\s*:~iu';
+ $ss=preg_split('~(?<=[.!?])\s+|\s+·\s+~u',$t);$out=[];$in=false;
+ foreach($ss as $x){
+  if(!$in){if(preg_match($how,$x)||preg_match('~:\s*$~u',$x))continue;$in=true;}elseif(preg_match($end,$x))break;$out[]=$x;}
+ return trim(implode(' ',$out));
 }
 
 /** v185: Voice check. A "say it" card with no text to read (a picture to name, a word with an answer key) gets the words

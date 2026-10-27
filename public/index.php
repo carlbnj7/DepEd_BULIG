@@ -8,7 +8,8 @@ try{
  if($page==='offline_sync'){offline_sync_info();}
  $tk=$page==='login'&&isset($_GET['key'])?(string)$_GET['key']:'';
  if(!$u&&$page==='credits'){head('Credits · BULIG','credits-public');echo '<main class="cr-public"><a class="btn secondary cr-back" href="?page=login">'.icon('arrow','flip').'Back to sign in</a>';credits_view();echo '</main>';foot();}
- elseif(!$u){if($page!=='login')go('?page=login');if($tk!=='')key_login_view($tk);else login_view();}
+ elseif(!$u){if($page!=='login'&&isset($_GET['page']))go('?page=login');   // the bare address shows sign-in at once (no extra redirect)
+ if($tk!=='')key_login_view($tk);else login_view();}
  elseif(teacher_must_change($u)){teacher_first_password_view($u);foot();}
  elseif($u['role']==='pupil'&&!in_array($page,['rcheck','credits','offline_manifest','offline_levels','offline_sync','login'],true)&&rc_needed($u)){go('?page=rcheck');}
  elseif($page==='rcheck'&&$u['role']==='pupil'){rc_pupil_view($u);}

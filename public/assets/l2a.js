@@ -54,7 +54,7 @@
  function cardAnswer(c){if(skip.has(c.dataset.n))return '(skipped)';const kinds=(c.dataset.kinds||'').split(' ').filter(Boolean);if(!kinds.length||kinds.every(k=>k==='look'))return '(seen)';
   return kinds.map((k,p)=>k==='look'?'':(val.get(key(c,p))||'')).filter(Boolean).join(' · ');}
  function needs(c){return (c.dataset.kinds||'').split(' ').some(k=>k&&k!=='look');}
- function collect(){if(ro)return;out.value='BULIG card answers\n'+cards.map(c=>'Card '+c.dataset.n+(c.dataset.t?' (no. '+c.dataset.t+')':'')+': '+cardAnswer(c)).join('\n')+triesLine();paintDots();}
+ function collect(){if(ro)return;out.value='BULIG card answers\n'+[...cards].sort((a,b)=>a.dataset.n-b.dataset.n).map(c=>'Card '+c.dataset.n+(c.dataset.t?' (no. '+c.dataset.t+')':'')+': '+cardAnswer(c)).join('\n')+triesLine();paintDots();}
  function set(c,p,v){val.set(key(c,p),v);collect();}
 
  /* ---------- BULIG checks each card right away (v172) ----------
@@ -318,7 +318,7 @@
  form.addEventListener('submit',e=>{if(ro||sure)return;collect();
   const unchecked=cards.find(c=>keyed(c)&&!autoOnly(c)&&!cst[c.dataset.n]&&cardAnswer(c)!=='');
   if(unchecked){e.preventDefault();e.stopImmediatePropagation();show(cards.indexOf(unchecked));checkCard(unchecked).then(ok=>{if(ok)form.requestSubmit();});return;}const empty=cards.filter(c=>needs(c)&&cardAnswer(c)==='');if(!empty.length)return;
-  e.preventDefault();e.stopImmediatePropagation();const n=empty[0].dataset.n;fb.className='answer-feedback l1-fb tryagain';fb.replaceChildren();
+  e.preventDefault();e.stopImmediatePropagation();const n=cards.indexOf(empty[0])+1;fb.className='answer-feedback l1-fb tryagain';fb.replaceChildren();
   const t=document.createElement('strong');t.textContent=empty.length===1?'Card '+n+' has no answer yet.':empty.length+' cards have no answer yet.';
   const row=document.createElement('div');row.className='l2-row';const g=document.createElement('button'),a=document.createElement('button');g.type=a.type='button';g.className='l1-btn2';a.className='l1-btn2';g.textContent='Go to card '+n;a.textContent='Submit anyway';
   g.addEventListener('click',()=>{fb.replaceChildren();fb.className='answer-feedback l1-fb';show(+n-1);});a.addEventListener('click',()=>{fb.replaceChildren();fb.className='answer-feedback l1-fb';sure=true;form.requestSubmit();sure=false;});row.append(g,a);fb.append(t,row);},true);

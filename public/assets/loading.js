@@ -14,7 +14,11 @@
   if(document.readyState==='complete')go();else{window.addEventListener('load',go,{once:true});setTimeout(go,max);}}
  /* ---------- opening screen ---------- */
  function hideBoot(){if(!d.classList.contains('bulig-boot'))return;d.classList.add('boot-out');try{sessionStorage.setItem('bulig-open','1');}catch(e){}setTimeout(function(){d.classList.remove('bulig-boot','boot-out');},still?0:650);}
- if(d.classList.contains('bulig-boot'))whenLoaded(hideBoot,arrived+2500,6000);
+ /* Speed (v186): the opening screen leaves as soon as the page can be used (it no longer waits for every picture),
+    after at least 1.2 seconds so the logo is seen. */
+ function whenReady(fn,min,max){var done=false;function go(){if(done)return;done=true;setTimeout(fn,still?0:Math.max(0,min-since()));}
+  if(document.readyState!=='loading')go();else{document.addEventListener('DOMContentLoaded',go,{once:true});setTimeout(go,max);}}
+ if(d.classList.contains('bulig-boot'))whenReady(hideBoot,arrived+1200,3000);
  /* ---------- hello after signing in ---------- */
  var hello=document.querySelector('[data-hello]');
  if(hello)whenLoaded(function(){hello.classList.add('out');setTimeout(function(){hello.remove();document.dispatchEvent(new Event('bulig:hello-done'));},still?0:600);},arrived+2600,6500);
