@@ -126,7 +126,7 @@ function card_tries(string $response):array{
  if(!preg_match('/\nTries: ([0-9=, ]*)\s*$/',$response,$m))return [];$t=[];
  foreach(explode(',',$m[1]) as $p)if(preg_match('/^\s*(\d+)=(\d+)\s*$/',$p,$x))$t[(int)$x[1]]=min(999,(int)$x[2]);return $t;
 }
-function card_strip_tries(string $r):string{return preg_replace('/\nTries: [0-9=, ]*\s*$/','',$r);}
+function card_strip_tries(string $r):string{return preg_replace('/\nTries: [0-9=, ]*\s*$/','',preg_replace('/\nCoach: [^\n]*/u','',$r));}   // v184: the Word Coach line too
 function card_tries_line(array $t):string{$t=array_filter($t);ksort($t);return $t?"\nTries: ".implode(', ',array_map(fn($n,$v)=>$n.'='.$v,array_keys($t),$t)):'';}
 /** At "Done": add the tries BULIG counted on this device's session (the higher count wins). */
 function key_merge_tries(string $answer,int $aid):string{
@@ -152,13 +152,14 @@ function key_score(array $a,string $response):?array{
  $got=card_answers($response);$right=0;$total=0;$cards=[];
  $ask=[];foreach($set['cards'] as $i=>$cd)if(array_diff($cd['ui']['answer']??[],['look']))$ask[]=$i+1;
  $nums=array_values(array_unique(array_merge(array_map('intval',array_keys($key)),$ask)));sort($nums);
- $tries=card_tries($response);
+ $tries=card_tries($response);$wc=function_exists('card_coach')?card_coach($response):[];   // v184: Word Coach results
  $dir=(string)($set['instruction']??'');
  foreach($nums as $n){if(($got[$n]??'')==='(skipped)')continue;   // a page skipped with a bug report: not scored (v176)
   $k=$key[$n]??null;$g=(string)($got[$n]??'');[$pts,$of,$want,$t]=key_card_points($k,$g);
   if(!$k&&($exp=say_words()[activity_key_id($a).':'.$n]??say_expected($set['cards'][$n-1]??[],$dir))){$t='say';$want=implode(', ',array_map(fn($x)=>explode('|',$x)[0],$exp));$h=key_said($g);if($h!==null)$pts=say_match($exp,$h);}/* pronunciation (v172) */
   $ok=$pts>=$of;$tr=$k?($tries[$n]??0):0;
   if($tr)$pts=round($pts*max(0,1-$tr/KEY_TRIES),2);/* each wrong try takes away a third (v172) */
+  if(isset($wc[$n])&&$wc[$n]['p']!==null)$pts=round($of*$wc[$n]['p']/100,2);/* v184: the Word Coach run is the reading: its score counts */
   $right+=$pts;$total+=$of;$cards[$n]=['got'=>$g,'want'=>$want,'pts'=>$pts,'of'=>$of,'t'=>$t,'fix'=>!empty($k['fix']),'ok'=>$ok,'tries'=>$tr];}
  return $total?['right'=>$right,'total'=>$total,'cards'=>$cards]:null;
 }

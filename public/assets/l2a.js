@@ -226,6 +226,7 @@
    url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');const base=rd?'(voice recording · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(voice recording)';set(c,p,base);
     /* the last words BULIG heard arrive a moment after the recording stops */
     setTimeout(()=>{const w=heardText();if(w&&r.dataset.state==='done'){set(c,p,base+' said: '+w);sub.textContent='BULIG heard: \u201c'+w+'\u201d';}},800);};fr.readAsDataURL(blob);}
+  r.addEventListener('wc:done',e=>{const d=e.detail||{};secs=+d.secs||0;inp.value='';if(url){URL.revokeObjectURL(url);url='';}ui('done');play.hidden=true;label.textContent='Read with Max';sub.textContent='Your reading is saved.';set(c,p,'(read with Word Coach'+(rd&&secs?' · time '+fmt(secs):'')+')'+(d.said?' said: '+d.said:''));});   // v184: the Word Coach run is the reading
   go.addEventListener('click',()=>{if(r.dataset.state==='rec'){if(Date.now()-t0<700)return;stop();}else if(r.dataset.state!=='starting')start();});
   again.addEventListener('click',()=>{if(pl){pl.pause();pl=null;}set(c,p,'');start();});
   lis.addEventListener('click',()=>{if(!url)return;if(pl&&!pl.paused){pl.pause();return;}if(!pl){pl=new Audio(url);pl.addEventListener('timeupdate',()=>bar.style.setProperty('--p',String(Math.min(1,pl.currentTime/(secs||1)))));pl.addEventListener('ended',()=>lis.classList.remove('on'));}pl.currentTime=0;pl.play().then(()=>lis.classList.add('on')).catch(()=>{});});
