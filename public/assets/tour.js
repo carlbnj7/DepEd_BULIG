@@ -106,7 +106,7 @@
    [['.pk-solo'],'BULIG is your buddy','You do this one on your own. Follow the steps, then tap I did it!'],
    [['.pk-poems'],'Choose a poem','Tap a poem. BULIG reads one line, then you read the next. The words light up as they are read.'],
    [['.pk-wordgame'],'Word game','Tap New word. BULIG says a word, then you say a word friend.'],
-   [['.ka-bar'],'Listen and read along','Tap play. BULIG reads the passage and each word lights up, so you can follow. Tap Slow to hear it slower.'],
+   [['.wc-gate'],'Reading Coach','Tap Start. Max reads it to you slowly, then you read it aloud and each word turns green when you say it right.'],
    [['.l1-dchoice'],'Your drawing','Draw on paper and take a photo, or draw here in BULIG. Check it, then send it.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null],
   l2:[
@@ -117,7 +117,7 @@
    [['.l2-card:not([hidden]) .l3-bgrid'],'Letter boxes','Tap the letters in order. Each one jumps onto the next line. Tap a letter on a line to take it back.'],
    [['.pk-solo'],'BULIG is your buddy','You do this one on your own. Follow the steps, then tap I did it!'],
    [['.pk-poems'],'Choose a poem','Tap a poem. BULIG reads one line, then you read the next. The words light up as they are read.'],
-   [['.ka-bar'],'Listen and read along','Tap play. BULIG reads the story and each word lights up, so you can follow. Tap Slow to hear it slower.'],
+   [['.wc-gate'],'Reading Coach','Tap Start. Max reads it to you slowly, then you read it aloud and each word turns green when you say it right.'],
    [['.l2-card:not([hidden]) .l2-chips'],'Tap a word','Tap the word or sound you choose. It turns green.'],
    [['.l2-card:not([hidden]) button.l2-pic'],'Tap a picture','Tap the picture you choose. It gets a green check.'],
    [['.l2-card:not([hidden]) .l2-nums'],'Count','Tap the number of sounds you hear.'],

@@ -71,3 +71,26 @@ function wc_review(array $c):string{
  foreach($r as $n=>$x)$h.='<li>'.($n?'<b>Card '.$n.'</b> · ':'').($x['p']===null?'Practised (the device could not listen)':'Word Coach '.(int)$x['p'].'%').($x['w']?' · practise: <span class="wc-rw">'.e(implode(', ',$x['w'])).'</span>':' · every word said well').'</li>';
  return '<div class="wc-review"><span class="eyebrow">WORD COACH</span><ul>'.$h.'</ul></div>';
 }
+
+/** v185: Levels 5 to 7: every card that holds a story or a passage (20 words or more, nothing else to answer, or the
+    reading-speed timer) gets the Reading Coach, as in Level 4: the pupil reads it aloud with Max before going on. */
+function wc_story(?array $s):?array{
+ if(!$s)return $s;
+ foreach($s['cards'] as &$c){$k=$c['ui']['answer']??[];if(!in_array($k,[['look'],['speed']],true))continue;
+  $t=trim(preg_replace('~\s+~u',' ',(string)($c['text']??'')));if(str_word_count($t)<20)continue;
+  $c['ui']['answer'][]='read';}
+ unset($c);return $s;
+}
+
+/** v185: Voice check. A "say it" card with no text to read (a picture to name, a word with an answer key) gets the words
+    BULIG listens for: while the pupil speaks the words heard show live, and the card turns green with a check when the
+    right word is said. Each "try again" counts as a wrong try (a third of the card's points). */
+function vc_words(array $a,array $c,int $n):array{
+ if(!function_exists('say_words'))return [];$id=activity_key_id($a);
+ $w=say_words()[$id.':'.$n]??[];if($w)return array_values(array_map('strval',$w));
+ $k=(activity_key($a)??[])[$n]??null;if(!$k)return [];
+ if(($k['t']??'')==='choice')return [implode('|',array_map('key_letters',array_merge([(string)$k['a']],(array)($k['alt']??[]))))];
+ $alts=[];foreach((array)($k['alts']??[]) as $alt)if(count($alt)===1&&($alt[0]['k']??'')==='eq'&&preg_match('~^[\p{L}\']+( [\p{L}\']+){0,3}$~u',(string)$alt[0]['v']))$alts[]=(string)$alt[0]['v'];
+ return $alts?[implode('|',$alts)]:[];
+}
+

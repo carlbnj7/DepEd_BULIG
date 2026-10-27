@@ -31,7 +31,8 @@ function audit(string $action,string $detail):void{q('INSERT INTO audit_log(acto
 function normalize_answer(string $s):string{$s=strtolower(trim($s));return preg_replace('/[^\pL\pN]+/u',' ',$s)??'';}
 function word_match(string $expected,string $heard):array{
  $a=preg_split('/\s+/',trim(normalize_answer($expected)),-1,PREG_SPLIT_NO_EMPTY);$b=preg_split('/\s+/',trim(normalize_answer($heard)),-1,PREG_SPLIT_NO_EMPTY);
- if(count($a)>300||count($b)>300)fail('Use a reading passage and transcript of at most 300 words.');
+ // Level 4 passages run up to 500 words; a longer reading is trimmed, never refused (the pupil's answer must save).
+ $a=array_slice($a,0,800);$b=array_slice($b,0,800);
  // Word-level edit distance: insertions, substitutions and omissions count as errors.
  $d=[];for($i=0;$i<=count($a);$i++)$d[$i]=[$i];for($j=0;$j<=count($b);$j++)$d[0][$j]=$j;
  for($i=1;$i<=count($a);$i++)for($j=1;$j<=count($b);$j++)$d[$i][$j]=min($d[$i-1][$j]+1,$d[$i][$j-1]+1,$d[$i-1][$j-1]+($a[$i-1]===$b[$j-1]?0:1));

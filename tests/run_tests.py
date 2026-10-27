@@ -530,7 +530,7 @@ def test_story(p):
         data = json.loads(text)
     except ValueError:
         data = []
-    check('All 17 story pages load for turning pages (Bob the Builder is page 15)', len(data) == 17 and all('<svg' in d.get('html', '') for d in data), f'{len(data)} pages')
+    check('All 17 story pages load for turning pages (Bob the Worker is page 15)', len(data) == 17 and all('<svg' in d.get('html', '') for d in data), f'{len(data)} pages')
     page_ok(p, '?page=story&print=1', 'The print version of the story opens')
     _, _, home = p.req('?page=dashboard')
     check('The pupil Overview has the Story time card', 'class="cm-card' in home and 'href="?page=story' in home, '')
@@ -552,7 +552,7 @@ def test_friends(p):
                if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'{k}-{x}.webp'))]
     missing += [f'claude-{x}' for x in ('hello', 'thumbs', 'shield', 'worried', 'sad')
                 if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', f'claude-{x}.webp'))]
-    check('All 60 pictures of the 12 friends are in place (Bob the Builder too)', not missing, missing)
+    check('All 60 pictures of the 12 friends are in place (Bob the Worker too)', not missing, missing)
     _, _, text = p.req('?page=dashboard')
     m = re.search(r'<meta name="bulig-friends" content="([^"]+)"', text)
     data = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&').replace('&#039;', "'")) if m else {}
@@ -581,8 +581,8 @@ def test_friends(p):
 
 
 def test_whats_new(p):
-    """Bob the Builder's "There's a new update" popup: once per account, then on the bell, and again with ?whatsnew=1."""
-    section('5c4. New update popup (Bob the Builder)')
+    """Bob the Worker's "There's a new update" popup: once per account, then on the bell, and again with ?whatsnew=1."""
+    section('5c4. New update popup (Bob the Worker)')
     q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
     _, _, text = p.req('?page=dashboard')
     me = re.search(r'name="bulig-uid" content="(\d+)"', text)
@@ -591,7 +591,7 @@ def test_whats_new(p):
     q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
     q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
     _, _, text = p.req('?page=dashboard')
-    check('The first page after the update shows Bob the Builder’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Win stars!' in text)
+    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Win stars!' in text)
     _, _, text = p.req('?page=dashboard')
     check('The popup comes only once', 'data-wn' not in text)
     check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')

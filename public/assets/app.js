@@ -234,6 +234,8 @@ function setup(board){if(board.dataset.ready)return;board.dataset.ready='1';cons
   const n=isA?key:pick.key,l=isA?pick.key:key;clearPick();connect(n,l);}
  board.addEventListener('click',e=>{const el=e.target.closest('.match-item,.match-choice');if(el)tap(el);});
  board.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('.match-item,.match-choice')){e.preventDefault();tap(e.target);}});
+ /* v185: the answer lists (keyboard and screen readers) draw the same lines and save the answer, in every card */
+ board.addEventListener('change',e=>{const s=e.target.closest('select[data-match]');if(!s||readonly)return;if(s.value)connect(s.dataset.match,s.value.toLowerCase());else{pairs.delete(s.dataset.match);save();draw();}});
  /* v177: tap only. Dragging was dropped: a long choice made the line miss, and scrolling past it on a phone cancelled the tap. */
  if(box&&box.value)for(const m of box.value.matchAll(/(\d+)\s*-\s*([a-z])/gi))pairs.set(m[1],m[2].toLowerCase());
  board.addEventListener('redraw',draw);board.addEventListener('dragstart',e=>e.preventDefault());board.querySelectorAll('img').forEach(i=>i.draggable=false);new ResizeObserver(draw).observe(board);board.querySelectorAll('img').forEach(i=>i.addEventListener('load',draw));draw();}
@@ -242,7 +244,7 @@ scan();new MutationObserver(()=>scan()).observe(document.body,{childList:true,su
 document.addEventListener('click',e=>{if(e.target.closest('[data-native-next],[data-native-prev],#demo-next,#demo-prev'))setTimeout(()=>document.querySelectorAll('[data-match-board]').forEach(b=>b.dispatchEvent(new Event('redraw'))),50);});})();
 
 /* Level 5 letter puzzles: tap letters to mark the words you find */
-document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.letter-grid .grid-cell');if(!b)return;b.classList.toggle('found');b.setAttribute('aria-pressed',b.classList.contains('found')?'true':'false');});
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.letter-grid .grid-cell');if(!b||b.closest('[data-ws]'))return;b.classList.toggle('found');b.setAttribute('aria-pressed',b.classList.contains('found')?'true':'false');});
 
 /* Level 6 reading for speed: time the reading, show words per minute, save it as the card's answer */
 document.addEventListener('click',function(e){
@@ -708,7 +710,7 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  build();let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,120);});
 })();
 
-// v178: Bob the Builder's "There's a new update" popup: close with the button, the shade or Escape.
+// v178: Bob the Worker's "There's a new update" popup: close with the button, the shade or Escape.
 (()=>{const box=document.querySelector('[data-wn]');if(!box)return;const close=()=>{box.hidden=true;};
  box.addEventListener('click',e=>{if(e.target===box||e.target.closest('[data-wn-close]'))close();});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!box.hidden)close();});

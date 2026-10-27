@@ -1,5 +1,5 @@
 <?php
-/* What's new (v178, list v181): Bob the Builder's popup. Each account sees it once, on the first page after signing in, after
+/* What's new (v178, list v181): Bob the Worker's popup. Each account sees it once, on the first page after signing in, after
    BULIG is updated: a construction sign with Bob and the new things for their role. Closing it keeps a copy on the
    bell (Notifications), and ?whatsnew=1 opens it again. Seen is kept in settings (whatsnew_<update>_<id>), no SQL.
    For a new update: change WHATS_NEW_ID and the lists below. */
@@ -10,7 +10,7 @@ const WHATS_NEW=[
   ['star','Post-test stars','Post-tests give up to 5 stars. Get 4 stars to open the next level.'],
   ['edit','Draw and type in BULIG','Puzzles, word boxes, crosswords and drawings are now done right here, not on paper.'],
   ['check','Save me when you sign out','Saving your account now asks when you sign out, not when you sign in.'],
-  ['comic','Bob is on the comic cover','Find Bob the Builder with all the BULIG friends in Story time.'],
+  ['comic','Bob is on the comic cover','Find Bob the Worker with all the BULIG friends in Story time.'],
  ],
  'teacher'=>[
   ['star','Stars and the 80% rule','Every lesson activity gives up to 3 stars, shown over each stop on the pupil\'s road map. A pupil needs 2 stars (80%) to go on; below that the activity opens again. Post-tests give 5 stars and still need 80% to open the next level. Pre-tests have no stars.'],
@@ -44,15 +44,15 @@ function whats_new_pop(?array $u):string{
   if(function_exists('teacher_must_change')&&teacher_must_change($u))return '';
   if($u['role']==='pupil'&&function_exists('friends_meta')&&friends_meta($u)!=='')return '';   // the friends say hello first; Bob comes next time
   try{q('INSERT IGNORE INTO settings(setting_key,setting_value) VALUES(?,?)',[wn_key((int)$u['id']),date('Y-m-d H:i:s')]);}catch(Throwable $e){}
-  if(function_exists('notify'))notify((int)$u['id'],'update','BULIG has a new update!','Bob the Builder built new things for you. Tap to see them again.','?page=dashboard&whatsnew=1');
+  if(function_exists('notify'))notify((int)$u['id'],'update','BULIG has a new update!','Bob the Worker made new things for you. Tap to see them again.','?page=dashboard&whatsnew=1');
  }
  $first=explode(' ',trim((string)$u['name']))[0];
  $li='';foreach(WHATS_NEW[$u['role']] as [$ic,$t,$d])$li.='<li><span class="wn-ic">'.wn_icon($ic).'</span><span><b>'.e($t).'</b><small>'.e($d).'</small></span></li>';
  return '<div class="wn-shade" data-wn role="dialog" aria-modal="true" aria-labelledby="wn-title"><div class="wn-box">'
   .'<div class="wn-tape" aria-hidden="true"></div>'
-  .'<img class="wn-bob" src="'.e(friend_img('bob','blueprint')).'" alt="Bob the Builder" width="150" height="326">'
+  .'<img class="wn-bob" src="'.e(friend_img('bob','blueprint')).'" alt="Bob the Worker" width="150" height="326">'
   .'<div class="wn-body"><span class="wn-badge">'.wn_icon('star').'NEW UPDATE</span><h2 id="wn-title">There’s a new update, '.e($first).'!</h2>'
-  .'<p class="wn-say"><b>Bob the Builder:</b> I built new things in BULIG for you. Here is what is new!</p><ul class="wn-list">'.$li.'</ul>'
+  .'<p class="wn-say"><b>Bob the Worker:</b> I made new things in BULIG for you. Here is what is new!</p><ul class="wn-list">'.$li.'</ul>'
   .'<button type="button" class="btn primary wn-ok" data-wn-close>'.icon('check').'Got it, Bob!</button></div>'
   .'<div class="wn-tape wn-tape-b" aria-hidden="true"></div></div></div>';
 }
