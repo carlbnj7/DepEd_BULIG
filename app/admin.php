@@ -67,6 +67,7 @@ function admin_teachers_view(array $u):void{
   echo '<a href="?page=accounts&amp;from=t'.$t['id'].'#move">'.icon('swap').'Move pupils</a>';
   echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_toggle_teacher"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="'.($t['active']?'Turn off '.e($t['name']).'? They will not be able to sign in.':'Turn on '.e($t['name']).'?').'">'.icon('lock').($t['active']?'Turn off':'Turn on').'</button></form>';
   echo admin_teacher_delete($t,$list,!$free);
+  echo admin_section_editor($t,$sl);
   echo '<details class="ws-more"><summary>'.icon('edit').'Edit name &amp; sex</summary><form method="post" class="ws-inline tn-edit">'.csrf_field().'<input type="hidden" name="action" value="admin_rename_teacher"><input type="hidden" name="id" value="'.$t['id'].'">'.name_fields(name_parts_of((int)$t['id'],$t['name'])).'<label>Sex<select name="teacher_sex">'.(function($m){return '<option value="female"'.(!$m?' selected':'').'>Female</option><option value="male"'.($m?' selected':'').'>Male</option>';})(tf_is_male((int)$t['id'])).'</select></label><button class="btn primary small">'.icon('check').'Save</button></form></details>'.school_teacher_move($t);
   echo '</div></td></tr>';}
  if(!$shown)echo '<tr><td colspan="'.($multi?8:7).'">No teachers match this filter.</td></tr>';
@@ -90,6 +91,26 @@ function admin_move_target(array $src,int $to):array{$t=admin_teacher($to);
  if(!admin_same_school($t,$src))fail('Choose a teacher from the same school.');return $t;}
 /** Two teachers of one school (an account made before schools were kept fits any school). */
 function admin_same_school(array $a,array $b):bool{$x=(int)($a['school_id']??0);$y=(int)($b['school_id']??0);return !$x||!$y||$x===$y;}
+/** Admin › Teachers (v183): change the grade and name of a teacher's sections, add a section, remove an empty one.
+    A grade change also moves the section's pupils to that grade (their grade-specific lessons follow). */
+function admin_section_editor(array $t,array $sl):string{
+ $opt=fn($g)=>implode('',array_map(fn($i)=>'<option value="'.$i.'"'.($i===$g?' selected':'').'>Grade '.$i.'</option>',range(1,6)));$tid=(int)$t['id'];
+ $h='<details class="ws-more as-sec"><summary>'.icon('edit').'Edit grade &amp; sections</summary><div class="as-box">';
+ if(!$sl)$h.='<p class="muted as-none">'.e($t['name']).' has no section yet.</p>';
+ foreach($sl as $s){$n=(int)($s['n']??0);$sid=(int)$s['id'];
+  $h.='<form method="post" class="as-row">'.csrf_field().'<input type="hidden" name="action" value="admin_section_save"><input type="hidden" name="id" value="'.$sid.'">'
+   .'<label>Grade<select name="grade_level" data-as-grade data-was="'.(int)$s['grade_level'].'" data-n="'.$n.'">'.$opt((int)$s['grade_level']).'</select></label><label>Section<input name="name" value="'.e($s['name']).'" required maxlength="80"></label>'
+   .'<span class="as-n">'.$n.' '.($n===1?'pupil':'pupils').'</span><button class="btn primary small">'.icon('check').'Save</button></form>';
+  if(!$n)$h.='<form method="post" class="as-del">'.csrf_field().'<input type="hidden" name="action" value="admin_section_delete"><input type="hidden" name="id" value="'.$sid.'"><button class="linkbutton" data-confirm="Remove Grade '.(int)$s['grade_level'].' · '.e($s['name']).' from '.e($t['name']).'? It has no pupils.">'.icon('close').'Remove Grade '.(int)$s['grade_level'].' · '.e($s['name']).'</button></form>';}
+ $h.='<form method="post" class="as-row as-add">'.csrf_field().'<input type="hidden" name="action" value="admin_section_add"><input type="hidden" name="teacher" value="'.$tid.'">'
+  .'<label>Grade<select name="grade_level">'.$opt(1).'</select></label><label>New section<input name="name" placeholder="e.g. Rizal" required maxlength="80"></label><button class="btn secondary small">'.icon('check').'Add section</button></form>';
+ return $h.'<p class="muted as-note">Changing a grade also moves the pupils in that section to the new grade.</p></div></details>';
+}
+/** A teacher's section the admin may change (the teacher must be one the admin manages). */
+function admin_section(int $id):array{
+ $s=one('SELECT * FROM sections WHERE id=?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$id]);if(!$s)fail('Section not found.',404);
+ admin_teacher((int)$s['teacher_id']);return $s;
+}
 /** The delete box of a teacher: with pupils or sections it first asks who gets them. */
 function admin_teacher_delete(array $t,array $list,bool $busy):string{
  if(!$busy)return delete_box('delete_teacher',(int)$t['id'],$t['name'],'teacher',true);
@@ -278,6 +299,24 @@ function admin_actions(string $action):void{
  if($action==='admin_reset_password'){$t=admin_teacher((int)($_POST['id']??0));$p=admin_new_password();q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($p,PASSWORD_DEFAULT),$t['id']]);saved_login_clear((int)$t['id']);try{q("DELETE FROM remember_tokens WHERE user_id=?",[$t['id']]);}catch(Throwable $e){}
   audit('admin_reset_password',(string)$t['id']);flash('New password for '.$t['name'].' ('.$t['public_id'].'): '.$p.' — give it to the teacher privately. They can change it in My profile.');go('?page=accounts');}
  if($action==='admin_toggle_teacher'){$t=admin_teacher((int)($_POST['id']??0));q('UPDATE users SET active=1-active WHERE id=?',[$t['id']]);audit('admin_toggle_teacher',(string)$t['id']);flash($t['name'].' is now '.($t['active']?'turned off. They cannot sign in.':'turned on.'));go('?page=accounts');}
+ if($action==='admin_section_save'||$action==='admin_section_add'){
+  $name=import_name_case(mb_substr(trim((string)($_POST['name']??'')),0,80));$grade=(int)($_POST['grade_level']??0);
+  if($name===''||$grade<1||$grade>6)fail('Type the section name and choose a grade from 1 to 6.');
+  if($action==='admin_section_save'){$s=admin_section((int)($_POST['id']??0));$tid=(int)$s['teacher_id'];$sid=(int)$s['id'];}else{$tid=(int)admin_teacher((int)($_POST['teacher']??0))['id'];$sid=0;}
+  $t=admin_teacher($tid);
+  if(val('SELECT id FROM sections WHERE teacher_id=? AND grade_level=? AND LOWER(name)=LOWER(?) AND id<>?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$tid,$grade,$name,$sid]))fail($t['name'].' already has Grade '.$grade.' · '.$name.'.');
+  db()->beginTransaction();try{
+   if($sid){q('UPDATE sections SET name=?,grade_level=? WHERE id=?',[$name,$grade,$sid]);
+    $moved=q('UPDATE pupils p JOIN pupil_sections ps ON ps.pupil_id=p.user_id SET p.section=?,p.grade_level=? WHERE ps.section_id=?',[$name,$grade,$sid])->rowCount();
+    $was='Grade '.(int)$s['grade_level'].' · '.$s['name'];audit('admin_section_save',$t['name'].': '.$was.' → Grade '.$grade.' · '.$name);
+    $msg=$t['name'].'’s section is now Grade '.$grade.' · '.$name.'.'.($grade!==(int)$s['grade_level']&&$moved?' Its pupils are now in Grade '.$grade.'.':'');}
+   else{q('INSERT INTO sections(teacher_id,grade_level,name) VALUES(?,?,?)',[$tid,$grade,$name]);audit('admin_section_add',$t['name'].': Grade '.$grade.' · '.$name);$msg='Grade '.$grade.' · '.$name.' was added for '.$t['name'].'.';}
+   db()->commit();
+  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  flash($msg);go('?page=accounts');}
+ if($action==='admin_section_delete'){$s=admin_section((int)($_POST['id']??0));$t=admin_teacher((int)$s['teacher_id']);
+  if(val('SELECT COUNT(*) FROM pupil_sections WHERE section_id=?',[$s['id']]))fail('This section still has pupils. Move them to another section first.');
+  q('DELETE FROM sections WHERE id=?',[$s['id']]);audit('admin_section_delete',$t['name'].': Grade '.$s['grade_level'].' · '.$s['name']);flash('Grade '.$s['grade_level'].' · '.$s['name'].' was removed from '.$t['name'].'.');go('?page=accounts');}
  if($action==='admin_rename_teacher'){$t=admin_teacher((int)($_POST['id']??0));$nm=name_input();$name=$nm['name'];if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Enter a name of 2–150 characters.');if($nm['parts'])name_parts_save((int)$t['id'],$nm['parts']);elseif($name!==$t['name'])name_parts_forget((int)$t['id']);q('UPDATE users SET name=? WHERE id=?',[$name,$t['id']]);tf_set_sex((int)$t['id'],(string)($_POST['teacher_sex']??''));audit('admin_rename_teacher',(string)$t['id']);flash('Teacher details saved.');go('?page=accounts');}
  if($action==='admin_move_pupils'){
   $to=admin_teacher((int)($_POST['to']??0));if(!$to['active'])fail('Choose an active teacher.');$from=(string)($_POST['from']??'');$moved=0;
@@ -309,4 +348,4 @@ function admin_actions(string $action):void{
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   flash('School year '.$year.' started. '.$up.' pupils moved up a grade and '.$done.' Grade 6 pupils finished BULIG. Teachers can now make new sections.');go('?page=settings&tab=year');}
 }
-const ADMIN_ACTIONS=['admin_logo','admin_logo_remove','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule','admin_lesson_cycles'];
+const ADMIN_ACTIONS=['admin_logo','admin_logo_remove','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule','admin_lesson_cycles','admin_section_save','admin_section_add','admin_section_delete'];

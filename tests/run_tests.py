@@ -309,6 +309,7 @@ def run_pages(acc):
             page_ok(p6, f"?page=lesson&id={acts6[0]['lesson_id']}&activity={acts6[0]['id']}", 'Level 6 activity page opens')
             test_auto_check(p6, acc, acts6[0])
             test_star_gate(p6, acc)
+            test_done_scores()
             test_castle(p6, acc)
             test_cycles(acc)
 
@@ -440,6 +441,14 @@ def test_star_gate(p6, acc):
     j = jget(text)
     check('With 80% or more the activity is finished and shows 3 stars', j.get('saved') is True and 'aria-label="3 of 3 stars"' in j.get('check', ''), text[:300])
     check('The finished activity counts as done', q(f"SELECT status FROM activity_completion WHERE pupil_id={acc['pupil6']['uid']} AND activity_id={aid}") == 'completed')
+
+
+def test_done_scores():
+    """v183: Level 1 "Done" activities (actions, games, pair work) and drawings have nothing to mark: no 0-of-1 score, so no 0 stars."""
+    section('6c-2. Done activities count as done')
+    r = php_cli('probe.php', 'done_score', 0)
+    check('A "Done" activity, a drawing and a page to read get no score (not 0 stars)', r.get('perform') is None and r.get('drawing') is None and r.get('none') is None, r)
+    check('Level 1 shows its Post-test card (post-assessments inside the lessons)', r.get('card') is True, r)
 
 
 def test_castle(p6, acc):
@@ -670,6 +679,26 @@ def test_delete_teacher(a):
     check('Renaming a teacher saves the parts and shows "Maria L. Santos Jr."', q(f'SELECT name FROM users WHERE id={int(busy)}') == 'Maria L. Santos Jr.' and q(f'SELECT CONCAT(first_name,"/",middle_name,"/",last_name,"/",name_ext) FROM user_names WHERE user_id={int(busy)}') == 'Maria/Lopez/Santos/Jr.')
     q(f"UPDATE users SET name='{old}' WHERE id={int(busy)}")
     q(f'DELETE FROM user_names WHERE user_id={int(busy)}')
+    # Edit grade & sections (v183): the administrator adds a section, changes its grade, and removes it when empty
+    _, _, text = a.req('?page=accounts')
+    check('Teachers page has "Edit grade & sections"', 'Edit grade &amp; sections' in text and 'name="action" value="admin_section_add"' in text)
+    a.req('index.php', {'action': 'admin_section_add', 'teacher': busy, 'grade_level': '4', 'name': 'sampaguita', 'csrf': a.token('?page=accounts')})
+    sid = q(f"SELECT id FROM sections WHERE teacher_id={int(busy)} AND name='Sampaguita' AND grade_level=4")
+    if check('The administrator adds Grade 4 · Sampaguita for the teacher', sid != ''):
+        pp = q(f'SELECT pupil_id FROM teacher_pupils WHERE teacher_id={int(busy)} LIMIT 1')
+        was = q(f'SELECT CONCAT_WS("|",IFNULL((SELECT section_id FROM pupil_sections WHERE pupil_id={int(pp)}),0),grade_level,IFNULL(section,"")) FROM pupils WHERE user_id={int(pp)}').split('|')
+        q(f'DELETE FROM pupil_sections WHERE pupil_id={int(pp)}')
+        q(f'INSERT INTO pupil_sections(pupil_id,section_id) VALUES({int(pp)},{int(sid)})')
+        a.req('index.php', {'action': 'admin_section_save', 'id': sid, 'grade_level': '5', 'name': 'Sampaguita', 'csrf': a.token('?page=accounts')})
+        check('Changing the grade moves the section and its pupils to Grade 5', q(f'SELECT grade_level FROM sections WHERE id={int(sid)}') == '5' and q(f'SELECT grade_level FROM pupils WHERE user_id={int(pp)}') == '5')
+        _, _, text = a.req('index.php', {'action': 'admin_section_delete', 'id': sid, 'csrf': a.token('?page=accounts')})
+        check('A section with pupils cannot be removed', q(f'SELECT COUNT(*) FROM sections WHERE id={int(sid)}') == '1')
+        q(f'DELETE FROM pupil_sections WHERE section_id={int(sid)}')
+        if was[0] != '0':
+            q(f'INSERT INTO pupil_sections(pupil_id,section_id) VALUES({int(pp)},{int(was[0])})')
+        q(f"UPDATE pupils SET grade_level={int(was[1])},section='{was[2]}' WHERE user_id={int(pp)}")
+        a.req('index.php', {'action': 'admin_section_delete', 'id': sid, 'csrf': a.token('?page=accounts')})
+        check('An empty section is removed', q(f'SELECT COUNT(*) FROM sections WHERE id={int(sid)}') == '0')
 
 
 def test_level4_scoring():

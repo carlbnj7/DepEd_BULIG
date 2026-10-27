@@ -20,6 +20,8 @@ $out=match($what){
   return ['keyed'=>$a&&ac_keyed($a),'right'=>"BULIG card answers\n".implode("\n",$right),'wrong'=>"BULIG card answers\n".implode("\n",$wrong),'cards'=>count($key)];})(),
  /* Level 4: BULIG's miscue count on a sample reading, and a perfect reading of every Level 4 passage (php tests/probe.php l4) */
  /* Cycles (v182): lessons 2 and up of the pupil's level open in 10 days; lesson 1 stays open. Settings are put back after. */
+ 'done_score'=>(function():array{$o=[];foreach(['perform','drawing','none'] as $m){$a=one("SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=1 AND a.published=1 AND a.response_mode=? LIMIT 1",[$m]);$o[$m]=$a?key_score($a,''):'none';}
+  $o['card']=pt_inlesson_card(0,1)!=='';return $o;})(),
  'cycle_check'=>(function()use($pid):array{$L=pupil_start_level($pid);$old=val("SELECT setting_value FROM settings WHERE setting_key='lesson_cycles'");
   $d=date('Y-m-d',strtotime('+10 days'));q("INSERT INTO settings(setting_key,setting_value) VALUES('lesson_cycles',?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)",[json_encode(['on'=>true,'levels'=>[(string)$L=>[['from'=>2,'to'=>cycle_level_size($L),'date'=>$d]]]])]);
   $mod=(int)val('SELECT m.id FROM modules m WHERE m.level_id=? AND (m.grade_level IS NULL OR m.grade_level=?) ORDER BY m.id LIMIT 1',[$L,pupil_grade($pid)]);$no=cycle_numbers($mod)['no'];$one=array_search(1,$no,true);$two=array_search(2,$no,true);
