@@ -148,7 +148,7 @@ function key_score(array $a,string $response):?array{
  if(!isset($a['lesson_id']))$a=one('SELECT * FROM activities WHERE id=?',[(int)$a['id']])??$a;
  $lv=isset($a['lesson_id'])?lesson_level((int)$a['lesson_id']):0;$key=activity_key($a)??[];
  $set=in_array($lv,[2,3,4,9,6,7,8],true)?l2a_set($a):null;
- if(!$set){if(!$key)return ($a['response_mode']??'answer')==='none'?null:['right'=>key_answered(trim($response))?1:0,'total'=>1,'cards'=>[]];$set=['cards'=>[]];}
+ if(!$set){if(!$key)return in_array($a['response_mode']??'answer',['none','perform','drawing'],true)?null:['right'=>key_answered(trim($response))?1:0,'total'=>1,'cards'=>[]];$set=['cards'=>[]];}
  $got=card_answers($response);$right=0;$total=0;$cards=[];
  $ask=[];foreach($set['cards'] as $i=>$cd)if(array_diff($cd['ui']['answer']??[],['look']))$ask[]=$i+1;
  $nums=array_values(array_unique(array_merge(array_map('intval',array_keys($key)),$ask)));sort($nums);
@@ -161,6 +161,20 @@ function key_score(array $a,string $response):?array{
   if($tr)$pts=round($pts*max(0,1-$tr/KEY_TRIES),2);/* each wrong try takes away a third (v172) */
   $right+=$pts;$total+=$of;$cards[$n]=['got'=>$g,'want'=>$want,'pts'=>$pts,'of'=>$of,'t'=>$t,'fix'=>!empty($k['fix']),'ok'=>$ok,'tries'=>$tr];}
  return $total?['right'=>$right,'total'=>$total,'cards'=>$cards]:null;
+}
+
+/** v183: "Done" activities (actions, games, pair work) and drawings have nothing to mark, so they count as done (no score).
+    Before, they were saved as 0 of 1: 0 stars, and the pupil could not go on. This fixes saved answers once. */
+function done_scores_repair():void{
+ static $ran=false;if($ran)return;$ran=true;
+ if(val("SELECT 1 FROM settings WHERE setting_key='fix_done_scores'"))return;
+ foreach(rows("SELECT c.id,c.pupil_id,c.activity_id,c.status,c.response,c.rubric_scores,c.reviewed_by,a.phase FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE a.response_mode IN ('perform','drawing') AND c.max_score=1 AND c.score=0") as $r){
+  $j=json_decode((string)($r['rubric_scores']??''),true);if(is_array($j)&&isset($j['teacher_score']))continue;
+  if(key_score(['id'=>(int)$r['activity_id']],(string)$r['response'])!==null)continue;
+  q('UPDATE activity_completion SET score=NULL,max_score=NULL WHERE id=?',[(int)$r['id']]);
+  if($r['status']==='retry'&&$r['phase']==='learn'&&$r['reviewed_by']===null){q("UPDATE activity_completion SET status='completed' WHERE id=?",[(int)$r['id']]);update_learning((int)$r['pupil_id'],(int)$r['activity_id']);}
+ }
+ q("INSERT INTO settings(setting_key,setting_value) VALUES('fix_done_scores','1') ON DUPLICATE KEY UPDATE setting_value='1'");
 }
 
 /** Save the auto score on a completion (score / max_score), unless the teacher has already set one. */
@@ -230,15 +244,17 @@ function stars_html(int $n,int $of,string $cls=''):string{if($of<1)return '';$n=
 /** Road map stars (v182): for each lesson id, ['of'=>3 (lesson) | 5 (post-test) | 0 (pre-test), 'n'=>stars won so far,
     'a'=>[[activity title, its stars], ...], 'ph'=>pre|learn|post]. An activity not done yet counts as 0; one done with no score counts as right. */
 function map_stars(int $pid,array $lids):array{
+ done_scores_repair();
  $lids=array_values(array_filter(array_map('intval',$lids)));if(!$lids)return [];$by=[];
  foreach(rows('SELECT a.id,a.lesson_id,a.title,a.phase,c.status,c.score,c.max_score FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id IN ('.implode(',',$lids).') AND a.published=1 ORDER BY a.lesson_id,a.position',[$pid]) as $r)$by[(int)$r['lesson_id']][]=$r;
  $out=[];foreach($by as $lid=>$acts){
   /* Lessons with mixed phases (Levels 1 and 3A keep a small pre/post check inside each lesson): the stars come from the lesson activities. */
   $phs=array_unique(array_column($acts,'phase'));$ph=in_array('learn',$phs,true)?'learn':(in_array('post',$phs,true)?'post':'pre');
+  $mx=null;if($ph==='learn'&&count($phs)>1){$mx=[];foreach(['pre','post'] as $k){$in=array_filter($acts,fn($r)=>$r['phase']===$k);if($in)$mx[$k]=[count(array_filter($in,'completion_ok')),count($in)];}if(count($mx)<2)$mx=null;}   // v183: the pre/post checks inside the lesson (Level 1)
   $acts=array_values(array_filter($acts,fn($r)=>$r['phase']===$ph));$of=star_of($ph);if(!$of){$out[$lid]=['of'=>0,'n'=>0,'a'=>[],'ph'=>$ph];continue;}
   $sum=0.0;$list=[];
   foreach($acts as $r){$ok=completion_ok($r);$fr=$ok?(completion_frac($r)??1.0):0.0;$sum+=$fr;$list[]=[(string)$r['title'],$ok?star_count($fr,'learn'):0];}
-  $out[$lid]=['of'=>$of,'n'=>star_count($sum/count($acts),$ph),'a'=>$ph==='post'?[]:$list,'ph'=>$ph];}
+  $out[$lid]=['of'=>$of,'n'=>star_count($sum/count($acts),$ph),'a'=>$ph==='post'?[]:$list,'ph'=>$ph,'mx'=>$mx];}
  return $out;
 }
 /** A saved answer's share right (0 to 1), or null when it has no score. */

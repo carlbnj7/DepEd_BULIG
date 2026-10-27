@@ -14,6 +14,7 @@ function pt_acts(int $pid,int $level):array{static $c=[];return $c[$pid.':'.$lev
     that were not fully right (missed). An answer saved before auto-checking existed is marked now. */
 function pt_result(int $pid,int $level,bool $fresh=false):array{
  static $c=[];$ck=$pid.':'.$level;if(!$fresh&&isset($c[$ck]))return $c[$ck];
+ if(function_exists('done_scores_repair'))done_scores_repair();
  $acts=pt_acts($pid,$level);$out=['n'=>count($acts),'done'=>0,'right'=>0.0,'total'=>0.0,'pct'=>100,'missed'=>[]];if(!$acts)return $c[$ck]=$out;
  $ids=array_map(fn($a)=>(int)$a['id'],$acts);$rows=[];
  foreach(rows('SELECT id,activity_id,status,score,max_score FROM activity_completion WHERE pupil_id=? AND activity_id IN ('.implode(',',$ids).')',[$pid]) as $r)$rows[(int)$r['activity_id']]=$r;
@@ -80,4 +81,18 @@ function pt_teacher_rows(int $pid):string{
  foreach(rows('SELECT id FROM bulig_levels WHERE '.level_order_sql('id').'>='.level_order_sql('?').' AND published=1 ORDER BY '.level_order_sql('id'),[$start]) as $l){$L=(int)$l['id'];$r=pt_result($pid,$L);if(!$r['n']||!$r['done'])continue;
   $fin=$r['done']>=$r['n'];$h.='<tr><td>'.e(level_label($L)).'</td><td>'.$r['done'].' of '.$r['n'].'</td><td>'.($fin?'<b>'.$r['pct'].'%</b>':'—').'</td><td>'.($fin?($r['pct']>=PT_PASS?'<span class="pg-ok">'.icon('check').'Passed</span>':'<span class="pg-no">Below '.PT_PASS.'% · trying again</span>'):'In progress').'</td></tr>';}
  return $h?'<section class="card pg-teacher"><h2>Post-tests</h2><p class="muted">A pupil opens the next level after scoring at least '.PT_PASS.'% on the post-test. Below that, they answer the missed activities again.</p><div class="tablewrap"><table><thead><tr><th>Level</th><th>Answered</th><th>Score</th><th>Result</th></tr></thead><tbody>'.$h.'</tbody></table></div></section>':'';
+}
+
+/** v183: Level 1 keeps its pre-assessment and post-assessment inside every lesson (as in the module). This card on the
+    level's road map shows the post-test: every lesson's post-assessment together, 5 stars, 80% to open the next level. */
+function pt_inlesson_card(int $pid,int $level):string{
+ $acts=pt_acts($pid,$level);if(!$acts)return '';
+ if(val("SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND EXISTS(SELECT 1 FROM activities a WHERE a.lesson_id=l.id AND a.published=1) AND NOT EXISTS(SELECT 1 FROM activities a WHERE a.lesson_id=l.id AND a.published=1 AND a.phase<>'post')",[$level]))return '';   // a level with its own post-test stop
+ $r=pt_result($pid,$level);$all=$r['done']>=$r['n'];$st=$r['done']?star_count($r['pct']/100,'post'):0;$nx=level_next($level);$nl=$nx?level_label($nx):'the next level';
+ $msg=!$r['done']?'Each lesson ends with a short Post-assessment. Together they are your '.level_label($level).' Post-test. Get 80% to open '.$nl.'.'
+  :(!$all?'So far '.$r['pct'].'%. Keep going: '.($r['n']-$r['done']).' more to answer.'
+  :($r['pct']>=PT_PASS?'You passed with '.$r['pct'].'%! '.$nl.' is open.':'You got '.$r['pct'].'%. You need 80% to open '.$nl.'. Try the missed ones again.'));
+ $cls=$all?($r['pct']>=PT_PASS?' pt-ok':' pt-low'):'';
+ $trophy='<svg viewBox="-16 -16 32 32" aria-hidden="true"><path d="M-9 -12h18v6a9 9 0 0 1-18 0Z" fill="currentColor"/><path d="M-9 -9h-5a5 5 0 0 0 6 7M9 -9h5a5 5 0 0 1-6 7" stroke="currentColor" stroke-width="2.4" fill="none"/><rect x="-2" y="2" width="4" height="6" fill="currentColor"/><rect x="-7" y="8" width="14" height="4" rx="1.5" fill="currentColor"/></svg>';
+ return '<section class="card pt-in'.$cls.'" aria-label="'.e(level_label($level)).' Post-test"><span class="pt-in-ic">'.$trophy.'</span><div class="pt-in-tx"><span class="eyebrow">'.e(mb_strtoupper(level_label($level))).' POST-TEST</span><h3>Show what you learned</h3><p>'.e($msg).'</p></div><div class="pt-in-st">'.stars_html($st,5).'<b>'.($r['done']?$r['pct'].'%':'—').'</b><small>'.$r['done'].' of '.$r['n'].' answered</small></div></section>';
 }
