@@ -100,6 +100,7 @@
    if(s==='idle'){label.textContent=startLabel;sub.textContent='';}
    if(s==='rec'){label.textContent='0:00';sub.textContent=rec.classList.contains('l4-rec')?(listen?'Read now. BULIG is listening. Tap the button when you finish.':'Read now. Tap the button when you finish.'):'Speak now. Tap the button to stop.';}
    if(s==='done'){label.textContent='Listen to your answer';sub.textContent='Happy with it? Tap Send. Or tap Try again.';}}
+  rec.addEventListener('wc:done',e=>{const d=e.detail||{};reset();secs=+d.secs||0;heardIn.value='1';if(saidIn)saidIn.value=d.said||'';const sIn=document.getElementById('l1-secs');if(sIn)sIn.value=String(Math.round(secs));ui('done');playBox.hidden=true;if(again)again.hidden=true;label.textContent='Read with Max';sub.textContent='Your reading is saved. Tap Send.';});   // v184: the Word Coach run is the reading
   function reset(){if(player){player.pause();player=null;}if(url){URL.revokeObjectURL(url);url='';}audioIn.value='';heardIn.value='';if(saidIn&&listen)saidIn.value='';bar.style.setProperty('--p','0');liveClear();}
   async function start(){if(state==='starting'||state==='rec')return;state='starting';rec.dataset.state='starting';go.classList.add('busy');stopSay();reset();
    if(solo){srStart();if(!srOn){solo=false;}else{go.classList.remove('busy');t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=MAX)stop();

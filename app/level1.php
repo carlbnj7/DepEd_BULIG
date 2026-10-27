@@ -256,9 +256,10 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
   if($speakHere&&$c&&$c['audio_path'])echo '<div class="l1-mine"><span>Your answer</span><audio controls preload="none" src="?page=recording&amp;id='.(int)$c['id'].'"></audio></div>';
  }elseif($speakHere){
   $recHtml=true;ob_start();   // v183: shown above the pictures and words (moved to the top of the card below)
-  echo '<div class="l1-rec rec-top" data-l1-rec><button type="button" class="l1-mic" data-rec-go aria-label="Tap and say your answer">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>'.($kind==='read'?'Now you say it!':'Tap and say your answer').'</b><small class="l1-rs" data-rec-sub role="status"></small>'
+  $wct=$kind==='read'&&(function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?trim((string)$a['expected_text']):'';   // v184: Word Coach on Level 1 reading
+  echo '<div class="l1-rec rec-top" data-l1-rec'.($wct!==''?wc_attr($wct):'').'><button type="button" class="l1-mic" data-rec-go aria-label="Tap and say your answer">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>'.($kind==='read'?'Now you say it!':'Tap and say your answer').'</b><small class="l1-rs" data-rec-sub role="status"></small>'
    .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my answer">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
-   .'<button type="button" class="l1-heard" data-rec-heard hidden>'.l1_icon('ok').'Done</button></div>';
+   .'<button type="button" class="l1-heard" data-rec-heard hidden>'.l1_icon('ok').'Done</button>'.($wct!==''?wc_input(0):'').'</div>';
  }
  if(!empty($recHtml)){$rec=(string)ob_get_clean();$card=$rec.trim((string)ob_get_clean());}else $card=trim((string)ob_get_clean());
  if($card!=='')echo '<section class="l2-card l1-card">'.$card.'</section>';

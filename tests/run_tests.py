@@ -310,6 +310,7 @@ def run_pages(acc):
             test_auto_check(p6, acc, acts6[0])
             test_star_gate(p6, acc)
             test_done_scores()
+            test_word_coach()
             test_castle(p6, acc)
             test_cycles(acc)
 
@@ -449,6 +450,16 @@ def test_done_scores():
     r = php_cli('probe.php', 'done_score', 0)
     check('A "Done" activity, a drawing and a page to read get no score (not 0 stars)', r.get('perform') is None and r.get('drawing') is None and r.get('none') is None, r)
     check('Level 1 shows its Post-test card (post-assessments inside the lessons)', r.get('card') is True, r)
+
+
+def test_word_coach():
+    """v184: Word Coach: Max reads first, then word by word; fewer tries, more points. Its result rides in the answer."""
+    section('6c-3. Word Coach')
+    r = php_cli('probe.php', 'wc_check', 0)
+    check('The coaching result is saved in the answer before the tries line', r.get('line') is True, r)
+    check('BULIG reads the coaching back (score and words to practise)', r.get('p1') == 40 and r.get('w1') == ['cat'] and r.get('p2') is None, r)
+    check('The card answers stay the same with the coaching line', r.get('cards') == {'1': '(voice recording) said: cat hat', '2': 'x'} and r.get('strip') is True, r)
+    check('Lessons, pre-tests and post-tests all get the coach', r.get('learn_on') is True and r.get('test_off') is True, r)
 
 
 def test_castle(p6, acc):

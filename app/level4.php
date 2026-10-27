@@ -111,9 +111,9 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
   $say='Read the following passage aloud. Tap the microphone when you start, and tap it again when you finish. BULIG listens and scores your reading.';
   echo '<div class="l1-q sm l4-dir"><p>'.e($say).'</p>'.l1_speaker($say).'</div>';ob_start();
   /* v183: the microphone sits above the passage and stays at the top of the screen while the pupil scrolls and reads */
-  if(!$readonly)echo roxanne_timer().'<div class="l1-rec l4-rec rec-top" data-l1-rec data-max="600"><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
+  if(!$readonly)echo roxanne_timer().'<div class="l1-rec l4-rec rec-top" data-l1-rec data-max="600"'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_attr((string)$a['expected_text']):'').'><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
    .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my reading">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
-   .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button></div>';
+   .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button>'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_input(0):'').'</div>';
   echo level4_passage($a);
  }else{
   echo '<div class="l1-q sm"><p>'.nl2br(e((string)$a['prompt'])).'</p>'.l1_speaker((string)$a['prompt']).'</div>';ob_start();echo l1_pictures($a);

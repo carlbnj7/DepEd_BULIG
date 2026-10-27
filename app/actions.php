@@ -179,7 +179,7 @@ function action():void{
   if($drawing!==''&&!preg_match('~^data:image/(png|jpeg);base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
   $audio=$action==='submit'?(string)($_POST['audio']??''):'';if(isset($_POST['audio_card'])&&!is_array($_POST['audio_card']))fail('Invalid recording.');$heard=($_POST['heard']??'')==='1';if(strlen($audio)>12500000)fail('This recording is too long. Please record again.');
   db()->beginTransaction();try{
-   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a)&&!l2a_draw_ok($a))$drawing='';if($action==='submit'&&function_exists('key_merge_tries'))$answer=key_merge_tries($answer,$aid);$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
+   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a)&&!l2a_draw_ok($a))$drawing='';if($action==='submit'&&function_exists('key_merge_tries'))$answer=key_merge_tries($answer,$aid);if($action==='submit'&&function_exists('wc_merge'))$answer=wc_merge($answer);$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
    if(completion_ok($old)){
     /* "Try it again" (v151): practice on a finished card activity; BULIG keeps the best score, no extra XP */
     if($action==='submit'&&!empty($_POST['again'])&&function_exists('ac_keyed')&&ac_keyed($a)&&$answer!==''){$pr=ac_practice($pid,$a,$old,$answer);db()->commit();submission_reply($a,true,$pr['message'],0,$pr['card']);}
@@ -213,7 +213,7 @@ function action():void{
    $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);key_save_score($cid);
    if($oral&&!$l4read&&function_exists('l1_auto_score'))q('UPDATE activity_completion SET score=?,max_score=1 WHERE id=?',[l1_auto_score($a,$transcript,$apath!==null||$audio!==''),$cid]);/* Level 1: BULIG checks the talk and pronunciation (v172) */
    /* Level 4: BULIG scores the reading from what the speech recognizer heard (the module's miscue table). */
-   $l4s=$l4read&&$transcript!==''?l4_auto($a,$transcript,(int)($_POST['secs']??0)):null;if($l4s)q('UPDATE activity_completion SET rubric_scores=?,score=?,max_score=100 WHERE id=?',[json_encode(['l4'=>$l4s],JSON_UNESCAPED_UNICODE),$l4s['score'],$cid]);q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
+   $l4s=$l4read&&$transcript!==''?l4_auto($a,$transcript,(int)($_POST['secs']??0)):null;if($l4s)q('UPDATE activity_completion SET rubric_scores=?,score=?,max_score=100 WHERE id=?',[json_encode(['l4'=>$l4s],JSON_UNESCAPED_UNICODE),$l4s['score'],$cid]);if($oral&&function_exists('wc_apply_single'))wc_apply_single($cid);/* v184: Word Coach */q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
    q('INSERT INTO pupil_progress(pupil_id,lesson_id,last_activity_id) VALUES(?,?,?) ON DUPLICATE KEY UPDATE last_activity_id=VALUES(last_activity_id)',[$pid,$a['lesson_id'],$aid]);
    if($a['expected_text']&&$transcript!==''){$match=word_match($a['expected_text'],$transcript);q('INSERT INTO reading_assessments(pupil_id,activity_id,transcript,expected_text,word_match_percent,detail) VALUES(?,?,?,?,?,?)',[$pid,$aid,$transcript,$a['expected_text'],$match['percent'],json_encode($match['words'])]);}
    /* Stars (v181): a lesson activity below 2 stars (80%) is not finished. It opens again for a fresh try (wrong tries reset). */
