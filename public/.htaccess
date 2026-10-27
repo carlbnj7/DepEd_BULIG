@@ -10,14 +10,14 @@ AddType application/manifest+json .webmanifest
 AddType image/png .png
 </IfModule>
 
-# Speed: browsers keep saved copies of files that rarely change, so a page opened again downloads almost nothing.
+# Speed: browsers keep saved copies of files that rarely change (pictures and sounds: 30 days), so a page opened again downloads almost nothing.
 # Style and script files get a new name (name-0123456789.css) whenever they change, so they can be kept for a year.
 <IfModule mod_headers.c>
 <FilesMatch "-[0-9a-f]{10}\.(css|js)$">
 Header set Cache-Control "public, max-age=31536000, immutable"
 </FilesMatch>
 <FilesMatch "\.(webp|png|jpe?g|gif|svg|ico|mp3|m4a|ogg)$">
-Header set Cache-Control "public, max-age=604800"
+Header set Cache-Control "public, max-age=2592000"
 </FilesMatch>
 <FilesMatch "\.(woff2?|ttf)$">
 Header set Cache-Control "public, max-age=31536000"
