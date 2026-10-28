@@ -321,10 +321,16 @@ function login_cards_view(array $u):void{
 function profile_view(array $u):void{
  if($u['role']==='pupil'){pupil_profile_view($u);return;}
  echo '<div class="pageheading"><div><span class="eyebrow">MY PROFILE</span><h1>'.e($u['name']).'</h1><p class="muted">'.e($u['public_id']).' · '.e(ucfirst($u['role'])).'</p></div>'.avatar($u).'</div><section class="card"><h2>Upload your own photo</h2><form method="post" enctype="multipart/form-data" class="stack">'.csrf_field().'<input type="hidden" name="action" value="profile"><label>Choose a PNG, JPEG or WebP photo. You can fit it in the circle before it is saved.<input name="avatar" type="file" accept="image/png,image/jpeg,image/webp" required data-crop></label><button class="btn primary">Save photo</button></form></section>';
- $m=tf_is_male((int)$u['id']);$k=$u['role']==='admin'?'admin':'teacher';$w=$k==='admin'?'admin':'teacher';
- echo '<section class="card char-pick"><h2>My '.$w.' character</h2><p class="muted">This character greets you after you sign in and guides your tours.</p><form method="post" class="char-opts">'.csrf_field().'<input type="hidden" name="action" value="teacher_character">';
- foreach(['female'=>!$m,'male'=>$m] as $sx=>$on)echo '<button name="character" value="'.$sx.'" class="char-opt'.($on?' on':'').'" aria-pressed="'.($on?'true':'false').'"><img src="'.char_src($k.'-'.$sx).'" alt="" loading="lazy"><span>'.ucfirst($sx).' '.$w.'</span>'.($on?'<small>'.icon('check').'Chosen</small>':'').'</button>';
- echo '</form></section><section class="card st-group st-install-card" data-install-card hidden><h2>Install BULIG</h2>'.install_row().'</section>';
+ echo '<section class="card my-name" id="my-name"><h2>'.icon('edit').' My name</h2><p class="muted">This is how your name shows in BULIG'.($u['role']==='teacher'?', on your pupils’ report cards and on your Teacher Pass':'').'.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="my_name">'.name_fields(name_parts_of((int)$u['id'],(string)$u['name'])).'<button class="btn primary">'.icon('check').'Save my name</button></form></section>'.names_script();
+ /* v195: a teacher's character follows the sex the administrator chose for them (female → female teacher, male → male
+    teacher), so only administrators pick their own character here. */
+ if($u['role']==='admin'){
+  $m=tf_is_male((int)$u['id']);$k=$u['role']==='admin'?'admin':'teacher';$w=$k==='admin'?'admin':'teacher';
+  echo '<section class="card char-pick"><h2>My '.$w.' character</h2><p class="muted">This character greets you after you sign in and guides your tours.</p><form method="post" class="char-opts">'.csrf_field().'<input type="hidden" name="action" value="teacher_character">';
+  foreach(['female'=>!$m,'male'=>$m] as $sx=>$on)echo '<button name="character" value="'.$sx.'" class="char-opt'.($on?' on':'').'" aria-pressed="'.($on?'true':'false').'"><img src="'.char_src($k.'-'.$sx).'" alt="" loading="lazy"><span>'.ucfirst($sx).' '.$w.'</span>'.($on?'<small>'.icon('check').'Chosen</small>':'').'</button>';
+  echo '</form></section>';
+ }
+ echo '<section class="card st-group st-install-card" data-install-card hidden><h2>Install BULIG</h2>'.install_row().'</section>';
  echo mode_card();
  if($u['role']==='teacher'&&function_exists('rate_profile_card'))echo rate_profile_card();
  password_change_form();

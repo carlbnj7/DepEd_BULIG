@@ -655,6 +655,24 @@ def test_delete_pupil(t):
     check('Ticking 2 pupils and pressing Delete removes both at once', len(ids) == 2 and q("SELECT COUNT(*) FROM users WHERE name LIKE '% Batchdel'") == '0' and '2 pupils were deleted' in text, f'{ids} {text[:0]}')
 
 
+def test_my_name(t):
+    """v194: a teacher changes their own name on My profile (first, middle, last, extension)."""
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    tid = q("SELECT id FROM users WHERE role='teacher' ORDER BY id LIMIT 1")
+    old = q(f'SELECT name FROM users WHERE id={int(tid)}')
+    _, _, text = t.req('?page=profile')
+    check('My profile has "My name" with first, middle and last name', 'value="my_name"' in text and 'name="first_name"' in text and 'name="last_name"' in text)
+    check('A teacher has no character picker: the character follows the sex on the account', 'char-pick' not in text and 'value="teacher_character"' not in text)
+    t.req('index.php', {'action': 'teacher_character', 'character': 'male', 'csrf': t.token('?page=profile')})
+    check('A teacher cannot change the character by sending the form', q(f"SELECT IFNULL((SELECT setting_value FROM settings WHERE setting_key='teacher_char_{int(tid)}'),'')") != 'male')
+    t.req('index.php', {'action': 'my_name', 'first_name': 'maria', 'middle_name': 'luna', 'last_name': 'santos', 'name_ext': '', 'csrf': t.token('?page=profile')})
+    got = q(f'SELECT name FROM users WHERE id={int(tid)}')
+    t.req('index.php', {'action': 'my_name', 'first_name': '', 'last_name': 'X', 'csrf': t.token('?page=profile')})
+    kept = q(f'SELECT name FROM users WHERE id={int(tid)}')
+    check('A teacher can change their own name (saved as Maria L. Santos); a name without a first name is refused', got == 'Maria L. Santos' and kept == got, f'{got} / {kept}')
+    q(f"UPDATE users SET name='{old}' WHERE id={int(tid)}")
+
+
 def test_delete_teacher(a):
     """The administrator deletes a teacher only when they have no pupils and no sections."""
     q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
@@ -782,6 +800,7 @@ def test_names(t):
     check('The class list template has an Extension column', text.lstrip('\ufeff').startswith('Last name,First name,Middle name,Extension,'), text[:80])
     test_sections(t, sid)
     test_delete_pupil(t)
+    test_my_name(t)
 
 
 def test_sections(t, sid):
@@ -921,7 +940,7 @@ def test_schools(a, acc):
     auto = q("SELECT code FROM schools WHERE name='Tall Wood Oak Elementary School'")
     _, _, sp = a.req('?page=schools')
     check('A new school gets its code from its name, never one already used (TWOES is taken → TAWOES)',
-          auto == 'TAWOES' and q("SELECT code FROM schools WHERE id=%s" % int(two)) == 'TWOES' and 'data-sc-auto' in sp and 'class="sc-foot"' in sp, auto)
+          auto == 'TAWOES' and q("SELECT code FROM schools WHERE id=%s" % int(two)) == 'TWOES' and 'data-sc-auto' in sp and 'sc-viewrow' in sp and 'value="school_save"' not in sp and 'Teachers of this school' not in sp, auto)
     q("DELETE FROM schools WHERE name='Tall Wood Oak Elementary School'")
     a.req('index.php', {'action': 'create_account', 'role': 'teacher', 'school_id': two, 'first_name': 'Tess', 'last_name': 'Two', 'teacher_sex': 'female', 'password': 'TessTwo4242!', 'back': 'add_teachers', 'csrf': a.token('?page=add_teachers')})
     got = q("SELECT CONCAT(public_id,'/',school_id) FROM users WHERE name='Tess Two'")
@@ -941,8 +960,8 @@ def test_schools(a, acc):
           and 'Lessons just finished' in sp and 'Tess Two' in spt and ('sp-tbl' in spp or 'No pupils match' in spp))
     # v191: the cover is always the BULIG reading picture (it cannot be changed); no details line under the name
     _, _, cv = a.req(f'?page=school&id={two}')
-    check('A school page has the BULIG cover picture (no upload) and no details line under the name',
-          'covers/school-cover.webp' in cv and 'name="cover"' not in cv and 'School head:' not in cv)
+    check('A school page has the fixed cover (no upload) and no details line under the name',
+          'name="cover"' not in cv and 'School head:' not in cv)
     _, _, home = a.req('?page=dashboard&school=0')
     check('Home with all schools shows each school side by side', home.count('class="sc-cmp') == 2)
     tid = q("SELECT id FROM users WHERE name='Tess Two'")
@@ -979,7 +998,9 @@ def test_schools(a, acc):
     cp = q("SELECT id FROM users WHERE public_id='DELES0001'")
     q(f"INSERT INTO pupils(user_id,grade_level,section) VALUES({int(cp)},2,'C'); INSERT INTO teacher_pupils(teacher_id,pupil_id) VALUES({int(ct)},{int(cp)}); INSERT INTO sections(teacher_id,grade_level,name) VALUES({int(ct)},2,'Closing Section')")
     _, _, text = a.req('?page=schools')
-    check('Each school has "Delete this school"', 'value="school_delete"' in text and 'Delete this school' in text)
+    _, _, text = a.req(f'?page=school&id={ds}&edit=1')
+    check('Edit and "Delete this school" are on the school\'s own page (View school), not on the Schools list',
+          'value="school_delete"' in text and 'Delete this school' in text and 'value="school_save"' in text and 'id="sp-manage"' in text and '<details class="sc-edit" open' in text)
     a.req('index.php', {'action': 'school_delete', 'id': ds, 'confirm': 'WRONG', 'csrf': a.token('?page=schools')})
     check('A school is not deleted without typing its code', q(f'SELECT COUNT(*) FROM schools WHERE id={int(ds)}') == '1')
     _, _, text = a.req('index.php', {'action': 'school_delete', 'id': ds, 'confirm': 'deles', 'csrf': a.token('?page=schools')})

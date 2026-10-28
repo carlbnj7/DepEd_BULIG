@@ -15,10 +15,10 @@ function school_page_view():void{
  $logo=$s['logo']!==''&&is_file(__DIR__.'/../public/'.$s['logo']);$name=$s['name']!==''?$s['name']:$s['code'];
 
  echo '<nav class="crumb sp-crumb"><a href="?page=schools">Schools</a>'.icon('chev').'<span>'.e($s['code']).'</span></nav>';
- echo '<section class="sp-head card"><div class="sp-cover"><img src="assets/images/covers/school-cover.webp" alt=""></div><div class="sp-id">'
+ echo '<section class="sp-head card"><div class="sp-cover '.$c.'" aria-hidden="true"><span></span></div><div class="sp-id">'
   .($logo?'<img class="sp-logo" src="'.e($s['logo']).'" alt="'.e($name).' logo">':'<span class="sp-logo '.$c.'">'.e($s['code']).'</span>')
   .'<div class="sp-name"><h1>'.e($name).'</h1>'
-  .'<div class="sp-acts"><a class="btn primary small" href="?page=accounts&amp;school='.$sid.'">'.icon('people').'Teachers page</a><a class="btn secondary small" href="?page=dashboard&amp;school='.$sid.'">'.icon('chart').'Home for this school</a><a class="btn quiet small" href="?page=schools#school-'.$sid.'">'.icon('edit').'Edit</a></div></div></div>';
+  .'<div class="sp-acts"><a class="btn primary small" href="?page=accounts&amp;school='.$sid.'">'.icon('people').'Teachers page</a><a class="btn secondary small" href="?page=dashboard&amp;school='.$sid.'">'.icon('chart').'Home for this school</a><a class="btn quiet small" href="?page=school&amp;id='.$sid.'&amp;edit=1#sp-manage">'.icon('edit').'Edit</a></div></div></div>';
  $t=fn($k,$ic,$l)=>'<a href="?page=school&amp;id='.$sid.($k==='overview'?'':'&amp;tab='.$k).'"'.($tab===$k?' class="on" aria-current="page"':'').'>'.icon($ic).$l.'</a>';
  echo '<nav class="sp-tabs" aria-label="School page">'.$t('overview','home','Overview').$t('teachers','useredit','Teachers <b>'.$cnt['t'].'</b>').$t('pupils','people','Pupils <b>'.number_format($cnt['p']).'</b>').'</nav></section>';
 
@@ -43,7 +43,7 @@ function school_page_view():void{
  if(!$g)echo '<p class="muted">No pupils yet.</p>';
  foreach($g as $r){$pct=(int)$r['n']?round((int)$r['d']/(int)$r['n']*100):0;
   echo '<div class="sp-grade"><span><b>'.((int)$r['g']?'Grade '.(int)$r['g']:'No grade').'</b> · '.(int)$r['n'].' '.((int)$r['n']===1?'pupil':'pupils').'</span><span class="sc-bar"><i class="w-'.(int)(round($pct/5)*5).'"></i></span><small>'.$pct.'% finished at least one lesson</small></div>';}
- echo '</section></div><div class="sp-main">';
+ echo '</section>'.school_manage_box($s,$cnt,isset($_GET['edit'])).'</div><div class="sp-main">';
 
  $top=rows("SELECT u.id,u.name,u.avatar_path,p.grade_level,COALESCE(x.total,0) xp,(SELECT COUNT(*) FROM pupil_progress pp WHERE pp.pupil_id=u.id AND pp.completed_at IS NOT NULL) done FROM users u JOIN pupils p ON p.user_id=u.id LEFT JOIN pupil_xp x ON x.pupil_id=u.id WHERE u.role='pupil' AND u.active=1 AND u.school_id=? ORDER BY xp DESC,done DESC,u.name LIMIT 5",[$sid]);
  echo '<section class="card sp-card"><h2>'.icon('star').'Top readers</h2>';

@@ -148,8 +148,14 @@ function action():void{
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   flash('Marked as done in class: '.$what.' for '.count($pupils).' '.(count($pupils)===1?'pupil':'pupils').'.');go($back);
  }
+ /* v194: teachers and administrators change their own name (My profile › My name) */
+ if($action==='my_name'){
+  $u=require_role('teacher','admin');$n=name_input();if(mb_strlen($n['name'])>150)fail('The name is too long.');
+  if($n['name']!==(string)$u['name']){q('UPDATE users SET name=? WHERE id=?',[$n['name'],$u['id']]);audit('my_name',$u['public_id'].': '.$u['name'].' → '.$n['name']);}
+  name_parts_save((int)$u['id'],$n['parts']);flash('Your name is saved: '.$n['name'].'.');go('?page=profile#my-name');
+ }
  if($action==='teacher_character'){
-  $u=require_role('teacher','admin');$c=(string)($_POST['character']??'');if(!in_array($c,['female','male'],true))fail('Choose a character.');
+  $u=require_role('admin');$c=(string)($_POST['character']??'');if(!in_array($c,['female','male'],true))fail('Choose a character.');
   tf_set_sex((int)$u['id'],$c);flash('Your '.($u['role']==='admin'?'admin':'teacher').' character is saved.');go('?page=profile');
  }
  if($action==='choose_avatar'){

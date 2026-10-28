@@ -165,7 +165,7 @@
    [['.me-week .weekdays'],'This week','The days you learned this week have a check.'],
    ['.me-pic','Your picture','Choose a character, or upload your own photo.'],
    [['.me-setbtn','.sidebar nav a[href="?page=settings"]'],'Settings','Sound, colours, offline lessons, your password and About BULIG are in Settings.']]:[
-   ['.char-pick','Your teacher character','Choose the character that greets you after you sign in. Jarvis the Robot guides your tours.'],
+   ['#my-name','Your name','Change how your name shows in BULIG, on report cards and on your Teacher Pass. Your teacher character matches the sex on your account.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
    ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']]
