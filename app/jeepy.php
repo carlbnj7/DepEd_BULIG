@@ -14,7 +14,8 @@ function jeepy_rides(?bool $girl=null):array{
  return array_map(fn($p)=>'assets/images/characters/jeepy-'.$g.'-'.$p.'.webp?v=1',JEEPY_POSES);
 }
 
-/** My lessons: the reading journey, one stop for each level, with Jeepy at the pupil's level. */
+/** My lessons: the reading journey, one stop for each level, with Jeepy at the pupil's level and the
+    Reading Castle from the BULIG comic at the end of the road (Level 7). */
 function jeepy_journey(int $pid):string{
  $assign=one('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);$start=(int)($assign['level_id']??0);
  $next=next_learning_lesson($pid);$nextLevel=(int)($next['level_id']??0);$items=[];$done=0;
@@ -32,6 +33,6 @@ function jeepy_journey(int $pid):string{
  $chip=$cur?'Next stop: Level '.$cur['n'].' · '.$cur['t']:($done===count($items)?'You finished every level!':'Jeepy is waiting for your next level');
  return '<section class="card jy-card" aria-label="My reading journey"><div class="jy-head"><div><span class="eyebrow">MY BULIG JOURNEY</span><h2>'.e($first).'’s road map</h2><span class="jy-chip">'.e($chip).'</span></div>'
   .'<div class="jy-prog"><b>'.$done.' of '.count($items).' levels done</b><progress max="'.count($items).'" value="'.$done.'" aria-label="Levels done"></progress></div></div>'
-  .'<div class="jy-map" data-jy-map="'.e(json_encode(['items'=>$items,'jy'=>jeepy_rides()])).'"></div>'
+  .'<div class="jy-map" data-jy-map="'.e(json_encode(['items'=>$items,'jy'=>jeepy_rides(),'cd'=>function_exists('castle_open')&&castle_open($pid)?1:0])).'">'.(function_exists('castle_art')?'<template class="jy-castle">'.castle_art('jy').'</template>':'').'</div>'
   .'<ol class="jy-list">'.implode('',array_map(fn($it)=>'<li class="jy-'.$it['s'].'">'.($it['h']?'<a href="'.e($it['h']).'">':'<span>').'Level '.e($it['n']).' · '.e($it['t']).($it['h']?'</a>':'</span>').'</li>',$items)).'</ol></section>';
 }

@@ -6344,7 +6344,7 @@ html.dark .sp-rank{background:#2e4234;color:#d6e6da}
 .jy-prog progress::-webkit-progress-bar{background:#e6efe3}.jy-prog progress::-webkit-progress-value{background:linear-gradient(90deg,#22895a,#3fbf6f);border-radius:999px}
 .jy-map{border-radius:18px;overflow:hidden;background:#bfe3a5}
 .jy-svg{display:block;width:100%;height:auto;font-family:Poppins,Arial,sans-serif}
-.jy-map:not(:empty)+.jy-list{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.jy-map:has(svg.jy-svg)+.jy-list{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .jy-list{margin:10px 0 0;padding-left:20px}
 .jy-stop{cursor:pointer}.jy-stop:focus-visible{outline:none}.jy-stop:focus-visible rect{stroke:#ffc629;stroke-width:3}
 .jy-lock{cursor:not-allowed}
@@ -6362,3 +6362,9 @@ html.dark .jy-prog{color:#bfe6cc}
 @media(max-width:740px){.fr-kid[src*="jeepy-"]{max-height:28vh}.fr-team img[src*="jeepy-"]{height:70px}}
 .fr-team .fr-t10{animation-delay:.7s}.fr-team .fr-t11{animation-delay:.77s}.fr-team .fr-t12{animation-delay:.84s}.fr-team .fr-t13{animation-delay:.91s}
 @media(min-width:741px){.fr-team img{height:124px;margin:0 -19px}.fr-team img[src*="jeepy-"]{height:100px;margin-left:-4px}}
+/* v199: Jeepy drives the pupil into the Reading Castle, then celebrates with them in front of the gate */
+.rc-kid.rc-ride{left:18%;bottom:-4%;width:40%}
+.rc-opened .rc-kid-a.rc-ride{animation:rcDrive 2s ease-in forwards}
+@keyframes rcDrive{0%{left:18%;bottom:-4%;width:40%}55%{left:50%;bottom:-2%;width:24%;opacity:1}100%{left:50%;bottom:4%;width:9%;opacity:0}}
+.rc-kid-b.rc-ride:not([hidden]){width:34%!important;bottom:-6%!important}
+@media(max-width:600px){.rc-kid.rc-ride{width:42%}.rc-kid-b.rc-ride:not([hidden]){width:36%!important}}
