@@ -10,7 +10,7 @@
    - Without the update file BULIG works as before (one school, from Settings). */
 
 const SCHOOL_KEYS=['school_name'=>'name','school_id'=>'school_no','school_district'=>'district','school_head'=>'head','school_code'=>'code','logo_school'=>'logo'];
-const SCHOOL_ACTIONS=['school_add','school_save','school_logo','school_logo_remove','teacher_school'];
+const SCHOOL_ACTIONS=['school_add','school_save','school_logo','school_logo_remove','teacher_school','school_delete'];
 
 function schools_ready():bool{static $r=null;if($r===null){try{$r=(bool)one("SHOW TABLES LIKE 'schools'")&&(bool)one("SHOW COLUMNS FROM users LIKE 'school_id'");}catch(Throwable $e){$r=false;}}return $r;}
 function school_rows(bool $activeOnly=false):array{static $c=null;if(!schools_ready())return [];if($c===null)$c=rows('SELECT * FROM schools ORDER BY id');return $activeOnly?array_values(array_filter($c,fn($s)=>(int)$s['active']===1)):$c;}
@@ -85,18 +85,26 @@ function schools_view():void{
   echo '<div class="sc-stats"><div><b>'.$c['t'].'</b><span>Teachers</span></div><div><b>'.number_format($c['p']).'</b><span>Pupils</span></div><div><b>'.$c['s'].'</b><span>Sections</span></div></div>';
   echo '<div class="sc-ids">New pupil IDs: <code>'.e(account_id_format('pupil',$s['code'],$yy,1)).'</code>, <code>'.e(account_id_format('pupil',$s['code'],$yy,2)).'</code>…<br>New teacher IDs: <code>'.e(account_id_format('teacher',$s['code'],$yy,1)).'</code>, <code>'.e(account_id_format('teacher',$s['code'],$yy,2)).'</code>…</div>';
   echo '<div class="ws-btns"><a class="btn primary small" href="?page=accounts&amp;school='.$sid.'">'.icon('people').'Teachers of this school</a><a class="btn secondary small" href="?page=dashboard&amp;school='.$sid.'">'.icon('chart').'Home for this school</a></div>';
-  echo '<details class="sc-edit"><summary>'.icon('edit').'Edit name, code and logo</summary><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_save"><input type="hidden" name="id" value="'.$sid.'">'.school_fields($s)
+  echo '<div class="sc-foot"><details class="sc-edit"><summary>'.icon('edit').'Edit name, code and logo</summary><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_save"><input type="hidden" name="id" value="'.$sid.'">'.school_fields($s)
    .'<p class="muted sc-full">Changing the code only changes the IDs of new accounts. Accounts made before keep their IDs.</p><button class="btn primary">Save</button></form>';
   echo '<div class="sc-logorow"><b>School logo</b> <small class="muted">Printed on report cards of this school’s pupils</small><form method="post" enctype="multipart/form-data" class="inline-form">'.csrf_field().'<input type="hidden" name="action" value="school_logo"><input type="hidden" name="id" value="'.$sid.'"><input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required><button class="btn secondary small">Upload</button></form>'
-   .($logo?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="school_logo_remove"><input type="hidden" name="id" value="'.$sid.'"><button class="btn quiet small">Remove logo</button></form>':'').'</div></details></section>';}
+   .($logo?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="school_logo_remove"><input type="hidden" name="id" value="'.$sid.'"><button class="btn quiet small">Remove logo</button></form>':'').'</div></details>'.(count($all)>1?school_delete_box($s,$c):'').'</div></section>';}
  echo '</div>';
- echo '<section class="card sc-add" id="add-school"><h2>'.icon('useredit').' Add a school</h2><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_add">'.school_fields(['code'=>'','name'=>'','school_no'=>'','district'=>'','head'=>''])
+ echo '<section class="card sc-add" id="add-school"><h2>'.icon('useredit').' Add a school</h2><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_add">'.school_fields(['code'=>'','name'=>'','school_no'=>'','district'=>'','head'=>''],true)
   .'<p class="sc-full sc-prev" data-sc-prev>Pupils of this school will get IDs like <b>CODE'.$yy.'0001</b>. Teachers like <b>CODET0001</b>.</p><button class="btn primary">'.icon('check').'Save school</button></form></section>';
  echo '<p class="muted">The Division logo is the same for every school: Settings › School info.</p>';
 }
-function school_fields(array $s):string{
- return '<label class="sc-full">School name<input name="name" required maxlength="150" value="'.e($s['name']).'" placeholder="e.g. Manolo Fortich Central Elementary School"></label>'
-  .'<label>School code<input name="code" required maxlength="10" pattern="[A-Za-z]{3,10}" value="'.e($s['code']).'" placeholder="e.g. MFCES" data-sc-code></label>'
+/** v187: delete a whole school: its teachers, pupils and sections go too. Type the school code to confirm. */
+function school_delete_box(array $s,array $c):string{
+ return '<details class="del-box sc-del"><summary>'.icon('close').'Delete this school</summary><form method="post" class="del-form">'.csrf_field().'<input type="hidden" name="action" value="school_delete"><input type="hidden" name="id" value="'.(int)$s['id'].'">'
+  .'<p><b>Delete '.e($s['name']!==''?$s['name']:$s['code']).' for good?</b> Its '.(int)$c['t'].' '.((int)$c['t']===1?'teacher':'teachers').', '.number_format((int)$c['p']).' '.((int)$c['p']===1?'pupil':'pupils').' and '.(int)$c['s'].' '.((int)$c['s']===1?'section':'sections').' are deleted too, with all their answers, stars and recordings. This cannot be undone. Download a backup first (Print &amp; download).</p>'
+  .'<label>Type the school code <b>'.e($s['code']).'</b> to confirm<input name="confirm" required autocomplete="off" autocapitalize="characters" placeholder="'.e($s['code']).'"></label>'
+  .'<button class="btn danger">'.icon('close').'Delete this school</button></form></details>';
+}
+function school_fields(array $s,bool $add=false):string{
+ $taken=$add?implode(',',array_map(fn($r)=>$r['code'],school_rows(true))):'';
+ return '<label class="sc-full">School name<input name="name" required maxlength="150" value="'.e($s['name']).'" placeholder="e.g. Manolo Fortich Central Elementary School"'.($add?' data-sc-name':'').'></label>'
+  .'<label>School code<input name="code"'.($add?' readonly tabindex="-1" class="sc-autocode"':' required').' maxlength="10" pattern="[A-Za-z]{3,10}" value="'.e($s['code']).'" placeholder="'.($add?'Type the school name first':'e.g. MFCES').'" data-sc-code'.($add?' data-sc-auto data-taken="'.e($taken).'"':'').'>'.($add?'<small class="muted">Made by itself from the school name, for example Plantation Elementary School → PES. If another school has PES, it becomes PLES.</small>':'').'</label>'
   .'<label>School ID<input name="school_no" maxlength="40" value="'.e($s['school_no']).'" placeholder="e.g. 128001"></label>'
   .'<label>District<input name="district" maxlength="150" value="'.e($s['district']).'" placeholder="e.g. Manolo Fortich District"></label>'
   .'<label>School head<input name="head" maxlength="150" value="'.e($s['head']).'" placeholder="Name of the principal"></label>';
@@ -107,13 +115,20 @@ function school_actions(string $action):void{
  if($action==='teacher_school'){$t=admin_teacher($id);$sid=(int)($_POST['school_id']??0);if(!school_row($sid))fail('Choose a school.');
   db()->beginTransaction();try{q('UPDATE users SET school_id=? WHERE id=?',[$sid,$id]);q('UPDATE users SET school_id=? WHERE id IN (SELECT pupil_id FROM teacher_pupils WHERE teacher_id=?)',[$sid,$id]);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   audit('teacher_school',$t['public_id'].' → '.school_row($sid)['code']);flash($t['name'].' and their pupils are now in '.school_row($sid)['code'].'. Their IDs stay the same.');go('?page=accounts');}
+ if($action==='school_delete'){$s=school_row($id);if(!$s)fail('School not found.',404);if(count(school_rows())<2)fail('BULIG needs at least one school. Add another school before deleting this one.');
+  if(strtoupper(trim((string)($_POST['confirm']??'')))!==strtoupper((string)$s['code']))fail('Type the school code '.$s['code'].' in the box to confirm.');
+  $u=current_user();db()->beginTransaction();try{$r=delete_school($id,(int)$u['id']);audit('school_delete',$s['code'].': '.count($r['teachers']).' teachers, '.count($r['pupils']).' pupils');db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  foreach($r['teachers'] as $t)del_files($t['avatar_path'],(int)$t['id'],false);foreach($r['pupils'] as $p)del_files($p['avatar_path'],(int)$p['id'],true);
+  if((string)$s['logo']!==''&&str_starts_with((string)$s['logo'],'assets/uploads/')&&is_file(__DIR__.'/../public/'.$s['logo']))@unlink(__DIR__.'/../public/'.$s['logo']);
+  unset($_SESSION['school_filter']);flash(($s['name']!==''?$s['name']:$s['code']).' was deleted, with '.count($r['teachers']).' '.(count($r['teachers'])===1?'teacher':'teachers').' and '.count($r['pupils']).' '.(count($r['pupils'])===1?'pupil':'pupils').'.');go('?page=schools');}
  if($action==='school_logo'||$action==='school_logo_remove'){$s=school_row($id);if(!$s)fail('School not found.',404);$old=(string)$s['logo'];
   $f=$action==='school_logo'?save_uploaded_image('logo'):'';q('UPDATE schools SET logo=? WHERE id=?',[$f,$id]);
   if($old!==''&&str_starts_with($old,'assets/uploads/')&&is_file(__DIR__.'/../public/'.$old))@unlink(__DIR__.'/../public/'.$old);
   audit('school_logo',$s['code'].($f?' uploaded':' removed'));flash($f?'School logo saved.':'School logo removed.');go('?page=schools#school-'.$id);}
  $code=strtoupper(trim((string)($_POST['code']??'')));$name=mb_substr(trim((string)($_POST['name']??'')),0,150);
+ if($action==='school_add')$code=unique_school_code($name,array_map(fn($r)=>$r['code'],school_rows(true)));
  if(!valid_school_code($code))fail('Use 3 to 10 letters (A–Z) for the school code, for example MFCES.');if(mb_strlen($name)<3)fail('Type the name of the school.');
- if(val('SELECT 1 FROM schools WHERE code=? AND id<>?',[$code,$id]))fail('Another school already uses the code '.$code.'. Each school needs its own code.');
+ if(val('SELECT 1 FROM schools WHERE code=? AND id<>?',[$code,$id]))fail('Another school already uses the code '.$code.'. Each school needs its own code'.($action==='school_add'?', for example '.unique_school_code($name!==''?$name:$code,array_map(fn($r)=>$r['code'],school_rows(true))):'').'.');
  $vals=[$code,$name,mb_substr(trim((string)($_POST['school_no']??'')),0,40),mb_substr(trim((string)($_POST['district']??'')),0,150),mb_substr(trim((string)($_POST['head']??'')),0,150)];
  if($action==='school_add'){q('INSERT INTO schools(code,name,school_no,district,head) VALUES(?,?,?,?,?)',$vals);$id=(int)db()->lastInsertId();audit('school_add',$code);flash($name.' is added. New teachers of this school get IDs like '.account_id_format('teacher',$code,date('y'),1).'.');}
  else{if(!school_row($id))fail('School not found.',404);q('UPDATE schools SET code=?,name=?,school_no=?,district=?,head=? WHERE id=?',array_merge($vals,[$id]));audit('school_save',$code);flash('School saved.');}

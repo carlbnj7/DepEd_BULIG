@@ -6192,3 +6192,67 @@ html.dark .ws-box .letter-grid{background:#f3f6f1}html.dark .ws-box .grid-cell{c
 .l1-rec.vc-no{border-color:#f0b35a!important;background:#fff6e5!important}.l1-rec.vc-no [data-rec-sub]{color:#8a5200;font-weight:700}
 html.dark .l1-rec.vc-ok{background:#173a22!important}html.dark .l1-rec.vc-ok [data-rec-sub]{color:#9be0b4}html.dark .l1-rec.vc-no{background:#3d3214!important}html.dark .l1-rec.vc-no [data-rec-sub]{color:#ffd76a}
 html.dark .l2-ra{background:#1d2d23;border-color:#2e4234}html.dark .l2-ra-text,html.dark .l2-ra .l2-story{color:#e8f0ea}
+/* v187: delete a teacher with their pupils, or a whole school */
+.del-picks{display:grid;gap:10px}
+.del-form label.del-pick{display:grid!important;grid-template-columns:20px 1fr;align-items:center;column-gap:8px;row-gap:4px;font-weight:600}
+.del-form label.del-pick input[type=radio],.tbulk-all input[type=checkbox]{width:18px!important;height:18px;min-height:0!important;margin:0;padding:0;accent-color:#b3261e;flex:none}
+.del-pick select{grid-column:2;width:100%}
+.del-pick small{display:block!important;grid-column:2;font-weight:500;font-size:.76rem;line-height:1.35;color:#7a2a24!important;opacity:1!important;visibility:visible!important}
+.tbulk .tbulk-all{display:inline-flex!important;flex-direction:row!important;align-items:center;gap:6px;font-weight:700;font-size:.85rem;color:#5c1b16;width:auto}
+.sc-del{margin-top:12px}
+html.dark .tbulk .tbulk-all{color:#ffb4ab}html.dark .del-pick small{color:#ffd9d2!important}
+/* v188: tidy buttons for teachers and administrators */
+.act-menu{position:relative;display:inline-block}
+.act-menu>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.act-menu>summary::-webkit-details-marker{display:none}
+.act-chev,.tm-chev{font-size:.7em;opacity:.7;transition:transform .2s}
+.act-menu[open] .act-chev,.tm-toggle.on .tm-chev{transform:rotate(180deg)}
+.act-pop{position:absolute;right:0;top:calc(100% + 6px);z-index:60;min-width:220px;max-width:320px;padding:6px;border-radius:14px;background:#fff;border:1px solid var(--g100,#dbe7cc);box-shadow:0 14px 34px -12px rgba(14,59,40,.35);display:grid;gap:2px}
+.act-pop>a,.act-pop>form>button,.act-pop>details>summary,.act-pop>.sx-del,.act-pop>form .sx-del{display:flex;align-items:center;gap:8px;width:100%;padding:9px 12px;border-radius:10px;font-weight:600;font-size:.86rem;color:#0e3b28;text-decoration:none;background:none;border:0;text-align:left;cursor:pointer;min-height:40px}
+.act-pop>a:hover,.act-pop>form>button:hover,.act-pop>details>summary:hover{background:#eef6ea}
+.act-pop .icon{width:16px;height:16px;flex:none}
+.act-pop>details>summary{list-style:none}.act-pop>details>summary::-webkit-details-marker{display:none}
+.act-pop>details[open]{background:#f6faf3;border-radius:10px;padding-bottom:8px}
+.act-pop>details form{padding:4px 12px;display:grid;gap:8px}
+.act-pop .sx-del,.act-pop form .sx-del{color:#b3261e}.act-pop .sx-del.off{color:#9a8f8a;cursor:not-allowed}
+.act-pop>form{margin:0;border-top:1px solid #eef2ea;padding-top:2px}
+/* Teachers page: one Manage button, the actions in a panel under the row */
+.tm-cell{white-space:nowrap;text-align:right}
+.tm-toggle.on{background:var(--g700,#14532d);color:#fff;border-color:var(--g700,#14532d)}
+tr.tm-panel>td{padding:0 12px 14px;background:#f6faf3;border-top:0}
+.tm-in{display:grid;gap:12px;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--g100,#dbe7cc)}
+.tm-group{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:start}
+.tm-lab{font:800 .7rem/1 inherit;letter-spacing:.14em;text-transform:uppercase;color:#6b7c71;padding-top:12px}
+.tm-danger{border-top:1px dashed #f0c9c4;padding-top:12px}.tm-danger .tm-lab{color:#b3261e}
+@media(max-width:760px){.tm-group{grid-template-columns:1fr}.tm-lab{padding-top:0}}
+/* My pupils: a calm ticked-pupils bar */
+.mp-bulk{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.mp-bulk .mp-bhint{display:none;margin:0;color:#6b7c71;font-size:.88rem;align-items:center;gap:8px}
+.mp-bulk.idle .mp-bhint{display:flex}
+.mp-bulk.idle>:not(.mp-bhint){display:none}
+.mp-bcount{font-weight:800;color:#0e3b28;padding:6px 12px;border-radius:999px;background:#fff3c4}
+.mp-bgrp{display:inline-flex;align-items:center;gap:6px;padding:4px 4px 4px 10px;border-radius:12px;background:#fff;border:1px solid var(--g100,#dbe7cc)}
+.mp-bgrp .mp-bsel{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:#6b7c71}
+.mp-bgrp select{max-width:220px}
+.mp-bulk .mp-bdel{margin-left:auto}
+/* Sections cards */
+.sx-act .act-menu{margin-left:auto}
+html.dark .act-pop,html.dark .tm-in,html.dark .mp-bgrp{background:#1d2d23;border-color:#2e4234}
+html.dark .act-pop>a,html.dark .act-pop>form>button,html.dark .act-pop>details>summary{color:#e8f0ea}
+html.dark .act-pop>a:hover,html.dark .act-pop>form>button:hover,html.dark .act-pop>details>summary:hover,html.dark .act-pop>details[open]{background:#24382b}
+html.dark tr.tm-panel>td{background:#16241b}html.dark .mp-bcount{background:#3a3415;color:#ffe9a8}
+.act-menu.flip>.act-pop{right:auto;left:0}
+.btn.secondary.tm-toggle.on,.btn.secondary.tm-toggle.on:hover{background:var(--g700,#14532d);color:#fff;border-color:var(--g700,#14532d)}
+.sx-moreb{min-height:34px;padding:5px 12px}
+/* v189: Schools card: Edit and Delete side by side at the bottom; an opened one takes the full width */
+.sc-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:14px;border-top:1px dashed var(--g100,#dbe7cc)}
+.sc-card{display:flex;flex-direction:column}
+.sc-foot>details{margin:0}
+.sc-foot>details[open]{flex-basis:100%}
+.sc-foot>.sc-edit>summary{min-height:38px;padding:7px 14px;border-radius:999px;border:1.5px solid var(--y300,#f5d76e);background:#fff;font-size:.86rem;list-style:none}
+.sc-foot>.sc-edit>summary::-webkit-details-marker{display:none}
+.sc-foot>.sc-del{margin-top:0}
+.sc-foot>.sc-edit[open]~.sc-del{display:none}
+input.sc-autocode{background:#f6faf3;font-weight:800;letter-spacing:.08em;color:var(--g700,#14532d);cursor:default}
+html.dark .sc-foot>.sc-edit>summary{background:#1d2d23;border-color:#3a4f3f}
+html.dark input.sc-autocode{background:#16241b;color:#bfe6c9}

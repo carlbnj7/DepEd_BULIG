@@ -16,6 +16,10 @@ function asset_url(string $f):string{static $c=[];if(isset($c[$f]))return $c[$f]
   if(!@copy($src,$tmp)||!@rename($tmp,$dir.$name)){@unlink($tmp);return $c[$f]='assets/'.$f.'?v='.$h;}
   foreach(glob($dir.$i['filename'].'-*.'.$i['extension'])?:[] as $old)if(basename($old)!==$name&&preg_match('~^'.preg_quote($i['filename'],'~').'-[0-9a-f]{10}\.'.$i['extension'].'$~',basename($old))&&filemtime($old)<time()-86400)@unlink($old);}
  return $c[$f]='assets/'.$name;}
+/** v188: a small drop-down menu ("More", "Print"…) so rows and cards show one button instead of many. */
+function act_menu(string $label,string $items,string $cls='btn secondary small'):string{
+ return '<details class="act-menu"><summary class="'.e($cls).'">'.$label.'<span class="act-chev" aria-hidden="true">▾</span></summary><div class="act-pop">'.$items.'</div></details>';
+}
 /** The automatic tour is offered once per account (kept on the server, so it does not return after signing in again). */
 function tour_seen(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings WHERE setting_key=?',['tour_seen_'.$uid]);}catch(Throwable $e){return false;}}
 /** George the Explorer introduces herself once per account (people who already saw the tour meet her with a short hello). */

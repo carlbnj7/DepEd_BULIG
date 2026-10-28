@@ -32,6 +32,22 @@ function school_code_from_name(string $name):string{
  if(strlen($code)<3&&$words)$code=substr(implode('',$words),0,max(3,strlen($code)));
  return substr($code,0,10);
 }
+/** v189: the code of a new school, made from its name: Plantation Elementary School → PES. If another school has
+    it, more letters of the first word are used (PLES, PLAES…), then of the next words; the last way out is an added
+    letter (PESB). So no two schools share a code. Keep in step with uniq() in public/assets/staff.js. */
+function school_code_words(string $name):array{
+ $s=strtoupper(strtr($name,['ñ'=>'n','Ñ'=>'N','á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','Á'=>'A','É'=>'E','Í'=>'I','Ó'=>'O','Ú'=>'U']));
+ return array_values(array_filter(preg_split('/[^A-Z]+/',$s)?:[],fn($w)=>$w!==''&&!in_array($w,['OF','AND','THE','DE','DEL','NG','SA','AT','FOR','IN','ON','INC'],true)));
+}
+function unique_school_code(string $name,array $taken):string{
+ $taken=array_map('strtoupper',$taken);$w=school_code_words($name);
+ $base=school_code_from_name($name);if(strlen($base)<3)$base=substr($base.'SCH',0,3);
+ $try=[$base];
+ foreach($w as $i=>$word)for($k=2;$k<=strlen($word);$k++){$c='';foreach($w as $j=>$x)$c.=$j===$i?substr($x,0,$k):$x[0];if(strlen($c)>=3&&strlen($c)<=10)$try[]=$c;}
+ foreach(range('B','Z') as $l)$try[]=substr($base,0,9).$l;
+ foreach($try as $c)if(!in_array($c,$taken,true))return $c;
+ return $base;
+}
 /** The code at the start of new pupil and teacher IDs: the saved school code, else the school name's initials. */
 function school_code():string{
  $c=strtoupper(trim((string)admin_setting('school_code','')));if(valid_school_code($c))return $c;

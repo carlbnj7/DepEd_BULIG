@@ -769,3 +769,19 @@ document.addEventListener('click',e=>{const b=e.target.closest('.wh-l');if(b)b.c
 /* Admin › Teachers (v183): before a section's grade changes, say that its pupils move to the new grade too */
 document.addEventListener('submit',e=>{const f=e.target.closest&&e.target.closest('.as-row');if(!f)return;const s=f.querySelector('[data-as-grade]');if(!s)return;
  const n=+s.dataset.n||0;if(n&&s.value!==s.dataset.was&&!confirm('Change this section to Grade '+s.value+'? Its '+n+' '+(n===1?'pupil moves':'pupils move')+' to Grade '+s.value+' too, and they see the Grade '+s.value+' lessons.')){e.preventDefault();e.stopImmediatePropagation();}},true);
+/* v188: tidy buttons. Teachers page: "Manage" opens the teacher's panel under the row. Menus ("More", "Print"): one open
+   at a time, closed by a tap outside or Esc. My pupils: the ticked-pupils bar shows its actions once pupils are ticked. */
+(function(){
+ document.addEventListener('click',e=>{
+  const t=e.target.closest&&e.target.closest('.tm-toggle');
+  if(t){const p=document.getElementById('tm-'+t.dataset.tm);if(!p)return;const open=p.hidden;p.hidden=!open;t.setAttribute('aria-expanded',open?'true':'false');t.classList.toggle('on',open);return;}
+  document.querySelectorAll('details.act-menu[open]').forEach(d=>{if(!d.contains(e.target))d.open=false;});
+ });
+ document.addEventListener('toggle',e=>{const d=e.target;if(!(d instanceof HTMLDetailsElement)||!d.classList.contains('act-menu')||!d.open)return;
+  document.querySelectorAll('details.act-menu[open]').forEach(x=>{if(x!==d&&!x.contains(d))x.open=false;});
+  const p=d.querySelector('.act-pop');if(p){d.classList.remove('flip');const r=p.getBoundingClientRect();if(r.left<8)d.classList.add('flip');}},true);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('details.act-menu[open]').forEach(d=>{d.open=false;const s=d.querySelector('summary');if(s)s.focus();});});
+ const bar=document.querySelector('[data-mp-bulk]');if(!bar)return;const form=bar.closest('form'),cnt=bar.querySelector('[data-mp-count]');
+ const sync=()=>{const n=form.querySelectorAll('input[name="pupils[]"]:checked').length;bar.classList.toggle('idle',!n);cnt.textContent=n+(n===1?' pupil ticked':' pupils ticked');};
+ form.addEventListener('change',sync);form.addEventListener('click',()=>setTimeout(sync,0));sync();
+})();
