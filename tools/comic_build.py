@@ -273,6 +273,7 @@ def s0(p):
     g+=f'<path d="M0 470 L140 380 L260 430 L400 340 L520 420 L680 350 L820 430 L960 360 L1080 420 L1200 380 V600 H0Z" fill="#9cc3e6" opacity=".8"/>'
     g+=f'<path d="M0 520 Q300 440 600 470 Q900 440 1200 510 V760 H0Z" fill="url(#{p}hillA)"/><path d="M0 520 Q300 440 600 470 Q900 440 1200 510" stroke="#e8ffd0" stroke-width="5" fill="none" opacity=".7"/>'
     g+=castle(p,600,452,.62,'bright')
+    g+=ground_shadow(375,452,80)+img('jeepy-thumbs',275,345,200,112)   # Jeepy the Jeepney joined in v199
     g+=f'<path d="M0 600 Q600 540 1200 600 V760 H0Z" fill="url(#{p}hillB)"/><path d="M0 600 Q600 540 1200 600 V760 H0Z" fill="url(#{p}grassDk)" opacity=".5"/>'
     g+=tree(p,60,600,1)+pine(p,150,570,.8)+tree(p,1140,600,.95)+pine(p,1060,570,.75)
     # back row (smaller), front row (bigger), Jarvis in the middle
@@ -590,7 +591,24 @@ def s15b(p):
     g+=bubble(['Do not worry!','I have a plan. I will fix it,','better than before!'],330,250,330,390,22,'Bob')
     g+=bubble(['Hooray! Now we can','reach the great lamp!'],1010,270,1000,500,22,'Jarvis')
     return g
-# ===================== PAGE 16 · The lamp shines =====================
+# ===================== PAGE 16 · Jeepy (v199) =====================
+def s16j(p):
+    g=sky(p,'Day')+cloud(p,160,90,.9)+cloud(p,980,120,.8)
+    g+=castle(p,960,430,.36,'dim')
+    g+=f'<path d="M0 500 Q600 450 1200 500 V760 H0Z" fill="url(#{p}hillA)"/><path d="M0 500 Q600 450 1200 500 V760 H0Z" fill="url(#{p}grass)"/>'
+    road='M-40 760 C200 700 420 640 600 600 S900 520 1000 470'
+    g+=f'<path d="{road}" fill="none" stroke="#1d1d1b" stroke-width="96" stroke-linecap="round" opacity=".18" transform="translate(0 8)"/><path d="{road}" fill="none" stroke="#e9ddb8" stroke-width="96" stroke-linecap="round"/><path d="{road}" fill="none" stroke="#5f6570" stroke-width="80" stroke-linecap="round"/><path d="{road}" fill="none" stroke="#ffd54a" stroke-width="6" stroke-dasharray="30 26" stroke-linecap="round"/>'
+    g+=tree(p,80,560,.9)+pine(p,1130,540,.8)+tree(p,260,520,.7)
+    g+=ground_shadow(560,700,190)+img('jeepy-hello',330,420,460,290)
+    g+=friend('jarvis-hello',1010,750,260,True)+friend('george-cheer',150,760,250)
+    g+=sparkle(820,420,1.2,'#fff3b0')+sparkle(300,400,.9)
+    g+=f'<rect width="{W}" height="{H}" fill="url(#{p}vig)" opacity=".45"/>'
+    g+=narr(['The road to the castle was very long.','Then a new friend drove up: Jeepy the Jeepney!'],34,30,24)
+    g+=sfx('BEEP BEEP!',300,400,50,-8,'#ffd23f')
+    g+=bubble(['Hop in, everyone!','I will drive you to the castle,','one stop at a time!'],560,250,520,420,22,'Jeepy')
+    g+=bubble(['Hooray! Now no one','has to walk alone!'],1010,300,1000,500,22,'Jarvis')
+    return g
+# ===================== PAGE 17 · The lamp shines =====================
 def s15(p):
     g=f'<rect width="{W}" height="{H}" fill="url(#{p}skyNight)"/>'+stars(80,15,400,True)
     g+=firework(200,170,70,'#ff8fab')+firework(1000,150,80,'#ffd23f')+firework(820,260,50,'#7ac0ff')+firework(370,290,45,'#9ad386')
@@ -598,6 +616,7 @@ def s15(p):
     g+=castle(p,600,470,.9,'bright')
     g+=f'<path d="M0 560 Q600 500 1200 560 V760 H0Z" fill="url(#{p}hillB)"/><path d="M0 560 Q600 500 1200 560 V760 H0Z" fill="url(#{p}grass)"/>'
     g+=confetti(15,70,520)
+    g+=ground_shadow(1090,560,80)+img('jeepy-cheer',990,430,200,140)   # Jeepy (v199)
     row=[('george-cheer',80),('max-cheer',180),('dracs-cheer',280),('bruno-cheer',380),('mia-cheer',820),('toby-cheer',920),('zion-cheer',1020),('arah-cheer',1120)]
     for n,x in row:g+=friend(n,x,700,200,x>600)
     row2=[('roxanne-cheer',140),('kai-cheer',260),('bob-cheer',360),('sofie-cheer',940),('claude-thumbs',1060)]
@@ -612,7 +631,7 @@ def s15(p):
 PAGES=[('0','How the BULIG Friends Met',s0),('1','The Sleeping Castle',s1),('2','A Robot Wakes Up',s2),('3','George the Explorer',s3),
  ('4','Max the Listener',s4),('5','Dracs the Storyteller',s5),('6','Bruno the Helper',s6),('7','Mia the Builder',s7),('8','Toby the Trailblazer',s8),
  ('9','Zion the Rank Keeper',s9),('10','Arah the Streak Keeper',s10),('11','Roxanne the Timekeeper',s11),('12','Kai the Messenger',s12),
- ('13','Sofie the Stylist',s13),('14','Claude the Protector',s14),('15','Bob the Worker',s15b),('16','The Lamp Shines Again',s15)]
+ ('13','Sofie the Stylist',s13),('14','Claude the Protector',s14),('15','Bob the Worker',s15b),('16','Jeepy the Jeepney',s16j),('17','The Lamp Shines Again',s15)]
 if __name__=='__main__':
     out=[]
     for n,title,fn in PAGES:

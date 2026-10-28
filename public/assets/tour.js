@@ -149,7 +149,7 @@
    ['.lb-card','Your reading ladder','Each step is a level. You stand on the step you are on now. Finish a level and its ribbon is yours! Tap a step to open its lessons.'],
    [['.lb-legend'],'What the colours mean','Green is finished, yellow is where you are, and grey is locked.']],
   story:[
-   ['.cm-fig','The story','How Jarvis met the 13 BULIG friends. One big picture on every page.'],
+   ['.cm-fig','The story','How Jarvis met the 14 BULIG friends. One big picture on every page.'],
    ['.cm-listen','Listen','Jarvis and the friends read the story to you. Each word lights up. Tap Stop to stop.'],
    [['.cm-foot .cm-next'],'Next page','Tap Next page, or swipe the picture, to turn the page.']],
   offline:[
@@ -203,7 +203,7 @@
    [['.nt-acts'],'Read, unread or delete','Mark one as read or as unread again, or delete it.'],
    [['.nt-tools','.pageheading'],'All at once','Mark all as read clears the yellow number on the bell. Delete all read removes the ones you have already seen.']],
   story:[
-   ['.cm-fig','Story time','The comic How the BULIG Friends Met. Read it with the class to meet Jarvis and the 13 friends.'],
+   ['.cm-fig','Story time','The comic How the BULIG Friends Met. Read it with the class to meet Jarvis and the 14 friends.'],
    ['.cm-listen','Listen','Each friend reads in a voice, and Jarvis in his robot voice. When a page is done, the next one turns by itself.'],
    ['[data-story-full]','Full screen','Show the story big on the TV or projector. The arrow keys turn the pages.'],
    ['.cm-tools a.cm-ico','Print','Print the whole story, one page per sheet.']],

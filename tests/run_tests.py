@@ -531,16 +531,16 @@ def test_story(p):
         data = json.loads(text)
     except ValueError:
         data = []
-    check('All 17 story pages load for turning pages (Bob the Worker is page 15)', len(data) == 17 and all('<svg' in d.get('html', '') for d in data), f'{len(data)} pages')
+    check('All 18 story pages load for turning pages (Bob is page 15, Jeepy page 16)', len(data) == 18 and all('<svg' in d.get('html', '') for d in data), f'{len(data)} pages')
     page_ok(p, '?page=story&print=1', 'The print version of the story opens')
     _, _, home = p.req('?page=dashboard')
     check('The pupil Overview has the Story time card', 'class="cm-card' in home and 'href="?page=story' in home, '')
     tok = p.token('?page=story')
     gains = []
-    for n in list(range(17)) + [3]:
+    for n in list(range(18)) + [3]:
         _, _, r = p.req('index.php', {'action': 'story_seen', 'p': str(n), 'csrf': tok}, accept_json=True)
         gains.append(jget(r).get('gained', -1))
-    check('Story XP: +3 for each new page, +15 on the last one, nothing for a page seen again', gains[:16] == [3] * 16 and gains[16] == 15 and gains[17] == 0, str(gains))
+    check('Story XP: +3 for each new page, +15 on the last one, nothing for a page seen again', gains[:17] == [3] * 17 and gains[17] == 15 and gains[18] == 0, str(gains))
     _, _, text = p.req('?page=story')
     check('The story shows it is finished', 'Story finished' in text, '')
 
