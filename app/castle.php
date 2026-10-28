@@ -1,7 +1,7 @@
 <?php
 /* The Reading Castle (v182), as in the BULIG comic: its great lamp is dim until a True Reader comes. When a pupil finishes Level 7 (every lesson, post-test at 80% or more), a full-screen scene
    opens once on the next page: night sky, fireworks and the castle. The pupil taps "Open the gates", the doors swing open,
-   golden light pours out, their character walks in and they are welcomed as a True Reader. Seen is kept in settings
+   golden light pours out, Jeepy the Jeepney drives them in (v199) and they are welcomed as a True Reader. Seen is kept in settings
    (castle_seen_<id>), no SQL. ?castle=1 opens it again (the castle on the Level 7 road map links there). */
 const CASTLE_LEVEL=8;   // Level 7
 function castle_key(int $uid):string{return 'castle_seen_'.$uid;}
@@ -9,6 +9,8 @@ function castle_open(int $pid):bool{return function_exists('level_finished_at')&
 /** The castle picture (v182b): stone bricks, round shaded towers with tiled cone roofs and gold tips, a tall middle tower with
     a book window, hanging banners, lit arched windows, a ribbon sign, a wooden gate that opens, steps, ivy and flowers.
     Class names drive the animation in theme.css (rc-win, rc-flag, rc-door-l/r, rc-rays, rc-gate). */
+/** The same castle for the road maps (v199): ids get a prefix so the picture can show twice on one page. */
+function castle_art(string $p):string{return str_replace(['id="rc-','url(#rc-'],['id="'.$p.'rc-','url(#'.$p.'rc-'],castle_svg());}
 function castle_svg():string{
  $win=fn($x,$y,$w=24,$h=34)=>'<g><path d="M'.($x-4).' '.($y+$h+3).'V'.($y+$w/2).'a'.($w/2+4).' '.($w/2+4).' 0 0 1 '.($w+8).' 0V'.($y+$h+3).'Z" fill="#b89a6a"/>'
   .'<path class="rc-win" d="M'.$x.' '.($y+$h).'V'.($y+$w/2).'a'.($w/2).' '.($w/2).' 0 0 1 '.$w.' 0V'.($y+$h).'Z"/>'
@@ -74,6 +76,8 @@ function castle_pop(?array $u):string{
  $first=explode(' ',trim((string)$u['name']))[0];$girl=function_exists('pf_is_girl')&&pf_is_girl();
  $kid=fn($p)=>e(function_exists('char_src')?char_src($girl?'girl':'boy',$p):'');
  $castle=castle_svg();
+ /* v199: the pupil rides to the gate in Jeepy the Jeepney, then Jeepy celebrates with them in front of the castle */
+ $ride=function_exists('jeepy_rides')?jeepy_rides($girl):null;
  /* the BULIG friends from the story cheer when the lamp is lit (as on the comic's last page) */
  $pals='';foreach(['jarvis','george','mia','bob','dracs','max'] as $k=>$id)$pals.='<img class="rc-pal rc-pal'.$k.'" src="'.e(function_exists('friend_img')?friend_img($id,'cheer'):'assets/images/characters/'.$id.'-cheer.webp').'" alt="" width="90" height="130" hidden>';
  $stars='';for($i=0;$i<28;$i++)$stars.='<i class="rc-twinkle rc-t'.($i%6).' rc-p'.$i.'"></i>';
@@ -84,7 +88,7 @@ function castle_pop(?array $u):string{
   .'<div class="rc-stage">'
   .'<div class="rc-text rc-text1"><span class="rc-badge">'.icon('star').'LEVEL 7 COMPLETE</span><h2 id="rc-title">You did it, '.e($first).'!</h2><p>You finished every level of BULIG. The great lamp of the Reading Castle is waiting for a True Reader to light it.</p></div>'
   .'<div class="rc-text rc-text2" hidden><span class="rc-badge rc-badge-gold">'.icon('star').'TRUE READER</span><h2>Welcome to the Reading Castle!</h2><p>You lit the great lamp, '.e($first).'! The BULIG friends cheer for you, a True Reader. Keep reading every day!</p></div>'
-  .'<div class="rc-scene">'.$castle.'<img class="rc-kid rc-kid-a" src="'.$kid('hello').'" alt="" width="120" height="170"><img class="rc-kid rc-kid-b" src="'.$kid('cheer').'" alt="" width="120" height="170" hidden>'.$pals.'</div>'
+  .'<div class="rc-scene">'.$castle.($ride?'<img class="rc-kid rc-ride rc-kid-a" src="'.e($ride['stop']).'" alt="" width="200" height="150"><img class="rc-kid rc-ride rc-kid-b" src="'.e($ride['done']).'" alt="" width="200" height="160" hidden>':'<img class="rc-kid rc-kid-a" src="'.$kid('hello').'" alt="" width="120" height="170"><img class="rc-kid rc-kid-b" src="'.$kid('cheer').'" alt="" width="120" height="170" hidden>').$pals.'</div>'
   .'<div class="rc-actions rc-act1"><button type="button" class="btn primary rc-go" data-rc-open>'.icon('arrow').'Open the gates</button></div>'
   .'<div class="rc-actions rc-act2" hidden><a class="btn primary" href="?page=certificate&amp;level='.CASTLE_LEVEL.'">'.icon('download').'See my certificate</a><button type="button" class="btn secondary" data-rc-say>'.icon('replay').'Listen again</button><button type="button" class="btn quiet" data-rc-close>Stay in the castle</button></div>'
   .'</div></div>';

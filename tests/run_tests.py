@@ -596,6 +596,7 @@ def test_jeepy(p):
     levels = int(q('SELECT COUNT(*) FROM bulig_levels') or 0)
     items = data.get('items', [])
     check('My lessons shows the journey map: one stop for each level, with Jeepy’s 4 ride pictures', 'class="card jy-card"' in text and len(items) == levels and sorted((data.get('jy') or {}).keys()) == ['done', 'drive', 'stop', 'wait'], (len(items), levels))
+    check('The Reading Castle from the BULIG comic stands at the end of the journey road (no school)', 'class="jy-castle"' in text and 'READING CASTLE' in text)
     check('The journey map has a plain list of the levels too (for screen readers and if the map cannot draw)', text.count('<li class="jy-') == levels)
     check('Exactly one level is “you are here” or none (all done or waiting)', sum(1 for i in items if i.get('s') == 'cur') <= 1, [i.get('s') for i in items])
     sex = q("SELECT d.sex FROM pupil_details d JOIN users u ON u.id=d.pupil_id WHERE u.id=" + re.search(r'name="bulig-uid" content="(\d+)"', text).group(1))
