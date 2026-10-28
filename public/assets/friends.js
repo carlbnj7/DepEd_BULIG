@@ -52,15 +52,15 @@
  function intro(){const g=F[0],p=frame('fr-start');tint(p,H?'#e53935':g.c);
   p.append(el('div','fr-stage',''),el('div','fr-side',''));
   const img=el('img','fr-kid fr-in');img.src=H?H.hello:g.hello;img.alt='';p.firstChild.append(el('div','fr-rays'),img);
-  const s=p.lastChild;s.append(el('span','fr-eyebrow',H?'BEEP BOOP! NEW FRIENDS':'NEW FRIENDS'));const h=el('h2');h.textContent='Hi, '+D.name+'!';s.append(h);
-  const lead=H?'I am Jarvis the Robot, your tour guide. Let me introduce the '+F.length+' BULIG friends. Each one will help you in BULIG!':'George and her friends want to meet you. Each one will help you in BULIG.';
+  const s=p.lastChild;s.append(el('span','fr-eyebrow',D.only?'BEEP BOOP! A NEW FRIEND':H?'BEEP BOOP! NEW FRIENDS':'NEW FRIENDS'));const h=el('h2');h.textContent='Hi, '+D.name+'!';s.append(h);
+  const lead=D.only?(H?'Beep boop! BULIG has a new friend for you. Let me introduce '+F[0].name+' '+F[0].title+'!':'A new friend wants to meet you!'):H?'I am Jarvis the Robot, your tour guide. Let me introduce the '+F.length+' BULIG friends. Each one will help you in BULIG!':'George and her friends want to meet you. Each one will help you in BULIG.';
   const t=el('p','fr-lead');t.textContent=lead;s.append(t);if(H)setTimeout(()=>{if(idx<0)say(JV,'Beep boop! Hi, '+D.name+'! '+lead);},700);
   const team=el('div','fr-dots');F.forEach(f=>{const i=el('i');const m=new Image();m.src=f.hello;m.alt='';i.append(m);team.append(i);});s.append(team);
-  const a=el('div','fr-actions');const go=el('button','btn primary fr-next','Meet my friends'+svg('next'));go.type='button';go.onclick=()=>show(0);a.append(go);s.append(a);
+  const a=el('div','fr-actions');const go=el('button','btn primary fr-next',(D.only?'Meet '+F[0].name:'Meet my friends')+svg('next'));go.type='button';go.onclick=()=>show(0);a.append(go);s.append(a);
   const sk=el('button','fr-skip','Skip');sk.type='button';sk.onclick=end;s.append(sk);setTimeout(()=>go.focus({preventScroll:true}),80);}
  function show(n){hush();clearTimeout(swap);idx=n;if(n>=F.length)return last();const f=F[n],text=f.line.replace('{n}',D.name),p=frame();tint(p,f.c);
   const stage=el('div','fr-stage');const img=el('img','fr-kid fr-in');img.src=f.hello;img.alt=f.name+' '+f.title;
-  stage.append(el('div','fr-rays'),el('span','fr-count','FRIEND '+(n+1)+' OF '+F.length),img);
+  stage.append(el('div','fr-rays'),el('span','fr-count',D.only?'NEW FRIEND':'FRIEND '+(n+1)+' OF '+F.length),img);
   if(H){const r=el('img','fr-host');r.src=H.point;r.alt='';stage.append(r);}
   const s=el('div','fr-side');s.append(el('span','fr-eyebrow','MEET YOUR BULIG FRIENDS'));
   const plate=el('div','fr-plate');plate.append(el('i','fr-dot'));const h=el('h2');h.textContent=f.name;const sub=el('span');sub.textContent=f.title;h.append(sub);plate.append(h);s.append(plate);
@@ -70,7 +70,7 @@
   const a=el('div','fr-actions');const v=el('button','fr-round',svg(talkOn?'on':'off'));v.type='button';v.setAttribute('aria-label',talkOn?'Voice on':'Voice off');
   v.onclick=()=>{talkOn=!talkOn;try{localStorage.setItem('bulig-tour-voice',talkOn?'on':'off');}catch(e){}v.innerHTML=svg(talkOn?'on':'off');v.setAttribute('aria-label',talkOn?'Voice on':'Voice off');if(talkOn)say(f,text);else{hush();lightAll();}};
   const r=el('button','fr-round',svg('again'));r.type='button';r.setAttribute('aria-label','Hear '+f.name+' again');r.onclick=()=>{words.forEach(w=>w.el.classList.remove('on'));say(f,text);};
-  const nx=el('button','btn primary fr-next',(n===F.length-1?'Meet everyone':'Next friend')+svg('next'));nx.type='button';nx.onclick=()=>show(n+1);a.append(v,r,nx);s.append(a);
+  const nx=el('button','btn primary fr-next',(D.only?'Done':n===F.length-1?'Meet everyone':'Next friend')+svg('next'));nx.type='button';nx.onclick=()=>D.only?end():show(n+1);a.append(v,r,nx);s.append(a);
   const foot=el('div','fr-foot');foot.append(el('span','','Each friend has their own voice.'));const sk=el('button','fr-skip','Skip');sk.type='button';sk.onclick=end;foot.append(sk);s.append(foot);
   p.append(stage,s);swap=setTimeout(()=>{if(idx===n)img.src=f.special;},1400);say(f,text);setTimeout(()=>nx.focus({preventScroll:true}),80);}
  function last(){hush();const p=frame('fr-final');tint(p,'#16842f');const stage=el('div','fr-stage');stage.append(el('div','fr-rays'));const team=el('div','fr-team');

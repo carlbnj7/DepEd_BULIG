@@ -20,13 +20,16 @@ const BULIG_FRIENDS=[
  ['claude','Claude','the Protector',false,'#1d2f5c','shield','Keeping your account safe',"Hello! I am Claude the Protector. I keep your account safe. Never share your password with anyone!",.78,.9,'thumbs'],
  /* v178 */
  ['bob','Bob','the Worker',false,'#f2a900','blueprint','New updates in BULIG',"Hi, {n}! I am Bob the Worker. When BULIG gets something new, I work on it and I tell you about it first!",.9,1.0,'cheer'],
+ /* v199 */
+ ['jeepy','Jeepy','the Jeepney',false,'#2f5fd0','thumbs','Your ride on the road map',"Beep beep! Hello, {n}! I am Jeepy the Jeepney. Hop in! I will drive you through every level of BULIG. Finish your lessons and we go to the next stop!",.92,1.04,'cheer'],
 ];
 
 function friend_img(string $id,string $pose):string{return $id==='george'?char_src('george',$pose):'assets/images/characters/'.$id.'-'.$pose.'.webp?v=2';}
+function jeepy_met(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings WHERE setting_key=?',['jeepy_met_'.$uid]);}catch(Throwable $e){return true;}}
 function friends_met(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings WHERE setting_key=?',['friends_met_'.$uid]);}catch(Throwable $e){return true;}}
 /** Met: the friends, and George too (she says hello first). */
 function friends_mark_met(int $uid):void{
- foreach(['friends_met_','george_met_','jarvis_met_'] as $k)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[$k.$uid,date('Y-m-d H:i:s')]);
+ foreach(['friends_met_','george_met_','jarvis_met_','jeepy_met_'] as $k)q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[$k.$uid,date('Y-m-d H:i:s')]);
 }
 
 /** The pupil's own boy or girl picture is only on the reading ladder and the lesson map. Everywhere else a friend shows up:
@@ -91,12 +94,15 @@ function friends_again_row():string{return '<a class="st-row" href="?page=dashbo
 /** <meta name="bulig-friends"> for assets/friends.js: only for a pupil who has not met the friends yet. */
 function friends_meta(?array $cu):string{
  $again=($_GET['meet']??'')==='1'&&($_GET['page']??'dashboard')==='dashboard';   // v170: "Meet my friends again"
- if(!$cu||$cu['role']!=='pupil'||(!$again&&friends_met((int)$cu['id'])))return '';
+ if(!$cu||$cu['role']!=='pupil')return '';
+ /* v199: a pupil who met the friends before meets only the new friend, Jeepy the Jeepney, once */
+ $only=!$again&&friends_met((int)$cu['id'])?(jeepy_met((int)$cu['id'])?null:'jeepy'):'';
+ if($only===null)return '';
  $list=array_map(fn($f)=>['id'=>$f[0],'name'=>$f[1],'title'=>$f[2],'girl'=>$f[3],'c'=>$f[4],'job'=>$f[6],'line'=>$f[7],'pitch'=>$f[8],'rate'=>$f[9],
-  'hello'=>friend_img($f[0],'hello'),'special'=>friend_img($f[0],$f[5]),'last'=>friend_img($f[0],$f[10])],BULIG_FRIENDS);
+  'hello'=>friend_img($f[0],'hello'),'special'=>friend_img($f[0],$f[5]),'last'=>friend_img($f[0],$f[10])],$only?array_values(array_filter(BULIG_FRIENDS,fn($f)=>$f[0]===$only)):BULIG_FRIENDS);
  /* Jarvis the Robot (v171) hosts it: he opens, presents each friend and closes, in a jolly robot voice. */
  $host=['name'=>'Jarvis','title'=>'the Robot','hello'=>jarvis_img('hello'),'point'=>jarvis_img('point'),'idea'=>jarvis_img('idea'),'cheer'=>jarvis_img('cheer'),'thumbs'=>jarvis_img('thumbs')];
- return '<meta name="bulig-friends" content="'.e(json_encode(['name'=>explode(' ',trim((string)$cu['name']))[0],'tour'=>!tour_seen((int)$cu['id']),'host'=>$host,'friends'=>$list])).'">';
+ return '<meta name="bulig-friends" content="'.e(json_encode(['name'=>explode(' ',trim((string)$cu['name']))[0],'tour'=>!tour_seen((int)$cu['id']),'only'=>$only?1:0,'host'=>$host,'friends'=>$list])).'">';
 }
 
 /** Claude the Protector's safety tip on each Home page: a different tip and pose each day. */

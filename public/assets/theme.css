@@ -5950,9 +5950,9 @@ html.dark body .l2-card .l2-xc-t input{background:#2a3a20!important}
 .lb-stars{display:inline-flex;align-items:center;gap:4px;font-weight:700}
 /* Road map stars (v182): 3 floating stars over each lesson stop (5 over the post-test); the popup lists each activity's stars. */
 .pfm-stars{animation:pfmStarFloat 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-.pfm-stars path:first-child{filter:drop-shadow(0 2px 1.5px rgba(80,50,0,.28))}
+.pfm-stars path:first-child{filter:drop-shadow(0 2px 2px rgba(30,40,20,.35))}
 .pfm-sd1{animation-delay:.35s}.pfm-sd2{animation-delay:.7s}.pfm-sd3{animation-delay:1.05s}
-.pfm-stars-lock{opacity:.55;animation:none}
+.pfm-stars-lock{opacity:.8;animation:none}
 @keyframes pfmStarFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @media (prefers-reduced-motion:reduce){.pfm-stars{animation:none}}
 .pfm-pstars{display:flex;align-items:center;gap:8px;margin:6px 0 2px}
@@ -6333,3 +6333,32 @@ html.dark .sp-rank{background:#2e4234;color:#d6e6da}
 .sp-logo{width:196px;height:196px;margin-top:-104px;border-width:7px;font-size:2.3rem}
 @media(max-width:900px){.sp-logo{width:168px;height:168px;margin-top:-90px;font-size:2rem}}
 @media(max-width:600px){.sp-logo{width:150px;height:150px;margin-top:-80px;font-size:1.8rem}}
+/* v199: Jeepy the Jeepney. My BULIG journey (one stop for each level) on My lessons, Jeepy on every level's road map,
+   and Jeepy in the friends introduction. */
+.jy-card{padding:18px 20px 20px;border-top:5px solid #ffc629}
+.jy-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.jy-head h2{margin:2px 0 8px}
+.jy-chip{display:inline-block;background:#fff;border:2px solid #ffc629;border-radius:14px;padding:5px 12px;font-weight:700;font-size:.86rem;color:#0e3b28;box-shadow:0 3px 0 #fff4cf}
+.jy-prog{display:flex;align-items:center;gap:10px;color:#176444;font-size:.95rem}
+.jy-prog progress{width:200px;height:12px;border:0;border-radius:999px;overflow:hidden;background:#e6efe3;accent-color:#2a9461}
+.jy-prog progress::-webkit-progress-bar{background:#e6efe3}.jy-prog progress::-webkit-progress-value{background:linear-gradient(90deg,#22895a,#3fbf6f);border-radius:999px}
+.jy-map{border-radius:18px;overflow:hidden;background:#bfe3a5}
+.jy-svg{display:block;width:100%;height:auto;font-family:Poppins,Arial,sans-serif}
+.jy-map:not(:empty)+.jy-list{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.jy-list{margin:10px 0 0;padding-left:20px}
+.jy-stop{cursor:pointer}.jy-stop:focus-visible{outline:none}.jy-stop:focus-visible rect{stroke:#ffc629;stroke-width:3}
+.jy-lock{cursor:not-allowed}
+.jy-jeep{cursor:pointer}
+.jy-glow{animation:jy-glow 2s ease-in-out infinite}@keyframes jy-glow{50%{opacity:.08}}
+.pfm-jeep{cursor:pointer}.pfm-jeep image{filter:drop-shadow(0 6px 5px rgba(0,0,0,.22))}
+@media(max-width:700px){.jy-card{padding:14px 12px 14px}.jy-prog{width:100%}.jy-prog progress{flex:1;width:auto}}
+@media(prefers-reduced-motion:reduce){.jy-glow{animation:none}}
+html.dark .jy-chip{background:#14261b;color:#e8f4ec;box-shadow:none}
+html.dark .jy-prog{color:#bfe6cc}
+/* Jeepy is a wide picture: fit it in the friends introduction */
+.fr-kid[src*="jeepy-"]{height:auto;width:min(92%,440px);max-height:380px}
+.fr-dots i img[src*="jeepy-"]{height:100%;object-fit:contain;object-position:center}
+.fr-team img[src*="jeepy-"]{height:118px}
+@media(max-width:740px){.fr-kid[src*="jeepy-"]{max-height:28vh}.fr-team img[src*="jeepy-"]{height:70px}}
+.fr-team .fr-t10{animation-delay:.7s}.fr-team .fr-t11{animation-delay:.77s}.fr-team .fr-t12{animation-delay:.84s}.fr-team .fr-t13{animation-delay:.91s}
+@media(min-width:741px){.fr-team img{height:124px;margin:0 -19px}.fr-team img[src*="jeepy-"]{height:100px;margin-left:-4px}}

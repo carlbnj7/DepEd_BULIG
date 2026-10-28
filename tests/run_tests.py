@@ -290,6 +290,7 @@ def run_pages(acc):
     test_ratings_pupil(p)
     test_george(p)
     test_friends(p)
+    test_jeepy(p)
     test_story(p)
     test_notifications(p)
     test_whats_new(p)
@@ -557,7 +558,7 @@ def test_friends(p):
     m = re.search(r'<meta name="bulig-friends" content="([^"]+)"', text)
     data = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&').replace('&#039;', "'")) if m else {}
     names = [f.get('name') for f in data.get('friends', [])]
-    check('A pupil who has not met the friends gets the introduction: George first, then 12 friends (Bob last)', names[:1] == ['George'] and len(names) == 13 and names[-1] == 'Bob' and 'Kai' in names and 'Sofie' in names and 'assets/friends' in text, names)
+    check('A pupil who has not met the friends gets the introduction: George first, then 13 friends (Jeepy last)', names[:1] == ['George'] and len(names) == 14 and names[-1] == 'Jeepy' and 'Bob' in names and 'Kai' in names and 'Sofie' in names and 'assets/friends' in text, names)
     check('Claude the Protector gives a safety tip on the pupil Home page', 'class="cl-tip"' in text and 'claude-' in text)
     check('Roxanne the Timekeeper is on Today’s goal', 'class="rx-goal"' in text and 'roxanne-' in text)
     m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', text)
@@ -580,6 +581,45 @@ def test_friends(p):
     check('The introduction shows only once (it is remembered)', jget(r).get('ok') and 'name="bulig-friends"' not in text, r[:120])
 
 
+def test_jeepy(p):
+    """Jeepy the Jeepney (v199): friend #14, the journey map on My lessons, Jeepy on each level's road map, and a
+    Jeepy-only introduction for pupils who met the friends before."""
+    section('5c2b. Jeepy the Jeepney')
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    pics = [f'jeepy-{x}' for x in ('hello', 'thumbs', 'cheer')] + [f'jeepy-{k}-{x}' for k in ('boy', 'girl') for x in ('driving', 'arriving', 'finished', 'waiting')]
+    missing = [x for x in pics if not os.path.isfile(os.path.join(ROOT, 'public/assets/images/characters', x + '.webp'))]
+    check('All 11 Jeepy pictures are in place (3 for the introduction, 4 rides for the boy and 4 for the girl)', not missing, missing)
+    unq = lambda v: json.loads(v.replace('&quot;', '"').replace('&amp;', '&').replace('&#039;', "'"))
+    _, _, text = p.req('?page=lessons')
+    m = re.search(r'data-jy-map="([^"]+)"', text)
+    data = unq(m.group(1)) if m else {}
+    levels = int(q('SELECT COUNT(*) FROM bulig_levels') or 0)
+    items = data.get('items', [])
+    check('My lessons shows the journey map: one stop for each level, with Jeepy’s 4 ride pictures', 'class="card jy-card"' in text and len(items) == levels and sorted((data.get('jy') or {}).keys()) == ['done', 'drive', 'stop', 'wait'], (len(items), levels))
+    check('The journey map has a plain list of the levels too (for screen readers and if the map cannot draw)', text.count('<li class="jy-') == levels)
+    check('Exactly one level is “you are here” or none (all done or waiting)', sum(1 for i in items if i.get('s') == 'cur') <= 1, [i.get('s') for i in items])
+    sex = q("SELECT d.sex FROM pupil_details d JOIN users u ON u.id=d.pupil_id WHERE u.id=" + re.search(r'name="bulig-uid" content="(\d+)"', text).group(1))
+    check('The pupil rides in Jeepy as their own boy or girl', all(('jeepy-girl-' if sex == 'female' else 'jeepy-boy-') in v for v in data.get('jy', {}).values()), data.get('jy'))
+    lv = next((i for i in items if i.get('h')), None)
+    if lv:
+        _, _, page = p.req(lv['h'].split('#')[0])
+        m = re.search(r'data-pf-map="([^"]+)"', page)
+        check('Each level’s road map has Jeepy too', bool(m) and 'jeepy-' in unq(m.group(1)).get('jy', {}).get('stop', ''))
+    js = open(os.path.join(ROOT, 'public/assets/app.js')).read()
+    check('Jeepy parks clear of the current stop, its stars, flag and name (and drives to a new lesson)', 'function jeepy(' in js and 'function drive(' in js and 'hit(box2(' in js)
+    me = re.search(r'name="bulig-uid" content="(\d+)"', text)
+    uid = int(me.group(1))
+    q(f"INSERT IGNORE INTO settings(setting_key,setting_value) VALUES('friends_met_{uid}',NOW())")
+    q(f"DELETE FROM settings WHERE setting_key='jeepy_met_{uid}'")
+    _, _, text = p.req('?page=dashboard')
+    m = re.search(r'<meta name="bulig-friends" content="([^"]+)"', text)
+    data = unq(m.group(1)) if m else {}
+    check('A pupil who met the friends before meets only the new friend, Jeepy', [f.get('name') for f in data.get('friends', [])] == ['Jeepy'] and data.get('only') == 1, data.get('friends', [])[:1])
+    _, _, r = p.req('index.php', {'action': 'friends_met', 'csrf': p.token('?page=dashboard')}, accept_json=True)
+    _, _, text = p.req('?page=dashboard')
+    check('Jeepy says hello only once', 'name="bulig-friends"' not in text and q(f"SELECT COUNT(*) FROM settings WHERE setting_key='jeepy_met_{uid}'") == '1')
+
+
 def test_whats_new(p):
     """Bob the Worker's "There's a new update" popup: once per account, then on the bell, and again with ?whatsnew=1."""
     section('5c4. New update popup (Bob the Worker)')
@@ -587,11 +627,11 @@ def test_whats_new(p):
     _, _, text = p.req('?page=dashboard')
     me = re.search(r'name="bulig-uid" content="(\d+)"', text)
     uid = int(me.group(1)) if me else int(q("SELECT id FROM users WHERE role='pupil' ORDER BY id LIMIT 1"))
-    q(f"INSERT IGNORE INTO settings(setting_key,setting_value) VALUES('friends_met_{uid}',NOW())")
+    q(f"INSERT IGNORE INTO settings(setting_key,setting_value) VALUES('friends_met_{uid}',NOW()),('jeepy_met_{uid}',NOW())")
     q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
     q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
     _, _, text = p.req('?page=dashboard')
-    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Win stars!' in text)
+    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Ride with Jeepy!' in text)
     _, _, text = p.req('?page=dashboard')
     check('The popup comes only once', 'data-wn' not in text)
     check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')
