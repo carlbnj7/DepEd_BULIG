@@ -21,7 +21,7 @@ function staff_notif_badge(array $u):array{$n=function_exists('notif_count')?not
 /** Which menu item a page belongs to. */
 function staff_nav_on(string $role,string $page):string{
  if($role==='teacher')return ['pupil'=>'manage','progress'=>'manage','cards'=>'print','certificates'=>'print','report'=>'print','report_card'=>'print','section_report'=>'print','rcheck_pupil'=>'rcheck','rcheck_rules'=>'rcheck','rcheck_print'=>'rcheck','review'=>'qcheck','guide'=>'class_demo','moved'=>'dashboard','rate'=>'profile'][$page]??$page;
- if($role==='admin')return ['teacher_cards'=>'print','teacher_import'=>'add_teachers','guide'=>'dashboard','visual_audit'=>'dashboard','health'=>'print','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
+ if($role==='admin')return ['school'=>'schools','teacher_cards'=>'print','teacher_import'=>'add_teachers','guide'=>'dashboard','visual_audit'=>'dashboard','health'=>'print','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
  return $page;
 }
 function staff_nav_html(array $u,string $page):string{

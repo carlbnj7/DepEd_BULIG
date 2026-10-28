@@ -931,6 +931,14 @@ def test_schools(a, acc):
     at = text.find(others) if others else -1
     check('The school filter shows only that school\'s teachers', 'Tess Two' in text and others != '' and at < 0 and 'sc-filter' in text,
           f"others={others!r} tess={'Tess Two' in text} filter={'sc-filter' in text} near={text[max(0, at - 160):at + 40]!r}")
+    # v190: View school: the school's own page (cover, logo, numbers, Overview / Teachers / Pupils)
+    _, _, sl = a.req('?page=schools')
+    _, _, sp = a.req(f'?page=school&id={two}')
+    _, _, spt = a.req(f'?page=school&id={two}&tab=teachers')
+    _, _, spp = a.req(f'?page=school&id={two}&tab=pupils')
+    check('Each school has "View school", which opens its own page with the logo, numbers and the three tabs',
+          f'?page=school&amp;id={two}' in sl and 'class="sp-head' in sp and 'Tall Wide Oak Elementary School' in sp and 'Top readers' in sp
+          and 'Lessons just finished' in sp and 'Tess Two' in spt and ('sp-tbl' in spp or 'No pupils match' in spp))
     _, _, home = a.req('?page=dashboard&school=0')
     check('Home with all schools shows each school side by side', home.count('class="sc-cmp') == 2)
     tid = q("SELECT id FROM users WHERE name='Tess Two'")
