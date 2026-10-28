@@ -1,5 +1,5 @@
 <?php
-/* Story time: the comic "How the BULIG Friends Met" (cover + 16 pages, one big scene per page; Bob the Worker came in v178).
+/* Story time: the comic "How the BULIG Friends Met" (cover + 17 pages, one big scene per page; Bob the Worker came in v178, Jeepy the Jeepney in v199).
    The pictures are drawn by tools/comic_build.py into app/story_pages.json (one SVG and the lines for each page).
    - ?page=story&p=N shows page N. Back / Next are real links, so it works without JavaScript; story.js turns pages
      without reloading (it loads ?page=story_data once), reads each page aloud with a voice for every friend
@@ -50,18 +50,23 @@ function story_view(array $u):void{
   foreach($pages as $pg)echo story_page_html($pg,$count,true);
   echo '</div><script src="'.asset_url('story.js').'" defer></script>';return;}
  $n=max(0,min($count-1,(int)($_GET['p']??0)));
- echo '<div class="pageheading"><div><span class="eyebrow">STORY TIME</span><h1>How the BULIG Friends Met</h1><p class="muted">A comic about Jarvis and the 13 BULIG friends. Tap <b>Listen</b> and Jarvis reads it with you.</p></div></div>';
+ echo '<div class="pageheading"><div><span class="eyebrow">STORY TIME</span><h1>How the BULIG Friends Met</h1><p class="muted">A comic about Jarvis and the 14 BULIG friends. Tap <b>Listen</b> and Jarvis reads it with you.</p></div></div>';
  echo story_xp_bar($u);
  echo '<div class="cm-book" data-story data-pages="'.$count.'" data-girls="'.e(json_encode(STORY_GIRLS)).'"'.($u['role']==='pupil'?' data-xp="'.STORY_XP_PAGE.'" data-csrf="'.e(csrf()).'"':'').'>'.story_page_html($pages[$n],$count).'</div>';
  echo '<script src="'.asset_url('story.js').'" defer></script>';
 }
 function story_seen(int $pid):array{try{$v=(string)val('SELECT setting_value FROM settings WHERE setting_key=?',['story_seen_'.$pid]);}catch(Throwable $e){$v='';}
- if($v==='')return [];if(str_starts_with($v,'v2:'))return array_map('intval',explode(',',substr($v,3)));
+ if($v==='')return [];if(str_starts_with($v,'v3:'))return array_map('intval',explode(',',substr($v,3)));
+ /* v199: Jeepy the Jeepney's page came in as page 16, so the lamp is page 17 now (same as Bob's page in v178) */
+ if(str_starts_with($v,'v2:')){$old=array_map('intval',explode(',',substr($v,3)));$new=array_map(fn($n)=>$n>=16?$n+1:$n,$old);
+  try{if(count($old)>=17)q('INSERT IGNORE INTO settings(setting_key,setting_value) VALUES(?,?)',['story_done_'.$pid,date('Y-m-d H:i:s')]);
+   q('UPDATE settings SET setting_value=? WHERE setting_key=?',['v3:'.implode(',',$new),'story_seen_'.$pid]);}catch(Throwable $e){}
+  return $new;}
  /* v178: Bob the Worker's page came in as page 15, so the old page 15 (the lamp) is page 16 now. A pupil who had read the
     whole story keeps the "finished" bonus they already got (story_done_<id>); Bob's page still gives +3 XP. */
- $old=array_map('intval',explode(',',$v));$new=array_map(fn($n)=>$n>=15?$n+1:$n,$old);
+ $old=array_map('intval',explode(',',$v));$new=array_map(fn($n)=>$n>=16?$n+2:($n>=15?$n+1:$n),$old);
  try{if(count($old)>=16)q('INSERT IGNORE INTO settings(setting_key,setting_value) VALUES(?,?)',['story_done_'.$pid,date('Y-m-d H:i:s')]);
-  q('UPDATE settings SET setting_value=? WHERE setting_key=?',['v2:'.implode(',',$new),'story_seen_'.$pid]);}catch(Throwable $e){}
+  q('UPDATE settings SET setting_value=? WHERE setting_key=?',['v3:'.implode(',',$new),'story_seen_'.$pid]);}catch(Throwable $e){}
  return $new;}
 function story_done_before(int $pid):bool{try{return (bool)val('SELECT 1 FROM settings WHERE setting_key=?',['story_done_'.$pid]);}catch(Throwable $e){return false;}}
 /** A pupil looked at page $n: XP the first time, and the bonus once every page is seen. */
@@ -71,7 +76,7 @@ function story_mark(int $pid,int $n):array{
  try{q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$seen=story_seen($pid);$gain=0;$done=false;
   if(!in_array($n,$seen,true)){$seen[]=$n;sort($seen);$gain=STORY_XP_PAGE;
    if(count($seen)>=$count){if(!story_done_before($pid)){$gain+=STORY_XP_END;q('INSERT IGNORE INTO settings(setting_key,setting_value) VALUES(?,?)',['story_done_'.$pid,date('Y-m-d H:i:s')]);}$done=true;}
-   q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['story_seen_'.$pid,'v2:'.implode(',',$seen)]);
+   q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['story_seen_'.$pid,'v3:'.implode(',',$seen)]);
    q('INSERT INTO pupil_xp(pupil_id,total) VALUES(?,?) ON DUPLICATE KEY UPDATE total=total+VALUES(total)',[$pid,$gain]);}
   db()->commit();}
  catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
@@ -86,7 +91,7 @@ function story_card(array $u):string{
  $count=count(story_pages());if(!$count)return '';$seen=count(story_seen((int)$u['id']));$fin=$seen>=$count;
  $left=($count-$seen)*STORY_XP_PAGE+($fin?0:STORY_XP_END);
  return '<link rel="stylesheet" href="'.asset_url('story.css').'"><a class="cm-card'.($fin?' done':'').'" href="?page=story'.($seen&&!$fin?'&amp;p='.min($count-1,$seen):'').'"><img src="assets/images/characters/jarvis-cheer.webp?v=2" alt="">'
-  .'<span><small>STORY TIME</small><b>How the BULIG Friends Met</b><em>'.($fin?'You read the whole story. Read it again anytime!':($seen?'Keep reading: '.$seen.' of '.$count.' pages read · '.$left.' XP left':'A comic about Jarvis and the 13 friends · earn '.$left.' XP')).'</em></span>'
+  .'<span><small>STORY TIME</small><b>How the BULIG Friends Met</b><em>'.($fin?'You read the whole story. Read it again anytime!':($seen?'Keep reading: '.$seen.' of '.$count.' pages read · '.$left.' XP left':'A comic about Jarvis and the 14 friends · earn '.$left.' XP')).'</em></span>'
   .'<i class="cm-card-go">'.story_icon('next').'</i></a>';
 }
 /** Every page for story.js, so pages turn without loading the whole screen again. */

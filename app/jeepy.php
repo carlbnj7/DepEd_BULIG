@@ -30,7 +30,6 @@ function jeepy_journey(int $pid):string{
  if(!$items)return '';
  $cur=null;foreach($items as $it)if($it['s']==='cur')$cur=$it;
  $first=explode(' ',trim((string)current_user()['name']))[0];
- $chip=$cur?'Next stop: Level '.$cur['n'].' · '.$cur['t']:($done===count($items)?'You finished every level!':'Jeepy is waiting for your next level');
  /* v200: tapping a stop pops up that level's card (its picture, progress, Continue and Save for offline); no separate level cards */
  $pops='';foreach($items as $i=>$it){$lk=$it['s']==='lock';
   $tag=['done'=>'COMPLETED','skip'=>'SKIPPED · FREE PRACTICE','cur'=>'YOUR LEVEL','open'=>'OPEN','lock'=>'LOCKED'][$it['s']];
@@ -39,7 +38,7 @@ function jeepy_journey(int $pid):string{
   $pops.='<div class="jy-pop jy-pop-'.$it['s'].'" data-jy-pop="'.$i.'" hidden role="dialog" aria-modal="true" aria-label="'.e('Level '.$it['n']).'"><button type="button" class="jy-pop-x" data-jy-x aria-label="Close">'.icon('close').'</button>'
    .'<img src="'.e($it['c']).'" alt="" width="480" height="300" loading="lazy"><div class="jy-pop-b"><span class="jy-now-tag">'.$tag.'</span><b>Level '.e($it['n']).' · '.e($it['title']?:$it['t']).'</b><small>'.$it['d'].' of '.$it['all'].' done'.($it['x']?' · Next: <strong>'.e($it['x']).'</strong>':'').'</small>'.$btn.'</div></div>';}
  $bar='<div class="jy-pops" hidden>'.$pops.'</div>';
- return '<section class="card jy-card" aria-label="My reading journey"><div class="jy-head"><div><span class="eyebrow">MY BULIG JOURNEY</span><h2>'.e($first).'’s road map</h2><span class="jy-chip">'.e($chip).'</span></div>'
+ return '<section class="card jy-card" aria-label="My reading journey"><div class="jy-head"><div><span class="eyebrow">MY BULIG JOURNEY</span><h2>'.e($first).'’s road map</h2></div>'
   .'<div class="jy-side"><div class="jy-links"><a class="btn secondary off-pagelink" href="?page=board">'.icon('ladder').'My reading board</a><a class="btn secondary off-pagelink" href="?page=offline">'.icon('download').'Offline lessons</a></div>'
   .'<div class="jy-prog"><b>'.$done.' of '.count($items).' levels done</b><progress max="'.count($items).'" value="'.$done.'" aria-label="Levels done"></progress></div></div></div>'
   .'<div class="jy-map" data-jy-map="'.e(json_encode(['items'=>$items,'jy'=>jeepy_rides(),'cd'=>function_exists('castle_open')&&castle_open($pid)?1:0])).'">'.(function_exists('castle_art')?'<template class="jy-castle">'.castle_art('jy').'</template>':'').'</div>'
