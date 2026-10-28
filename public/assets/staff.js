@@ -52,6 +52,14 @@
  document.querySelectorAll('[data-sc-code]').forEach(inp=>{const form=inp.closest('form'),prev=form&&form.querySelector('[data-sc-prev]');if(!prev)return;
   const upd=()=>{const c=(inp.value||'').toUpperCase().replace(/[^A-Z]/g,'');inp.value=c;prev.innerHTML='';const code=c||'CODE';prev.append('Pupils of this school will get IDs like ');const a=document.createElement('b');a.textContent=code+yy+'0001';prev.append(a,'. Teachers like ');const b=document.createElement('b');b.textContent=code+'T0001';prev.append(b,'.');};
   inp.addEventListener('input',upd);upd();});
+ /* v189: Add a school makes the code from the name (same rule as unique_school_code in account_ids.php) */
+ const SKIP=['OF','AND','THE','DE','DEL','NG','SA','AT','FOR','IN','ON','INC'];
+ const words=n=>n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().split(/[^A-Z]+/).filter(x=>x&&!SKIP.includes(x));
+ const uniq=(n,t)=>{const w=words(n);if(!w.length)return '';let b=w.map(x=>x[0]).join('');if(b.length<3)b=w.join('').slice(0,Math.max(3,b.length));b=b.slice(0,10);if(b.length<3)b=(b+'SCH').slice(0,3);
+  const tr=[b];w.forEach((word,i)=>{for(let k=2;k<=word.length;k++){const c=w.map((x,j)=>j===i?x.slice(0,k):x[0]).join('');if(c.length>=3&&c.length<=10)tr.push(c);}});
+  for(const l of 'BCDEFGHIJKLMNOPQRSTUVWXYZ')tr.push(b.slice(0,9)+l);return tr.find(c=>!t.includes(c))||b;};
+ document.querySelectorAll('[data-sc-auto]').forEach(inp=>{const name=inp.form&&inp.form.querySelector('[data-sc-name]');if(!name)return;const t=(inp.dataset.taken||'').split(',').filter(Boolean);
+  const go=()=>{inp.value=uniq(name.value,t);inp.dispatchEvent(new Event('input'));};name.addEventListener('input',go);go();});
  document.querySelectorAll('[data-sc-pick]').forEach(sel=>{const out=sel.parentElement.querySelector('[data-sc-idprev]');if(!out)return;
   const upd=()=>{const c=sel.selectedOptions[0]?sel.selectedOptions[0].dataset.code:'';out.textContent=c?'New teacher IDs here look like '+c+'T0001. Their pupils get IDs like '+c+(out.dataset.yy||yy)+'0001.':'';};
   sel.addEventListener('change',upd);upd();});
