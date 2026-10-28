@@ -6256,3 +6256,80 @@ html.dark tr.tm-panel>td{background:#16241b}html.dark .mp-bcount{background:#3a3
 input.sc-autocode{background:#f6faf3;font-weight:800;letter-spacing:.08em;color:var(--g700,#14532d);cursor:default}
 html.dark .sc-foot>.sc-edit>summary{background:#1d2d23;border-color:#3a4f3f}
 html.dark input.sc-autocode{background:#16241b;color:#bfe6c9}
+/* v190: one school's page (like a social profile): cover, round logo, tabs, numbers, about, top readers, feed */
+.sp-head{padding:0;overflow:hidden;margin-top:18px}
+.sp-cover{height:190px;position:relative;background:linear-gradient(120deg,#0f5132,#1f8a4c 55%,#f2c230);overflow:hidden}
+.sp-cover.c1{background:linear-gradient(120deg,#163e7a,#2f6cc4 55%,#7cc4f2)}
+.sp-cover.c2{background:linear-gradient(120deg,#7a2e12,#d0632a 55%,#f5c04a)}
+.sp-cover.c3{background:linear-gradient(120deg,#4a1d6b,#8a4fc4 55%,#f2a3c7)}
+.sp-cover::before,.sp-cover::after,.sp-cover span{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12)}
+.sp-cover::before{width:340px;height:340px;right:-80px;top:-150px}
+.sp-cover::after{width:200px;height:200px;left:38%;bottom:-120px}
+.sp-cover span{width:90px;height:90px;left:12%;top:24px;background:rgba(255,255,255,.08)}
+.sp-id{display:flex;align-items:flex-end;gap:20px;padding:0 28px 16px;flex-wrap:wrap}
+.sp-logo{width:148px;height:148px;border-radius:50%;border:6px solid #fff;margin-top:-74px;background:#fff;object-fit:contain;box-shadow:0 10px 28px -10px rgba(0,0,0,.35);flex:none;display:grid;place-items:center;font:900 1.7rem/1 inherit;color:#fff;position:relative}
+span.sp-logo{background:linear-gradient(135deg,#14532d,#22895a)}span.sp-logo.c1{background:linear-gradient(135deg,#163e7a,#2f6cc4)}span.sp-logo.c2{background:linear-gradient(135deg,#7a2e12,#d0632a)}span.sp-logo.c3{background:linear-gradient(135deg,#4a1d6b,#8a4fc4)}
+.sp-name{flex:1;min-width:220px;padding-bottom:6px}
+.sp-name h1{margin:0 0 6px;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15}
+.sp-name p{margin:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--muted);font-weight:600}
+.sp-acts{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:8px}
+.sp-tabs{display:flex;gap:4px;padding:0 20px;border-top:1px solid var(--g100,#dbe7cc);overflow-x:auto}
+.sp-tabs a{display:inline-flex;align-items:center;gap:8px;padding:14px 16px;font-weight:800;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap;min-height:48px}
+.sp-tabs a b{font-size:.75rem;padding:2px 8px;border-radius:999px;background:var(--g50,#eef6ea);color:var(--g700,#14532d)}
+.sp-tabs a.on{color:var(--g700,#14532d);border-bottom-color:var(--g700,#14532d)}
+.sp-tabs a:hover{background:var(--g50,#eef6ea)}
+.sp-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:16px 0}
+.sp-stat{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:12px;align-items:center;padding:14px 16px;border-radius:18px;background:#fff;border:1px solid var(--g100,#dbe7cc)}
+.sp-stat .icon{grid-row:span 2;width:40px;height:40px;padding:9px;border-radius:12px;background:var(--g50,#eef6ea);color:var(--g700,#14532d)}
+.sp-stat b{font-size:1.45rem;line-height:1.1;color:#0e3b28}.sp-stat span{font-size:.78rem;font-weight:700;color:var(--muted)}
+.sp-grid{display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:16px;align-items:start}
+.sp-side,.sp-main{display:grid;gap:16px}
+.sp-card{margin:0}.sp-card h2{display:flex;align-items:center;gap:8px;font-size:1.1rem;margin:0 0 12px}
+.sp-about{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.sp-about li{display:flex;gap:12px;align-items:flex-start}.sp-about .icon{width:20px;height:20px;color:var(--g700,#14532d);flex:none;margin-top:3px}
+.sp-about small{display:block;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sp-grade{margin-bottom:12px}.sp-grade small{color:var(--muted)}
+.sp-top,.sp-feed{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.sp-top li,.sp-feed li{display:flex;align-items:center;gap:12px;padding:8px;border-radius:14px}
+.sp-top li:hover,.sp-feed li:hover{background:var(--g50,#eef6ea)}
+.sp-top .avatar,.sp-feed .avatar,.sp-pp .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none}
+.sp-rank{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.85rem;background:#eef2ea;color:#4b5b50;flex:none}
+.sp-rank.r1{background:#f6c94a;color:#5a3d00}.sp-rank.r2{background:#d5dbe2;color:#36424f}.sp-rank.r3{background:#e7b48a;color:#5a2e0d}
+.sp-who{flex:1;min-width:0}.sp-who b,.sp-who small,.sp-feed span small{display:block}.sp-who small,.sp-feed small{color:var(--muted);font-size:.8rem}
+.sp-xp{color:var(--g700,#14532d);white-space:nowrap}
+.sp-feed span{flex:1;min-width:0}.sp-feed .sp-ok{width:22px;height:22px;color:#22895a;flex:none}
+.sp-people{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.sp-person{margin:0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+.sp-person .avatar{width:84px;height:84px;border-radius:50%;object-fit:cover;border:4px solid var(--g50,#eef6ea)}
+.sp-person h3{margin:6px 0 0;font-size:1.05rem}.sp-person>small{color:var(--muted)}
+.sp-secs{font-size:.84rem;color:var(--muted);margin:4px 0;min-height:2.4em}
+.sp-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin:6px 0 10px}
+.sp-mini span{padding:8px;border-radius:12px;background:var(--g50,#eef6ea);font-size:.74rem;font-weight:700;color:var(--muted)}
+.sp-mini b{display:block;font-size:1.2rem;color:#0e3b28}
+.sp-pp{display:flex;align-items:center;gap:10px}.sp-pp b,.sp-pp small{display:block}.sp-pp small{color:var(--muted)}
+@media(max-width:1100px){.sp-stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.sp-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.sp-cover{height:130px}.sp-id{padding:0 16px 12px;gap:12px;flex-direction:column;align-items:center;text-align:center}.sp-logo{width:116px;height:116px;margin-top:-58px}.sp-name p{justify-content:center}.sp-acts{justify-content:center}.sp-stats{grid-template-columns:1fr 1fr}.sp-stat:last-child{grid-column:span 2}.sp-tabs{padding:0 8px}.sp-tabs a{padding:12px 10px}}
+html.dark .sp-logo{border-color:#1d2d23}html.dark .sp-stat{background:#1d2d23;border-color:#2e4234}html.dark .sp-stat b,html.dark .sp-mini b{color:#e8f0ea}
+html.dark .sp-stat .icon,html.dark .sp-mini span,html.dark .sp-tabs a b{background:#24382b;color:#bfe6c9}html.dark .sp-tabs{border-color:#2e4234}
+html.dark .sp-tabs a.on{color:#bfe6c9;border-bottom-color:#7fd29a}html.dark .sp-tabs a:hover,html.dark .sp-top li:hover,html.dark .sp-feed li:hover{background:#24382b}
+html.dark .sp-rank{background:#2e4234;color:#d6e6da}
+.sp-logo{font:inherit;font-weight:900;font-size:1.7rem;letter-spacing:.04em}
+.sp-name{min-width:260px;padding-top:14px}
+.sp-name .sp-acts{margin-top:12px;padding-bottom:0}
+@media(max-width:600px){.sp-tabs{justify-content:space-between}.sp-tabs a .icon{display:none}.sp-tabs a{padding:12px 8px;gap:6px}}
+.sp-name{padding-top:22px}
+@media(max-width:600px){.sp-name{padding-top:6px}}
+.tt-tabs{margin:4px 0 16px}
+/* v193: phone top bar: the JARVIS ? never sits on the open menu, and the logo leaves room for it on small phones */
+@media(max-width:740px){
+ body.sidebar-open .tour-help{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+ a.mobile-brand img{max-width:calc(100vw - 236px)!important;height:auto!important;object-fit:contain}
+}
+/* v196: Schools cards keep only View school; Edit and Delete are on the school's own page */
+.sc-viewrow{margin-top:auto;padding-top:6px}.sc-viewrow .btn{flex:1;justify-content:center}
+.sp-manage .sc-foot{border-top:0;padding-top:0;margin-top:0}
+/* v197: bigger school logo on the school page */
+.sp-logo{width:196px;height:196px;margin-top:-104px;border-width:7px;font-size:2.3rem}
+@media(max-width:900px){.sp-logo{width:168px;height:168px;margin-top:-90px;font-size:2rem}}
+@media(max-width:600px){.sp-logo{width:150px;height:150px;margin-top:-80px;font-size:1.8rem}}

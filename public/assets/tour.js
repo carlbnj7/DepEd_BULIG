@@ -165,7 +165,7 @@
    [['.me-week .weekdays'],'This week','The days you learned this week have a check.'],
    ['.me-pic','Your picture','Choose a character, or upload your own photo.'],
    [['.me-setbtn','.sidebar nav a[href="?page=settings"]'],'Settings','Sound, colours, offline lessons, your password and About BULIG are in Settings.']]:[
-   ['.char-pick','Your teacher character','Choose the character that greets you after you sign in. Jarvis the Robot guides your tours.'],
+   ['#my-name','Your name','Change how your name shows in BULIG, on report cards and on your Teacher Pass. Your teacher character matches the sex on your account.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
    ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']]
@@ -334,7 +334,7 @@
    [['.nt-acts'],'Read, unread or delete','Mark one as read or as unread again, or delete it.'],
    [['.nt-tools','.pageheading'],'All at once','Mark all as read clears the yellow number on the bell. Delete all read removes the ones you have already seen.']],
   accounts:[
-   ['.ws-btns','Add teachers','Opens Add teachers: one teacher at a time, or the whole team from an Excel list.'],
+   ['.tt-tabs','Teacher list and Add teachers','The Teachers page has two tabs. Add teachers adds one teacher at a time, or the whole team from an Excel list.'],
    ['.ws-filters','Find a teacher','Search by name, or filter by grade and status.'],
    ['table.ws-table','Your teaching team','Sections, pupils and last sign-in for each teacher. Edit names, reset passwords or turn an account off here.'],
    ['#move','Move pupils','Move pupils to another teacher. They keep their progress, XP and badges.']],
@@ -380,6 +380,7 @@
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']],
   add_teachers:[
+   ['.tt-tabs','Add teachers','Adding teachers is a tab of the Teachers page. Teacher list shows your team.'],
    ['.ap-choice','One teacher or many','Add one teacher with a short form, or the whole team at once from an Excel list.'],
    [['.ap-one form','form.formgrid'],'Add one teacher','Enter the first, middle and last name (and extension, if any) and the sex. BULIG makes the Teacher ID and a starter password. The teacher makes their own password at first sign-in.'],
    [['.import-card'],'Add many teachers','Download the template, fill it in, upload it and check every row before the accounts are made.']],

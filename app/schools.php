@@ -81,18 +81,21 @@ function schools_view():void{
  echo admin_kpis([['school',count($all),count($all)===1?'School':'Schools','',false],['user',array_sum(array_column($cnt,'t')),'Teachers','',false],['people',number_format(array_sum(array_column($cnt,'p'))),'Pupils','',false],['book',array_sum(array_column($cnt,'s')),'Sections','',false]]);
  echo '<div class="sc-grid">';
  foreach($all as $i=>$s){$sid=(int)$s['id'];$c=$cnt[$sid]??['t'=>0,'p'=>0,'s'=>0];$logo=$s['logo']!==''&&is_file(__DIR__.'/../public/'.$s['logo']);
-  echo '<section class="card sc-card" id="school-'.$sid.'"><div class="sc-top">'.($logo?'<img class="sc-logo" src="'.e($s['logo']).'" alt="">':'<span class="sc-logo c'.($i%4).'">'.e($s['code']).'</span>').'<div><h3>'.e($s['name']!==''?$s['name']:$s['code']).'</h3><small>'.e(trim(($s['school_no']!==''?'School ID '.$s['school_no']:'').($s['district']!==''?' · '.$s['district']:''),' ·')?:'Add the School ID and district below').'</small></div><span class="sc-tag c'.($i%4).'">'.e($s['code']).'</span></div>';
+  echo '<section class="card sc-card" id="school-'.$sid.'"><div class="sc-top">'.($logo?'<img class="sc-logo" src="'.e($s['logo']).'" alt="">':'<span class="sc-logo c'.($i%4).'">'.e($s['code']).'</span>').'<div><h3>'.e($s['name']!==''?$s['name']:$s['code']).'</h3><small>'.e(trim(($s['school_no']!==''?'School ID '.$s['school_no']:'').($s['district']!==''?' · '.$s['district']:''),' ·')?:'Add the School ID and district in View school').'</small></div><span class="sc-tag c'.($i%4).'">'.e($s['code']).'</span></div>';
   echo '<div class="sc-stats"><div><b>'.$c['t'].'</b><span>Teachers</span></div><div><b>'.number_format($c['p']).'</b><span>Pupils</span></div><div><b>'.$c['s'].'</b><span>Sections</span></div></div>';
-  echo '<div class="sc-ids">New pupil IDs: <code>'.e(account_id_format('pupil',$s['code'],$yy,1)).'</code>, <code>'.e(account_id_format('pupil',$s['code'],$yy,2)).'</code>…<br>New teacher IDs: <code>'.e(account_id_format('teacher',$s['code'],$yy,1)).'</code>, <code>'.e(account_id_format('teacher',$s['code'],$yy,2)).'</code>…</div>';
-  echo '<div class="ws-btns"><a class="btn primary small" href="?page=accounts&amp;school='.$sid.'">'.icon('people').'Teachers of this school</a><a class="btn secondary small" href="?page=dashboard&amp;school='.$sid.'">'.icon('chart').'Home for this school</a></div>';
-  echo '<div class="sc-foot"><details class="sc-edit"><summary>'.icon('edit').'Edit name, code and logo</summary><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_save"><input type="hidden" name="id" value="'.$sid.'">'.school_fields($s)
-   .'<p class="muted sc-full">Changing the code only changes the IDs of new accounts. Accounts made before keep their IDs.</p><button class="btn primary">Save</button></form>';
-  echo '<div class="sc-logorow"><b>School logo</b> <small class="muted">Printed on report cards of this school’s pupils</small><form method="post" enctype="multipart/form-data" class="inline-form">'.csrf_field().'<input type="hidden" name="action" value="school_logo"><input type="hidden" name="id" value="'.$sid.'"><input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required><button class="btn secondary small">Upload</button></form>'
-   .($logo?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="school_logo_remove"><input type="hidden" name="id" value="'.$sid.'"><button class="btn quiet small">Remove logo</button></form>':'').'</div></details>'.(count($all)>1?school_delete_box($s,$c):'').'</div></section>';}
+  echo '<div class="ws-btns sc-viewrow"><a class="btn primary small" href="?page=school&amp;id='.$sid.'">'.icon('eye').'View school</a></div></section>';}
  echo '</div>';
  echo '<section class="card sc-add" id="add-school"><h2>'.icon('useredit').' Add a school</h2><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_add">'.school_fields(['code'=>'','name'=>'','school_no'=>'','district'=>'','head'=>''],true)
   .'<p class="sc-full sc-prev" data-sc-prev>Pupils of this school will get IDs like <b>CODE'.$yy.'0001</b>. Teachers like <b>CODET0001</b>.</p><button class="btn primary">'.icon('check').'Save school</button></form></section>';
  echo '<p class="muted">The Division logo is the same for every school: Settings › School info.</p>';
+}
+/** v196: Edit and Delete for one school, shown on its own page (View school) under "Manage this school". */
+function school_manage_box(array $s,array $c,bool $open=false):string{
+ $sid=(int)$s['id'];$logo=$s['logo']!==''&&is_file(__DIR__.'/../public/'.$s['logo']);
+ return '<section class="card sp-card sp-manage" id="sp-manage"><h2>'.icon('settings').'Manage this school</h2><div class="sc-foot"><details class="sc-edit"'.($open?' open':'').'><summary>'.icon('edit').'Edit name, code and logo</summary><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_save"><input type="hidden" name="id" value="'.$sid.'">'.school_fields($s)
+  .'<p class="muted sc-full">Changing the code only changes the IDs of new accounts. Accounts made before keep their IDs.</p><button class="btn primary">Save</button></form>'
+  .'<div class="sc-logorow"><b>School logo</b> <small class="muted">Printed on report cards of this school’s pupils</small><form method="post" enctype="multipart/form-data" class="inline-form">'.csrf_field().'<input type="hidden" name="action" value="school_logo"><input type="hidden" name="id" value="'.$sid.'"><input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required><button class="btn secondary small">Upload</button></form>'
+  .($logo?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="school_logo_remove"><input type="hidden" name="id" value="'.$sid.'"><button class="btn quiet small">Remove logo</button></form>':'').'</div></details>'.(count(school_rows())>1?school_delete_box($s,$c):'').'</div></section>';
 }
 /** v187: delete a whole school: its teachers, pupils and sections go too. Type the school code to confirm. */
 function school_delete_box(array $s,array $c):string{
@@ -124,7 +127,7 @@ function school_actions(string $action):void{
  if($action==='school_logo'||$action==='school_logo_remove'){$s=school_row($id);if(!$s)fail('School not found.',404);$old=(string)$s['logo'];
   $f=$action==='school_logo'?save_uploaded_image('logo'):'';q('UPDATE schools SET logo=? WHERE id=?',[$f,$id]);
   if($old!==''&&str_starts_with($old,'assets/uploads/')&&is_file(__DIR__.'/../public/'.$old))@unlink(__DIR__.'/../public/'.$old);
-  audit('school_logo',$s['code'].($f?' uploaded':' removed'));flash($f?'School logo saved.':'School logo removed.');go('?page=schools#school-'.$id);}
+  audit('school_logo',$s['code'].($f?' uploaded':' removed'));flash($f?'School logo saved.':'School logo removed.');go('?page=school&id='.$id.'#sp-manage');}
  $code=strtoupper(trim((string)($_POST['code']??'')));$name=mb_substr(trim((string)($_POST['name']??'')),0,150);
  if($action==='school_add')$code=unique_school_code($name,array_map(fn($r)=>$r['code'],school_rows(true)));
  if(!valid_school_code($code))fail('Use 3 to 10 letters (A–Z) for the school code, for example MFCES.');if(mb_strlen($name)<3)fail('Type the name of the school.');
@@ -132,7 +135,7 @@ function school_actions(string $action):void{
  $vals=[$code,$name,mb_substr(trim((string)($_POST['school_no']??'')),0,40),mb_substr(trim((string)($_POST['district']??'')),0,150),mb_substr(trim((string)($_POST['head']??'')),0,150)];
  if($action==='school_add'){q('INSERT INTO schools(code,name,school_no,district,head) VALUES(?,?,?,?,?)',$vals);$id=(int)db()->lastInsertId();audit('school_add',$code);flash($name.' is added. New teachers of this school get IDs like '.account_id_format('teacher',$code,date('y'),1).'.');}
  else{if(!school_row($id))fail('School not found.',404);q('UPDATE schools SET code=?,name=?,school_no=?,district=?,head=? WHERE id=?',array_merge($vals,[$id]));audit('school_save',$code);flash('School saved.');}
- go('?page=schools#school-'.$id);
+ go($action==='school_add'?'?page=schools#school-'.$id:'?page=school&id='.$id.'#sp-manage');
 }
 /** "School" choice for a new teacher (Add teachers), set to the filter's school. */
 function school_pick_field(string $label='School',int $sel=0):string{

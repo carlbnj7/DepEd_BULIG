@@ -45,7 +45,8 @@ function admin_teachers_view(array $u):void{
  $list=rows("SELECT u.*,(SELECT COUNT(*) FROM teacher_pupils t JOIN users p ON p.id=t.pupil_id AND p.active=1 WHERE t.teacher_id=u.id) pupils FROM users u WHERE u.role='teacher'".school_users_sql()." ORDER BY u.name");$multi=count(school_rows())>1;
  $secs=[];foreach(rows('SELECT s.*,(SELECT COUNT(*) FROM pupil_sections ps WHERE ps.section_id=s.id) n FROM sections s WHERE 1'.admin_live_sections_sql().' ORDER BY s.grade_level,s.name') as $s)$secs[(int)$s['teacher_id']][]=$s;
  $cards=cards_ready();$starter=teacher_starter_ids();
- admin_heading('TEACHERS','Your teaching team.','Add teachers, print their Teacher Pass, give a new starter password, and move pupils when a teacher transfers.','<a class="btn secondary" href="?page=teacher_cards">'.icon('key').'Teacher Passes</a><a class="btn primary" href="?page=add_teachers">'.icon('useredit').'Add teachers</a>');
+ admin_heading('TEACHERS','Your teaching team.','Add teachers, print their Teacher Pass, give a new starter password, and move pupils when a teacher transfers.','<a class="btn secondary" href="?page=teacher_cards">'.icon('key').'Teacher Passes</a>');
+ echo teachers_tabs('list');
  echo school_filter_bar('accounts');
  echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="accounts"><input name="q" value="'.e($q).'" placeholder="Search name or ID"><select name="grade"><option value="0">All grades</option>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';
  echo '</select><select name="status">';foreach(['all'=>'All statuses','active'=>'Active','idle'=>'Inactive 14+ days','off'=>'Turned off'] as $k=>$v)echo '<option value="'.$k.'" '.($status===$k?'selected':'').'>'.$v.'</option>';echo '</select><button class="btn secondary">Filter</button>';
