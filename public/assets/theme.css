@@ -6368,3 +6368,49 @@ html.dark .jy-prog{color:#bfe6cc}
 @keyframes rcDrive{0%{left:18%;bottom:-4%;width:40%}55%{left:50%;bottom:-2%;width:24%;opacity:1}100%{left:50%;bottom:4%;width:9%;opacity:0}}
 .rc-kid-b.rc-ride:not([hidden]){width:34%!important;bottom:-6%!important}
 @media(max-width:600px){.rc-kid.rc-ride{width:42%}.rc-kid-b.rc-ride:not([hidden]){width:36%!important}}
+/* v200: one clean My lessons page: the journey map with the level pictures, the buttons on top and the current level under the map */
+.jy-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.jy-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.jy-links .btn{min-height:40px;padding:8px 14px;font-size:.9rem}
+.jy-now{display:flex;align-items:center;gap:14px;margin-top:14px;padding:12px;border-radius:18px;background:#fff8e6;border:2px solid #ffc629}
+.jy-now>img{width:120px;height:80px;object-fit:cover;border-radius:12px;flex:none}
+.jy-now-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.jy-now-t b{color:#0e3b28;font-size:1.05rem}.jy-now-t small{color:#5d6f63}
+.jy-now-tag{align-self:flex-start;background:#ffc629;color:#0e3b28;font:800 .7rem Poppins,sans-serif;letter-spacing:.06em;padding:2px 9px;border-radius:999px}
+.jy-now-go{display:flex;flex-direction:column;gap:6px;min-width:220px}.jy-now-go .btn{width:100%}
+@media(max-width:700px){.jy-side{align-items:stretch;width:100%}.jy-links{justify-content:stretch}.jy-links .btn{flex:1}.jy-now{flex-wrap:wrap}.jy-now>img{width:100%;height:120px}.jy-now-go{min-width:0;width:100%}}
+html.dark .jy-now{background:#1d3324;border-color:#8a6d12}html.dark .jy-now-t b{color:#e8f4ec}html.dark .jy-now-t small{color:#bfd6c6}
+@media(max-width:700px){.jy-links .btn{white-space:nowrap;font-size:.8rem;padding:8px 8px;gap:6px}}
+/* v200b: tapping a stop shows its level card on the map, beside the stop */
+.jy-card{position:relative}
+.jy-pops{position:absolute;z-index:30;width:270px}
+.jy-pops[hidden]{display:none}
+.jy-pop{position:relative;background:#fff;border-radius:18px;border:3px solid #ffc629;box-shadow:0 14px 34px rgba(14,59,40,.35);overflow:hidden;animation:jyPopIn .25s cubic-bezier(.3,1.4,.5,1)}
+.jy-pop[hidden]{display:none}
+@keyframes jyPopIn{from{transform:scale(.8);opacity:0}}
+.jy-pop>img{display:block;width:100%;height:120px;object-fit:cover}
+.jy-pop.jy-pop-lock>img{filter:grayscale(.6)}
+.jy-pop-b{display:flex;flex-direction:column;gap:4px;padding:10px 12px 12px}.jy-pop-b b{font-size:.95rem;color:#0e3b28;line-height:1.3}.jy-pop-b small{color:#5d6f63;font-size:.8rem}
+.jy-pop-b .btn{margin-top:4px;width:100%;min-height:40px;padding:8px 12px;font-size:.9rem}
+.jy-pop-b .off-slot .btn{min-height:36px}
+.jy-pop-msg{display:flex;gap:6px;align-items:center;margin:4px 0 0;padding:8px 10px;border-radius:10px;background:#f1f3ef;color:#4f5d53;font-weight:600;font-size:.82rem}
+.jy-pop-x{position:absolute;top:6px;right:6px;width:32px;height:32px;border-radius:50%;border:0;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);display:grid;place-items:center;cursor:pointer;z-index:1}
+.jy-pop-msg .icon,.jy-pop-x .icon{width:16px;height:16px}
+html.dark .jy-pop{background:#14261b}html.dark .jy-pop-b b{color:#e8f4ec}html.dark .jy-pop-b small{color:#bfd6c6}html.dark .jy-pop-msg{background:#1d3324;color:#cfe3d5}
+@media(max-width:700px){.jy-pops{width:240px}.jy-pop>img{height:100px}}
+.jy-arrow{position:absolute;bottom:-13px;width:0;height:0;margin-left:-14px;border:14px solid transparent;border-bottom:0;border-top-color:#ffc629;filter:drop-shadow(0 4px 3px rgba(14,59,40,.25))}
+.jy-pops[data-side="down"] .jy-arrow{bottom:auto;top:-13px;border-top:0;border-bottom:14px solid #ffc629}
+.jy-pops[data-side="right"] .jy-arrow{bottom:auto;left:-13px!important;margin:-14px 0 0;border:14px solid transparent;border-left:0;border-right-color:#ffc629}
+.jy-pops[data-side="left"] .jy-arrow{bottom:auto;left:auto!important;right:-13px;margin:-14px 0 0;border:14px solid transparent;border-right:0;border-left-color:#ffc629}
+@media(prefers-reduced-motion:reduce){.jy-pop{animation:none}}
+/* v200c: the level card on the map is liquid glass, so the map still shows behind it */
+.jy-pop{background:linear-gradient(160deg,rgba(255,255,255,.55),rgba(255,255,255,.28));-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);border:1.5px solid rgba(255,255,255,.75);box-shadow:0 14px 34px rgba(14,59,40,.3),inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(255,255,255,.35)}
+.jy-pop>img{margin:8px 8px 0;width:calc(100% - 16px);border-radius:12px;opacity:.92}
+.jy-pop-b b,.jy-pop-b small{text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.jy-pop-b small{color:#2f4a3a}
+.jy-pop-b .off-slot .btn,.jy-pop-x{background:rgba(255,255,255,.7)}
+.jy-pop-msg{background:rgba(255,255,255,.55)}
+.jy-arrow{border-top-color:rgba(255,255,255,.75)}
+.jy-pops[data-side="down"] .jy-arrow{border-bottom-color:rgba(255,255,255,.75)}
+.jy-pops[data-side="right"] .jy-arrow{border-right-color:rgba(255,255,255,.75)}
+.jy-pops[data-side="left"] .jy-arrow{border-left-color:rgba(255,255,255,.75)}
+html.dark .jy-pop{background:linear-gradient(160deg,rgba(20,38,27,.62),rgba(20,38,27,.38));border-color:rgba(255,255,255,.25)}
+html.dark .jy-pop-b b,html.dark .jy-pop-b small{text-shadow:none}html.dark .jy-pop-b small{color:#cfe3d5}

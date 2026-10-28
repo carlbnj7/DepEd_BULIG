@@ -56,7 +56,8 @@
   lessons:[
    [['.pg-gate'],'Post-test result','You need 80% on the post-test to open the next level. Tap Try again to answer the parts you missed.'],
    [['.jy-card'],'Your journey with Jeepy','Every level is a stop on this road. You ride in Jeepy the Jeepney! The pin shows where you are. Tap Continue to go on.'],
-   ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
+   [['.level-catalog .section-heading'],'Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
+   [['.jy-now','.jy-card'],'Your level','Your level is under the road map. Tap Continue learning to open its road map and play your next lesson.'],
    [['a.off-pagelink[href="?page=board"]'],'My reading board','See all your levels as a ladder, with a ribbon for every level you finish or start above.'],
    [['.level-card.pf-current','.level-card.available'],'Your level','Your level is always at the top. Tap "Continue learning" to open your road map, see your progress and play your next lesson.'],
    [['.level-fold>summary'],'Optional practice','Levels your teacher skipped are folded here. Tap to open them and practise whenever you like.'],
