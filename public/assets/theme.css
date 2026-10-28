@@ -6318,3 +6318,17 @@ html.dark .sp-rank{background:#2e4234;color:#d6e6da}
 .sp-name{min-width:260px;padding-top:14px}
 .sp-name .sp-acts{margin-top:12px;padding-bottom:0}
 @media(max-width:600px){.sp-tabs{justify-content:space-between}.sp-tabs a .icon{display:none}.sp-tabs a{padding:12px 8px;gap:6px}}
+/* v191: school cover is the BULIG reading picture */
+.sp-cover{height:230px;background:#cfe8c4}
+.sp-cover::before{display:none}
+.sp-cover>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.sp-cover::after{content:"";display:block;position:absolute;inset:auto 0 0 0;height:45%;width:auto;border-radius:0;left:0;bottom:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.22))}
+.sp-name{padding-top:22px}
+@media(max-width:600px){.sp-cover{height:150px}.sp-name{padding-top:6px}}
+.tt-tabs{margin:4px 0 16px}
+/* v193: phone top bar: the JARVIS ? never sits on the open menu, and the logo leaves room for it on small phones */
+@media(max-width:740px){
+ body.sidebar-open .tour-help{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+ a.mobile-brand img{max-width:calc(100vw - 236px)!important;height:auto!important;object-fit:contain}
+}
+.sp-cover>img{object-position:center 50%}.sp-cover::after{display:none}

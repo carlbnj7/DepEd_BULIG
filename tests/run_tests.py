@@ -939,12 +939,20 @@ def test_schools(a, acc):
     check('Each school has "View school", which opens its own page with the logo, numbers and the three tabs',
           f'?page=school&amp;id={two}' in sl and 'class="sp-head' in sp and 'Tall Wide Oak Elementary School' in sp and 'Top readers' in sp
           and 'Lessons just finished' in sp and 'Tess Two' in spt and ('sp-tbl' in spp or 'No pupils match' in spp))
+    # v191: the cover is always the BULIG reading picture (it cannot be changed); no details line under the name
+    _, _, cv = a.req(f'?page=school&id={two}')
+    check('A school page has the BULIG cover picture (no upload) and no details line under the name',
+          'covers/school-cover.webp' in cv and 'name="cover"' not in cv and 'School head:' not in cv)
     _, _, home = a.req('?page=dashboard&school=0')
     check('Home with all schools shows each school side by side', home.count('class="sc-cmp') == 2)
     tid = q("SELECT id FROM users WHERE name='Tess Two'")
     a.req('index.php', {'action': 'teacher_school', 'id': tid, 'school_id': first, 'csrf': a.token('?page=accounts')})
     check('A teacher can be moved to another school (their ID stays)', q(f'SELECT CONCAT(public_id,"/",school_id) FROM users WHERE id={int(tid)}') == f'TWOEST0001/{first}')
     # Add many teachers › Type the list (like the pupils' list): a row with a mistake saves nothing, a right list makes every account
+    _, _, tl = a.req('?page=accounts')
+    _, _, ta = a.req('?page=add_teachers')
+    check('Add teachers is a tab of the Teachers page, not a separate menu item',
+          'tt-tabs' in tl and 'tt-tabs' in ta and 'Your teaching team.' in ta and 'Add one teacher' in ta and 'nav-add_teachers' not in tl and '>Add teachers</span>' not in tl)
     _, _, grid = a.req('?page=add_teachers&mode=many')
     check('Add many teachers has the two ways: Type the list and Upload a file', 'data-who="teacher"' in grid and 'how=file' in grid and 'name="t[grade][0]"' in grid)
     typed = {'action': 'timport_typed', 'school_id': two, 'csrf': a.token('?page=add_teachers&mode=many'),

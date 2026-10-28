@@ -13,7 +13,7 @@ function staff_nav_list(array $u):array{
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['leaderboard','star','Leaderboard'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
    ['g','TEACHING'],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
- return [['dashboard','home','Home'],['g','PEOPLE'],['schools','school','Schools'],['accounts','people','Teachers'],['directory','search','School directory'],['add_teachers','useredit','Add teachers'],['checkup','shield','Account check'],
+ return [['dashboard','home','Home'],['g','PEOPLE'],['schools','school','Schools'],['accounts','people','Teachers'],['directory','search','School directory'],['checkup','shield','Account check'],
   ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=bug_open_count((int)$u['id']))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['settings','settings','Settings'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
 }
 /** The number of new notifications beside Notifications in the menu. */
@@ -21,7 +21,7 @@ function staff_notif_badge(array $u):array{$n=function_exists('notif_count')?not
 /** Which menu item a page belongs to. */
 function staff_nav_on(string $role,string $page):string{
  if($role==='teacher')return ['pupil'=>'manage','progress'=>'manage','cards'=>'print','certificates'=>'print','report'=>'print','report_card'=>'print','section_report'=>'print','rcheck_pupil'=>'rcheck','rcheck_rules'=>'rcheck','rcheck_print'=>'rcheck','review'=>'qcheck','guide'=>'class_demo','moved'=>'dashboard','rate'=>'profile'][$page]??$page;
- if($role==='admin')return ['school'=>'schools','teacher_cards'=>'print','teacher_import'=>'add_teachers','guide'=>'dashboard','visual_audit'=>'dashboard','health'=>'print','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
+ if($role==='admin')return ['school'=>'schools','add_teachers'=>'accounts','teacher_import'=>'accounts','teacher_cards'=>'print','guide'=>'dashboard','visual_audit'=>'dashboard','health'=>'print','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
  return $page;
 }
 function staff_nav_html(array $u,string $page):string{
@@ -156,9 +156,14 @@ function add_pupils_view(array $u):void{
 }
 
 /* ---------------- administrator: Add teachers (one, or many) ---------------- */
+/** v192: Add teachers is a tab of the Teachers page (no separate menu item). */
+function teachers_tabs(string $on):string{
+ return '<nav class="bk-tabs tt-tabs" aria-label="Teachers"><a href="?page=accounts"'.($on==='list'?' class="on" aria-current="page"':'').'>'.icon('people').'Teacher list</a><a href="?page=add_teachers"'.($on==='add'?' class="on" aria-current="page"':'').'>'.icon('useredit').'Add teachers</a></nav>';
+}
 function add_teachers_view(array $u):void{
  $mode=($_GET['mode']??'')==='many'||isset($_GET['step'])||($_GET['page']??'')==='teacher_import'?'many':'one';
- admin_heading('PEOPLE','Add teachers','Add one teacher, or the whole teaching team at once: type the list or upload an Excel file. BULIG makes each Teacher ID and starter password.','<a class="btn secondary" href="?page=teacher_cards">'.icon('print').'Print Teacher Passes</a>');
+ admin_heading('TEACHERS','Your teaching team.','Add one teacher, or the whole teaching team at once: type the list or upload an Excel file. BULIG makes each Teacher ID and starter password.','<a class="btn secondary" href="?page=teacher_cards">'.icon('key').'Teacher Passes</a>');
+ echo teachers_tabs('add');
  echo ap_choice($mode,['useredit','One teacher','Type the name of the teacher'],['excel','Many teachers','Type the list or upload Excel'],'add_teachers');
  if($mode==='many'){ob_start();teacher_import_view();$h=(string)ob_get_clean();echo preg_replace('~^.*?(<section)~s','$1',$h,1);return;}
  $nt=(int)($_SESSION['new_teacher']??0);unset($_SESSION['new_teacher']);if($nt)echo new_teacher_overlay($nt);

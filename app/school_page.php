@@ -13,12 +13,11 @@ function school_page_view():void{
  $done=(int)val('SELECT COUNT(*) FROM pupil_progress pp JOIN users u ON u.id=pp.pupil_id AND u.school_id=? WHERE pp.completed_at IS NOT NULL',[$sid]);
  $act=(int)val('SELECT COUNT(DISTINCT d.pupil_id) FROM learning_days d JOIN users u ON u.id=d.pupil_id AND u.active=1 AND u.school_id=? WHERE d.day>=?',[$sid,$week]);
  $logo=$s['logo']!==''&&is_file(__DIR__.'/../public/'.$s['logo']);$name=$s['name']!==''?$s['name']:$s['code'];
- $about=array_filter([$s['school_no']!==''?'School ID '.$s['school_no']:'',$s['district'],$s['head']!==''?'School head: '.$s['head']:'']);
 
  echo '<nav class="crumb sp-crumb"><a href="?page=schools">Schools</a>'.icon('chev').'<span>'.e($s['code']).'</span></nav>';
- echo '<section class="sp-head card"><div class="sp-cover '.$c.'" aria-hidden="true"><span></span></div><div class="sp-id">'
+ echo '<section class="sp-head card"><div class="sp-cover"><img src="assets/images/covers/school-cover.webp" alt=""></div><div class="sp-id">'
   .($logo?'<img class="sp-logo" src="'.e($s['logo']).'" alt="'.e($name).' logo">':'<span class="sp-logo '.$c.'">'.e($s['code']).'</span>')
-  .'<div class="sp-name"><h1>'.e($name).'</h1><p><span class="sc-tag '.$c.'">'.e($s['code']).'</span>'.e(implode(' · ',$about)?:'Add the School ID, district and school head on the Schools page').'</p>'
+  .'<div class="sp-name"><h1>'.e($name).'</h1>'
   .'<div class="sp-acts"><a class="btn primary small" href="?page=accounts&amp;school='.$sid.'">'.icon('people').'Teachers page</a><a class="btn secondary small" href="?page=dashboard&amp;school='.$sid.'">'.icon('chart').'Home for this school</a><a class="btn quiet small" href="?page=schools#school-'.$sid.'">'.icon('edit').'Edit</a></div></div></div>';
  $t=fn($k,$ic,$l)=>'<a href="?page=school&amp;id='.$sid.($k==='overview'?'':'&amp;tab='.$k).'"'.($tab===$k?' class="on" aria-current="page"':'').'>'.icon($ic).$l.'</a>';
  echo '<nav class="sp-tabs" aria-label="School page">'.$t('overview','home','Overview').$t('teachers','useredit','Teachers <b>'.$cnt['t'].'</b>').$t('pupils','people','Pupils <b>'.number_format($cnt['p']).'</b>').'</nav></section>';
