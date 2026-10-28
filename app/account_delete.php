@@ -14,7 +14,7 @@ function del_q(string $table,string $sql,array $args):void{if(del_has_table($tab
 
 /** Settings that belong to one person (seen pop-ups, tours, ratings, teacher picture …). */
 function del_settings(int $id):void{
- q("DELETE FROM settings WHERE setting_key REGEXP ?",['^(cardpw|pupil_seen|teacher_char|tour_seen|george_met|jarvis_met|friends_met|rate_later|class_done_note|seen_[a-z0-9_]+)_'.$id.'$']);
+ q("DELETE FROM settings WHERE setting_key REGEXP ?",['^(cardpw|pupil_seen|teacher_char|tour_seen|george_met|jarvis_met|jeepy_met|friends_met|rate_later|class_done_note|seen_[a-z0-9_]+)_'.$id.'$']);
 }
 function del_files(?string $avatar,int $id,bool $pupil):void{
  if($avatar&&preg_match('~^assets/uploads/[A-Za-z0-9._-]+$~',$avatar))@unlink(__DIR__.'/../public/'.$avatar);

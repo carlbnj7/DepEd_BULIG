@@ -55,6 +55,7 @@
    [['.nt-tools','.pageheading'],'All at once','Mark all as read clears the yellow number on the bell. Delete all read removes the ones you have already seen.']],
   lessons:[
    [['.pg-gate'],'Post-test result','You need 80% on the post-test to open the next level. Tap Try again to answer the parts you missed.'],
+   [['.jy-card'],'Your journey with Jeepy','Every level is a stop on this road. You ride in Jeepy the Jeepney! The pin shows where you are. Tap Continue to go on.'],
    ['.level-catalog .section-heading','Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
    [['a.off-pagelink[href="?page=board"]'],'My reading board','See all your levels as a ladder, with a ribbon for every level you finish or start above.'],
    [['.level-card.pf-current','.level-card.available'],'Your level','Your level is always at the top. Tap "Continue learning" to open your road map, see your progress and play your next lesson.'],
@@ -67,6 +68,7 @@
    ['.back-levels','Back to all levels','Tap here to go back to the list of levels.'],
    ['.level-banner','This level','The name of the level and how many activities you finished.'],
    [['.pfm-node.pfm-cur','.pf-mapcard'],'You are here','The big yellow stop is your next lesson. Tap it to start.'],
+   [['.pfm-jeep'],'Jeepy the Jeepney','You ride in Jeepy! Jeepy waits beside your next lesson. When you finish a lesson, Jeepy drives you to the next stop.'],
    [['.pfm-node.pfm-done','.pf-mapcard'],'Finished lessons','Green stops with a check are done. You can open them again to practise.'],
    [['.pfm-node.pfm-lock','.pf-mapcard'],'Coming next','Grey stops open one by one as you finish each lesson. Tap one to see which lesson to finish first.']],
   activity:[
