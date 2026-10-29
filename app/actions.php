@@ -6,6 +6,7 @@ function review_back():string{$b=(string)($_POST['back']??'');return preg_match(
 function action():void{
  check_csrf();$action=(string)($_POST['action']??'');unset($_SESSION['notif_live']);
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
+ if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
  if(in_array($action,['message_preview','message_send'],true))messages_action($action);
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if(str_starts_with($action,'rc_'))rc_action($action);
@@ -303,5 +304,6 @@ function submission_reply(array $a,bool $ok,string $message,int $xp,string $chec
  if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>$ok,'message'=>$message,'xp'=>$xp,'url'=>$url]+($check!==''?['check'=>$check]:[]));exit;}
  flash($message);go($url);
 }
+
 
 

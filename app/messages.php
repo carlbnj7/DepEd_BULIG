@@ -36,8 +36,8 @@ function messages_action(string $action):void{
  }
  fail('Unknown message action.');
 }
-function messages_view(array $u):void{
- $admin=$u['role']==='admin';$uid=(int)$u['id'];echo '<div class="pagehead"><div><span class="eyebrow">BULIG</span><h1>Messages</h1><p>'.($admin?'Send a school message and see who has opened it.':'Messages from your school administrator.').'</p></div></div>';
+function messages_content(array $u):void{
+ $admin=$u['role']==='admin';$uid=(int)$u['id'];
  if(!messages_ready()){echo '<section class="card"><h2>Messages are being set up</h2><p>'.($admin?'Import database/migrations/033_admin_messages.sql to enable messages.':'Please check back later.').'</p></section>';return;}
  $id=(int)($_GET['id']??0);
  if($id){
@@ -73,3 +73,18 @@ function messages_view(array $u):void{
  messages_pager($p,$total,25,'?page=messages');
 }
 function messages_pager(int $p,int $total,int $size,string $base):void{echo '<nav class="buttonrow" aria-label="Message pages">'.($p>1?'<a class="btn secondary" href="'.e($base.'&p='.($p-1)).'">Previous</a>':'').($p*$size<$total?'<a class="btn secondary" href="'.e($base.'&p='.($p+1)).'">Next</a>':'').'</nav>';}
+
+
+/** Messenger-style split pane; existing sending, access checks and read receipts are unchanged. */
+function messages_view(array $u):void{
+ if(!messages_ready()){messages_content($u);return;}
+ $admin=$u['role']==='admin';$uid=(int)$u['id'];$id=(int)($_GET['id']??0);$selected=$id||!empty($_GET['compose'])||!empty($_GET['preview']);$search=mb_substr(trim((string)($_GET['search']??'')),0,100);$p=max(1,min(100000,(int)($_GET['listpage']??1)));
+ $where=$admin?'m.sender_id=?':'r.user_id=?';$params=[$uid];if($search!==''){$where.=' AND (m.subject LIKE ? OR m.body LIKE ?)';$params[]='%'.$search.'%';$params[]='%'.$search.'%';}
+ $sql=$admin?'SELECT m.*,NULL read_at FROM admin_messages m':'SELECT m.*,r.read_at FROM message_recipients r JOIN admin_messages m ON m.id=r.message_id';$list=rows($sql.' WHERE '.$where.' ORDER BY m.id DESC LIMIT 25 OFFSET '.(($p-1)*25),$params);
+ echo '<div class="msg-shell'.($selected?' has-selection':'').'"><aside class="msg-list card" aria-label="Message list"><div class="msg-list-head"><div><span class="eyebrow">'.($admin?'SENT MESSAGES':'SCHOOL INBOX').'</span><h1>Messages</h1></div>'.($admin?'<a class="btn primary small" href="?page=messages&compose=1">New message</a>':'').'</div><form method="get" class="msg-search"><input type="hidden" name="page" value="messages"><label>Search messages<input name="search" maxlength="100" value="'.e($search).'" placeholder="Search subject or message"></label><button class="btn secondary small">Search</button></form><nav class="msg-items" aria-label="Messages">';
+ foreach($list as $m){$active=(int)$m['id']===$id;$new=!$admin&&$m['read_at']===null;echo '<a class="msg-item'.($active?' active':'').($new?' unread':'').'" href="?page=messages&id='.(int)$m['id'].'"'.($active?' aria-current="page"':'').'><span class="msg-avatar" aria-hidden="true">'.icon('comic').'</span><span class="msg-summary"><span class="msg-item-top"><strong>'.e($m['subject']).'</strong>'.($new?'<span class="msg-dot" aria-label="Unread"></span>':'').'</span><small>'.e(mb_substr($m['body'],0,80)).'</small><time>'.e(date('M j, g:i A',strtotime($m['created_at']))).'</time></span></a>';}
+ if(!$list)echo '<p class="msg-empty">'.($search!==''?'No matching messages.':'No messages yet.').'</p>';
+ echo '</nav><div class="buttonrow msg-pages">'.($p>1?'<a class="btn secondary small" href="?page=messages&listpage='.($p-1).'&search='.e(urlencode($search)).'">Previous</a>':'').(count($list)===25?'<a class="btn secondary small" href="?page=messages&listpage='.($p+1).'&search='.e(urlencode($search)).'">Next</a>':'').'</div></aside><section class="msg-panel card'.($admin?' msg-sent':' msg-received').'" aria-label="Selected message">';
+ if($selected)messages_content($u);else echo '<div class="msg-welcome">'.icon('comic').'<h2>Your BULIG messages</h2><p>'.($admin?'Choose a sent message to check its read status, or start a new message.':'Choose a message from your school administrator.').'</p><p>Pupils and teachers can read messages. Replies are not enabled.</p>'.($admin?'<a class="btn primary" href="?page=messages&compose=1">New message</a>':'').'</div>';
+ echo '</section></div>';
+}

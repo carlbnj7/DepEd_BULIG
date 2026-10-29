@@ -9,10 +9,10 @@
 
 /** The menu of each role: [page, icon, label, extra] or ['g', group word] or ['hr']. */
 function staff_nav_list(array $u):array{
- if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['story','comic','Story time'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile'],['settings','settings','Settings']];
+ if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['story','comic','Story time'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['bug_report','alert','My bug reports'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile'],['settings','settings','Settings']];
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['leaderboard','star','Leaderboard'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
-   ['g','TEACHING'],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
+   ['g','TEACHING'],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['bug_report','alert','My bug reports'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
  return [['dashboard','home','Home'],['g','PEOPLE'],['schools','school','Schools'],['accounts','people','Teachers'],['directory','search','School directory'],['checkup','shield','Account check'],
   ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=bug_open_count((int)$u['id']))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['settings','settings','Settings'],['hr'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
 }
@@ -357,5 +357,6 @@ function staff_pc_tip(array $u):string{
  if(!empty($_SESSION['pc_tip']))return '';$_SESSION['pc_tip']=1;$first=explode(' ',trim((string)$u['name']))[0];
  return '<template id="pc-tip" data-img="'.e(friend_img('kai','letter')).'" data-hi="'.e(($u['role']==='admin'?'Hi, ':'Hi, Teacher ').$first.'!').'"></template>';
 }
+
 
 

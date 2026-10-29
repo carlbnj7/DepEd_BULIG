@@ -47,7 +47,7 @@ function help_bug(array $u,int $pid,int $lid,int $aid,string $back):never{
  $note=trim(preg_replace('/\s+/',' ',(string)($_POST['note']??'')));$note=mb_substr($note,0,200);
  $body=($note!==''?'“'.$note.'” · ':'').$where.' · '.help_device((string)($_SERVER['HTTP_USER_AGENT']??'')).($skipped?' · Skipped for this pupil':($card?' · Page '.$card.' skipped for this pupil':''));
  $title='Bug report from '.$u['name'].' ('.$u['public_id'].')';
- foreach(rows("SELECT id FROM users WHERE role='admin' AND active=1") as $ad)notify((int)$ad['id'],'bug',$title,$body,'?page=bugs');
+ if(function_exists('bugflow_ready')&&bugflow_ready()){db()->beginTransaction();try{bugflow_create($u,$note!==''?$note:'Something is not working',$body);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}}else foreach(rows("SELECT id FROM users WHERE role='admin' AND active=1") as $ad)notify((int)$ad['id'],'bug',$title,$body,'?page=bugs');
  audit('bug_report',mb_substr($where.($note!==''?' · '.$note:''),0,250));
  if($ajax){header('Content-Type: application/json');echo json_encode(['ok'=>true]);exit;}
  if($skipped){$n=next_activity($pid,$lid);$_SESSION['help_toast']='Thank you! You told the BULIG team. You can skip this part for now. Here is the next one.';go('?page=lesson&id='.$lid.($n?'&activity='.(int)$n['id']:''));}
@@ -70,20 +70,22 @@ function help_device(string $ua):string{
 /* v178: a report stays open until the administrator taps Fixed. Reading it on the bell or in Notifications
    (or "Mark all as read") no longer moves it to Fixed: Fixed changes its kind to 'bugfixed', and the day it was
    fixed is kept in settings (bug_fixed_<id>). */
-function bug_open_count(int $uid):int{return notif_ready()?(int)val("SELECT COUNT(*) FROM notifications WHERE user_id=? AND kind='bug'",[$uid]):0;}
+function bug_open_count(int $uid):int{if(function_exists('bugflow_ready')&&bugflow_ready())return (int)val("SELECT COUNT(*) FROM bug_reports WHERE status IN ('open','processing')")+(notif_ready()?(int)val("SELECT COUNT(*) FROM notifications WHERE user_id=? AND kind='bug' AND id NOT IN (SELECT notification_id FROM bug_report_links)",[$uid]):0);return notif_ready()?(int)val("SELECT COUNT(*) FROM notifications WHERE user_id=? AND kind='bug'",[$uid]):0;}
 function bug_fixed_on(array $n):string{$d='';try{$d=(string)val('SELECT setting_value FROM settings WHERE setting_key=?',['bug_fixed_'.(int)$n['id']]);}catch(Throwable $e){}return $d!==''?$d:(string)($n['read_at']??'');}
 /** Administrator: Bug reports from pupils (?page=bugs). */
 function bugs_view(array $u):void{
+ if(function_exists('bugflow_ready')&&bugflow_ready()){bugflow_admin($u);if(!in_array($_GET['show']??'open',['open','fixed'],true))return;}
  $f=($_GET['show']??'')==='fixed'?'fixed':'open';
- $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=? AND kind=? ORDER BY created_at DESC,id DESC LIMIT 200",[(int)$u['id'],$f==='open'?'bug':'bugfixed']):[];
+ $legacyFilter=function_exists('bugflow_ready')&&bugflow_ready()?' AND id NOT IN (SELECT notification_id FROM bug_report_links)':'';
+ $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=? AND kind=?".$legacyFilter." ORDER BY created_at DESC,id DESC LIMIT 200",[(int)$u['id'],$f==='open'?'bug':'bugfixed']):[];
  $open=bug_open_count((int)$u['id']);
  $dl='<a class="btn secondary" href="?page=bugs_csv&amp;show='.$f.'">'.icon('arrow').'Download '.($f==='open'?'open':'fixed').' reports (CSV)</a><a class="btn quiet" href="?page=bugs_csv&amp;show=all">Download all</a>';
- admin_heading('SYSTEM · BUG REPORTS','Bug reports from pupils.','When something does not work, pupils tap I need help › Something is not working. Each report says where it happened and on which device. The pupil skips that activity and goes on to the next one (it gets no score).','<div class="bug-acts">'.$dl.($open?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn secondary" data-confirm="Mark all '.$open.' open reports as fixed?">'.icon('check').'Mark all as fixed</button></form>':'').'</div>');
+ if(function_exists('bugflow_ready')&&bugflow_ready())echo '<h2>Earlier reports</h2>';else admin_heading('SYSTEM · BUG REPORTS','Bug reports from pupils.','When something does not work, pupils tap I need help › Something is not working. Each report says where it happened and on which device. The pupil skips that activity and goes on to the next one (it gets no score).','<div class="bug-acts">'.$dl.($open?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn secondary" data-confirm="Mark all '.$open.' open reports as fixed?">'.icon('check').'Mark all as fixed</button></form>':'').'</div>');
  echo '<section class="card bug-card"><nav class="bk-tabs" aria-label="Show"><a href="?page=bugs"'.($f==='open'?' class="on" aria-current="page"':'').'>'.icon('alert').'Open ('.$open.')</a><a href="?page=bugs&amp;show=fixed"'.($f==='fixed'?' class="on" aria-current="page"':'').'>'.icon('check').'Fixed</a></nav>';
  if(!$list){echo '<p class="muted bug-empty">'.($f==='open'?'No open bug reports. Well done!':'No fixed reports yet.').'</p></section>';return;}
  echo '<div class="tablewrap"><table class="bug-table"><thead><tr><th>When</th><th>Pupil</th><th>What and where</th><th></th></tr></thead><tbody>';
  foreach($list as $n){$who=preg_replace('/^Bug report from /','',(string)$n['title']);
-  echo '<tr><td>'.e(date('M j, g:i A',strtotime((string)$n['created_at']))).'</td><td>'.e($who).'</td><td>'.e((string)$n['body']).'</td><td>'.($f==='open'?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed"><input type="hidden" name="id" value="'.(int)$n['id'].'"><button class="btn primary small">'.icon('check').'Fixed</button></form>':'<small class="muted">Fixed '.e(date('M j',strtotime(bug_fixed_on($n)?:'now'))).'</small>').'</td></tr>';}
+  echo '<tr><td>'.e(date('M j, g:i A',strtotime((string)$n['created_at']))).'</td><td>'.e($who).'</td><td>'.e((string)$n['body']).'</td><td>'.((function_exists('bugflow_ready')&&bugflow_ready())?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_adopt"><input type="hidden" name="id" value="'.(int)$n['id'].'"><button class="btn secondary small">Review / reply</button></form>':'').($f==='open'?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed"><input type="hidden" name="id" value="'.(int)$n['id'].'"><button class="btn primary small">'.icon('check').'Fixed</button></form>':'<small class="muted">Fixed '.e(date('M j',strtotime(bug_fixed_on($n)?:'now'))).'</small>').'</td></tr>';}
  echo '</tbody></table></div></section>';
 }
 /** Bug reports as a CSV file (opens in Excel): the open ones, the fixed ones or all. */
@@ -98,6 +100,7 @@ function bugs_csv(array $u):never{
  exit;
 }
 function bug_fixed(array $u,bool $all):never{
+ if(function_exists('bugflow_legacy_fixed'))bugflow_legacy_fixed($u,$all);
  if(notif_ready()){$ids=$all?array_map('intval',array_column(rows("SELECT id FROM notifications WHERE user_id=? AND kind='bug'",[(int)$u['id']]),'id'))
    :array_map('intval',array_column(rows("SELECT id FROM notifications WHERE id=? AND user_id=? AND kind='bug'",[(int)($_POST['id']??0),(int)$u['id']]),'id'));
   foreach($ids as $id){q("UPDATE notifications SET kind='bugfixed',read_at=COALESCE(read_at,NOW()) WHERE id=?",[$id]);
@@ -133,3 +136,4 @@ function help_done(array $u,bool $all=false):void{
 }
 
 function lesson_home_name(array $l):string{$t=(string)$l['title'];$s=trim((string)($l['subtitle']??''));return str_starts_with($t,'Activity')&&$s!==''?$s.' ('.$t.')':$t;}
+
