@@ -78,6 +78,7 @@ function bugs_view(array $u):void{
  $f=($_GET['show']??'')==='fixed'?'fixed':'open';
  $legacyFilter=function_exists('bugflow_ready')&&bugflow_ready()?' AND id NOT IN (SELECT notification_id FROM bug_report_links)':'';
  $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=? AND kind=?".$legacyFilter." ORDER BY created_at DESC,id DESC LIMIT 200",[(int)$u['id'],$f==='open'?'bug':'bugfixed']):[];
+ if($legacyFilter!==''&&!$list)return;
  $open=bug_open_count((int)$u['id']);
  $dl='<a class="btn secondary" href="?page=bugs_csv&amp;show='.$f.'">'.icon('arrow').'Download '.($f==='open'?'open':'fixed').' reports (CSV)</a><a class="btn quiet" href="?page=bugs_csv&amp;show=all">Download all</a>';
  if(function_exists('bugflow_ready')&&bugflow_ready())echo '<h2>Earlier reports</h2>';else admin_heading('SYSTEM · BUG REPORTS','Bug reports from pupils.','When something does not work, pupils tap I need help › Something is not working. Each report says where it happened and on which device. The pupil skips that activity and goes on to the next one (it gets no score).','<div class="bug-acts">'.$dl.($open?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn secondary" data-confirm="Mark all '.$open.' open reports as fixed?">'.icon('check').'Mark all as fixed</button></form>':'').'</div>');
@@ -137,4 +138,5 @@ function help_done(array $u,bool $all=false):void{
 }
 
 function lesson_home_name(array $l):string{$t=(string)$l['title'];$s=trim((string)($l['subtitle']??''));return str_starts_with($t,'Activity')&&$s!==''?$s.' ('.$t.')':$t;}
+
 
