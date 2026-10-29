@@ -224,7 +224,7 @@ def run_pages(acc):
           len(pairs) == 6 and all(k in pics for k in ('george', 'toby', 'max', 'dracs', 'bruno', 'mia', 'zion', 'arah', 'roxanne', 'kai', 'sofie', 'claude')) and 'lfx-who' not in text, pics[:160])
     _, _, text = anon.req('bulig-check.php')
     bad = len(re.findall(r'class="bad"', text))
-    check('bulig-check.php finds no missing or changed files and no missing tables', bad == 0 and 'BULIG' in text, f'{bad} problems listed')
+    check('Public diagnostics are denied without exposing file or schema details', 'require administrator sign-in' in text and 'Files on the server' not in text)
     lock = Client()
     for _ in range(8):
         lock.login('pupil', 'nobody-test', 'wrong-password')
@@ -1162,6 +1162,8 @@ def test_bug_workflow(acc):
     a,p,t,other=Client(),Client(),Client(),Client()
     a.login('admin',acc['admin']['id'],acc['admin']['pw'])
     a.req('index.php',{'action':'admin_pin','csrf':a.token(),'pin':acc['admin']['pin']})
+    code,_,diagnostic=a.req('bulig-check.php')
+    check('Authenticated admin diagnostics validate files and tables',code==200 and 'Files on the server' in diagnostic and 'class="bad"' not in diagnostic and '<script>' not in diagnostic)
     p.login('pupil',acc['pupil1']['id'],acc['pupil1']['pw'])
     other.login('pupil',acc['pupil6']['id'],acc['pupil6']['pw'])
     t.login('teacher',acc['teacher']['id'],acc['teacher']['pw'])
