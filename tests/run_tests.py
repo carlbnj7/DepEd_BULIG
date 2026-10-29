@@ -1179,6 +1179,7 @@ def test_bug_workflow(acc):
     def data(status,reply='',points=0,confirm='0'):
         version=q(f'SELECT COALESCE(MAX(id),0) FROM bug_report_updates WHERE report_id={rid}')
         return {'action':'bug_report_update','id':rid,'status':status,'reply':reply,'deduct_xp':points,'confirm_false':confirm,'version':version,'csrf':a.token('?page=bugs')}
+    check('Admin panel shows fixed penalty with no manual amount input','Automatic false-report deduction: 10 XP' in a.req(page+'&id='+str(rid))[2] and 'name="deduct_xp"' not in a.req(page+'&id='+str(rid))[2])
     check('Other pupils cannot inspect a private report',other.req(page+'&id='+str(rid))[0]==404)
     check('Report text is escaped','&lt;script&gt;' in a.req(page+'&id='+str(rid))[2])
     d=data('processing','We are checking this.');d.pop('csrf')
@@ -1202,13 +1203,13 @@ def test_bug_workflow(acc):
     check('Rejection requires confirmation',a.req('index.php',data('rejected','Reviewed: deliberately false.',20))[0]==400)
     check('Rejection requires a reason',a.req('index.php',data('rejected','',20,'1'))[0]==400)
     check('Failed rejection leaves XP unchanged',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='80')
-    rejected=data('rejected','Reviewed with the teacher: this report was deliberately false.',20,'1')
+    rejected=data('rejected','Reviewed with the teacher: this report was deliberately false.',9999,'1')
     a.req('index.php',rejected)
-    check('Confirmed rejection deducts chosen XP',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='60' and q(f'SELECT deducted_xp FROM bug_reports WHERE id={rid}')=='20')
+    check('Confirmed rejection deducts fixed automatic XP despite a tampered amount',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='70' and q(f'SELECT deducted_xp FROM bug_reports WHERE id={rid}')=='10')
     a.req('index.php',rejected)
     a.req('index.php',data('rejected','You may contact your teacher about this decision.',20,'1'))
-    check('Duplicate submissions and later replies never deduct twice',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='60')
-    check('Reporter sees rejection reason and actual deduction','XP deducted: 20' in p.req(page+'&id='+str(rid))[2])
+    check('Duplicate submissions and later replies never deduct twice',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='70')
+    check('Reporter sees rejection reason and actual deduction','XP deducted: 10' in p.req(page+'&id='+str(rid))[2])
     check('A rejected report cannot be reopened to deduct twice',a.req('index.php',data('open'))[0]==400)
     rid=report(p,'Second test report')
     q(f'UPDATE pupil_xp SET total=5 WHERE pupil_id={pid}')
@@ -1250,5 +1251,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 

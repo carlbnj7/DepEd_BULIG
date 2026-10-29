@@ -1,0 +1,95 @@
+name: Bug panel and automatic XP validation
+
+on:
+  push:
+    branches: [codex/bug-panels-auto-xp]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      mariadb:
+        image: mariadb:11.4
+        env:
+          MARIADB_ROOT_PASSWORD: bulig-isolated-test-only
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      BULIG_TEST_DB_HOST: 127.0.0.1
+      BULIG_TEST_DB_PORT: 3306
+      BULIG_TEST_DB_NAME: bulig_test
+      BULIG_TEST_DB_USER: root
+      BULIG_TEST_DB_PASS: bulig-isolated-test-only
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 20
+      - name: Install test runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y php-cli php-mysql php-mbstring php-xml php-gd php-zip mariadb-client
+      - name: JavaScript regression checks
+        run: |
+          node --check public/assets/app.js
+          node --check public/assets/offline.js
+          node --check public/assets/lesson-ready.js
+          node tests/audit-regressions.cjs
+          node --check public/assets/bug-updates.js
+      - name: Refresh checker in disposable checkout
+        run: python3 tools/update_checker.py
+      - name: PHP and database integration tests
+        run: python3 tests/run_tests.py
+      - name: Install browser test runtime
+        run: |
+          python3 -m venv /tmp/bulig-ui
+          /tmp/bulig-ui/bin/pip install playwright
+          /tmp/bulig-ui/bin/playwright install --with-deps chromium
+      - name: Verify desktop, phone and popup behavior
+        run: /tmp/bulig-ui/bin/python tests/bug_message_ui.py
+      - name: Keep internal UI previews
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-ui-previews
+          path: tests/ui-preview/
+          retention-days: 7
+      - name: Build and test update installation
+        run: |
+          git clean -fd -- public storage
+          python3 tools/update_checker.py
+          python3 tools/make_update.py --from 490400e343a697d4dca4b4d04953ed9b54d582e8 --name BULIG-Bug-Panels-Auto-XP
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          p = Path('live-update/BULIG-Bug-Panels-Auto-XP.zip')
+          assert p.stat().st_size < 30000000
+          expected = {'app/bug_workflow.php','app/help.php','public/assets/theme.css','public/bulig-check.php'}
+          with zipfile.ZipFile(p) as z:
+              assert set(z.namelist()) == expected, z.namelist()
+          print('Verified update contains only the four intended files.')
+          PY
+      - name: Keep tested update
+        uses: actions/upload-artifact@v4
+        with:
+          name: BULIG-Bug-Panels-Auto-XP
+          path: live-update/BULIG-Bug-Panels-Auto-XP.zip
+          if-no-files-found: error
+          retention-days: 30
+      - name: Keep test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-validation-log
+          path: tests/last-run-server.log
+          if-no-files-found: ignore
+          retention-days: 7
