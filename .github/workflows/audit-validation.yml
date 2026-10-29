@@ -1,0 +1,58 @@
+name: Audit fix validation
+
+on:
+  push:
+    branches: [codex/audit-fixes-2026-10-29]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      mariadb:
+        image: mariadb:11.4
+        env:
+          MARIADB_ROOT_PASSWORD: bulig-isolated-test-only
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      BULIG_TEST_DB_HOST: 127.0.0.1
+      BULIG_TEST_DB_PORT: 3306
+      BULIG_TEST_DB_NAME: bulig_test
+      BULIG_TEST_DB_USER: root
+      BULIG_TEST_DB_PASS: bulig-isolated-test-only
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install test runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y php-cli php-mysql php-mbstring php-xml php-gd php-zip mariadb-client
+      - name: JavaScript regression checks
+        run: |
+          node --check public/assets/app.js
+          node --check public/assets/offline.js
+          node --check public/assets/lesson-ready.js
+          node tests/audit-regressions.cjs
+      - name: Refresh checker in disposable checkout
+        run: python3 tools/update_checker.py
+      - name: PHP and database integration tests
+        run: python3 tests/run_tests.py
+      - name: Keep test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-validation-log
+          path: tests/last-run-server.log
+          if-no-files-found: ignore
+          retention-days: 7
