@@ -36,7 +36,7 @@ KEEP = '--keep' in sys.argv
 LOG = os.path.join(HERE, 'last-run-server.log')
 
 # Every table a full install must have (the install file plus every update file).
-EXPECTED_TABLES = sorted('''account_id_history activities activity_completion activity_drafts admin_security admins answers assessment_attempts
+EXPECTED_TABLES = sorted('''admin_messages message_recipients account_id_history activities activity_completion activity_drafts admin_security admins answers assessment_attempts
  assessment_questions assessments audit_log badges bulig_levels content_issues grade_levels help_requests id_sequences
  learning_days lessons login_attempts modules notifications pupil_badges pupil_cards pupil_details pupil_level_assignments
  pupil_progress pupil_rewards pupil_sections pupil_streaks pupil_xp pupils push_queue push_subscriptions questions
@@ -394,6 +394,7 @@ def run_pages(acc):
         test_account_ids(a, acc)
         test_schools(a, acc)
         test_bug_reports(a)
+    test_messages(acc)
 
 
 def jget(text):
@@ -1097,6 +1098,64 @@ def test_account_ids(a, acc):
         os.remove(f)
 
 
+def test_messages(acc):
+    section('Admin messaging')
+    a, p, other, t = Client(), Client(), Client(), Client()
+    a.login('admin', acc['admin']['id'], acc['admin']['pw'])
+    prepin = a.req('index.php', {'action':'message_preview','csrf':a.token(), 'scope':'teachers','subject':'Blocked','body':'Blocked'})
+    check('Messages cannot be sent before admin PIN verification', prepin[0] in (401,403))
+    a.req('index.php', {'action':'admin_pin','csrf':a.token(), 'pin':acc['admin']['pin']})
+    p.login('pupil', acc['pupil1']['id'], acc['pupil1']['pw'])
+    other.login('pupil', acc['pupil6']['id'], acc['pupil6']['pw'])
+    t.login('teacher', acc['teacher']['id'], acc['teacher']['pw'])
+    page='?page=messages'
+    for c,label in [(a,'Admin'),(p,'Pupil'),(t,'Teacher')]:
+        check(label+' can open Messages', c.req(page)[0] == 200)
+    payload={'action':'message_preview','scope':'person','person':acc['pupil1']['uid'],'subject':'Reading reminder','body':'Hello <script>alert(1)</script>\nPlease read today.'}
+    check('Message preview rejects missing CSRF', a.req('index.php', payload)[0] == 403)
+    for c,label in [(p,'Pupil'),(t,'Teacher')]:
+        check(label+' cannot send messages', c.req('index.php', dict(payload,csrf=c.token(page)))[0] == 403)
+    status,_,text=a.req('index.php',dict(payload,csrf=a.token(page)))
+    check('Preview escapes text and shows recipients',status==200 and 'Check before sending' in text and '&lt;script&gt;' in text and '<script>alert(1)</script>' not in text)
+    token=re.search(r'name="token" value="([0-9a-f]+)"',text).group(1)
+    status,url,text=a.req('index.php',{'action':'message_send','csrf':a.token(page),'token':token})
+    mid=int(urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)['id'][0])
+    check('Admin sends message and sees read status',status==200 and '0 of 1 recipients' in text)
+    q=lambda sql:mysql('-N','-e',sql,db=DB['name']).stdout.strip()
+    check('Exactly one recipient is recorded',q(f'SELECT COUNT(*) FROM message_recipients WHERE message_id={mid}')=='1')
+    check('Recipient bell includes message', 'Reading reminder' in p.req('?page=notifications')[2])
+    check('Another pupil cannot open private message',other.req(page+'&id='+str(mid))[0]==404)
+    check('Teacher cannot open private pupil message',t.req(page+'&id='+str(mid))[0]==404)
+    check('Opening notifications alone does not set message read receipt',q(f'SELECT COUNT(*) FROM message_recipients WHERE message_id={mid} AND read_at IS NOT NULL')=='0')
+    status,_,text=p.req(page+'&id='+str(mid))
+    check('Pupil reads escaped complete message',status==200 and 'Please read today.' in text and '&lt;script&gt;' in text)
+    check('Read receipt is recorded',q(f'SELECT COUNT(*) FROM message_recipients WHERE message_id={mid} AND read_at IS NOT NULL')=='1')
+    check('Admin sees updated read count','1 of 1 recipients' in a.req(page+'&id='+str(mid))[2])
+    a.req('index.php',{'action':'message_send','csrf':a.token(page),'token':token})
+    check('Repeated confirmation does not duplicate message',q('SELECT COUNT(*) FROM admin_messages')=='1')
+    for scope in ['pupils','teachers','everyone']:
+        status,_,text=a.req('index.php',dict(payload,scope=scope,csrf=a.token(page)))
+        check('Admin can preview '+scope,status==200 and 'Check before sending' in text)
+    check('Group previews do not send messages',q('SELECT COUNT(*) FROM admin_messages')=='1')
+    check('Invalid recipient is rejected',a.req('index.php',dict(payload,person=0,csrf=a.token(page)))[0]==400)
+    check('Empty message is rejected',a.req('index.php',dict(payload,body='',csrf=a.token(page)))[0]==400)
+    tid=int(q("SELECT id FROM users WHERE role='teacher' AND name='Test Teacher' ORDER BY id LIMIT 1"))
+    adminid=int(q("SELECT id FROM users WHERE public_id='testadmin' AND role='admin'"))
+    status,_,text=a.req('index.php',dict(payload,person=tid,subject='Teacher note',csrf=a.token(page)))
+    token2=re.search(r'name="token" value="([0-9a-f]+)"',text).group(1)
+    _,url,_=a.req('index.php',{'action':'message_send','csrf':a.token(page),'token':token2})
+    teacher_mid=int(urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)['id'][0])
+    check('Teacher receives and opens an addressed message','Teacher note' in t.req(page+'&id='+str(teacher_mid))[2])
+    check('Pupil cannot read a teacher message',p.req(page+'&id='+str(teacher_mid))[0]==404)
+    q(f"INSERT INTO sections(teacher_id,grade_level,name) VALUES({tid},1,'Message test class')")
+    sid=q("SELECT id FROM sections WHERE name='Message test class' ORDER BY id DESC LIMIT 1")
+    q(f"INSERT INTO pupil_sections(pupil_id,section_id) VALUES({int(acc['pupil1']['uid'])},{int(sid)}) ON DUPLICATE KEY UPDATE section_id=VALUES(section_id)")
+    status,_,text=a.req('index.php',dict(payload,scope='class',section=sid,csrf=a.token(page)))
+    check('Class message previews its pupil recipients',status==200 and '1 recipients' in text and 'Check before sending' in text)
+    check('Admin accounts are not valid message recipients',a.req('index.php',dict(payload,person=adminid,csrf=a.token(page)))[0]==400)
+
+
+
 def main():
     os.chdir(ROOT)
     print('BULIG automatic tests' + ('' if ROOT == os.path.dirname(HERE) else ' for ' + ROOT))
@@ -1117,3 +1176,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
