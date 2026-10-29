@@ -1139,18 +1139,20 @@ def test_messages(acc):
     check('Group previews do not send messages',q('SELECT COUNT(*) FROM admin_messages')=='1')
     check('Invalid recipient is rejected',a.req('index.php',dict(payload,person=0,csrf=a.token(page)))[0]==400)
     check('Empty message is rejected',a.req('index.php',dict(payload,body='',csrf=a.token(page)))[0]==400)
-    status,_,text=a.req('index.php',dict(payload,person=acc['teacher']['uid'],subject='Teacher note',csrf=a.token(page)))
+    tid=int(q("SELECT id FROM users WHERE role='teacher' AND name='Test Teacher' ORDER BY id LIMIT 1"))
+    adminid=int(q("SELECT id FROM users WHERE public_id='testadmin' AND role='admin'"))
+    status,_,text=a.req('index.php',dict(payload,person=tid,subject='Teacher note',csrf=a.token(page)))
     token2=re.search(r'name="token" value="([0-9a-f]+)"',text).group(1)
     _,url,_=a.req('index.php',{'action':'message_send','csrf':a.token(page),'token':token2})
     teacher_mid=int(urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)['id'][0])
     check('Teacher receives and opens an addressed message','Teacher note' in t.req(page+'&id='+str(teacher_mid))[2])
     check('Pupil cannot read a teacher message',p.req(page+'&id='+str(teacher_mid))[0]==404)
-    q(f"INSERT INTO sections(teacher_id,grade_level,name) VALUES({int(acc['teacher']['uid'])},1,'Message test class')")
+    q(f"INSERT INTO sections(teacher_id,grade_level,name) VALUES({tid},1,'Message test class')")
     sid=q("SELECT id FROM sections WHERE name='Message test class' ORDER BY id DESC LIMIT 1")
     q(f"INSERT INTO pupil_sections(pupil_id,section_id) VALUES({int(acc['pupil1']['uid'])},{int(sid)}) ON DUPLICATE KEY UPDATE section_id=VALUES(section_id)")
     status,_,text=a.req('index.php',dict(payload,scope='class',section=sid,csrf=a.token(page)))
     check('Class message previews its pupil recipients',status==200 and '1 recipients' in text and 'Check before sending' in text)
-    check('Admin accounts are not valid message recipients',a.req('index.php',dict(payload,person=acc['admin']['uid'],csrf=a.token(page)))[0]==400)
+    check('Admin accounts are not valid message recipients',a.req('index.php',dict(payload,person=adminid,csrf=a.token(page)))[0]==400)
 
 
 
