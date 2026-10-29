@@ -90,6 +90,7 @@ function bugs_view(array $u):void{
 }
 /** Bug reports as a CSV file (opens in Excel): the open ones, the fixed ones or all. */
 function bugs_csv(array $u):never{
+ if(function_exists('bugflow_ready')&&bugflow_ready())bugflow_csv($u);
  $f=(string)($_GET['show']??'all');$w=$f==='open'?" AND kind='bug'":($f==='fixed'?" AND kind='bugfixed'":" AND kind IN ('bug','bugfixed')");
  $list=notif_ready()?rows("SELECT * FROM notifications WHERE user_id=?".$w." ORDER BY created_at DESC,id DESC",[(int)$u['id']]):[];
  header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-bug-reports-'.date('Y-m-d').'.csv"');

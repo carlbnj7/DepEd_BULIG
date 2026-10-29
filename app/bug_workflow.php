@@ -80,6 +80,7 @@ function bugflow_poll():never{
 function bugflow_admin(array $u):void{
  $show=(string)($_GET['show']??'open');if(!isset(BUG_STATES[$show]))$show='open';
  echo '<div class="pagehead"><div><span class="eyebrow">SYSTEM</span><h1>Bug reports</h1><p>Review reports, reply to the reporter, or update their status.</p></div></div><nav class="buttonrow">';foreach(BUG_STATES as $k=>$label)echo '<a class="btn '.($show===$k?'primary':'secondary').'" href="?page=bugs&show='.$k.'">'.$label.'</a>';echo '</nav>';
+ echo '<div class="buttonrow"><a class="btn secondary" href="?page=bugs_csv&show='.e($show).'">Download '.e(BUG_STATES[$show]).' reports (CSV)</a><a class="btn secondary" href="?page=bugs_csv&show=all">Download all</a><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn secondary" data-confirm="Mark all open and processing reports as fixed and notify their reporters?">Mark all as fixed</button></form></div>';
  $p=max(1,min(100000,(int)($_GET['p']??1)));$list=rows('SELECT b.*,u.name,u.public_id FROM bug_reports b JOIN users u ON u.id=b.reporter_id WHERE b.status=? ORDER BY b.id DESC LIMIT 30 OFFSET '.(($p-1)*30),[$show]);
  foreach($list as $r)echo '<article class="card"><span class="eyebrow">Report #'.(int)$r['id'].' · '.e($r['created_at']).'</span><h2>'.e($r['summary']).'</h2><p>'.e($r['name'].' · '.$r['public_id']).'</p><a class="btn secondary" href="?page=bug_report&id='.(int)$r['id'].'">Review report</a></article>';
  if(!$list)echo '<p>No '.$show.' reports.</p>';echo '<div class="buttonrow">'.($p>1?'<a class="btn secondary" href="?page=bugs&show='.$show.'&p='.($p-1).'">Previous</a>':'').(count($list)===30?'<a class="btn secondary" href="?page=bugs&show='.$show.'&p='.($p+1).'">Next</a>':'').'</div>';
@@ -105,4 +106,16 @@ function bugflow_legacy_fixed(array $u,bool $all):bool{
  if(!bugflow_ready())return false;
  if($all){foreach(rows("SELECT id FROM bug_reports WHERE status IN ('open','processing')") as $r)bugflow_apply($u,(int)$r['id'],'fixed','The reported issue has been marked as fixed.');return false;}
  $r=one('SELECT l.report_id FROM bug_report_links l JOIN notifications n ON n.id=l.notification_id WHERE n.id=? AND n.user_id=?',[(int)($_POST['id']??0),$u['id']]);if(!$r)return false;bugflow_apply($u,(int)$r['report_id'],'fixed','The reported issue has been marked as fixed.');flash('Marked as fixed. The reporter has been notified.');go('?page=bugs');
+}
+
+/** Export canonical and older reports without losing processing/rejected states. */
+function bugflow_csv(array $u):never{
+ $show=(string)($_GET['show']??'all');$filter=isset(BUG_STATES[$show]);
+ header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-bug-reports-'.date('Y-m-d').'.csv"');
+ $out=fopen('php://output','w');fwrite($out,"\xEF\xBB\xBF");
+ $write=function(array $cells)use($out){$safe=array_map(fn($v)=>preg_match('/^[=+@\\-]/',(string)$v)?"'".$v:(string)$v,$cells);fputcsv($out,$safe,',','"','\\');};
+ $write(['When','Reporter','Status','Description','Context','XP deducted','Report']);
+ foreach(rows('SELECT b.*,u.name,u.public_id FROM bug_reports b JOIN users u ON u.id=b.reporter_id'.($filter?' WHERE b.status=?':'').' ORDER BY b.id DESC',$filter?[$show]:[]) as $b)$write([$b['created_at'],$b['name'].' ('.$b['public_id'].')',BUG_STATES[$b['status']],$b['summary'],$b['context'],$b['deducted_xp'],'#'.$b['id']]);
+ if(!$filter||in_array($show,['open','fixed'],true))foreach(rows("SELECT * FROM notifications WHERE user_id=? AND kind IN ('bug','bugfixed') AND id NOT IN (SELECT notification_id FROM bug_report_links)".($filter?' AND kind=?':'').' ORDER BY id DESC',$filter?[$u['id'],$show==='fixed'?'bugfixed':'bug']:[$u['id']]) as $n)$write([$n['created_at'],$n['title'],$n['kind']==='bugfixed'?'Fixed':'Open',$n['body'],'Earlier report',0,'Notification #'.$n['id']]);
+ fclose($out);exit;
 }

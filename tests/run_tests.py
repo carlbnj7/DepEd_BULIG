@@ -1185,6 +1185,7 @@ def test_bug_workflow(acc):
     check('Pupils cannot change report status',p.req('index.php',d)[0]==403)
     d=data('processing','We are checking this.')
     check('Admin marks a report processing',a.req('index.php',d)[0]==200 and q(f'SELECT status FROM bug_reports WHERE id={rid}')=='processing')
+    check('Processing reports remain in CSV export','Processing' in a.req('?page=bugs_csv&show=processing')[2])
     check('Processing does not deduct XP',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='80')
     check('Reporter sees Processing status and reply','Processing' in p.req(page+'&id='+str(rid))[2] and 'We are checking this.' in p.req(page+'&id='+str(rid))[2])
     check('Reporter bell contains a report update','Processing' in p.req('?page=notifications')[2])
