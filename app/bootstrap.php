@@ -42,11 +42,19 @@ function word_match(string $expected,string $heard):array{
 }
 function activities(int $lid,int $pid=0):array{return rows("SELECT a.*,c.status,c.response,c.feedback,c.drawing,c.id completion_id FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.published=1 ORDER BY FIELD(a.phase,'pre','learn','post'),a.position",[$pid,$lid]);}
 function lesson_available(int $pid,int $lid):bool{
+ if(isset($GLOBALS['bulig_map_availability'])&&($_SERVER['REQUEST_METHOD']??'GET')==='GET'){
+  $key=$pid.':'.$lid;
+  if(!array_key_exists($key,$GLOBALS['bulig_map_availability']))$GLOBALS['bulig_map_availability'][$key]=lesson_available_check($pid,$lid);
+  return $GLOBALS['bulig_map_availability'][$key];
+ }
+ return lesson_available_check($pid,$lid);
+}
+function lesson_available_check(int $pid,int $lid):bool{
  $l=one('SELECT l.*,m.level_id,m.grade_level module_grade FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=? AND l.published=1',[$lid]);if(!$l)return false;
  if($l['module_grade']!==null&&(int)$l['module_grade']!==pupil_grade($pid))return false;
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$l['level_id']]))return false;
  if(!level_available($pid,(int)$l['level_id']))return false;
- if((int)$l['level_id']<pupil_start_level($pid))return true;
+ if(level_rank((int)$l['level_id'])<level_rank(pupil_start_level($pid)))return true;
  if(function_exists('lesson_cycle_opens')&&lesson_cycle_opens($lid)!==null)return false;   // a cycle that has not opened yet (app/cycles.php)
  return !val('SELECT COUNT(*) FROM lessons l LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.module_id=? AND l.position<? AND l.published=1 AND p.completed_at IS NULL',[$pid,$l['module_id'],$l['position']]);
 }
@@ -248,13 +256,20 @@ function module_source_meta(int $level,?int $grade=null):?array{
  return null;
 }
 function next_learning_lesson(int $pid):?array{
+ if(isset($GLOBALS['bulig_map_availability'])&&($_SERVER['REQUEST_METHOD']??'GET')==='GET'){
+  if(!array_key_exists($pid,$GLOBALS['bulig_map_next']??[]))$GLOBALS['bulig_map_next'][$pid]=next_learning_lesson_check($pid);
+  return $GLOBALS['bulig_map_next'][$pid];
+ }
+ return next_learning_lesson_check($pid);
+}
+function next_learning_lesson_check(int $pid):?array{
  foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id JOIN pupil_level_assignments assigned ON assigned.pupil_id=? LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=assigned.pupil_id WHERE '.level_order_sql('m.level_id').'>='.level_order_sql('assigned.level_id').' AND l.published=1 AND p.completed_at IS NULL'.GRADE_SQL.' ORDER BY '.level_order_sql('m.level_id').',l.position',[$pid,pupil_grade($pid)]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
  return null;
 }
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['coach','whats_new','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy'];
+const BULIG_PARTS=['coach','whats_new','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
  if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}
@@ -265,3 +280,6 @@ function bulig_missing_files(array $missing):never{
 if($__missing=array_values(array_filter(BULIG_PARTS,fn($f)=>!is_file(__DIR__.'/'.$f.'.php'))))bulig_missing_files($__missing);
 foreach(BULIG_PARTS as $__part)require_once __DIR__.'/'.$__part.'.php';
 unset($__part,$__missing);
+
+
+

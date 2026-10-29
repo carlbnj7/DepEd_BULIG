@@ -1,0 +1,81 @@
+name: Admin messaging validation
+
+on:
+  push:
+    branches: [codex/admin-messages]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      mariadb:
+        image: mariadb:11.4
+        env:
+          MARIADB_ROOT_PASSWORD: bulig-isolated-test-only
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      BULIG_TEST_DB_HOST: 127.0.0.1
+      BULIG_TEST_DB_PORT: 3306
+      BULIG_TEST_DB_NAME: bulig_test
+      BULIG_TEST_DB_USER: root
+      BULIG_TEST_DB_PASS: bulig-isolated-test-only
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 5
+      - name: Install test runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y php-cli php-mysql php-mbstring php-xml php-gd php-zip mariadb-client
+      - name: JavaScript regression checks
+        run: |
+          node --check public/assets/app.js
+          node --check public/assets/offline.js
+          node --check public/assets/lesson-ready.js
+          node tests/audit-regressions.cjs
+      - name: Refresh checker in disposable checkout
+        run: python3 tools/update_checker.py
+      - name: PHP and database integration tests
+        run: python3 tests/run_tests.py
+      - name: Build and test update installation
+        run: |
+          git clean -fd -- public storage
+          python3 tools/update_checker.py
+          python3 tools/make_update.py --from 10a14819120d5e8274eed045dc307429a48334bb --name BULIG-Admin-Messages
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          p = Path('live-update/BULIG-Admin-Messages.zip')
+          assert p.stat().st_size < 30000000
+          expected = {'app/actions.php','app/bootstrap.php','app/staff_ui.php','app/messages.php','public/index.php','public/bulig-check.php','database/migrations/033_admin_messages.sql'}
+          with zipfile.ZipFile(p) as z:
+              assert set(z.namelist()) == expected, z.namelist()
+          print('Verified update contains only the seven intended files.')
+          PY
+      - name: Keep tested update
+        uses: actions/upload-artifact@v4
+        with:
+          name: BULIG-Admin-Messages
+          path: live-update/BULIG-Admin-Messages.zip
+          if-no-files-found: error
+          retention-days: 30
+      - name: Keep test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-validation-log
+          path: tests/last-run-server.log
+          if-no-files-found: ignore
+          retention-days: 7

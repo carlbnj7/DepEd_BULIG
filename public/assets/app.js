@@ -1,3 +1,37 @@
+/* Map performance: keep exact geometry, but only compare nearby road samples. */
+function buligRoadNearby(points){
+ const bins=new Map(),size=128;
+ for(const p of points){const key=Math.floor(p.y/size);if(!bins.has(key))bins.set(key,[]);bins.get(key).push(p);}
+ return (x,y,r,inclusive=false)=>{
+  for(let k=Math.floor((y-r)/size);k<=Math.floor((y+r)/size);k++){
+   for(const p of bins.get(k)||[]){const d=Math.hypot(p.x-x,p.y-y);if(inclusive?d<=r:d<r)return true;}
+  }
+  return false;
+ };
+}
+/* Leave visible animation timing/styles alone; stop work beyond the viewport. */
+const buligMapObservers=new WeakMap();
+function buligMapAnimations(svg){
+ const old=buligMapObservers.get(svg);if(old)old();
+ if(!('IntersectionObserver' in window)||!svg.getAnimations)return;
+ const targets=new Map();
+ for(const a of svg.getAnimations({subtree:true})){
+  if(!a.effect||a.effect.getTiming().iterations!==Infinity)continue;
+  const el=a.effect.target;if(!el)continue;
+  if(!targets.has(el))targets.set(el,{visible:true,animations:[],paused:new Set()});
+  targets.get(el).animations.push(a);
+ }
+ if(!targets.size)return;
+ function sync(s){for(const a of s.animations){
+  if(document.hidden||!s.visible){if(a.playState==='running'){a.pause();s.paused.add(a);}}
+  else if(s.paused.has(a)){if(a.playState==='paused')a.play();s.paused.delete(a);}
+ }}
+ const io=new IntersectionObserver(entries=>{for(const e of entries){const s=targets.get(e.target);if(s){s.visible=e.isIntersecting;sync(s);}}},{rootMargin:'150px'});
+ const visibility=()=>targets.forEach(sync);document.addEventListener('visibilitychange',visibility);
+ for(const el of targets.keys())io.observe(el);visibility();
+ buligMapObservers.set(svg,()=>{io.disconnect();document.removeEventListener('visibilitychange',visibility);});
+}
+
 'use strict';
 const $=(s)=>document.querySelector(s);
 for(const button of document.querySelectorAll('[data-password]'))button.addEventListener('click',()=>{const input=document.getElementById(button.dataset.password);input.type=input.type==='password'?'text':'password';const shown=input.type==='text';if(button.classList.contains('lgn-eye')){button.setAttribute('aria-pressed',shown?'true':'false');button.setAttribute('aria-label',shown?'Hide password':'Show password');button.title=shown?'Hide password':'Show password';}else button.textContent=shown?'Hide':'Show';});
@@ -34,7 +68,7 @@ const form=$('#activity-form');let draftTimer,submitting=false,drawingDirty=fals
 /* Drafts: typed answers save 0.65 s after typing stops. Drawings send the whole picture, so they save at most every 15 s while drawing, and right away when the pupil leaves the page. */let draftSlow=false;function draft(slow){if(!form||form.dataset.draft!=='on'||submitting)return;if(slow&&draftTimer&&draftSlow)return;clearTimeout(draftTimer);draftSlow=!!slow;draftTimer=setTimeout(()=>{draftTimer=null;saveDraft();},slow?15000:650);}document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&draftTimer&&!submitting){clearTimeout(draftTimer);draftTimer=null;saveDraft();}});
 async function saveDraft(){if(submitting||form.dataset.draft!=='on')return;const data=new FormData(form);data.set('action','draft');const status=$('#draft-status');status.textContent='Saving your draft…';try{const res=await fetch('index.php',{method:'POST',body:data,credentials:'same-origin'});const result=await res.json();if(!res.ok||!result.saved)throw new Error(result.error||'Could not save');status.textContent='Draft saved';}catch(error){status.textContent=navigator.onLine===false?'Offline · choose Submit to keep your answer on this device':'Draft not saved. Check your connection before leaving.';}}
 if(form){
- form.addEventListener('input',draft);
+ form.addEventListener('input',()=>draft(false));
  form.addEventListener('submit',async event=>{
   event.preventDefault();if(submitting)return;submitting=true;clearTimeout(draftTimer);
   const button=$('#submit-answer'),feedback=$('#answer-feedback'),next=$('#next-activity');const original=button?.innerHTML;
@@ -402,7 +436,8 @@ document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600
   const fence=(x,y,n)=>`<g transform="translate(${x} ${y})"><rect x="0" y="-14" width="${n*18}" height="4" fill="#c48a4f"/><rect x="0" y="-4" width="${n*18}" height="4" fill="#c48a4f"/>${Array.from({length:n+1},(_,k)=>`<rect x="${k*18-3}" y="-22" width="6" height="26" rx="2" fill="#a9703a"/>`).join('')}</g>`;
   const ct=box.querySelector('template.pf-map-castle'),castleArt=ct?ct.innerHTML.replace(/^<svg[^>]*>|<\/svg>$/g,''):'';   // the castle from the BULIG comic (app/castle.php)
   const castleOn=data.level==='Level 7',fx=end.x>W/2?end.x-(wide?230:150):end.x+(wide?230:150),cbox=castleOn?(wide?[fx-140,end.y-210,280,231]:[fx-96,end.y-144,192,158]):null;
-  const far=(x,y)=>pts.every(q=>Math.hypot(q.x-x,q.y-y)>(wide?70:56))&&P.every(q=>Math.hypot(q.x-x,q.y-y)>(wide?80:60)&&!(Math.abs(q.x-x)<(wide?120:95)&&y>q.y+20&&y<q.y+110))&&Math.abs(y-riverY)>70&&Math.abs(y-townY)>100&&Math.abs(y-pondY)>60&&(!castleOn||Math.hypot(x-fx,y-end.y)>(wide?170:110))&&y>220;
+  const roadNearby=buligRoadNearby(pts);
+  const far=(x,y)=>!roadNearby(x,y,wide?70:56,true)&&P.every(q=>Math.hypot(q.x-x,q.y-y)>(wide?80:60)&&!(Math.abs(q.x-x)<(wide?120:95)&&y>q.y+20&&y<q.y+110))&&Math.abs(y-riverY)>70&&Math.abs(y-townY)>100&&Math.abs(y-pondY)>60&&(!castleOn||Math.hypot(x-fx,y-end.y)>(wide?170:110))&&y>220;
   const L=[];if(townY>0){L.push(house(W*.16,townY+10,'#d6452f'),house(W*.84,townY+20,'#2a6cc0'),fence(W*.06,townY+60,wide?5:3),fence(W*(wide?.76:.7),townY+70,wide?5:3));if(wide)L.push(house(W*.06,townY+40,'#ff8a2a'));}
   if(pondY>0){const px=P[Math.round((N-1)*.5)].x>W/2?W*.2:W*.8;L.push(`<g transform="translate(${px} ${pondY})"><ellipse rx="${wide?90:62}" ry="26" fill="#e8d9a6"/><ellipse rx="${wide?82:56}" ry="21" fill="url(#m-river)"/><g class="pfm-duck"><g transform="translate(-30 -6)"><ellipse rx="10" ry="6" fill="#ffd23f"/><circle cx="8" cy="-6" r="5" fill="#ffd23f"/><path d="M12 -6l5 1-5 2z" fill="#ff8a2a"/></g></g></g>`);}
   L.push(`<g transform="translate(${P[0].x-(wide?150:120)} ${P[0].y-96})"><rect x="-3" y="0" width="7" height="64" fill="#8a5527"/><rect x="-54" y="-6" width="110" height="36" rx="10" fill="#fff8e8" stroke="#b08a4e" stroke-width="3"/><text x="1" y="18" text-anchor="middle" font-weight="800" font-size="15" fill="#17633a">START HERE</text></g>`);
@@ -437,6 +472,7 @@ document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600
    const name=it.t.length>26?it.t.slice(0,25)+'…':it.t,lw=Math.max(110,(name.length+(it.k?0:String(NUM[i]).length+2))*(wide?7.4:8)+26);
    g+=`<g transform="translate(${p.x} ${p.y+R+30})"><rect x="${-lw/2}" y="-14" width="${lw}" height="26" rx="13" fill="#fff" stroke="${st==='done'?'#9fd8a8':st==='cur'?'#f6c02c':'#e2e6df'}" stroke-width="2"/><text y="4" text-anchor="middle" font-weight="700" font-size="${wide?12:13}" fill="${st==='lock'?'#8a958d':'#17633a'}">${it.k?'':NUM[i]+'. '}${esc(name)}</text></g>${it.od?`<g class="pfm-opens" transform="translate(${p.x} ${p.y+R+58})"><rect x="-58" y="-12" width="116" height="24" rx="12" fill="#fff4cc" stroke="#e0a91c" stroke-width="2"/><text y="5" text-anchor="middle" font-weight="800" font-size="12" fill="#7a5200">Opens ${esc(it.od)}</text></g>`:''}</a>`;s+=g;});
   svg.innerHTML=s;
+  buligMapAnimations(svg);
   svg.querySelectorAll('.pfm-check').forEach((c,k)=>{c.style.animationDelay=(.2+k*.08)+'s';});
   const cas=svg.querySelector('.pfm-castle');if(cas){const cg=cas.parentNode;cg.classList.add('pfm-castle-tap');cg.setAttribute('role','button');cg.setAttribute('tabindex','0');cg.setAttribute('aria-label',data.cd?'Enter the Reading Castle':'Reading Castle (finish Level 7 to enter)');
    const go=e=>{e.preventDefault();e.stopPropagation();if(data.cd){location.href='?page=lessons&level=8&castle=1';return;}if(window.buligLockOverlay)window.buligLockOverlay({title:'The Reading Castle is waiting',text:'Finish every lesson of Level 7 and pass the post-test to open the castle gates.',go:null});};
@@ -714,14 +750,17 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
    else if(lk)a.addEventListener('click',e=>{e.preventDefault();if(window.buligLockOverlay){const c=items[CUR];window.buligLockOverlay({title:'Level '+it.n+' is still locked',text:c?'Finish Level '+c.n+' first, then Jeepy drives you here.':'Your teacher opens this level for you.',go:c&&c.h?{label:'Go to Level '+c.n,href:c.h}:null});}});
    (cur?q('top'):q('stops')).appendChild(a);});
   boxes.push(...keep);
-  const near=(x,y,r)=>{for(let t=0;t<L;t+=12){const p=at(t);if(Math.hypot(p.x-x,p.y-y)<r)return true}return boxes.some(([bx,by,bw,bh])=>x>bx-r*.6&&x<bx+bw+r*.6&&y>by-r*.3&&y<by+bh+r*1.7)};
+  // Sample the unchanged road once per build, not again for every decoration candidate.
+  const roadSamples=[];for(let t=0;t<L;t+=12)roadSamples.push(at(t));
+  const roadNearby=buligRoadNearby(roadSamples);
+  const near=(x,y,r)=>{if(roadNearby(x,y,r))return true;return boxes.some(([bx,by,bw,bh])=>x>bx-r*.6&&x<bx+bw+r*.6&&y>by-r*.3&&y<by+bh+r*1.7)};
   let dc=phone?'':`<path d="M${W*.03} ${H*.97}L${W*.05} ${H*.84}L${W*.2} ${H*.84}L${W*.22} ${H*.97}Z" fill="url(#jy-rice)" opacity=".9"/>`,n=0;dc+=castleArt?`<g class="jy-castle-g"><ellipse cx="${sx+cw/2}" cy="${sy+ch*.96}" rx="${cw*.52}" ry="${ch*.09}" fill="#000" opacity=".13"/><svg x="${sx}" y="${sy}" width="${cw}" height="${ch}" viewBox="0 0 400 330">${castleArt}</svg></g>`:school(sx+cw/2,sy+ch,phone?.62:.85);const kinds=[palm,bush,palm,hut,bush,palm];
   for(let k=0;k<900&&n<(phone?16:26);k++){const x=20+rnd()*(W-40),y=sky+30+rnd()*(H-sky-40),s=(phone?.55:.7)+((y-sky)/(H-sky))*.45;if(near(x,y,phone?46:50))continue;dc+=kinds[n%kinds.length](x,y,s);boxes.push([x-20,y-50*s,40,50*s]);n++;}
   for(let k=0;k<300&&n<(phone?26:44);k++){const x=rnd()*W,y=sky+30+rnd()*(H-sky-30);if(!near(x,y,24)){dc+=flowers(x,y);n++;}}q('deco').innerHTML=dc;
   const pose=CUR>=0?'stop':allDone?'done':'wait',g=document.createElementNS(NS,'g');g.setAttribute('class','jy-jeep');g.setAttribute('role','img');g.setAttribute('aria-label','Jeepy the Jeepney'+(J>=0?' at Level '+items[J].n:', every level finished'));
   g.innerHTML=(J>=0&&CUR>=0?`<ellipse class="jy-glow" cx="${jp.x}" cy="${jp.y+8}" rx="${jw*.55}" ry="13" fill="#2a9461" opacity=".3"/>`:'')+`<ellipse cx="${jp.x}" cy="${jp.y+6}" rx="${jw*.38}" ry="7" fill="#000" opacity=".22"/><image href="${esc(D.jy[pose])}" x="${jp.x-jw/2}" y="${jy}" width="${jw}" height="${jh}" preserveAspectRatio="xMidYMax meet"/>`
    +(J>=0?`<g class="jy-pin" transform="translate(${jp.x} ${py}) scale(${Z})"><g filter="url(#jy-sh)"><path d="M0 26C-8 14-24 4-24-10a24 24 0 0 1 48 0C24 4 8 14 0 26z" fill="${CUR>=0?'#176444':'#8c958d'}" stroke="#fff" stroke-width="3.5"/></g><text y="-4" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">${esc(items[J].n)}</text><rect x="-36" y="-50" width="72" height="16" rx="8" fill="#ffc629"/><text y="-38.5" text-anchor="middle" font-size="8.6" font-weight="800" fill="#0e3b28">${CUR>=0?'YOU ARE HERE':'NEXT STOP'}</text></g>`:'');
-  q('top').prepend(g);if(J>=0){const pj=document.querySelector('[data-jy-pop="'+J+'"]');if(pj)g.addEventListener('click',()=>jyPop(pj,g.querySelector('image')));else if(items[J].h)g.addEventListener('click',()=>{location.href=items[J].h;});}}
+  q('top').prepend(g);buligMapAnimations(svg);if(J>=0){const pj=document.querySelector('[data-jy-pop="'+J+'"]');if(pj)g.addEventListener('click',()=>jyPop(pj,g.querySelector('image')));else if(items[J].h)g.addEventListener('click',()=>{location.href=items[J].h;});}}
  build();let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,200);});
 })();
 /* My reading board (app/reading_board.php): the school's Reading Progress Board as a staircase in the road map's meadow.
@@ -884,3 +923,5 @@ document.addEventListener('submit',e=>{const f=e.target.closest&&e.target.closes
  const sync=()=>{const n=form.querySelectorAll('input[name="pupils[]"]:checked').length;bar.classList.toggle('idle',!n);cnt.textContent=n+(n===1?' pupil ticked':' pupils ticked');};
  form.addEventListener('change',sync);form.addEventListener('click',()=>setTimeout(sync,0));sync();
 })();
+
+

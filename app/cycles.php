@@ -40,7 +40,7 @@ function lesson_cycle_opens(int $lid):?string{
 }
 /** Locked by a cycle for this pupil (never in a level the pupil skipped). */
 function lesson_cycle_locked(int $pid,int $lid,int $level):bool{
- return $level>=pupil_start_level($pid)&&lesson_cycle_opens($lid)!==null;
+ return level_rank($level)>=level_rank(pupil_start_level($pid))&&lesson_cycle_opens($lid)!==null;
 }
 
 /* ---------- Administrator: Settings › Schedule & cycles ---------- */
@@ -79,3 +79,4 @@ function cycle_admin_save():void{
  flash(!$list?level_label($lv).' has no cycles now: its lessons are open.':($on?level_label($lv).' cycles saved. Lessons open on their dates.':level_label($lv).' cycles saved. Turn "Cycles on" to use them.'));
  go('?page=settings&tab=schedule&cyc='.$lv.'#cycles');
 }
+
