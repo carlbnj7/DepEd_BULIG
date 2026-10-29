@@ -1173,7 +1173,7 @@ def test_bug_workflow(acc):
     page='?page=bug_report'
     def report(c,note):
         status,url,text=c.req('index.php',{'action':'bug_report_submit','csrf':c.token(page),'note':note})
-        check('Reporter submits a problem',status==200 and 'Report #' in text)
+        check('Reporter submits a problem',status==200 and 'bug-report-summary' in text)
         return int(urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)['id'][0])
     rid=report(p,'Button does not work <script>alert(1)</script>')
     def data(status,reply='',points=0,confirm='0'):
