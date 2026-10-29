@@ -1,39 +1,3 @@
-/* Lesson pages: cover the HTML fallback until deferred map/activity setup finishes.
-   mode.js runs in the head, so this happens before the first body paint. */
-(function(){
- var uid=document.querySelector('meta[name="bulig-uid"]');
- var page=new URLSearchParams(location.search).get('page');
- if(!uid||!(+uid.content>0)||(page!=='lessons'&&page!=='lesson'))return;
- var root=document.documentElement,finished=false,resolveReady;
- root.classList.add('bulig-boot');
- window.buligLessonReady=new Promise(function(resolve){resolveReady=resolve;});
- function finish(){if(finished)return;finished=true;clearTimeout(failsafe);resolveReady();}
- // Never strand the pupil if a deferred script or asset fails to arrive.
- var failsafe=setTimeout(function(){finish();root.classList.remove('bulig-boot','boot-out');},8000);
- function ready(){
-  requestAnimationFrame(function(){requestAnimationFrame(function(){
-   if(finished)return;
-   var jobs=[];
-   if(document.fonts&&document.fonts.ready)jobs.push(document.fonts.ready.catch(function(){}));
-   document.querySelectorAll('main img,main svg image').forEach(function(el){
-    var r=el.getBoundingClientRect();
-    if(!r.width||!r.height||r.bottom<=0||r.top>=innerHeight||r.right<=0||r.left>=innerWidth)return;
-    var img=el;
-    if(el.tagName.toLowerCase()==='image'){
-     var src=el.getAttribute('href')||el.getAttribute('xlink:href');if(!src)return;
-     img=new Image();img.src=src;
-    }
-    if(img.decode)jobs.push(img.decode().catch(function(){}));
-   });
-   // Wait only for visible assets, with no minimum display time or wait for audio.
-   var limit=setTimeout(finish,1200);
-   Promise.all(jobs).then(function(){clearTimeout(limit);finish();},finish);
-  });});
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready,{once:true});else ready();
- window.addEventListener('pageshow',function(e){if(e.persisted){finish();root.classList.remove('bulig-boot','boot-out');}});
-})();
-
 /* BULIG light / dark / auto. Loaded in <head> without defer so the right colours show
    before the page draws. The choice is kept on this device; "auto" follows the device setting. */
 (function(){
@@ -109,4 +73,3 @@
   return speak(u);
  };
 })();
-
