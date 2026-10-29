@@ -6418,3 +6418,8 @@ html.dark .jy-pop-b b,html.dark .jy-pop-b small{text-shadow:none}html.dark .jy-p
 .jy-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.jy-links .btn{min-width:0}
 @media(max-width:700px){.jy-links .btn{min-height:42px;padding:8px 4px;font-size:.78rem;white-space:nowrap;justify-content:center;gap:5px;overflow:hidden}.jy-links .btn .icon{width:16px;height:16px}}
 @media(max-width:700px){.jy-card .jy-links .btn.off-pagelink{width:100%!important;justify-content:center!important;max-width:100%!important;min-width:0!important;font-size:.78rem!important;padding:8px 4px!important;gap:5px!important;white-space:nowrap!important;overflow:hidden}}
+
+/* Reveal only completed lesson enhancements; keep the no-JS fallback usable. */
+html.lesson-enhancing .jy-list,
+html.lesson-enhancing .pf-map:not(.pf-has-map) > .lesson-path,
+html.lesson-enhancing #activity-form { visibility: hidden; }

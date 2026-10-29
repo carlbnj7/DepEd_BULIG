@@ -45,23 +45,29 @@
  async function saveLevel(level,ui){
   const r=await fetch('?page=offline_manifest&level='+level,{credentials:'same-origin',cache:'no-store'});
   const m=await r.json().catch(()=>({error:'Could not reach BULIG.'}));if(!r.ok||m.error)throw new Error(m.error||'Could not save this level.');
-  const name='bulig-off-'+uid+'-L'+level,was=meta().levels[level];if(!(was&&was.locked))await caches.delete(name);const cache=await caches.open(name);
+  const name='bulig-off-'+uid+'-L'+level,stage='bulig-stage-'+uid+'-'+level+'-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+  const cache=await caches.open(stage);let failed=0;
+  try{
   const pages=[...m.pages];m.lessons.forEach(l=>{pages.push('?page=lesson&id='+l.id);l.acts.forEach(a=>pages.push('?page=lesson&id='+l.id+'&activity='+a.id));});
   const assets=new Set((m.assets||[]).map(abs));let bytes=0,done=0;const total=pages.length;
   const collect=root=>root.querySelectorAll('img[src],img[data-src],script[src],link[rel="stylesheet"][href],link[rel="icon"][href],source[src],image[href]').forEach(n=>{const v=n.getAttribute('src')||n.getAttribute('data-src')||n.getAttribute('href');if(v&&!v.startsWith('data:')){const u=new URL(v,base);if(u.origin===location.origin)assets.add(u.href);}});
   async function page(p){if(ui.cancelled)return;
    try{const res=await fetch(p+'&off=1',{credentials:'same-origin',cache:'no-store'});if(res.ok&&!res.url.includes('page=login')){const html=await res.text();bytes+=html.length;
     await cache.put(abs(p),new Response(html,{headers:{'Content-Type':'text/html; charset=utf-8'}}));
-    const doc=new DOMParser().parseFromString(html,'text/html');collect(doc);doc.querySelectorAll('template').forEach(t=>collect(t.content));}}catch(e){}
+    const doc=new DOMParser().parseFromString(html,'text/html');collect(doc);doc.querySelectorAll('template').forEach(t=>collect(t.content));}else failed++;}catch(e){failed++;}
    done++;ui.progress(done,total);}
   const queue=[...pages];await Promise.all(Array.from({length:4},async()=>{while(queue.length&&!ui.cancelled)await page(queue.shift());}));
-  if(ui.cancelled){await caches.delete(name);return null;}
+  if(ui.cancelled)return null;
   /* Pictures used by the style sheets (level covers and backgrounds). */
-  for(const css of [...assets].filter(a=>/\.css(\?|$)/.test(a))){try{const t=await (await fetch(css)).text();for(const mt of t.matchAll(/url\(["']?([^"')]+)["']?\)/g)){if(mt[1].startsWith('data:'))continue;const u=new URL(mt[1],css);if(u.origin===location.origin)assets.add(u.href);}}catch(e){}}
+  for(const css of [...assets].filter(a=>/\.css(\?|$)/.test(a))){try{const cssResponse=await fetch(css);if(!cssResponse.ok)throw new Error('Stylesheet unavailable');const t=await cssResponse.text();for(const mt of t.matchAll(/url\(["']?([^"')]+)["']?\)/g)){if(mt[1].startsWith('data:'))continue;const u=new URL(mt[1],css);if(u.origin===location.origin)assets.add(u.href);}}catch(e){failed++;}}
   const list=[...assets];let ai=0;ui.progress(done,total,'pictures');
-  await Promise.all(Array.from({length:4},async()=>{while(list.length&&!ui.cancelled){const a=list.shift();try{const had=await cache.match(a);if(had){bytes+=(await had.clone().blob()).size;ai++;continue;}const res=await fetch(a);if(res.ok){const b=await res.clone().blob();bytes+=b.size;await cache.put(a,res);}}catch(e){}ai++;}}));
-  if(ui.cancelled){await caches.delete(name);return null;}
+  await Promise.all(Array.from({length:4},async()=>{while(list.length&&!ui.cancelled){const a=list.shift();try{const had=await cache.match(a);if(had){bytes+=(await had.clone().blob()).size;ai++;continue;}const res=await fetch(a);if(res.ok){const b=await res.clone().blob();bytes+=b.size;await cache.put(a,res);}else failed++;}catch(e){failed++;}ai++;}}));
+  if(ui.cancelled)return null;
+  if(failed)throw new Error('Some lesson files could not be saved. Your previous download is kept. Please try again.');
+  const target=await caches.open(name);
+  for(const request of await cache.keys())await target.put(request,await cache.match(request));
   const all=meta();all.levels[level]={title:m.title,bytes,at:Date.now(),lessons:m.lessons,build:BUILD,locked:!!m.locked};saveMeta(all);return all.levels[level];
+  }finally{await caches.delete(stage);}
  }
  async function removeLevel(level){await caches.delete('bulig-off-'+uid+'-L'+level);const m=meta();delete m.levels[level];saveMeta(m);}
 
@@ -78,6 +84,7 @@
   else if(state.syncing)show('up','Uploading your answers…',state.sent+' of '+state.total+' sent');
   else if(state.done&&!n)show('ok','All '+state.done.sent+' '+(state.done.sent===1?'answer':'answers')+' uploaded!',(state.done.xp?'+'+state.done.xp+' XP · ':'')+'Your teacher can see them now.');
   else if(n&&state.needSignIn)show('wait',n+' '+(n===1?'answer is':'answers are')+' still waiting','Sign in once with your Pupil ID and password, then they will upload.');
+  else if(n&&state.failed)show('wait',n+' answers still waiting','The upload did not finish. Your answers are still on this device.','Try again');
   else if(n&&state.blocked)show('wait',n+' '+(n===1?'answer is':'answers are')+' still waiting','Finish the earlier activity first, then they will upload.','Try again');
   else if(n)show('wait',n+' '+(n===1?'answer':'answers')+' waiting to upload','They will send when you are online.','Upload now');
   else bar.hidden=true;
@@ -105,9 +112,9 @@
    let res;try{res=await fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'}});}catch(e){break;}
    if(res.url.includes('page=login')){state.blocked=true;break;}
    const data=await res.clone().json().catch(()=>({}));
-   if(res.ok){await del(it.key);if(it.kind==='answer')state.sent++;if(data.xp)xp+=data.xp;if(it.kind==='answer'&&data.saved===false)dropDone(it.aid);}
+   if(res.ok&&typeof data.saved==='boolean'){await del(it.key);if(it.kind==='answer')state.sent++;if(data.xp)xp+=data.xp;if(it.kind==='answer'&&data.saved===false)dropDone(it.aid);}
    else if(res.status===403){state.blocked=true;break;}
-   else await del(it.key);
+   else{state.failed=true;break;} // Keep unacknowledged answers for retry, including 429/5xx and invalid JSON.
    render();
   }
   const sent=state.sent;state.syncing=false;
@@ -232,7 +239,10 @@
   if(!online()){run.paused=true;paint();window.addEventListener('online',()=>{if(run){run.paused=false;next();}},{once:true});return;}
   const row=rowOf(l.level);if(row){row.querySelector('.dl-st').textContent='0%';}run.frac=0;
   const ui={cancelled:false,progress(d,t,what){run.frac=what?.92:.9*d/Math.max(1,t);if(row){row.querySelector('.dl-pb i').style.width=Math.round(run.frac*100)+'%';row.querySelector('.dl-st').textContent=Math.round(run.frac*100)+'%';}pageProg(l.level,Math.round(run.frac*100));paint();}};
-  try{await saveLevel(l.level,ui);}catch(e){}
+  try{await saveLevel(l.level,ui);}catch(e){
+   if(row){row.querySelector('.dl-st').textContent='Needs retry';const retry=el('button','linkbutton','Retry');retry.type='button';retry.addEventListener('click',()=>{retry.remove();next();},{once:true});row.append(retry);}
+   run.frac=0;paint();return;
+  }
   if(!online()){run.paused=true;paint();window.addEventListener('online',()=>{if(run){run.paused=false;next();}},{once:true});return;}
   (run.names=run.names||[]).push(l.title);run.q.shift();store(DLQ,run.q);run.doneBytes+=l.bytes||1;run.frac=0;run.ready++;
   if(row){row.classList.add('ok');row.querySelector('.dl-pb i').style.width='100%';row.querySelector('.dl-st').textContent='Ready';}paint();renderPage();next();}
@@ -407,3 +417,4 @@
    if(Object.keys(dm().units).length&&$('[data-demo-off-card]'))setTimeout(()=>saveHome().catch(()=>{}),2500);}
  }
 })();
+

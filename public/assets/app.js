@@ -68,7 +68,7 @@ const form=$('#activity-form');let draftTimer,submitting=false,drawingDirty=fals
 /* Drafts: typed answers save 0.65 s after typing stops. Drawings send the whole picture, so they save at most every 15 s while drawing, and right away when the pupil leaves the page. */let draftSlow=false;function draft(slow){if(!form||form.dataset.draft!=='on'||submitting)return;if(slow&&draftTimer&&draftSlow)return;clearTimeout(draftTimer);draftSlow=!!slow;draftTimer=setTimeout(()=>{draftTimer=null;saveDraft();},slow?15000:650);}document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&draftTimer&&!submitting){clearTimeout(draftTimer);draftTimer=null;saveDraft();}});
 async function saveDraft(){if(submitting||form.dataset.draft!=='on')return;const data=new FormData(form);data.set('action','draft');const status=$('#draft-status');status.textContent='Saving your draft…';try{const res=await fetch('index.php',{method:'POST',body:data,credentials:'same-origin'});const result=await res.json();if(!res.ok||!result.saved)throw new Error(result.error||'Could not save');status.textContent='Draft saved';}catch(error){status.textContent=navigator.onLine===false?'Offline · choose Submit to keep your answer on this device':'Draft not saved. Check your connection before leaving.';}}
 if(form){
- form.addEventListener('input',draft);
+ form.addEventListener('input',()=>draft(false));
  form.addEventListener('submit',async event=>{
   event.preventDefault();if(submitting)return;submitting=true;clearTimeout(draftTimer);
   const button=$('#submit-answer'),feedback=$('#answer-feedback'),next=$('#next-activity');const original=button?.innerHTML;
@@ -923,4 +923,5 @@ document.addEventListener('submit',e=>{const f=e.target.closest&&e.target.closes
  const sync=()=>{const n=form.querySelectorAll('input[name="pupils[]"]:checked').length;bar.classList.toggle('idle',!n);cnt.textContent=n+(n===1?' pupil ticked':' pupils ticked');};
  form.addEventListener('change',sync);form.addEventListener('click',()=>setTimeout(sync,0));sync();
 })();
+
 
