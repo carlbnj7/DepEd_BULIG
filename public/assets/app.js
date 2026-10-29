@@ -714,7 +714,9 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
    else if(lk)a.addEventListener('click',e=>{e.preventDefault();if(window.buligLockOverlay){const c=items[CUR];window.buligLockOverlay({title:'Level '+it.n+' is still locked',text:c?'Finish Level '+c.n+' first, then Jeepy drives you here.':'Your teacher opens this level for you.',go:c&&c.h?{label:'Go to Level '+c.n,href:c.h}:null});}});
    (cur?q('top'):q('stops')).appendChild(a);});
   boxes.push(...keep);
-  const near=(x,y,r)=>{for(let t=0;t<L;t+=12){const p=at(t);if(Math.hypot(p.x-x,p.y-y)<r)return true}return boxes.some(([bx,by,bw,bh])=>x>bx-r*.6&&x<bx+bw+r*.6&&y>by-r*.3&&y<by+bh+r*1.7)};
+  // Sample the unchanged road once per build, not again for every decoration candidate.
+  const roadSamples=[];for(let t=0;t<L;t+=12)roadSamples.push(at(t));
+  const near=(x,y,r)=>{for(const p of roadSamples){if(Math.hypot(p.x-x,p.y-y)<r)return true}return boxes.some(([bx,by,bw,bh])=>x>bx-r*.6&&x<bx+bw+r*.6&&y>by-r*.3&&y<by+bh+r*1.7)};
   let dc=phone?'':`<path d="M${W*.03} ${H*.97}L${W*.05} ${H*.84}L${W*.2} ${H*.84}L${W*.22} ${H*.97}Z" fill="url(#jy-rice)" opacity=".9"/>`,n=0;dc+=castleArt?`<g class="jy-castle-g"><ellipse cx="${sx+cw/2}" cy="${sy+ch*.96}" rx="${cw*.52}" ry="${ch*.09}" fill="#000" opacity=".13"/><svg x="${sx}" y="${sy}" width="${cw}" height="${ch}" viewBox="0 0 400 330">${castleArt}</svg></g>`:school(sx+cw/2,sy+ch,phone?.62:.85);const kinds=[palm,bush,palm,hut,bush,palm];
   for(let k=0;k<900&&n<(phone?16:26);k++){const x=20+rnd()*(W-40),y=sky+30+rnd()*(H-sky-40),s=(phone?.55:.7)+((y-sky)/(H-sky))*.45;if(near(x,y,phone?46:50))continue;dc+=kinds[n%kinds.length](x,y,s);boxes.push([x-20,y-50*s,40,50*s]);n++;}
   for(let k=0;k<300&&n<(phone?26:44);k++){const x=rnd()*W,y=sky+30+rnd()*(H-sky-30);if(!near(x,y,24)){dc+=flowers(x,y);n++;}}q('deco').innerHTML=dc;
@@ -884,3 +886,4 @@ document.addEventListener('submit',e=>{const f=e.target.closest&&e.target.closes
  const sync=()=>{const n=form.querySelectorAll('input[name="pupils[]"]:checked').length;bar.classList.toggle('idle',!n);cnt.textContent=n+(n===1?' pupil ticked':' pupils ticked');};
  form.addEventListener('change',sync);form.addEventListener('click',()=>setTimeout(sync,0));sync();
 })();
+
