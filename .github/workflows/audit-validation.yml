@@ -34,6 +34,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 5
       - name: Install test runtime
         run: |
           sudo apt-get update
@@ -48,6 +49,28 @@ jobs:
         run: python3 tools/update_checker.py
       - name: PHP and database integration tests
         run: python3 tests/run_tests.py
+      - name: Build and test update installation
+        run: |
+          git clean -fd -- public storage
+          python3 tools/update_checker.py
+          python3 tools/make_update.py --from bf568b33616aea8f76bd880fd50a8f9fabea2ebc --name BULIG-Audit-Fixes
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          p = Path('live-update/BULIG-Audit-Fixes.zip')
+          assert p.stat().st_size < 30000000
+          expected = {'app/actions.php','app/bootstrap.php','app/cycles.php','app/views.php','public/assets/app.js','public/assets/offline.js','public/assets/lesson-ready.js','public/assets/theme.css','public/bulig-check.php'}
+          with zipfile.ZipFile(p) as z:
+              assert set(z.namelist()) == expected, z.namelist()
+          print('Verified update contains only the nine intended files.')
+          PY
+      - name: Keep tested update
+        uses: actions/upload-artifact@v4
+        with:
+          name: BULIG-Audit-Fixes
+          path: live-update/BULIG-Audit-Fixes.zip
+          if-no-files-found: error
+          retention-days: 30
       - name: Keep test log
         if: always()
         uses: actions/upload-artifact@v4
