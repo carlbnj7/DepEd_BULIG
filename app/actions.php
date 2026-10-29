@@ -166,7 +166,7 @@ function action():void{
  }
  if($action==='profile'){$u=require_role('pupil','teacher','admin');$path=save_uploaded_image('avatar');q('UPDATE users SET avatar_path=? WHERE id=?',[$path,$u['id']]);flash('Profile photo updated.');go('?page=profile');}
  if($action==='finish_lesson'){
-  $u=require_role('pupil');$lid=(int)($_POST['lesson_id']??0);db()->beginTransaction();try{q('SELECT id FROM users WHERE id=? FOR UPDATE',[$u['id']]);finish_lesson((int)$u['id'],$lid);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=lesson&id='.$lid.'&finished=1');
+  $u=require_role('pupil');$lid=(int)($_POST['lesson_id']??0);db()->beginTransaction();try{q('SELECT id FROM users WHERE id=? FOR UPDATE',[$u['id']]);finish_lesson((int)$u['id'],$lid);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>true]);exit;}go('?page=lesson&id='.$lid.'&finished=1');
  }
  /* Story time: a pupil looked at a page of the comic (XP the first time, app/story.php) */
  if($action==='story_seen'){$u=require_role('pupil');header('Content-Type: application/json');echo json_encode(story_mark((int)$u['id'],(int)($_POST['p']??-1)));exit;}
@@ -302,3 +302,4 @@ function submission_reply(array $a,bool $ok,string $message,int $xp,string $chec
  if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>$ok,'message'=>$message,'xp'=>$xp,'url'=>$url]+($check!==''?['check'=>$check]:[]));exit;}
  flash($message);go($url);
 }
+
