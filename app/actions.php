@@ -229,9 +229,10 @@ function action():void{
    $gate=null;if($ok&&($a['phase']??'')==='learn'&&function_exists('completion_frac')&&($fr=completion_frac(one('SELECT score,max_score FROM activity_completion WHERE id=?',[$cid])))!==null&&round($fr*100,6)<STAR_PASS){
     $gate=$fr;$ok=false;q("UPDATE activity_completion SET status='retry' WHERE id=?",[$cid]);unset($_SESSION['ck'][$aid]);}
    rv_capture($cid,$a);
-   if($ok){q('DELETE FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);update_learning($pid,$aid);}
+   if($ok){q('DELETE FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);update_learning($pid,$aid);$awardedXp=(int)val('SELECT amount FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);}
    db()->commit();$message=$ok?($exact?'Correct! Great work.':($mode==='none'?'You’re ready for the next step.':($mode==='perform'?'Activity completed. Well done!':($oral?'Your answer is saved. Great speaking!':'Your response is saved. Thank you for sharing!')))):'Not quite yet. Listen again and give it another try.';
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  if($ok)$a['xp_reward']=$awardedXp??0;
   if($ok&&function_exists('pt_after_answer'))pt_after_answer($pid,$a);
   $check=$ok&&function_exists('ac_keyed')&&ac_keyed($a)?ac_card($a,['response'=>$answer],['fresh'=>true,'xp'=>(int)$a['xp_reward']]):'';/* BULIG's result card (v151) */
   if($ok&&!empty($l4s))$check=l4_result_card($a,$l4s);

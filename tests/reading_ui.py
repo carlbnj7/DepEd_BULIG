@@ -6,6 +6,8 @@ from playwright.sync_api import sync_playwright
 os.chdir(t.ROOT)
 assert t.test_database()
 acc=t.php_cli('seed.php')
+pid=int(acc['pupil1']['uid'])
+t.mysql('-e',f"INSERT INTO activity_completion(pupil_id,activity_id,response,prompt_snapshot,activity_revision,status,submitted_at,score,max_score) SELECT {pid},id,'Read cat hat','Read these words: cat hat',1,'completed',NOW(),1,1 FROM activities ORDER BY id LIMIT 1; INSERT INTO reading_verifications(completion_id,pupil_id,activity_id,state,audio_paths,prompt_snapshot,response_snapshot,score,max_score) SELECT id,pupil_id,activity_id,'pending','{{\"0\":\"1/1-20261030000000-aabbccdd.webm\"}}',prompt_snapshot,response,score,max_score FROM activity_completion WHERE pupil_id={pid} ORDER BY id DESC LIMIT 1",db=t.DB['name'])
 server=subprocess.Popen(['php','-S',f'127.0.0.1:{t.PORT}','-t','public'],env=t.env(),stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
 try:
  assert t.wait_for_server()

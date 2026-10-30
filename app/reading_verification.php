@@ -8,7 +8,11 @@ function rv_capture(int $cid,array $a):void{
  $c=one('SELECT * FROM activity_completion WHERE id=?',[$cid]);$wc=wc_post();$input=$_POST['coach_audio']??[];
  if(!is_array($input))fail('Invalid reading recording.');
  $paths=[];$total=0;foreach($input as $n=>$data){if(!ctype_digit((string)$n)||(int)$n>60||!is_string($data))fail('Invalid reading recording.');if($data==='')continue;$total+=strlen($data);if($total>9000000)fail('These recordings are too large. Please keep each reading short.');$paths[(string)(int)$n]=l1_save_audio($data,(int)$c['pupil_id'],(int)$a['id']);}
- if(!$paths){if(!empty($c['audio_path']))$paths['0']=$c['audio_path'];$paths+=json_decode((string)($c['audio_paths']??''),true)?:[];}
+ if(!empty($c['audio_path'])&&!isset($paths['0']))$paths['0']=$c['audio_path'];
+ $paths+=json_decode((string)($c['audio_paths']??''),true)?:[];
+ // Some later-level cards use the shared recorder but not the legacy audio_paths whitelist.
+ foreach((array)($_POST['audio_card']??[]) as $n=>$data){if(!ctype_digit((string)$n)||(int)$n<1||(int)$n>60||!is_string($data))fail('Invalid card recording.');if($data===''||isset($paths[(string)$n]))continue;$total+=strlen($data);if($total>9000000)fail('These recordings are too large.');$paths[(string)$n]=l1_save_audio($data,(int)$c['pupil_id'],(int)$a['id']);}
+ if(empty($paths['0'])&&!empty($_POST['audio']))$paths['0']=l1_save_audio((string)$_POST['audio'],(int)$c['pupil_id'],(int)$a['id']);
  if(!$wc&&!$paths&&!rv_latest($cid)&&empty($_POST['heard'])&&!preg_match('~\(spoken answer|\(read aloud|\(read with Word Coach|Said:~i',(string)$c['response']))return;
  // A retry must carry new audio. Never accept a previous attempt's stored paths as a fresh recording.
  $prev=rv_latest($cid);if($prev&&$prev['state']==='rejected'&&!$input&&empty($_POST['audio'])&&empty($_POST['audio_card']))fail('Please record your reading again before sending.');

@@ -93,7 +93,7 @@
   const lock=on=>{rec.classList.toggle('wc-locked',on);rec.querySelectorAll('button').forEach(b=>{if(on)b.setAttribute('aria-disabled','true');else b.removeAttribute('aria-disabled');});};
   rec.addEventListener('click',e=>{if(!rec.classList.contains('wc-locked'))return;e.preventDefault();e.stopImmediatePropagation();gate.classList.remove('wc-nudge');void gate.offsetWidth;gate.classList.add('wc-nudge');},true);
   const drawGate=res=>{
-   if(!res){gate.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><b>First, practise with Max!</b><p>Max reads it to you slowly. Then you read it, and each word turns green when you say it right. Fewer tries, more points!</p></div><button type="button" class="btn wc-go">'+svg.mic+'Start</button>';
+   if(!res){gate.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><b>First, practise with Max!</b><p>Max reads it to you slowly. Then you read it, and each word turns green when you say it right. Fewer tries, more points! Your reading will be recorded for your teacher.</p></div><button type="button" class="btn wc-go">'+svg.mic+'Start</button>';
     gate.querySelector('.wc-go').addEventListener('click',()=>open(false));lock(true);return;}
    const [p,w]=res.split('|');gate.classList.add('wc-done');
    gate.innerHTML='<img src="'+IMG('thumbs')+'" alt=""><div><b>'+(p==='na'?'You practised with Max!':'Word Coach: '+p+'%')+'</b>'+(p==='na'?'':starHtml(stars(+p),3))+(w?'<p>Practise: '+esc(w.split(' ').join(', '))+'</p>':(p==='na'?'<p>Now tap the microphone and read it all.</p>':'<p>Your reading is saved. Great work!</p>'))+'</div><button type="button" class="btn wc-again">Do it again</button>';
@@ -113,7 +113,7 @@
    const $=s=>ov.querySelector(s),txt=$('[data-txt]'),box=$('[data-box]');
    txt.innerHTML=all.map((w,i)=>'<span class="wc-w" data-i="'+i+'">'+esc(w)+'</span>').join(' ');
    const W=[...txt.querySelectorAll('.wc-w')];let alive=true;
-   let gen=0;const say=(t,r,cb,b)=>{const g=++gen;hush();if(recording)recording.pause();speak(t,r,()=>{if(recording)recording.resume();if(g===gen&&alive&&cb)cb();},b);};   // only the newest voice line moves the coach on
+   let gen=0;const say=(t,r,cb,b)=>{const g=++gen;hush();if(recording)recording.pause();speak(t,r,()=>{if(g===gen&&alive){if(recording)recording.resume();if(cb)cb();}},b);};   // only the newest voice line moves the coach on
    const close=()=>{alive=false;gen++;hush();if(recording)recording.cancel();window.removeEventListener('pagehide',close);if(stream)stream.stop();ov.remove();document.body.classList.remove('wc-open');};
    $('.wc-x').addEventListener('click',close);window.addEventListener('pagehide',close,{once:true});
    const mark=(i0,i1,cls)=>{for(let i=i0;i<=i1;i++){W[i].classList.remove('cur','dim');if(cls)W[i].classList.add(cls);}};
