@@ -1252,7 +1252,7 @@ def test_reading_verification(acc):
         q(f'UPDATE pupil_level_assignments SET level_id={level} WHERE pupil_id={pid}')
         q(f"INSERT INTO lessons(module_id,position,title,objectives,teacher_guide,source_pages) VALUES({mod},{-10000-ix},'Verification test {ix}','','','[]')")
         lid=q('SELECT MAX(id) FROM lessons')
-        q(f"INSERT INTO activities(lesson_id,phase,position,title,type,instructions,prompt,narration,expected_text,xp_reward,source_page,source_excerpt,response_mode) VALUES({lid},'{phase}',1,'Read cat hat','reading','Read aloud.','cat hat','','cat hat',10,1,'','answer')")
+        q(f"INSERT INTO activities(lesson_id,phase,position,title,type,instructions,prompt,narration,expected_text,xp_reward,source_page,source_excerpt,response_mode) VALUES({lid},'{phase}',1,'Read cat hat','reading','Read aloud.','cat hat','','cat hat',10,99999,'','answer')")
         aid=q('SELECT MAX(id) FROM activities')
         data={'action':'submit','activity_id':aid,'response':'Spoken reading','heard':'1','transcript':'cat hat','secs':'2','wc[0]':'100|','coach_audio[0]':audio,'csrf':p.token()}
         before=int(q(f'SELECT COALESCE(total,0) FROM pupil_xp WHERE pupil_id={pid}') or 0)
