@@ -40,10 +40,14 @@ try:
    if mode=='error':page.evaluate("() => {window.SpeechRecognition=class {start(){setTimeout(()=>this.onerror?.({error:'not-allowed'}),30);}abort(){}};}")
    if mode=='throw':page.evaluate("() => {window.SpeechRecognition=class {start(){throw new Error('start failed');}abort(){}};}")
    if mode=='missing':page.evaluate("window.SpeechRecognition=null;window.webkitSpeechRecognition=null")
+   if mode=='late-mute':page.evaluate("() => {const stop=MediaRecorder.prototype.stop;MediaRecorder.prototype.stop=function(){stop.call(this);testTracks.forEach(t=>t.dispatchEvent(new Event('mute')));};}")
    if apple:page.evaluate("Object.defineProperty(navigator,'userAgent',{value:'iPhone Safari/605.1',configurable:true})")
    page.add_script_tag(url=t.BASE+'assets/coach.js')
    page.locator('.wc-go').click();page.locator('.wc-skip').click()
-   if apple and mode!='missing':page.locator('.wc-start-reading').click()
+   if apple and mode!='missing':
+    page.locator('.wc-start-reading').wait_for(state='visible')
+    if mode=='paused-mute':page.evaluate("testTracks.forEach(t=>t.dispatchEvent(new Event('mute')))")
+    page.locator('.wc-start-reading').click()
   harness()
   page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
   page.locator('.wc-ov').wait_for(state='detached')
@@ -63,6 +67,14 @@ try:
   assert page.evaluate('recognitionStarts>0 && recognitionGesture')
   assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
   print('PASS: iPhone user agent enables scoring plus real recording; recognition starts from a tap. This is a Chromium harness, not a physical iPhone test.')
+  for mode in ['late-mute','paused-mute']:
+   harness(True,mode)
+   page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
+   page.locator('.wc-ov').wait_for(state='detached')
+   assert page.locator('[data-coach-audio]').input_value().startswith('data:audio/')
+   assert page.locator('[data-wc-val]').input_value()=='100|'
+   assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
+  print('PASS: completed audio survives late mute events and paused preparation interruptions without disabling scoring.')
   for mode in ['error','throw','missing']:
    harness(True,mode)
    page.locator('.wc-retry-listen').wait_for(state='visible')

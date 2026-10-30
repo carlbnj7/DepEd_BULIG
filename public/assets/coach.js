@@ -14,21 +14,21 @@
  const Rec=window.SpeechRecognition||window.webkitSpeechRecognition,synth=window.speechSynthesis||null;
  // Record only the pupil phase. Never record Max's opening demonstration or continue after closing.
  async function captureReading(){
-  let media=null,mr=null,chunks=[],timer=null,expired=false,ended=false;
+  let media=null,mr=null,chunks=[],timer=null,expired=false,ended=false,failure='';
   const cleanup=()=>{clearTimeout(timer);if(media)media.getTracks().forEach(t=>t.stop());};
   try{
    if(!navigator.mediaDevices||!window.MediaRecorder)return null;
    media=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
    // Some microphone implementations mute capture when recognition starts. Never save that as evidence.
-   media.getAudioTracks().forEach(t=>{t.addEventListener('mute',()=>{expired=true;});t.addEventListener('ended',()=>{if(!ended)expired=true;});});
+   media.getAudioTracks().forEach(t=>{t.addEventListener('mute',()=>{if(!ended&&mr&&mr.state==='recording'){expired=true;failure='The microphone was interrupted while Word Coach was listening. This attempt has no complete recording.';}});t.addEventListener('ended',()=>{if(!ended)expired=true;});});
    const type=['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported(t));
    mr=new MediaRecorder(media,type?{mimeType:type,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000});
    let resolve;const result=new Promise(r=>resolve=r);
    mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
-   mr.onerror=()=>{expired=true;cleanup();resolve('');};
+   mr.onerror=()=>{expired=true;failure='The browser could not finish the audio recording.';cleanup();resolve('');};
    mr.onstop=()=>{cleanup();const blob=new Blob(chunks,{type:(mr.mimeType||'audio/webm').split(';')[0]});if(expired||blob.size<200||blob.size>6000000){resolve('');return;}const f=new FileReader();f.onload=()=>resolve(String(f.result));f.onerror=()=>resolve('');f.readAsDataURL(blob);};
-   mr.start(500);timer=setTimeout(()=>{expired=true;if(mr.state!=='inactive')mr.stop();},600000);
-   return {valid(){return !expired&&media.getAudioTracks().every(t=>t.readyState==='live'&&!t.muted);},pause(){if(mr.state==='recording')mr.pause();},resume(){if(mr.state==='paused')mr.resume();},stop(){if(!ended){ended=true;if(mr.state!=='inactive')mr.stop();else cleanup();}return result;},cancel(){expired=true;this.stop();cleanup();}};
+   mr.start(500);mr.pause();timer=setTimeout(()=>{expired=true;if(mr.state!=='inactive')mr.stop();},600000);
+   return {error(){return failure;},valid(){return !expired&&media.getAudioTracks().every(t=>t.readyState==='live'&&!t.muted);},pause(){if(mr.state==='recording')mr.pause();},resume(){if(mr.state==='paused')mr.resume();},stop(){if(!ended){ended=true;if(mr.state!=='inactive')mr.stop();else cleanup();}return result;},cancel(){expired=true;this.stop();cleanup();}};
   }catch(e){cleanup();return null;}
  }
 
@@ -109,7 +109,7 @@
   const saveReading=(said,secs,audio)=>{rec.dispatchEvent(new CustomEvent('wc:done',{detail:{said,secs,audio}}));rec.scrollIntoView({block:'center',behavior:'smooth'});};
 
   function open(practice){
-   hush();const attemptAbort=new AbortController();const all=words(text);let recording=null,audio='',recordingResult=null;
+   hush();const attemptAbort=new AbortController();const all=words(text);let recording=null,audio='',recordingResult=null,recordingError='';
    const audioField=()=>{let f=rec.querySelector('[data-coach-audio]');if(!f){f=document.createElement('input');f.type='hidden';f.name='coach_audio['+(val?val.name.match(/\d+/)[0]:0)+']';f.dataset.coachAudio='';rec.append(f);}return f;};
    if(!practice){audioField().value='';if(val)val.value='';}
    const ov=document.createElement('div');ov.className='wc-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Word Coach with Max');
@@ -151,7 +151,7 @@
      $('[data-c]').textContent='Your turn';
      box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Tap below, then read aloud. Your reading will be scored and recorded for your teacher.</p><button type="button" class="btn primary wc-start-reading">'+svg.mic+'Start my reading</button></div>';
      box.querySelector('.wc-start-reading').onclick=()=>{if(recording)recording.resume();beginListening();};
-    }else beginListening();
+    }else{if(recording)recording.resume();beginListening();}
    }
    function beginListening(){
     if(!alive)return;
@@ -210,7 +210,7 @@
    }
 
    /* 4) Stars and the words to practise */
-   function summary(){if(recording){recordingResult=recording.stop().then(x=>{audio=x;return x;});recording=null;}
+   function summary(){if(recording){const clip=recording;recordingResult=clip.stop().then(x=>{audio=x;recordingError=clip.error();return x;});recording=null;}
     $('[data-bar]').style.width='100%';$('[data-c]').textContent='Done';W.forEach(x=>{x.classList.remove('cur','nx');x.onclick=null;});
     const scored=got.filter(g=>g!==-1&&g!==null),na=!scored.length,pct=na?null:Math.round(scored.reduce((a,b)=>a+b,0)/scored.length*100);
     const first=got.filter((g,i)=>g!==-1&&g!==null&&!fails[i]).length,after=got.filter((g,i)=>g>0&&fails[i]).length,miss=got.filter(g=>g===0).length;
@@ -222,8 +222,8 @@
      +'<div class="wc-row c">'+(hard.length&&!practice?'<button type="button" class="btn ghost wc-redo">Practise these again</button>':'')+'<button type="button" class="btn primary wc-read">'+((na&&rec.dataset.kind!=='read')||practice?svg.mic+'Now read it all':svg.ok+'Save my reading')+'</button></div></div>';
     box.querySelectorAll('.wc-chip').forEach(c=>c.onclick=()=>say(c.textContent,.55));
     const r=box.querySelector('.wc-redo');if(r)r.onclick=()=>{close();open(true);};
-    box.querySelector('.wc-read').onclick=async()=>{const b=box.querySelector('.wc-read');b.disabled=true;b.textContent='Saving recording…';if(recordingResult)await recordingResult;if(!alive)return;if(!practice&&!audio){b.disabled=false;b.textContent='Retry recording';let note=box.querySelector('[data-audio-error]');if(!note){note=document.createElement('p');note.className='wc-note';note.dataset.audioError='';box.querySelector('.wc-sum').append(note);}note.textContent='No complete recording was captured. Please retry so your teacher can hear this reading.';b.onclick=()=>{close();open(false);};return;}if(!practice){audioField().value=audio;if(val)val.value=resultValue;store.set(key,resultValue);drawGate(resultValue);}close();if(!practice&&(audio||!na||rec.dataset.kind==='read')){saveReading(all.filter((w,i)=>got[i]>0).join(' '),secs,audio);return;}const m=rec.querySelector('[data-rec-go]');if(m)m.focus();rec.scrollIntoView({block:'center',behavior:'smooth'});};
-    if(!na&&!practice)say(pct>=80?'Great job! Your reading is done.':'Good work! Your reading is done.',.85);}
+    box.querySelector('.wc-read').onclick=async()=>{const b=box.querySelector('.wc-read');b.disabled=true;b.textContent='Saving recording…';if(recordingResult)await recordingResult;if(!alive)return;if(!practice&&!audio){b.disabled=false;b.textContent='Retry recording';let note=box.querySelector('[data-audio-error]');if(!note){note=document.createElement('p');note.className='wc-note';note.dataset.audioError='';box.querySelector('.wc-sum').append(note);}note.textContent=recordingError||'The browser did not produce an audio recording. Check microphone access before trying again.';b.onclick=()=>{close();open(false);};return;}if(!practice){audioField().value=audio;if(val)val.value=resultValue;store.set(key,resultValue);drawGate(resultValue);}close();if(!practice&&(audio||!na||rec.dataset.kind==='read')){saveReading(all.filter((w,i)=>got[i]>0).join(' '),secs,audio);return;}const m=rec.querySelector('[data-rec-go]');if(m)m.focus();rec.scrollIntoView({block:'center',behavior:'smooth'});};
+    if(!na&&!practice)Promise.resolve(recordingResult).then(()=>{if(alive)say(pct>=80?'Great job! Your reading is done.':'Good work! Your reading is done.',.85);});}
 
    if(practice){const prev=(store.get(key)||'').split('|')[1]||'';const hard=prev.split(' ').filter(Boolean);
     if(hard.length){all.splice(0,all.length,...hard);txt.innerHTML=all.map((w,i)=>'<span class="wc-w">'+esc(w)+'</span>').join(' ');W.splice(0,W.length,...txt.querySelectorAll('.wc-w'));
