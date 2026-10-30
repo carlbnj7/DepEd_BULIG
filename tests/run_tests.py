@@ -1254,7 +1254,9 @@ def test_reading_verification(acc):
         lid=q('SELECT MAX(id) FROM lessons')
         q(f"INSERT INTO activities(lesson_id,phase,position,title,type,instructions,prompt,narration,expected_text,xp_reward,source_page,source_excerpt,response_mode) VALUES({lid},'{phase}',1,'Read cat hat','reading','Read aloud.','cat hat','','cat hat',10,99999,'','answer')")
         aid=q('SELECT MAX(id) FROM activities')
-        data={'action':'submit','activity_id':aid,'response':'Spoken reading','heard':'1','transcript':'cat hat','secs':'2','wc[0]':'100|','coach_audio[0]':audio,'csrf':p.token()}
+        n=1 if level in [4,9] else 0
+        audio_key=f'coach_audio[{n}]'
+        data={'action':'submit','activity_id':aid,'response':'BULIG card answers\nCard 1: (voice recording) said: cat hat','heard':'1','transcript':'cat hat','secs':'2',f'wc[{n}]':'100|',audio_key:audio,'csrf':p.token()}
         before=int(q(f'SELECT COALESCE(total,0) FROM pupil_xp WHERE pupil_id={pid}') or 0)
         status,_,text=p.req('index.php',data,accept_json=True)
         cid=q(f'SELECT id FROM activity_completion WHERE pupil_id={pid} AND activity_id={aid}')
@@ -1275,7 +1277,7 @@ def test_reading_verification(acc):
         check(f'Level {level} {phase}: rejection reverses only its XP and reopens activity',status==200 and q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')==str(before) and q(f'SELECT status FROM activity_completion WHERE id={cid}')=='retry' and q(f'SELECT COUNT(*) FROM xp_transactions WHERE pupil_id={pid} AND activity_id={aid}')=='0',text[:120])
         t.req('index.php',review)
         check(f'Level {level} {phase}: repeated rejection cannot deduct twice',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')==str(before))
-        missing=dict(data);missing.pop('coach_audio[0]')
+        missing=dict(data);missing.pop(audio_key)
         check(f'Level {level} {phase}: rereading cannot reuse old audio',p.req('index.php',missing,accept_json=True)[0]==400)
         status,_,text=p.req('index.php',data,accept_json=True)
         new=q(f'SELECT id FROM reading_verifications WHERE completion_id={cid} ORDER BY id DESC LIMIT 1')
@@ -1289,7 +1291,7 @@ def test_reading_verification(acc):
             check('Historic recording remains playable after rereading',t.req(f'?page=reading_audio&id={rid}&n=0')[0]==200)
     # Missing recording is explicitly missing, never silently verified.
     q(f"UPDATE activity_completion SET status='retry' WHERE id={cid}")
-    missing=dict(data);missing.pop('coach_audio[0]')
+    missing=dict(data);missing.pop(audio_key)
     p.req('index.php',missing,accept_json=True)
     mid=q(f'SELECT id FROM reading_verifications WHERE completion_id={cid} ORDER BY id DESC LIMIT 1')
     check('Unrecorded reading is flagged for teacher review',q(f'SELECT state FROM reading_verifications WHERE id={mid}')=='missing')

@@ -18,6 +18,7 @@ function rv_capture(int $cid,array $a):void{
  $prev=rv_latest($cid);if($prev&&$prev['state']==='rejected'&&!$input&&empty($_POST['audio'])&&empty($_POST['audio_card']))fail('Please record your reading again before sending.');
  if($prev&&$prev['state']==='rejected'&&!$paths)fail('Please record your reading again before sending.');
  $complete=(bool)$paths;foreach($wc as $n=>$x)if(empty($paths[(string)$n]))$complete=false;
+ if($prev&&$prev['state']==='rejected'&&!$complete)fail('Please record every reading card again before sending.');
  q("UPDATE reading_verifications SET state='superseded' WHERE completion_id=? AND state IN ('pending','missing')",[$cid]);
  q('INSERT INTO reading_verifications(completion_id,pupil_id,activity_id,state,audio_paths,prompt_snapshot,response_snapshot,score,max_score) VALUES(?,?,?,?,?,?,?,?,?)',[$cid,$c['pupil_id'],$a['id'],$complete?'pending':'missing',json_encode($paths),$c['prompt_snapshot'],$c['response'],$c['score'],$c['max_score']]);
 }
