@@ -9,9 +9,9 @@
 (()=>{
  'use strict';
  const recs=[...document.querySelectorAll('[data-wc]')];if(!recs.length)return;
- // Safari uses one microphone job at a time: keep real audio, leave pronunciation to the teacher there.
+ // Browser identity never disables recognition. Apple browsers get an explicit listening gesture.
  const APPLE=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)||(/Safari\//.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/.test(navigator.userAgent));
- const Rec=APPLE?null:(window.SpeechRecognition||window.webkitSpeechRecognition),synth=window.speechSynthesis||null;
+ const Rec=window.SpeechRecognition||window.webkitSpeechRecognition,synth=window.speechSynthesis||null;
  // Record only the pupil phase. Never record Max's opening demonstration or continue after closing.
  async function captureReading(){
   let media=null,mr=null,chunks=[],timer=null,expired=false,ended=false;
@@ -19,6 +19,8 @@
   try{
    if(!navigator.mediaDevices||!window.MediaRecorder)return null;
    media=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+   // Some microphone implementations mute capture when recognition starts. Never save that as evidence.
+   media.getAudioTracks().forEach(t=>{t.addEventListener('mute',()=>{expired=true;});t.addEventListener('ended',()=>{if(!ended)expired=true;});});
    const type=['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported(t));
    mr=new MediaRecorder(media,type?{mimeType:type,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000});
    let resolve;const result=new Promise(r=>resolve=r);
@@ -26,7 +28,7 @@
    mr.onerror=()=>{expired=true;cleanup();resolve('');};
    mr.onstop=()=>{cleanup();const blob=new Blob(chunks,{type:(mr.mimeType||'audio/webm').split(';')[0]});if(expired||blob.size<200||blob.size>6000000){resolve('');return;}const f=new FileReader();f.onload=()=>resolve(String(f.result));f.onerror=()=>resolve('');f.readAsDataURL(blob);};
    mr.start(500);timer=setTimeout(()=>{expired=true;if(mr.state!=='inactive')mr.stop();},600000);
-   return {pause(){if(mr.state==='recording')mr.pause();},resume(){if(mr.state==='paused')mr.resume();},stop(){if(!ended){ended=true;if(mr.state!=='inactive')mr.stop();else cleanup();}return result;},cancel(){expired=true;this.stop();cleanup();}};
+   return {valid(){return !expired&&media.getAudioTracks().every(t=>t.readyState==='live'&&!t.muted);},pause(){if(mr.state==='recording')mr.pause();},resume(){if(mr.state==='paused')mr.resume();},stop(){if(!ended){ended=true;if(mr.state!=='inactive')mr.stop();else cleanup();}return result;},cancel(){expired=true;this.stop();cleanup();}};
   }catch(e){cleanup();return null;}
  }
 
@@ -75,12 +77,13 @@
 
  /* Listen while the pupil reads: onText(all words heard in this listening session), onNew() when a new session starts
     (Chrome stops after a pause, so BULIG starts again), onStop() when this device cannot listen any more. */
- const listenAll=(onText,onNew,onStop)=>{let on=true,r=null;
-  const start=()=>{if(!on)return;try{r=new Rec();}catch(e){on=false;onStop();return;}r.lang='en-US';r.continuous=true;r.interimResults=true;r.maxAlternatives=1;onNew();
-   r.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=' '+e.results[i][0].transcript;onText(t);};
-   r.onerror=e=>{if(['not-allowed','service-not-allowed','audio-capture','language-not-supported','network'].includes(e.error)){on=false;onStop();}};
-   r.onend=()=>{if(on)setTimeout(start,120);};try{r.start();}catch(e){on=false;onStop();}};
-  start();return {stop(){on=false;try{r&&r.abort();}catch(e){}}};};
+ const listenAll=(onText,onNew,onStop)=>{let on=true,r=null,restart=null;
+  const fail=reason=>{if(!on)return;on=false;clearTimeout(restart);try{r&&r.abort();}catch(e){}queueMicrotask(()=>onStop(reason));};
+  const start=()=>{if(!on)return;try{r=new Rec();}catch(e){fail('unavailable');return;}r.lang='en-US';r.continuous=true;r.interimResults=true;r.maxAlternatives=1;onNew();
+   r.onresult=e=>{if(!on)return;let t='';for(let i=0;i<e.results.length;i++)t+=' '+e.results[i][0].transcript;onText(t);};
+   r.onerror=e=>{if(['not-allowed','service-not-allowed','audio-capture','language-not-supported','network'].includes(e.error))fail(e.error);};
+   r.onend=()=>{if(on)restart=setTimeout(start,300);};try{r.start();}catch(e){fail(e.name==='NotAllowedError'?'not-allowed':'unavailable');}};
+  start();return {stop(){on=false;clearTimeout(restart);try{r&&r.abort();}catch(e){}}};};
  const words=t=>String(t).split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w));
  const lines=t=>{const out=[];let cur=[];for(const w of words(t)){cur.push(w);if(/[.!?]["”’)]*$/.test(w)||cur.length>=12){out.push(cur);cur=[];}}if(cur.length)out.push(cur);return out;};
  const stars=p=>p>=95?3:p>=80?2:p>=50?1:0;
@@ -140,7 +143,16 @@
    async function pass(){
     box.innerHTML='<p class="wc-say">Preparing your reading recording… Your teacher can listen to this attempt.</p>';
     if(!practice)recording=await captureReading();if(!alive){if(recording)recording.cancel();return;}
-    if(!Rec){noListen();return;}
+    if(!Rec){noListen('unavailable');return;}
+    if(APPLE){
+     if(recording)recording.pause();
+     $('[data-c]').textContent='Your turn';
+     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Tap below, then read aloud. Your reading will be scored and recorded for your teacher.</p><button type="button" class="btn primary wc-start-reading">'+svg.mic+'Start my reading</button></div>';
+     box.querySelector('.wc-start-reading').onclick=()=>{if(recording)recording.resume();beginListening();};
+    }else beginListening();
+   }
+   function beginListening(){
+    if(!alive)return;
     let p=0,sessBase=0,last=Date.now(),hintT=null,ended=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Each word turns green when you say it right.</p><div class="wc-row"><span class="wc-mic">'+svg.mic+'</span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span><b data-st>Listening…</b><span data-recording-note></span></div><p class="wc-hint" data-hint hidden></p><div class="wc-row"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div></div>';
     box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':'Audio unavailable — teacher review needed';
@@ -153,12 +165,12 @@
      for(const t of toks){for(let k=0;k<=3&&q+k<N;k++){if(near(t,T[q+k])){for(let m=q;m<q+k;m++)st[m]='miss';st[q+k]='ok';q=q+k+1;break;}}}
      if(q<p)return;for(let i=sessBase;i<q;i++)if(st[i]&&S[i]!=='ok')set(i,st[i]);else if(st[i]==='ok')set(i,'ok');
      if(q>p){p=q;last=Date.now();hint.hidden=true;}show();if(p>=N)finish();};
-    stream=listenAll(align,()=>{sessBase=p;},()=>{if(ended)return;stream=null;if(!p){noListen();return;}finish();});
+    const startListening=()=>{stream=listenAll(align,()=>{sessBase=p;},reason=>{if(!alive||ended)return;ended=true;clearInterval(hintT);stream=null;noListen(reason);});};
     box.querySelector('.wc-skipw').onclick=()=>{if(p<N){set(p,'miss');p++;sessBase=p;last=Date.now();hint.hidden=true;show();if(p>=N)finish();}};
     box.querySelector('.wc-done').onclick=finish;
-    hintT=setInterval(()=>{if(!live()||ended){clearInterval(hintT);return;}if(Date.now()-last>7000&&p<N){hint.hidden=false;hint.innerHTML='Stuck on <b>“'+esc(all[p])+'”</b>? Tap it to hear it, or tap <b>Skip this word</b>.';}},1000);
+    hintT=setInterval(()=>{const note=box.querySelector('[data-recording-note]');if(note&&recording&&!recording.valid())note.textContent='Recording interrupted — please retry this reading';if(!live()||ended){clearInterval(hintT);return;}if(Date.now()-last>7000&&p<N){hint.hidden=false;hint.innerHTML='Stuck on <b>“'+esc(all[p])+'”</b>? Tap it to hear it, or tap <b>Skip this word</b>.';}},1000);
     W.forEach((x,i)=>{x.onclick=()=>{if(ended)return;say(all[i],.6);if(S[i]!=='ok'&&i>=p){set(i,'miss');if(i===p){p++;sessBase=p;show();if(p>=N)finish();}}};});
-    show();}
+    show();startListening();}
    const live=()=>alive;
 
    /* 3) The missed words, one at a time: the pupil says it again (no help first). 2nd try 2/3, 3rd try 1/3, then 0. */
@@ -180,10 +192,20 @@
       box.querySelector('.wc-slow').onclick=()=>say(all[i],.5);box.querySelector('.wc-again').onclick=()=>{gen++;hush();ask(i);};});};
     nextWord();}
 
-   /* A device that cannot listen: the pupil reads along and taps "I finished" (no score). */
-   function noListen(){const recordStart=Date.now();W.forEach((x,i)=>paint(i,''));
-    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Read it all out loud. Tap a word to hear it.</p><div class="wc-row"><button type="button" class="btn primary wc-fin">'+svg.ok+'I finished reading</button></div><p class="wc-note">Your device cannot score pronunciation while recording. Your teacher will review the audio. If recording is unavailable, a supervised rereading is needed.</p></div>';
-    W.forEach((x,i)=>x.onclick=()=>say(all[i],.6));box.querySelector('.wc-fin').onclick=()=>{secs=Math.round((Date.now()-recordStart)/1000);W.forEach((x,i)=>paint(i,'ok'));all.forEach((w,i)=>got[i]=-1);summary();};}
+   /* Only an absent API or a real recognition error opens this choice; never browser identity. */
+   function noListen(reason){if(!alive)return;const recordStart=Date.now();W.forEach((x,i)=>{paint(i,'');x.onclick=null;});
+    if(recording)recording.pause();
+    $('[data-c]').textContent='Listening paused';
+    const why=reason==='network'?'The speech service could not connect. Check your connection and try again.':(['not-allowed','service-not-allowed'].includes(reason)?'Please allow microphone and speech recognition access in your browser, then try again.':'Word Coach could not start listening. Please try again.');
+    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say">'+why+'</p><div class="wc-row"><button type="button" class="btn primary wc-retry-listen">'+svg.mic+'Try listening again</button><button type="button" class="btn ghost wc-audio-only">Let my teacher review</button></div><p class="wc-note">Teacher review alone does not give an automatic pronunciation score.</p></div>';
+    box.querySelector('.wc-retry-listen').onclick=()=>{close();open(false);};
+    box.querySelector('.wc-audio-only').onclick=()=>{
+     if(recording)recording.resume();
+     $('[data-c]').textContent='Read for your teacher';
+     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Read it all out loud for your teacher.</p><button type="button" class="btn primary wc-fin">'+svg.ok+'I finished reading</button><p class="wc-note">'+(recording&&recording.valid()?'Recording for your teacher.':'Audio is unavailable. Please retry with microphone access before submitting.')+'</p></div>';
+     box.querySelector('.wc-fin').onclick=()=>{secs=Math.round((Date.now()-recordStart)/1000);all.forEach((w,i)=>{got[i]=-1;fails[i]=0;});summary();};
+    };
+   }
 
    /* 4) Stars and the words to practise */
    function summary(){if(recording){recordingResult=recording.stop().then(x=>{audio=x;return x;});recording=null;}
@@ -191,14 +213,14 @@
     const scored=got.filter(g=>g!==-1&&g!==null),na=!scored.length,pct=na?null:Math.round(scored.reduce((a,b)=>a+b,0)/scored.length*100);
     const first=got.filter((g,i)=>g!==-1&&g!==null&&!fails[i]).length,after=got.filter((g,i)=>g>0&&fails[i]).length,miss=got.filter(g=>g===0).length;
     const hard=[...new Set(all.filter((w,i)=>fails[i]>0).map(w=>w.replace(/[^\p{L}\p{N}'-]/gu,'')))].filter(Boolean).slice(0,30);
-    if(!practice){const v=(na?'na':pct)+'|'+hard.join(' ');if(val)val.value=v;store.set(key,v);drawGate(v);}
+    const resultValue=(na?'na':pct)+'|'+hard.join(' ');
     box.innerHTML='<div class="wc-sum"><img src="'+IMG('cheer')+'" alt=""><h3>'+(practice?'Practice done!':'You read all '+N+' words!')+'</h3>'+(na||practice?'':starHtml(stars(pct),3)+'<p class="wc-pct">'+pct+'%</p>')
      +(na||practice?'':'<div class="wc-cnt"><div class="g"><b>'+first+'</b>right the first time</div><div class="y"><b>'+after+'</b>right after trying again</div><div class="r"><b>'+miss+'</b>to practise</div></div>')
      +(hard.length?'<p class="wc-hl">Words to practise (tap to hear):</p><div class="wc-chips">'+hard.map(h=>'<button type="button" class="wc-chip">'+svg.spk+esc(h)+'</button>').join('')+'</div>':'')
      +'<div class="wc-row c">'+(hard.length&&!practice?'<button type="button" class="btn ghost wc-redo">Practise these again</button>':'')+'<button type="button" class="btn primary wc-read">'+((na&&rec.dataset.kind!=='read')||practice?svg.mic+'Now read it all':svg.ok+'Save my reading')+'</button></div></div>';
     box.querySelectorAll('.wc-chip').forEach(c=>c.onclick=()=>say(c.textContent,.55));
     const r=box.querySelector('.wc-redo');if(r)r.onclick=()=>{close();open(true);};
-    box.querySelector('.wc-read').onclick=async()=>{const b=box.querySelector('.wc-read');b.disabled=true;b.textContent='Saving recording…';if(recordingResult)await recordingResult;if(!alive)return;if(!practice)audioField().value=audio;close();if(!practice&&(audio||!na||rec.dataset.kind==='read')){saveReading(all.filter((w,i)=>got[i]>0).join(' '),secs,audio);return;}const m=rec.querySelector('[data-rec-go]');if(m)m.focus();rec.scrollIntoView({block:'center',behavior:'smooth'});};
+    box.querySelector('.wc-read').onclick=async()=>{const b=box.querySelector('.wc-read');b.disabled=true;b.textContent='Saving recording…';if(recordingResult)await recordingResult;if(!alive)return;if(!practice&&!audio){b.disabled=false;b.textContent='Retry recording';let note=box.querySelector('[data-audio-error]');if(!note){note=document.createElement('p');note.className='wc-note';note.dataset.audioError='';box.querySelector('.wc-sum').append(note);}note.textContent='No complete recording was captured. Please retry so your teacher can hear this reading.';b.onclick=()=>{close();open(false);};return;}if(!practice){audioField().value=audio;if(val)val.value=resultValue;store.set(key,resultValue);drawGate(resultValue);}close();if(!practice&&(audio||!na||rec.dataset.kind==='read')){saveReading(all.filter((w,i)=>got[i]>0).join(' '),secs,audio);return;}const m=rec.querySelector('[data-rec-go]');if(m)m.focus();rec.scrollIntoView({block:'center',behavior:'smooth'});};
     if(!na&&!practice)say(pct>=80?'Great job! Your reading is done.':'Good work! Your reading is done.',.85);}
 
    if(practice){const prev=(store.get(key)||'').split('|')[1]||'';const hard=prev.split(' ').filter(Boolean);

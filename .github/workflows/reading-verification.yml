@@ -1,8 +1,8 @@
-name: Activity reading verification validation
+name: iPhone Word Coach regression validation
 
 on:
   push:
-    branches: [codex/activity-reading-verification]
+    branches: [codex/iphone-word-coach-fix]
   workflow_dispatch:
 
 permissions:
@@ -68,13 +68,13 @@ jobs:
         run: |
           git clean -fd -- public storage
           python3 tools/update_checker.py
-          python3 tools/make_update.py --from 2c60879ff8d0176c52d7562d1330529b57412be7 --name BULIG-Activity-Reading-Verification
+          python3 tools/make_update.py --from db2aede542cf6f7a1abdb9509c0ad58446785c0f --name BULIG-iPhone-Word-Coach-Fix
           python3 - <<'PY'
           from pathlib import Path
           import zipfile
-          p = Path('live-update/BULIG-Activity-Reading-Verification.zip')
+          p = Path('live-update/BULIG-iPhone-Word-Coach-Fix.zip')
           assert p.stat().st_size < 30000000
-          expected = {'app/actions.php','app/bootstrap.php','app/reading_verification.php','app/level1.php','app/views.php','app/staff_ui.php','app/account_delete.php','public/index.php','public/assets/coach.js','public/bulig-check.php','database/migrations/035_reading_verification.sql'}
+          expected = {'public/assets/coach.js','public/bulig-check.php'}
           with zipfile.ZipFile(p) as z:
               assert set(z.namelist()) == expected, z.namelist()
           print('Verified update contains only the intended recording and review files.')
@@ -82,8 +82,8 @@ jobs:
       - name: Keep tested update
         uses: actions/upload-artifact@v4
         with:
-          name: BULIG-Activity-Reading-Verification
-          path: live-update/BULIG-Activity-Reading-Verification.zip
+          name: BULIG-iPhone-Word-Coach-Fix
+          path: live-update/BULIG-iPhone-Word-Coach-Fix.zip
           if-no-files-found: error
           retention-days: 30
       - name: Keep test log

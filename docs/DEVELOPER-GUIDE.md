@@ -254,7 +254,10 @@ Audio is private, outside public/, served with authorization, byte ranges and no
 identification, voiceprints or camera. Notify families that reading microphone use records audio for their teacher.
 Word Coach records only the pupil phase, pauses for coaching speech, stops on close/pagehide, and limits a clip
 to ten minutes/6 MB. Data URLs share the existing offline answer queue and retry behavior.
-Safari's single-microphone path records audio without simultaneous recognition; no invented pronunciation percentage.
+Word Coach uses speech recognition whenever the API is present, including Safari/iPhone. Apple browsers use an
+explicit Start my reading tap after recording permission so recognition starts from a user gesture. Actual listening
+errors offer retry or explicit teacher-only review; browser identity never disables scoring. Interrupted/muted
+recordings are discarded and Save requests a fresh attempt rather than pretending evidence was captured.
 Missing/blocked audio is explicitly queued as missing, cannot be verified, and needs rereading/supervised follow-up.
 Legacy attempts are not retroactively recorded or penalized. Existing manually recorded oral answers also enter review.
 Use `python3 tests/run_tests.py`, `node --check public/assets/coach.js`, and Playwright `tests/reading_ui.py`.
