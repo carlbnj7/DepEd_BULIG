@@ -20,9 +20,11 @@ try:
   ctx=browser.new_context(permissions=['microphone'],viewport={'width':1440,'height':1000});ctx.add_cookies(cookies)
   page=ctx.new_page();page.goto(t.BASE+'?page=reading_reviews');page.wait_for_load_state('networkidle')
   assert page.get_by_role('heading',name='Reading verification').is_visible()
+  page.locator('.boot').wait_for(state='hidden')
   page.screenshot(path='tests/ui-preview/reading-review-desktop.png',full_page=True)
   phone=browser.new_context(viewport={'width':390,'height':844},is_mobile=True);phone.add_cookies(cookies);m=phone.new_page();m.goto(t.BASE+'?page=reading_reviews');m.wait_for_load_state('networkidle')
   assert m.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+  m.locator('.boot').wait_for(state='hidden')
   m.screenshot(path='tests/ui-preview/reading-review-phone.png',full_page=True)
   def harness(apple=False):
    page.goto(t.BASE+'?page=reading_reviews')
