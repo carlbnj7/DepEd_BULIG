@@ -253,7 +253,7 @@ when it meets the existing pass rule. A stale decision cannot act on the replace
 Audio is private, outside public/, served with authorization, byte ranges and no-store. No automatic speaker
 identification, voiceprints or camera. Notify families that reading microphone use records audio for their teacher.
 Word Coach records only the pupil phase, pauses for coaching speech, stops on close/pagehide, and limits a clip
-to four minutes/6 MB. Data URLs share the existing offline answer queue and retry behavior.
+to ten minutes/6 MB. Data URLs share the existing offline answer queue and retry behavior.
 Safari's single-microphone path records audio without simultaneous recognition; no invented pronunciation percentage.
 Missing/blocked audio is explicitly queued as missing, cannot be verified, and needs rereading/supervised follow-up.
 Legacy attempts are not retroactively recorded or penalized. Existing manually recorded oral answers also enter review.
