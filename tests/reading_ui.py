@@ -26,20 +26,32 @@ try:
   assert m.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
   m.locator('.boot').wait_for(state='hidden')
   m.screenshot(path='tests/ui-preview/reading-review-phone.png',full_page=True)
-  def harness(apple=False):
+  page.goto(t.BASE+'?page=dashboard');page.locator('.boot').wait_for(state='hidden')
+  assert page.locator('.rv-home').is_visible()
+  assert page.locator('.rv-home').bounding_box()['y'] > page.locator('.hm-head').bounding_box()['y']
+  page.screenshot(path='tests/ui-preview/teacher-home-compact.png',full_page=True)
+  def harness(apple=False,mode="success"):
    page.goto(t.BASE+'?page=reading_reviews')
    page.set_content('<form id="activity-form"><input name="activity_id" value="1"><div class="l2-card" data-n="1"><div data-wc="cat hat" data-kind="read"><input name="wc[1]" data-wc-val></div></div></form>')
    page.evaluate('''() => {
-    window.testTracks=[];window.readingDone=null;
+    window.testTracks=[];window.readingDone=null;window.recognitionStarts=0;window.recognitionGesture=false;
     const gum=navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
     navigator.mediaDevices.getUserMedia=async(...a)=>{const s=await gum(...a);testTracks.push(...s.getTracks());return s;};
     Object.defineProperty(window,'speechSynthesis',{value:null,configurable:true});
-    window.SpeechRecognition=class {start(){setTimeout(()=>{if(!this.off){this.onresult?.({results:[[{transcript:'cat hat'}]]});}},1600);}stop(){this.off=true;this.onend?.();}abort(){this.off=true;}};
+    window.SpeechRecognition=class {start(){window.recognitionStarts++;window.recognitionGesture=navigator.userActivation.isActive;setTimeout(()=>{if(!this.off){this.onresult?.({results:[[{transcript:'cat hat'}]]});}},1600);}stop(){this.off=true;this.onend?.();}abort(){this.off=true;}};
     document.querySelector('[data-wc]').addEventListener('wc:done',e=>{window.readingDone=e.detail;});
    }''')
+   if mode=='error':page.evaluate("() => {window.SpeechRecognition=class {start(){setTimeout(()=>this.onerror?.({error:'not-allowed'}),30);}abort(){}};}")
+   if mode=='throw':page.evaluate("() => {window.SpeechRecognition=class {start(){throw new Error('start failed');}abort(){}};}")
+   if mode=='missing':page.evaluate("window.SpeechRecognition=null;window.webkitSpeechRecognition=null")
+   if mode=='late-mute':page.evaluate("() => {const stop=MediaRecorder.prototype.stop;MediaRecorder.prototype.stop=function(){stop.call(this);testTracks.forEach(t=>t.dispatchEvent(new Event('mute')));};}")
    if apple:page.evaluate("Object.defineProperty(navigator,'userAgent',{value:'iPhone Safari/605.1',configurable:true})")
    page.add_script_tag(url=t.BASE+'assets/coach.js')
    page.locator('.wc-go').click();page.locator('.wc-skip').click()
+   if apple and mode!='missing':
+    page.locator('.wc-start-reading').wait_for(state='visible')
+    if mode=='paused-mute':page.evaluate("testTracks.forEach(t=>t.dispatchEvent(new Event('mute')))")
+    page.locator('.wc-start-reading').click()
   harness()
   page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
   page.locator('.wc-ov').wait_for(state='detached')
@@ -51,12 +63,46 @@ try:
   harness();page.locator('[data-recording-note]').filter(has_text='Recording for your teacher').wait_for(state='visible');page.locator('.wc-x').click();assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
   assert page.locator('[data-coach-audio]').input_value()==''
   print('PASS: cancel discards recording and releases microphone.')
-  harness(True);page.locator('.wc-fin').wait_for(state='visible');page.wait_for_timeout(1100);page.locator('.wc-fin').click();page.locator('.wc-read').click()
+  harness(True)
+  page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
   page.locator('.wc-ov').wait_for(state='detached')
   assert page.locator('[data-coach-audio]').input_value().startswith('data:audio/')
-  assert page.locator('[data-wc-val]').input_value()=='na|'
+  assert page.locator('[data-wc-val]').input_value()=='100|'
+  assert page.evaluate('recognitionStarts>0 && recognitionGesture')
   assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
-  print('PASS: Safari path records real audio without inventing a pronunciation percentage (device testing still required).')
+  print('PASS: iPhone user agent enables scoring plus real recording; recognition starts from a tap. This is a Chromium harness, not a physical iPhone test.')
+  for mode in ['late-mute','paused-mute']:
+   harness(True,mode)
+   page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
+   page.locator('.wc-ov').wait_for(state='detached')
+   assert page.locator('[data-coach-audio]').input_value().startswith('data:audio/')
+   assert page.locator('[data-wc-val]').input_value()=='100|'
+   assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
+  print('PASS: completed audio survives late mute events and paused preparation interruptions without disabling scoring.')
+  for mode in ['error','throw','missing']:
+   harness(True,mode)
+   page.locator('.wc-retry-listen').wait_for(state='visible')
+   assert page.locator('.wc-fin').count()==0
+   assert page.locator('[data-wc-val]').input_value()==''
+   if mode=='throw':
+    page.locator('.wc-retry-listen').click();page.locator('.wc-skip').wait_for(state='visible')
+    assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
+    page.locator('.wc-x').click()
+   else:
+    page.locator('.wc-audio-only').click();page.wait_for_timeout(1100)
+    page.locator('.wc-fin').click();page.locator('.wc-read').click();page.locator('.wc-ov').wait_for(state='detached')
+    assert page.locator('[data-wc-val]').input_value()=='na|'
+    assert page.locator('[data-coach-audio]').input_value().startswith('data:audio/')
+   assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
+  print('PASS: permission errors, synchronous start failure and missing API offer retry; teacher-only review is explicit and unscored.')
+  harness(True)
+  page.evaluate("testTracks[0].dispatchEvent(new Event('mute'))")
+  page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
+  page.locator('[data-audio-error]').wait_for(state='visible')
+  assert page.locator('[data-coach-audio]').input_value()==''
+  assert page.evaluate('readingDone===null && testTracks.every(t=>t.readyState==="ended")')
+  print('PASS: interrupted recording cannot masquerade as valid evidence or be submitted with the score.')
+  page.locator('.wc-x').click()
   browser.close()
 finally:
  server.terminate();server.wait(timeout=10)
