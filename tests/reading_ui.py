@@ -36,7 +36,7 @@ try:
     document.querySelector('[data-wc]').addEventListener('wc:done',e=>{window.readingDone=e.detail;});
    }''')
    if apple:page.evaluate("Object.defineProperty(navigator,'userAgent',{value:'iPhone Safari/605.1',configurable:true})")
-   page.add_script_tag(path='public/assets/coach.js')
+   page.add_script_tag(url=t.BASE+'assets/coach.js')
    page.locator('.wc-go').click();page.locator('.wc-skip').click()
   harness()
   page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
