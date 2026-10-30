@@ -40,16 +40,18 @@ try:
    page.locator('.wc-go').click();page.locator('.wc-skip').click()
   harness()
   page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
-  page.wait_for_function('window.readingDone && document.querySelector("[data-coach-audio]").value.startsWith("data:audio/")')
+  page.locator('.wc-ov').wait_for(state='detached')
+  assert page.locator('[data-coach-audio]').input_value().startswith('data:audio/')
   assert page.locator('[data-wc-val]').input_value()=='100|'
   assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
   assert page.evaluate('readingDone.audio.length>200')
   print('PASS: actual browser recording is saved with scored Word Coach attempt and microphone stops.')
-  harness();page.wait_for_function('testTracks.length>0');page.locator('.wc-x').click();page.wait_for_function('testTracks.every(t=>t.readyState==="ended")')
+  harness();page.locator('[data-recording-note]').filter(has_text='Recording for your teacher').wait_for(state='visible');page.locator('.wc-x').click();assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
   assert page.locator('[data-coach-audio]').input_value()==''
   print('PASS: cancel discards recording and releases microphone.')
   harness(True);page.locator('.wc-fin').wait_for(state='visible');page.wait_for_timeout(1100);page.locator('.wc-fin').click();page.locator('.wc-read').click()
-  page.wait_for_function('window.readingDone && document.querySelector("[data-coach-audio]").value.startsWith("data:audio/")')
+  page.locator('.wc-ov').wait_for(state='detached')
+  assert page.locator('[data-coach-audio]').input_value().startswith('data:audio/')
   assert page.locator('[data-wc-val]').input_value()=='na|'
   assert page.evaluate('testTracks.every(t=>t.readyState==="ended")')
   print('PASS: Safari path records real audio without inventing a pronunciation percentage (device testing still required).')
