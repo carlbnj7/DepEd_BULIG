@@ -7,6 +7,7 @@ function action():void{
  check_csrf();$action=(string)($_POST['action']??'');unset($_SESSION['notif_live']);
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
+ if($action==='reading_decision')rv_action();
  if(in_array($action,['message_preview','message_send'],true))messages_action($action);
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if(str_starts_with($action,'rc_'))rc_action($action);
@@ -214,7 +215,7 @@ function action():void{
     $score=$ok?1:0;$max=1;$outcome=$ok?'correct':'recorded';
    }
    $status=$ok?'completed':'retry';$when=offline_answer_time()??date('Y-m-d H:i:s');
-   q('INSERT INTO activity_completion(pupil_id,activity_id,response,drawing,transcript,prompt_snapshot,activity_revision,status,submitted_at,outcome,score,max_score) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript),prompt_snapshot=VALUES(prompt_snapshot),activity_revision=VALUES(activity_revision),status=VALUES(status),submitted_at=VALUES(submitted_at),outcome=VALUES(outcome),score=VALUES(score),max_score=VALUES(max_score)',[$pid,$aid,$answer,$drawing?:null,$transcript?:null,level2_prompt_snapshot($a),$a['revision'],$status,$when,$outcome,$score,$max]);
+   q('INSERT INTO activity_completion(pupil_id,activity_id,response,drawing,transcript,prompt_snapshot,activity_revision,status,submitted_at,outcome,score,max_score) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript),prompt_snapshot=VALUES(prompt_snapshot),activity_revision=VALUES(activity_revision),status=VALUES(status),submitted_at=VALUES(submitted_at),outcome=VALUES(outcome),score=VALUES(score),max_score=VALUES(max_score),audio_path=NULL,audio_paths=NULL,rubric_scores=NULL,reviewed_by=NULL,reviewed_at=NULL',[$pid,$aid,$answer,$drawing?:null,$transcript?:null,level2_prompt_snapshot($a),$a['revision'],$status,$when,$outcome,$score,$max]);
    if(!empty($_POST['audio_card'])&&is_array($_POST['audio_card'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,9,7],true)&&l2a_audio_supported()&&($ap=l2a_save_audios($_POST['audio_card'],$pid,$aid)))q('UPDATE activity_completion SET audio_paths=? WHERE pupil_id=? AND activity_id=?',[json_encode($ap),$pid,$aid]);
    if($apath)q('UPDATE activity_completion SET audio_path=? WHERE pupil_id=? AND activity_id=?',[$apath,$pid,$aid]);
    if(offline_answer_time())q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$pid,'offline_answer','activity '.$aid.' at '.$when]);
@@ -227,6 +228,7 @@ function action():void{
    /* Stars (v181): a lesson activity below 2 stars (80%) is not finished. It opens again for a fresh try (wrong tries reset). */
    $gate=null;if($ok&&($a['phase']??'')==='learn'&&function_exists('completion_frac')&&($fr=completion_frac(one('SELECT score,max_score FROM activity_completion WHERE id=?',[$cid])))!==null&&round($fr*100,6)<STAR_PASS){
     $gate=$fr;$ok=false;q("UPDATE activity_completion SET status='retry' WHERE id=?",[$cid]);unset($_SESSION['ck'][$aid]);}
+   rv_capture($cid,$a);
    if($ok){q('DELETE FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);update_learning($pid,$aid);}
    db()->commit();$message=$ok?($exact?'Correct! Great work.':($mode==='none'?'You’re ready for the next step.':($mode==='perform'?'Activity completed. Well done!':($oral?'Your answer is saved. Great speaking!':'Your response is saved. Thank you for sharing!')))):'Not quite yet. Listen again and give it another try.';
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
@@ -304,6 +306,7 @@ function submission_reply(array $a,bool $ok,string $message,int $xp,string $chec
  if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>$ok,'message'=>$message,'xp'=>$xp,'url'=>$url]+($check!==''?['check'=>$check]:[]));exit;}
  flash($message);go($url);
 }
+
 
 
 

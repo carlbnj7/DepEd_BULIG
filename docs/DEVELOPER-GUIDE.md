@@ -236,3 +236,27 @@ George is one character for everyone, with five poses in `public/assets/images/c
 - Finished lessons, finished levels, the new-level gate, level up, rank up and head start (`pupil_fun.php`, `reader_level.php`).
 
 The pupil's own boy or girl stays on the activity screens, the reading ladder and the hello after signing in.
+
+
+
+## Activity reading verification (035)
+
+Import `database/migrations/035_reading_verification.sql`, then upload the update.
+`reading_verifications` keeps immutable attempt snapshots, per-card audio paths and teacher decisions.
+Pupils keep immediate scores and XP under existing pass rules. Pending verification does not hold progress.
+Teacher Home and Teaching > Reading verification list only the teacher's assigned pupils, 20 attempts per page.
+Rejecting requires a reason, locks the pupil and attempt, reverses that activity's XP once, sets its score to zero
+and status to retry, and clears the affected lesson completion. Earlier/later answers remain intact.
+The existing path/post-test gates require the reopened lesson before advancing again. No starting-level reset.
+A fresh submission must contain fresh audio, makes a new pending attempt and can earn back the actual reversed XP
+when it meets the existing pass rule. A stale decision cannot act on the replacement attempt.
+Audio is private, outside public/, served with authorization, byte ranges and no-store. No automatic speaker
+identification, voiceprints or camera. Notify families that reading microphone use records audio for their teacher.
+Word Coach records only the pupil phase, pauses for coaching speech, stops on close/pagehide, and limits a clip
+to four minutes/6 MB. Data URLs share the existing offline answer queue and retry behavior.
+Safari's single-microphone path records audio without simultaneous recognition; no invented pronunciation percentage.
+Missing/blocked audio is explicitly queued as missing, cannot be verified, and needs rereading/supervised follow-up.
+Legacy attempts are not retroactively recorded or penalized. Existing manually recorded oral answers also enter review.
+Use `python3 tests/run_tests.py`, `node --check public/assets/coach.js`, and Playwright `tests/reading_ui.py`.
+Browser tests use actual MediaRecorder with fake microphone input and deterministic speech callbacks; actual iPhone
+and Android microphone/recognition coexistence still needs a device pilot before broad classroom rollout.
