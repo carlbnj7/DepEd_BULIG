@@ -37,8 +37,8 @@ try:
     window.SpeechRecognition=class {start(){window.recognitionStarts++;window.recognitionGesture=navigator.userActivation.isActive;setTimeout(()=>{if(!this.off){this.onresult?.({results:[[{transcript:'cat hat'}]]});}},1600);}stop(){this.off=true;this.onend?.();}abort(){this.off=true;}};
     document.querySelector('[data-wc]').addEventListener('wc:done',e=>{window.readingDone=e.detail;});
    }''')
-   if mode=='error':page.evaluate("window.SpeechRecognition=class {start(){setTimeout(()=>this.onerror?.({error:'not-allowed'}),30);}abort(){}}")
-   if mode=='throw':page.evaluate("window.SpeechRecognition=class {start(){throw new Error('start failed');}abort(){}}")
+   if mode=='error':page.evaluate("() => {window.SpeechRecognition=class {start(){setTimeout(()=>this.onerror?.({error:'not-allowed'}),30);}abort(){}};}")
+   if mode=='throw':page.evaluate("() => {window.SpeechRecognition=class {start(){throw new Error('start failed');}abort(){}};}")
    if mode=='missing':page.evaluate("window.SpeechRecognition=null;window.webkitSpeechRecognition=null")
    if apple:page.evaluate("Object.defineProperty(navigator,'userAgent',{value:'iPhone Safari/605.1',configurable:true})")
    page.add_script_tag(url=t.BASE+'assets/coach.js')
