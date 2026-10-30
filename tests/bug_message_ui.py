@@ -38,10 +38,28 @@ try:
   _,reporturl,_=p.req('index.php',{'action':'bug_report_submit','note':'The speaker did not start.','csrf':p.token('?page=bug_report')})
   rid=urllib.parse.parse_qs(urllib.parse.urlsplit(reporturl).query)['id'][0]
   a.req('index.php',{'action':'bug_report_update','id':rid,'status':'processing','reply':'We are checking the sound. Thank you for telling us.','version':'0','csrf':a.token('?page=bugs')})
+  page.goto(t.BASE+'?page=bug_report&id='+rid);page.wait_for_load_state('networkidle')
+  conversation=page.locator('.bug-conversation').bounding_box();moderation=page.locator('.bug-moderation').bounding_box()
+  assert conversation and moderation and conversation['x']+conversation['width']<=moderation['x']+2
+  assert page.locator('input[name=deduct_xp]').count()==0
+  assert page.get_by_text('Automatic false-report deduction: 10 XP').is_visible()
+  page.screenshot(path='tests/ui-preview/bug-panels-desktop.png',full_page=True)
+  admin_phone=browser.new_context(viewport={'width':390,'height':844},is_mobile=True,has_touch=True,reduced_motion='reduce');admin_phone.add_cookies(cookies(a));ap=admin_phone.new_page();ap.goto(t.BASE+'?page=bug_report&id='+rid);ap.wait_for_load_state('networkidle')
+  conversation=ap.locator('.bug-conversation').bounding_box();moderation=ap.locator('.bug-moderation').bounding_box()
+  assert conversation and moderation and moderation['y']>=conversation['y']+conversation['height']-2
+  assert ap.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+  ap.screenshot(path='tests/ui-preview/bug-panels-phone.png',full_page=True)
   m.goto(t.BASE+'?page=bug_report&id='+rid);m.locator('.bug-update-dialog').wait_for(state='visible');assert m.locator('.bug-update-dialog').get_by_text('We are checking the sound. Thank you for telling us.').is_visible()
   m.locator('.bug-update-dialog').get_by_role('button',name='Got it').click();m.locator('.bug-update-dialog').wait_for(state='detached')
+  pid=int(acc['pupil1']['uid']);t.mysql('-e',f'INSERT INTO pupil_xp(pupil_id,total) VALUES({pid},25) ON DUPLICATE KEY UPDATE total=25',db=t.DB['name'])
+  ap.select_option('[name=status]','rejected');ap.fill('[name=reply]','Reviewed with the teacher: this was a confirmed false report.');ap.check('[name=confirm_false]');ap.on('dialog',lambda dialog:dialog.accept());ap.get_by_role('button',name='Save and notify').click();ap.wait_for_load_state('networkidle')
+  balance=t.mysql('-N','-e',f'SELECT total FROM pupil_xp WHERE pupil_id={pid}',db=t.DB['name']).stdout.strip();assert balance=='15',balance
+  m.reload();m.locator('.bug-update-dialog').wait_for(state='visible');assert 'XP deducted: 10.' in m.locator('.bug-update-dialog').inner_text()
+  m.locator('.bug-update-dialog').get_by_role('button',name='Got it').click();m.locator('.bug-update-dialog').wait_for(state='detached')
+  print('PASS: desktop/mobile bug panels, fixed server-side XP deduction through the real form, and rejection popup.')
   print('PASS: desktop panels, phone list/detail layout, no horizontal overflow, and actual report-update popup acknowledgment.')
   browser.close()
 finally:
  server.terminate();server.wait(timeout=10)
  t.mysql('-e',f"DROP DATABASE IF EXISTS `{t.DB['name']}`")
+

@@ -1,5 +1,6 @@
 <?php
 function bugflow_ready():bool{static $r;if($r===null){try{$r=(bool)one("SHOW TABLES LIKE 'bug_report_updates'");}catch(Throwable $e){$r=false;}}return $r;}
+const BUG_FALSE_REPORT_XP=10;
 const BUG_STATES=['open'=>'Open','processing'=>'Processing','fixed'=>'Fixed','rejected'=>'Rejected'];
 /** New reports have a stable reporter ID; legacy notifications are never guessed from names. */
 function bugflow_create(array $u,string $summary,string $context):int{
@@ -16,7 +17,9 @@ function bugflow_notify(int $report,int $admin,string $status,string $body,int $
 /** Caller is an authenticated admin. Each status update uses an optimistic version and report row lock. */
 function bugflow_apply(array $u,int $id,string $status,string $reply,int $requested=0,?int $version=null):void{
  if(!isset(BUG_STATES[$status]))fail('Choose a valid report status.');
- if(mb_strlen($reply)>2000||$requested<0||$requested>100)fail('Replies may contain 2,000 characters and deductions must be between 0 and 100 XP.');
+ if(mb_strlen($reply)>2000)fail('Replies may contain up to 2,000 characters.');
+ // The server determines the penalty; submitted amounts cannot disable or increase it.
+ $requested=BUG_FALSE_REPORT_XP;
  db()->beginTransaction();try{
   $r=one('SELECT * FROM bug_reports WHERE id=? FOR UPDATE',[$id]);if(!$r)fail('Report not found.',404);
   $last=(int)val('SELECT COALESCE(MAX(id),0) FROM bug_report_updates WHERE report_id=?',[$id]);
@@ -79,29 +82,38 @@ function bugflow_poll():never{
 }
 function bugflow_admin(array $u):void{
  $show=(string)($_GET['show']??'open');if(!isset(BUG_STATES[$show]))$show='open';
- echo '<div class="pagehead"><div><span class="eyebrow">SYSTEM</span><h1>Bug reports</h1><p>Review reports, reply to the reporter, or update their status.</p></div></div><nav class="buttonrow">';foreach(BUG_STATES as $k=>$label)echo '<a class="btn '.($show===$k?'primary':'secondary').'" href="?page=bugs&show='.$k.'">'.$label.'</a>';echo '</nav>';
- echo '<div class="buttonrow"><a class="btn secondary" href="?page=bugs_csv&show='.e($show).'">Download '.e(BUG_STATES[$show]).' reports (CSV)</a><a class="btn secondary" href="?page=bugs_csv&show=all">Download all</a><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn secondary" data-confirm="Mark all open and processing reports as fixed and notify their reporters?">Mark all as fixed</button></form></div>';
+ echo '<div class="pagehead"><div><span class="eyebrow">SYSTEM</span><h1>Bug reports</h1><p>Review reports, reply to the reporter, or update their status.</p></div></div><nav class="buttonrow bug-filters">';foreach(BUG_STATES as $k=>$label)echo '<a class="btn '.($show===$k?'primary':'secondary').'" href="?page=bugs&show='.$k.'">'.$label.'</a>';echo '</nav>';
+ echo '<div class="buttonrow bug-toolbar"><a class="btn secondary" href="?page=bugs_csv&show='.e($show).'">Download '.e(BUG_STATES[$show]).' reports (CSV)</a><a class="btn secondary" href="?page=bugs_csv&show=all">Download all</a><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn secondary" data-confirm="Mark all open and processing reports as fixed and notify their reporters?">Mark all as fixed</button></form></div>';
  $p=max(1,min(100000,(int)($_GET['p']??1)));$list=rows('SELECT b.*,u.name,u.public_id FROM bug_reports b JOIN users u ON u.id=b.reporter_id WHERE b.status=? ORDER BY b.id DESC LIMIT 30 OFFSET '.(($p-1)*30),[$show]);
- foreach($list as $r)echo '<article class="card"><span class="eyebrow">Report #'.(int)$r['id'].' · '.e($r['created_at']).'</span><h2>'.e($r['summary']).'</h2><p>'.e($r['name'].' · '.$r['public_id']).'</p><a class="btn secondary" href="?page=bug_report&id='.(int)$r['id'].'">Review report</a></article>';
- if(!$list)echo '<p>No '.$show.' reports.</p>';echo '<div class="buttonrow">'.($p>1?'<a class="btn secondary" href="?page=bugs&show='.$show.'&p='.($p-1).'">Previous</a>':'').(count($list)===30?'<a class="btn secondary" href="?page=bugs&show='.$show.'&p='.($p+1).'">Next</a>':'').'</div>';
+ echo '<div class="bug-report-grid">';foreach($list as $r)echo '<article class="card bug-report-tile"><span class="eyebrow">Report #'.(int)$r['id'].' · '.e($r['created_at']).'</span><h2>'.e($r['summary']).'</h2><p>'.e($r['name'].' · '.$r['public_id']).'</p><a class="btn secondary" href="?page=bug_report&id='.(int)$r['id'].'">Review report</a></article>';
+ echo '</div>';if(!$list)echo '<section class="card bug-empty"><p>No '.$show.' reports.</p></section>';echo '<div class="buttonrow">'.($p>1?'<a class="btn secondary" href="?page=bugs&show='.$show.'&p='.($p-1).'">Previous</a>':'').(count($list)===30?'<a class="btn secondary" href="?page=bugs&show='.$show.'&p='.($p+1).'">Next</a>':'').'</div>';
 }
 function bugflow_view(array $u):void{
  if(!bugflow_ready()){echo '<section class="card"><h1>Bug reports are being updated</h1><p>Please check back shortly.</p></section>';return;}
  $admin=$u['role']==='admin';$id=(int)($_GET['id']??0);
  if(!$id){
-  if($admin){go('?page=bugs');}
-  echo '<section class="card"><h1>My bug reports</h1><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_report_submit"><label>What is not working?<textarea name="note" rows="4" maxlength="2000" required></textarea></label><button class="btn primary">Report a problem</button></form></section>';
-  foreach(rows('SELECT id,summary,status FROM bug_reports WHERE reporter_id=? ORDER BY id DESC LIMIT 100',[$u['id']]) as $r)echo '<article class="card"><span class="eyebrow">'.e(BUG_STATES[$r['status']]).'</span><h2><a href="?page=bug_report&id='.(int)$r['id'].'">#'.(int)$r['id'].' · '.e($r['summary']).'</a></h2></article>';return;
+  if($admin)go('?page=bugs');
+  echo '<section class="card"><h1>My bug reports</h1><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_report_submit"><label>What is not working?<textarea name="note" rows="4" maxlength="2000" required></textarea></label><button class="btn primary">Report a problem</button></form></section><div class="bug-report-grid">';
+  foreach(rows('SELECT id,summary,status FROM bug_reports WHERE reporter_id=? ORDER BY id DESC LIMIT 100',[$u['id']]) as $r)echo '<article class="card bug-report-tile"><span class="bug-status status-'.e($r['status']).'">'.e(BUG_STATES[$r['status']]).'</span><h2><a href="?page=bug_report&id='.(int)$r['id'].'">#'.(int)$r['id'].' · '.e($r['summary']).'</a></h2></article>';echo '</div>';return;
  }
  $r=one('SELECT b.*,u.name,u.role FROM bug_reports b JOIN users u ON u.id=b.reporter_id WHERE b.id=?'.($admin?'':' AND b.reporter_id=?'),$admin?[$id]:[$id,$u['id']]);if(!$r)fail('Report not found.',404);
- echo '<section class="card"><span class="eyebrow">Report #'.$id.' · '.e(BUG_STATES[$r['status']]).'</span><h1>'.e($r['summary']).'</h1><p>'.nl2br(e($r['context'])).'</p><p>Reported by '.e($r['name']).'</p>'.((int)$r['deducted_xp']?'<p>XP deducted for this report: '.(int)$r['deducted_xp'].'</p>':'').'</section>';
- $last=(int)val('SELECT COALESCE(MAX(id),0) FROM bug_report_updates WHERE report_id=?',[$id]);
- foreach(rows('SELECT * FROM bug_report_updates WHERE report_id=? ORDER BY id DESC LIMIT 100',[$id]) as $e)echo '<article class="card"><span class="eyebrow">School administrator · '.e(BUG_STATES[$e['status']]).' · '.e($e['created_at']).'</span><p>'.nl2br(e($e['body'])).'</p></article>';
- if($admin){echo '<section class="card"><h2>Update or reply</h2><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_report_update"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="version" value="'.$last.'"><label>Status<select name="status">';foreach(BUG_STATES as $k=>$label)if($r['status']!=='rejected'||$k==='rejected')echo '<option value="'.$k.'"'.($r['status']===$k?' selected':'').'>'.$label.'</option>';
-  echo '</select></label><label>Reply or rejection reason<textarea name="reply" rows="4" maxlength="2000"></textarea></label>';
-  if($r['status']!=='rejected')echo '<label>XP to deduct only if rejecting a confirmed false report (0–100)<input name="deduct_xp" type="number" min="0" max="100" value="0"'.($r['role']!=='pupil'?' readonly':'').'></label><p>Deductions apply once, up to available earned XP. Teachers have no pupil XP. Reader level and rank may decrease because they use XP. Activity scores and answer history are unchanged.</p><label><input type="checkbox" name="confirm_false" value="1"> I reviewed this report and confirm the rejection and selected XP deduction.</label>';
-  echo '<button class="btn primary" data-confirm="Notify the reporter of this update? A confirmed rejection may deduct the selected XP once.">Save and notify</button></form></section>';}
+ $last=(int)val('SELECT COALESCE(MAX(id),0) FROM bug_report_updates WHERE report_id=?',[$id]);$updates=rows('SELECT * FROM bug_report_updates WHERE report_id=? ORDER BY id DESC LIMIT 100',[$id]);
+ echo '<div class="bug-detail-header"><a class="btn secondary" href="'.($admin?'?page=bugs':'?page=bug_report').'">'.icon('arrow').'Back to reports</a><span class="bug-status status-'.e($r['status']).'">'.e(BUG_STATES[$r['status']]).'</span></div><div class="bug-detail-layout'.($admin?'':' reporter-view').'"><div class="bug-conversation"><section class="card bug-report-summary"><span class="eyebrow">REPORT #'.$id.' · '.e($r['created_at']).'</span><h1>'.e($r['summary']).'</h1><p class="muted">Reported by '.e($r['name']).'</p><div class="bug-report-context">'.nl2br(e($r['context'])).'</div>'.((int)$r['deducted_xp']?'<p class="bug-penalty-notice">XP deducted for this report: <strong>'.(int)$r['deducted_xp'].'</strong></p>':'').'</section><section class="card bug-thread"><h2>Updates and replies</h2>';
+ if(!$updates)echo '<p class="muted">No updates yet. Replies and status changes will appear here.</p>';
+ foreach($updates as $e)echo '<article class="bug-thread-entry"><div class="bug-update-meta"><strong>School administrator</strong><span class="bug-status status-'.e($e['status']).'">'.e(BUG_STATES[$e['status']]).'</span></div><time class="muted">'.e($e['created_at']).'</time><p>'.nl2br(e($e['body'])).'</p></article>';
+ echo '</section></div>';
+ if($admin){echo '<aside class="card bug-moderation" aria-label="Update report"><h2>Update report</h2><p class="muted">Change the status or send a reply.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_report_update"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="version" value="'.$last.'"><label for="bug-status">Status<select id="bug-status" name="status">';foreach(BUG_STATES as $k=>$label)if($r['status']!=='rejected'||$k==='rejected')echo '<option value="'.$k.'"'.($r['status']===$k?' selected':'').'>'.$label.'</option>';
+  echo '</select></label><label for="bug-reply">Reply or rejection reason<textarea id="bug-reply" name="reply" rows="6" maxlength="2000" placeholder="Explain the update to the reporter."></textarea></label>';
+  if($r['status']!=='rejected'){
+   if($r['role']==='pupil')echo '<div class="bug-penalty-notice"><strong>Automatic false-report deduction: '.BUG_FALSE_REPORT_XP.' XP</strong><p>Applies only when you reject a confirmed false report. It is capped at available earned XP and applied once. XP-based reader level/rank may decrease; lesson scores stay unchanged.</p></div>';
+   else echo '<div class="bug-penalty-notice">This reporter is a teacher. No pupil XP will be deducted.</div>';
+   echo '<label class="bug-confirm"><input type="checkbox" name="confirm_false" value="1"><span>I reviewed this report and confirm the rejection and automatic XP deduction if I select Rejected.</span></label>';
+  }else echo '<div class="bug-penalty-notice"><strong>Report closed</strong><p>Recorded deduction: '.(int)$r['deducted_xp'].' XP. Further replies will not deduct again.</p></div>';
+  echo '<button class="btn primary" data-confirm="Send this update? Rejecting a confirmed false pupil report automatically deducts up to '.BUG_FALSE_REPORT_XP.' XP once.">Save and notify</button></form></aside>';
+ }
+ echo '</div>';
 }
+
 function bugflow_legacy_fixed(array $u,bool $all):bool{
  if(!bugflow_ready())return false;
  if($all){foreach(rows("SELECT id FROM bug_reports WHERE status IN ('open','processing')") as $r)bugflow_apply($u,(int)$r['id'],'fixed','The reported issue has been marked as fixed.');return false;}
@@ -119,3 +131,4 @@ function bugflow_csv(array $u):never{
  if(!$filter||in_array($show,['open','fixed'],true))foreach(rows("SELECT * FROM notifications WHERE user_id=? AND kind IN ('bug','bugfixed') AND id NOT IN (SELECT notification_id FROM bug_report_links)".($filter?' AND kind=?':'').' ORDER BY id DESC',$filter?[$u['id'],$show==='fixed'?'bugfixed':'bug']:[$u['id']]) as $n)$write([$n['created_at'],$n['title'],$n['kind']==='bugfixed'?'Fixed':'Open',$n['body'],'Earlier report',0,'Notification #'.$n['id']]);
  fclose($out);exit;
 }
+
