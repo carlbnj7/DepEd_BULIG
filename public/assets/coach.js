@@ -66,13 +66,15 @@
   return false;};
 
  /* One listen: resolves with the transcripts, '' when nothing was heard, or null when this device cannot listen */
- const listen=()=>new Promise(res=>{if(!Rec){res(null);return;}let r;try{r=new Rec();}catch(e){res(null);return;}
-  r.lang='en-US';r.interimResults=false;r.maxAlternatives=5;r.continuous=false;let out=[],done=false;
-  const fin=v=>{if(done)return;done=true;try{r.abort();}catch(e){}res(v);};
+ const listen=signal=>new Promise(res=>{if(!Rec){res(null);return;}let r;try{r=new Rec();}catch(e){res(null);return;}
+  r.lang='en-US';r.interimResults=false;r.maxAlternatives=5;r.continuous=false;let out=[],done=false,timer=null;
+  const cancel=()=>fin(null);
+  const fin=v=>{if(done)return;done=true;clearTimeout(timer);signal.removeEventListener('abort',cancel);try{r.abort();}catch(e){}res(v);};
+  if(signal.aborted){fin(null);return;}signal.addEventListener('abort',cancel,{once:true});
   r.onresult=e=>{for(const x of e.results)for(const a of x)out.push(a.transcript);};
   r.onerror=e=>{fin(['not-allowed','service-not-allowed','network','audio-capture','language-not-supported'].includes(e.error)?null:'');};
   r.onend=()=>fin(out.length?out:'');
-  try{r.start();}catch(e){fin(null);}setTimeout(()=>{try{r.stop();}catch(e){}},9000);});
+  try{r.start();}catch(e){fin(null);}if(!done)timer=setTimeout(()=>fin(out.length?out:''),9000);});
 
 
  /* Listen while the pupil reads: onText(all words heard in this listening session), onNew() when a new session starts
@@ -107,7 +109,7 @@
   const saveReading=(said,secs,audio)=>{rec.dispatchEvent(new CustomEvent('wc:done',{detail:{said,secs,audio}}));rec.scrollIntoView({block:'center',behavior:'smooth'});};
 
   function open(practice){
-   hush();const all=words(text);let recording=null,audio='',recordingResult=null;
+   hush();const attemptAbort=new AbortController();const all=words(text);let recording=null,audio='',recordingResult=null;
    const audioField=()=>{let f=rec.querySelector('[data-coach-audio]');if(!f){f=document.createElement('input');f.type='hidden';f.name='coach_audio['+(val?val.name.match(/\d+/)[0]:0)+']';f.dataset.coachAudio='';rec.append(f);}return f;};
    if(!practice){audioField().value='';if(val)val.value='';}
    const ov=document.createElement('div');ov.className='wc-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Word Coach with Max');
@@ -117,7 +119,7 @@
    txt.innerHTML=all.map((w,i)=>'<span class="wc-w" data-i="'+i+'">'+esc(w)+'</span>').join(' ');
    const W=[...txt.querySelectorAll('.wc-w')];let alive=true;
    let gen=0;const say=(t,r,cb,b)=>{const g=++gen;hush();if(recording)recording.pause();speak(t,r,()=>{if(g===gen&&alive){if(recording)recording.resume();if(cb)cb();}},b);};   // only the newest voice line moves the coach on
-   const close=()=>{alive=false;gen++;hush();if(recording)recording.cancel();window.removeEventListener('pagehide',close);if(stream)stream.stop();ov.remove();document.body.classList.remove('wc-open');};
+   const close=()=>{alive=false;gen++;attemptAbort.abort();hush();if(recording)recording.cancel();window.removeEventListener('pagehide',close);if(stream)stream.stop();ov.remove();document.body.classList.remove('wc-open');};
    $('.wc-x').addEventListener('click',close);window.addEventListener('pagehide',close,{once:true});
    const mark=(i0,i1,cls)=>{for(let i=i0;i<=i1;i++){W[i].classList.remove('cur','dim');if(cls)W[i].classList.add(cls);}};
    const focus=(i0,i1)=>{W.forEach(x=>x.classList.remove('cur'));for(let i=i0;i<=i1;i++)W[i].classList.add('cur');W[i0].scrollIntoView({block:'nearest',behavior:'smooth'});};
@@ -183,7 +185,7 @@
     const nextWord=()=>{if(!alive)return;if(at>=todo.length){summary();return;}const i=todo[at];focus(i,i);prog(at,todo.length,'Missed word');ask(i);};
     const ask=i=>{if(!Rec){got[i]=null;at++;nextWord();return;}
      box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<p class="wc-say">Read this word again.</p><div class="wc-row"><span class="wc-mic">'+svg.mic+'</span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span><b>Listening…</b>'+tries(i)+'</div></div>';
-     listen().then(alts=>{if(!alive)return;
+     listen(attemptAbort.signal).then(alts=>{if(!alive)return;
       if(alts===null||alts===''){box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<div class="wc-res y">I did not hear you. Say it a little louder.</div><div class="wc-row">'+tries(i)+'<button type="button" class="btn primary wc-again">'+svg.mic+'Say it</button></div></div>';box.querySelector('.wc-again').onclick=()=>ask(i);return;}
       if(heardOk(alts,[all[i]])){got[i]=practice?1:PTS[fails[i]]||0;paint(i,'mid');box.innerHTML='<img src="'+IMG('thumbs')+'" alt=""><div>'+step+big(i)+'<div class="wc-res g">Yes! You got it.</div></div>';at++;setTimeout(nextWord,1000);return;}
       fails[i]++;const heard=String(alts[0]||'').trim();
