@@ -27,7 +27,7 @@ function del_files(?string $avatar,int $id,bool $pupil):void{
 function del_unlink_actor(int $id):void{
  q('UPDATE audit_log SET actor_id=NULL WHERE actor_id=?',[$id]);
  q('UPDATE activity_completion SET reviewed_by=NULL WHERE reviewed_by=?',[$id]);
- q('UPDATE assessment_attempts SET reviewed_by=NULL WHERE reviewed_by=?',[$id]);
+ q('UPDATE assessment_attempts SET reviewed_by=NULL WHERE reviewed_by=?',[$id]);if(rv_ready())q('UPDATE reading_verifications SET reviewed_by=NULL WHERE reviewed_by=?',[$id]);
  del_q('content_issues','UPDATE content_issues SET acknowledged_by=NULL WHERE acknowledged_by=?',[$id]);
  del_q('reading_checks','UPDATE reading_checks SET changed_by=NULL WHERE changed_by=?',[$id]);
 }
@@ -36,6 +36,7 @@ function delete_pupil(int $id):void{
  $p=one("SELECT id,avatar_path FROM users WHERE id=? AND role='pupil'",[$id]);if(!$p)fail('Pupil not found.',404);
  $done='SELECT id FROM activity_completion WHERE pupil_id=?';
  q('DELETE FROM response_history WHERE completion_id IN('.$done.') OR actor_id=?',[$id,$id]);
+ if(rv_ready())q('DELETE FROM reading_verifications WHERE pupil_id=?',[$id]);
  foreach(['activity_completion','activity_drafts','assessment_attempts','reading_assessments','pupil_progress','pupil_badges','pupil_rewards','pupil_xp','xp_transactions','pupil_streaks','learning_days','pupil_level_assignments','pupil_sections','teacher_pupils','pupil_details','help_requests','reading_checks'] as $t)
   del_q($t,'DELETE FROM '.$t.' WHERE pupil_id=?',[$id]);
  del_user_rows($id);q('DELETE FROM pupils WHERE user_id=?',[$id]);
@@ -128,3 +129,4 @@ function account_delete_action(string $action):void{
   flash($t['name'].' was deleted.'.($moved?' Their '.$moved.' '.($moved===1?'pupil':'pupils').' moved to '.one('SELECT name FROM users WHERE id=?',[$to])['name'].'.':'').($gone?' Their '.count($gone).' '.(count($gone)===1?'pupil was':'pupils were').' deleted too.':''));go('?page=accounts');
  }
 }
+

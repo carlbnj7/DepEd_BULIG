@@ -12,7 +12,7 @@ function staff_nav_list(array $u):array{
  if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['story','comic','Story time'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['bug_report','alert','My bug reports'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile'],['settings','settings','Settings']];
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['leaderboard','star','Leaderboard'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
-   ['g','TEACHING'],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['bug_report','alert','My bug reports'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
+   ['g','TEACHING'],['reading_reviews','mic','Reading verification',['count'=>rv_count($tid)]],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['bug_report','alert','My bug reports'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
  return [['dashboard','home','Home'],['g','PEOPLE'],['schools','school','Schools'],['accounts','people','Teachers'],['directory','search','School directory'],['checkup','shield','Account check'],
   ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=bug_open_count((int)$u['id']))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['settings','settings','Settings'],['hr'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
 }
@@ -74,6 +74,7 @@ function staff_moved_note(array $u):string{
 /* ---------------- teacher: Home ---------------- */
 function teacher_home(array $u):void{
  $tid=(int)$u['id'];echo tf_defs().teacher_welcome($u);teacher_announcements();echo staff_moved_note($u);
+ if(rv_ready())echo '<section class="card"><h2>Reading verification</h2><p>'.rv_count($tid).' activity readings waiting for you. Pupils already have their scores.</p><a class="btn primary" href="?page=reading_reviews">Listen and review</a></section>';
  [$grade,$sid]=teacher_class_selection($u);
  $pupils=rows('SELECT u.*,p.grade_level,p.section,l.title level_title,a.level_id FROM users u JOIN pupils p ON p.user_id=u.id JOIN teacher_pupils t ON t.pupil_id=u.id LEFT JOIN pupil_level_assignments a ON a.pupil_id=u.id LEFT JOIN bulig_levels l ON l.id=a.level_id WHERE t.teacher_id=? AND p.grade_level=? AND (?=0 OR u.id IN(SELECT pupil_id FROM pupil_sections WHERE section_id=?)) ORDER BY u.name',[$tid,$grade,$sid,$sid]);
  $pending=(int)val("SELECT COUNT(*) FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id JOIN pupils p ON p.user_id=c.pupil_id WHERE t.teacher_id=? AND p.grade_level=? AND (?=0 OR c.pupil_id IN(SELECT pupil_id FROM pupil_sections WHERE section_id=?)) AND c.status IN ('completed','approved')",[$tid,$grade,$sid,$sid]);
@@ -357,6 +358,7 @@ function staff_pc_tip(array $u):string{
  if(!empty($_SESSION['pc_tip']))return '';$_SESSION['pc_tip']=1;$first=explode(' ',trim((string)$u['name']))[0];
  return '<template id="pc-tip" data-img="'.e(friend_img('kai','letter')).'" data-hi="'.e(($u['role']==='admin'?'Hi, ':'Hi, Teacher ').$first.'!').'"></template>';
 }
+
 
 
 

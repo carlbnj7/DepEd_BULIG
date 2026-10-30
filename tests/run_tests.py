@@ -36,7 +36,7 @@ KEEP = '--keep' in sys.argv
 LOG = os.path.join(HERE, 'last-run-server.log')
 
 # Every table a full install must have (the install file plus every update file).
-EXPECTED_TABLES = sorted('''bug_reports bug_report_links bug_report_updates admin_messages message_recipients account_id_history activities activity_completion activity_drafts admin_security admins answers assessment_attempts
+EXPECTED_TABLES = sorted('''reading_verifications bug_reports bug_report_links bug_report_updates admin_messages message_recipients account_id_history activities activity_completion activity_drafts admin_security admins answers assessment_attempts
  assessment_questions assessments audit_log badges bulig_levels content_issues grade_levels help_requests id_sequences
  learning_days lessons login_attempts modules notifications pupil_badges pupil_cards pupil_details pupil_level_assignments
  pupil_progress pupil_rewards pupil_sections pupil_streaks pupil_xp pupils push_queue push_subscriptions questions
@@ -396,6 +396,7 @@ def run_pages(acc):
         test_bug_reports(a)
     test_messages(acc)
     test_bug_workflow(acc)
+    test_reading_verification(acc)
 
 
 def jget(text):
@@ -1231,6 +1232,80 @@ def test_bug_workflow(acc):
     check('Message compose remains inside selected panel','msg-shell has-selection' in text and 'New message' in text)
 
 
+def test_reading_verification(acc):
+    """Real submission/review endpoints across all nine level IDs and every phase, isolated DB only."""
+    import base64
+    section('Activity reading verification')
+    q=lambda sql:mysql('-N','-e',sql,db=DB['name']).stdout.strip()
+    p,t,other=Client(),Client(),Client()
+    p.login('pupil',acc['pupil1']['id'],acc['pupil1']['pw'])
+    t.login('teacher',acc['teacher']['id'],acc['teacher']['pw'])
+    other.login('pupil',acc['pupil6']['id'],acc['pupil6']['pw'])
+    pid=int(acc['pupil1']['uid']);tid=int(q("SELECT id FROM users WHERE public_id='T2099001'"))
+    audio='data:audio/webm;base64,'+base64.b64encode(bytes.fromhex('1a45dfa3')+bytes(1000)).decode()
+    check('Teacher opens reading verification',t.req('?page=reading_reviews')[0]==200)
+    check('Pupil cannot open teacher reading queue',p.req('?page=reading_reviews')[0]==403)
+    for ix,(level,phase) in enumerate((lv,ph) for lv in [1,2,3,4,9,5,6,7,8] for ph in ['pre','learn','post']):
+        mod=q(f'SELECT id FROM modules WHERE level_id={level} ORDER BY grade_level IS NOT NULL,grade_level LIMIT 1')
+        grade=q(f'SELECT COALESCE(grade_level,1) FROM modules WHERE id={mod}')
+        q(f'UPDATE pupils SET grade_level={grade} WHERE user_id={pid}')
+        q(f'UPDATE pupil_level_assignments SET level_id={level} WHERE pupil_id={pid}')
+        q(f"INSERT INTO lessons(module_id,position,title,objectives,teacher_guide,source_pages) VALUES({mod},{-10000-ix},'Verification test {ix}','','','[]')")
+        lid=q('SELECT MAX(id) FROM lessons')
+        q(f"INSERT INTO activities(lesson_id,phase,position,title,type,instructions,prompt,narration,expected_text,xp_reward,source_page,source_excerpt,response_mode) VALUES({lid},'{phase}',1,'Read cat hat','reading','Read aloud.','cat hat','','cat hat',10,99999,'','answer')")
+        aid=q('SELECT MAX(id) FROM activities')
+        n=1 if level in [4,9] else 0
+        audio_key=f'coach_audio[{n}]'
+        data={'action':'submit','activity_id':aid,'response':'BULIG card answers\nCard 1: (voice recording) said: cat hat','heard':'1','transcript':'cat hat','secs':'2',f'wc[{n}]':'100|',audio_key:audio,'csrf':p.token()}
+        before=int(q(f'SELECT COALESCE(total,0) FROM pupil_xp WHERE pupil_id={pid}') or 0)
+        status,_,text=p.req('index.php',data,accept_json=True)
+        cid=q(f'SELECT id FROM activity_completion WHERE pupil_id={pid} AND activity_id={aid}')
+        rid=q(f'SELECT id FROM reading_verifications WHERE completion_id={cid} ORDER BY id DESC LIMIT 1') if cid else ''
+        check(f'Level {level} {phase}: actual submission saves audio and immediate XP',status==200 and bool(rid) and q(f'SELECT state FROM reading_verifications WHERE id={rid}')=='pending' and int(q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}'))==before+10,text[:160])
+        if not rid:continue
+        review={'action':'reading_decision','attempt_id':rid,'decision':'reject','reason':'Please read this yourself.','csrf':t.token('?page=reading_reviews')}
+        if ix==0:
+            bad=dict(review);bad.pop('csrf')
+            check('Review requires CSRF',t.req('index.php',bad)[0]==403)
+            check('Pupil cannot reject a reading',p.req('index.php',dict(review,csrf=p.token()))[0]==403)
+            q(f'DELETE FROM teacher_pupils WHERE teacher_id={tid} AND pupil_id={pid}')
+            check('Unassigned teacher cannot read audio or decide',t.req(f'?page=reading_audio&id={rid}&n=0')[0]==403 and t.req('index.php',review)[0]==403)
+            q(f'INSERT INTO teacher_pupils(teacher_id,pupil_id) VALUES({tid},{pid})')
+            check('Owner teacher can play actual attempt; other pupil cannot',t.req(f'?page=reading_audio&id={rid}&n=0')[0]==200 and other.req(f'?page=reading_audio&id={rid}&n=0')[0]==404)
+            check('Empty rejection reason is blocked',t.req('index.php',dict(review,reason=''))[0]==400)
+        status,_,text=t.req('index.php',review)
+        check(f'Level {level} {phase}: rejection reverses only its XP and reopens activity',status==200 and q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')==str(before) and q(f'SELECT status FROM activity_completion WHERE id={cid}')=='retry' and q(f'SELECT COUNT(*) FROM xp_transactions WHERE pupil_id={pid} AND activity_id={aid}')=='0',text[:120])
+        t.req('index.php',review)
+        check(f'Level {level} {phase}: repeated rejection cannot deduct twice',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')==str(before))
+        missing=dict(data);missing.pop(audio_key)
+        check(f'Level {level} {phase}: rereading cannot reuse old audio',p.req('index.php',missing,accept_json=True)[0]==400)
+        status,_,text=p.req('index.php',data,accept_json=True)
+        new=q(f'SELECT id FROM reading_verifications WHERE completion_id={cid} ORDER BY id DESC LIMIT 1')
+        check(f'Level {level} {phase}: fresh rereading restores XP once',status==200 and new!=rid and q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')==str(before+10),text[:160])
+        check(f'Level {level} {phase}: stale review cannot reject new attempt',t.req('index.php',review)[0]==400)
+        verify=dict(review,attempt_id=new,decision='verify',reason='Verified in class.')
+        status,_,text=t.req('index.php',verify)
+        check(f'Level {level} {phase}: verification keeps earned XP',status==200 and q(f'SELECT state FROM reading_verifications WHERE id={new}')=='verified' and q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')==str(before+10),text[:120])
+        if ix==0:
+            check('Pupil notification explains rereading and XP','XP removed: 10' in p.req('?page=notifications')[2])
+            check('Historic recording remains playable after rereading',t.req(f'?page=reading_audio&id={rid}&n=0')[0]==200)
+    # Missing recording is explicitly missing, never silently verified.
+    q(f"UPDATE activity_completion SET status='retry' WHERE id={cid}")
+    missing=dict(data);missing.pop(audio_key)
+    p.req('index.php',missing,accept_json=True)
+    mid=q(f'SELECT id FROM reading_verifications WHERE completion_id={cid} ORDER BY id DESC LIMIT 1')
+    check('Unrecorded reading is flagged for teacher review',q(f'SELECT state FROM reading_verifications WHERE id={mid}')=='missing')
+    check('A missing recording cannot be marked verified',t.req('index.php',dict(verify,attempt_id=mid))[0]==400)
+    # Available balance below activity XP: no negative balance and no points generated by repeated rejection/reread.
+    q(f'UPDATE pupil_xp SET total=3 WHERE pupil_id={pid}')
+    t.req('index.php',dict(review,attempt_id=mid))
+    check('Reversal caps at available XP',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='0' and q(f'SELECT xp_reversed FROM reading_verifications WHERE id={mid}')=='3')
+    p.req('index.php',data,accept_json=True)
+    check('Rereading restores actual reversed XP, without farming',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='3' and q(f'SELECT amount FROM xp_transactions WHERE pupil_id={pid} AND activity_id={aid}')=='3')
+    p.req('index.php',data,accept_json=True)
+    check('Duplicate submission gives no extra XP',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='3')
+
+
 def main():
     os.chdir(ROOT)
     print('BULIG automatic tests' + ('' if ROOT == os.path.dirname(HERE) else ' for ' + ROOT))
@@ -1251,6 +1326,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 

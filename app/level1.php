@@ -93,9 +93,12 @@ function l1_save_audio(string $data,int $pid,int $aid):string{
 
 /** Play a recording: the pupil who made it, or a teacher of that pupil. */
 function l1_recording(array $u):never{
- $c=one('SELECT * FROM activity_completion WHERE id=?',[(int)($_GET['id']??0)]);
+ if(($_GET['page']??'')==='reading_audio'){
+  if(!rv_ready())fail('Recording not found.',404);$v=one('SELECT * FROM reading_verifications WHERE id=?',[(int)($_GET['id']??0)]);
+  if(!$v)fail('Recording not found.',404);$paths=json_decode((string)$v['audio_paths'],true)?:[];$c=['pupil_id'=>$v['pupil_id'],'audio_path'=>$paths[(string)(int)($_GET['n']??0)]??null];
+ }else $c=one('SELECT * FROM activity_completion WHERE id=?',[(int)($_GET['id']??0)]);
  /* Level 2A keeps one recording per card: ?n=card number. */
- if($c&&isset($_GET['n'])){$m=json_decode((string)($c['audio_paths']??''),true)?:[];$c['audio_path']=$m[(string)(int)$_GET['n']]??null;}
+ if($c&&($_GET['page']??'')!=='reading_audio'&&isset($_GET['n'])){$m=json_decode((string)($c['audio_paths']??''),true)?:[];$c['audio_path']=$m[(string)(int)$_GET['n']]??null;}
  if(!$c||!$c['audio_path'])fail('Recording not found.',404);
  if($u['role']==='teacher')own_pupil((int)$c['pupil_id']);elseif((int)$u['id']!==(int)$c['pupil_id'])fail('Recording not found.',404);
  $path=(string)$c['audio_path'];if(!preg_match('~^\d+/[0-9]+-\d{14}-[0-9a-f]{8}\.(webm|ogg|m4a|mp3|aac)$~',$path,$m))fail('Recording not found.',404);
@@ -103,7 +106,7 @@ function l1_recording(array $u):never{
  $type=['webm'=>'audio/webm','ogg'=>'audio/ogg','m4a'=>'audio/mp4','mp3'=>'audio/mpeg','aac'=>'audio/aac'][$m[1]];
  while(ob_get_level())ob_end_clean();
  $size=filesize($f);$start=0;$end=$size-1;
- header('Content-Type: '.$type);header('Accept-Ranges: bytes');header('Cache-Control: private, max-age=3600');header('X-Content-Type-Options: nosniff');
+ header('Content-Type: '.$type);header('Accept-Ranges: bytes');header('Cache-Control: private, no-store');header('X-Content-Type-Options: nosniff');
  /* Safari plays audio only when byte ranges work. */
  if(preg_match('~^bytes=(\d*)-(\d*)$~',(string)($_SERVER['HTTP_RANGE']??''),$r)){
   if($r[1]===''&&$r[2]!==''){$start=max(0,$size-(int)$r[2]);}else{$start=(int)$r[1];if($r[2]!=='')$end=min($end,(int)$r[2]);}
@@ -380,3 +383,4 @@ function l1_rubric_form(int $position,array $r):string{
  }
  return $h.'<input type="hidden" name="'.$n.'[_]" value="1"></fieldset>';
 }
+
