@@ -26,6 +26,10 @@ try:
   assert m.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
   m.locator('.boot').wait_for(state='hidden')
   m.screenshot(path='tests/ui-preview/reading-review-phone.png',full_page=True)
+  page.goto(t.BASE+'?page=dashboard');page.locator('.boot').wait_for(state='hidden')
+  assert page.locator('.rv-home').is_visible()
+  assert page.locator('.rv-home').bounding_box()['y'] > page.locator('.hm-head').bounding_box()['y']
+  page.screenshot(path='tests/ui-preview/teacher-home-compact.png',full_page=True)
   def harness(apple=False,mode="success"):
    page.goto(t.BASE+'?page=reading_reviews')
    page.set_content('<form id="activity-form"><input name="activity_id" value="1"><div class="l2-card" data-n="1"><div data-wc="cat hat" data-kind="read"><input name="wc[1]" data-wc-val></div></div></form>')

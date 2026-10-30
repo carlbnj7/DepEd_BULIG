@@ -68,13 +68,13 @@ jobs:
         run: |
           git clean -fd -- public storage
           python3 tools/update_checker.py
-          python3 tools/make_update.py --from db2aede542cf6f7a1abdb9509c0ad58446785c0f --name BULIG-iPhone-Word-Coach-Fix
+          python3 tools/make_update.py --from db2aede542cf6f7a1abdb9509c0ad58446785c0f --name BULIG-Reading-Review-and-Recording-Fix
           python3 - <<'PY'
           from pathlib import Path
           import zipfile
-          p = Path('live-update/BULIG-iPhone-Word-Coach-Fix.zip')
+          p = Path('live-update/BULIG-Reading-Review-and-Recording-Fix.zip')
           assert p.stat().st_size < 30000000
-          expected = {'public/assets/coach.js','public/bulig-check.php'}
+          expected = {'public/assets/coach.js','public/bulig-check.php','public/assets/theme.css','app/staff_ui.php','app/reading_verification.php'}
           with zipfile.ZipFile(p) as z:
               assert set(z.namelist()) == expected, z.namelist()
           print('Verified update contains only the intended recording and review files.')
@@ -82,8 +82,8 @@ jobs:
       - name: Keep tested update
         uses: actions/upload-artifact@v4
         with:
-          name: BULIG-iPhone-Word-Coach-Fix
-          path: live-update/BULIG-iPhone-Word-Coach-Fix.zip
+          name: BULIG-Reading-Review-and-Recording-Fix
+          path: live-update/BULIG-Reading-Review-and-Recording-Fix.zip
           if-no-files-found: error
           retention-days: 30
       - name: Keep test log

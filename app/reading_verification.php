@@ -2,6 +2,21 @@
 /* Private recordings of actual activity attempts. Teacher decisions never identify a speaker automatically. */
 function rv_ready():bool{static $ok;if($ok===null){try{$ok=(bool)one("SHOW TABLES LIKE 'reading_verifications'");}catch(Throwable $e){$ok=false;}}return $ok;}
 function rv_latest(int $cid):?array{return rv_ready()?one('SELECT * FROM reading_verifications WHERE completion_id=? ORDER BY id DESC LIMIT 1',[$cid]):null;}
+function rv_reading_texts(array $a):array{
+ $out=[];$text=trim((string)($a['expected_text']??''));if($text!=='')$out[0]=$text;
+ if(in_array(lesson_level((int)$a['lesson_id']),[2,3,4,9,6,7,8],true)&&($set=l2a_set($a))){
+  foreach($set['cards'] as $i=>$c){$k=$c['ui']['answer']??[];$text=in_array('read',$k,true)?trim((string)($c['ui']['wct']??'')):'';
+   if($text===''&&in_array('say',$k,true))$text=wc_card_text($c,(string)($set['instruction']??''));if($text!=='')$out[$i+1]=$text;
+  }
+ }return $out;
+}
+function rv_snapshot(array $a,string $instructions):string{return json_encode(['bulig_reading_snapshot'=>1,'instructions'=>$instructions,'readings'=>rv_reading_texts($a)],JSON_UNESCAPED_UNICODE|JSON_INVALID_UTF8_SUBSTITUTE);}
+function rv_reference(array $r):array{
+ $raw=(string)$r['prompt_snapshot'];$j=json_decode($raw,true);
+ if(is_array($j)&&($j['bulig_reading_snapshot']??null)===1&&is_array($j['readings']??null))return ['instructions'=>(string)($j['instructions']??''),'readings'=>$j['readings'],'historic'=>true];
+ $a=one('SELECT * FROM activities WHERE id=?',[$r['activity_id']]);return ['instructions'=>$raw,'readings'=>$a?rv_reading_texts($a):[],'historic'=>false];
+}
+
 /** Called inside the pupil/user transaction, after scoring. Historical recordings remain attached to their attempt. */
 function rv_capture(int $cid,array $a):void{
  if(!rv_ready())return;
@@ -20,7 +35,7 @@ function rv_capture(int $cid,array $a):void{
  $complete=(bool)$paths;foreach($wc as $n=>$x)if(empty($paths[(string)$n]))$complete=false;
  if($prev&&$prev['state']==='rejected'&&!$complete)fail('Please record every reading card again before sending.');
  q("UPDATE reading_verifications SET state='superseded' WHERE completion_id=? AND state IN ('pending','missing')",[$cid]);
- q('INSERT INTO reading_verifications(completion_id,pupil_id,activity_id,state,audio_paths,prompt_snapshot,response_snapshot,score,max_score) VALUES(?,?,?,?,?,?,?,?,?)',[$cid,$c['pupil_id'],$a['id'],$complete?'pending':'missing',json_encode($paths),$c['prompt_snapshot'],$c['response'],$c['score'],$c['max_score']]);
+ q('INSERT INTO reading_verifications(completion_id,pupil_id,activity_id,state,audio_paths,prompt_snapshot,response_snapshot,score,max_score) VALUES(?,?,?,?,?,?,?,?,?)',[$cid,$c['pupil_id'],$a['id'],$complete?'pending':'missing',json_encode($paths),rv_snapshot($a,(string)$c['prompt_snapshot']),$c['response'],$c['score'],$c['max_score']]);
 }
 function rv_count(int $tid):int{return rv_ready()?(int)val("SELECT COUNT(*) FROM reading_verifications r JOIN teacher_pupils t ON t.pupil_id=r.pupil_id WHERE t.teacher_id=? AND r.state IN ('pending','missing')",[$tid]):0;}
 /** Same pupil lock as answer submission; row version = immutable attempt ID, so stale decisions cannot reject a reread. */
@@ -62,8 +77,11 @@ function rv_view(array $u):void{
  echo '<nav class="buttonrow">';foreach(['pending'=>'To verify','missing'=>'Missing audio','verified'=>'Verified','rejected'=>'Rereading requested','superseded'=>'Replaced attempts'] as $k=>$v)echo '<a class="btn '.($state===$k?'primary':'secondary').'" href="?page=reading_reviews&amp;show='.$k.'">'.$v.'</a>';echo '</nav>';
  $p=max(1,min(100000,(int)($_GET['p']??1)));
  $list=rows('SELECT r.*,u.name,a.title,a.lesson_id,m.level_id FROM reading_verifications r JOIN teacher_pupils t ON t.pupil_id=r.pupil_id JOIN users u ON u.id=r.pupil_id JOIN activities a ON a.id=r.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE t.teacher_id=? AND r.state=? ORDER BY r.id DESC LIMIT 20 OFFSET '.(($p-1)*20),[$u['id'],$state]);
- foreach($list as $r){echo '<section class="card"><span class="eyebrow">'.e(level_label((int)$r['level_id'])).' · '.e($r['created_at']).'</span><h2>'.e($r['name']).' · '.e($r['title']).'</h2><p>Score for this attempt: '.e(key_score_text($r)?:'Not automatically scored').'</p><details><summary>Activity instructions and answer</summary><p class="preserve">'.e($r['prompt_snapshot']).'</p><p class="preserve">'.e($r['response_snapshot']).'</p></details>';
-  $paths=json_decode((string)$r['audio_paths'],true)?:[];foreach($paths as $n=>$path)echo '<p>'.((int)$n?'Card '.(int)$n:'Activity reading').'</p><audio controls preload="none" src="?page=reading_audio&amp;id='.(int)$r['id'].'&amp;n='.(int)$n.'"></audio>';
+ foreach($list as $r){$ref=rv_reference($r);echo '<section class="card rv-review"><span class="eyebrow">'.e(level_label((int)$r['level_id'])).' · '.e($r['created_at']).'</span><h2>'.e($r['name']).' · '.e($r['title']).'</h2><p>Score for this attempt: '.e(key_score_text($r)?:'Not automatically scored').'</p>';
+  $paths=json_decode((string)$r['audio_paths'],true)?:[];foreach($paths as $n=>$path){$text=trim((string)($ref['readings'][(int)$n]??''));$label=(int)$n?'Card '.(int)$n:'Activity reading';
+   echo '<div class="rv-recording"><div class="rv-reference"><span class="eyebrow">'.e($label).'</span><h3>'.($text!==''?'Words to read':'Activity instructions').'</h3><div class="rv-passage" tabindex="0" role="region" aria-label="Reading reference">'.nl2br(e($text!==''?$text:$ref['instructions'])).'</div>'.(!$ref['historic']?'<small class="muted">Current activity reference · this older recording has no saved text snapshot.</small>':'').'</div><div class="rv-player"><h3>Listen to the pupil</h3><p>Follow the words as you listen.</p><audio controls preload="none" aria-label="'.e($label).' recording" src="?page=reading_audio&amp;id='.(int)$r['id'].'&amp;n='.(int)$n.'"></audio></div></div>';
+  }
+  echo '<details><summary>Activity instructions and pupil answer</summary><p class="preserve">'.e($ref['instructions']).'</p><p class="preserve">'.e($r['response_snapshot']).'</p></details>';
   if($state==='missing')echo '<p>No complete audio evidence. This does not prove misconduct. Arrange a rereading or a supervised check.</p>';
   if(in_array($state,['pending','missing'],true))echo '<form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="reading_decision"><input type="hidden" name="attempt_id" value="'.(int)$r['id'].'"><label>Reason or note<textarea name="reason" rows="2" maxlength="3000"></textarea></label><div class="buttonrow">'.($state==='pending'?'<button class="btn primary" name="decision" value="verify">Verify reading</button>':'').'<button class="btn secondary" name="decision" value="reject" data-confirm="Reject this attempt, reverse its earned activity XP once, and require a new recording?">Reject and request rereading</button></div></form>';
   else echo '<p>'.e($r['reason']).'</p><p>XP reversed: '.(int)$r['xp_reversed'].'</p>';echo '</section>';
