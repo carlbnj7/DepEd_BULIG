@@ -49,6 +49,8 @@ jobs:
           node --check public/assets/coach.js
       - name: Refresh checker in disposable checkout
         run: python3 tools/update_checker.py
+      - name: Complete Level 7 reading regression
+        run: php tests/level7_reading.php
       - name: PHP and database integration tests
         run: python3 tests/run_tests.py
       - name: Install browser test runtime
@@ -74,7 +76,7 @@ jobs:
           import zipfile
           p = Path('live-update/BULIG-Reading-Review-and-Recording-Fix.zip')
           assert p.stat().st_size < 30000000
-          expected = {'public/assets/coach.js','public/bulig-check.php','public/assets/theme.css','app/staff_ui.php','app/reading_verification.php'}
+          expected = {'app/coach.php','app/level2a.php','public/assets/coach.js','public/bulig-check.php','public/assets/theme.css','app/staff_ui.php','app/reading_verification.php'}
           with zipfile.ZipFile(p) as z:
               assert set(z.namelist()) == expected, z.namelist()
           print('Verified update contains only the intended recording and review files.')

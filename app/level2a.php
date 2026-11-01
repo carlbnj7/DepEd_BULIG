@@ -119,7 +119,9 @@ function l6_set(array $a):?array{
    $c['choices']=array_map(fn($x)=>trim(preg_replace('~^\s*☐\s*~u','',$x)),$ch);$c['ui']=['answer'=>['chip']];
   }elseif($title==='Read'){
    /* Reading for speed (the module's word count): aloud -> record it; silently -> Start / Done timer. Both give words per minute. */
-   $sp=(int)($c['speed']??0);$c['ui']=['answer'=>[$aloud?'say':($sp?'speed':'look')]]+($aloud?['max'=>300]:[])+($sp?['words'=>$sp]:[]);}
+   $sp=(int)($c['speed']??0);$c['ui']=['answer'=>[$aloud?'say':($sp?'speed':'look')]]+($aloud?['max'=>300]:[])+($sp?['words'=>$sp]:[]);
+   /* Level 7 has explicit reading cards: preserve the module passage separately from directions. */
+   if($l7)$c['ui']['module_reading']=$t;}
   elseif(!empty($c['grid'])){$c['text']='';$c['ui']=['answer'=>['lgrid']];}
   elseif($title==='Puzzle'){$c['ui']=['answer'=>['paper']];}
   /* v180: no more "on paper" cards. Marking a word (underline, circle, box) -> tap it; drawing -> the drawing pad;

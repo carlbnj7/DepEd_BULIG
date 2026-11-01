@@ -84,7 +84,7 @@ function wc_story(?array $s,?array $a=null):?array{
    foreach(preg_split('~(?<=[.!?])\s+~u',$rest,-1,PREG_SPLIT_OFFSET_CAPTURE) as [$x,$o])if(str_ends_with(trim($x),'?')||preg_match('~^([“"]|(Write|Circle|Choose|Draw|Tell)\b)~u',$x)){$q=$o;break;}
    if($q&&str_word_count(substr($rest,0,$q))>=5)$c['ui']['practice']=['title'=>trim($m[1]),'story'=>trim(preg_replace('~\s+~u',' ',substr($rest,0,$q))),'q'=>trim(substr($rest,$q))];}
   if(!in_array($k,[['look'],['speed']],true))continue;
-  $ttl=null;$t=wc_story_text((string)($c['text']??''),$ttl);if($ttl&&empty($c['story']))$c['story']=$ttl;
+  $ttl=null;$t=array_key_exists('module_reading',$c['ui'])?trim((string)$c['ui']['module_reading']):wc_story_text((string)($c['text']??''),$ttl);if($ttl&&empty($c['story']))$c['story']=$ttl;
   /* v186: "Listen carefully as your teacher reads the story “My Food”": the story is in the lesson's "Listen:" activity; put it here. */
   if(str_word_count($t)<10&&$a&&$k===['look']&&preg_match('~\blisten~iu',(string)($c['text']??''))&&preg_match('~\b(story|passage|poem)\b~iu',(string)($c['text']??''))&&($t=wc_listen_story($a,implode(' ',array_column($s['cards'],'text'))))!==''){
    $c['story']=preg_match('~\b(?:story|passage|poem)\s*[“"]([^”"]{2,60})[”"]~iu',(string)$c['text'],$m)?trim($m[1]):'';$c['text']=$t;}
