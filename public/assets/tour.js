@@ -178,7 +178,7 @@
    [['.msg-panel'],'Read it here','The message you tap opens here.']],
   bug_report:[
    [['main .card form textarea','.bug-detail-header'],'Tell us what is wrong','Something not working? Write what happened here, then send it. The BULIG team reads every report.'],
-   [['.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']]
+   [['.br-list','.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']]
  };
  const T={
   credits:[
@@ -323,7 +323,7 @@
    [['.msg-panel'],'Read it here','The message you tap opens here.']],
   bug_report:[
    [['main .card form textarea','.bug-detail-header'],'Tell us what is wrong','Something not working? Write what happened here, then send it. The BULIG team reads every report.'],
-   [['.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']],
+   [['.br-list','.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']],
   reading_reviews:[
    ['.pagehead','Reading verification','Listen to your pupils’ read-aloud recordings. You decide if each reading is really the pupil’s own.'],
    [['.rv-vtabs'],'Lists','To verify, recordings with missing audio, and the ones you already checked.'],

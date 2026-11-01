@@ -925,3 +925,9 @@ document.addEventListener('submit',e=>{const f=e.target.closest&&e.target.closes
 })();
 
 
+
+/* v203 Messages chat: open at the newest message, the reply box grows as you type, Enter sends on a computer (Shift+Enter for a new line). */
+(()=>{const log=document.querySelector('.mc-log');if(log)log.scrollTop=log.scrollHeight;
+ const f=document.querySelector('.mc-send');if(!f)return;const t=f.querySelector('textarea');const fit=()=>{t.style.height='auto';t.style.height=Math.min(140,t.scrollHeight)+'px';};t.addEventListener('input',fit);
+ const touch=matchMedia('(pointer:coarse)').matches;t.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!touch&&!e.isComposing){e.preventDefault();if(t.value.trim())f.requestSubmit();}});
+ f.addEventListener('submit',()=>{const b=f.querySelector('.mc-go');setTimeout(()=>{b.disabled=true;},0);});})();

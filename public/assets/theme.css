@@ -6433,6 +6433,36 @@ html.lesson-enhancing #activity-form { visibility: hidden; }
 .msg-panel{padding:24px!important;max-height:85vh;overflow:auto}.msg-panel article.card{max-width:92%;border-radius:20px 20px 20px 5px;box-shadow:none;background:var(--g100,#edf5eb);overflow-wrap:anywhere}.msg-panel.msg-sent article.card{margin-left:auto;border-radius:20px 20px 5px 20px}.msg-panel article.card h2{font-size:1.2rem}.msg-panel article.card p{line-height:1.75}.msg-panel section.card{box-shadow:none}.msg-welcome{min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}.msg-welcome>.icon{width:56px;height:56px;color:var(--g700,#166534)}
 html.dark .msg-shell>.card{background:#13251b;color:#eef5ee}html.dark .msg-item.active,html.dark .msg-item:hover,html.dark .msg-panel article.card{background:#203c2b}html.dark .msg-avatar{background:#294631;color:#f8da63}
 @media(max-width:760px){.msg-shell{grid-template-columns:1fr;border-radius:20px}.msg-shell:not(.has-selection)>.msg-panel{display:none}.msg-shell.has-selection>.msg-list{display:none}.msg-list{border-right:0!important}.msg-items{max-height:none}.msg-panel{max-height:none;padding:16px!important;min-height:65vh}.msg-panel article.card{max-width:100%}.msg-welcome{min-height:40vh}}
+/* v203 Messenger-style chat: the message and the replies as bubbles, the reply box stays at the bottom. */
+.msg-panel:has(.mc),.msg-panel:has(>.mc-head){padding:0!important;display:flex;flex-direction:column}
+.mc{display:flex;flex-direction:column;height:clamp(420px,calc(100dvh - 250px),760px)}
+.mc-head,.msg-panel>.mc-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--g200,#dbe8dd);background:#fff;position:sticky;top:0;z-index:1}
+.mc-head b{display:block;font-size:1rem;color:var(--g900,#0e3b28)}.mc-head small{display:block;font-size:.78rem;color:var(--muted,#5f6f63);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52vw}
+.mc-head>div{min-width:0;flex:1}
+.mc-back{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;color:var(--g700,#166534);flex:none}.mc-back:hover{background:var(--g100,#edf5eb)}.mc-back svg{transform:rotate(180deg);width:20px;height:20px}
+.mc-av{display:grid;place-items:center;flex:none;width:42px;height:42px;border-radius:50%;background:var(--btn-green,#166534);color:#fff;font-weight:800}.mc-av svg{width:22px;height:22px}
+.mc-log{flex:1;overflow-y:auto;padding:18px 18px 8px;display:flex;flex-direction:column;gap:6px;background:linear-gradient(#fbfdf8,#f4f9f0)}
+.msg-panel>.mc-log{flex:none;max-height:none}
+.mc-day{align-self:center;font-size:.72rem;font-weight:700;color:var(--muted,#5f6f63);background:#fff;border:1px solid var(--g200,#dbe8dd);border-radius:999px;padding:3px 12px;margin:4px 0 8px}
+.mc-row{display:flex}.mc-row.me{justify-content:flex-end}
+.mc-bub{max-width:min(78%,560px);padding:10px 14px;border-radius:20px;background:#fff;border:1px solid var(--g200,#dbe8dd);overflow-wrap:anywhere;box-shadow:0 2px 6px -4px rgba(14,59,40,.3)}
+.mc-row.them .mc-bub{border-bottom-left-radius:6px}
+.mc-row.me .mc-bub{background:var(--btn-green,#166534);border-color:transparent;color:#fff;border-bottom-right-radius:6px}
+.mc-bub p{margin:0;line-height:1.55;font-size:.95rem}.mc-bub b{display:block;margin-bottom:4px;font-size:.98rem}
+.mc-bub time,.mc-seen{display:inline-block;margin-top:4px;font-size:.68rem;opacity:.7}.mc-seen{margin-left:8px;font-weight:700}
+.mc-first{max-width:min(88%,640px)}
+.mc-send{display:flex;align-items:flex-end;gap:10px;padding:12px 14px;border-top:1px solid var(--g200,#dbe8dd);background:#fff;margin:0}
+.mc-send textarea{flex:1;min-height:44px;max-height:140px;resize:none;border-radius:22px;padding:11px 16px;border:1px solid var(--g200,#dbe8dd);background:var(--g50,#f5faee);font:inherit;box-sizing:border-box;margin:0}
+.mc-go{flex:none;width:44px;height:44px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--btn-green,#166534);color:#fff;cursor:pointer}.mc-go svg{width:20px;height:20px}
+.mc-off{padding:12px 18px;margin:0;color:var(--muted,#5f6f63);border-top:1px solid var(--g200,#dbe8dd)}
+.mc-threads{padding:8px 0 0}.mc-threads h2{font-size:1rem;margin:10px 18px}.mc-threads h2 small{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;background:var(--g100,#edf5eb);font-size:.75rem;margin-left:6px}
+.mc-status{margin:12px 18px 18px}.mc-status summary{cursor:pointer;font-weight:700;color:var(--g700,#166534)}.mc-status p{margin:6px 0;font-size:.88rem}
+.msg-nr{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:var(--y400,#ffc629);color:#3d2a00;font-size:.68rem;font-weight:800}
+html.dark .mc-head,html.dark .mc-send,html.dark .mc-day,html.dark .mc-row.them .mc-bub{background:#13251b;border-color:#2e4234;color:#eef5ee}
+html.dark .mc-log{background:#0f1d15}html.dark .mc-send textarea{background:#1d2d23;border-color:#2e4234;color:#eef5ee}html.dark .mc-head b{color:#eef5ee}
+@media(max-width:760px){.msg-shell:has(.mc),.msg-panel:has(.mc){overflow:visible!important}.mc{height:auto;min-height:60vh}.mc-log{overflow:visible;flex:1}.mc-bub{max-width:86%}.mc-head{padding:12px;border-radius:20px 20px 0 0}
+ .mc-send{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));border:1px solid var(--g200,#dbe8dd);border-radius:24px;margin:8px;box-shadow:0 10px 24px -12px rgba(14,59,40,.45)}
+ body:has(.pupil-tabbar) .mc-send{bottom:calc(100px + env(safe-area-inset-bottom))}body:has(.pupil-tabbar) .mc{padding-bottom:90px}}
 
 /* Bug report panels: readable details and a separate moderation column. */
 .bug-detail-header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:18px 0}.bug-detail-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:24px;align-items:start}.bug-detail-layout.reporter-view{grid-template-columns:minmax(0,1fr)}.bug-conversation{min-width:0;display:grid;gap:20px}.bug-detail-layout .card{margin:0;min-width:0;overflow-wrap:anywhere}.bug-report-summary h1{font-size:clamp(1.35rem,2vw,1.9rem);line-height:1.35;margin:12px 0}.bug-report-context{line-height:1.75;padding-top:16px;border-top:1px solid var(--g200,#dbe8dd)}.bug-status{display:inline-flex;align-items:center;justify-content:center;flex:none;padding:7px 12px;border-radius:999px;font-size:.78rem;font-weight:800;background:var(--g100,#edf5eb);color:var(--g700,#166534)}.bug-status.status-processing{background:#fff2bd;color:#765400}.bug-status.status-rejected{background:#fbe6df;color:#853b2c}.bug-status.status-fixed{background:#dff0df;color:#185528}.bug-thread h2,.bug-moderation h2{margin:0 0 12px;font-size:1.25rem}.bug-thread-entry{padding:18px 0;border-top:1px solid var(--g200,#dbe8dd)}.bug-update-meta{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.bug-thread-entry time{display:block;font-size:.78rem;margin:7px 0}.bug-thread-entry p{line-height:1.75;margin:10px 0 0}.bug-moderation{position:sticky;top:20px}.bug-moderation form{display:flex;flex-direction:column;gap:18px;margin-top:18px}.bug-moderation label{display:flex;flex-direction:column;gap:8px;font-weight:750}.bug-moderation select,.bug-moderation textarea{width:100%;min-width:0;box-sizing:border-box;margin:0}.bug-moderation textarea{min-height:155px;resize:vertical;line-height:1.65}.bug-moderation .bug-confirm{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start;font-size:.82rem;font-weight:500;line-height:1.55}.bug-confirm input[type=checkbox]{width:18px!important;height:18px;min-width:0;margin:3px 0 0}.bug-moderation button{width:100%}.bug-penalty-notice{padding:14px 16px;border:1px solid #efd88d;border-radius:14px;background:#fff8df;color:#594714;font-size:.85rem;line-height:1.6}.bug-penalty-notice p{margin:8px 0 0}.bug-report-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:20px 0}.bug-report-grid .card{margin:0;display:flex;flex-direction:column;align-items:flex-start;min-width:0;overflow-wrap:anywhere}.bug-report-tile h2{font-size:1.1rem;line-height:1.5}.bug-report-tile .btn{margin-top:auto}.bug-toolbar,.bug-filters{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.bug-toolbar form{margin:0}.bug-empty{margin-top:20px}html.dark .bug-penalty-notice{background:#39321b;color:#f8e4a4;border-color:#746037}html.dark .bug-status{background:#27472e;color:#e6f2df}html.dark .bug-status.status-processing{background:#4b3c19;color:#ffe49c}html.dark .bug-status.status-rejected{background:#4d2d25;color:#ffd8c9}
@@ -6465,3 +6495,36 @@ html.dark .msg-shell>.card{background:#13251b;color:#eef5ee}html.dark .msg-item.
 html.dark body:not(.demo-page) .rv-rhead,html.dark body:not(.demo-page) .rv-noaudio,html.dark body:not(.demo-page) .rv-note{background:#2a2614!important;border-color:#5c4f1f!important}
 html.dark body:not(.demo-page) .rv-decide{background:var(--sf2,#1d2d23)!important;border-color:var(--ln,#2e4234)!important}
 html.dark body:not(.demo-page) .rv-decided{border-color:var(--ln,#2e4234)!important}
+/* v203 tidy administrator Home: big cards only for what needs attention, the rest in one "All clear" line;
+   4 shortcuts; pupils at each level as a compact grid; two equal cards below. */
+.hm-todo[class*="hm-todo-n"]{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.hm-clear{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0 0}
+.hm-clear>b{display:inline-flex;align-items:center;gap:6px;color:var(--g800,#0f3318);font-size:.95rem;margin-right:4px}
+.hm-clear a{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid var(--line,#e9e2cc);color:var(--g800,#0f3318);font-size:.82rem;font-weight:600;text-decoration:none}
+.hm-clear a:hover{border-color:var(--g300,#9bcf9f)}.hm-clear svg{width:15px;height:15px;color:var(--g600,#1c7a50);flex:none}
+.hm-levels{margin:16px 0}
+.hl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.hl-lv{display:grid;grid-template-columns:1fr auto;gap:6px 8px;align-items:center;padding:10px 12px;border-radius:14px;background:var(--g50,#f5faee);border:1px solid var(--g100,#e3f0e4)}
+.hl-lv span{font-size:.85rem;font-weight:600;color:var(--g800,#0f3318)}.hl-lv b{font-size:1.15rem;color:var(--g900,#0e3b28)}
+.hl-lv u{grid-column:1/-1;display:block;height:8px;border-radius:8px;background:#e4eddc;overflow:hidden;text-decoration:none}
+.hl-lv u i{display:block;height:100%;border-radius:8px;background:var(--btn-green,#166534)}
+.hl-lv.z{opacity:.6}
+.hl-lv i.w-0{width:0}.hl-lv i.w-5{width:5%}.hl-lv i.w-10{width:10%}.hl-lv i.w-15{width:15%}.hl-lv i.w-20{width:20%}.hl-lv i.w-25{width:25%}.hl-lv i.w-30{width:30%}.hl-lv i.w-35{width:35%}.hl-lv i.w-40{width:40%}.hl-lv i.w-45{width:45%}.hl-lv i.w-50{width:50%}.hl-lv i.w-55{width:55%}.hl-lv i.w-60{width:60%}.hl-lv i.w-65{width:65%}.hl-lv i.w-70{width:70%}.hl-lv i.w-75{width:75%}.hl-lv i.w-80{width:80%}.hl-lv i.w-85{width:85%}.hl-lv i.w-90{width:90%}.hl-lv i.w-95{width:95%}.hl-lv i.w-100{width:100%}
+.hm-g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px;align-items:stretch}.hm-g2>.card{margin:0}
+@media(max-width:740px){.hm-todo[class*="hm-todo-n"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}.hm-g2{grid-template-columns:1fr}.hl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hm-clear a{font-size:.78rem;padding:6px 10px}}
+html.dark .hm-clear a{background:#16231b;border-color:#2e4234;color:#e8f0ea}html.dark .hm-clear>b{color:#e8f0ea}
+html.dark .hl-lv{background:#16231b;border-color:#2e4234}html.dark .hl-lv span,html.dark .hl-lv b{color:#e8f0ea}html.dark .hl-lv u{background:#2e4234}
+/* v203 My bug reports: the form in one card, the reports as a tidy list. */
+.br-new{display:flex;gap:16px;align-items:flex-start}
+.br-ic{flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--btn-yellow,#ffc629);color:var(--g900,#0e3b28)}.br-ic svg{width:24px;height:24px}
+.br-form{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}.br-form label{font-weight:800;color:var(--g900,#0e3b28)}
+.br-form textarea{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;margin:0}
+.br-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.br-row small{color:var(--muted,#5f6f63)}.br-row .btn svg{width:18px;height:18px}
+.br-list{padding-bottom:8px!important}.br-list .ws-hd{margin-bottom:6px}
+.br-item{display:flex;align-items:center;gap:14px;padding:14px 4px;border-top:1px solid var(--line,#e9e2cc);text-decoration:none!important;color:inherit!important}
+.br-item:hover{background:var(--g50,#f5faee)}.br-item>svg{width:18px;height:18px;flex:none;color:var(--g700,#166534)}
+.br-item .bug-status{min-width:92px}
+.br-txt{flex:1;min-width:0}.br-txt b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--g900,#0e3b28);font-size:.95rem}.br-txt small{display:block;color:var(--muted,#5f6f63);font-size:.78rem;margin-top:3px}
+.br-none{margin:6px 0 10px}
+@media(max-width:640px){.br-new{flex-direction:column;gap:10px}.br-ic{width:40px;height:40px}.br-row .btn{width:100%;justify-content:center}.br-item{flex-wrap:wrap;gap:8px 12px}.br-item .bug-status{min-width:0}.br-txt{flex-basis:100%;order:3}.br-item>svg{margin-left:auto}}
+html.dark .br-txt b,html.dark .br-form label{color:#e8f0ea}html.dark .br-item{border-color:#2e4234}html.dark .br-item:hover{background:#1d2d23}

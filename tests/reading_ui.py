@@ -102,7 +102,12 @@ try:
   assert page.locator('[data-coach-audio]').input_value()==''
   assert page.evaluate('readingDone===null && testTracks.every(t=>t.readyState==="ended")')
   print('PASS: interrupted recording cannot masquerade as valid evidence or be submitted with the score.')
-  page.locator('.wc-x').click()
+  page.locator('.wc-rec-start').click();page.locator('.wc-rec-stop').wait_for(state='visible');page.wait_for_timeout(1200)
+  page.locator('.wc-rec-stop').click();page.locator('.wc-ov').wait_for(state='detached')
+  assert page.locator('[data-coach-audio]').input_value().startswith('data:audio/')
+  assert page.locator('[data-wc-val]').input_value()=='100|'
+  assert page.evaluate('readingDone && readingDone.audio.length>200 && testTracks.every(t=>t.readyState==="ended")')
+  print('PASS: iPhone fallback: when Word Coach loses the recording, the score is kept and a record-only reading is saved for the teacher.')
   browser.close()
 finally:
  server.terminate();server.wait(timeout=10)

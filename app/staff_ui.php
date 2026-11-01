@@ -9,12 +9,12 @@
 
 /** The menu of each role: [page, icon, label, extra] or ['g', group word] or ['hr']. */
 function staff_nav_list(array $u):array{
- if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['story','comic','Story time'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['bug_report','alert','My bug reports'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile'],['settings','settings','Settings']];
+ if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['story','comic','Story time'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['bug_report','alert','My bug reports'],['messages','comic','Messages',['count'=>function_exists('messages_unread')?messages_unread($u):0]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile'],['settings','settings','Settings']];
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['leaderboard','star','Leaderboard'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
-   ['g','TEACHING'],['reading_reviews','mic','Verify readings',['count'=>rv_count($tid)]],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['bug_report','alert','My bug reports'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
+   ['g','TEACHING'],['reading_reviews','mic','Verify readings',['count'=>rv_count($tid)]],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['bug_report','alert','My bug reports'],['messages','comic','Messages',['count'=>function_exists('messages_unread')?messages_unread($u):0]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
  return [['dashboard','home','Home'],['g','PEOPLE'],['schools','school','Schools'],['accounts','people','Teachers'],['directory','search','School directory'],['checkup','shield','Account check'],
-  ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=bug_open_count((int)$u['id']))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['settings','settings','Settings'],['hr'],['messages','comic','Messages'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
+  ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=bug_open_count((int)$u['id']))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['settings','settings','Settings'],['hr'],['messages','comic','Messages',['count'=>function_exists('messages_unread')?messages_unread($u):0]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
 }
 /** The number of new notifications beside Notifications in the menu. */
 function staff_notif_badge(array $u):array{$n=function_exists('notif_count')?notif_count($u):0;return $n?['count'=>$n]:[];}
@@ -182,34 +182,37 @@ function admin_home(array $u):void{
  $sp=school_filter_id()?' AND pupil_id IN (SELECT id FROM users WHERE school_id='.school_filter_id().')':'';$week=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=?'.$sp,[date('Y-m-d H:i:s',strtotime('-7 days'))]);$prev=(int)val('SELECT COUNT(*) FROM activity_completion WHERE submitted_at>=? AND submitted_at<?'.$sp,[date('Y-m-d H:i:s',strtotime('-14 days')),date('Y-m-d H:i:s',strtotime('-7 days'))]);
  $trend=$prev?(($week>=$prev?'+':'').round(($week-$prev)/$prev*100).'% vs last week'):($week?'first week of activity':'');
  echo staff_moved_note($u);
- admin_heading('ADMINISTRATOR HOME','What would you like to do today?','School year '.admin_school_year().' · Things that need you come first.','<a class="btn secondary" href="?page=print">'.icon('print').'Print &amp; download</a><a class="btn secondary" href="?page=settings&amp;tab=announcements">'.icon('mega').'Post announcement</a><a class="btn primary" href="?page=add_teachers">'.icon('useredit').'Add teachers</a>');
+ admin_heading('ADMINISTRATOR HOME','What would you like to do today?','School year '.admin_school_year().' · Things that need you come first.','<a class="btn secondary" href="?page=print">'.icon('print').'Print &amp; download</a><a class="btn primary" href="?page=add_teachers">'.icon('useredit').'Add teachers</a>');
  echo function_exists('account_ids_admin_notice')?account_ids_admin_notice():'';
  echo school_filter_bar('dashboard').school_compare_cards();
  $inactive=admin_inactive_pupils(7);$top=one("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN sections s ON s.id=ps.section_id WHERE u.role='pupil' AND u.active=1".school_users_sql()." AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?) GROUP BY s.id ORDER BY c DESC LIMIT 1",[date('Y-m-d',strtotime('-6 days'))]);
  $bk=admin_setting('last_backup_at','');$oldBackup=$bk===''||admin_days_since($bk)>7;
  $failed=(int)val("SELECT COUNT(*) FROM audit_log WHERE action IN ('login_failed','admin_pin_failed') AND created_at>=?",[date('Y-m-d 00:00:00')]);
- echo '<p class="hm-sub">Needs you today</p><div class="hm-todo">'
-  .hm_todo($oldBackup?'hot':'calm','download',$oldBackup?1:0,'Backup to download',admin_backup_note(),'Open Backup','?page=print#pc-backup')
-  .hm_todo($inactive?'hot':'calm','people',$inactive,'Pupils inactive 7+ days',$top?'Most in '.$top['n']:'All pupils learned this week','See the report','?page=reports')
-  .hm_todo($idle?'hot':'calm','user',count($idle),'Teachers not signed in 14+ days',$idle?implode(', ',array_slice(array_column($idle,'name'),0,2)).(count($idle)>2?' …':''):'All teachers signed in within 14 days','Open Teachers','?page=accounts'.($idle?'&amp;status=idle':''))
-  .hm_todo($failed?'hot':'calm','lock',$failed,'Wrong passwords today',$failed?'Check the activity log':'No wrong passwords today','Open the log','?page=activity_log&amp;tab=security&amp;days=1').'</div>';
- echo '<div class="hm-checkup">'.checkup_overview_item().'</div>';
- echo '<p class="hm-sub">What do you want to do?</p><div class="hm-grid">'
-  .hm_task('useredit','Add teachers','One teacher or a whole Excel list','?page=add_teachers').hm_task('print','Print Teacher Passes','Teacher ID, password and QR','?page=teacher_cards',true)
-  .hm_task('key','Reset a teacher’s password','Teachers › New starter password','?page=accounts').hm_task('move','Move pupils to a teacher','When a class changes teacher','?page=accounts#move')
-  .hm_task('download','Download a backup','Keep a copy of all records','?page=print#pc-backup',true).hm_task('print','Print school report','For the principal or division','?page=reports',true)
-  .hm_task('mega','Post an announcement','All teachers see it','?page=settings&tab=announcements').'</div>'.claude_tip($u);
+ /* v203 tidy Home: only what needs the administrator gets a big card; everything that is fine is one "All clear" line. */
+ $todo=[[$oldBackup,'download',$oldBackup?1:0,'Backup to download',admin_backup_note(),'Open Backup','?page=print#pc-backup','Backup is up to date'],
+  [(bool)$inactive,'people',$inactive,'Pupils inactive 7+ days',$top?'Most in '.$top['n']:'All pupils learned this week','See the report','?page=reports','All pupils learned this week'],
+  [(bool)$idle,'user',count($idle),'Teachers not signed in 14+ days',$idle?implode(', ',array_slice(array_column($idle,'name'),0,2)).(count($idle)>2?' …':''):'','Open Teachers','?page=accounts'.($idle?'&amp;status=idle':''),'All teachers signed in'],
+  [(bool)$failed,'lock',$failed,'Wrong passwords today',$failed?'Check the activity log':'','Open the log','?page=activity_log&amp;tab=security&amp;days=1','No wrong passwords today']];
+ $hot=array_filter($todo,fn($t)=>$t[0]);$calm=array_filter($todo,fn($t)=>!$t[0]);
+ echo '<p class="hm-sub">Needs you today</p>';
+ if($hot)echo '<div class="hm-todo hm-todo-n'.count($hot).'">'.implode('',array_map(fn($t)=>hm_todo('hot',$t[1],$t[2],$t[3],$t[4],$t[5],$t[6]),$hot)).'</div>';
+ $cu=checkup_overview_item();
+ echo '<div class="hm-clear">'.($hot?'':'<b>'.icon('check').'All clear today</b>').implode('',array_map(fn($t)=>'<a href="'.$t[6].'">'.icon('check').e($t[7]).'</a>',$calm)).'</div>';
+ if($cu!=='')echo '<div class="hm-checkup">'.$cu.'</div>';
+ echo '<p class="hm-sub">Shortcuts</p><div class="hm-grid">'
+  .hm_task('print','Print Teacher Passes','Teacher ID, password and QR','?page=teacher_cards',true).hm_task('key','Reset a teacher’s password','Teachers › New starter password','?page=accounts')
+  .hm_task('move','Move pupils to a teacher','When a class changes teacher','?page=accounts#move').hm_task('mega','Post an announcement','All teachers see it','?page=settings&tab=announcements').'</div>';
  echo '<p class="hm-sub">School at a glance</p>';
  echo admin_kpis([['people',number_format($pupils),'Pupils',$newPupils?'+'.$newPupils.' this month':'',false],['user',count($teachers),'Teachers',$idle?count($idle).' inactive 14+ days':'all active',(bool)$idle],['book',$sections,'Sections',$grades?'Grades '.implode(', ',array_column($grades,'g')):'none yet',false],['check',number_format($week),'Activities this week',$trend,$prev&&$week<$prev]]);
  $levels=[];foreach(rows("SELECT ELT(GREATEST(".level_order_sql('a.level_id').",COALESCE((SELECT MAX(".level_order_sql('m.level_id').") FROM activity_completion c JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=u.id),0)),".implode(',',LEVEL_ORDER).") lv FROM users u JOIN pupil_level_assignments a ON a.pupil_id=u.id WHERE u.role='pupil' AND u.active=1".school_users_sql()) as $r)$levels[(int)$r['lv']]=($levels[(int)$r['lv']]??0)+1;$max=max([1]+$levels);
- echo '<div class="ws-g3 hm-g3"><section class="card"><div class="ws-hd"><h2>Pupils at each level</h2><a href="?page=reports">View report '.icon('arrow').'</a></div><div class="ws-bars">';
- foreach(rows('SELECT id FROM bulig_levels ORDER BY '.level_order_sql('id')) as $l){$n=$levels[(int)$l['id']]??0;echo '<div class="ws-bar"><span>'.e(level_label((int)$l['id'])).'</span><u><i class="w-'.(int)(round($n/$max*20)*5).'"></i></u><b>'.$n.'</b></div>';}
- echo '</div></section><section class="card"><div class="ws-hd"><h2>Most active sections</h2><small class="muted">last 30 days</small></div><div class="ws-list">';
+ echo '<section class="card hm-levels"><div class="ws-hd"><h2>Pupils at each level</h2><a href="?page=reports">View report '.icon('arrow').'</a></div><div class="hl-grid">';
+ foreach(rows('SELECT id FROM bulig_levels ORDER BY '.level_order_sql('id')) as $l){$n=$levels[(int)$l['id']]??0;echo '<div class="hl-lv'.($n?'':' z').'"><span>'.e(level_label((int)$l['id'])).'</span><b>'.$n.'</b><u><i class="w-'.(int)(round($n/$max*20)*5).'"></i></u></div>';}
+ echo '</div></section><div class="hm-g2"><section class="card"><div class="ws-hd"><h2>Most active sections</h2><small class="muted">last 30 days</small></div><div class="ws-list">';
  $act=rows("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM activity_completion c JOIN pupil_sections ps ON ps.pupil_id=c.pupil_id JOIN sections s ON s.id=ps.section_id WHERE c.submitted_at>=?".admin_live_sections_sql()." GROUP BY s.id ORDER BY c DESC LIMIT 3",[date('Y-m-d',strtotime('-30 days'))]);
  foreach($act as $a)echo '<div class="ws-li">'.icon('star').'<span>'.e($a['n']).'</span><span class="ws-sp ws-pill ok">'.number_format((int)$a['c']).'</span></div>';if(!$act)echo '<p class="muted">No activity in the last 30 days yet.</p>';
  echo '</div></section><section class="card"><div class="ws-hd"><h2>Announcement</h2><a href="?page=settings&amp;tab=announcements">Edit</a></div>';
  $ann=admin_announcements(true);if($ann){$a=$ann[0];echo '<div class="ws-ann"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · Shown to all teachers'.($a['until']?' until '.e(date('M j',strtotime($a['until']))):'').'</small></div>';}else echo '<p class="muted">No announcement. Post one for all teachers in Settings.</p>';
- echo '</section></div>';
+ echo '</section></div>'.claude_tip($u);
 }
 
 /* ---------------- administrator: Print & download ---------------- */

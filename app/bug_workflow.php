@@ -93,8 +93,15 @@ function bugflow_view(array $u):void{
  $admin=$u['role']==='admin';$id=(int)($_GET['id']??0);
  if(!$id){
   if($admin)go('?page=bugs');
-  echo '<section class="card"><h1>My bug reports</h1><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_report_submit"><label>What is not working?<textarea name="note" rows="4" maxlength="2000" required></textarea></label><button class="btn primary">Report a problem</button></form></section><div class="bug-report-grid">';
-  foreach(rows('SELECT id,summary,status FROM bug_reports WHERE reporter_id=? ORDER BY id DESC LIMIT 100',[$u['id']]) as $r)echo '<article class="card bug-report-tile"><span class="bug-status status-'.e($r['status']).'">'.e(BUG_STATES[$r['status']]).'</span><h2><a href="?page=bug_report&id='.(int)$r['id'].'">#'.(int)$r['id'].' · '.e($r['summary']).'</a></h2></article>';echo '</div>';return;
+  /* v203 tidy page: a short heading, the report form in its own card, then each report as one row with its status and replies. */
+  echo '<div class="pagehead"><div><span class="eyebrow">HELP</span><h1>My bug reports</h1><p>Something not working in BULIG? Tell us here. The BULIG team reads every report and replies on this page.</p></div></div>';
+  echo '<section class="card br-new"><span class="br-ic" aria-hidden="true">'.icon('alert').'</span><form method="post" class="br-form">'.csrf_field().'<input type="hidden" name="action" value="bug_report_submit"><label for="br-note">What is not working?</label><textarea id="br-note" name="note" rows="3" maxlength="2000" required placeholder="What happened? Which page were you on? Example: The microphone does not start in My lessons."></textarea><div class="br-row"><small>Your device type is sent with your report, so we can check it.</small><button class="btn primary">'.icon('check').'Send report</button></div></form></section>';
+  $mine=rows('SELECT b.id,b.summary,b.status,b.created_at,b.updated_at,(SELECT COUNT(*) FROM bug_report_updates x WHERE x.report_id=b.id) replies FROM bug_reports b WHERE b.reporter_id=? ORDER BY b.id DESC LIMIT 100',[$u['id']]);
+  echo '<section class="card br-list"><div class="ws-hd"><h2>Your reports</h2><small class="muted">'.count($mine).' '.(count($mine)===1?'report':'reports').'</small></div>';
+  if(!$mine)echo '<p class="muted br-none">No reports yet. If something does not work, write it above.</p>';
+  foreach($mine as $r){$when=strtotime((string)$r['created_at']);
+   echo '<a class="br-item" href="?page=bug_report&amp;id='.(int)$r['id'].'"><span class="bug-status status-'.e($r['status']).'">'.e(BUG_STATES[$r['status']]).'</span><span class="br-txt"><b>'.e($r['summary']).'</b><small>Report #'.(int)$r['id'].' · '.e($when?date('M j, Y',$when):'').((int)$r['replies']?' · '.(int)$r['replies'].' '.((int)$r['replies']===1?'reply':'replies'):'').'</small></span>'.icon('chev').'</a>';}
+  echo '</section>';return;
  }
  $r=one('SELECT b.*,u.name,u.role FROM bug_reports b JOIN users u ON u.id=b.reporter_id WHERE b.id=?'.($admin?'':' AND b.reporter_id=?'),$admin?[$id]:[$id,$u['id']]);if(!$r)fail('Report not found.',404);
  $last=(int)val('SELECT COALESCE(MAX(id),0) FROM bug_report_updates WHERE report_id=?',[$id]);$updates=rows('SELECT * FROM bug_report_updates WHERE report_id=? ORDER BY id DESC LIMIT 100',[$id]);

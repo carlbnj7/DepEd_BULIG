@@ -647,12 +647,14 @@ def test_whats_new(p):
     q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
     q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
     _, _, text = p.req('?page=dashboard')
-    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Ride with Jeepy!' in text)
+    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Reply to messages' in text)
     _, _, text = p.req('?page=dashboard')
     check('The popup comes only once', 'data-wn' not in text)
     check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
+    _, _, text = Client().req('?page=login&role=pupil')
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v203"' in text and 'BULIG has a new update!' in text and ' hidden ' in text)
 
 
 def test_notifications(p):
@@ -1167,6 +1169,24 @@ def test_messages(acc):
     status,_,text=a.req('index.php',dict(payload,scope='class',section=sid,csrf=a.token(page)))
     check('Class message previews its pupil recipients',status==200 and '1 recipients' in text and 'Check before sending' in text)
     check('Admin accounts are not valid message recipients',a.req('index.php',dict(payload,person=adminid,csrf=a.token(page)))[0]==400)
+    # v203 replies: a private chat for each person under each message
+    pid=int(acc['pupil1']['uid'])
+    status,url,text=p.req('index.php',{'action':'message_reply','csrf':p.token(page+'&id='+str(mid)),'message_id':mid,'body':'Thank you! <b>I will read.</b>'})
+    check('Pupil replies to a message and sees it in the chat',status==200 and 'mc-row me' in text and '&lt;b&gt;I will read.&lt;/b&gt;' in text)
+    p.req('index.php',{'action':'message_reply','csrf':p.token(page+'&id='+str(mid)),'message_id':mid,'body':'Thank you! <b>I will read.</b>'})
+    check('A double tap does not post the same reply twice',q(f'SELECT COUNT(*) FROM message_replies WHERE message_id={mid}')=='1')
+    check('Pupil cannot reply to a message sent to someone else',p.req('index.php',{'action':'message_reply','csrf':p.token(page),'message_id':teacher_mid,'body':'hi'})[0]==404)
+    check('Another pupil cannot reply into this chat',other.req('index.php',{'action':'message_reply','csrf':other.token(page),'message_id':mid,'body':'hi'})[0]==404)
+    check('Admin sees who replied, with an unread mark','Thank you!' in a.req(page+'&id='+str(mid))[2] and q(f'SELECT COUNT(*) FROM message_replies WHERE read_at IS NULL')=='1')
+    status,_,text=a.req(page+'&id='+str(mid)+'&with='+str(pid))
+    check('Admin opens the chat and the reply is marked read',status==200 and 'mc-row them' in text and q('SELECT COUNT(*) FROM message_replies WHERE read_at IS NULL')=='0')
+    a.req('index.php',{'action':'message_reply','csrf':a.token(page),'message_id':mid,'with':pid,'body':'Great, see you in class.'})
+    status,_,text=p.req(page+'&id='+str(mid))
+    check('Pupil sees the administrator reply in the chat','Great, see you in class.' in text and 'Seen' in text)
+    check('Teacher cannot open the pupil chat',t.req(page+'&id='+str(mid)+'&with='+str(pid))[0]==404)
+    status,url,text=t.req('index.php',{'action':'message_reply','csrf':t.token(page),'message_id':teacher_mid,'body':'Noted, thank you.'})
+    check('Teacher replies to a message',status==200 and 'Noted, thank you.' in text)
+    check('Empty replies are rejected',p.req('index.php',{'action':'message_reply','csrf':p.token(page),'message_id':mid,'body':'  '})[0]==400)
 
 
 

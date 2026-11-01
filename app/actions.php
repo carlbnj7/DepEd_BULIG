@@ -9,6 +9,7 @@ function action():void{
  if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
  if($action==='reading_decision')rv_action();
  if(in_array($action,['message_preview','message_send'],true))messages_action($action);
+ if($action==='message_reply')message_reply_action();
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if(str_starts_with($action,'rc_'))rc_action($action);
  if($action==='rate_app'||$action==='rate_later')rate_action($action);/* app ratings (v152) */
