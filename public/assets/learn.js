@@ -18,7 +18,9 @@
 
  /* ---------- tidy header ---------- */
  const head=$('.activity-header'),prog=$('.activity-progress progress');
- if(head&&prog){const max=+prog.max||0,val=+prog.value||0;if(max>0&&max<=30){const seg=el('div','ap-seg');seg.setAttribute('aria-hidden','true');for(let i=0;i<max;i++)seg.append(el('i',i<val?'d':(i===val&&!readonly?'c':'')));prog.after(seg);head.classList.add('has-seg');}}
+ if(head&&prog){const max=+prog.max||0,val=+prog.value||0;if(max>0&&max<=30){const seg=el('div','ap-seg');seg.setAttribute('aria-hidden','true');for(let i=0;i<max;i++)seg.append(el('i',i<val?'d':(i===val&&!readonly?'c':'')));prog.after(seg);head.classList.add('has-seg');
+  /* v203 the progress is a little road like the level road map: each stop is an activity and Jeepy drives to the current one */
+  if(head.dataset.jeepy){seg.classList.add('ap-road');const j=new Image();j.className='ap-jeep';j.alt='';j.src=head.dataset.jeepy;j.style.left=Math.min(100,(Math.min(val,max-1)+.5)/max*100)+'%';seg.append(j);}}}
  const ds=$('#draft-status');
  if(head&&ds&&mode!=='none'){const chip=el('span','ap-saved');chip.setAttribute('aria-hidden','true');head.append(chip);
   const paint=()=>{const t=ds.textContent||'';let k='',x='';if(/saving/i.test(t)){k='busy';x='Saving…';}else if(/not saved/i.test(t)){k='bad';x='Not saved';}else if(/device|offline/i.test(t)){k='dev';x='On this device';}else if(/saved|restored/i.test(t)){k='ok';x='Saved';}chip.className='ap-saved'+(k?' on '+k:'');chip.textContent=x;};

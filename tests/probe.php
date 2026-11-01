@@ -20,6 +20,20 @@ $out=match($what){
   return ['keyed'=>$a&&ac_keyed($a),'right'=>"BULIG card answers\n".implode("\n",$right),'wrong'=>"BULIG card answers\n".implode("\n",$wrong),'cards'=>count($key)];})(),
  /* Level 4: BULIG's miscue count on a sample reading, and a perfect reading of every Level 4 passage (php tests/probe.php l4) */
  /* Cycles (v182): lessons 2 and up of the pupil's level open in 10 days; lesson 1 stays open. Settings are put back after. */
+ /* v202 content audit: every keyed multiple-choice answer is one of its card's choices, no key points past the last card,
+    and Level 5 Grade 3 keeps module order (answer-key pages 13 and 53 leave a gap): php tests/probe.php key_audit */
+ 'key_audit'=>(function():array{$n=fn($s)=>key_norm(preg_replace('~^\s*[a-z]\s*[.)]\s*~i','',(string)$s));$bad=[];$checked=0;
+  foreach(rows('SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id WHERE a.published=1 AND l.published=1') as $a){$key=activity_key($a);if(!$key)continue;$s=l2a_set($a);$cards=$s['cards']??[];
+   foreach($key as $i=>$k){$c=$cards[(int)$i-1]??null;if($cards&&!$c){$bad[]=activity_key_id($a).' card '.$i.' missing';continue;}
+    if(!$c||($k['t']??'')!=='choice'||empty($c['choices']))continue;$checked++;$ch=array_map($n,$c['choices']);$ok=false;
+    foreach(array_merge([$k['a']],$k['alt']??[]) as $w)if(in_array($n($w),$ch,true))$ok=true;if(!$ok)$bad[]=activity_key_id($a).' card '.$i;}}
+  $g3=rows("SELECT a.phase,a.position,a.source_page FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=6 AND m.grade_level=3 AND a.phase IN ('pre','post') AND a.published=1");
+  $order=true;foreach($g3 as $r)if((int)$r['position']!==(int)$r['source_page']-($r['phase']==='pre'?5:47))$order=false;
+  return ['checked'=>$checked,'bad'=>array_slice($bad,0,10),'g3'=>count($g3),'g3_order'=>$order];})(),
+ /* v203 Word Coach only where the module asks pupils to read: php tests/probe.php wc_module */
+ 'wc_module'=>(function():array{$f=function(string $title,int $lv,int $g):?bool{$a=one('SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE a.title=? AND m.level_id=? AND m.grade_level=? AND a.published=1 LIMIT 1',[$title,$lv,$g]);if(!$a)return null;
+   foreach(l2a_set($a)['cards']??[] as $c)if(in_array('read',$c['ui']['answer']??[],true))return true;return false;};
+  return ['editorial'=>$f('A Dirty Cafeteria',8,6),'read_story'=>$f('My Friend',7,1)];})(),
  'wc_check'=>(function():array{$r="BULIG card answers\nCard 1: (voice recording) said: cat hat\nCard 2: x";$_POST['wc']=['1'=>'40|cat','2'=>'na|'];$m=wc_merge($r."\nTries: 2=1");unset($_POST['wc']);
   $c=card_coach($m);return ['line'=>str_contains($m,"\nCoach: 1=40|cat; 2=na|\nTries: 2=1"),'p1'=>$c[1]['p']??-1,'w1'=>$c[1]['w']??[],'p2'=>isset($c[2])&&array_key_exists('p',$c[2])?$c[2]['p']:-1,'cards'=>card_answers($m),'strip'=>card_strip_tries($m)===$r,
    'test_off'=>wc_on(['phase'=>'post'])||wc_on(['phase'=>'pre']),'learn_on'=>wc_on(['phase'=>'learn'])];})(),

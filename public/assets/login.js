@@ -111,3 +111,15 @@
  setInterval(()=>{if(document.hidden)return;n=(n+1)%pairs.length;fetchPair(n+1);box.classList.add('lfx-swap');
   setTimeout(()=>{a.src=pairs[n].a;b.src=pairs[n].b;box.classList.remove('lfx-swap');box.classList.add('lfx-in');setTimeout(()=>box.classList.remove('lfx-in'),700);},380);},4200);
 })();
+
+/* v203 What's new before signing in: Bob's update popup comes right after the opening screen, once on each device.
+   Closing it is remembered here and in a cookie, so Bob does not come again right after signing in. */
+(()=>{const box=document.querySelector('[data-wn-guest]');if(!box)return;const id=box.dataset.wnGuest,k='bulig-wn-guest';
+ let seen=false;try{seen=localStorage.getItem(k)===id;}catch(e){}if(seen||document.cookie.split('; ').includes('bulig_wn='+id))return;
+ const close=()=>{box.hidden=true;try{localStorage.setItem(k,id);}catch(e){}document.cookie='bulig_wn='+id+'; path=/; max-age=31536000; SameSite=Lax'+(location.protocol==='https:'?'; Secure':'');};
+ box.addEventListener('click',e=>{if(e.target===box||e.target.closest('[data-wn-close]'))close();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!box.hidden)close();});
+ const d=document.documentElement,t0=Date.now();
+ const wait=()=>{if(d.classList.contains('bulig-boot')&&Date.now()-t0<8000){setTimeout(wait,150);return;}
+  setTimeout(()=>{box.hidden=false;const b=box.querySelector('[data-wn-close]');if(b)setTimeout(()=>b.focus({preventScroll:true}),300);},d.classList.contains('boot-out')?650:250);};
+ wait();})();

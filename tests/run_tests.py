@@ -312,6 +312,7 @@ def run_pages(acc):
             test_star_gate(p6, acc)
             test_done_scores()
             test_word_coach()
+            test_content_keys()
             test_castle(p6, acc)
             test_cycles(acc)
 
@@ -464,6 +465,19 @@ def test_word_coach():
     check('BULIG reads the coaching back (score and words to practise)', r.get('p1') == 40 and r.get('w1') == ['cat'] and r.get('p2') is None, r)
     check('The card answers stay the same with the coaching line', r.get('cards') == {'1': '(voice recording) said: cat hat', '2': 'x'} and r.get('strip') is True, r)
     check('Lessons, pre-tests and post-tests all get the coach', r.get('learn_on') is True and r.get('test_off') is True, r)
+
+
+def test_content_keys():
+    """v202: answer keys match the cards pupils see (Levels 1 to 7, every grade)."""
+    section('6c-4. Answer keys and module order')
+    r = php_cli('probe.php', 'key_audit', 0)
+    check('Every keyed multiple-choice answer is one of its choices', r.get('checked', 0) > 100 and r.get('bad') == [], r)
+    check('Level 5 Grade 3 pre-test and post-test keep module order, so their keys check the right item', r.get('g3', 0) > 15 and r.get('g3_order') is True, r)
+    r = php_cli('probe.php', 'wc_module', 0)
+    check('Word Coach only where the module asks pupils to read (not on the Level 7 sample editorial)', r.get('editorial') is False and r.get('read_story') is True, r)
+    tour = open(os.path.join(ROOT, 'public/assets/tour.js'), encoding='utf8').read()
+    check('Jarvis has a tour on Messages, Bug reports, Reading verification, Leaderboard and Certificates',
+          all(k + ':[' in tour for k in ('messages', 'bug_report', 'reading_reviews', 'leaderboard', 'certificates', 'bugs', 'directory', 'school')))
 
 
 def test_castle(p6, acc):
@@ -635,12 +649,14 @@ def test_whats_new(p):
     q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
     q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
     _, _, text = p.req('?page=dashboard')
-    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Ride with Jeepy!' in text)
+    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Reply to messages' in text)
     _, _, text = p.req('?page=dashboard')
     check('The popup comes only once', 'data-wn' not in text)
     check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
+    _, _, text = Client().req('?page=login&role=pupil')
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v203"' in text and 'BULIG has a new update!' in text and ' hidden ' in text)
 
 
 def test_notifications(p):
@@ -1007,7 +1023,7 @@ def test_schools(a, acc):
     check('A school page has the fixed cover (no upload) and no details line under the name',
           'name="cover"' not in cv and 'School head:' not in cv)
     _, _, home = a.req('?page=dashboard&school=0')
-    check('Home with all schools shows each school side by side', home.count('class="sc-cmp') == 2)
+    check('Home with all schools shows the school highlights and a link to compare them all', home.count('class="so-hi ') == 3 and 'Compare all 2 schools' in home and 'class="ah-hero"' in home)
     tid = q("SELECT id FROM users WHERE name='Tess Two'")
     a.req('index.php', {'action': 'teacher_school', 'id': tid, 'school_id': first, 'csrf': a.token('?page=accounts')})
     check('A teacher can be moved to another school (their ID stays)', q(f'SELECT CONCAT(public_id,"/",school_id) FROM users WHERE id={int(tid)}') == f'TWOEST0001/{first}')
@@ -1155,6 +1171,24 @@ def test_messages(acc):
     status,_,text=a.req('index.php',dict(payload,scope='class',section=sid,csrf=a.token(page)))
     check('Class message previews its pupil recipients',status==200 and '1 recipients' in text and 'Check before sending' in text)
     check('Admin accounts are not valid message recipients',a.req('index.php',dict(payload,person=adminid,csrf=a.token(page)))[0]==400)
+    # v203 replies: a private chat for each person under each message
+    pid=int(acc['pupil1']['uid'])
+    status,url,text=p.req('index.php',{'action':'message_reply','csrf':p.token(page+'&id='+str(mid)),'message_id':mid,'body':'Thank you! <b>I will read.</b>'})
+    check('Pupil replies to a message and sees it in the chat',status==200 and 'mc-row me' in text and '&lt;b&gt;I will read.&lt;/b&gt;' in text)
+    p.req('index.php',{'action':'message_reply','csrf':p.token(page+'&id='+str(mid)),'message_id':mid,'body':'Thank you! <b>I will read.</b>'})
+    check('A double tap does not post the same reply twice',q(f'SELECT COUNT(*) FROM message_replies WHERE message_id={mid}')=='1')
+    check('Pupil cannot reply to a message sent to someone else',p.req('index.php',{'action':'message_reply','csrf':p.token(page),'message_id':teacher_mid,'body':'hi'})[0]==404)
+    check('Another pupil cannot reply into this chat',other.req('index.php',{'action':'message_reply','csrf':other.token(page),'message_id':mid,'body':'hi'})[0]==404)
+    check('Admin sees who replied, with an unread mark','Thank you!' in a.req(page+'&id='+str(mid))[2] and q(f'SELECT COUNT(*) FROM message_replies WHERE read_at IS NULL')=='1')
+    status,_,text=a.req(page+'&id='+str(mid)+'&with='+str(pid))
+    check('Admin opens the chat and the reply is marked read',status==200 and 'mc-row them' in text and q('SELECT COUNT(*) FROM message_replies WHERE read_at IS NULL')=='0')
+    a.req('index.php',{'action':'message_reply','csrf':a.token(page),'message_id':mid,'with':pid,'body':'Great, see you in class.'})
+    status,_,text=p.req(page+'&id='+str(mid))
+    check('Pupil sees the administrator reply in the chat','Great, see you in class.' in text and 'Seen' in text)
+    check('Teacher cannot open the pupil chat',t.req(page+'&id='+str(mid)+'&with='+str(pid))[0]==404)
+    status,url,text=t.req('index.php',{'action':'message_reply','csrf':t.token(page),'message_id':teacher_mid,'body':'Noted, thank you.'})
+    check('Teacher replies to a message',status==200 and 'Noted, thank you.' in text)
+    check('Empty replies are rejected',p.req('index.php',{'action':'message_reply','csrf':p.token(page),'message_id':mid,'body':'  '})[0]==400)
 
 
 

@@ -28,7 +28,7 @@ try:
   m.screenshot(path='tests/ui-preview/reading-review-phone.png',full_page=True)
   page.goto(t.BASE+'?page=dashboard');page.locator('.boot').wait_for(state='hidden')
   assert page.locator('.rv-home').is_visible()
-  assert page.locator('.rv-home').bounding_box()['y'] > page.locator('.hm-head').bounding_box()['y']
+  assert page.locator('.rv-home').bounding_box()['y'] > page.locator('.ah-hero').bounding_box()['y']
   page.screenshot(path='tests/ui-preview/teacher-home-compact.png',full_page=True)
   def harness(apple=False,mode="success"):
    page.goto(t.BASE+'?page=reading_reviews')
@@ -102,7 +102,12 @@ try:
   assert page.locator('[data-coach-audio]').input_value()==''
   assert page.evaluate('readingDone===null && testTracks.every(t=>t.readyState==="ended")')
   print('PASS: interrupted recording cannot masquerade as valid evidence or be submitted with the score.')
-  page.locator('.wc-x').click()
+  page.locator('.wc-rec-start').click();page.locator('.wc-rec-stop').wait_for(state='visible');page.wait_for_timeout(1200)
+  page.locator('.wc-rec-stop').click();page.locator('.wc-ov').wait_for(state='detached')
+  assert page.locator('[data-coach-audio]').input_value().startswith('data:audio/')
+  assert page.locator('[data-wc-val]').input_value()=='100|'
+  assert page.evaluate('readingDone && readingDone.audio.length>200 && testTracks.every(t=>t.readyState==="ended")')
+  print('PASS: iPhone fallback: when Word Coach loses the recording, the score is kept and a record-only reading is saved for the teacher.')
   browser.close()
 finally:
  server.terminate();server.wait(timeout=10)
