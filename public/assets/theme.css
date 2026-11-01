@@ -6440,9 +6440,28 @@ html.dark .msg-shell>.card{background:#13251b;color:#eef5ee}html.dark .msg-item.
 @media(max-width:600px){.bug-detail-header{gap:10px;flex-wrap:wrap}.bug-detail-layout{gap:16px}.bug-conversation{gap:16px}.bug-filters .btn{flex:1 1 40%;text-align:center}.bug-toolbar>.btn,.bug-toolbar>form{flex:1 1 100%;width:100%}.bug-toolbar form button{width:100%}.bug-update-meta{align-items:flex-start}.bug-report-summary,.bug-thread,.bug-moderation{padding:18px!important}}
 
 /* Compact teacher reading shortcut and passage/audio review. */
-.rv-home{display:flex;align-items:center;gap:12px;max-width:640px;padding:12px 16px;margin:12px 0 20px;border:1px solid var(--g200);border-radius:16px;background:var(--g100);color:var(--g900)}
-.rv-home>div{flex:1;min-width:0}.rv-home strong,.rv-home small{display:block}.rv-home strong{font-size:15px}.rv-home small{font-size:13px;margin-top:3px}.rv-home>span svg{width:24px;height:24px}.rv-home .btn{font-size:14px;padding:10px 14px}
-.rv-recording{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,1fr);border:1px solid var(--g200);border-radius:18px;overflow:hidden;margin:16px 0;background:var(--g100)}
+/* v202 Reading verification: the Teacher Home card sits with the other "Needs you today" cards; review cards are tidy panels. */
+#tf-todo.hm-todo.hm-todo4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1100px){#tf-todo.hm-todo.hm-todo4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:740px){#tf-todo.hm-todo.hm-todo4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.rv-vtabs{margin:4px 0 18px}
+.rv-review{padding:0!important;overflow:hidden}
+.rv-rhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 20px;border-bottom:1px solid var(--line,#e9e2cc);background:var(--y50,#fffbea)}
+.rv-rhead .rv-main strong{font-size:1.05rem;white-space:normal}.rv-rhead .rv-main small{font-size:.86rem}
+.rv-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-left:auto}
+.rv-meta .rv-ks{margin:0;display:inline-flex;align-items:center;gap:4px;font-weight:700}.rv-meta .rv-ks svg{width:14px;height:14px}
+.rv-meta time{font-size:.8rem;color:var(--muted,#5f6f63);font-weight:600}
+.rv-recording{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,1fr);border:1px solid var(--g200);border-radius:18px;overflow:hidden;margin:16px 20px;background:var(--g100)}
 .rv-reference{padding:20px;background:var(--white);min-width:0}.rv-reference h3,.rv-player h3{font-size:17px;margin:6px 0 12px}.rv-passage{overflow-wrap:anywhere;line-height:1.8;font-size:18px;max-height:360px;overflow:auto;padding-right:8px}.rv-reference>small{display:block;margin-top:12px;font-size:12px}
-.rv-player{padding:24px 20px;display:flex;flex-direction:column;justify-content:center;min-width:0}.rv-player p{font-size:14px;margin:0 0 16px}.rv-player audio{width:100%;max-width:100%;min-width:0}.rv-review .stack{margin-top:18px}
-@media(max-width:650px){.rv-home{flex-wrap:wrap;padding:12px}.rv-home>.btn{margin-left:36px}.rv-recording{grid-template-columns:minmax(0,1fr)}.rv-reference,.rv-player{padding:16px}.rv-passage{font-size:17px;max-height:320px}.rv-player{border-top:1px solid var(--g200)}}
+.rv-player{padding:24px 20px;display:flex;flex-direction:column;justify-content:center;min-width:0}.rv-player h3{display:flex;align-items:center;gap:8px}.rv-player h3 svg{width:20px;height:20px;color:var(--g700)}.rv-player p{font-size:14px;margin:0 0 16px}.rv-player audio{width:100%;max-width:100%;min-width:0}
+.rv-more{margin:0 20px 14px}.rv-more>summary{cursor:pointer;font-weight:600;color:var(--g700,#176444);font-size:.92rem}
+.rv-noaudio,.rv-note{display:flex;align-items:center;gap:8px;margin:14px 20px;padding:10px 14px;border-radius:12px;background:var(--y50,#fffbea);border:1px solid var(--y300,#f3e2a6);font-size:.9rem}.rv-noaudio svg{width:18px;height:18px;flex:none}
+.rv-decide{display:flex;flex-direction:column;gap:12px;padding:16px 20px 20px;border-top:1px solid var(--line,#e9e2cc);background:var(--g50,#f5faee)}
+.rv-decide label{display:flex;flex-direction:column;gap:6px;font-weight:700}.rv-decide label small{font-weight:500;color:var(--muted,#5f6f63)}
+.rv-decide textarea{width:100%;box-sizing:border-box}.rv-decide .buttonrow{margin:0}.rv-decide .btn svg{width:18px;height:18px}
+.rv-decided{padding:12px 20px 18px;border-top:1px solid var(--line,#e9e2cc)}.rv-decided p{margin:4px 0}
+.rv-empty p{margin:0}
+@media(max-width:650px){.rv-rhead{padding:14px 16px}.rv-meta{margin-left:0;width:100%}.rv-recording{grid-template-columns:minmax(0,1fr);margin:14px 12px}.rv-reference,.rv-player{padding:16px}.rv-passage{font-size:17px;max-height:320px}.rv-player{border-top:1px solid var(--g200)}.rv-more{margin:0 16px 12px}.rv-noaudio,.rv-note{margin:12px}.rv-decide{padding:14px 16px 16px}.rv-decide .buttonrow{flex-direction:column;align-items:stretch}.rv-decide .btn{width:100%;justify-content:center}.rv-vtabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.rv-vtabs .rv-tab{flex:none}}
+html.dark body:not(.demo-page) .rv-rhead,html.dark body:not(.demo-page) .rv-noaudio,html.dark body:not(.demo-page) .rv-note{background:#2a2614!important;border-color:#5c4f1f!important}
+html.dark body:not(.demo-page) .rv-decide{background:var(--sf2,#1d2d23)!important;border-color:var(--ln,#2e4234)!important}
+html.dark body:not(.demo-page) .rv-decided{border-color:var(--ln,#2e4234)!important}

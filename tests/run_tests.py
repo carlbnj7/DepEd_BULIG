@@ -312,6 +312,7 @@ def run_pages(acc):
             test_star_gate(p6, acc)
             test_done_scores()
             test_word_coach()
+            test_content_keys()
             test_castle(p6, acc)
             test_cycles(acc)
 
@@ -464,6 +465,17 @@ def test_word_coach():
     check('BULIG reads the coaching back (score and words to practise)', r.get('p1') == 40 and r.get('w1') == ['cat'] and r.get('p2') is None, r)
     check('The card answers stay the same with the coaching line', r.get('cards') == {'1': '(voice recording) said: cat hat', '2': 'x'} and r.get('strip') is True, r)
     check('Lessons, pre-tests and post-tests all get the coach', r.get('learn_on') is True and r.get('test_off') is True, r)
+
+
+def test_content_keys():
+    """v202: answer keys match the cards pupils see (Levels 1 to 7, every grade)."""
+    section('6c-4. Answer keys and module order')
+    r = php_cli('probe.php', 'key_audit', 0)
+    check('Every keyed multiple-choice answer is one of its choices', r.get('checked', 0) > 100 and r.get('bad') == [], r)
+    check('Level 5 Grade 3 pre-test and post-test keep module order, so their keys check the right item', r.get('g3', 0) > 15 and r.get('g3_order') is True, r)
+    tour = open(os.path.join(ROOT, 'public/assets/tour.js'), encoding='utf8').read()
+    check('Jarvis has a tour on Messages, Bug reports, Reading verification, Leaderboard and Certificates',
+          all(k + ':[' in tour for k in ('messages', 'bug_report', 'reading_reviews', 'leaderboard', 'certificates', 'bugs', 'directory', 'school')))
 
 
 def test_castle(p6, acc):

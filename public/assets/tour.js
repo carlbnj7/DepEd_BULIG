@@ -171,7 +171,14 @@
    ['#my-name','Your name','Change how your name shows in BULIG, on report cards and on your Teacher Pass. Your teacher character matches the sex on your account.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
-   ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']]
+   ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']],
+  messages:[
+   [['.msg-list'],'Your messages','Every message you get in BULIG is listed here. Tap one to read it.'],
+   [['.msg-search'],'Find a message','Type a word to find an older message.'],
+   [['.msg-panel'],'Read it here','The message you tap opens here.']],
+  bug_report:[
+   [['main .card form textarea','.bug-detail-header'],'Tell us what is wrong','Something not working? Write what happened here, then send it. The BULIG team reads every report.'],
+   [['.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']]
  };
  const T={
   credits:[
@@ -309,7 +316,25 @@
    ['.pc-tip','Save as PDF','In the print window, choose “Save as PDF” to keep a copy instead of printing.']],
   moved:[
    ['.hm-head','Where things are now','The menu has a new order. This page lists every old place and where it is now.'],
-   [['.wm-tbl'],'Old place, new place','Find the old name on the left. The right side tells you where it is now. Tap it to go there.']]
+   [['.wm-tbl'],'Old place, new place','Find the old name on the left. The right side tells you where it is now. Tap it to go there.']],
+  messages:[
+   [['.msg-list'],'Your messages','Every message you get in BULIG is listed here. Tap one to read it.'],
+   [['.msg-search'],'Find a message','Type a word to find an older message.'],
+   [['.msg-panel'],'Read it here','The message you tap opens here.']],
+  bug_report:[
+   [['main .card form textarea','.bug-detail-header'],'Tell us what is wrong','Something not working? Write what happened here, then send it. The BULIG team reads every report.'],
+   [['.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']],
+  reading_reviews:[
+   ['.pagehead','Reading verification','Listen to your pupils’ read-aloud recordings. You decide if each reading is really the pupil’s own.'],
+   [['.rv-vtabs'],'Lists','To verify, recordings with missing audio, and the ones you already checked.'],
+   [['.rv-recording'],'Listen and follow','The words the pupil had to read are on the left. Play the recording and follow along.'],
+   [['.rv-decide'],'Your decision','Verify the reading, or reject it with a reason. Rejecting takes back that activity’s XP once and asks the pupil to read it again.']],
+  leaderboard:[
+   [['.class-tabs'],'Choose a class','Pick a grade or section to see its top readers.'],
+   [['.lb-filter'],'Filter','Show one level or all levels.'],
+   [['.tf-top'],'Top 10 pupils','The ten pupils with the best average scores in BULIG.']],
+  certificates:[
+   [['main h1'],'Certificates','Certificates for pupils who finished every lesson of a level. Print them from here.']]
  };
  const A={
   credits:[
@@ -393,7 +418,23 @@
    [['#pc-backup'],'Backup','Download a copy of the database. Keep it somewhere safe.']],
   moved:[
    ['.hm-head','Where things are now','The menu has a new order. This page lists every old place and where it is now.'],
-   [['.wm-tbl'],'Old place, new place','Find the old name on the left. The right side tells you where it is now.']]
+   [['.wm-tbl'],'Old place, new place','Find the old name on the left. The right side tells you where it is now.']],
+  messages:[
+   [['.msg-list'],'Your messages','Every message you get in BULIG is listed here. Tap one to read it.'],
+   [['.msg-search'],'Find a message','Type a word to find an older message.'],
+   [['.msg-panel'],'Read it here','The message you tap opens here.']],
+  bugs:[
+   ['.pagehead','Bug reports','Reports from teachers and pupils. Reply to them or update their status.'],
+   [['.bug-filters'],'By status','Open, processing and fixed reports are kept apart.'],
+   [['.bug-toolbar'],'Download or close','Download the reports as a CSV file, or mark them all as fixed.'],
+   [['.bug-report-tile'],'One report','Tap Review report to read it, reply and change its status.']],
+  directory:[
+   [['.bk-tabs'],'Pupils and teachers','Switch between the pupil list and the teacher list.'],
+   [['.dir-filters'],'Search and filter','Find a person by name or ID, grade, teacher or level.']],
+  school:[
+   [['.sp-head'],'School page','This school’s teachers, pupils and progress in one place.'],
+   [['.sp-tabs'],'Tabs','Overview, the teachers and the pupils of this school.'],
+   [['.sp-stats'],'At a glance','How many pupils learned this week and how many lessons they finished.']]
  };
  const raw=(pupil?P:me.role==='admin'?A:T)[key];if(!raw)return;
  const steps=raw.filter(Boolean);
