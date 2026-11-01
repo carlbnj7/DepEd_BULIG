@@ -17,12 +17,14 @@ const WHATS_NEW=[
   ['star','Jarvis helps you','Tap Jarvis on Messages and My bug reports to see how they work.'],
  ],
  'teacher'=>[
+  ['star','A new Home page','Your Home has a green welcome banner with your class numbers. Only what needs you shows big; the rest is a green check.'],
   ['check','Verify readings','Reading verification is now a card on your Home page, next to the other things that need you today. The review page is easier to follow.'],
   ['comic','Reply to messages','You can reply to messages from your school administrator in a Messenger-style chat.'],
   ['phone','iPhone recordings','Pupils on iPhones and iPads can now send their reading recordings to you.'],
   ['star','Answer keys checked','Answer keys were checked against the modules. Level 5 Grade 3 tests now check the right items.'],
  ],
  'admin'=>[
+  ['star','A new Home page','A green welcome banner with the school numbers, one school dropdown instead of many buttons, and the schools as three highlights.'],
   ['comic','Message replies','Pupils and teachers can reply to your messages. Each person has a private chat under each message. Import 037_message_replies.sql.'],
   ['check','Content fixes','Answer keys were checked against the modules. Import 036_level5_g3_positions.sql for Level 5 Grade 3.'],
   ['phone','iPhone recordings','Word Coach recordings now reach teachers from iPhones and iPads.'],

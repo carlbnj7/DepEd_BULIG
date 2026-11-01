@@ -137,7 +137,7 @@ function lesson_view(array $u):void{
  if($chosen&&in_array(lesson_level($lid),[6,7,8],true)&&($l5=l2a_set($chosen))){l2a_activity_page($u,$lesson,$all,$chosen,$l5);return;}
  /* Level 3: the same card screens as Level 2 (module directions, tap / write / say on each card). */
  if($chosen&&level_family(lesson_level($lid))===4&&($l3=l2a_set($chosen))){l2a_activity_page($u,$lesson,$all,$chosen,$l3);return;}
- head(level_label(lesson_level($lid)).' · '.$lesson['subtitle'],'activity-page');echo '<header class="activity-header"><a class="iconbutton" href="?page=lessons&amp;level='.lesson_level($lid).'#level'.lesson_level($lid).'-path" aria-label="Back to my lessons">'.icon('close').'</a><div><strong>'.e(level_label(lesson_level($lid)).' · '.$lesson['subtitle']).'</strong><span>'.e($lesson['title']).'</span></div><div class="activity-progress"><span>'.$done.' / '.count($all).' complete</span><progress max="'.count($all).'" value="'.$done.'"></progress></div></header><main class="activity-main">';notice();
+ head(level_label(lesson_level($lid)).' · '.$lesson['subtitle'],'activity-page');echo '<header class="activity-header"'.(function_exists('jeepy_rides')?' data-jeepy="'.e(jeepy_rides()['drive']).'"':'').'><a class="iconbutton" href="?page=lessons&amp;level='.lesson_level($lid).'#level'.lesson_level($lid).'-path" aria-label="Back to my lessons">'.icon('close').'</a><div><strong>'.e(level_label(lesson_level($lid)).' · '.$lesson['subtitle']).'</strong><span>'.e($lesson['title']).'</span></div><div class="activity-progress"><span>'.$done.' / '.count($all).' complete</span><progress max="'.count($all).'" value="'.$done.'"></progress></div></header><main class="activity-main">';notice();
  if(!$chosen){
   $xp=(int)val('SELECT COALESCE(SUM(x.amount),0) FROM xp_transactions x JOIN activities a ON a.id=x.activity_id WHERE x.pupil_id=? AND a.lesson_id=?',[$pid,$lid]);
   echo pf_defs().'<section class="completion-card pf-completion">'.pf_lesson_celebration($lid,$pid,$finished).'<span class="eyebrow">'.e(lesson_display_label(lesson_level($lid),(int)$lesson['position'])).'</span><h1>'.($finished?'Lesson complete!':'You did it!').'</h1><p>You earned <strong>'.$xp.' XP</strong> and gave your voice a little more practice.</p>';
@@ -481,6 +481,7 @@ function visual_audit_view():void{
 
 function identity_banner(array $u,string $page):void{
  if($u['role']==='admin'||($u['role']==='pupil'&&in_array($page,['profile','settings'],true)))return;
+ if($u['role']==='teacher'&&$page==='dashboard')return;   // v203: the teacher Home has its own welcome banner
  $home=$page==='dashboard'&&$u['role']!=='pupil';$h=(int)date('G');$sky=$page==='dashboard'&&$u['role']==='pupil'?($h>=5&&$h<12?'m':($h>=12&&$h<17?'a':'e')):'';$detail=ucfirst($u['role']);
  if($u['role']==='pupil'){$p=one('SELECT grade_level,section FROM pupils WHERE user_id=?',[$u['id']]);$detail=$p?'Grade '.$p['grade_level'].' · '.$p['section']:'Pupil';}
  elseif($u['role']==='teacher'){$sections=teacher_sections((int)$u['id']);$names=array_map(fn($s)=>'Grade '.$s['grade_level'].' · '.$s['name'],array_slice($sections,0,2));$detail=$names?implode(' / ',$names).(count($sections)>2?' + '.(count($sections)-2).' more':''):'Teacher · Your classroom';}

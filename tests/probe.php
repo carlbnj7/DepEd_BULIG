@@ -30,6 +30,10 @@ $out=match($what){
   $g3=rows("SELECT a.phase,a.position,a.source_page FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=6 AND m.grade_level=3 AND a.phase IN ('pre','post') AND a.published=1");
   $order=true;foreach($g3 as $r)if((int)$r['position']!==(int)$r['source_page']-($r['phase']==='pre'?5:47))$order=false;
   return ['checked'=>$checked,'bad'=>array_slice($bad,0,10),'g3'=>count($g3),'g3_order'=>$order];})(),
+ /* v203 Word Coach only where the module asks pupils to read: php tests/probe.php wc_module */
+ 'wc_module'=>(function():array{$f=function(string $title,int $lv,int $g):?bool{$a=one('SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE a.title=? AND m.level_id=? AND m.grade_level=? AND a.published=1 LIMIT 1',[$title,$lv,$g]);if(!$a)return null;
+   foreach(l2a_set($a)['cards']??[] as $c)if(in_array('read',$c['ui']['answer']??[],true))return true;return false;};
+  return ['editorial'=>$f('A Dirty Cafeteria',8,6),'read_story'=>$f('My Friend',7,1)];})(),
  'wc_check'=>(function():array{$r="BULIG card answers\nCard 1: (voice recording) said: cat hat\nCard 2: x";$_POST['wc']=['1'=>'40|cat','2'=>'na|'];$m=wc_merge($r."\nTries: 2=1");unset($_POST['wc']);
   $c=card_coach($m);return ['line'=>str_contains($m,"\nCoach: 1=40|cat; 2=na|\nTries: 2=1"),'p1'=>$c[1]['p']??-1,'w1'=>$c[1]['w']??[],'p2'=>isset($c[2])&&array_key_exists('p',$c[2])?$c[2]['p']:-1,'cards'=>card_answers($m),'strip'=>card_strip_tries($m)===$r,
    'test_off'=>wc_on(['phase'=>'post'])||wc_on(['phase'=>'pre']),'learn_on'=>wc_on(['phase'=>'learn'])];})(),

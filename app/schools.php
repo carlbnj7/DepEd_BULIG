@@ -48,6 +48,12 @@ function school_sections_sql():string{$f=school_filter_id();return $f?' AND s.te
 /* ---------- the filter bar on the administrator's pages ---------- */
 function school_filter_bar(string $page,string $extra=''):string{
  if(count(school_rows())<2)return '';$f=school_filter_id();
+ /* v203: many schools would fill the top of the page with buttons, so 7 or more schools get one dropdown instead */
+ if(count(school_rows())>=7){parse_str(html_entity_decode(ltrim($extra,'&')),$kv);
+  $h='<form class="sc-pick" method="get" aria-label="Choose a school"><input type="hidden" name="page" value="'.e($page).'">';foreach($kv as $k=>$v)if(is_string($v))$h.='<input type="hidden" name="'.e($k).'" value="'.e($v).'">';
+  $h.='<label>'.icon('home').'<span>Showing</span><select name="school"><option value="0">All schools ('.count(school_rows()).')</option>';
+  foreach(school_rows() as $s)$h.='<option value="'.(int)$s['id'].'"'.($f===(int)$s['id']?' selected':'').'>'.e($s['code'].($s['name']!==''?' · '.$s['name']:'')).'</option>';
+  return $h.'</select></label><button class="btn secondary small sc-pick-go">Show</button></form>';}
  $h='<nav class="sc-filter" aria-label="Choose a school"><span>Showing:</span><div class="sc-seg"><a class="'.($f?'':'on').'" href="?page='.e($page).$extra.'&amp;school=0">All schools</a>';
  foreach(school_rows() as $s)$h.='<a class="'.($f===(int)$s['id']?'on':'').'" href="?page='.e($page).$extra.'&amp;school='.(int)$s['id'].'" title="'.e($s['name']).'">'.e($s['code']).'</a>';
  return $h.'</div></nav>';
@@ -62,15 +68,27 @@ function school_counts():array{
  return $c;
 }
 /** Side-by-side numbers for each school on the administrator's Home (all schools shown). */
-function school_compare_cards():string{
- if(count(school_rows())<2||school_filter_id())return '';$cnt=school_counts();$week=date('Y-m-d',strtotime('-6 days'));
- $h='<div class="sc-compare">';
+/** Each school's numbers for Home: pupils, teachers, % who finished a lesson, pupils who learned this week. */
+function school_stats():array{
+ $cnt=school_counts();$week=date('Y-m-d',strtotime('-6 days'));$out=[];
  foreach(school_rows() as $i=>$s){$sid=(int)$s['id'];$p=$cnt[$sid]['p']??0;
   $done=(int)val("SELECT COUNT(DISTINCT pp.pupil_id) FROM pupil_progress pp JOIN users u ON u.id=pp.pupil_id AND u.active=1 AND u.school_id=? WHERE pp.completed_at IS NOT NULL",[$sid]);
   $act=(int)val('SELECT COUNT(DISTINCT d.pupil_id) FROM learning_days d JOIN users u ON u.id=d.pupil_id AND u.active=1 AND u.school_id=? WHERE d.day>=?',[$sid,$week]);
-  $pct=$p?round($done/$p*100):0;
-  $h.='<a class="sc-cmp c'.($i%4).'" href="?page=dashboard&amp;school='.$sid.'"><h4><span class="sc-tag c'.($i%4).'">'.e($s['code']).'</span>'.number_format($p).' '.($p===1?'pupil':'pupils').'</h4><small>Finished at least one lesson</small><span class="sc-bar"><i class="w-'.(int)(round($pct/5)*5).'"></i></span><b>'.$pct.'%</b><p>Learned this week: '.number_format($act).' · Teachers: '.(int)($cnt[$sid]['t']??0).'</p></a>';}
- return $h.'</div>';
+  $out[]=['id'=>$sid,'code'=>(string)$s['code'],'name'=>(string)$s['name'],'p'=>$p,'t'=>(int)($cnt[$sid]['t']??0),'pct'=>$p?(int)round($done/$p*100):0,'act'=>$act,'c'=>$i%4];}
+ return $out;
+}
+/** Administrator Home, all schools: three highlights (top school, most active this week, needs support) and a link to compare all. */
+function school_overview():string{
+ if(count(school_rows())<2||school_filter_id())return '';$st=school_stats();
+ $tag=fn($r)=>'<span class="sc-tag c'.$r['c'].'">'.e($r['code']).'</span>';$go=fn($r)=>'?page=dashboard&amp;school='.$r['id'];
+ $tp=array_sum(array_column($st,'p'));
+ $withP=array_values(array_filter($st,fn($r)=>$r['p']>0));if(!$withP)$withP=$st;
+ $byPct=$withP;usort($byPct,fn($a,$b)=>$b['pct']<=>$a['pct']);$byAct=$st;usort($byAct,fn($a,$b)=>$b['act']<=>$a['act']);$low=end($byPct);
+ $tile=fn($cls,$ic,$label,$r,$big,$sub)=>'<a class="so-hi '.$cls.'" href="'.$go($r).'"><span class="so-hi-l">'.icon($ic).e($label).'</span><span class="so-hi-s">'.$tag($r).'<b>'.e($r['name']!==''?$r['name']:$r['code']).'</b></span><strong>'.$big.'</strong><small>'.$sub.'</small></a>';
+ return '<section class="card so so-c"><div class="ws-hd"><h2>Schools</h2><small class="muted">'.count($st).' schools · '.number_format($tp).' pupils</small></div><div class="so-his">'
+  .$tile('top','star','Top school',$byPct[0],$byPct[0]['pct'].'%','finished at least one lesson')
+  .$tile('act','chart','Most active this week',$byAct[0],number_format($byAct[0]['act']),'pupils learned this week')
+  .$tile('low','alert','Needs support',$low,$low['pct'].'%','finished at least one lesson').'</div><a class="btn secondary so-all" href="?page=schools">'.icon('home').'Compare all '.count($st).' schools '.icon('arrow').'</a></section>';
 }
 
 /* ---------- the Schools page ---------- */

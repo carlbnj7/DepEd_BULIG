@@ -76,7 +76,8 @@ function wc_review(array $c):string{
     reading-speed timer) gets the Reading Coach, as in Level 4: the pupil reads it aloud with Max before going on. */
 function wc_story(?array $s,?array $a=null):?array{
  if(!$s)return $s;
- foreach($s['cards'] as &$c){$k=$c['ui']['answer']??[];
+ $kid=$a&&function_exists('activity_key_id')?activity_key_id($a):null;
+ foreach($s['cards'] as $ci=>&$c){$k=$c['ui']['answer']??[];
   /* v186: "(Read Aloud) “My Food” These are the foods I eat. … Who cooks the food in the story?": the story and the question
      share one card (Level 5 assessments). The story is shown first with the Reading Coach to practise (no score: the
      card's answer is what counts), then the question. */
@@ -93,11 +94,15 @@ function wc_story(?array $s,?array $a=null):?array{
    &&($lid=(int)val("SELECT l.id FROM lessons l JOIN lessons me ON me.module_id=l.module_id WHERE me.id=? AND l.title IN (?,?) LIMIT 1",[(int)$a['lesson_id'],'Activity '.$m[1],'Lesson '.$m[1]]))
    &&($t=wc_listen_story(['lesson_id'=>$lid,'id'=>0]))!==''){$c['story']=trim($m[2]);$c['text']=$t;}
   if(str_word_count($t)<10)continue;
+  /* v203: Word Coach only where the module asks pupils to read the passage (the reading-speed timer always reads) */
+  if($k!==['speed']&&$kid&&!wc_module_reads($kid.':'.($ci+1)))continue;
   $c['ui']['answer'][]='read';$c['ui']['wct']=$t;
   /* v186: a story with no pictures here gets the pictures of the same story on the lesson's "Listen:" page. */
   if(empty($c['images'])&&$a&&($x=wc_listen_card($a,$t))&&$x['images']&&$x['share']>=.6)$c['images']=$x['images'];}
  unset($c);return $s;
 }
+/** v203: true when the module asks pupils to read this passage (database/word-coach-passages.json, checked against the module PDFs). */
+function wc_module_reads(string $key):bool{static $m=null;if($m===null){$f=__DIR__.'/../database/word-coach-passages.json';$j=is_file($f)?json_decode((string)file_get_contents($f),true):null;$m=is_array($j['keep']??null)?array_flip($j['keep']):false;}return $m===false||isset($m[$key]);}
 /** v186: the story of the lesson's "Listen: …" activity (Level 5), or ''. */
 function wc_listen_story(array $a,string $hint=''):string{return wc_listen_card($a,$hint)['t']??'';}
 /** The lesson's "Listen:" story that best fits $hint: ['t' => story, 'images' => its pictures, 'share' => 0-1 words of $hint in it]. */

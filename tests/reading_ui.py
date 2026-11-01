@@ -28,7 +28,7 @@ try:
   m.screenshot(path='tests/ui-preview/reading-review-phone.png',full_page=True)
   page.goto(t.BASE+'?page=dashboard');page.locator('.boot').wait_for(state='hidden')
   assert page.locator('.rv-home').is_visible()
-  assert page.locator('.rv-home').bounding_box()['y'] > page.locator('.hm-head').bounding_box()['y']
+  assert page.locator('.rv-home').bounding_box()['y'] > page.locator('.ah-hero').bounding_box()['y']
   page.screenshot(path='tests/ui-preview/teacher-home-compact.png',full_page=True)
   def harness(apple=False,mode="success"):
    page.goto(t.BASE+'?page=reading_reviews')

@@ -931,3 +931,6 @@ document.addEventListener('submit',e=>{const f=e.target.closest&&e.target.closes
  const f=document.querySelector('.mc-send');if(!f)return;const t=f.querySelector('textarea');const fit=()=>{t.style.height='auto';t.style.height=Math.min(140,t.scrollHeight)+'px';};t.addEventListener('input',fit);
  const touch=matchMedia('(pointer:coarse)').matches;t.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!touch&&!e.isComposing){e.preventDefault();if(t.value.trim())f.requestSubmit();}});
  f.addEventListener('submit',()=>{const b=f.querySelector('.mc-go');setTimeout(()=>{b.disabled=true;},0);});})();
+
+/* v203 school dropdown: choosing a school opens it straight away (the Show button stays for keyboards without scripts). */
+document.querySelectorAll('.sc-pick select').forEach(s=>{const f=s.form,b=f&&f.querySelector('.sc-pick-go');if(b)b.hidden=true;s.addEventListener('change',()=>f&&f.submit());});

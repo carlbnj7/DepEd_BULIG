@@ -473,6 +473,8 @@ def test_content_keys():
     r = php_cli('probe.php', 'key_audit', 0)
     check('Every keyed multiple-choice answer is one of its choices', r.get('checked', 0) > 100 and r.get('bad') == [], r)
     check('Level 5 Grade 3 pre-test and post-test keep module order, so their keys check the right item', r.get('g3', 0) > 15 and r.get('g3_order') is True, r)
+    r = php_cli('probe.php', 'wc_module', 0)
+    check('Word Coach only where the module asks pupils to read (not on the Level 7 sample editorial)', r.get('editorial') is False and r.get('read_story') is True, r)
     tour = open(os.path.join(ROOT, 'public/assets/tour.js'), encoding='utf8').read()
     check('Jarvis has a tour on Messages, Bug reports, Reading verification, Leaderboard and Certificates',
           all(k + ':[' in tour for k in ('messages', 'bug_report', 'reading_reviews', 'leaderboard', 'certificates', 'bugs', 'directory', 'school')))
@@ -1021,7 +1023,7 @@ def test_schools(a, acc):
     check('A school page has the fixed cover (no upload) and no details line under the name',
           'name="cover"' not in cv and 'School head:' not in cv)
     _, _, home = a.req('?page=dashboard&school=0')
-    check('Home with all schools shows each school side by side', home.count('class="sc-cmp') == 2)
+    check('Home with all schools shows the school highlights and a link to compare them all', home.count('class="so-hi ') == 3 and 'Compare all 2 schools' in home and 'class="ah-hero"' in home)
     tid = q("SELECT id FROM users WHERE name='Tess Two'")
     a.req('index.php', {'action': 'teacher_school', 'id': tid, 'school_id': first, 'csrf': a.token('?page=accounts')})
     check('A teacher can be moved to another school (their ID stays)', q(f'SELECT CONCAT(public_id,"/",school_id) FROM users WHERE id={int(tid)}') == f'TWOEST0001/{first}')

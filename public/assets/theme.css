@@ -6528,3 +6528,67 @@ html.dark .hl-lv{background:#16231b;border-color:#2e4234}html.dark .hl-lv span,h
 .br-none{margin:6px 0 10px}
 @media(max-width:640px){.br-new{flex-direction:column;gap:10px}.br-ic{width:40px;height:40px}.br-row .btn{width:100%;justify-content:center}.br-item{flex-wrap:wrap;gap:8px 12px}.br-item .bug-status{min-width:0}.br-txt{flex-basis:100%;order:3}.br-item>svg{margin-left:auto}}
 html.dark .br-txt b,html.dark .br-form label{color:#e8f0ea}html.dark .br-item{border-color:#2e4234}html.dark .br-item:hover{background:#1d2d23}
+/* v203 schools on administrator Home: one dropdown instead of many school buttons; the schools compared in one card. */
+.sc-pick{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 18px;padding:8px 10px 8px 14px;background:#fff;border:1px solid var(--line,#e3e8e0);border-radius:999px;width:fit-content;max-width:100%;box-sizing:border-box}
+.sc-pick label{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;margin:0;font-weight:700;color:var(--muted,#5f6f64);font-size:.9rem;min-width:0}
+.sc-pick label svg{width:18px;height:18px;color:var(--g700,#166534);flex:none}
+.sc-pick select{margin:0;min-width:220px;max-width:60vw;border-radius:999px;padding:8px 14px;font-weight:700;color:var(--g900,#0e3b28)}
+.so{margin:0 0 16px}.so .ws-hd{margin-bottom:8px}
+.so-his{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.so-hi{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;border:1px solid var(--line,#e9e2cc);text-decoration:none!important;color:inherit!important;background:#fff}
+.so-hi.top{background:#eef8ef;border-color:#cfe7d3}.so-hi.act{background:#eef4fc;border-color:#cfdcf0}.so-hi.low{background:#fff6e6;border-color:#f3dfb2}
+.so-hi-l{display:flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted,#5f6f63)}.so-hi-l svg{width:16px;height:16px}
+.so-hi-s{display:flex;align-items:center;gap:8px;min-width:0}.so-hi-s b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--g900,#0e3b28)}
+.so-hi strong{font-size:2rem;line-height:1;color:var(--g900,#0e3b28)}.so-hi small{color:var(--muted,#5f6f63)}
+.so-all{margin-top:12px}
+@media(max-width:740px){.sc-pick{border-radius:18px;width:100%}.sc-pick label{flex:1}.sc-pick select{min-width:0;flex:1;max-width:none}.so-his{grid-template-columns:1fr}}
+html.dark .sc-pick,html.dark .so-hi{background:#16231b;border-color:#2e4234}html.dark .so-hi strong,html.dark .so-hi-s b{color:#e8f0ea}
+/* v203 administrator Home layouts (preview) */
+.ah-list{display:flex;flex-direction:column;gap:8px}
+.ah-li{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--y50,#fffbea);border:1px solid var(--y300,#f3e2a6);text-decoration:none!important;color:inherit!important}
+.ah-li:hover{border-color:#e7c35b}.ah-ic{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--btn-yellow,#ffc629);color:var(--g900,#0e3b28)}.ah-ic svg{width:20px;height:20px}
+.ah-tx{flex:1;min-width:0}.ah-tx b{display:block;color:var(--g900,#0e3b28)}.ah-tx small{display:block;color:var(--muted,#5f6f63);font-size:.8rem}
+.ah-li strong{font-size:1.6rem;color:var(--g900,#0e3b28)}.ah-li>svg{width:18px;height:18px;color:var(--g700,#166534);flex:none}
+.ah-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.ah-kpis>div{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding:14px 16px;border-radius:18px;background:#fff;border:1px solid var(--line,#e9e2cc)}
+.ah-kpis>div>span{grid-row:1/3;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--g100,#edf5eb);color:var(--g700,#166534)}.ah-kpis>div>span svg{width:20px;height:20px}
+.ah-kpis b{font-size:1.5rem;line-height:1.1;color:var(--g900,#0e3b28)}.ah-kpis small{color:var(--muted,#5f6f63);font-size:.8rem}
+.ah-kpis em{grid-column:2;font-style:normal;font-size:.72rem;font-weight:700;color:var(--g600,#1c7a50)}.ah-kpis em.bad{color:#b4462c}
+.ah-short{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ah-short a{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border-radius:14px;background:var(--g50,#f5faee);border:1px solid var(--g100,#e3f0e4);font-weight:700;font-size:.85rem;color:var(--g900,#0e3b28);text-decoration:none;line-height:1.25}
+.ah-short a:hover{border-color:var(--g300,#9bcf9f)}.ah-short a span{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--btn-green,#166534);color:#fff}.ah-short svg{width:18px;height:18px}
+.ah-hero{border-radius:28px;padding:26px 28px;margin:0 0 18px;background:radial-gradient(circle at 85% 20%,rgba(255,214,79,.35),transparent 40%),linear-gradient(135deg,#0b5a2c,#14803c);color:#fff;box-shadow:0 18px 36px -24px rgba(8,60,30,.9)}
+.ah-hero .eyebrow{color:#ffd54f}.ah-hero h1{color:#fff;margin:6px 0 4px;font-size:2rem}.ah-hero p{margin:0;color:#e5f4e8}
+.ah-hero-t{display:flex;flex-direction:column;margin-bottom:18px}.ah-hero-b{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.ah-hero .ah-kpis{margin:0}.ah-hero .ah-kpis>div{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}.ah-hero .ah-kpis b{color:#fff}.ah-hero .ah-kpis small{color:#d8eedc}.ah-hero .ah-kpis em{color:#ffe08a}.ah-hero .ah-kpis em.bad{color:#ffc3b0}.ah-hero .ah-kpis>div>span{background:rgba(255,255,255,.18);color:#fff}
+.ah-bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:16px;align-items:stretch}
+.ah-bento>.card,.ah-bento>div>.card,.ah-bento .so,.ah-bento .hm-levels{margin:0;height:100%;box-sizing:border-box}
+.ah-b-today{grid-column:span 2}.ah-b-schools{grid-column:1/-1}.ah-b-levels{grid-column:1/-1}
+.ah-b-schools:empty{display:none}
+@media(max-width:1100px){.ah-bento{grid-template-columns:repeat(2,minmax(0,1fr))}.ah-b-today{grid-column:1/-1}}
+@media(max-width:740px){.ah-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.ah-bento{grid-template-columns:1fr}.ah-hero{padding:20px;border-radius:22px}.ah-hero h1{font-size:1.6rem}.ah-li strong{font-size:1.25rem}}
+html.dark .ah-kpis>div:not(.ah-hero *),html.dark .ah-short a{background:#16231b;border-color:#2e4234}html.dark .ah-kpis b,html.dark .ah-tx b,html.dark .ah-short a,html.dark .ah-li strong{color:#e8f0ea}html.dark .ah-li{background:#2a2614;border-color:#5c4f1f}
+.ah-bento:not(.th-bento)>section.card:last-child{grid-column:span 2}@media(max-width:1100px){.ah-bento:not(.th-bento)>section.card:last-child{grid-column:auto}}
+/* v203 teacher Home banner: the teacher's photo next to the hello */
+.th-who{display:flex;align-items:center;gap:16px}.th-photo{flex:none;display:block;width:64px;height:64px;border-radius:50%;overflow:hidden;border:3px solid #ffd54f;background:#fff}
+.th-photo img,.th-photo .avatar{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+@media(max-width:740px){.th-photo{width:52px;height:52px}.th-who{gap:12px}}
+/* v203 activity pages look like the level road map: blue sky and hills at the top, grass at the bottom,
+   and the progress is a little road with a stop for each activity and Jeepy at the current one. */
+html:has(body.activity-page){background:linear-gradient(180deg,#bfe4fb 0,#dff2fd 260px,#f3fae9 520px,#e4f3cf 100%)!important;min-height:100%}
+body.activity-page{position:relative}
+body.activity-page::before{content:"";position:fixed;left:0;right:0;bottom:0;height:150px;z-index:-1;pointer-events:none;
+ background:radial-gradient(120% 90px at 15% 100%,#a8d886 60%,transparent 61%),radial-gradient(110% 80px at 85% 100%,#9fd27c 60%,transparent 61%),linear-gradient(0deg,#b7df98 0,#b7df98 40px,transparent 40px)}
+body.activity-page::after{content:"";position:fixed;left:0;right:0;top:96px;height:160px;z-index:-1;pointer-events:none;opacity:.55;
+ background:radial-gradient(40% 120px at 10% 100%,#cfe9c4 60%,transparent 61%),radial-gradient(35% 100px at 55% 100%,#d6edc9 60%,transparent 61%),radial-gradient(40% 130px at 95% 100%,#c7e5bb 60%,transparent 61%)}
+.ap-seg.ap-road{position:relative;gap:0;height:16px;min-width:160px;align-items:center;justify-content:space-between;padding:0 6px;margin-top:10px;border-radius:999px;background:#3b4148;box-shadow:inset 0 0 0 2px #e9c23b}
+.ap-seg.ap-road::before{content:"";position:absolute;left:10px;right:10px;top:50%;border-top:2px dashed #ffd54f;opacity:.85}
+.ap-seg.ap-road i{position:relative;z-index:1;flex:none;width:9px;height:9px;border-radius:50%;background:#fff;opacity:.55}
+.ap-seg.ap-road i.d{background:#3fbf6f;opacity:1;box-shadow:0 0 0 2px #fff}.ap-seg.ap-road i.c{background:#ffc629;opacity:1;box-shadow:0 0 0 2px #fff}
+.ap-jeep{position:absolute;z-index:2;bottom:4px;width:44px;height:auto;transform:translateX(-50%);filter:drop-shadow(0 2px 2px rgba(0,0,0,.35));transition:left .6s ease;pointer-events:none}
+@media(max-width:700px){.ap-seg.ap-road{min-width:120px}.ap-jeep{width:36px}}
+html.dark:has(body.activity-page){background:linear-gradient(180deg,#0c2233 0,#10283a 260px,#11241a 520px,#0f2016 100%)!important}
+html.dark body.activity-page::before{background:radial-gradient(120% 90px at 15% 100%,#1d3a24 60%,transparent 61%),radial-gradient(110% 80px at 85% 100%,#1a3520 60%,transparent 61%),linear-gradient(0deg,#1c3822 0,#1c3822 40px,transparent 40px)}
+html.dark body.activity-page::after{opacity:.25}
+.ap-jeep.jp-0{left:0%}.ap-jeep.jp-5{left:5%}.ap-jeep.jp-10{left:10%}.ap-jeep.jp-15{left:15%}.ap-jeep.jp-20{left:20%}.ap-jeep.jp-25{left:25%}.ap-jeep.jp-30{left:30%}.ap-jeep.jp-35{left:35%}.ap-jeep.jp-40{left:40%}.ap-jeep.jp-45{left:45%}.ap-jeep.jp-50{left:50%}.ap-jeep.jp-55{left:55%}.ap-jeep.jp-60{left:60%}.ap-jeep.jp-65{left:65%}.ap-jeep.jp-70{left:70%}.ap-jeep.jp-75{left:75%}.ap-jeep.jp-80{left:80%}.ap-jeep.jp-85{left:85%}.ap-jeep.jp-90{left:90%}.ap-jeep.jp-95{left:95%}.ap-jeep.jp-100{left:100%}
+.ap-seg.ap-road a{position:relative;z-index:1;flex:none;display:grid;place-items:center}.ap-seg.ap-road a i{width:9px;height:9px;border-radius:50%;background:#fff;opacity:.55;display:block}.ap-seg.ap-road a.d i{background:#3fbf6f;opacity:1}.ap-seg.ap-road a.c i{background:#ffc629;opacity:1}
