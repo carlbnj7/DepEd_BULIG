@@ -6592,3 +6592,130 @@ html.dark body.activity-page::before{background:radial-gradient(120% 90px at 15%
 html.dark body.activity-page::after{opacity:.25}
 .ap-jeep.jp-0{left:0%}.ap-jeep.jp-5{left:5%}.ap-jeep.jp-10{left:10%}.ap-jeep.jp-15{left:15%}.ap-jeep.jp-20{left:20%}.ap-jeep.jp-25{left:25%}.ap-jeep.jp-30{left:30%}.ap-jeep.jp-35{left:35%}.ap-jeep.jp-40{left:40%}.ap-jeep.jp-45{left:45%}.ap-jeep.jp-50{left:50%}.ap-jeep.jp-55{left:55%}.ap-jeep.jp-60{left:60%}.ap-jeep.jp-65{left:65%}.ap-jeep.jp-70{left:70%}.ap-jeep.jp-75{left:75%}.ap-jeep.jp-80{left:80%}.ap-jeep.jp-85{left:85%}.ap-jeep.jp-90{left:90%}.ap-jeep.jp-95{left:95%}.ap-jeep.jp-100{left:100%}
 .ap-seg.ap-road a{position:relative;z-index:1;flex:none;display:grid;place-items:center}.ap-seg.ap-road a i{width:9px;height:9px;border-radius:50%;background:#fff;opacity:.55;display:block}.ap-seg.ap-road a.d i{background:#3fbf6f;opacity:1}.ap-seg.ap-road a.c i{background:#ffc629;opacity:1}
+/* v205 cards with nothing to answer: a book (reading) or an i (instructions) instead of a number */
+.l2-cdots button[class^="l2-cd-"],.l2-cdots button[class*=" l2-cd-"]{display:inline-grid;place-items:center;padding:0 8px;background:#fff7dc;border-color:#f1d27a;color:#7a5200}
+.l2-cdots button.l2-cd-info{background:#e8f1fb;border-color:#b7cfee;color:#244f86}
+.l2-cdots button[class*="l2-cd-"] svg{width:18px;height:18px}
+.l2-cdots button[class*="l2-cd-"].cur{background:var(--btn-green);border-color:#0a6a20;color:#fff}
+.l2-cnum.l2-role-story,.l2-cnum.l2-role-aloud,.l2-cnum.l2-role-info{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#fff7dc;color:#7a5200;letter-spacing:0}
+.l2-cnum.l2-role-info{background:#e8f1fb;color:#244f86}
+.l2-cnum[class*="l2-role-"] svg{width:16px;height:16px;flex:none}
+html.dark .l2-cdots button[class*="l2-cd-"]:not(.cur),html.dark .l2-cnum.l2-role-story,html.dark .l2-cnum.l2-role-aloud{background:#2a2614;border-color:#5c4f1f;color:#ffe08a}
+html.dark .l2-cdots button.l2-cd-info:not(.cur),html.dark .l2-cnum.l2-role-info{background:#16263a;border-color:#2c4767;color:#b9d4f5}
+/* v205 speed: the road maps keep their look, but the scenery no longer moves all the time (every tree, flower, star
+   and the road's centre line made phones repaint the whole map on every frame). */
+.pfm-sway,.pfm-dash,.pfm-stars{animation:none!important}
+.pfm-stars path:first-child{filter:none}
+.pfm-stars path{paint-order:stroke}
+html.map-lite :is(.pfm-cloud,.pfm-birds,.pfm-bird,.pfm-ripple,.pfm-duck,.pfm-smoke,.pfm-sunr,.pfm-flagwave,.pfm-c-spark,.jy-glow,.pfm-flag,.pfm-cur .pfm-disc){animation:none!important}
+.jy-svg,.pfm-svg,svg.pf-map{contain:layout paint}
+/* v205 My profile: the character pictures fit inside their tiles (they were 120px in tiles narrower than that);
+   the select circle is hidden (the green check shows the choice), so nothing sits on the faces. */
+.me-pic .avatar-options{max-width:none;grid-template-columns:repeat(auto-fill,minmax(100px,1fr))!important;gap:10px}
+.me-pic .avatar-option{flex-direction:column;gap:6px;padding:10px 6px 8px!important;min-width:0}
+.me-pic .avatar-option input{position:absolute!important;opacity:0;width:1px!important;height:1px!important;pointer-events:none}
+.me-pic .avatar-option-picture{width:100%;max-width:92px;aspect-ratio:1;height:auto}
+.me-pic .avatar-option-picture>img{width:100%!important;height:100%!important;border-width:3px}
+.me-pic .avatar-picked{position:absolute;right:-2px;top:-2px;bottom:auto}
+@media(max-width:740px){.me-pic .avatar-options{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px}.me-pic .avatar-option-picture{max-width:70px}}
+/* v205 rank frames round the pupil's picture */
+.rf{position:relative;display:inline-block;width:var(--rf,150px);aspect-ratio:1;flex:none;isolation:isolate}
+.rf>.avatar,.rf>img.avatar{position:absolute!important;left:15%;top:15%;width:70%!important;height:70%!important;border-radius:50%;object-fit:cover;border:0!important;box-shadow:none!important;background:#fff;z-index:0}
+.rf>.rf-svg{position:absolute;inset:-16%;width:132%;height:132%;z-index:1;overflow:visible;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(14,59,40,.28))}
+.rf>.rf-badge{position:absolute;left:50%;bottom:-27%;width:38%;height:auto;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.rf.rf-t8 .rf-svg,.rf.rf-t9 .rf-svg{animation:rf-glow 3s ease-in-out infinite}
+@keyframes rf-glow{50%{filter:drop-shadow(0 0 10px rgba(255,214,79,.85))}}
+html.map-lite .rf .rf-svg{animation:none}
+@media(prefers-reduced-motion:reduce){.rf .rf-svg{animation:none}}
+.me-av .rf{--rf:120px;margin:18px 22px 26px}
+@media(max-width:740px){.me-av .rf{--rf:118px;margin:16px auto 28px}}
+.me-av .rf>img.rf-badge{width:38%!important;height:auto!important;border:0!important;border-radius:0!important;box-shadow:none!important;object-fit:contain;background:none}
+.me-av .rf>img.avatar{width:70%!important;height:70%!important}
+@media(max-width:740px){.me-av .rf{--rf:96px;margin:22px 26px 18px 20px}.me-av .rf:is(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin:24px 36px 18px 30px}}
+/* v205: the pupil's picture in the banner is bigger and always has its rank frame */
+.identity-photo.has-rf{position:relative;display:block;flex:none;margin:14px 22px 14px 14px}
+.identity-photo.has-rf .rf{--rf:108px}
+.identity-photo.has-rf .rf>img.avatar{width:70%!important;height:70%!important;border:0!important;box-shadow:none!important}
+.identity-photo.has-rf .photo-edit{position:absolute;right:-2px;bottom:2px;z-index:3}
+.identity-compact .identity-photo.has-rf .rf{--rf:84px}
+.identity-compact .identity-photo.has-rf{margin:10px 18px 10px 10px}
+@media(max-width:740px){.identity-photo.has-rf .rf{--rf:86px}.identity-photo.has-rf{margin:12px 18px 12px 12px}.identity-compact .identity-photo.has-rf .rf{--rf:70px}.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin-left:24px;margin-right:26px}}
+.identity-photo.has-rf .rf{--rf:132px}.identity-compact .identity-photo.has-rf .rf{--rf:112px}
+.identity-photo.has-rf{margin:18px 28px 18px 18px}.identity-compact .identity-photo.has-rf{margin:16px 26px 16px 16px}
+@media(max-width:740px){.identity-photo.has-rf .rf,.identity-compact .identity-photo.has-rf .rf{--rf:100px}.identity-photo.has-rf,.identity-compact .identity-photo.has-rf{margin:16px 20px 16px 14px}.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin-left:28px;margin-right:30px}}
+/* v205b frames: the photo fills the frame (no gap); the ornaments reach out 30% on each side */
+.rf>.avatar,.rf>img.avatar,.me-av .rf>img.avatar,.identity-photo.has-rf .rf>img.avatar{left:10%!important;top:10%!important;width:80%!important;height:80%!important;object-fit:cover;border:0!important;box-shadow:none!important}
+.rf>.rf-svg{inset:-30%!important;width:160%!important;height:160%!important;filter:drop-shadow(0 4px 6px rgba(10,20,10,.35))}
+.identity-photo.has-rf .rf{--rf:112px}.identity-compact .identity-photo.has-rf .rf{--rf:96px}
+.identity-photo.has-rf{margin:38px 44px 40px 40px}.identity-compact .identity-photo.has-rf{margin:34px 38px 36px 34px}
+.identity-photo.has-rf .photo-edit{right:4%;bottom:14%}
+.me-av .rf{--rf:120px;margin:42px 46px 46px}
+@media(max-width:740px){.identity-photo.has-rf .rf,.identity-compact .identity-photo.has-rf .rf{--rf:88px}.identity-photo.has-rf,.identity-compact .identity-photo.has-rf,.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin:32px 34px 34px 30px}
+ .me-av .rf,.me-av .rf:is(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){--rf:92px;margin:34px 36px 36px 32px}}
+/* v205c: bigger framed pictures (the margins leave room for the wings and the crown) */
+.identity-photo.has-rf .rf{--rf:150px}.identity-compact .identity-photo.has-rf .rf{--rf:124px}
+.identity-photo.has-rf,.identity-compact .identity-photo.has-rf,.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin:calc(var(--rfm,150px)*.42) calc(var(--rfm,150px)*.36) calc(var(--rfm,150px)*.4) calc(var(--rfm,150px)*.34)}
+.identity-photo.has-rf{--rfm:150px}.identity-compact .identity-photo.has-rf{--rfm:124px}
+.me-av .rf,.me-av .rf:is(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){--rf:170px;margin:72px 62px 66px}
+@media(max-width:740px){.identity-photo.has-rf .rf,.identity-compact .identity-photo.has-rf .rf{--rf:112px}.identity-photo.has-rf,.identity-compact .identity-photo.has-rf{--rfm:112px}
+ .me-av .rf,.me-av .rf:is(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){--rf:128px;margin:54px 44px 50px 40px}}
+/* a light sweeps across the frame now and then */
+.rf::after{content:"";position:absolute;inset:-6%;border-radius:50%;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);background-size:300% 100%;background-position:120% 0;animation:rf-sweep 6s ease-in-out 1.5s infinite;mix-blend-mode:overlay}
+@keyframes rf-sweep{0%,70%{background-position:120% 0}100%{background-position:-120% 0}}
+html.map-lite .rf::after{animation:none;display:none}
+/* rank up: the new frame flies in with light rays and sparkles */
+.rf-up{position:fixed;inset:0;z-index:9500;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(40,20,80,.55),rgba(5,8,20,.88));animation:rfu-in .35s ease-out}
+.rf-up[hidden]{display:none}
+.rf-up-box{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#fff;padding:20px}
+.rf-up-rays{position:absolute;left:50%;top:40%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,214,79,.32) 0 9deg,transparent 9deg 22deg);-webkit-mask:radial-gradient(circle,#000 20%,transparent 68%);mask:radial-gradient(circle,#000 20%,transparent 68%);animation:rfu-spin 14s linear infinite}
+.rf-up-stage{position:relative;width:200px;height:200px;margin:90px 0 60px}
+.rf-up-stage .rf{--rf:200px;position:absolute;inset:0}
+.rf-up-stage .rf-old{animation:rfu-out .9s ease-in forwards}
+.rf-up-stage .rf-new{opacity:0;animation:rfu-pop 1.1s cubic-bezier(.2,1.5,.4,1) .75s forwards}
+.rf-up-flash{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;background:#fff;opacity:0;animation:rfu-flash .9s ease-out .7s}
+.rf-up i.sp{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;background:#ffd54f;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);opacity:0;animation:rfu-sp 1.4s ease-out forwards}
+.rf-up h2{margin:0;font-size:2.2rem;font-weight:900;letter-spacing:.04em;background:linear-gradient(#fff6c8,#f6c94a 55%,#c58b1c);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #5a3a06);opacity:0;animation:rfu-txt .6s ease-out 1.4s forwards}
+.rf-up p{margin:0;font-size:1.05rem;font-weight:700;opacity:0;animation:rfu-txt .6s ease-out 1.6s forwards}
+.rf-up .btn{margin-top:10px;opacity:0;animation:rfu-txt .5s ease-out 1.9s forwards}
+@keyframes rfu-in{from{opacity:0}}
+@keyframes rfu-spin{to{transform:rotate(360deg)}}
+@keyframes rfu-out{0%{transform:scale(1)}50%{transform:scale(1.08) rotate(-4deg);filter:brightness(1.6)}100%{transform:scale(.2) rotate(30deg);opacity:0;filter:brightness(3)}}
+@keyframes rfu-pop{0%{opacity:0;transform:scale(.2) rotate(-25deg)}60%{opacity:1;transform:scale(1.18) rotate(4deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes rfu-flash{0%{opacity:0;transform:scale(1)}20%{opacity:1}100%{opacity:0;transform:scale(30)}}
+@keyframes rfu-sp{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.3) rotate(160deg)}}
+@keyframes rfu-txt{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rf-up *{animation-duration:.01s!important;animation-delay:0s!important}.rf::after{animation:none}}
+@media(max-width:740px){.rf-up-stage{width:160px;height:160px;margin:70px 0 50px}.rf-up-stage .rf{--rf:160px}.rf-up h2{font-size:1.8rem}.rf-up-rays{width:420px;height:420px;margin:-210px 0 0 -210px}}
+/* v205d: the photo fills the frame: a rank-coloured backdrop behind the character (no white gap), the character zoomed to fill */
+.rf>.rf-ph{position:absolute;left:10%;top:10%;width:80%;height:80%;border-radius:50%;overflow:hidden;z-index:0;background:radial-gradient(circle at 50% 38%,#ffffff 0,var(--rfc1,#e8f2ff) 45%,var(--rfc2,#9cc4ef) 100%)}
+.rf>.rf-ph>img.avatar,.me-av .rf>.rf-ph>img.avatar,.identity-photo.has-rf .rf>.rf-ph>img.avatar{position:absolute!important;left:0!important;top:0!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:none!important;object-fit:cover;transform:scale(1.12) translateY(4%)}
+.rf>.rf-ph>img.default-avatar{transform:none}
+.rf-beginner{--rfc1:#fbe6c8;--rfc2:#d89a55}.rf-learner{--rfc1:#dceaff;--rfc2:#7fb0ea}.rf-explorer{--rfc1:#ffe0d8;--rfc2:#e85b4a}.rf-achiever{--rfc1:#dcf7dc;--rfc2:#5fd06a}.rf-champion{--rfc1:#dff3ff;--rfc2:#8fd0ff}
+.rf-guardian{--rfc1:#efe0ff;--rfc2:#b37cf0}.rf-elite{--rfc1:#ffe0dc;--rfc2:#f0584c}.rf-master{--rfc1:#fff3cf;--rfc2:#f6c94a}.rf-legend{--rfc1:#dcebff;--rfc2:#6fb2ff}.rf-mythic{--rfc1:#ffe0f4;--rfc2:#ff7fd0}
+/* tighter banner spacing round the framed picture */
+.identity-photo.has-rf,.identity-compact .identity-photo.has-rf,.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin:calc(var(--rfm,150px)*.36) calc(var(--rfm,150px)*.26) calc(var(--rfm,150px)*.32) calc(var(--rfm,150px)*.2)}
+.identity-banner:has(.identity-photo.has-rf){padding-top:14px;padding-bottom:14px}
+@media(max-width:740px){.identity-banner:has(.identity-photo.has-rf){gap:10px;padding-left:12px;padding-right:12px}}
+/* v205 preview: teachers and administrators use the pupils' bottom tab bar on phones; "More" opens the full menu */
+@media(max-width:740px){
+ :is(.role-teacher,.role-admin) .mobile-menu-toggle{display:none!important}
+ :is(.role-teacher,.role-admin).workspace{padding-bottom:106px!important}
+ .staff-tabbar .tab-more{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--font-fun);font-size:.64rem;font-weight:700;color:#a9d3b4;padding:6px 0 4px;border:0;background:none;border-radius:14px;cursor:pointer}
+ html:not(.lg-lite) body.workspace .staff-tabbar .tab-more{text-shadow:0 1px 2px rgba(0,36,16,.4)}
+ .staff-tabbar .tab-more .icon{width:22px;height:22px}
+ :is(.role-teacher,.role-admin) .tour-help{bottom:104px}
+}
+
+/* v205: teachers and administrators get the pupils' phone top bar (bell, dark mode, sign out) with their tab bar */
+@media(max-width:740px){.role-teacher .mobile-signout{display:block;position:absolute;right:12px;top:14px;z-index:30}}
+@media(max-width:740px){.role-admin .mobile-signout{display:block;position:absolute;right:12px;top:14px;z-index:30}}
+@media(max-width:740px){.role-teacher .mobile-signout{right:64px}}
+@media(max-width:740px){.role-admin .mobile-signout{right:64px}}
+@media(max-width:740px){.role-teacher .mobile-signout button span{display:none}.role-teacher .mobile-signout button{width:42px;height:42px;padding:0;justify-content:center;border-radius:50%}.role-teacher .mobile-signout{top:12px}}
+@media(max-width:740px){.role-admin .mobile-signout button span{display:none}.role-admin .mobile-signout button{width:42px;height:42px;padding:0;justify-content:center;border-radius:50%}.role-admin .mobile-signout{top:12px}}
+@media(max-width:740px){html:not(.lg-lite) body.role-teacher:not(.view-lesson):not(.view-certificate) .notif-m.pupil{position:fixed;top:12px;left:14px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-admin:not(.view-lesson):not(.view-certificate) .notif-m.pupil{position:fixed;top:12px;left:14px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-teacher:not(.view-lesson):not(.view-certificate) .mode-mobile.mode-pupil{position:fixed;top:14px;right:66px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-admin:not(.view-lesson):not(.view-certificate) .mode-mobile.mode-pupil{position:fixed;top:14px;right:66px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-teacher:not(.view-lesson):not(.view-certificate) .mobile-signout{position:fixed;top:12px;right:12px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-admin:not(.view-lesson):not(.view-certificate) .mobile-signout{position:fixed;top:12px;right:12px;z-index:70}}

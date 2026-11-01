@@ -285,10 +285,13 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
  $ck=!$readonly&&function_exists('key_checks_cards')&&key_checks_cards($a);$ckKey=$ck?(activity_key($a)??[]):[];/* v172: BULIG checks each card right away */
  if(function_exists('wc_context'))wc_context($readonly?null:$a,$set,true);   // v184: the Word Coach on "say" cards
  echo '<div class="l2-deck" data-l2-deck data-total="'.$N.'"'.($readonly?' data-readonly':'').($ck?' data-ck="1"':'').'>';
+ /* v205: a card with nothing to answer is marked as a reading (book) or as instructions (i), and only the answer cards are numbered */
+ $role=[];$tasks=0;foreach($order as $i){$k=array_values(array_diff($cards[$i]['ui']['answer']??[],['look','read']));$rd=in_array('read',$cards[$i]['ui']['answer']??[],true);
+  $role[$i]=$k?['task',++$tasks]:[$rd?'aloud':(str_word_count(strip_tags((string)($cards[$i]['text']??'')))>=25||!empty($cards[$i]['images'])?'story':'info'),0];}
  foreach($order as $pos=>$i){$c=$cards[$i];$n=$i+1;$kinds=$c['ui']['answer']??[];
   if(in_array('read',$kinds,true)&&!empty($c['ui']['wct'])&&function_exists('wc_display'))$c['text']=wc_display((string)$c['text'],$c['ui']['wct']);   // v186: the story only, not its directions
   $tiles=in_array('tiles',$kinds,true);
-  echo '<section class="l2-card" data-n="'.$n.'" data-t="'.e(ctype_digit((string)$c['title'])&&(string)$c['title']!==(string)$n?(string)$c['title']:'').'" data-kinds="'.e(implode(' ',$kinds)).'"'.(isset($ckKey[$n])||isset($ckKey[(string)$n])?' data-keyed="1"':'').($pos?' hidden':'').'><div class="l2-cardtop"><span class="l2-cnum">'.($N>1?'Card '.($pos+1).' of '.$N:'').'</span>'.l1_speaker(trim((string)($c['speak']??(($c['text']??'')!==''?$c['text']:$set['instruction']))),'Hear this card','sm').'</div>';
+  echo '<section class="l2-card" data-n="'.$n.'" data-t="'.e(ctype_digit((string)$c['title'])&&(string)$c['title']!==(string)$n?(string)$c['title']:'').'" data-kinds="'.e(implode(' ',$kinds)).'" data-role="'.$role[$i][0].'"'.($role[$i][1]?' data-q="'.$role[$i][1].'"':'').(isset($ckKey[$n])||isset($ckKey[(string)$n])?' data-keyed="1"':'').($pos?' hidden':'').'><div class="l2-cardtop"><span class="l2-cnum l2-role-'.$role[$i][0].'">'.($role[$i][0]==='task'?($tasks>1?'Question '.$role[$i][1].' of '.$tasks:($N>1?'Your answer':'')):l2a_role_badge($role[$i][0])).'</span>'.l1_speaker(trim((string)($c['speak']??(($c['text']??'')!==''?$c['text']:$set['instruction']))),'Hear this card','sm').'</div>';
   /* v183: the microphone (or the reading-speed Start/Done) comes first and stays on screen while the pupil scrolls and reads */
   $recTop=!$readonly&&($kinds===['say']||$kinds===['speed']||$kinds===['look','read']||$kinds===['speed','read']);if($recTop)echo str_replace(['class="l2-say l1-rec"','class="l2-speed"'],['class="l2-say l1-rec rec-top"','class="l2-speed spd-top"'],l2a_answer($c,$n,$readonly));   // v185: the Reading Coach of a story card is on top too
   if($moved&&$i===0)echo $dirBox;
@@ -405,4 +408,10 @@ function l2a_review_media(array $r):string{
  $m=json_decode((string)($r['audio_paths']??''),true)?:[];if(!$m)return '';ksort($m,SORT_NUMERIC);$h='<div class="rv-l1-audio rv-l2-audio"><span>'.l1_icon('mic').'Pupil’s recordings</span>';
  foreach($m as $n=>$p)$h.='<div class="rv-l2-one"><b>Card '.(int)$n.'</b><audio controls preload="none" src="?page=recording&amp;id='.(int)$r['id'].'&amp;n='.(int)$n.'"></audio></div>';
  return $h.'</div>';
+}
+
+/** v205: the label of a card with nothing to answer: a reading (book) or instructions (i). */
+function l2a_role_badge(string $r):string{
+ $ic=['story'=>'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7M8 11h7"/>','aloud'=>'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><rect x="10" y="6" width="4" height="7" rx="2"/>','info'=>'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>'][$r]??'';
+ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.$ic.'</svg>'.(['story'=>'Read this · no answer needed','aloud'=>'Read it aloud','info'=>'Instructions · no answer needed'][$r]??'');
 }

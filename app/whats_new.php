@@ -3,31 +3,32 @@
    BULIG is updated: a construction sign with Bob and the new things for their role. Closing it keeps a copy on the
    bell (Notifications), and ?whatsnew=1 opens it again. Seen is kept in settings (whatsnew_<update>_<id>), no SQL.
    For a new update: change WHATS_NEW_ID and the lists below. */
-const WHATS_NEW_ID='v203';
+const WHATS_NEW_ID='v205';
 const WHATS_NEW=[
- /* v203: shown before signing in too (on the login page, after the opening screen), once on each device */
+ /* shown before signing in too (on the login page, after the opening screen), once on each device */
  'guest'=>[
-  ['comic','Reply to messages','Got a message from your school? You can now reply to it, in a chat like Messenger.'],
-  ['phone','Reading on iPhone','Word Coach now saves your reading for your teacher on iPhones and iPads too.'],
-  ['star','Jarvis helps on more pages','Tap the robot on Messages, Bug reports and more to see how each page works.'],
+  ['star','Rank frames','Your picture now has a frame that matches your rank, like in a game. Rank up and a new frame pops in!'],
+  ['book','Clearer activity pages','A book shows a story to read and an i shows instructions. Only the numbered pages need an answer.'],
+  ['jeep','Faster road maps','The road maps look the same and open much faster on phones.'],
+  ['phone','New phone menu','Teachers and administrators get the same easy bottom menu as pupils.'],
  ],
  'pupil'=>[
-  ['comic','Reply to messages','Got a message from your school? Open it and write back. It looks like a chat.'],
-  ['phone','Reading on iPhone','Word Coach now saves your reading for your teacher on iPhones and iPads too. If the recording stops, read it once more and your score stays.'],
-  ['star','Jarvis helps you','Tap Jarvis on Messages and My bug reports to see how they work.'],
+  ['star','Your rank frame','Your picture has a frame that matches your rank. Rank up and you see a RANK UP! surprise with your new frame.'],
+  ['book','Story and instruction pages','In an activity, a book means a story to read and an i means instructions. Only the numbered pages need an answer.'],
+  ['ladder','The Reading Castle','Your reading ladder now has the Reading Castle from the BULIG comic at the top.'],
+  ['jeep','Faster road maps','Your road maps open faster, and the map of all levels looks like each level\'s map.'],
  ],
  'teacher'=>[
-  ['star','A new Home page','Your Home has a green welcome banner with your class numbers. Only what needs you shows big; the rest is a green check.'],
-  ['check','Verify readings','Reading verification is now a card on your Home page, next to the other things that need you today. The review page is easier to follow.'],
-  ['comic','Reply to messages','You can reply to messages from your school administrator in a Messenger-style chat.'],
-  ['phone','iPhone recordings','Pupils on iPhones and iPads can now send their reading recordings to you.'],
-  ['star','Answer keys checked','Answer keys were checked against the modules. Level 5 Grade 3 tests now check the right items.'],
+  ['phone','New phone menu','On a phone, your pages are at the bottom: Home, Pupils, Readings, Results and More, like the pupils have.'],
+  ['star','Rank frames for pupils','Each pupil\'s picture has a frame for their rank, and a RANK UP! surprise when they reach a new rank.'],
+  ['book','Clearer activity pages','Pupils see a book for stories, an i for instructions, and numbers only on the pages they answer.'],
+  ['jeep','Faster road maps','The road maps open faster on phones, and the new Reading Castle is on the reading ladder.'],
  ],
  'admin'=>[
-  ['star','A new Home page','A green welcome banner with the school numbers, one school dropdown instead of many buttons, and the schools as three highlights.'],
-  ['comic','Message replies','Pupils and teachers can reply to your messages. Each person has a private chat under each message. Import 037_message_replies.sql.'],
-  ['check','Content fixes','Answer keys were checked against the modules. Import 036_level5_g3_positions.sql for Level 5 Grade 3.'],
-  ['phone','iPhone recordings','Word Coach recordings now reach teachers from iPhones and iPads.'],
+  ['phone','New phone menu','On a phone, your pages are at the bottom: Home, Teachers, Schools, Reports and More.'],
+  ['star','Rank frames','Pupils\' pictures have frames for their ranks, with a RANK UP! animation when they reach a new rank.'],
+  ['book','Clearer activity pages','Story and instruction pages are marked; only answer pages are numbered.'],
+  ['jeep','Faster road maps','Road maps open much faster on phones. The reading ladders use the new Reading Castle.'],
  ],
 ];
 function wn_key(int $uid):string{return 'whatsnew_'.WHATS_NEW_ID.'_'.$uid;}

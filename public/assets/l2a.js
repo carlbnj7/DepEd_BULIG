@@ -297,7 +297,12 @@
   heard.addEventListener('click',()=>{const on=heard.getAttribute('aria-pressed')!=='true';heard.setAttribute('aria-pressed',on?'true':'false');if(on){inp.value='';if(url){URL.revokeObjectURL(url);url='';}ui('idle');}set(c,p,on?'(done)':'');});});
  /* ---------- moving between cards ---------- */
  const dots=document.createElement('div');dots.className='l2-cdots';
- if(cards.length>1){cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.textContent=String(i+1);b.setAttribute('aria-label','Card '+(i+1));b.addEventListener('click',()=>show(i));dots.append(b);});deck.before(dots);}
+ /* v205: a reading card shows a book, an instructions card shows an i; only the answer cards are numbered 1, 2, 3 */
+ const ROLE={story:['<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7M8 11h7"/>','Reading'],aloud:['<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><rect x="10" y="6" width="4" height="7" rx="2"/>','Read aloud'],info:['<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>','Instructions']};
+ if(cards.length>1){cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';const r=ROLE[c.dataset.role];
+   if(r){b.className='l2-cd-'+c.dataset.role;b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+r[0]+'</svg>';b.setAttribute('aria-label',r[1]);b.title=r[1];}
+   else{b.textContent=c.dataset.q||String(i+1);b.setAttribute('aria-label','Question '+(c.dataset.q||i+1));}
+   b.addEventListener('click',()=>show(i));dots.append(b);});deck.before(dots);}
  function paintDots(){$$('button',dots).forEach((b,i)=>{b.classList.toggle('cur',i===at);b.classList.toggle('ok',!ro&&needs(cards[i])&&cardAnswer(cards[i])!=='');b.classList.toggle('ck-out',cst[cards[i].dataset.n]==='out');});}
  function show(i){at=Math.max(0,Math.min(cards.length-1,i));cards.forEach((c,k)=>c.hidden=k!==at);window.speechSynthesis&&speechSynthesis.cancel();
   const last=at===cards.length-1,saved=fb&&fb.classList.contains('success');prev.hidden=at===0||saved;
@@ -319,7 +324,7 @@
   const unchecked=cards.find(c=>keyed(c)&&!autoOnly(c)&&!cst[c.dataset.n]&&cardAnswer(c)!=='');
   if(unchecked){e.preventDefault();e.stopImmediatePropagation();show(cards.indexOf(unchecked));checkCard(unchecked).then(ok=>{if(ok)form.requestSubmit();});return;}const empty=cards.filter(c=>needs(c)&&cardAnswer(c)==='');if(!empty.length)return;
   e.preventDefault();e.stopImmediatePropagation();const n=cards.indexOf(empty[0])+1;fb.className='answer-feedback l1-fb tryagain';fb.replaceChildren();
-  const t=document.createElement('strong');t.textContent=empty.length===1?'Card '+n+' has no answer yet.':empty.length+' cards have no answer yet.';
+  const t=document.createElement('strong');t.textContent=empty.length===1?(empty[0].dataset.q?'Question '+empty[0].dataset.q:'Card '+n)+' has no answer yet.':empty.length+' questions have no answer yet.';
   const row=document.createElement('div');row.className='l2-row';const g=document.createElement('button'),a=document.createElement('button');g.type=a.type='button';g.className='l1-btn2';a.className='l1-btn2';g.textContent='Go to card '+n;a.textContent='Submit anyway';
   g.addEventListener('click',()=>{fb.replaceChildren();fb.className='answer-feedback l1-fb';show(+n-1);});a.addEventListener('click',()=>{fb.replaceChildren();fb.className='answer-feedback l1-fb';sure=true;form.requestSubmit();sure=false;});row.append(g,a);fb.append(t,row);},true);
  if(fb)new MutationObserver(()=>{if(fb.classList.contains('success')){drafts.forEach(k=>{try{localStorage.removeItem(k);}catch(_){}});prev.hidden=true;if(next)next.hidden=true;dots.remove();$$('.l2-ans',deck).forEach(x=>x.classList.add('locked'));}}).observe(fb,{attributes:true,attributeFilter:['class']});

@@ -30,6 +30,7 @@
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
    ['.identity-banner','This is you','Your name and grade are here. Tap your picture to change it.'],
+   [['.identity-photo.has-rf'],'Your rank frame','Your picture has a frame that matches your rank. Level up to a new rank and you get a new, fancier frame, with a RANK UP! surprise.'],
    ['.level-stat','My level now','The level you are on now and how much of it you finished. It also shows the level your teacher started you at. Tap it to go to that level.'],
    [['.rl-stat','.xp-stat'],'Your level and rank','You earn XP for every activity you finish. XP makes your level go up, all the way to Level 100. Every 2 levels give a star, and 5 stars take you to the next rank! Tap to see all the ranks.'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
@@ -115,6 +116,7 @@
   l2:[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
    ['.l2-dir','What to do','These are the directions from your book. Tap the yellow speaker to hear them.'],
+   [['.l2-cdots'],'Pages of this activity','A book means a story to read, an i means instructions to read. Only the numbered pages need an answer.'],
    [['.l2-cdots'],'Your cards','Each number is a card. Green cards are answered. Tap a number to jump to it.'],
    [['.l2-card:not([hidden]) .l2-keys'],'Letter tiles','Tap the letters to write your answer. The red arrow erases.'],
    [['.l2-card:not([hidden]) .l3-bgrid'],'Letter boxes','Tap the letters in order. Each one jumps onto the next line. Tap a letter on a line to take it back.'],
@@ -147,6 +149,7 @@
   board:[
    ['.lb-sum','Your ribbons','How many ribbons you have, the level you are on, and how many levels are left to the Reading Castle.'],
    ['.lb-card','Your reading ladder','Each step is a level. You stand on the step you are on now. Finish a level and its ribbon is yours! Tap a step to open its lessons.'],
+   [['.lb-card'],'The Reading Castle','At the top of the ladder is the Reading Castle from the BULIG comic. Finish Level 7 to open its gates!'],
    [['.lb-legend'],'What the colours mean','Green is finished, yellow is where you are, and grey is locked.']],
   story:[
    ['.cm-fig','The story','How Jarvis met the 14 BULIG friends. One big picture on every page.'],
@@ -165,6 +168,7 @@
    ['.st-about','About BULIG','See who made BULIG.']],
   profile:pupil?[
    ['.me-hero','Your profile','Your picture, your name and your class.'],
+   [['.me-av .rf'],'Your rank frame','This frame shows your rank. The number at the bottom is your level. Keep learning to unlock wings and a crown!'],
    [['.me-week .weekdays'],'This week','The days you learned this week have a check.'],
    ['.me-pic','Your picture','Choose a character, or upload your own photo.'],
    [['.me-setbtn','.sidebar nav a[href="?page=settings"]'],'Settings','Sound, colours, offline lessons, your password and About BULIG are in Settings.']]:[
@@ -194,6 +198,7 @@
    [['.ah-b-short','.hm-grid'],'Shortcuts','The jobs teachers do most: add pupils, and print tickets, report cards and certificates.'],
    ['.class-tabs','Grades and sections','Choose a grade or section to see only those pupils in My class below.'],
    [['.tf-list','.class-tabs'],'My pupils','Each pupil with their level and last learning day. “Check in” means no learning in 7 days. Tap a pupil to open their page.'],
+   [['.staff-tabbar'],'Your menu on phones','On a phone, your pages are at the bottom, like the pupils have. The gold button in the middle is the page you use most. Tap More for every other page.'],
    ['.nv-find','Search','Type what you need, for example “print” or “password”, then tap the page. Press Enter to open the first one.'],
    ['.sidebar .nv-g','The menu in groups','MY CLASS: your pupils, adding pupils, the reading check and sections. TEACHING: Class Demo and Class results. PRINT: everything you can print.'],
    ['.sidebar nav a[href="?page=rcheck"]','Reading check','Pupils with no starting level take a short reading check the first time they sign in. BULIG places them, and you can change any level.'],
@@ -349,6 +354,7 @@
    [['.ah-b-short','.hm-grid'],'Shortcuts','Print Teacher Passes, reset a teacher’s password, move pupils and post an announcement.'],
    [['.ah-b-schools .so'],'Schools','The top school, the most active this week and the one that needs support. Compare all schools from here.'],
    [['.ah-b-levels .hm-levels','.hm-g3'],'Pupils at each level','How many pupils are on each level now.'],
+   [['.staff-tabbar'],'Your menu on phones','On a phone, your pages are at the bottom, like the pupils have. The gold button in the middle is the page you use most. Tap More for every other page.'],
    ['.nv-find','Search','Type what you need, for example “backup” or “passes”, then tap the page.'],
    ['.sidebar .nv-g','The menu in groups','PEOPLE: teachers and accounts. REPORTS & PRINT: reports, app ratings, passes and backups. SYSTEM: activity log and settings.'],
    ['.sidebar nav a[href="?page=print"]','Print & download','Teacher Passes, the school report, backups, the activity log and teacher lists, in one place.'],
