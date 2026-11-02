@@ -122,7 +122,7 @@ function teacher_home(array $u):void{
  else{echo '<div class="cl-list">';
   foreach(array_slice($pupils,0,8) as $p){$s=$stats[(int)$p['id']];$inactive=!$s['last_activity_date']||$s['last_activity_date']<date('Y-m-d',strtotime('-7 days'));[$label,$tone]=!$p['active']?['Inactive','off']:(!$p['level_id']?['Reading check','warn']:($inactive?['Check in','warn']:['On track','ok']));
    $last=$s['last_activity_date']?($s['last_activity_date']===date('Y-m-d')?'learned today':'last learned '.date('M j',strtotime($s['last_activity_date']))):'not started yet';
-   echo '<a class="cl-row" href="?page=pupil&amp;id='.(int)$p['id'].'">'.avatar($p).'<b>'.e($p['name']).'</b><small>'.e(($p['level_id']?level_label((int)$p['level_id']):'No level yet').' · '.($p['section']?:'—').' · '.$last).'</small><span class="status status-'.$tone.'">'.$label.'</span></a>';}
+   echo '<a class="cl-row" href="?page=pupil&amp;id='.(int)$p['id'].'">'.avatar($p).'<b>'.e($p['name']).(function_exists('speech_mark')?speech_mark((int)$p['id']):'').'</b><small>'.e(($p['level_id']?level_label((int)$p['level_id']):'No level yet').' · '.($p['section']?:'—').' · '.$last).'</small><span class="status status-'.$tone.'">'.$label.'</span></a>';}
   echo '</div>'.(count($pupils)>8?'<a class="cl-more" href="?page=manage">See all '.count($pupils).' pupils '.icon('arrow').'</a>':'');}
  echo '<a class="cl-charts" href="?page=qcheck#glance">'.icon('chart').'<span>Class activity, reading tree and milestones are in <b>Class results</b></span>'.icon('arrow').'</a></section>';
  echo claude_tip($u);
@@ -170,7 +170,7 @@ function add_pupils_view(array $u):void{
  echo '<section class="card"><h2>Add one pupil</h2>';
  if(!$secs)echo '<p class="ap-need">'.icon('info').'<span>No section yet. In Section below, choose “+ Add a new section…”, or open <a href="?page=sections">Sections</a>.</span></p>';
  echo '<form class="formgrid" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account">'.name_fields().'<div class="default-password"><strong>Starter password</strong><p>Made for each pupil</p><small>BULIG makes an easy password like mango4721. You see it after saving, and it is printed on the pupil’s sign-in ticket. The pupil may change it in Settings.</small></div>';
- echo grade_fields(['level_id'=>rc_ready()?0:1,'section_id'=>(int)($_GET['section']??0)],$secs).'<div class="formend"><small>A unique Pupil ID is made automatically. After saving, BULIG shows the pupil’s sign-in ticket, ready to print.</small><button class="btn primary" type="submit">'.icon('check').'Create account</button></div></form></section>'.names_script();
+ echo grade_fields(['level_id'=>rc_ready()?0:1,'section_id'=>(int)($_GET['section']??0)],$secs).(function_exists('speech_reg_field')?speech_reg_field():'').'<div class="formend"><small>A unique Pupil ID is made automatically. After saving, BULIG shows the pupil’s sign-in ticket, ready to print.</small><button class="btn primary" type="submit">'.icon('check').'Create account</button></div></form></section>'.names_script();
 }
 
 /* ---------------- administrator: Add teachers (one, or many) ---------------- */
@@ -306,7 +306,7 @@ function pupil_list_view(array $u):void{
  foreach($groups as $g=>$x){echo '<tbody data-mp-group="'.e($g).'"><tr class="mp-gh"><th colspan="6"><span>'.e($g).' · '.count($x['rows']).'</span><button type="button" class="linkbutton" data-mp-all>Select all</button></th></tr>';
   foreach($x['rows'] as $p){$id=(int)$p['id'];$lv=(int)$p['level_id'];
    echo '<tr class="mp-item'.($p['active']?'':' off').'" data-mp-name="'.e(mb_strtolower($p['name'].' '.$p['public_id'])).'"><td class="mp-c"><input type="checkbox" name="pupils[]" value="'.$id.'" aria-label="Tick '.e($p['name']).'"></td>'
-    .'<td><a class="mp-who" href="?page=pupil&amp;id='.$id.'">'.avatar($p).'<span>'.e($p['name']).'<small>'.e($p['public_id']).($p['starter']!==null?' · <span class="mp-pill'.($p['starter']?' y':'').'">'.($p['starter']?'Starter password':'Own password').'</span>':'').(!$p['active']?' · <span class="mp-pill n">Turned off</span>':'').'</small></span></a></td>'
+    .'<td><a class="mp-who" href="?page=pupil&amp;id='.$id.'">'.avatar($p).'<span>'.e($p['name']).(function_exists('speech_mark')?speech_mark($id):'').'<small>'.e($p['public_id']).($p['starter']!==null?' · <span class="mp-pill'.($p['starter']?' y':'').'">'.($p['starter']?'Starter password':'Own password').'</span>':'').(!$p['active']?' · <span class="mp-pill n">Turned off</span>':'').'</small></span></a></td>'
     .'<td>'.e($p['section']?:'—').'</td><td>'.($lv?'<b>'.e(level_label($lv)).'</b><small class="mp-sm">'.(int)$p['done'].' lessons done</small>':'<a class="mp-pill y" href="?page=rcheck_pupil&amp;id='.$id.'">Reading check</a>').'</td><td>'.e($p['last_day']?date('M j',strtotime((string)$p['last_day'])):'Not yet').'</td>'
     .'<td><div class="mp-act"><a class="btn secondary small" href="?page=pupil&amp;id='.$id.'">'.icon('eye').'Open</a><a class="btn quiet small" href="?page=pupil&amp;id='.$id.'&amp;tab=account">'.icon('edit').'Edit</a></div></td></tr>';}
   echo '</tbody>';}
@@ -328,7 +328,7 @@ function pupil_page_view(array $u):void{
  $s=progress_stats($pid);$first=explode(' ',trim((string)$p['name']))[0];$lv=(int)$p['level_id'];
  $empty=fn(string $ic,string $title,string $text)=>'<div class="pd-empty"><span class="pd-ic">'.icon($ic).'</span><div><strong>'.e($title).'</strong><span>'.e($text).'</span></div></div>';
  echo '<p class="crumb"><a href="?page=manage">My pupils</a>'.icon('chev').'<span>'.e($p['name']).'</span></p>';
- echo hm_head('PUPIL · '.e($p['public_id']),(string)$p['name'],e(rl_pupil_line($pid)).' · '.$s['xp'].' XP · '.$s['completed'].' lessons complete'.($p['section']?' · Grade '.(int)$p['grade_level'].' · '.e($p['section']):''),act_menu(icon('print').'Print','<a href="?page=report_card&amp;id='.$pid.'">'.icon('flag').'Report card</a><a href="?page=report&amp;id='.$pid.'">'.icon('chart').'Progress report</a><a href="?page=cards&amp;pupils[]='.$pid.'">'.icon('key').'Sign-in ticket</a>','btn secondary').'<a class="btn quiet" href="?page=pupil&amp;id='.$pid.'&amp;tab=account">'.icon('edit').'Edit account</a>');
+ echo preg_replace('~</h1>~',(function_exists('speech_mark')?speech_mark($pid):'').'</h1>',hm_head('PUPIL · '.e($p['public_id']),(string)$p['name'],e(rl_pupil_line($pid)).' · '.$s['xp'].' XP · '.$s['completed'].' lessons complete'.($p['section']?' · Grade '.(int)$p['grade_level'].' · '.e($p['section']):''),act_menu(icon('print').'Print','<a href="?page=report_card&amp;id='.$pid.'">'.icon('flag').'Report card</a><a href="?page=report&amp;id='.$pid.'">'.icon('chart').'Progress report</a><a href="?page=cards&amp;pupils[]='.$pid.'">'.icon('key').'Sign-in ticket</a>','btn secondary').'<a class="btn quiet" href="?page=pupil&amp;id='.$pid.'&amp;tab=account">'.icon('edit').'Edit account</a>'),1);   // v208 Speech support plus
  echo '<nav class="pupil-tabs pp-tabs" aria-label="'.e($p['name']).'">';foreach($tabs as $k=>[$ic,$label])echo '<a class="pt-tab'.($tab===$k?' on':'').'" href="?page=pupil&amp;id='.$pid.($k==='path'?'':'&amp;tab='.$k).'"'.($tab===$k?' aria-current="page"':'').'>'.icon($ic).$label.'</a>';echo '</nav>';
  if($tab==='path'){
   echo (function_exists('schedule_pupil_note')?schedule_pupil_note($pid):'');
@@ -336,6 +336,7 @@ function pupil_page_view(array $u):void{
   echo '<section class="card mp-start"><div class="section-heading"><h2>'.icon('ladder').' Starting level</h2>'.($lv?'<span class="status">'.e(level_label($lv)).'</span>':'<span class="status status-warn">Reading check</span>').'</div><p class="muted">Levels before the starting level become free practice. The pupil can begin right away at the level you choose.'.(!$lv?' '.e($first).' takes the reading check at the next sign-in, or choose a level now.':'').'</p><form method="post" class="mp-startform">'.csrf_field().'<input type="hidden" name="action" value="set_start_level"><input type="hidden" name="pupil" value="'.$pid.'"><input type="hidden" name="back" value="?page=pupil&amp;id='.$pid.'"><label>Starting level<select name="level_id">';
   foreach($levels as $l)echo '<option value="'.(int)$l['id'].'"'.((int)$l['id']===$lv?' selected':'').'>'.e(level_label((int)$l['id']).' · '.(function_exists('rc_level_name')?rc_level_name((int)$l['id']):'')).'</option>';
   echo '</select></label><button class="btn primary">'.icon('check').'Save starting level</button></form></section>';
+  if(function_exists('speech_card'))echo speech_card($pid,$first);
   if(function_exists('pt_teacher_rows'))echo pt_teacher_rows($pid);
   echo class_done_path($pid);return;}
  if($tab==='answers'){

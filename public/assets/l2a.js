@@ -256,35 +256,58 @@
   /* v185: voice check. The words BULIG listens for (a picture's name, a word with an answer key, the word on the spin
      wheel): the card turns green with a check as soon as it is said; if not, "try again" (each try counts). */
   let vcList=[];try{vcList=JSON.parse(r.dataset.vc||'[]');}catch(e){}const spinOut=$('[data-spin-word]',c);
-  const vcN=s=>String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9']+/g,'');
+  /* v207: speech recognition writes numbers as digits ("10" for "ten"): a digit and its word are the same */
+  const NUMW=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+  const vcN=s=>{const w=String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9']+/g,'');return /^\d+$/.test(w)&&+w<NUMW.length?NUMW[+w]:w;};
+  /* words that sound the same ("then" / "den", "wet" / "wed"); the vowel stays, so short-vowel words are still told apart */
+  const vcS=w=>w.replace(/^th/,'d').replace(/th/g,'d').replace(/^wh/,'w').replace(/ph/g,'f').replace(/ck/g,'k').replace(/c(?=[aou]|$)/g,'k').replace(/q/g,'k').replace(/x/g,'ks').replace(/(.)\1+/g,'$1').replace(/([^aeiou])e$/,'$1').replace(/[dt]$/,'T').replace(/[gk]$/,'K').replace(/[bp]$/,'P').replace(/[sz]$/,'S');
+  /* v208 how BULIG listens to this pupil (set by the teacher): 'accent' also takes common accent sound changes (i/e, o/u,
+     p/f, b/v, s/z/sh, a last consonant not said); 'support' (Speech support) never marks a spoken word wrong: the teacher listens */
+  const SPM=(document.querySelector('meta[name="bulig-speech"]')||{}).content||'';
+  const vcA=k=>k.replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
+  const vcEq=(g,a)=>g===a||(g.length>1&&vcS(g)===vcS(a))||(a.length>=5&&vcL1(g,a))||(SPM==='accent'&&g.length>1&&vcA(vcS(g.replace(/th/g,'t')))===vcA(vcS(a.replace(/th/g,'t'))));
   const vcL1=(a,b)=>{if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,d=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue;}if(++d>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++;}}return d+(a.length-i)+(b.length-j)<=1;};
   const vcWant=()=>{if(spinOut&&spinOut.textContent.trim()&&spinOut.textContent.trim()!=='?')return [spinOut.textContent.trim()];return vcList;};
-  const vcHit=t=>{const want=vcWant();if(!want.length||!t)return null;const got=t.split(/\s+/).map(vcN).filter(Boolean);
-   return want.every(e=>String(e).split('|').some(a=>{a=vcN(a);return got.some(g=>g===a||(a.length>=5&&vcL1(g,a)));}));};
+  const vcHit=t=>{const want=vcWant();if(!want.length||!t)return null;if(SPM==='support')return true;const got=t.split(/\s+/).map(vcN).filter(Boolean);
+   return want.every(e=>String(e).split('|').some(a=>{a=vcN(a);return got.some(g=>vcEq(g,a));}));};
   /* v207 Picture Coach (Reading Coach style): one chip for each name to say; the chip and its picture turn green as soon as
      BULIG hears the name; stars when all are said (fewer tries, more stars). */
   const pcBox=$('[data-pc-names]',r),pcStars=$('[data-pc-stars]',r),pcPics=$$('.l2-pics .l2-pic',c);const pcFound=new Set();
   const pcChips=pcBox?vcList.map((v,i)=>{const b=document.createElement('span');b.className='pc-chip';b.textContent=vcList.length>1?String(i+1):'?';b.setAttribute('aria-label','Name '+(i+1)+': not said yet');pcBox.append(b);return b;}):[];
   const pcPic=i=>pcPics.length===vcList.length?pcPics[i]:(vcList.length===1?pcPics[0]:null);
   const pcMark=t=>{if(!pcChips.length||!t)return;const got=String(t).split(/\s+/).map(vcN).filter(Boolean);
-   vcList.forEach((v,i)=>{if(pcFound.has(i))return;const hit=String(v).split('|').find(a=>{a=vcN(a);return got.some(g=>g===a||(a.length>=5&&vcL1(g,a)));});
+   vcList.forEach((v,i)=>{if(pcFound.has(i))return;const hit=String(v).split('|').find(a=>{a=vcN(a);return got.some(g=>vcEq(g,a));});
     if(hit){pcFound.add(i);const ch=pcChips[i];ch.className='pc-chip ok';ch.textContent=hit;ch.setAttribute('aria-label','Name '+(i+1)+': '+hit+', said right');const pic=pcPic(i);if(pic){pic.classList.remove('pc-no');pic.classList.add('pc-ok');}}});};
   const pcReset=()=>{if(!pcChips.length)return;pcFound.clear();pcChips.forEach((ch,i)=>{ch.className='pc-chip';ch.textContent=vcList.length>1?String(i+1):'?';});pcPics.forEach(x=>x.classList.remove('pc-ok','pc-no'));if(pcStars)pcStars.hidden=true;};
   const pcResult=ok=>{if(!pcChips.length)return;pcChips.forEach((ch,i)=>{if(!pcFound.has(i)){ch.classList.add('no');const pic=pcPic(i);if(pic)pic.classList.add('pc-no');}});
    if(ok&&pcStars){const k=Math.max(1,3-(tries[c.dataset.n]||0)),all=vcList.length>1?'them all':'it';pcStars.innerHTML='<b>'+'\u2605'.repeat(k)+'<i>'+'\u2605'.repeat(3-k)+'</i></b><span>'+(k===3?'Super! You said '+all+' right!':'Well done! You said '+all+'!')+'</span>';pcStars.hidden=false;}};
+  /* v207 Word list coach: on a card that shows words to read (the word grid), each word turns green as soon as BULIG hears
+     it, a counter shows how many are read, BULIG stops by itself after the last word, and stars show at the end. */
+  const wlWords=vcList.length?[]:$$('.l3-grid > span',c).filter(x=>/^[A-Za-z][A-Za-z' -]*$/.test(x.textContent.trim()));
+  let wlBox=null;const wlCount=()=>wlWords.filter(x=>x.classList.contains('wl-ok')).length;
+  if(wlWords.length){r.classList.add('wl');wlBox=document.createElement('div');wlBox.className='wl-box';wlBox.setAttribute('aria-live','polite');r.insertBefore(wlBox,$('[data-rec-heard]',r));label.textContent='Tap and read the words aloud';}
+  const wlShow=(end)=>{if(!wlBox)return;const n=wlCount(),all=wlWords.length;let h='<span class="wl-n"><b>'+n+'</b> of '+all+' words read</span>';
+   if(end){const f=n/all,k=f>=.9?3:(f>=.6?2:1);h+='<span class="pc-stars"><b>'+'\u2605'.repeat(k)+'<i>'+'\u2605'.repeat(3-k)+'</i></b><span>'+(n===all?'Super! You read all the words!':(k===2?'Good reading! Practise the red words.':'Keep practising! Read the red words again.'))+'</span></span>';}
+   wlBox.innerHTML=h;};
+  const wlMark=t=>{if(!wlWords.length||!t)return;const got=String(t).split(/\s+/).map(vcN).filter(Boolean);
+   wlWords.forEach(x=>{if(x.classList.contains('wl-ok'))return;const a=vcN(x.textContent.trim());if(got.some(g=>vcEq(g,a))){x.classList.remove('wl-no');x.classList.add('wl-ok');}});wlShow(false);};
+  const wlReset=()=>{if(!wlWords.length)return;wlWords.forEach(x=>x.classList.remove('wl-ok','wl-no'));wlShow(false);};
+  if(SPM==='support')wlWords.forEach(x=>x.addEventListener('click',()=>{x.classList.remove('wl-no');x.classList.add('wl-ok');wlShow(false);}));   /* Speech support: the pupil taps each word as they read it */
+  const wlEnd=w=>{if(!wlWords.length)return;wlMark(w);if(SPM==='support'){wlShow(false);return;}wlWords.forEach(x=>{if(!x.classList.contains('wl-ok'))x.classList.add('wl-no');});wlShow(true);if(wlCount()===wlWords.length)sfx('correct');};
+  wlShow(false);r.dataset.idleLabel=label.textContent;
   let vcOk=false;const vcSay=(ok,w)=>{r.classList.toggle('vc-ok',ok);r.classList.toggle('vc-no',!ok);vcOk=ok;pcResult(ok);
-   sub.textContent=ok?'Great! You said it right!':'Not yet. I heard \u201c'+w+'\u201d. Tap the microphone and try again.';if(ok)sfx('correct');else sfx('tryagain');};
-  const vcEnd=w=>{pcMark(w);const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
+   sub.textContent=ok&&SPM==='support'?'Thank you! Your teacher will listen to it.':ok?'Great! You said it right!':'Not yet. I heard \u201c'+w+'\u201d. Tap the microphone and try again.';if(ok)sfx('correct');else sfx('tryagain');};
+  const vcEnd=w=>{if(SPM==='support'&&w)vcList.forEach((v,i)=>{if(!pcFound.has(i)&&pcChips[i]){pcFound.add(i);pcChips[i].className='pc-chip ok';pcChips[i].textContent=String(v).split('|')[0];}});pcMark(w);wlEnd(w);const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
   function srStart(){if(!SRC)return;said=[];part='';srErr='';srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=true;
-    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();pcMark(t);if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
+    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();pcMark(t);wlMark(t);if(wlWords.length&&r.dataset.state==='rec'&&wlCount()===wlWords.length&&!r.dataset.wlAuto){r.dataset.wlAuto='1';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
     sr.onerror=e=>{srErr=e.error||'';if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
     sr.onend=()=>{if(part){said.push(part);part='';}if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
    make();try{sr.start();}catch(e){srOn=false;}}
   function srStop(){srOn=false;try{sr&&sr.stop();}catch(e){}}const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
   const ui=s=>{r.dataset.state=s;go.classList.toggle('on',s==='rec');go.hidden=s==='done';play.hidden=s!=='done';
-   label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(rd?'Tap and read the story aloud':'Tap and say it');sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
+   label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(r.dataset.idleLabel||(rd?'Tap and read the story aloud':'Tap and say it'));sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
   if(!canRec&&!solo){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
-  async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';vcOk=false;r.classList.remove('vc-ok','vc-no');pcReset();window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
+  async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';vcOk=false;r.classList.remove('vc-ok','vc-no');pcReset();wlReset();delete r.dataset.wlAuto;window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
    if(solo){srStart();if(srOn){t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();
      if(!srOn&&srErr){clearInterval(tick);if(srErr==='not-allowed'){ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg({name:'NotAllowedError'});if(heard)heard.hidden=false;}else if(!heardText()){solo=false;r.dataset.state='idle';start();}else stop();}},250);return;}solo=false;}
    try{st=await getMic();}catch(e){r.dataset.state='idle';label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(e);if(heard)heard.hidden=false;return;}

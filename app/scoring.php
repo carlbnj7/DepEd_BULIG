@@ -106,16 +106,23 @@ function say_words():array{static $w;if($w===null){$f=__DIR__.'/../database/say-
 /** What BULIG heard on a recorded answer, or null when the device did not listen. */
 function key_said(string $g):?string{return preg_match('~\)\s*said:\s*(.+)$~su',$g,$m)?trim($m[1]):null;}
 /** Share of the expected words heard (each heard word counts once), 0 to 1. */
+function say_num_words(string $w):string{static $n=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];return preg_match('~^\d+$~',$w)&&(int)$w<count($n)?$n[(int)$w]:$w;}
+/** v207: how a word sounds: "then" = "den", "wet" = "wed", "10" = "ten" (the vowel stays, so bed and bad differ) */
+function say_sound(string $w):string{$w=say_num_words($w);
+ $w=preg_replace(['~^th~','~th~','~^wh~','~ph~','~ck~','~c(?=[aou]|$)~','~q~','~x~','~(.)\1+~','~([^aeiou])e$~','~[dt]$~','~[gk]$~','~[bp]$~','~[sz]$~'],['d','d','w','f','k','k','k','ks','$1','$1','T','K','P','S'],$w)??$w;return $w;}
 function say_match(array $exp,string $heard):float{
- if(!$exp)return 1.0;$h=array_count_values(array_filter(array_map('key_letters',preg_split('~\s+~u',$heard)),'strlen'));$ok=0;
- foreach($exp as $w)foreach(explode('|',$w) as $alt){$alt=key_letters($alt);if(($h[$alt]??0)>0){$h[$alt]--;$ok++;break;}}
+ if(!$exp)return 1.0;
+ /* v208 speech setting (app/reading_support.php): Speech support is never marked wrong (the teacher listens); Accent-friendly compares accent keys */
+ $sm=function_exists('speech_me')?speech_me():'standard';if($sm==='support')return 1.0;$key=$sm==='accent'?fn($x)=>accent_key(key_letters($x)):fn($x)=>say_sound(key_letters($x));
+ $h=array_count_values(array_filter(array_map($key,preg_split('~\s+~u',$heard)),'strlen'));$ok=0;
+ foreach($exp as $w)foreach(explode('|',$w) as $alt){$alt=$key($alt);if(($h[$alt]??0)>0){$h[$alt]--;$ok++;break;}}
  return round($ok/count($exp),2);
 }
 /** Level 1 (oral) answers, checked by BULIG (v172): 0 to 1. With the words to say (expected_text): the share BULIG heard
     said right. Otherwise how much the pupil said: 3 or more words 1, 1-2 words 0.8 (2 stars). A recording the device could not
     listen to, or an answer said aloud in class, counts as 1. */
 function l1_auto_score(array $a,string $transcript,bool $recorded):float{
- $said=trim($transcript);
+ $said=trim($transcript);if(function_exists('speech_me')&&speech_me()==='support')return 1.0;   // v208 Speech support: the teacher listens
  if($said!==''&&trim((string)($a['expected_text']??''))!==''){$exp=array_values(array_filter(array_map('key_letters',preg_split('~\s+~u',(string)$a['expected_text'])),'strlen'));return say_match($exp,$said);}
  if($said!==''){$n=count(array_filter(preg_split('~\s+~u',$said),'strlen'));return $n>=3?1.0:0.8;}   // v181: a short answer is still an answer (2 stars), so it never blocks a young pupil
  return 1.0;

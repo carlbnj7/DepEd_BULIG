@@ -656,7 +656,7 @@ def test_whats_new(p):
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
     _, _, text = Client().req('?page=login&role=pupil')
-    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v206"' in text and 'BULIG has a new update!' in text and ' hidden ' in text)
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v207"' in text and 'BULIG has a new update!' in text and ' hidden ' in text)
 
 
 def test_notifications(p):

@@ -28,8 +28,18 @@ function l4_words(array $a,int &$titleN=0):array{
  $t=preg_split('/\s+/u',trim((string)$p['title']),-1,PREG_SPLIT_NO_EMPTY);if($t&&count($w)+count($t)===(int)$p['words']){$w=array_merge($t,$w);$titleN=count(array_filter($t,fn($x)=>l4_norm($x)!==''));}
  return array_values(array_filter($w,fn($x)=>l4_norm($x)!==''));
 }
+/** The reading without the title words said at its start (in order; a word heard a little wrong still counts). */
+function l4_drop_title(string $said,string $title):string{
+ $t=array_values(array_filter(array_map('l4_norm',preg_split('/\s+/u',$title)),'strlen'));$h=preg_split('/\s+/u',trim($said),-1,PREG_SPLIT_NO_EMPTY);
+ if(!$t||count($h)<=count($t))return $said;$k=0;
+ foreach($t as $i=>$x){$y=l4_norm((string)($h[$i]??''));if($y===$x||l4_similar($x,$y))$k++;else break;}
+ return $k===count($t)?implode(' ',array_slice($h,$k)):$said;
+}
 function l4_norm(string $w):string{return preg_replace('~[^a-z0-9\']+~','',mb_strtolower(str_replace(['’','‘'],"'",$w)));}
 /** A near miss (said almost right): same sound key, one or two letters off, or the same start of a long word. */
+/** The same word; with Accent-friendly (v208) also a word said with a common accent sound change. */
+function l4_eq(string $p,string $h):bool{static $acc=null;if($p===$h)return true;$acc??=function_exists('speech_me')&&speech_me()==='accent';
+ return $acc&&$p!==''&&$h!==''&&accent_key($p)===accent_key($h);}
 function l4_similar(string $a,string $b):bool{
  if($a===''||$b==='')return false;if(metaphone($a)===metaphone($b))return true;
  $n=max(strlen($a),strlen($b));return levenshtein($a,$b)<=max(1,intdiv($n,3))||(strlen($a)>=4&&strlen($b)>=4&&substr($a,0,3)===substr($b,0,3));
@@ -43,7 +53,7 @@ function l4_miscues(array $words,string $heard):array{
  $P=array_values(array_map('l4_norm',$words));$H=array_values(array_filter(array_map('l4_norm',preg_split('/\s+/u',$heard)),'strlen'));
  $n=count($P);$m=count($H);$INF=1e9;$D=array_fill(0,$n+1,array_fill(0,$m+1,$INF));$B=$D;$D[0][0]=0;
  for($i=0;$i<=$n;$i++)for($j=0;$j<=$m;$j++){$c=$D[$i][$j];if($c>=$INF)continue;
-  if($i<$n&&$j<$m){$x=$P[$i]===$H[$j]?0:(l4_similar($P[$i],$H[$j])||strrev($P[$i])===$H[$j]?0.6:1);if($c+$x<$D[$i+1][$j+1]){$D[$i+1][$j+1]=$c+$x;$B[$i+1][$j+1]='s';}}
+  if($i<$n&&$j<$m){$x=l4_eq($P[$i],$H[$j])?0:(l4_similar($P[$i],$H[$j])||strrev($P[$i])===$H[$j]?0.6:1);if($c+$x<$D[$i+1][$j+1]){$D[$i+1][$j+1]=$c+$x;$B[$i+1][$j+1]='s';}}
   if($i<$n&&$c+1<$D[$i+1][$j]){$D[$i+1][$j]=$c+1;$B[$i+1][$j]='d';}
   if($j<$m){$rep=($j>0&&$H[$j]===$H[$j-1])||($i>0&&in_array($H[$j],array_slice($P,max(0,$i-3),min(3,$i)),true));$x=$rep?0.9:1;if($c+$x<$D[$i][$j+1]){$D[$i][$j+1]=$c+$x;$B[$i][$j+1]=$rep?'r':'i';}}
   if($i+1<$n&&$j+1<$m&&$P[$i]!==$P[$i+1]&&$P[$i]===$H[$j+1]&&$P[$i+1]===$H[$j]&&$c+1<$D[$i+2][$j+2]){$D[$i+2][$j+2]=$c+1;$B[$i+2][$j+2]='t';}
@@ -52,7 +62,7 @@ function l4_miscues(array $words,string $heard):array{
   if($b==='s'){$ops[]=['s',$i-1,$j-1];$i--;$j--;}elseif($b==='d'){$ops[]=['d',$i-1,0];$i--;}elseif($b==='t'){$ops[]=['t',$i-2,$j-2];$i-=2;$j-=2;}else{$ops[]=[$b,$i,$j-1];$j--;}}
  $cnt=array_fill(0,7,0);$marks=[];$extra=[];$lastRep=-2;
  foreach(array_reverse($ops) as [$o,$i,$j]){
-  if($o==='s'){if($P[$i]===$H[$j])continue;
+  if($o==='s'){if(l4_eq($P[$i],$H[$j]))continue;
    if(strlen($P[$i])>1&&strrev($P[$i])===$H[$j]){$cnt[6]++;$marks[$i]=['k'=>'rev','h'=>$H[$j]];}
    elseif(l4_similar($P[$i],$H[$j])){$cnt[0]++;$marks[$i]=['k'=>'mis','h'=>$H[$j]];}else{$cnt[2]++;$marks[$i]=['k'=>'sub','h'=>$H[$j]];}}
   elseif($o==='d'){$cnt[1]++;$marks[$i]=['k'=>'om'];}
@@ -65,8 +75,11 @@ function l4_miscues(array $words,string $heard):array{
 /** BULIG's score for one reading, in the shape the teacher's table saves ('auto' => 1). Words BULIG did not hear count
     as omissions (v172: also when only part was read). Null only when the recognizer heard no word at all. */
 function l4_auto(array $a,string $said,int $secs):?array{
- $w=l4_words($a);$p=level4_passage_parts($a);if(!$w||!$p)return null;$words=(int)$p['words']?:count($w);
- $said=trim(mb_substr($said,0,8000));$heard=count(array_filter(array_map('l4_norm',preg_split('/\s+/u',$said)),'strlen'));
+ if(function_exists('speech_me')&&speech_me()==='support')return null;   /* v208 Speech support: the teacher scores the reading */
+ $nt=0;$w=l4_words($a,$nt);$p=level4_passage_parts($a);if(!$w||!$p)return null;$words=(int)$p['words']?:count($w);
+ $said=trim(mb_substr($said,0,8000));
+ /* v208: a pupil who reads the title first is not marked for extra words when the module's word count leaves the title out */
+ if(!$nt&&trim((string)$p['title'])!==''){$cut=l4_drop_title($said,(string)$p['title']);if($cut!==$said&&l4_drop_title(implode(' ',$w),(string)$p['title'])===implode(' ',$w))$said=$cut;}   /* not when the story itself starts with the title words */$heard=count(array_filter(array_map('l4_norm',preg_split('/\s+/u',$said)),'strlen'));
  if($heard<1)return null;
  $r=l4_miscues($w,$said);$tot=min($words,array_sum($r['m']));$score=round(($words-$tot)/$words*100,1);
  return ['m'=>$r['m'],'total'=>$tot,'words'=>$words,'score'=>$score,'level'=>l4_level($score),'secs'=>$secs,'wpm'=>$secs?(int)round(($words-$tot)/$secs*60):0,
@@ -111,7 +124,7 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
   $say='Read the following passage aloud. Tap the microphone when you start, and tap it again when you finish. BULIG listens and scores your reading.';
   echo '<div class="l1-q sm l4-dir"><p>'.e($say).'</p>'.l1_speaker($say).'</div>';ob_start();
   /* v183: the microphone sits above the passage and stays at the top of the screen while the pupil scrolls and reads */
-  if(!$readonly)echo roxanne_timer().'<div class="l1-rec l4-rec rec-top" data-l1-rec data-max="600"'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_attr((string)$a['expected_text']):'').'><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
+  if(!$readonly)echo roxanne_timer().'<div class="l1-rec l4-rec rec-top" data-l1-rec data-max="600"'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_attr((string)$a['expected_text']).(($pp=level4_passage_parts($a))&&trim((string)$pp['title'])!==''?' data-wc-title="'.e(trim((string)$pp['title'])).'"':''):'').'><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
    .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my reading">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
    .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button>'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_input(0):'').'</div>';
   echo level4_passage($a);
