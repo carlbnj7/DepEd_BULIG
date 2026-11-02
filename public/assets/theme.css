@@ -6719,3 +6719,20 @@ html.map-lite .rf::after{animation:none;display:none}
 @media(max-width:740px){html:not(.lg-lite) body.role-admin:not(.view-lesson):not(.view-certificate) .mode-mobile.mode-pupil{position:fixed;top:14px;right:66px;z-index:70}}
 @media(max-width:740px){html:not(.lg-lite) body.role-teacher:not(.view-lesson):not(.view-certificate) .mobile-signout{position:fixed;top:12px;right:12px;z-index:70}}
 @media(max-width:740px){html:not(.lg-lite) body.role-admin:not(.view-lesson):not(.view-certificate) .mobile-signout{position:fixed;top:12px;right:12px;z-index:70}}
+/* v205e phones: long school or teacher names no longer widen the Home cards past the screen */
+.ah-bento>*,.ah-kpis>*,.so-his>*,.hl-grid>*,.hm-g2>*{min-width:0}
+.ah-tx b,.ah-tx small,.so-hi-s b,.hm-clear a{overflow-wrap:anywhere}
+.ah-tx small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:740px){.ah-bento,.so-his{grid-template-columns:minmax(0,1fr)!important}.ah-bento:not(.th-bento)>section.card:last-child{grid-column:auto}
+ .ah-li{gap:10px;padding:10px 12px}.ah-li strong{font-size:1.15rem;flex:none}.ah-ic{width:36px;height:36px}
+ .ah-hero{padding:18px 16px}.ah-kpis{gap:8px}.ah-kpis>div{padding:10px 12px;column-gap:8px}.ah-kpis>div>span{width:34px;height:34px}.ah-kpis b{font-size:1.25rem}
+ .sc-pick{width:100%!important;max-width:100%}.sc-pick select{min-width:0!important;width:100%}
+ .mainwrap,.main{max-width:100vw;overflow-x:clip}}
+/* v205e phones: My pupils keeps long section and pupil names inside the card */
+@media(max-width:740px){
+ .mp-bar{min-width:0}.mp-bar select,.mp-bar input,.mp-bsel select{max-width:100%!important;width:100%!important;min-width:0!important;box-sizing:border-box}
+ .mp-tbl td,.mp-tbl th{overflow-wrap:break-word;white-space:normal!important}.mp-tbl{width:100%;max-width:100%}
+ .mp-tbl a.mp-who{flex:1 1 auto;min-width:0;white-space:normal}.mp-tbl a.mp-who>*:not(.avatar){min-width:0;overflow-wrap:break-word}
+ .mp-tbl tr.mp-gh th{white-space:normal}.mp-tbl tr.mp-gh th span{display:inline}
+ select{max-width:100%}}
+@media(max-width:740px){.mp-tbl tr.mp-item{grid-template-columns:30px minmax(0,1fr) auto}.mp-tbl tr.mp-item td{min-width:0}}
