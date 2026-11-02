@@ -170,7 +170,7 @@ function add_pupils_view(array $u):void{
  echo '<section class="card"><h2>Add one pupil</h2>';
  if(!$secs)echo '<p class="ap-need">'.icon('info').'<span>No section yet. In Section below, choose “+ Add a new section…”, or open <a href="?page=sections">Sections</a>.</span></p>';
  echo '<form class="formgrid" method="post">'.csrf_field().'<input type="hidden" name="action" value="create_account">'.name_fields().'<div class="default-password"><strong>Starter password</strong><p>Made for each pupil</p><small>BULIG makes an easy password like mango4721. You see it after saving, and it is printed on the pupil’s sign-in ticket. The pupil may change it in Settings.</small></div>';
- echo grade_fields(['level_id'=>rc_ready()?0:1,'section_id'=>(int)($_GET['section']??0)],$secs).'<div class="formend"><small>A unique Pupil ID is made automatically. After saving, BULIG shows the pupil’s sign-in ticket, ready to print.</small><button class="btn primary" type="submit">'.icon('check').'Create account</button></div></form></section>'.names_script();
+ echo grade_fields(['level_id'=>rc_ready()?0:1,'section_id'=>(int)($_GET['section']??0)],$secs).(function_exists('speech_reg_field')?speech_reg_field():'').'<div class="formend"><small>A unique Pupil ID is made automatically. After saving, BULIG shows the pupil’s sign-in ticket, ready to print.</small><button class="btn primary" type="submit">'.icon('check').'Create account</button></div></form></section>'.names_script();
 }
 
 /* ---------------- administrator: Add teachers (one, or many) ---------------- */

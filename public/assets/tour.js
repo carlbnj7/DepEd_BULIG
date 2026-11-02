@@ -257,6 +257,7 @@
    ['.ap-choice','One pupil or a whole class','Add one pupil with a short form, or a whole class at once from an Excel list. The DepEd SF1 list works.'],
    [['form.formgrid:not(.import-form)'],'Add one pupil','Type the first, middle and last name (and Jr., Sr. … if any), then the section, sex and starting level. BULIG makes the Pupil ID and an easy starter password for you.'],
    [['form.formgrid:not(.import-form) select[name="level_id"]','form.formgrid:not(.import-form)'],'Let BULIG find the level','Leave the starting level on “Let BULIG find it”. The pupil takes the reading check at first sign-in and BULIG places them. You can change it later.'],
+   [['.sp-reg'],'Reading support','Choose how BULIG listens. Standard for most pupils. Accent-friendly for a different accent, for example pupils from the mountains or Lumad communities. Speech support for a speech need such as cleft palate: no word is marked wrong and you score the reading. Only you see it.'],
    [['form.formgrid:not(.import-form) .btn.primary','form.formgrid:not(.import-form)'],'Their ticket, right away','After you save, a window shows the new pupil’s sign-in ticket with the QR code. Print it there, or add the next pupil.'],
    [['#import','.import-card'],'Add a whole class','Type the list: one row per pupil, Enter goes to the next. Choose one section for everyone or a section on each row, and change any pupil’s starting level on their row. Or choose Upload a file to use an Excel list. Nothing is saved until every row is right.']],
   cards:[
@@ -271,7 +272,7 @@
    ['.pupil-tabs','My pupils','Three tabs: Pupil list (this one), Add pupils, and Class progress.'],
    ['.mp-bar','Find a pupil','Search by name or ID, or choose a section.'],
    ['.mp-tbl','Every pupil in one list','Grouped by section, with each pupil’s starting level, reading check and last learning day. Tap a name to open the pupil’s page.'],
-   [['.mp-tbl .sp-mark'],'Speech support','A red plus beside a name means Speech support: BULIG does not mark that pupil’s spoken words wrong. You listen to the readings and score them.'],
+   [['.mp-tbl .sp-mark'],'Reading support icons','A red plus beside a name means Speech support: BULIG does not mark that pupil’s spoken words wrong, and you score the readings. A blue speech bubble means Accent-friendly: BULIG accepts common accent sounds.'],
    [['.rk-inl'],'Level and rank','Each pupil’s reader level (1 to 100), rank emblem and stars. They go up as the pupil finishes activities.'],
    ['.mp-bulk','Many pupils at once','Tick pupils, then set one starting level for all of them, move them to another section, or print their sign-in tickets.']],
   progress:[
@@ -297,7 +298,7 @@
    ['.hm-head','One pupil','The pupil’s name, ID, level and progress. The buttons print this pupil’s report card, progress report and sign-in ticket.'],
    ['.pp-tabs','Everything about this pupil','Learning path, Answers and scores (every answer with BULIG’s score; change a score or write a note there), Reading check, Badges and Account (name, section, password and a new ticket).'],
    ['.mp-start','Starting level','Change where this pupil begins. Earlier levels become optional practice.'],
-   [['#speech'],'How BULIG listens','Standard checks each word. Accent-friendly accepts a different accent (for example pupils from the mountains or Lumad communities). Speech support is for a pupil with a speech need such as cleft palate: no word is marked wrong, the pupil taps each word as they read, and you score the recording. A red plus then shows beside the name.'],
+   [['#speech'],'How BULIG listens','Standard checks each word. Accent-friendly accepts a different accent (for example pupils from the mountains or Lumad communities). Speech support is for a pupil with a speech need such as cleft palate: no word is marked wrong, the pupil taps each word as they read, and you score the recording. A red plus (Speech support) or a blue speech bubble (Accent-friendly) then shows beside the name.'],
    ['#learning-path','Learning path','Every level and lesson with its status. Open a level to mark lessons done in class.'],
    [['.cd-actions'],'Mark as done in class','Tick lessons or activities you did together, then save. Use "Undo" if you made a mistake.'],
    [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.']],

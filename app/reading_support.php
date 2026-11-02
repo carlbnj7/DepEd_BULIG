@@ -388,20 +388,27 @@ function speech_me():string{try{$u=current_user();}catch(Throwable $e){$u=null;}
 function accent_key(string $w):string{
  $w=say_sound(str_replace('th','t',strtolower($w)));$w=preg_replace(['~sh~','~z~','~S$~','~f~','~v~','~ee~','~oo~','~e~','~u~','~T$~','~K$~','~P$~'],['s','s','s','p','b','i','o','i','o','t','k','p'],$w)??$w;
  return preg_replace(['~([^aeiou])s$~','~([aeiou][^aeiou])[^aeiou]$~'],['$1','$1'],$w)??$w;}
-/** v208 the small red plus beside the name of a pupil with Speech support (teacher and admin pages only, never on class screens). */
+/** v208 the small icon beside the name of a pupil with a speech setting (teacher and admin pages only, never on class
+    screens): a red plus for Speech support, a blue speech bubble for Accent-friendly. */
+function speech_icon(string $m):string{
+ if($m==='support')return '<span class="sp-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 4h5v5.5H20v5h-5.5V20h-5v-5.5H4v-5h5.5z"/></svg></span>';
+ if($m==='accent')return '<span class="sp-mark acc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg></span>';
+ return '';}
 function speech_mark(int $pid):string{
- if(speech_mode($pid)!=='support')return '';$t='Speech support: BULIG does not mark spoken words wrong. You listen and score.';
- return '<span class="sp-mark" title="'.e($t).'" aria-label="'.e($t).'" role="img"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 4h5v5.5H20v5h-5.5V20h-5v-5.5H4v-5h5.5z"/></svg></span>';}
-/** Teacher, pupil page: the speech setting card. */
-function speech_card(int $pid,string $first):string{
- $m=speech_mode($pid);$h='<section class="card sp-card" id="speech"><div class="section-heading"><h2>'.icon('mic').' How BULIG listens to '.e($first).'</h2><span class="status">'.e(SPEECH_MODES[$m][0]).'</span></div>';
- $h.='<p class="muted">Choose this for a pupil with a different accent or a speech need. Only you see it. You can change it any time.</p><form method="post" class="sp-form">'.csrf_field().'<input type="hidden" name="action" value="speech_mode"><input type="hidden" name="pupil" value="'.$pid.'">';
- foreach(SPEECH_MODES as $k=>[$t,$d])$h.='<label class="sp-opt"><input type="radio" name="mode" value="'.$k.'"'.($k===$m?' checked':'').'><span><b>'.e($t).'</b><small>'.e($d).'</small></span></label>';
- return $h.'<button class="btn primary">'.icon('check').'Save</button></form></section>';
-}
+ $m=speech_mode($pid);if($m==='standard')return '';
+ $t=$m==='support'?'Speech support: BULIG does not mark spoken words wrong. You listen and score.':'Accent-friendly: BULIG accepts common accent sounds.';
+ return str_replace('aria-hidden="true">','title="'.e($t).'" aria-label="'.e($t).'" role="img">',speech_icon($m));}
+/** Save a pupil's speech setting ('standard' removes it). */
+function speech_set(int $pid,string $m):void{if(!isset(SPEECH_MODES[$m]))$m='standard';
+ if($m==='standard')q('DELETE FROM settings WHERE setting_key=?',['speech_'.$pid]);
+ else q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['speech_'.$pid,$m]);}
+/** v208 Add one pupil: Reading support, chosen when the pupil is registered (Standard unless the teacher picks another). */
+function speech_reg_field():string{
+ $h='<fieldset class="sp-reg"><legend>Reading support</legend><p class="muted">How BULIG listens when this pupil reads aloud. Only you see it, and you can change it later on the pupil’s page.</p><div class="sp-form">';
+ foreach(SPEECH_MODES as $k=>[$t,$d])$h.='<label class="sp-opt"><input type="radio" name="speech_mode" value="'.$k.'"'.($k==='standard'?' checked':'').'><span><b>'.e($t).($k!=='standard'?' '.speech_icon($k):'').'</b><small>'.e($d).'</small></span></label>';
+ return $h.'</div></fieldset>';}
 function speech_save(array $u):void{
  $pid=(int)($_POST['pupil']??0);own_pupil($pid);$m=(string)($_POST['mode']??'');if(!isset(SPEECH_MODES[$m]))fail('Choose how BULIG listens.');
- if($m==='standard')q('DELETE FROM settings WHERE setting_key=?',['speech_'.$pid]);
- else q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['speech_'.$pid,$m]);
+ speech_set($pid,$m);
  audit('speech_mode','Pupil '.$pid.': '.$m);flash('Saved: '.SPEECH_MODES[$m][0].'.');go('?page=pupil&id='.$pid.'#speech');
 }

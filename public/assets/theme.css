@@ -6995,3 +6995,8 @@ html.dark .sp-opt{background:#16231b;border-color:#2e4234}html.dark .sp-opt:has(
 .sp-mark svg{width:12px;height:12px}
 .hm-head h1 .sp-mark{width:26px;height:26px;margin-left:10px;vertical-align:.15em}.hm-head h1 .sp-mark svg{width:17px;height:17px}
 html.dark .sp-mark{box-shadow:0 0 0 2px #16231b}
+/* v208 Add one pupil: Reading support */
+.formgrid .sp-reg{grid-column:1/-1;margin:4px 0 0;padding:14px 16px;border:1.5px solid var(--g200,#cfe7c9);border-radius:18px;background:var(--g50,#f5faee);min-width:0}
+.sp-reg legend{padding:0 6px;font-weight:800;color:var(--g800,#13503a)}.sp-reg>p{margin:0 0 4px;font-size:.88rem}.sp-reg .sp-form{margin-top:6px}.sp-reg .sp-mark{width:16px;height:16px}.sp-reg .sp-mark svg{width:11px;height:11px}
+html.dark .formgrid .sp-reg{background:#13251b;border-color:#2e4234}html.dark .sp-reg legend{color:#cfe7c9}
+.sp-mark.acc{background:#2e78d6}.sp-mark.acc svg{width:11px;height:11px}.hm-head h1 .sp-mark.acc svg{width:15px;height:15px}
