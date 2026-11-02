@@ -110,3 +110,30 @@ function class_done_path(int $pid,string $back='',bool $acts=false):string{
 
 /** Teacher page: manage pupils (starting level, done in class by level, lesson or activity). */
 function manage_pupils_view(array $u):void{pupil_list_view($u);}
+
+/* v208 Undo instead of "Are you sure?": the last change of a starting level or "Done in class" can be undone for a
+   short time from the bar that shows after saving. */
+function undo_set(string $kind,array $data,string $msg,string $back):void{$_SESSION['undo']=['kind'=>$kind,'data'=>$data,'msg'=>$msg,'back'=>$back,'t'=>time(),'tok'=>bin2hex(random_bytes(8))];}
+function undo_toast():string{
+ $u=$_SESSION['undo']??null;if(!$u)return '';if(time()-(int)$u['t']>20){unset($_SESSION['undo']);return '';}
+ static $here=false;if($here)return '';$rid=(string)($_SERVER['REQUEST_TIME_FLOAT']??microtime(true));if(!empty($u['shown'])&&$u['shown']!==$rid){unset($_SESSION['undo']);return '';}$_SESSION['undo']['shown']=$rid;$here=true;
+ return '<div class="undo-toast" role="status" data-undo><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><b>'.e((string)$u['msg']).'</b><form method="post">'.csrf_field().'<input type="hidden" name="action" value="undo_last"><input type="hidden" name="tok" value="'.e((string)$u['tok']).'"><button class="undo-btn">Undo</button></form><span class="undo-ring" aria-hidden="true"><i data-undo-n>5</i></span></div>';
+}
+function undo_run(array $teacher):never{
+ $u=$_SESSION['undo']??null;$back=(string)($u['back']??'?page=dashboard');
+ if(!$u||!hash_equals((string)$u['tok'],(string)($_POST['tok']??''))||time()-(int)$u['t']>30){unset($_SESSION['undo']);flash('It is too late to undo that change.');go($back);}
+ unset($_SESSION['undo']);$tid=(int)$teacher['id'];
+ db()->beginTransaction();try{
+  if($u['kind']==='level'){foreach((array)$u['data']['prev'] as $pid=>$lv){$pid=(int)$pid;if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))continue;
+    if($lv===null||$lv===false)q('DELETE FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);else q('UPDATE pupil_level_assignments SET level_id=?,assigned_by=? WHERE pupil_id=?',[(int)$lv,$tid,$pid]);}
+   audit('undo','start level');}
+  if($u['kind']==='done'){foreach((array)$u['data']['aids'] as $pid=>$aids){$pid=(int)$pid;if(!$aids||!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))continue;$in=implode(',',array_map('intval',$aids));
+    $made=rows('SELECT c.id,c.activity_id,a.lesson_id FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.activity_id IN('.$in.') AND c.prompt_snapshot=? AND c.reviewed_at>=?',[$pid,CLASS_DONE_MARK,(string)$u['data']['t0']]);$lessons=[];
+    foreach($made as $m){$xp=(int)val('SELECT amount FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$m['activity_id']]);q('DELETE FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$m['activity_id']]);if($xp)q('UPDATE pupil_xp SET total=GREATEST(0,CAST(total AS SIGNED)-?) WHERE pupil_id=?',[$xp,$pid]);
+     q('DELETE FROM response_history WHERE completion_id=?',[$m['id']]);q('DELETE FROM activity_completion WHERE id=?',[$m['id']]);$lessons[(int)$m['lesson_id']]=1;}
+    foreach(array_keys($lessons) as $lid){q('UPDATE pupil_progress SET completed_at=NULL WHERE pupil_id=? AND lesson_id=?',[$pid,$lid]);sync_assessments($pid,$lid);}}
+   audit('undo','done in class');}
+  db()->commit();
+ }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+ flash('Undone. Everything is back the way it was.');go($back);
+}

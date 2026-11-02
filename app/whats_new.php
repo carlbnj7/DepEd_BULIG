@@ -3,32 +3,32 @@
    BULIG is updated: a construction sign with Bob and the new things for their role. Closing it keeps a copy on the
    bell (Notifications), and ?whatsnew=1 opens it again. Seen is kept in settings (whatsnew_<update>_<id>), no SQL.
    For a new update: change WHATS_NEW_ID and the lists below. */
-const WHATS_NEW_ID='v207';
+const WHATS_NEW_ID='v208';
 const WHATS_NEW=[
  /* shown before signing in too (on the login page, after the opening screen), once on each device */
  'guest'=>[
-  ['mic','Read with Max','When you read a story, Max stands beside it. Each word turns green when you say it right.'],
-  ['star','5 hearts for each word','Missed a word? Say it again. You have 5 hearts for each word, like lives in a game.'],
-  ['check','Word cards turn green','In Level 3, say each word and its card turns green.'],
-  ['edit','Clearer instructions','Instructions in every level are shorter and easier to follow.'],
+  ['mic','Max helps with the microphone','Before your phone asks, Max explains: tap Allow so he can hear you read.'],
+  ['star','A chime for every word','A soft chime and a tiny buzz each time a word you read turns green.'],
+  ['book','Continue where you stopped','If the page closes while you read, you can go on from the last green word.'],
+  ['ladder','Level 8 is coming','On the road map, Bob the Worker is building the bridge to Level 8.'],
  ],
  'pupil'=>[
-  ['mic','Read with Max','When you read a story, Max stands beside it. Each word turns green when you say it right.'],
-  ['star','5 hearts for each word','Missed a word? Say it again. You have 5 hearts for each word. A heart goes away when the word is not right yet.'],
-  ['check','Word cards turn green','In Level 3, say each word and its card turns green. When all are green, you are done!'],
-  ['edit','BULIG hears you better','Numbers like 10 and words that sound alike, like "then" and "den", are now heard right.'],
+  ['mic','I can hear you!','The red bars move with your voice, so you know Max can hear you read.'],
+  ['star','A chime for every word','A soft chime and a tiny buzz each time a word turns green. Turn it off in Settings › Sound effects.'],
+  ['book','Continue where you stopped','If the page closes while you read, tap Continue reading to go on from the last green word.'],
+  ['ladder','Level 8 is coming','Look at your road map: Bob the Worker is building the bridge to Level 8!'],
  ],
  'teacher'=>[
-  ['mic','Reading Coach with hearts','In Level 4 stories and other reading activities, pupils get 5 hearts for each missed word. Hearts lost are shown at the end.'],
-  ['check','Level 3 word cards','In Levels 3A and 3B, each word card turns green as the pupil says it.'],
-  ['edit','Better listening','Numbers ("10" and "ten") and sound-alike words ("then" and "den") are now counted as right.'],
-  ['book','Clearer instructions','Instructions in all levels were checked and made shorter and easier for pupils.'],
+  ['alert','Waiting for you','Verify Readings shows the readings BULIG could not score, oldest first, so no reading waits too long.'],
+  ['mic','Reading support for each pupil','Choose Standard, Accent-friendly or Speech support when you add a pupil or a whole class. A red plus or a blue bubble marks them.'],
+  ['check','Undo','Changed a starting level or marked work as done by mistake? Tap Undo on the bar that shows after saving.'],
+  ['edit','Short vowels stay strict','In lessons that teach a vowel, BULIG checks that vowel even for Accent-friendly pupils.'],
  ],
  'admin'=>[
-  ['mic','Reading Coach with hearts','Level 4 stories and other reading activities give pupils 5 hearts for each missed word.'],
-  ['check','Level 3 word cards','In Levels 3A and 3B, word cards turn green as the pupil says each word.'],
-  ['edit','Better listening','Numbers and sound-alike words are now matched correctly when pupils read aloud.'],
-  ['search','Bug fixes','Fixes for the word bank, practice words and button colours.'],
+  ['search','Clear old data','Data cleanup can clear the activity log and other old records. Download a backup first.'],
+  ['mic','Reading support','Teachers mark pupils who need Accent-friendly listening or Speech support.'],
+  ['ladder','Level 8 on the road map','Pupils see Level 8 under construction, past the Reading Castle.'],
+  ['edit','Titles in Title Case','Menus and titles use Title Case. Names and text people type stay as written.'],
  ],
 ];
 function wn_key(int $uid):string{return 'whatsnew_'.WHATS_NEW_ID.'_'.$uid;}

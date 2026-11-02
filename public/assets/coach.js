@@ -23,16 +23,25 @@
    // Some microphone implementations mute capture when recognition starts. Never save that as evidence.
    media.getAudioTracks().forEach(t=>{t.addEventListener('mute',()=>{if(!ended&&mr&&mr.state==='recording'){expired=true;failure='The microphone was interrupted while Word Coach was listening. This attempt has no complete recording.';}});t.addEventListener('ended',()=>{if(!ended)expired=true;});});
    const type=(APPLE?['audio/mp4','audio/webm;codecs=opus','audio/webm']:['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg;codecs=opus']).find(t=>MediaRecorder.isTypeSupported(t));
+   /* v208 live microphone meter: how loud the pupil is right now (0 to 1) */
+   let an=null,buf=null,ac=null;try{const AC=window.AudioContext||window.webkitAudioContext;if(AC){ac=new AC();const src=ac.createMediaStreamSource(media);an=ac.createAnalyser();an.fftSize=512;src.connect(an);buf=new Uint8Array(an.fftSize);}}catch(e){an=null;}
+   const level=()=>{if(!an)return -1;an.getByteTimeDomainData(buf);let sum=0;for(let k=0;k<buf.length;k++){const v=(buf[k]-128)/128;sum+=v*v;}return Math.min(1,Math.sqrt(sum/buf.length)*4);};
    mr=new MediaRecorder(media,type?{mimeType:type,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000});
    let resolve;const result=new Promise(r=>resolve=r);
    mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
    mr.onerror=()=>{expired=true;failure='The browser could not finish the audio recording.';cleanup();resolve('');};
-   mr.onstop=()=>{cleanup();const blob=new Blob(chunks,{type:(mr.mimeType||'audio/webm').split(';')[0]});if(expired||blob.size<200||blob.size>6000000){resolve('');return;}const f=new FileReader();f.onload=()=>resolve(String(f.result));f.onerror=()=>resolve('');f.readAsDataURL(blob);};
+   mr.onstop=()=>{cleanup();try{if(ac)ac.close();}catch(e){}const blob=new Blob(chunks,{type:(mr.mimeType||'audio/webm').split(';')[0]});if(expired||blob.size<200||blob.size>6000000){resolve('');return;}const f=new FileReader();f.onload=()=>resolve(String(f.result));f.onerror=()=>resolve('');f.readAsDataURL(blob);};
    mr.start(500);if(!live)mr.pause();timer=setTimeout(()=>{expired=true;if(mr.state!=='inactive')mr.stop();},600000);
-   return {error(){return failure;},valid(){return !expired&&media.getAudioTracks().every(t=>t.readyState==='live'&&!t.muted);},pause(){if(mr.state==='recording')mr.pause();},resume(){if(mr.state==='paused')mr.resume();},stop(){if(!ended){ended=true;if(mr.state!=='inactive')mr.stop();else cleanup();}return result;},cancel(){expired=true;this.stop();cleanup();}};
+   return {level,closeMeter(){try{if(ac)ac.close();}catch(e){}},error(){return failure;},valid(){return !expired&&media.getAudioTracks().every(t=>t.readyState==='live'&&!t.muted);},pause(){if(mr.state==='recording')mr.pause();},resume(){if(mr.state==='paused')mr.resume();},stop(){if(!ended){ended=true;if(mr.state!=='inactive')mr.stop();else cleanup();}return result;},cancel(){expired=true;this.stop();cleanup();}};
   }catch(e){cleanup();return null;}
  }
 
+ /* v208 the red bars move with the pupil's real voice; "I can hear you!" or, after 3 quiet seconds, a gentle hint */
+ function liveMeter(box,rec,alive,soft){const wave=box.querySelector('.wc-wave'),hear=box.querySelector('[data-hear]');if(!wave||!rec||!rec.level||rec.level()<0)return;
+  wave.classList.add('wc-live');const bars=[...wave.querySelectorAll('i')],shape=[.45,.7,1,.8,.95,.6];let loud=Date.now(),said=false;
+  const tick=()=>{if(!alive()||!document.body.contains(wave))return;const lv=rec.level();bars.forEach((b,k)=>{b.style.height=Math.round(6+Math.min(30,lv*60*shape[k%shape.length]))+'px';});
+   if(lv>.08){loud=Date.now();said=true;}if(hear){const quiet=Date.now()-loud>3000;hear.textContent=quiet?(soft?'Take your time. Read when you are ready.':'I can’t hear you. Speak a little louder, or move closer.'):(said?'I can hear you!':'');hear.classList.toggle('wc-quiet',quiet&&!soft);}
+   requestAnimationFrame(tick);};requestAnimationFrame(tick);}
  const IMG=p=>'assets/images/characters/max-'+p+'.webp?v=2';
  /* v205 sending: 'tap' = one Send to my teacher button; 'auto' = sends by itself after 5 seconds */
  const SENDMODE=new URLSearchParams(location.search).get('wcsend')==='tap'?'tap':'auto';
@@ -68,7 +77,8 @@
    .replace(/(.)\1+/g,'$1').replace(/([^aeiou])e$/,'$1').replace(/[dt]$/,'T').replace(/[gk]$/,'K').replace(/[bp]$/,'P').replace(/[sz]$/,'S');};
  /* v208 how BULIG listens to this pupil, set by the teacher: '' (standard), 'accent' (Accent-friendly) or 'support' (Speech support) */
  const SPM=(document.querySelector('meta[name="bulig-speech"]')||{}).content||'';
- const accent=k=>k.replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
+ const VST=!!document.querySelector('meta[name="bulig-vowel"]');   /* a lesson that teaches a vowel: vowels are checked strictly */
+ const accent=k=>(VST?k:k.replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o')).replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
  const near=(h,t)=>h===t||(t.length>=5&&lev(h,t)<=1)||(h.length>1&&sound(h)===sound(t))||(SPM==='accent'&&h.length>1&&accent(sound(h.replace(/th/g,'t')))===accent(sound(t.replace(/th/g,'t'))));
  const heardOk=(alts,unit)=>{const want=unit.map(norm).filter(Boolean);if(!want.length)return true;
   for(const alt of alts){const got=alt.split(/\s+/).map(norm).filter(Boolean);
@@ -126,7 +136,7 @@
    if(vis(nx)){nx.click();return;}if(vis(sb)){sb.click();return;}if(sb&&f.requestSubmit)f.requestSubmit(sb);};
   rec.addEventListener('wc:done',()=>{if(sendAfter){sendAfter=false;setTimeout(sendNow,450);}});
 
-  function open(practice){let hlTotal=null;
+  function open(practice){let hlTotal=null,resume=null;
    hush();const attemptAbort=new AbortController();const all=words(text);let recording=null,audio='',recordingResult=null,recordingError='';
    const audioField=()=>{let f=rec.querySelector('[data-coach-audio]');if(!f){f=document.createElement('input');f.type='hidden';f.name='coach_audio['+(val?val.name.match(/\d+/)[0]:0)+']';f.dataset.coachAudio='';rec.append(f);}return f;};
    if(!practice){audioField().value='';if(val)val.value='';}
@@ -179,12 +189,15 @@
     if(!alive)return;
     if(SPM==='support'){readAlong();return;}
     let p=0,sessBase=0,last=Date.now(),hintT=null,ended=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
-    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Each word turns green when you say it right.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
-    box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':'Audio unavailable — teacher review needed';
+    /* v208 continue an interrupted reading: start at the last word reached, the green words stay green */
+    const PK='wcprog:'+key;if(resume&&resume.p>0&&resume.p<N){p=sessBase=resume.p;(resume.S||[]).forEach((v,i)=>{if(i<N&&v){S[i]=v;paint(i,v==='ok'?'ok':'miss');}});}resume=null;
+    const keep=()=>{if(practice)return;try{localStorage.setItem(PK,JSON.stringify({p,S,n:N,t:Date.now()}));}catch(e){}};
+    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Each word turns green when you say it right.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
+    box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':'Audio unavailable — teacher review needed';liveMeter(box,recording,()=>alive,false);
     const hint=box.querySelector('[data-hint]');
-    const show=()=>{for(let i=0;i<N;i++)if(!S[i])paint(i,i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
-    const set=(i,v)=>{S[i]=v;paint(i,v==='ok'?'ok':'miss');};
-    const finish=()=>{if(ended)return;ended=true;ov.classList.remove('wc-reading');secs=Math.round((Date.now()-t0)/1000);clearInterval(hintT);if(stream)stream.stop();for(let i=0;i<N;i++)if(S[i]!=='ok')set(i,'miss');
+    const show=()=>{keep();for(let i=0;i<N;i++)if(!S[i])paint(i,i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
+    const set=(i,v)=>{if(v==='ok'&&S[i]!=='ok'&&window.buligWordOk)window.buligWordOk();S[i]=v;paint(i,v==='ok'?'ok':'miss');};
+    const finish=()=>{if(ended)return;ended=true;try{localStorage.removeItem(PK);}catch(e){}ov.classList.remove('wc-reading');secs=Math.round((Date.now()-t0)/1000);clearInterval(hintT);if(stream)stream.stop();for(let i=0;i<N;i++)if(S[i]!=='ok')set(i,'miss');
      for(let i=0;i<N;i++)if(S[i]==='ok')got[i]=1;else fails[i]=1;setTimeout(()=>alive&&fix(),700);};
     const align=heard=>{if(ended)return;const toks=heard.split(/\s+/).map(norm).filter(Boolean);let q=sessBase;const st={};
      /* the next 4 words, or (when the pupil read on) the same word further on: the reading always goes on */
@@ -204,10 +217,10 @@
       as they say it (or Next word); nothing is marked wrong and no hearts are lost. The recording goes to the teacher. */
    function readAlong(){
     let p=0;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');$('[data-c]').textContent='Read for your teacher';
-    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Read it out loud. Tap each word as you say it.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span></div><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-nextw">'+svg.skip+'Next word</button><button type="button" class="btn primary wc-fin">'+svg.ok+'I finished reading</button></div><p class="wc-auto">Take your time. Your teacher will listen to your reading.</p></div>';
-    box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':'Audio unavailable — tell your teacher';
+    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Read it out loud. Tap each word as you say it.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-nextw">'+svg.skip+'Next word</button><button type="button" class="btn primary wc-fin">'+svg.ok+'I finished reading</button></div><p class="wc-auto">Take your time. Your teacher will listen to your reading.</p></div>';
+    box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':'Audio unavailable — tell your teacher';liveMeter(box,recording,()=>alive,true);
     const show=()=>{for(let i=0;i<N;i++)paint(i,i<p?'ok':i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
-    const go=i=>{if(i>=p&&i<N){p=i+1;show();}};
+    const go=i=>{if(i>=p&&i<N){p=i+1;show();if(window.buligWordOk)window.buligWordOk(false);}};   /* Speech support: a chime, no buzz */
     W.forEach((x,i)=>{x.onclick=()=>go(i);});
     box.querySelector('.wc-nextw').onclick=()=>go(p);
     const tick=setInterval(()=>{const st=box.querySelector('[data-st]');if(!st||!alive){clearInterval(tick);return;}const el=Math.round((Date.now()-t0)/1000);st.textContent=Math.floor(el/60)+':'+String(el%60).padStart(2,'0');},1000);
@@ -303,6 +316,16 @@
    if(practice){const prev=(store.get(key)||'').split('|')[1]||'';const hard=prev.split(' ').filter(Boolean);
     if(hard.length){all.splice(0,all.length,...hard);txt.innerHTML=all.map((w,i)=>'<span class="wc-w">'+esc(w)+'</span>').join(' ');W.splice(0,W.length,...txt.querySelectorAll('.wc-w'));
      all.forEach((w,i)=>{fails[i]=1;got[i]=null;});fix(all.map((w,i)=>i));return;}}
+   /* v208 welcome back: a reading that stopped part way (the page reloaded or the internet dropped) can go on */
+   let saved=null;try{saved=JSON.parse(localStorage.getItem('wcprog:'+key)||'null');}catch(e){}
+   if(saved&&saved.n===N&&saved.p>0&&saved.p<N&&Date.now()-saved.t<86400000){
+    pal.src=IMG('point');$('[data-c]').textContent='Welcome back';$('[data-bar]').style.width=Math.round(saved.p/N*100)+'%';
+    (saved.S||[]).forEach((v,i)=>{if(i<N&&v==='ok')W[i].classList.add('ok');});
+    box.innerHTML='<img src="'+IMG('point')+'" alt=""><div class="wc-back"><h3>Welcome back!</h3><p class="wc-say">You stopped at word <b>'+(saved.p+1)+' of '+N+'</b>. Keep going from there?</p><div class="wc-bar wc-back-bar"><i data-back-bar></i></div><div class="wc-row"><button type="button" class="btn ghost wc-over">'+svg.redo+'Start over</button><button type="button" class="btn primary wc-cont">'+svg.mic+'Continue reading</button></div></div>';
+    {const bb=box.querySelector('[data-back-bar]');if(bb)bb.style.width=Math.round(saved.p/N*100)+'%';}
+    box.querySelector('.wc-over').onclick=()=>{try{localStorage.removeItem('wcprog:'+key);}catch(e){}W.forEach(x=>x.classList.remove('ok'));readAll();};
+    box.querySelector('.wc-cont').onclick=()=>{resume=saved;W.forEach(x=>x.classList.remove('ok'));pass();};
+    return;}
    readAll();
   }
  });

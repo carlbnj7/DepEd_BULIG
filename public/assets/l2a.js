@@ -264,7 +264,8 @@
   /* v208 how BULIG listens to this pupil (set by the teacher): 'accent' also takes common accent sound changes (i/e, o/u,
      p/f, b/v, s/z/sh, a last consonant not said); 'support' (Speech support) never marks a spoken word wrong: the teacher listens */
   const SPM=(document.querySelector('meta[name="bulig-speech"]')||{}).content||'';
-  const vcA=k=>k.replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
+  const VST=!!document.querySelector('meta[name="bulig-vowel"]');   /* a lesson that teaches a vowel: vowels are checked strictly */
+  const vcA=k=>(VST?k:k.replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o')).replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
   const vcEq=(g,a)=>g===a||(g.length>1&&vcS(g)===vcS(a))||(a.length>=5&&vcL1(g,a))||(SPM==='accent'&&g.length>1&&vcA(vcS(g.replace(/th/g,'t')))===vcA(vcS(a.replace(/th/g,'t'))));
   const vcL1=(a,b)=>{if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,d=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue;}if(++d>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++;}}return d+(a.length-i)+(b.length-j)<=1;};
   const vcWant=()=>{if(spinOut&&spinOut.textContent.trim()&&spinOut.textContent.trim()!=='?')return [spinOut.textContent.trim()];return vcList;};
@@ -290,7 +291,7 @@
    if(end){const f=n/all,k=f>=.9?3:(f>=.6?2:1);h+='<span class="pc-stars"><b>'+'\u2605'.repeat(k)+'<i>'+'\u2605'.repeat(3-k)+'</i></b><span>'+(n===all?'Super! You read all the words!':(k===2?'Good reading! Practise the red words.':'Keep practising! Read the red words again.'))+'</span></span>';}
    wlBox.innerHTML=h;};
   const wlMark=t=>{if(!wlWords.length||!t)return;const got=String(t).split(/\s+/).map(vcN).filter(Boolean);
-   wlWords.forEach(x=>{if(x.classList.contains('wl-ok'))return;const a=vcN(x.textContent.trim());if(got.some(g=>vcEq(g,a))){x.classList.remove('wl-no');x.classList.add('wl-ok');}});wlShow(false);};
+   wlWords.forEach(x=>{if(x.classList.contains('wl-ok'))return;const a=vcN(x.textContent.trim());if(got.some(g=>vcEq(g,a))){x.classList.remove('wl-no');x.classList.add('wl-ok');if(window.buligWordOk)window.buligWordOk();}});wlShow(false);};
   const wlReset=()=>{if(!wlWords.length)return;wlWords.forEach(x=>x.classList.remove('wl-ok','wl-no'));wlShow(false);};
   if(SPM==='support')wlWords.forEach(x=>x.addEventListener('click',()=>{x.classList.remove('wl-no');x.classList.add('wl-ok');wlShow(false);}));   /* Speech support: the pupil taps each word as they read it */
   const wlEnd=w=>{if(!wlWords.length)return;wlMark(w);if(SPM==='support'){wlShow(false);return;}wlWords.forEach(x=>{if(!x.classList.contains('wl-ok'))x.classList.add('wl-no');});wlShow(true);if(wlCount()===wlWords.length)sfx('correct');};

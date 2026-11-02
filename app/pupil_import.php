@@ -57,7 +57,7 @@ function import_columns(array $header):array{
  $alias=['name'=>['name','full name','fullname','learner name','learners name','pupil name','name of learner','name of pupil','student name','complete name'],
   'last'=>['last name','lastname','surname','family name','apelyido'],'first'=>['first name','firstname','given name','pangalan'],'middle'=>['middle name','middlename','middle initial','mi'],'ext'=>['extension','ext','name extension','extension name','suffix','jr sr'],
   'lrn'=>['lrn','learner reference number','lrn no','lrn number','learner reference no'],'sex'=>['sex','gender','m f','kasarian'],'section'=>['section','class','seksyon'],
-  'grade'=>['grade','grade level','gr'],'level'=>['starting level','bulig level','level','start level']];
+  'grade'=>['grade','grade level','gr'],'support'=>['reading support','support','speech support','speech','listening','how bulig listens'],'level'=>['starting level','bulig level','level','start level']];
  $cols=[];
  foreach($header as $i=>$h){$k=trim(preg_replace('/\s+/',' ',preg_replace('/[^a-z0-9]+/',' ',strtolower($h))));
   foreach($alias as $key=>$words)if(!isset($cols[$key])&&in_array($k,$words,true)){$cols[$key]=$i;continue 2;}
@@ -110,7 +110,7 @@ function import_check(array $rows,array $teacher,int $defaultSection,int $defaul
   $name=trim(preg_replace('/\s+/',' ',$name));
   $lrn=preg_replace('/[\s\-\'’]/','',$get('lrn'));$sexRaw=strtolower($get('sex'));
   $sex=in_array($sexRaw,['m','male','boy','lalaki','l'],true)?'male':(in_array($sexRaw,['f','female','girl','babae','b'],true)?'female':null);
-  $row=['line'=>$hi+$n+2,'name'=>$name,'parts'=>$parts,'lrn'=>$lrn,'sex'=>$sex,'section'=>null,'new_section'=>null,'grade'=>null,'level'=>$defaultLevel,'status'=>'ok','notes'=>[]];
+  $row=['line'=>$hi+$n+2,'name'=>$name,'parts'=>$parts,'lrn'=>$lrn,'sex'=>$sex,'section'=>null,'new_section'=>null,'grade'=>null,'level'=>$defaultLevel,'support'=>function_exists('speech_parse')?speech_parse($get('support')):'standard','status'=>'ok','notes'=>[]];
   $err=function(string $m)use(&$row){$row['status']='error';$row['notes'][]=$m;};
   if(mb_strlen($name)<2||mb_strlen($name)>150)$err('Name is missing or too long.');
   elseif(!isset($cols['name'])&&($get('first')===''||$get('last')===''))$err($get('first')===''?'First name is missing.':'Last name is missing.');
@@ -167,16 +167,16 @@ function import_actions(string $action):void{
   $mine=[];foreach(teacher_sections($tid) as $x)$mine[(int)$x['id']]=$x;
   $sid=0;$newSec=null;
   if(!$many){if(($_POST['section_id']??'')==='new')$newSec=section_new_input();else{$sid=(int)($_POST['section_id']??0);if(!$sid)fail('Choose the section for this list.');owned_section($sid,$tid);}}
-  $t=(array)($_POST['t']??[]);$keys=['last','first','middle','ext','sex','lrn','sec','level'];$n=0;foreach($keys as $k)foreach(array_keys((array)($t[$k]??[])) as $i)$n=max($n,(int)$i+1);
+  $t=(array)($_POST['t']??[]);$keys=['last','first','middle','ext','sex','lrn','sec','level','sup'];$n=0;foreach($keys as $k)foreach(array_keys((array)($t[$k]??[])) as $i)$n=max($n,(int)$i+1);
   if($n>IMPORT_MAX_ROWS)fail('Type up to '.IMPORT_MAX_ROWS.' pupils at a time.');
   $codes=[0=>'BULIG',1=>'1',2=>'2A',3=>'2B',4=>'3A',9=>'3B',5=>'4',6=>'5',7=>'6',8=>'7'];
   $typed=[];$list=[];
   for($i=0;$i<$n;$i++){$r=[];foreach($keys as $k)$r[]=mb_substr(trim((string)(((array)($t[$k]??[]))[$i]??'')),0,80);
-   if($r[0].$r[1].$r[2].$r[5]===''){$typed[]=array_fill(0,8,'');$list[]=array_fill(0,9,'');continue;}   // only M or F picked: an empty row
+   if($r[0].$r[1].$r[2].$r[5]===''){$typed[]=array_fill(0,9,'');$list[]=array_fill(0,10,'');continue;}   // only M or F picked: an empty row
    $typed[]=$r;$sec=$newSec?['grade_level'=>$newSec[0],'name'=>$newSec[1]]:($many?($mine[(int)$r[6]]??null):null);$lv=$r[7]===''?$level:(int)$r[7];
-   $list[]=[$r[0],$r[1],$r[2],$r[3],$r[4],$r[5],$sec['name']??'',$sec?(string)$sec['grade_level']:'',$codes[$lv]??''];}
+   $list[]=[$r[0],$r[1],$r[2],$r[3],$r[4],$r[5],$sec['name']??'',$sec?(string)$sec['grade_level']:'',$codes[$lv]??'',$r[8]];}
   if(!array_filter($typed,fn($r)=>implode('',$r)!==''))fail('Type at least one pupil first.');
-  $checked=import_check(array_merge([['Last name','First name','Middle name','Extension','Sex','LRN','Section','Grade','Starting level']],$list),$u,$sid,$level);
+  $checked=import_check(array_merge([['Last name','First name','Middle name','Extension','Sex','LRN','Section','Grade','Starting level','Reading support']],$list),$u,$sid,$level);
   foreach($checked as &$c){$c['line']--;$c['notes']=array_map(fn($x)=>preg_replace_callback('/line (\d+) in this file/',fn($m)=>'row '.((int)$m[1]-1).' of this list',str_starts_with($x,'Section is missing')?'Choose a section.':$x),$c['notes']);}unset($c);   // row numbers of the list, not of a file
   $bad=array_filter($checked,fn($r)=>$r['status']==='error');
   if($bad){$_SESSION['pupil_typed']=['rows'=>$typed,'notes'=>array_column(array_map(fn($r)=>[$r['line']-1,implode(' ',array_filter($r['notes'],fn($x)=>!str_starts_with($x,'New section')))],$bad),1,0),'section'=>$sid,'level'=>$level,'many'=>$many,'new'=>$newSec];
@@ -198,6 +198,7 @@ function import_create(array $rows,array $u,string $file):never{
     $section=$made[$key];}
    if($r['lrn']!==''&&val('SELECT pupil_id FROM pupil_details WHERE lrn=?',[$r['lrn']]))continue;
    $public=create_pupil_account($u,$r['name'],$section,(int)$r['level'],[$r['sex'],$r['lrn']?:null],$r['parts']??null);
+   if(($r['support']??'standard')!=='standard'&&function_exists('speech_set'))speech_set((int)val('SELECT id FROM users WHERE public_id=?',[$public]),(string)$r['support']);   // v208 Reading support from the list
    $done[]=['id'=>$public,'name'=>$r['name'],'lrn'=>$r['lrn'],'section'=>'Grade '.$section['grade_level'].' · '.$section['name'],'pw'=>$GLOBALS['last_starter_pw']??'12345678'];}
   audit('import_pupils',count($done).' from '.$file);db()->commit();
  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
@@ -209,7 +210,7 @@ function import_create(array $rows,array $u,string $file):never{
 function import_download(string $what):never{
  require_role('teacher');header('Content-Type: text/csv; charset=utf-8');
  if($what==='template'){header('Content-Disposition: attachment; filename="BULIG-class-list-template.csv"');
-  echo "\xEF\xBB\xBF".'Last name,First name,Middle name,Extension,LRN,Sex,Grade,Section,Starting level'."\r\n";exit;}
+  echo "\xEF\xBB\xBF".'Last name,First name,Middle name,Extension,LRN,Sex,Grade,Section,Starting level,Reading support'."\r\n";exit;}
  $done=$_SESSION['pupil_import_done']??[];if(!$done)fail('There is no finished import to download.',404);
  header('Content-Disposition: attachment; filename="BULIG-new-pupil-logins.csv"');$h=fopen('php://output','w');fwrite($h,"\xEF\xBB\xBF");
  fputcsv($h,['Pupil ID','Name','LRN','Section','Starter password'],',','"','\\');foreach($done as $d)fputcsv($h,[$d['id'],$d['name'],$d['lrn']!==''?'="'.$d['lrn'].'"':'',$d['section'],$d['pw']??'12345678'],',','"','\\');exit;
@@ -253,7 +254,7 @@ function import_typed_grid(array $sections):string{
   .'<div class="sx-mode">'.$mode('one',!$many,'All pupils in one section','Choose the section once, for the whole list.').$mode('many',$many,'Pupils in different sections','Choose the section on each row.').'</div>'
   .'<div class="bk-top"><div class="bk-onesec">'.section_select($sections,$sid,$tid).'</div><div class="bk-lvall">'.str_replace(['<label>Starting level<select name="level_id" required>'],['<label>Starting level for everyone<select name="level_id" required data-bk-lvall>'],starting_level_field($level)).'</div></div>'
   .'<p class="sx-hint">Each pupil can start at a different level: change it on that pupil’s row.</p>';
- $h.='<div class="bk-gridwrap"><table class="bk-grid"><thead><tr><th>#</th><th>Last name</th><th>First name</th><th>Middle name</th><th class="c-ext">Ext.</th><th class="c-sex">Sex</th><th class="c-sec">Section</th><th class="c-lv">Starting level</th><th class="c-lrn">LRN (optional)</th><th class="c-st"><span class="sr-only">Check</span></th></tr></thead><tbody data-bk-body>';
+ $h.='<div class="bk-gridwrap"><table class="bk-grid"><thead><tr><th>#</th><th>Last name</th><th>First name</th><th>Middle name</th><th class="c-ext">Ext.</th><th class="c-sex">Sex</th><th class="c-sec">Section</th><th class="c-lv">Starting level</th><th class="c-lrn">LRN (optional)</th><th class="c-sup">Reading support</th><th class="c-st"><span class="sr-only">Check</span></th></tr></thead><tbody data-bk-body>';
  for($i=0,$n=max(10,count($rows));$i<$n;$i++)$h.=import_typed_row($i,$rows[$i]??[],$notes[$i]??'',$sections,$level);
  $h.='</tbody></table></div><template data-bk-tpl>'.import_typed_row(-1,[],'',$sections,$level).'</template>';
  return $h.'<div class="bk-foot"><small>Press <b>Enter</b> for the next pupil. Empty rows are skipped. <span data-bk-count aria-live="polite"></span></small><span class="bk-btns"><button type="button" class="btn secondary" data-bk-more>+ 10 more rows</button><button class="btn primary" data-bk-go>'.icon('check').'<span data-bk-label>Create pupil accounts</span></button></span></div></form>';
@@ -265,8 +266,11 @@ function import_typed_row(int $i,array $r,string $note,array $sections,int $leve
  $mf='';foreach(['M'=>'Male','F'=>'Female'] as $k=>$t)$mf.='<label><input type="radio" name="t[sex]['.$n.']" value="'.$k.'"'.(in_array($sex,[$k,strtoupper($t)],true)?' checked':'').' aria-label="'.$t.'"><b>'.$k.'</b></label>';
  return '<tr data-bk-row'.($note!==''?' class="err"':'').'><td data-bk-n>'.($i<0?'':$i+1).'</td>'.$in(0,'last','Last name',$i===0?' placeholder="Type here…"':'').$in(1,'first','First name').$in(2,'middle','Middle name')
   .'<td class="c-ext" data-l="Ext."><select name="t[ext]['.$n.']" aria-label="Extension">'.$o.'</select></td><td class="c-sex" data-l="Sex"><span class="bk-sex">'.$mf.'</span></td>'
-  .import_typed_choices($n,$r,$sections,$level).'<td class="c-lrn" data-l="LRN (optional)"><input name="t[lrn]['.$n.']" value="'.$v(5).'" maxlength="14" inputmode="numeric" autocomplete="off" aria-label="LRN"></td><td class="c-st" data-bk-st>'.($note!==''?'<span class="bad">'.e($note).'</span>':'').'</td></tr>';
+  .import_typed_choices($n,$r,$sections,$level).'<td class="c-lrn" data-l="LRN (optional)"><input name="t[lrn]['.$n.']" value="'.$v(5).'" maxlength="14" inputmode="numeric" autocomplete="off" aria-label="LRN"></td>'.import_support_cell($n,(string)($r[8]??'')).'<td class="c-st" data-bk-st>'.($note!==''?'<span class="bad">'.e($note).'</span>':'').'</td></tr>';
 }
+/** v208 Reading support for a typed row (Standard, Accent-friendly, Speech support). */
+function import_support_cell(string $n,string $v):string{$v=function_exists('speech_parse')?speech_parse($v):'standard';$o='';foreach((defined('SPEECH_MODES')?SPEECH_MODES:['standard'=>['Standard','']]) as $k=>[$t])$o.='<option value="'.$k.'"'.($k===$v?' selected':'').'>'.e($t).'</option>';
+ return '<td class="c-sup" data-l="Reading support"><select name="t[sup]['.$n.']" aria-label="Reading support">'.$o.'</select></td>';}
 /** A row's own Section (when pupils are in different sections) and Starting level. */
 function import_typed_choices(string $n,array $r,array $sections,int $level):string{
  $sec=(int)($r[6]??0);$lv=($r[7]??'')===''?$level:(int)$r[7];

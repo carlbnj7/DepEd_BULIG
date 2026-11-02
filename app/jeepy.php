@@ -41,6 +41,6 @@ function jeepy_journey(int $pid):string{
  return '<section class="card jy-card" aria-label="My reading journey"><div class="jy-head"><div><span class="eyebrow">MY BULIG JOURNEY</span><h2>'.e($first).'’s road map</h2></div>'
   .'<div class="jy-side"><div class="jy-links"><a class="btn secondary off-pagelink" href="?page=board">'.icon('ladder').'My reading board</a><a class="btn secondary off-pagelink" href="?page=offline">'.icon('download').'Offline lessons</a></div>'
   .'<div class="jy-prog"><b>'.$done.' of '.count($items).' levels done</b><progress max="'.count($items).'" value="'.$done.'" aria-label="Levels done"></progress></div></div></div>'
-  .'<div class="jy-map" data-jy-map="'.e(json_encode(['items'=>$items,'jy'=>jeepy_rides(),'cd'=>function_exists('castle_open')&&castle_open($pid)?1:0])).'">'.(function_exists('castle_art')?'<template class="jy-castle">'.castle_art('jy').'</template>':'').'</div>'
+  .'<div class="jy-map" data-jy-map="'.e(json_encode(['items'=>$items,'jy'=>jeepy_rides(),'cd'=>function_exists('castle_open')&&castle_open($pid)?1:0,'l8'=>1])).'">'.(function_exists('castle_art')?'<template class="jy-castle">'.castle_art('jy').'</template>':'').'</div>'
   .'<ol class="jy-list">'.implode('',array_map(fn($it)=>'<li class="jy-'.$it['s'].'">'.($it['h']?'<a href="'.e($it['h']).'">':'<span>').'Level '.e($it['n']).' · '.e($it['t']).($it['h']?'</a>':'</span>').'</li>',$items)).'</ol>'.$bar.'</section>';
 }

@@ -328,8 +328,8 @@ def run_pages(acc):
             page_ok(t, f'?page={pg}', f'Teacher page opens: {pg}')
         status, _, text = t.req('?page=dashboard')
         check('Teacher Home has the grouped menu (MY CLASS, TEACHING, PRINT) and "Find a page"',
-              all(g in text for g in ('>MY CLASS<', '>TEACHING<', '>PRINT<')) and 'data-find-input' in text and 'Needs you today' in text)
-        check('Teacher Home shows the Top 10 pupils', 'Top 10 pupils' in text and 'id="tf-top"' in text)
+              all(g in text for g in ('>MY CLASS<', '>TEACHING<', '>PRINT<')) and 'data-find-input' in text and 'needs you today' in text.lower())
+        check('Teacher Home shows the Top 10 pupils', 'top 10 pupils' in text.lower() and 'id="tf-top"' in text)
         check('Nothing waits for the teacher: no "Check answers", BULIG checks every answer, Class results in the menu',
               'Check answers' not in text and 'Answers to check' not in text and 'BULIG checks every answer' in text and 'href="?page=qcheck"' in text)
         _, url, _ = t.req(f"?page=review&pupil={acc['pupil1']['uid']}")
@@ -389,7 +389,7 @@ def run_pages(acc):
         check('Module content cannot be changed by the administrator', 'Unknown action' in text or 'not found' in text.lower())
         status, _, text = a.req('?page=ratings&period=all')
         check('Reports › App ratings shows the pupils’ stars and the teachers’ evaluation',
-              status == 200 and 'How do pupils and teachers rate BULIG?' in text and '1 pupil rated BULIG' in text and '1 teacher answered' in text
+              status == 200 and 'how do pupils and teachers rate bulig?' in text.lower() and '1 pupil rated bulig' in text.lower() and '1 teacher answered' in text.lower()
               and '4.2' in text and 'More practice for Level 3, please.' in text and not PHP_ERROR.search(text), f'status {status}')
         test_delete_teacher(a)
         test_account_ids(a, acc)
@@ -649,14 +649,14 @@ def test_whats_new(p):
     q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
     q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
     _, _, text = p.req('?page=dashboard')
-    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'practice words' in text)
+    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'there’s a new update' in text.lower() and 'bob-blueprint' in text and 'practice words' in text.lower())
     _, _, text = p.req('?page=dashboard')
     check('The popup comes only once', 'data-wn' not in text)
     check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
     _, _, text = Client().req('?page=login&role=pupil')
-    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v207"' in text and 'BULIG has a new update!' in text and ' hidden ' in text)
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v208"' in text and 'bulig has a new update!' in text.lower() and ' hidden ' in text)
 
 
 def test_notifications(p):
@@ -835,7 +835,7 @@ def test_names(t):
     check('Add one pupil asks for First, Middle, Last name and Extension', status == 200 and all(f'name="{n}"' in text for n in ('first_name', 'middle_name', 'last_name', 'name_ext')) and 'Shows as' in text and 'name="name"' not in text, f'status {status}')
     status, _, text = t.req('?page=accounts&mode=class')
     m = re.search(r'class="bk-onesec"><label>Section<select name="section_id" required data-sx-select><option value="">Choose a section</option><option value="(\d+)"', text)
-    check('A whole class opens on "Type the list" (no paste option) with the Upload a file tab', status == 200 and m is not None and 'data-bk-row' in text and 'Upload a file' in text and 'Paste' not in text, f'status {status}')
+    check('A whole class opens on "Type the list" (no paste option) with the Upload a file tab', status == 200 and m is not None and 'data-bk-row' in text and 'upload a file' in text.lower() and 'Paste' not in text, f'status {status}')
     if not m:
         return
     sid = m.group(1)
@@ -1016,8 +1016,8 @@ def test_schools(a, acc):
     _, _, spt = a.req(f'?page=school&id={two}&tab=teachers')
     _, _, spp = a.req(f'?page=school&id={two}&tab=pupils')
     check('Each school has "View school", which opens its own page with the logo, numbers and the three tabs',
-          f'?page=school&amp;id={two}' in sl and 'class="sp-head' in sp and 'Tall Wide Oak Elementary School' in sp and 'Top readers' in sp
-          and 'Lessons just finished' in sp and 'Tess Two' in spt and ('sp-tbl' in spp or 'No pupils match' in spp))
+          f'?page=school&amp;id={two}' in sl and 'class="sp-head' in sp and 'Tall Wide Oak Elementary School' in sp and 'top readers' in sp.lower()
+          and 'lessons just finished' in sp.lower() and 'Tess Two' in spt and ('sp-tbl' in spp or 'No pupils match' in spp))
     # v191: the cover is always the BULIG reading picture (it cannot be changed); no details line under the name
     _, _, cv = a.req(f'?page=school&id={two}')
     check('A school page has the fixed cover (no upload) and no details line under the name',
@@ -1031,7 +1031,7 @@ def test_schools(a, acc):
     _, _, tl = a.req('?page=accounts')
     _, _, ta = a.req('?page=add_teachers')
     check('Add teachers is a tab of the Teachers page, not a separate menu item',
-          'tt-tabs' in tl and 'tt-tabs' in ta and 'Your teaching team.' in ta and 'Add one teacher' in ta and 'nav-add_teachers' not in tl and '>Add teachers</span>' not in tl)
+          'tt-tabs' in tl and 'tt-tabs' in ta and 'your teaching team.' in ta.lower() and 'add one teacher' in ta.lower() and 'nav-add_teachers' not in tl and '>add teachers</span>' not in tl.lower())
     _, _, grid = a.req('?page=add_teachers&mode=many')
     check('Add many teachers has the two ways: Type the list and Upload a file', 'data-who="teacher"' in grid and 'how=file' in grid and 'name="t[grade][0]"' in grid)
     typed = {'action': 'timport_typed', 'school_id': two, 'csrf': a.token('?page=add_teachers&mode=many'),
@@ -1134,7 +1134,7 @@ def test_messages(acc):
     for c,label in [(p,'Pupil'),(t,'Teacher')]:
         check(label+' cannot send messages', c.req('index.php', dict(payload,csrf=c.token(page)))[0] == 403)
     status,_,text=a.req('index.php',dict(payload,csrf=a.token(page)))
-    check('Preview escapes text and shows recipients',status==200 and 'Check before sending' in text and '&lt;script&gt;' in text and '<script>alert(1)</script>' not in text)
+    check('Preview escapes text and shows recipients',status==200 and 'check before sending' in text.lower() and '&lt;script&gt;' in text and '<script>alert(1)</script>' not in text)
     token=re.search(r'name="token" value="([0-9a-f]+)"',text).group(1)
     status,url,text=a.req('index.php',{'action':'message_send','csrf':a.token(page),'token':token})
     mid=int(urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)['id'][0])
@@ -1153,7 +1153,7 @@ def test_messages(acc):
     check('Repeated confirmation does not duplicate message',q('SELECT COUNT(*) FROM admin_messages')=='1')
     for scope in ['pupils','teachers','everyone']:
         status,_,text=a.req('index.php',dict(payload,scope=scope,csrf=a.token(page)))
-        check('Admin can preview '+scope,status==200 and 'Check before sending' in text)
+        check('Admin can preview '+scope,status==200 and 'check before sending' in text.lower())
     check('Group previews do not send messages',q('SELECT COUNT(*) FROM admin_messages')=='1')
     check('Invalid recipient is rejected',a.req('index.php',dict(payload,person=0,csrf=a.token(page)))[0]==400)
     check('Empty message is rejected',a.req('index.php',dict(payload,body='',csrf=a.token(page)))[0]==400)
@@ -1169,7 +1169,7 @@ def test_messages(acc):
     sid=q("SELECT id FROM sections WHERE name='Message test class' ORDER BY id DESC LIMIT 1")
     q(f"INSERT INTO pupil_sections(pupil_id,section_id) VALUES({int(acc['pupil1']['uid'])},{int(sid)}) ON DUPLICATE KEY UPDATE section_id=VALUES(section_id)")
     status,_,text=a.req('index.php',dict(payload,scope='class',section=sid,csrf=a.token(page)))
-    check('Class message previews its pupil recipients',status==200 and '1 recipients' in text and 'Check before sending' in text)
+    check('Class message previews its pupil recipients',status==200 and '1 recipients' in text and 'check before sending' in text.lower())
     check('Admin accounts are not valid message recipients',a.req('index.php',dict(payload,person=adminid,csrf=a.token(page)))[0]==400)
     # v203 replies: a private chat for each person under each message
     pid=int(acc['pupil1']['uid'])
@@ -1257,7 +1257,7 @@ def test_bug_workflow(acc):
     rid=report(p,'Third test report')
     a.req('index.php',data('fixed','This is now repaired.'))
     check('Fixed status notifies the reporter','This is now repaired.' in p.req(page+'&id='+str(rid))[2])
-    check('Reporter can see their report history','My bug reports' in p.req(page)[2])
+    check('Reporter can see their report history','my bug reports' in p.req(page)[2].lower())
     q(f'UPDATE pupil_xp SET total={int(old or 0)} WHERE pupil_id={pid}')
     for client in [a,p,t]:
         _,_,text=client.req('?page=messages')

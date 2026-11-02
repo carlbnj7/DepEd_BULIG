@@ -25,6 +25,7 @@
  const sparkle=(at,n)=>{for(let i=0;i<n;i++)tone('sine',2000+Math.random()*1800,0,at+i*.05,.12,.08);};
  const NOTES={C5:523.25,E5:659.25,G5:783.99,A5:880,B5:987.77,C6:1046.5,E6:1318.5,G4:392,C4:261.63,E4:329.63,G6:1568};
  const SOUNDS={
+  word(){tone('sine',NOTES.C6,0,0,.07,.16);tone('sine',NOTES.G6,0,.04,.09,.07);},   /* v208 a word turned green in the Reading Coach */
   pop(){tone('sine',720,300,0,.08,.55);},
   correct(){tone('triangle',NOTES.E5,0,0,.22,.5);tone('triangle',NOTES.C6,0,.11,.38,.5);sparkle(.16,3);},
   tryagain(){tone('sine',330,262,0,.26,.45);tone('sine',294,220,.16,.3,.35);},
@@ -47,6 +48,8 @@
  const unlock=()=>{if(!audio())return;if(ctx.state!=='running')ctx.resume().then(()=>{if(pending&&Date.now()-pending.at<1500&&isOn())try{SOUNDS[pending.name]();}catch(e){}pending=null;}).catch(()=>{});};
  ['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,unlock,{capture:true,passive:true}));
  window.buligSfx={play:n=>play(n),on:isOn};
+ /* v208 a soft chime and a tiny buzz when a read word turns green (the Sounds setting turns both off) */
+ let lastWord=0;window.buligWordOk=(buzz)=>{if(!isOn())return;const t=Date.now();if(t-lastWord<120)return;lastWord=t;play('word');if(buzz!==false&&navigator.vibrate)try{navigator.vibrate(12);}catch(e){}};
 
  /* 1. Tapping an answer */
  document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;
