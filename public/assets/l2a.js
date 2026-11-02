@@ -261,11 +261,22 @@
   const vcWant=()=>{if(spinOut&&spinOut.textContent.trim()&&spinOut.textContent.trim()!=='?')return [spinOut.textContent.trim()];return vcList;};
   const vcHit=t=>{const want=vcWant();if(!want.length||!t)return null;const got=t.split(/\s+/).map(vcN).filter(Boolean);
    return want.every(e=>String(e).split('|').some(a=>{a=vcN(a);return got.some(g=>g===a||(a.length>=5&&vcL1(g,a)));}));};
-  let vcOk=false;const vcSay=(ok,w)=>{r.classList.toggle('vc-ok',ok);r.classList.toggle('vc-no',!ok);vcOk=ok;
+  /* v207 Picture Coach (Reading Coach style): one chip for each name to say; the chip and its picture turn green as soon as
+     BULIG hears the name; stars when all are said (fewer tries, more stars). */
+  const pcBox=$('[data-pc-names]',r),pcStars=$('[data-pc-stars]',r),pcPics=$$('.l2-pics .l2-pic',c);const pcFound=new Set();
+  const pcChips=pcBox?vcList.map((v,i)=>{const b=document.createElement('span');b.className='pc-chip';b.textContent=vcList.length>1?String(i+1):'?';b.setAttribute('aria-label','Name '+(i+1)+': not said yet');pcBox.append(b);return b;}):[];
+  const pcPic=i=>pcPics.length===vcList.length?pcPics[i]:(vcList.length===1?pcPics[0]:null);
+  const pcMark=t=>{if(!pcChips.length||!t)return;const got=String(t).split(/\s+/).map(vcN).filter(Boolean);
+   vcList.forEach((v,i)=>{if(pcFound.has(i))return;const hit=String(v).split('|').find(a=>{a=vcN(a);return got.some(g=>g===a||(a.length>=5&&vcL1(g,a)));});
+    if(hit){pcFound.add(i);const ch=pcChips[i];ch.className='pc-chip ok';ch.textContent=hit;ch.setAttribute('aria-label','Name '+(i+1)+': '+hit+', said right');const pic=pcPic(i);if(pic){pic.classList.remove('pc-no');pic.classList.add('pc-ok');}}});};
+  const pcReset=()=>{if(!pcChips.length)return;pcFound.clear();pcChips.forEach((ch,i)=>{ch.className='pc-chip';ch.textContent=vcList.length>1?String(i+1):'?';});pcPics.forEach(x=>x.classList.remove('pc-ok','pc-no'));if(pcStars)pcStars.hidden=true;};
+  const pcResult=ok=>{if(!pcChips.length)return;pcChips.forEach((ch,i)=>{if(!pcFound.has(i)){ch.classList.add('no');const pic=pcPic(i);if(pic)pic.classList.add('pc-no');}});
+   if(ok&&pcStars){const k=Math.max(1,3-(tries[c.dataset.n]||0)),all=vcList.length>1?'them all':'it';pcStars.innerHTML='<b>'+'\u2605'.repeat(k)+'<i>'+'\u2605'.repeat(3-k)+'</i></b><span>'+(k===3?'Super! You said '+all+' right!':'Well done! You said '+all+'!')+'</span>';pcStars.hidden=false;}};
+  let vcOk=false;const vcSay=(ok,w)=>{r.classList.toggle('vc-ok',ok);r.classList.toggle('vc-no',!ok);vcOk=ok;pcResult(ok);
    sub.textContent=ok?'Great! You said it right!':'Not yet. I heard \u201c'+w+'\u201d. Tap the microphone and try again.';if(ok)sfx('correct');else sfx('tryagain');};
-  const vcEnd=w=>{const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
+  const vcEnd=w=>{pcMark(w);const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
   function srStart(){if(!SRC)return;said=[];part='';srErr='';srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=true;
-    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
+    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();pcMark(t);if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
     sr.onerror=e=>{srErr=e.error||'';if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
     sr.onend=()=>{if(part){said.push(part);part='';}if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
    make();try{sr.start();}catch(e){srOn=false;}}
@@ -273,7 +284,7 @@
   const ui=s=>{r.dataset.state=s;go.classList.toggle('on',s==='rec');go.hidden=s==='done';play.hidden=s!=='done';
    label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(rd?'Tap and read the story aloud':'Tap and say it');sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
   if(!canRec&&!solo){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
-  async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';vcOk=false;r.classList.remove('vc-ok','vc-no');window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
+  async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';vcOk=false;r.classList.remove('vc-ok','vc-no');pcReset();window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
    if(solo){srStart();if(srOn){t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();
      if(!srOn&&srErr){clearInterval(tick);if(srErr==='not-allowed'){ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg({name:'NotAllowedError'});if(heard)heard.hidden=false;}else if(!heardText()){solo=false;r.dataset.state='idle';start();}else stop();}},250);return;}solo=false;}
    try{st=await getMic();}catch(e){r.dataset.state='idle';label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(e);if(heard)heard.hidden=false;return;}

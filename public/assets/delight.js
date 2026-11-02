@@ -163,7 +163,7 @@
 
 /* v172: "Why are you leaving?" On an activity that is not finished yet (the form has data-open), the close (X) button,
    the menu, the bottom tabs and the top bar always ask first. Bruno the Helper gives choices; each one gets a kind
-   answer, and "It is too hard" / "Something is not working" can open "I need help" for the teacher. A finished activity
+   answer, and "Something is wrong" can open "I need help" for the teacher (v207: three choices only). A finished activity
    never asks ("Try it again" is a new, open try). Links inside the activity (Next, Try again) are not stopped. */
 (function(){
  const main=document.querySelector('body.activity-page .activity-main');if(!main)return;
@@ -173,10 +173,8 @@
  const btn=(c,x)=>{const b=el('button','btn '+c,x);b.type='button';return b;};
  const pic=p=>'assets/images/characters/bruno-'+p+'.webp?v=2';
  const WHY=[
-  ['hard','It is too hard','tryagain','That is okay! Hard things get easier when we practise. Your teacher can help you.',true],
-  ['tired','I am tired','thumbs','Rest a little, then come back. You can finish it anytime.'],
   ['later','I will finish it later','thumbs','Okay! Your activity will wait for you. Come back soon.'],
-  ['broken','Something is not working','tryagain','Sorry about that! Tell your teacher so they can fix it.',true],
+  ['broken','Something is wrong','tryagain','Sorry about that! Tell your teacher so they can fix it.',true],
   ['oops','I tapped it by mistake','cheer','No problem! Let’s keep going.']];
  function ask(go){
   const help=document.querySelector('[data-help-open]');

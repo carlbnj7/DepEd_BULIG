@@ -169,7 +169,7 @@ function l1_pictures(array $a,bool $demo=false):string{
 
 /** The question text, with sentence-starter blanks shown as a yellow gap. */
 function l1_question_html(array $a):string{
- $t=e(trim((string)$a['prompt']));
+ $t=e(trim(pupil_wording((string)$a['prompt'])));
  if($a['type']==='sentence'){$gap='<span class="l1-gap" aria-label="your words">?</span>';
   $t=preg_replace('~\[[^\]]{1,30}\]|_{3,}|…|\.\.\.~u',$gap,$t,1,$n);if(!$n)$t.=' '.$gap;}
  return nl2br($t);
@@ -221,7 +221,7 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  $pid=(int)$u['id'];$lid=(int)$lesson['id'];$kind=l1_kind($a);$mode=$a['response_mode'];if($mode==='drawing'&&!draw_allowed($a))$mode='answer';$readonly=completion_ok($a);
  $c=$a['completion_id']?one('SELECT id,audio_path,drawing FROM activity_completion WHERE id=?',[(int)$a['completion_id']]):null;
  $phase=array_values(array_filter($all,fn($x)=>$x['phase']===$a['phase']));$at=0;foreach($phase as $i=>$x)if((int)$x['id']===(int)$a['id'])$at=$i+1;
- $doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));$say=trim((string)($a['narration']?:$a['prompt']));$tag=l1_tag($a,$kind);$pics=l1_pictures($a);
+ $doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));$say=pupil_wording(trim((string)($a['narration']?:$a['prompt'])));$tag=l1_tag($a,$kind);$pics=l1_pictures($a);
  head('Level 1 · '.$lesson['subtitle'],'activity-page l1-page');
  echo '<div class="l1-app l1-k-'.$kind.'">'.lesson_head($lesson,$all,$a,'?page=lessons&level=1#level1-path');
  echo '<main class="l1-main activity-main">';notice();
@@ -233,7 +233,7 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
   echo '<div class="l1-howto">';foreach(l1_steps((int)$lesson['position']) as $i=>$s)echo '<span><b>'.($i+1).'</b>'.e($s).'</span>';echo '</div>';
  }elseif($kind==='pair'||$kind==='group'){
   /* Pupils work on their own: BULIG is the buddy. The module's pair and group wording stays in Class Demo. */
-  $solo=l1_solo($lesson,$a);$txt=$solo['text']??(string)$a['prompt'];
+  $solo=l1_solo($lesson,$a);$txt=pupil_wording((string)($solo['text']??$a['prompt']));
   echo '<div class="l1-q sm"><p>'.nl2br(e($txt)).'</p>'.l1_speaker($txt).'</div>';ob_start();
   echo l1_buddy($solo['steps']??['Do it on your own.','Say your answer out loud.','Tap I did it! when you finish.']);
   if(!empty($solo['poems']))echo l1_poems_html(false);

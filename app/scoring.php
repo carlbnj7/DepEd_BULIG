@@ -14,7 +14,12 @@
 
 function answer_keys():array{static $k;if($k===null){$k=['keys'=>[],'notes'=>[]];
  foreach(['answer-keys.json','answer-keys-2.json'] as $f){$f=__DIR__.'/../database/'.$f;$j=is_file($f)?(json_decode((string)file_get_contents($f),true)??[]):[];
-  foreach($j['keys']??[] as $id=>$cards)foreach($cards as $n=>$c)$k['keys'][$id][$n]=$c;foreach($j['notes']??[] as $id=>$x)$k['notes'][$id]=array_merge($k['notes'][$id]??[],$x);}}return $k;}
+  foreach($j['keys']??[] as $id=>$cards)foreach($cards as $n=>$c)$k['keys'][$id][$n]=$c;foreach($j['notes']??[] as $id=>$x)$k['notes'][$id]=array_merge($k['notes'][$id]??[],$x);}
+ /* v206: the drawing cards became picture cards (database/draw-picks.json): their right pictures */
+ if(function_exists('draw_picks'))foreach(draw_picks() as $ref=>$c){if(empty($c['key']))continue;[$id,$n]=explode('|',$ref);$kk=$c['key'];
+  if(isset($kk['eq'])){$k['keys'][$id][(int)$n]=['t'=>'card','alts'=>[[['k'=>'eq','v'=>key_norm((string)$kk['eq'])]]],'w'=>(string)$kk['eq']];continue;}
+  $k['keys'][$id][(int)$n]=['t'=>'card','alts'=>[[['k'=>'set','req'=>$kk['req'],'opt'=>$kk['opt'],'min'=>$kk['min'],'pics'=>1]]],'w'=>implode(', ',array_map(fn($i)=>'Picture '.$i.(($c['images'][$i-1]['say']??'')!==''?' ('.$c['images'][$i-1]['say'].')':''),array_merge($kk['req'],$kk['opt'])))];}
+ }return $k;}
 
 /** The key of one activity ("level:grade:lesson position:phase:position", grade 0 for levels shared by every grade). */
 function activity_key_id(array $a):?string{

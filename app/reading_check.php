@@ -350,11 +350,13 @@ function rc_story_page(array $u,array $row,array $s):void{
  $g=(int)$s['grade'];$st=rc_story($g);if(!$st){$s['parts'][5]['st']='fail';rc_after_part($s,5);rc_save((int)$row['id'],$s);if(!empty($s['result']))rc_finish(rc_row((int)$row['pupil_id']),$s);go('?page=rcheck');}
  head('Reading check','activity-page l1-page l4-page rk-page');
  echo '<div class="l1-app l4-app">'.rc_head('Read a story',$s).'<main class="l1-main activity-main">';notice();
- $dir='Tap the microphone, then read the title and the story out loud. Each word turns green when BULIG hears it. Tap the microphone again when you finish.';
+ $dir='Tap the microphone, then read the title and the story out loud. Each word turns green when BULIG hears it. When you read the last word, BULIG finishes and sends it to your teacher.';
  echo '<form method="post" class="rk-form" data-rc-story data-words="'.count($st[1]).'">'.csrf_field().'<input type="hidden" name="action" value="rc_submit"><input type="hidden" name="rc_token" value="'.e($s['token']).'"><input type="hidden" name="sr" value="" data-rc-sr><input type="hidden" name="heard[0]" value="" data-rc-heard><input type="hidden" name="audio[0]" value="" data-rc-audio><input type="hidden" name="secs" value="" data-rc-secs>';
  echo '<span class="l1-tag">READ A STORY</span><div class="l1-q sm l4-dir"><p>'.e($dir).'</p>'.l1_speaker($dir).'</div>';
+ /* v205 new layout: three steps at the top; they light up as the pupil goes */
+ echo '<ol class="rk-steps" data-rc-steps><li class="on"><span>1</span>Tap the microphone</li><li><span>2</span>Read out loud</li><li><span>3</span>Send to your teacher</li></ol>';
  /* The microphone (and Send) sit at the top and stay on screen, so the pupil taps it and reads straight down the story. */
- echo '<div class="rk-storybar"><div class="l1-rec l4-rec rk-say" data-rc-say data-story><button type="button" class="l1-mic" data-rc-go aria-label="Tap and read the story">'.l1_icon('mic').'</button><b class="l1-rl" data-rc-label>Tap and read the title and the story</b><small class="l1-rs" data-rc-sub role="status"></small></div><button class="l1-big rk-send" type="submit" data-rc-send hidden>Send '.l1_icon('next').'</button></div>';
+ echo '<div class="rk-storybar"><div class="l1-rec l4-rec rk-say" data-rc-say data-story><button type="button" class="l1-mic" data-rc-go aria-label="Tap and read the story">'.l1_icon('mic').'</button><b class="l1-rl" data-rc-label>Tap and read the title and the story</b><small class="l1-rs" data-rc-sub role="status"></small></div><div class="rk-prog" data-rc-prog hidden><b data-rc-pn>0</b><span> of '.count($st[1]).' words</span><i><u data-rc-pb></u></i></div><button class="l1-big rk-send" type="submit" data-rc-send hidden>Send to my teacher '.l1_icon('next').'</button></div>';
  echo '<section class="l2-card l1-card l4-card">'.level4_passage($st[0]).'</section></form></main></div>';
  echo '<script defer src="'.asset_url('rcheck.js').'"></script>';foot();
 }

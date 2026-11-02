@@ -32,6 +32,8 @@
    ['.identity-banner','This is you','Your name and grade are here. Tap your picture to change it.'],
    [['.identity-photo.has-rf'],'Your rank frame','Your picture has a frame that matches your rank. Level up to a new rank and you get a new, fancier frame, with a RANK UP! surprise.'],
    ['.level-stat','My level now','The level you are on now and how much of it you finished. It also shows the level your teacher started you at. Tap it to go to that level.'],
+   [['.rs-chp'],'Class reading challenge','How many words your class read with Word Coach this week. Every reading helps your class reach the goal!'],
+   [['.rs-plink'],'My practice words','Words that were hard for you. Tap to practise them with Max.'],
    [['.rl-stat','.xp-stat'],'Your level and rank','You earn XP for every activity you finish. XP makes your level go up, all the way to Level 100. Every 2 levels give a star, and 5 stars take you to the next rank! Tap to see all the ranks.'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
    ['.badge-stat','Your badges','Badges are prizes for learning. Tap to see the ones you earned.'],
@@ -159,9 +161,15 @@
    ['.off-sum','Your saved lessons','See how many levels are saved on this device, and how much space they use.'],
    [['.op-all'],'Download everything','One tap saves every level you can open. Use Wi-Fi for big downloads.'],
    [['.op-row'],'Each level','Download, update or remove one level. “Needs update” means BULIG has new things.']],
+  practice:[
+   [['.rs-pwl li'],'Your practice words','Words that were hard when you read with Word Coach. The number shows how many times.'],
+   [['.rs-pwl .l1-spk'],'Hear it','Tap the speaker. Max says the word slowly.'],
+   [['.rs-pwl .rs-mic'],'Say it','Tap Say it, then say the word. It turns green when Max hears it right. This is only practice.']],
   settings:[
    ['.st-sfx','Sound effects','Turn the little sounds on or off on this device.'],
    [['.st-seg'],'How BULIG looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.'],
+   [['.st-row:has([data-a11y-switch="big"])'],'Bigger text','Makes words and buttons larger on every page of this device.'],
+   [['.st-row:has([data-a11y-switch="easy"])'],'Easy-read letters','A plain letter style with more space between letters and words. It can make reading on the screen easier.'],
    ['.st-glass','Glass look','Menus and buttons look like clear glass. Turn it off if this phone feels slow.'],
    [['a.st-row[href="?page=offline"]'],'Offline lessons','Save lessons on this device so they open even without internet.'],
    ['.st-pw','Your password','Tap here when you want to change your password.'],
@@ -175,7 +183,8 @@
    ['#my-name','Your name','Change how your name shows in BULIG, on report cards and on your Teacher Pass. Your teacher character matches the sex on your account.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
-   ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.']],
+   ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.'],
+   [['.a11y-card'],'Easier to read','Bigger text and Easy-read letters, on this device.']],
   messages:[
    [['.msg-list'],'Your messages','Every message you get in BULIG is listed here. Tap one to read it.'],
    [['.msg-search'],'Find a message','Type a word to find an older message.'],
@@ -193,6 +202,9 @@
   dashboard:[
    [['.ah-hero','.hm-head'],'Teacher Home','Your class at a glance: your pupils, who learned this week and lessons finished. Tap your photo to change it.'],
    ['#tf-todo','Needs you today','Pupils who need a check-in, reading checks, help requests and readings to verify. Only what needs you shows big; the rest is a green check.'],
+   [['#rs-readers'],'Readers who need help','Pupils whose Word Coach scores stay under 60% in 3 or more readings, with the words they miss. BULIG suggests a reread together, or a small group when several pupils on one level find the same reading hard.'],
+   [['#rs-challenge'],'Class reading challenge','The words your pupils read right with Word Coach this week. Set the weekly goal here. Pupils see the same bar on their Home.'],
+   [['#rs-offline'],'Work waiting to upload','Pupils who answered offline and still have answers on their phone. Ask them to open BULIG with internet; the answers upload by themselves.'],
    ['.hm-auto','BULIG checks every answer','Pupils see their score and the right answers as soon as they finish. Nothing waits for you. To see one pupil’s answers, change a score or write a note, open the pupil › Answers and scores.'],
    ['#tf-help','Asked for help','When a pupil taps “I need help” in a lesson, at school or at home, it shows here: who, what is hard and where. Tap See pupil, or Mark as helped when you are done.'],
    [['.ah-b-short','.hm-grid'],'Shortcuts','The jobs teachers do most: add pupils, and print tickets, report cards and certificates.'],
@@ -413,8 +425,13 @@
   profile:[
    [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in. Jarvis the Robot guides your tours.'],
     ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
+   [['.a11y-card'],'Easier to read','Bigger text and Easy-read letters, on this device.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']],
+  cleanup:[
+   [['.hm-head'],'Data cleanup','Fix the data in two places: pupils with two accounts, and sections from last year.'],
+   [['.cu-grp'],'Pupils with two accounts','Pupils with the same name and grade. BULIG keeps the account with more work. Merge moves the answers, XP and progress, then switches the other account off.'],
+   [['.cu-secs'],'Last year’s sections','Sections made before June 1. Archive them in one step: pupils and their work stay, and teachers can place them in new sections.']],
   add_teachers:[
    ['.tt-tabs','Add teachers','Adding teachers is a tab of the Teachers page. Teacher list shows your team.'],
    ['.ap-choice','One teacher or many','Add one teacher with a short form, or the whole team at once from an Excel list.'],

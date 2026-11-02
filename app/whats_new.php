@@ -3,32 +3,32 @@
    BULIG is updated: a construction sign with Bob and the new things for their role. Closing it keeps a copy on the
    bell (Notifications), and ?whatsnew=1 opens it again. Seen is kept in settings (whatsnew_<update>_<id>), no SQL.
    For a new update: change WHATS_NEW_ID and the lists below. */
-const WHATS_NEW_ID='v205';
+const WHATS_NEW_ID='v206';
 const WHATS_NEW=[
  /* shown before signing in too (on the login page, after the opening screen), once on each device */
  'guest'=>[
-  ['star','Rank frames','Your picture now has a frame that matches your rank, like in a game. Rank up and a new frame pops in!'],
-  ['book','Clearer activity pages','A book shows a story to read and an i shows instructions. Only the numbered pages need an answer.'],
-  ['jeep','Faster road maps','The road maps look the same and open much faster on phones.'],
-  ['phone','New phone menu','Teachers and administrators get the same easy bottom menu as pupils.'],
+  ['mic','Reading Coach in every level','Read the story, and BULIG stops by itself at the last word. You see your stars, then it is sent to your teacher.'],
+  ['book','Easier to read','Settings has Bigger text and Easy-read letters, a plain letter style that helps many readers.'],
+  ['star','My practice words','Hard words from Word Coach are kept in one list. Max says each word, then you say it.'],
+  ['phone','Faster pictures','Pictures are smaller now, so pages open faster on phones.'],
  ],
  'pupil'=>[
-  ['star','Your rank frame','Your picture has a frame that matches your rank. Rank up and you see a RANK UP! surprise with your new frame.'],
-  ['book','Story and instruction pages','In an activity, a book means a story to read and an i means instructions. Only the numbered pages need an answer.'],
-  ['ladder','The Reading Castle','Your reading ladder now has the Reading Castle from the BULIG comic at the top.'],
-  ['jeep','Faster road maps','Your road maps open faster, and the map of all levels looks like each level\'s map.'],
+  ['mic','Read, and it sends itself','Read the story to the last word. BULIG stops by itself, shows your stars, and sends it to your teacher.'],
+  ['star','My practice words','Your hard words are in My practice words. Tap to hear Max say a word, then say it to him.'],
+  ['ladder','Class reading challenge','Your Home shows how many words your class read this week. Read to help your class reach the goal!'],
+  ['book','Bigger text and easy letters','In Settings, turn on Bigger text or Easy-read letters if reading on the screen is hard.'],
  ],
  'teacher'=>[
-  ['phone','New phone menu','On a phone, your pages are at the bottom: Home, Pupils, Readings, Results and More, like the pupils have.'],
-  ['star','Rank frames for pupils','Each pupil\'s picture has a frame for their rank, and a RANK UP! surprise when they reach a new rank.'],
-  ['book','Clearer activity pages','Pupils see a book for stories, an i for instructions, and numbers only on the pages they answer.'],
-  ['jeep','Faster road maps','The road maps open faster on phones, and the new Reading Castle is on the reading ladder.'],
+  ['alert','Readers who need help','Home lists pupils whose Word Coach scores stay low, with their hard words, and suggests a reread or a small group.'],
+  ['ladder','Class reading challenge','Set a weekly words goal on Home. Pupils see the class progress bar on their Home.'],
+  ['phone','Work waiting to upload','Home shows which pupils have answers still on their phone that did not upload yet.'],
+  ['mic','Reading Coach in every level','Pupils read the story; BULIG stops at the last word and sends the reading to you by itself.'],
  ],
  'admin'=>[
-  ['phone','New phone menu','On a phone, your pages are at the bottom: Home, Teachers, Schools, Reports and More.'],
-  ['star','Rank frames','Pupils\' pictures have frames for their ranks, with a RANK UP! animation when they reach a new rank.'],
-  ['book','Clearer activity pages','Story and instruction pages are marked; only answer pages are numbered.'],
-  ['jeep','Faster road maps','Road maps open much faster on phones. The reading ladders use the new Reading Castle.'],
+  ['search','Data cleanup','A new page joins pupils who have two accounts, and archives last year\'s sections in one step.'],
+  ['alert','Readers who need help','Teachers now see pupils with low Word Coach scores, with a reread or small group idea.'],
+  ['book','Easier to read','My profile and pupil Settings have Bigger text and Easy-read letters.'],
+  ['phone','Faster pictures','Large pictures are smaller now, so pages open faster on phones.'],
  ],
 ];
 function wn_key(int $uid):string{return 'whatsnew_'.WHATS_NEW_ID.'_'.$uid;}
@@ -36,7 +36,7 @@ function wn_seen(int $uid):bool{try{return (bool)val('SELECT 1 FROM settings WHE
 function wn_icon(string $k):string{
  $d=['jeep'=>'<rect x="3" y="6" width="18" height="10" rx="2"/><path d="M3 11h18M8 6V4h8v2"/><circle cx="7.5" cy="18" r="1.8"/><circle cx="16.5" cy="18" r="1.8"/>','ladder'=>'<path d="M7 3v18M17 3v18M7 7h10M7 12h10M7 17h10"/>','match'=>'<circle cx="5" cy="7" r="2"/><circle cx="19" cy="17" r="2"/><path d="M7 7c6 0 4 10 10 10"/>',
   'edit'=>'<path d="M4 20h4L19 9l-4-4L4 16z"/>','comic'=>'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 12h18M12 4v8"/>','book'=>'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>',
-  'check'=>'<path d="M5 12l4 4 10-10"/>','search'=>'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>','alert'=>'<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>','phone'=>'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>','star'=>'<path d="M12 3l2.7 5.6 6.2.9-4.5 4.3 1.1 6.1L12 17l-5.5 2.9 1.1-6.1L3 9.5l6.2-.9z"/>'][$k]??'';
+  'check'=>'<path d="M5 12l4 4 10-10"/>','mic'=>'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>','search'=>'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>','alert'=>'<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>','phone'=>'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>','star'=>'<path d="M12 3l2.7 5.6 6.2.9-4.5 4.3 1.1 6.1L12 17l-5.5 2.9 1.1-6.1L3 9.5l6.2-.9z"/>'][$k]??'';
  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.$d.'</svg>';
 }
 /** The popup, or '' when this account has seen it (or another first-time screen is showing). */

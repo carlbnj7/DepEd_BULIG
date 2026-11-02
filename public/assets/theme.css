@@ -6743,3 +6743,191 @@ html.map-lite .rf::after{animation:none;display:none}
 .rk-sw.sk{color:#9a7a3a!important}
 .rk-sw.nx{background:#ffe27a;color:#0e3b28!important;box-shadow:0 0 0 2px #ffe27a}
 html.dark .rk-sw.ok{background:#1f4a2b;color:#bff0c9!important}html.dark .rk-sw.nx{background:#6b5310;color:#fff!important;box-shadow:0 0 0 2px #6b5310}
+/* v205 reading check story: steps, word progress, and the "Great reading!" sheet */
+.rk-steps{list-style:none;display:flex;gap:8px;margin:0 0 12px;padding:0;flex-wrap:wrap}
+.rk-steps li{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid var(--line,#e9e2cc);font-weight:700;font-size:.85rem;color:#6a7a6e}
+.rk-steps li span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#e8eee3;color:#3a4a3e;font-size:.75rem;font-weight:900}
+.rk-steps li.on{background:#fff7d6;border-color:#f1d27a;color:#0e3b28}.rk-steps li.on span{background:#ffc629;color:#3d2a00}
+.rk-steps li.done{color:#176444;border-color:#cfe7d3;background:#eef8ef}.rk-steps li.done span{background:#1d7a3c;color:#fff}
+.rk-prog{flex:1 1 140px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px;min-width:120px;font-size:.85rem;color:#5f6f63}
+.rk-prog b{font-size:1.3rem;color:#0f6a2c;font-variant-numeric:tabular-nums}
+.rk-prog i{flex:1 1 100%;height:8px;border-radius:8px;background:#e5ecdf;overflow:hidden}.rk-prog u{display:block;height:100%;width:0;background:linear-gradient(90deg,#3fbf6f,#1d7a3c);border-radius:8px;transition:width .4s}
+.rk-prog[hidden]{display:none}
+.rk-sheet{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,30,18,.45);animation:rk-fade .25s ease-out}
+.rk-sh-in{width:min(520px,100%);background:#fffdf6;border-radius:28px 28px 0 0;padding:26px 22px calc(22px + env(safe-area-inset-bottom));text-align:center;box-shadow:0 -10px 30px rgba(10,30,18,.25);animation:rk-up .35s cubic-bezier(.2,1.2,.4,1)}
+@media(min-width:741px){.rk-sheet{align-items:center}.rk-sh-in{border-radius:28px}}
+.rk-sh-ic{display:inline-grid;place-items:center;width:64px;height:64px;border-radius:50%;background:linear-gradient(#6fdc86,#1d7a3c);color:#fff;box-shadow:0 6px 16px rgba(29,122,60,.4)}.rk-sh-ic svg{width:34px;height:34px}
+.rk-sh-in h2{margin:12px 0 10px;font-size:1.6rem;color:#0e3b28}
+.rk-sh-stats{display:flex;justify-content:center;gap:12px;margin:0 0 14px}
+.rk-sh-stats>div{min-width:110px;padding:10px 14px;border-radius:16px;background:#eef8ef;border:1px solid #cfe7d3}.rk-sh-stats b{display:block;font-size:1.4rem;color:#0f6a2c;font-variant-numeric:tabular-nums}.rk-sh-stats small{color:#5f6f63;font-weight:600}
+.rk-sh-play{display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 10px;border-radius:999px;border:2px solid #cfe7d3;background:#fff;font:700 1rem var(--font-fun,inherit);color:#176444;cursor:pointer}
+.rk-sh-pi{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#1d7a3c;color:#fff}.rk-sh-pi svg{width:18px;height:18px}
+.rk-sh-play.on .rk-sh-pi{background:#e2452b}
+.rk-sh-note{margin:14px 0;color:#5f6f63;font-size:.92rem}
+.rk-sh-btns{display:flex;gap:10px;flex-wrap:wrap}
+.rk-sh-btns>*{flex:1 1 180px;min-height:54px;margin:0!important;display:inline-flex!important;align-items:center;justify-content:center;gap:8px}
+.rk-sh-again{border-radius:16px;border:2px solid #e3e6df;background:#fff;font:700 1rem var(--font-fun,inherit);color:#0e3b28;cursor:pointer}.rk-sh-again svg{width:20px;height:20px}
+.rk-sh-btns .rk-send{width:auto}
+@keyframes rk-up{from{transform:translateY(60%);opacity:0}}@keyframes rk-fade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){.rk-sheet,.rk-sh-in{animation:none}}
+html.dark .rk-sh-in{background:#13251b;color:#e8f0ea}html.dark .rk-sh-in h2{color:#e8f0ea}html.dark .rk-steps li,html.dark .rk-sh-again,html.dark .rk-sh-play{background:#16231b;border-color:#2e4234;color:#e8f0ea}
+.rk-storybar .rk-prog{flex:1 1 100%;order:3;margin-top:2px}
+/* v205 Word Coach finish: reading time, listen back, and sending to the teacher */
+.wc-time{display:inline-flex;align-items:center;gap:6px;margin:6px 0 2px;font-weight:700;color:#5f6f63}.wc-time svg{width:18px;height:18px}
+.wc-listen{display:inline-flex;align-items:center;gap:8px;margin:8px auto 0;padding:9px 16px;border-radius:999px;border:2px solid #cfe7d3;background:#fff;font-weight:700;color:#176444;cursor:pointer}.wc-listen svg{width:20px;height:20px}.wc-listen.on{border-color:#e2452b;color:#e2452b}
+.wc-listen[hidden]{display:none}
+.wc-count{margin:10px 0 0;font-weight:700;color:#7a5200;background:#fff7d6;border:1px solid #f1d27a;border-radius:12px;padding:8px 12px}.wc-count b{font-size:1.2rem}
+/* v205 Word Coach while the pupil reads: the story fills the screen, the controls are one slim dock at the bottom */
+.wc-ov.wc-reading .wc-panel{display:flex;flex-direction:column;height:min(900px,calc(100vh - 32px));height:min(900px,calc(100dvh - 32px))}
+.wc-ov.wc-reading .wc-txt{flex:1;max-height:none;font-size:1.45rem;line-height:2.1;scroll-behavior:smooth}
+.wc-ov.wc-reading .wc-box{flex:none;display:block;margin-top:10px;padding:10px 12px;border-radius:18px;text-align:left}
+.wc-ov.wc-reading .wc-box>img,.wc-ov.wc-reading .wc-step,.wc-ov.wc-reading .wc-say{display:none}
+.wc-ov.wc-reading .wc-dockrow{display:flex;align-items:center;gap:10px;margin:0;justify-content:flex-start}
+.wc-ov.wc-reading .wc-mic{flex:none}
+.wc-dockst{display:flex;flex-direction:column;min-width:0;flex:1}.wc-dockst b{font-size:1rem}.wc-dockst span{font-size:.78rem;color:#7a5200;font-weight:600}
+.wc-ov.wc-reading .wc-dockbtns{display:flex;gap:8px;margin:8px 0 0}.wc-ov.wc-reading .wc-dockbtns .btn{flex:1;min-height:46px;margin:0;justify-content:center}
+.wc-auto{display:none;margin:6px 0 0;font-size:.78rem;color:#5f6f63;text-align:center}.wc-ov.wc-reading .wc-auto{display:block}
+.wc-ov.wc-reading .wc-hint{margin:6px 0 0}
+@media(max-width:600px){.wc-ov.wc-reading .wc-panel{height:100%}.wc-ov.wc-reading .wc-txt{font-size:1.3rem}}
+/* v205 reading check: the same slim reading dock as Word Coach, pinned at the bottom while reading */
+.rk-sh-count{margin:4px 0 12px;font-weight:700;color:#7a5200;background:#fff7d6;border:1px solid #f1d27a;border-radius:12px;padding:8px 12px}.rk-sh-count b{font-size:1.2rem}
+.rk-storybar{background:linear-gradient(135deg,#fffaf0,#fff3d6)!important;border:2px solid #f2d27a!important}
+@media(max-width:740px){.rk-page .rk-storybar{position:fixed;top:auto;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;margin:0;box-shadow:0 -6px 22px rgba(15,61,36,.25)}
+ .rk-page .rk-form{padding-bottom:150px}.rk-page .l4-card .l4-pass,.rk-page .l4-card p{font-size:1.25rem;line-height:2}}
+/* v205 one finish sheet for Word Coach (all levels) and the BULIG reading check: stars, right / missed tally, auto-send */
+.wc-stars{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 10px}.wc-stars .ac-stars i{width:40px;height:40px}.wc-stars .wc-pct{font-size:1.6rem;font-weight:900;color:#7a5200;margin:0}
+.wc-tally{flex-wrap:wrap}.wc-tally>div{min-width:92px;flex:1 1 92px}
+.wc-tally>div.g{background:#e6f7ea;border-color:#bfe6c8}.wc-tally>div.g b{color:#0f6a2c}
+.wc-tally>div.r{background:#fdeceb;border-color:#f3c9c4}.wc-tally>div.r b{color:#b4462c}
+.wc-ov.wc-sheetmode{place-items:end center;padding:0}
+.wc-ov.wc-sheetmode .wc-panel{background:transparent;box-shadow:none;padding:0;width:min(560px,100%);max-height:100vh;display:flex;flex-direction:column;justify-content:flex-end}
+.wc-ov.wc-sheetmode .wc-top,.wc-ov.wc-sheetmode .wc-x{display:none}
+.wc-ov.wc-sheetmode .wc-txt{display:none}
+.wc-ov.wc-sheetmode .wc-box{display:block;background:none;border:0;padding:0;margin:0}
+.wc-ov.wc-sheetmode .wc-sum.rk-sh-in{width:100%;max-height:92vh;overflow:auto;box-sizing:border-box}
+@media(min-width:741px){.wc-ov.wc-sheetmode{place-items:center}}
+.wc-sum .rk-sh-btns .rk-send{flex:1 1 100%}.wc-sum .rk-sh-again svg{width:20px;height:20px}
+.wc-sum .wc-chips{justify-content:center;margin:0 0 6px}
+/* the reading dock looks like the reading check's: a big round stop button and the timer */
+.wc-ov.wc-reading .wc-box{background:linear-gradient(135deg,#fffaf0,#fff3d6);border:2px solid #f2d27a}
+.wc-ov.wc-reading .wc-mic{width:58px;height:58px;box-shadow:0 0 0 6px rgba(226,69,43,.15),0 6px 14px rgba(226,69,43,.35)}
+.wc-ov.wc-reading .wc-dockst b{font-size:1.2rem;font-variant-numeric:tabular-nums}
+.wc-sum .rk-send svg,.wc-sum .wc-read svg{width:22px!important;height:22px!important;flex:none}
+.wc-sum .rk-send{min-height:56px;font-size:1.1rem}
+.wc-ov.wc-reading .wc-panel{background:#fffdf6}
+.wc-ov.wc-reading .wc-txt{background:#fff;border:0;border-radius:22px;box-shadow:0 6px 18px -10px rgba(14,59,40,.3);text-align:center;padding:18px 16px}
+/* v205: while the More menu is open on a phone, the floating top buttons hide (they covered the menu) */
+@media(max-width:740px){body.sidebar-open :is(.notif-m,.mode-mobile,.mobile-signout,.pupil-tabbar,.tour-help){opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:opacity .15s}}
+/* ---- v204 reading support: readers who need help, class challenge, offline waiting, practice words, data cleanup ---- */
+.rs-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;margin:16px 0}
+.rs-cols>.card{margin:0;min-width:0}
+.rs-card .ws-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}.rs-card .ws-hd h2{display:flex;align-items:center;gap:8px}.rs-card .ws-hd h2 .icon{width:22px;height:22px;color:#16842f}
+.rs-sub{font-size:.8rem;color:#6b7a70}
+.rs-ok{display:flex;gap:8px;align-items:flex-start;color:#2f5a3a;margin:6px 0}.rs-ok .icon{flex:none;color:#16842f}
+.rs-list{display:grid;gap:8px}
+.rs-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;border:1px solid rgba(12,38,20,.1);background:#fff;text-decoration:none!important;color:inherit!important;min-width:0}
+.rs-row .avatar,.rs-row img{width:40px;height:40px}
+.rs-tx{display:grid;gap:2px;min-width:0}.rs-tx b{overflow-wrap:break-word}.rs-tx small{color:#6b7a70}
+.rs-tx em{font-style:normal;font-size:.82rem;color:#7d5a00}
+.rs-words{display:flex;flex-wrap:wrap;gap:4px;margin:2px 0}.rs-words i{font-style:normal;font-size:.78rem;padding:2px 8px;border-radius:99px;background:#fdecea;color:#a12a1f;font-weight:700}
+.rs-pct{font-size:1.15rem;color:#c62828;font-weight:800}
+.rs-group{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--y50,#fffbeb);border:1px solid var(--y300,#ffd966);margin-bottom:10px}
+.rs-group .icon{flex:none;color:#b88900}.rs-group small{display:block;color:#5c4a14}
+.rs-big{margin:4px 0 8px;font-size:1rem}.rs-big b{font-size:1.6rem;color:#16842f}
+progress.rs-bar{-webkit-appearance:none;appearance:none;display:block;width:100%;height:14px;border:0;border-radius:99px;background:#eef3ef;overflow:hidden;color:#16842f}
+progress.rs-bar::-webkit-progress-bar{background:#eef3ef;border-radius:99px}
+progress.rs-bar::-webkit-progress-value{background:linear-gradient(90deg,#16842f,#3fb35a);border-radius:99px}
+progress.rs-bar::-moz-progress-bar{background:linear-gradient(90deg,#16842f,#3fb35a);border-radius:99px}
+.rs-goal{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-top:10px}.rs-goal label{display:grid;gap:4px;font-size:.85rem;font-weight:700}.rs-goal input{width:140px}
+.rs-chp{margin:16px 0}.rs-chh{display:flex;gap:12px;align-items:center;margin-bottom:6px}.rs-chh small{display:block;color:#6b7a70}
+.rs-pic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:#e6f4ea;color:#16842f}
+.rs-plink{display:flex;align-items:center;gap:12px;margin:16px 0;text-decoration:none!important;color:inherit!important}.rs-plink>span:nth-child(2){flex:1;min-width:0}.rs-plink small{display:block;color:#6b7a70}
+.rs-pwl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px}
+.rs-pwl li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding:10px 12px;border-radius:16px;border:2px solid #e3eae5;background:#fff}
+.rs-pwl li b{font-size:1.3rem;overflow-wrap:anywhere}.rs-pwl li .rs-msg{grid-column:2;font-size:.78rem;color:#6b7a70}
+.rs-pwl li .l1-spk{grid-row:1/3}.rs-pwl li .rs-mic{grid-row:1/3;grid-column:3}
+.rs-mic{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:99px;border:0;background:#c62828;color:#fff;font-weight:700;cursor:pointer;min-height:40px}.rs-mic .icon{width:18px;height:18px}
+.rs-pwl li.listen{border-color:#c62828}.rs-pwl li.listen .rs-mic{animation:rsPulse 1s infinite}
+.rs-pwl li.ok{border-color:#16842f;background:#e6f4ea}.rs-pwl li.ok .rs-msg{color:#16842f;font-weight:700}
+.rs-pwl li.no .rs-msg{color:#a12a1f;font-weight:700}
+.rs-spk.on{outline:3px solid #ffc629}
+.rs-note{display:flex;gap:6px;align-items:center;margin-top:12px}.rs-note .icon{width:18px;height:18px}
+@keyframes rsPulse{50%{box-shadow:0 0 0 8px rgba(198,40,40,.18)}}
+@media(prefers-reduced-motion:reduce){.rs-pwl li.listen .rs-mic{animation:none}}
+.cu-grp{padding:12px;border:1px solid rgba(12,38,20,.1);border-radius:16px;margin-bottom:12px;display:grid;gap:10px}
+.cu-list{display:grid;gap:8px}.cu-p{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:#f7f9f7;min-width:0}
+.cu-p.keep{background:#e6f4ea}.cu-p span{display:grid;min-width:0}.cu-p small{color:#6b7a70;overflow-wrap:break-word}.cu-p .avatar,.cu-p img{width:36px;height:36px}
+.cu-form{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.cu-sure{display:flex;gap:8px;align-items:flex-start;font-size:.88rem;flex:1 1 260px}.cu-sure input{margin-top:3px}
+.cu-secs{list-style:none;padding:0;margin:0 0 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:8px}
+.cu-secs li{padding:8px 12px;border-radius:12px;background:#f7f9f7;display:grid}.cu-secs small{color:#6b7a70}
+html.dark .rs-row,html.dark .rs-pwl li{background:#16231b;border-color:#2e4234}html.dark .rs-row b,html.dark .rs-pwl li b{color:#eef5f0}
+html.dark .rs-sub,html.dark .rs-tx small,html.dark .rs-chh small,html.dark .rs-plink small,html.dark .cu-p small,html.dark .cu-secs small{color:#a9bcb0}
+html.dark .rs-tx em{color:#ffd966}html.dark .rs-ok{color:#cfe8d6}
+html.dark .rs-group{background:rgba(255,198,41,.1);border-color:rgba(255,198,41,.35)}html.dark .rs-group small{color:#f3e2a6}
+html.dark .rs-pwl li.ok{background:rgba(22,132,47,.2)}html.dark .cu-p,html.dark .cu-secs li{background:#1b2a20}html.dark .cu-p.keep{background:rgba(22,132,47,.22)}
+html.dark progress.rs-bar,html.dark progress.rs-bar::-webkit-progress-bar{background:#26382c}html.dark .rs-pic{background:rgba(22,132,47,.22);color:#7fd18f}
+html.dark .rs-words i{background:rgba(198,40,40,.22);color:#ffb4ab}
+/* ---- v204 accessibility: Bigger text and Easy-read letters (Settings) ---- */
+html.a11y-big{font-size:112.5%}
+html.a11y-easy{--font-fun:Verdana,Tahoma,'Segoe UI',Arial,sans-serif;--font-body:Verdana,Tahoma,'Segoe UI',Arial,sans-serif}
+html.a11y-easy body,html.a11y-easy body :is(p,li,span,b,small,em,label,a,button,input,textarea,select,h1,h2,h3,h4,td,th){font-family:Verdana,Tahoma,'Segoe UI',Arial,sans-serif!important;letter-spacing:.04em;word-spacing:.14em}
+html.a11y-easy body :is(p,li){line-height:1.75}
+html.a11y-easy body :is(p,li){font-style:normal}
+.cu-form label.cu-sure{display:flex!important;flex-direction:row;align-items:flex-start;gap:10px;font-weight:600;margin:0}.cu-form label.cu-sure input{width:20px;height:20px;flex:none;margin:2px 0 0;min-height:0}
+/* ---- v206 answer screens (phones) ---- */
+/* the lesson title no longer runs under the help friend in the green header */
+body:has(.tour-help-dock) .activity-header>div:not(.activity-progress){padding-right:58px;min-width:0}
+body:has(.tour-help-dock) .activity-header>div:not(.activity-progress) strong{overflow-wrap:anywhere}
+/* one microphone at a time: the old "Tap and say it" recorder waits until Word Coach with Max is done */
+.l1-rec.wc-locked{display:none!important}
+/* reading the words comes before counting them */
+.l2-ans:has(.l2-nums)>.l2-words{order:-2}.l2-ans:has(.l2-nums)>.l2-how{order:-1}
+/* bigger words in Draw a line to match */
+.l2-match .match-word,.l2-match .match-choice span{font-size:15.5px!important;line-height:1.25}.l2-match .match-item:has(img) .match-word{font-size:13px!important}
+@media(max-width:640px){
+ .ck-row .ck-go{flex:1 1 100%;min-height:50px;font-size:1.05rem}
+ .ck-row .ck-msg{flex:1 1 100%;text-align:center;margin:0}
+ .l2-draw-tools{gap:6px}.l2-pen{width:34px;height:34px;flex:none}
+ .l2-draw-clear{min-height:38px!important;padding:0 12px!important;font-size:.85rem!important;width:auto!important;flex:none;white-space:nowrap;margin-left:auto}
+ .l2-draw{min-width:0}.l2-canvas{max-width:100%}
+}
+/* True or False cards: two big keys, T and F */
+.l2-tiles.tf .l2-keys{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.l2-tiles.tf .l2-key:not(.sp):not(.er){min-height:64px;font-size:1.8rem;font-weight:900}
+.l2-tiles.tf .l2-key[data-key="T"]{background:#e6f4ea;border-color:#16842f;color:#16842f}.l2-tiles.tf .l2-key[data-key="F"]{background:#fdecea;border-color:#c62828;color:#c62828}
+@media(max-width:640px){.l2-match .match-board{column-gap:30px!important;padding:12px 6px!important}}
+.l2-match .match-word,.l2-match .match-choice span{hyphens:manual;-webkit-hyphens:manual}
+/* v206 picture cards that replaced drawing: a speaker on each picture says its name */
+.l2-picw{position:relative;display:grid;min-width:0}.l2-picw>.l2-pic{width:100%;height:100%}
+.l2-picw>.l2-picsay{position:absolute;left:6px;bottom:6px;width:34px;height:34px;min-height:0;padding:0;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.l2-picw>.l2-picsay svg{width:16px;height:16px}
+/* drawn diagrams (shapes, clocks, sets): one per row, big enough to see the details */
+.l2-pics.dpw{grid-template-columns:minmax(0,1fr)!important;gap:10px}
+.l2-pics.dpw .l2-pic{aspect-ratio:auto;padding:6px}.l2-pics.dpw .l2-pic img{width:100%;max-height:230px;height:auto;object-fit:contain}
+@media(min-width:760px){.l2-pics.dpw{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+/* ---- v207 "say it" cards in the Reading Coach style: a yellow coach dock under the pictures, a big red microphone,
+   one chip for each name to say (green when BULIG hears it), green pictures and stars ---- */
+.l2-say.rc-dock{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:14px;row-gap:8px;margin-top:14px;padding:12px 16px;border-radius:22px;background:var(--y50,#fffbeb);border:1.5px solid #f6df92;box-shadow:0 12px 26px -18px rgba(14,59,40,.55)}
+.l2-say.rc-dock>.l1-mic{grid-row:1/3;width:64px;height:64px;box-shadow:0 0 0 6px rgba(226,69,43,.15),0 6px 14px rgba(226,69,43,.35)}
+.l2-say.rc-dock>.l1-mic svg{width:30px;height:30px}
+.l2-say.rc-dock>.l1-rl{grid-column:2;align-self:end;font-size:1.02rem;line-height:1.25;color:#173a26;font-variant-numeric:tabular-nums}
+.l2-say.rc-dock>.l1-rs{grid-column:2;align-self:start;font-size:.84rem;color:#5b6b60;min-height:0}
+.l2-say.rc-dock>.l1-heard{grid-column:3;grid-row:1/3;align-self:center}
+.l2-say.rc-dock[data-state=rec]>.l1-rl{color:#c62828}
+.l2-say.rc-dock>.l1-play{grid-column:1/-1}
+.pc-names{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pc-chip{min-width:46px;min-height:40px;padding:6px 14px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;font-weight:800;font-size:1.05rem;background:#fff;border:2px dashed #e3c766;color:#a08a3c;transition:background .25s,border-color .25s,color .25s,transform .25s}
+.pc-chip.ok{background:#16842f;border:2px solid #16842f;color:#fff;transform:scale(1.06)}
+.pc-chip.ok::before{content:"✓ ";font-weight:900}
+.pc-chip.no{border-style:solid;border-color:#e57373;color:#c62828;background:#fdecea}
+.pc-stars{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0 2px;text-align:center}
+.pc-stars b{font-size:2rem;letter-spacing:4px;color:#f2b10c;line-height:1}.pc-stars b i{font-style:normal;color:#e3e7e4}
+.pc-stars span{font-weight:800;color:#16683f}
+.l2-pic.pc-ok{outline:4px solid #16842f;outline-offset:2px;border-radius:16px;position:relative}
+.l2-pic.pc-ok::after{content:"✓";position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;background:#16842f;color:#fff;display:grid;place-items:center;font-weight:900}
+.l2-pic.pc-no{outline:3px solid #e57373;outline-offset:2px;border-radius:16px}
+@media(max-width:640px){.l2-say.rc-dock{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:20;grid-template-columns:auto minmax(0,1fr)}.l2-say.rc-dock>.l1-heard{grid-column:1/-1;grid-row:auto;justify-self:stretch}}
+html.dark .l2-say.rc-dock{background:#1f2a22;border-color:#5a4d1f}html.dark .l2-say.rc-dock>.l1-rl{color:#eef5f0}html.dark .l2-say.rc-dock>.l1-rs{color:#a9bcb0}
+html.dark .pc-chip{background:#16231b;border-color:#7a6a2c;color:#d8c27a}html.dark .pc-chip.ok{background:#16842f;border-color:#16842f;color:#fff}
+.l2-say.rc-dock>.l1-rl,.l2-say.rc-dock>.l1-rs{text-align:left;justify-self:start}

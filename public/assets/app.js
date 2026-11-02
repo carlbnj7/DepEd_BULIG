@@ -974,3 +974,8 @@ document.querySelectorAll('.sc-pick select').forEach(s=>{const f=s.form,b=f&&f.q
 
 /* v205: the "More" tab (teachers and administrators) opens the full menu */
 document.querySelectorAll('[data-tab-more]').forEach(b=>b.addEventListener('click',()=>{const t=document.querySelector('.mobile-menu-toggle');if(t)t.click();}));
+
+/* v204: Bigger text and Easy-read letters (Settings, My profile) */
+(function(){const sw=[...document.querySelectorAll('[data-a11y-switch]')];if(!sw.length)return;const d=document.documentElement;
+ const save=()=>{const v=['big','easy'].filter(k=>d.classList.contains('a11y-'+k)).join(' ');try{localStorage.setItem('bulig-a11y',v);}catch(e){}};
+ sw.forEach(s=>{const k=s.dataset.a11ySwitch;s.checked=d.classList.contains('a11y-'+k);s.addEventListener('change',()=>{d.classList.toggle('a11y-'+k,s.checked);sw.forEach(o=>{if(o!==s&&o.dataset.a11ySwitch===k)o.checked=s.checked;});save();});});})();
