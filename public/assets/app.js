@@ -663,7 +663,7 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  /* 3. Sliding bubble */
  const bubble=(wrap,items,v,key,isOn)=>{const on=items.findIndex(isOn);if(on<0)return;const bb=document.createElement('span');bb.className='lg-bubble lg-g'+(v?' lg-v':'');bb.setAttribute('aria-hidden','true');wrap.prepend(bb);wrap.classList.add('lg-has-bubble');all.push({el:bb,blur:'',where:''});
   const place=(i,anim)=>{const a=items[i];if(!a)return;if(!anim)bb.style.transition='none';
-   if(v){bb.style.setProperty('--lg-by',a.offsetTop+'px');bb.style.height=a.offsetHeight+'px';}else{bb.style.setProperty('--lg-bx',a.offsetLeft+'px');bb.style.width=a.offsetWidth+'px';}
+   if(v){bb.style.setProperty('--lg-by',a.offsetTop+'px');bb.style.height=a.offsetHeight+'px';}else{bb.style.setProperty('--lg-bx',a.offsetLeft+'px');bb.style.width=a.offsetWidth+'px';if(wrap.classList.contains('pupil-tabs')){bb.style.top=a.offsetTop+'px';bb.style.height=a.offsetHeight+'px';}}   /* v208: tabs that wrap onto two rows on a phone: the pill covers only its own tab */
    bb.classList.toggle('lg-play',!v&&a.classList.contains('tab-play'));if(!anim){void bb.offsetWidth;bb.style.removeProperty('transition');}};
   let from=-1;try{const s=JSON.parse(sessionStorage.getItem(key)||'null');if(s&&Date.now()-s.t<8000)from=s.i;sessionStorage.removeItem(key);}catch(e){}
   if(from>=0&&from!==on&&from<items.length&&!still&&!lite()){place(from,false);requestAnimationFrame(()=>requestAnimationFrame(()=>{bb.classList.add('lg-stretch');place(on,true);setTimeout(()=>bb.classList.remove('lg-stretch'),280);}));}else place(on,false);

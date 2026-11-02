@@ -7000,3 +7000,14 @@ html.dark .sp-mark{box-shadow:0 0 0 2px #16231b}
 .sp-reg legend{padding:0 6px;font-weight:800;color:var(--g800,#13503a)}.sp-reg>p{margin:0 0 4px;font-size:.88rem}.sp-reg .sp-form{margin-top:6px}.sp-reg .sp-mark{width:16px;height:16px}.sp-reg .sp-mark svg{width:11px;height:11px}
 html.dark .formgrid .sp-reg{background:#13251b;border-color:#2e4234}html.dark .sp-reg legend{color:#cfe7c9}
 .sp-mark.acc{background:#2e78d6}.sp-mark.acc svg{width:11px;height:11px}.hm-head h1 .sp-mark.acc svg{width:15px;height:15px}
+/* v208 layout fixes */
+/* sign-in tickets and teacher passes on screen: a ticket is never narrower than its design, so the picture never covers the name */
+@media screen{.tk-sheet{grid-template-columns:repeat(auto-fill,minmax(min(100%,calc(86mm*var(--u,1))),1fr))!important}}
+/* credits: the web team cards fit their column on tablets */
+@media(min-width:741px) and (max-width:1100px){.cr-team{grid-template-columns:repeat(2,1fr)}}
+.cr-webs{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+/* My pupils on a tablet: the table scrolls inside its card, never the whole page; the less needed column is hidden */
+@media(min-width:741px) and (max-width:1099px){.mp-list .mp-form{overflow-x:auto;max-width:100%}.mp-tbl th:nth-child(5),.mp-tbl td:nth-child(5),.mp-tbl thead th:nth-child(3),.mp-tbl tr.mp-item td:nth-child(3){display:none}}
+/* hidden screen-reader labels inside a scrolling table stay inside it (they made the whole page scroll sideways on tablets) */
+.bk-gridwrap,.mp-list .mp-form,.table-wrap,.tbl-wrap{position:relative}
+@media(min-width:741px) and (max-width:899px){.mp-tbl .mp-act .btn{font-size:0;gap:0;padding:8px;min-width:40px;justify-content:center}.mp-tbl .mp-act .btn .icon,.mp-tbl .mp-act .btn svg{width:18px;height:18px}.mp-tbl .mp-act{gap:6px;flex-direction:column}.mp-tbl a.mp-who .avatar{display:none}}
