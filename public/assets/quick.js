@@ -56,6 +56,27 @@
   if(o.pct!=null&&o.need){const bar=el('div','qo-prog'),i=el('i');bar.append(i);bar.style.setProperty('--w',Math.max(3,Math.min(100,+o.pct))+'%');extra.push(bar,el('p','qo-small',o.need+' · '+o.pct+'% done'));}
   overlay({cls:'qo-lock',art,title:o.title,text:o.text,extra,primary:o.go?{label:o.go.label,href:o.go.href}:{label:'Okay'},secondary:o.go?{label:'Okay'}:null});
  };
+ /* v208 Clear old data: after the backup starts downloading, step 1 is done and the Delete buttons open */
+ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-cu-backup]');if(!b)return;setTimeout(()=>{const st=document.querySelector('[data-cu-step]');if(st){st.classList.add('done');const n=st.querySelector('[data-cu-note]');if(n)n.textContent='Done · Last backup today';}
+  document.querySelectorAll('[data-needs-backup]:not([data-empty])').forEach(x=>x.disabled=false);const w=document.querySelector('[data-cu-wait]');if(w)w.remove();},1500);});
+ /* v208 Undo bar: counts down 5 seconds, then goes away (Undo still works if tapped in time) */
+ (function(){const t=document.querySelector('[data-undo]');if(!t)return;const n=t.querySelector('[data-undo-n]'),ring=t.querySelector('.undo-ring');let s=5;
+  const k=setInterval(()=>{s--;if(n)n.textContent=Math.max(0,s);if(ring)ring.style.setProperty('--p',Math.max(0,s/5*100)+'%');if(s<=0){clearInterval(k);t.classList.add('out');setTimeout(()=>t.remove(),400);}},1000);})();
+ /* v208 Max asks for the microphone first: before the phone's own question ("Allow" or "Block"), Max explains why,
+    so children tap Allow. When the microphone is blocked, Max shows how to turn it back on. */
+ (function(){let mic='unknown',pass=false;const KEY='bulig-mic-ok';
+  try{if(navigator.permissions&&navigator.permissions.query)navigator.permissions.query({name:'microphone'}).then(p=>{mic=p.state;p.onchange=()=>{mic=p.state;};}).catch(()=>{});}catch(e){}
+  const seen=()=>{try{return localStorage.getItem(KEY)==='1';}catch(e){return false;}},mark=()=>{try{localStorage.setItem(KEY,'1');}catch(e){}};
+  const SEL='[data-rec-go],.l1-mic,.wc-go,.wc-start-reading,.wc-retry-listen,.rs-mic,.pc-mic,[data-mic]';
+  const art=img=>{const a=el('div','qo-lockart qo-soonart');const b=el('img','qo-bob');b.src='assets/images/characters/max-'+img+'.webp?v=2';b.alt='';a.append(b);return a;};
+  document.addEventListener('click',e=>{if(pass||!window.isSecureContext&&location.hostname!=='localhost')return;const b=e.target.closest&&e.target.closest(SEL);if(!b||b.disabled||b.getAttribute('aria-disabled')==='true')return;
+   if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)&&!(window.SpeechRecognition||window.webkitSpeechRecognition))return;
+   if(mic==='granted'||(mic==='unknown'&&seen()))return;
+   e.preventDefault();e.stopImmediatePropagation();
+   if(mic==='denied'){overlay({cls:'qo-lock qo-soon qo-mic',art:art('hello'),title:'I can’t hear you yet',text:'The microphone is turned off for BULIG. Ask a grown-up to tap the lock or the “aA” beside the web address, then turn on Microphone. Then tap the microphone again.',extra:[],primary:{label:'Okay'},secondary:null});return;}
+   const ex=el('div','qo-micask');ex.innerHTML='<b>bulig wants to use your microphone</b><span class="qo-micbtns"><i>Block</i><em>Allow</em></span>';
+   overlay({cls:'qo-lock qo-soon qo-mic',art:art('mic'),title:'Can I hear you read?',text:'Your phone will ask to use the microphone. Tap Allow so I can hear you read.',extra:[ex],primary:{label:'Okay, I will tap Allow',run:close=>{close();mark();pass=true;try{b.click();}finally{pass=false;}}},secondary:null});},true);
+ })();
  /* v208 something still being built (Level 8): Bob the Worker with his plans, a short message and Okay */
  window.buligSoonOverlay=function(o){const art=el('div','qo-lockart qo-soonart');const b=el('img','qo-bob');b.src=o.img||'assets/images/characters/bob-blueprint.webp';b.alt='';art.append(b);
   overlay({cls:'qo-lock qo-soon',art,title:o.title,text:o.text,extra:[],primary:{label:'Okay'},secondary:null});};

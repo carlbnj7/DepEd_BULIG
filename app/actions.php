@@ -123,6 +123,7 @@ function action():void{
   if($new!==(string)($_POST['confirm_password']??''))fail('The new passwords do not match.');
   q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);card_forget_starter((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go($u['role']==='pupil'?'?page=settings':'?page=profile');
  }
+ if($action==='undo_last'){undo_run(require_role('teacher'));}   // v208 Undo bar
  if($action==='speech_mode'){speech_save(require_role('teacher'));}   // v208 how BULIG listens to a pupil
  if($action==='set_start_level'){
   $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=(manage(&id=[0-9]+)?|pupil&id=[0-9]+)$~',$back))$back='?page=manage';
@@ -130,9 +131,10 @@ function action():void{
   if(!$pupils){flash('Tick at least one pupil first.');go($back);}
   $level=selected_start_level();if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$level]))fail('Choose a level that is available.');
   foreach($pupils as $pid)if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))fail('This pupil is not assigned to you.',403);
+  $prev=[];foreach($pupils as $pid)$prev[$pid]=val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);   // v208 kept for Undo
   foreach($pupils as $pid)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?) ON DUPLICATE KEY UPDATE level_id=VALUES(level_id),assigned_by=VALUES(assigned_by),assigned_at=NOW()',[$pid,$level,$tid]);
   foreach($pupils as $pid)push_queue($pid,'lessons',level_label($level).' is open!','Your teacher chose '.level_label($level).' for you. Your next adventure is waiting.','?page=lessons&level='.$level);
-  audit('start_level',level_label($level).' for '.count($pupils).' pupils');flash('Starting level set to '.level_label($level).' for '.count($pupils).' '.(count($pupils)===1?'pupil':'pupils').'.');go($back);
+  audit('start_level',level_label($level).' for '.count($pupils).' pupils');$msg=count($pupils)===1?(string)val('SELECT name FROM users WHERE id=?',[$pupils[0]]).' now starts at '.level_label($level).'.':'Starting level set to '.level_label($level).' for '.count($pupils).' pupils.';flash($msg);undo_set('level',['prev'=>$prev],$msg,$back);go($back);
  }
  if($action==='class_done'){
   $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=(class_demo|pupil|manage)(&[a-zA-Z0-9_=]+)*(#learning-path)?$~',$back))$back='?page=dashboard';
@@ -142,19 +144,19 @@ function action():void{
   foreach($pupils as $pid)if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))fail('This pupil is not assigned to you.',403);
   db()->beginTransaction();try{
    if($undo){$n=class_done_undo($pupils[0],$undo);audit('class_done_undo','Pupil '.$pupils[0].', lesson '.$undo.', '.$n.' activities');db()->commit();flash($n?'The "Done in class" mark was removed from that lesson.':'Nothing to undo in that lesson.');go($back);}
-   if(!in_array($scope,['activity','lesson','level','lessons'],true))fail('Choose what you finished.');
+   if(!in_array($scope,['activity','lesson','level','lessons'],true))fail('Choose what you finished.');$t0=date('Y-m-d H:i:s');$madeAids=[];
    $marked=0;$what=$scope==='level'?level_label($level):($scope==='activity'?'this activity':($scope==='lesson'?'this lesson':'the chosen work'));
    $lids=$scope==='lessons'?array_map('intval',(array)($_POST['lessons']??[])):[];$acts=$scope==='lessons'?array_map('intval',(array)($_POST['activities']??[])):[];if($scope==='lessons'&&!$lids&&!$acts){db()->rollBack();flash('Tick at least one lesson or activity first.');go($back);}
    foreach($pupils as $pid){
     $aids=[];if($scope==='lessons'){foreach($lids as $lid)$aids=array_merge($aids,class_done_activities($pid,'lesson',$lid));foreach($acts as $aid)$aids=array_merge($aids,class_done_activities($pid,'activity',$aid));}
     else $aids=class_done_activities($pid,$scope,$scope==='level'?$level:(int)($_POST[$scope==='activity'?'aid':'lid']??0));
-    $n=class_done_apply($tid,$pid,$aids);$marked+=$n;
+    $n=class_done_apply($tid,$pid,$aids);$marked+=$n;if($n)$madeAids[$pid]=array_values(array_unique(array_map('intval',$aids)));
     if($n)push_queue($pid,'lessons','Your next lesson is open!','Your class did it together. Your next step in BULIG is ready.','?page=dashboard');
     if($n)class_done_note_set($pid,$scope==='level'?'Your teacher marked '.level_label($level).' as done.'.(($nx=level_next($level))&&level_available($pid,$nx)?' '.level_label($nx).' is open now.':''):'Your teacher marked '.($scope==='activity'?'an activity':'your lesson').' as done. Your next step is ready.');
    }
    audit('class_done',$what.' for '.count($pupils).' pupils, '.$marked.' activities');db()->commit();
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
-  flash('Marked as done in class: '.$what.' for '.count($pupils).' '.(count($pupils)===1?'pupil':'pupils').'.');go($back);
+  $msg='Marked as done in class: '.$what.' for '.count($pupils).' '.(count($pupils)===1?'pupil':'pupils').'.';flash($msg);if($madeAids)undo_set('done',['aids'=>$madeAids,'t0'=>$t0],$msg,$back);go($back);
  }
  /* v194: teachers and administrators change their own name (My profile › My name) */
  if($action==='my_name'){
@@ -224,7 +226,7 @@ function action():void{
    if(!empty($_POST['audio_card'])&&is_array($_POST['audio_card'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,9,7],true)&&l2a_audio_supported()&&($ap=l2a_save_audios($_POST['audio_card'],$pid,$aid)))q('UPDATE activity_completion SET audio_paths=? WHERE pupil_id=? AND activity_id=?',[json_encode($ap),$pid,$aid]);
    if($apath)q('UPDATE activity_completion SET audio_path=? WHERE pupil_id=? AND activity_id=?',[$apath,$pid,$aid]);
    if(offline_answer_time())q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$pid,'offline_answer','activity '.$aid.' at '.$when]);
-   $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);key_save_score($cid);
+   $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);$GLOBALS['bulig_vowel_lesson']=function_exists('vowel_lesson')&&vowel_lesson((int)$a['lesson_id']);key_save_score($cid);
    if($oral&&!$l4read&&function_exists('l1_auto_score'))q('UPDATE activity_completion SET score=?,max_score=1 WHERE id=?',[l1_auto_score($a,$transcript,$apath!==null||$audio!==''),$cid]);/* Level 1: BULIG checks the talk and pronunciation (v172) */
    /* Level 4: BULIG scores the reading from what the speech recognizer heard (the module's miscue table). */
    $l4s=$l4read&&$transcript!==''?l4_auto($a,$transcript,(int)($_POST['secs']??0)):null;if($l4s)q('UPDATE activity_completion SET rubric_scores=?,score=?,max_score=100 WHERE id=?',[json_encode(['l4'=>$l4s],JSON_UNESCAPED_UNICODE),$l4s['score'],$cid]);if($oral&&function_exists('wc_apply_single'))wc_apply_single($cid);/* v184: Word Coach */q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);

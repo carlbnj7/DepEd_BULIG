@@ -70,9 +70,25 @@ function rv_decide(array $u,int $id,string $decision,string $reason):void{
 function rv_action():never{
  $u=require_role('teacher');rv_decide($u,(int)($_POST['attempt_id']??0),(string)($_POST['decision']??''),trim((string)($_POST['reason']??'')));flash('Reading review saved. The pupil has been notified.');go('?page=reading_reviews');
 }
+/** v208 Readings BULIG could not score (Speech support, nothing heard, no microphone), oldest first: the teacher scores them. */
+function rv_waiting(int $tid):array{
+ if(!rv_ready())return [];
+ return rows("SELECT r.id,r.pupil_id,r.state,r.created_at,c.score,u.name,u.avatar_path,a.title,a.lesson_id,m.level_id,EXISTS(SELECT 1 FROM settings s WHERE s.setting_key=CONCAT('speech_',r.pupil_id) AND s.setting_value='support') sp
+  FROM reading_verifications r JOIN teacher_pupils t ON t.pupil_id=r.pupil_id JOIN users u ON u.id=r.pupil_id JOIN activity_completion c ON c.id=r.completion_id JOIN activities a ON a.id=r.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id
+  WHERE t.teacher_id=? AND r.state IN ('pending','missing') AND (c.score IS NULL OR EXISTS(SELECT 1 FROM settings s2 WHERE s2.setting_key=CONCAT('speech_',r.pupil_id) AND s2.setting_value='support')) ORDER BY r.id LIMIT 30",[$tid]);
+}
+function rv_wait_card_safe(array $u):string{try{return rv_waiting_card((int)$u['id']);}catch(Throwable $e){return '';}}
+function rv_waiting_card(int $tid):string{
+ $w=rv_waiting($tid);if(!$w)return '';$old=strtotime((string)$w[0]['created_at']);$days=$old?max(0,(int)floor((time()-$old)/86400)):0;
+ $h='<section class="card rv-wait" id="rv-wait"><div class="rv-wait-hd"><h2>'.icon('clock').'Waiting for you <span class="rv-wait-n">'.count($w).'</span></h2>'.($days?'<span class="rv-wait-old">Oldest: '.$days.' '.($days===1?'day':'days').'</span>':'').'</div><p class="muted">BULIG could not score these readings. Listen, then score them so the pupil can move on.</p><div class="rv-wait-list">';
+ foreach($w as $r){$why=$r['sp']?'Speech support':($r['state']==='missing'?'No recording':'BULIG could not hear it');$t=strtotime((string)$r['created_at']);$ago=$t?(date('Y-m-d',$t)===date('Y-m-d')?'today':((int)floor((time()-$t)/86400)<=1?'1 day ago':(int)floor((time()-$t)/86400).' days ago')):'';
+  $h.='<div class="rv-wait-row">'.avatar($r).'<div class="rv-wait-tx"><b>'.e($r['name']).(function_exists('speech_mark')?speech_mark((int)$r['pupil_id']):'').'</b><small>'.e(level_label((int)$r['level_id']).' · '.$r['title'].' · '.$why.($ago?' · '.$ago:'')).'</small></div><a class="btn primary small" href="?page=pupil&amp;id='.(int)$r['pupil_id'].'&amp;tab=answers">Score</a></div>';}
+ return $h.'</div></section>';
+}
 function rv_view(array $u):void{
  echo '<div class="pagehead"><div><span class="eyebrow">TEACHING</span><h1>Reading verification</h1><p>Listen to each read-aloud recording and decide if it is the pupil’s own reading. Scores and XP are given right away. Rejecting takes back only that activity’s XP and asks the pupil to read it again.</p></div></div>';
  if(!rv_ready()){echo '<section class="card"><p>Import 035_reading_verification.sql to enable recording reviews.</p></section>';return;}
+ echo rv_wait_card_safe($u);
  $state=(string)($_GET['show']??'pending');if(!in_array($state,['pending','missing','verified','rejected','superseded'],true))$state='pending';
  /* v202: tabs with counts, one tidy card for each attempt, the decision in its own footer. */
  $counts=[];foreach(rows('SELECT r.state,COUNT(*) n FROM reading_verifications r JOIN teacher_pupils t ON t.pupil_id=r.pupil_id WHERE t.teacher_id=? GROUP BY r.state',[$u['id']]) as $c)$counts[$c['state']]=(int)$c['n'];

@@ -158,6 +158,7 @@ function cleanup_action(string $action):never{
   flash(count($ids).' '.(count($ids)===1?'section':'sections').' from last year archived. Pupils and their work are kept. Teachers can place them in new sections.');go('?page=cleanup');}
  if($action==='cleanup_clear'){$k=(string)($_POST['kind']??'');$age=(string)($_POST['age']??'');$K=cleanup_kinds();
   if(!isset($K[$k])||!isset(CLEANUP_AGES[$age]))fail('Choose what to clear.');if(empty($_POST['sure']))fail('Tick the box to confirm.');
+  $lb=function_exists('admin_setting')?admin_setting('last_backup_at',''):'';if($lb===''||!function_exists('admin_days_since')||admin_days_since($lb)>=1)fail('Download a backup first (step 1), then delete.');
   [$label,$table,$col,$where]=$K[$k];$cut=$age==='all'?null:date('Y-m-d H:i:s',strtotime('-'.$age.' days'));
   $n=(int)q('DELETE FROM '.$table.' WHERE '.$where.($cut?' AND '.$col.'<?':''),$cut?[$cut]:[])->rowCount();
   audit('cleanup_clear',$label.' · '.CLEANUP_AGES[$age].' · '.$n.' removed');
@@ -179,13 +180,16 @@ function cleanup_kinds():array{
  return array_filter($k,fn($id)=>$ok[$id],ARRAY_FILTER_USE_KEY);
 }
 function cleanup_clear_card():string{
- $h='<section class="card rs-card cu-clear" id="cu-clear"><div class="ws-hd"><h2>'.icon('trash').'Clear old data</h2><span class="rs-sub">Pupils’ answers, scores and XP are never removed</span></div><p class="muted">Old records make BULIG slower and backups bigger. Choose how old, tick the box, then tap Delete. This cannot be undone, so make a backup first in Print & download.</p><div class="cu-kinds">';
+ $b=function_exists('admin_setting')?admin_setting('last_backup_at',''):'';$fresh=$b!==''&&function_exists('admin_days_since')&&admin_days_since($b)<1;$note=function_exists('admin_backup_note')?admin_backup_note():'';
+ $h='<section class="card rs-card cu-clear" id="cu-clear"><div class="ws-hd"><h2>'.icon('trash').'Clear old data</h2><span class="rs-sub">Pupils’ answers, scores and XP are never removed</span></div><p class="muted">Old records make BULIG slower and backups bigger. Deleting cannot be undone, so BULIG asks for a backup first.</p>'
+  .'<div class="cu-step'.($fresh?' done':'').'" data-cu-step><b class="cu-sn">1</b><div><b>Make a backup</b><small data-cu-note>'.e($fresh?'Done · '.$note:$note).'</small></div><span class="cu-bbtns"><a class="btn primary small" href="?page=backup_csv" data-cu-backup>'.icon('download').'Download backup now</a><a class="btn secondary small" href="?page=backup_sql" data-cu-backup>Full database (.sql)</a></span></div>'
+  .'<p class="cu-step2"><b class="cu-sn">2</b>Choose how old, tick the box, then tap Delete.'.($fresh?'':' <span data-cu-wait>The Delete buttons open after you make a backup today.</span>').'</p><div class="cu-kinds">';
  foreach(cleanup_kinds() as $id=>[$label,$table,$col,$where,$note]){
   try{$all=(int)val('SELECT COUNT(*) FROM '.$table.' WHERE '.$where);$old=(int)val('SELECT COUNT(*) FROM '.$table.' WHERE '.$where.' AND '.$col.'<?',[date('Y-m-d H:i:s',strtotime('-90 days'))]);}catch(Throwable $e){continue;}
   $h.='<form method="post" class="cu-kind">'.csrf_field().'<input type="hidden" name="action" value="cleanup_clear"><input type="hidden" name="kind" value="'.$id.'"><div class="cu-kh"><b>'.e($label).'</b><span class="cu-n">'.number_format($all).' '.($all===1?'record':'records').($old?' · '.number_format($old).' older than 3 months':'').'</span></div><small>'.e($note).'</small>'
    .'<div class="cu-krow"><label><span class="sr-only">How old</span><select name="age">';
   foreach(CLEANUP_AGES as $a=>$t)$h.='<option value="'.$a.'"'.((string)$a==='90'?' selected':'').'>'.e(ucfirst($t)).'</option>';
-  $h.='</select></label><label class="cu-sure"><input type="checkbox" name="sure" value="1" required>I want to delete these</label><button class="btn danger small"'.($all?'':' disabled').'>'.icon('trash').'Delete</button></div></form>';}
+  $h.='</select></label><label class="cu-sure"><input type="checkbox" name="sure" value="1" required>I want to delete these</label><button class="btn danger small" data-needs-backup'.($all&&$fresh?'':' disabled').($all?'':' data-empty').'>'.icon('trash').'Delete</button></div></form>';}
  return $h.'</div></section>';
 }
 function cleanup_view(array $u):void{
@@ -416,8 +420,12 @@ function speech_mode(int $pid):string{static $c=[];if(isset($c[$pid]))return $c[
 /** The signed-in pupil's speech setting ('standard' for everyone else). */
 function speech_me():string{try{$u=current_user();}catch(Throwable $e){$u=null;}return $u&&($u['role']??'')==='pupil'?speech_mode((int)$u['id']):'standard';}
 /** Accent-friendly key of a word (th is said as t): the sound changes above give the same key. */
+/** v208 A lesson that teaches a vowel sound ("CVC Short “e”", "long a", "vowels"): Accent-friendly checks vowels strictly there. */
+function vowel_lesson(int $lid):bool{static $c=[];if(isset($c[$lid]))return $c[$lid];$l=$lid?one('SELECT title,subtitle FROM lessons WHERE id=?',[$lid]):null;
+ return $c[$lid]=$l&&(bool)preg_match('~\b(short|long)\s*[“"\'‘]?[aeiou]\b|\bvowels?\b~iu',$l['title'].' '.$l['subtitle']);}
 function accent_key(string $w):string{
- $w=say_sound(str_replace('th','t',strtolower($w)));$w=preg_replace(['~sh~','~z~','~S$~','~f~','~v~','~ee~','~oo~','~e~','~u~','~T$~','~K$~','~P$~'],['s','s','s','p','b','i','o','i','o','t','k','p'],$w)??$w;
+ $strict=!empty($GLOBALS['bulig_vowel_lesson']);
+ $w=say_sound(str_replace('th','t',strtolower($w)));$w=preg_replace($strict?['~sh~','~z~','~S$~','~f~','~v~','~T$~','~K$~','~P$~']:['~sh~','~z~','~S$~','~f~','~v~','~ee~','~oo~','~e~','~u~','~T$~','~K$~','~P$~'],$strict?['s','s','s','p','b','t','k','p']:['s','s','s','p','b','i','o','i','o','t','k','p'],$w)??$w;
  return preg_replace(['~([^aeiou])s$~','~([aeiou][^aeiou])[^aeiou]$~'],['$1','$1'],$w)??$w;}
 /** v208 the small icon beside the name of a pupil with a speech setting (teacher and admin pages only, never on class
     screens): a red plus for Speech support, a blue speech bubble for Accent-friendly. */
@@ -429,6 +437,9 @@ function speech_mark(int $pid):string{
  $m=speech_mode($pid);if($m==='standard')return '';
  $t=$m==='support'?'Speech support: BULIG does not mark spoken words wrong. You listen and score.':'Accent-friendly: BULIG accepts common accent sounds.';
  return str_replace('aria-hidden="true">','title="'.e($t).'" aria-label="'.e($t).'" role="img">',speech_icon($m));}
+/** v208 Reading support written on a class list: "Accent", "Accent-friendly", "Speech", "Speech support", "Cleft palate"... */
+function speech_parse(string $v):string{$v=strtolower(trim($v));if($v==='')return 'standard';if(isset(SPEECH_MODES[$v]))return $v;
+ if(str_contains($v,'accent'))return 'accent';if(str_contains($v,'speech')||str_contains($v,'cleft')||str_contains($v,'support'))return 'support';return 'standard';}
 /** Save a pupil's speech setting ('standard' removes it). */
 function speech_set(int $pid,string $m):void{if(!isset(SPEECH_MODES[$m]))$m='standard';
  if($m==='standard')q('DELETE FROM settings WHERE setting_key=?',['speech_'.$pid]);

@@ -259,6 +259,7 @@
    [['form.formgrid:not(.import-form) select[name="level_id"]','form.formgrid:not(.import-form)'],'Let BULIG find the level','Leave the starting level on “Let BULIG find it”. The pupil takes the reading check at first sign-in and BULIG places them. You can change it later.'],
    [['.sp-reg'],'Reading support','Choose how BULIG listens. Standard for most pupils. Accent-friendly for a different accent, for example pupils from the mountains or Lumad communities. Speech support for a speech need such as cleft palate: no word is marked wrong and you score the reading. Only you see it.'],
    [['form.formgrid:not(.import-form) .btn.primary','form.formgrid:not(.import-form)'],'Their ticket, right away','After you save, a window shows the new pupil’s sign-in ticket with the QR code. Print it there, or add the next pupil.'],
+   [['.bk-grid th.c-sup','#import'],'Reading support','Choose Standard, Accent-friendly or Speech support for each pupil. In an Excel list, add a column named Reading support.'],
    [['#import','.import-card'],'Add a whole class','Type the list: one row per pupil, Enter goes to the next. Choose one section for everyone or a section on each row, and change any pupil’s starting level on their row. Or choose Upload a file to use an Excel list. Nothing is saved until every row is right.']],
   cards:[
    ['.lc-upgrade','Starter passwords','Pupils still on the old password 12345678 can each get their own easy starter password here. Print their new tickets right away.'],
@@ -347,6 +348,7 @@
    [['.br-list','.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']],
   reading_reviews:[
    ['.pagehead','Reading verification','Listen to your pupils’ read-aloud recordings. You decide if each reading is really the pupil’s own.'],
+   [['#rv-wait'],'Waiting for you','Readings BULIG could not score: Speech support pupils, readings it could not hear, or no microphone. The oldest is first. Tap Score to listen and give the score.'],
    [['.rv-vtabs'],'Lists','To verify, recordings with missing audio, and the ones you already checked.'],
    [['.rv-recording'],'Listen and follow','The words the pupil had to read are on the left. Play the recording and follow along.'],
    [['.rv-decide'],'Your decision','Verify the reading, or reject it with a reason. Rejecting takes back that activity’s XP once and asks the pupil to read it again.']],
@@ -436,6 +438,7 @@
    [['.hm-head'],'Data cleanup','Join pupils with two accounts, put away last year’s sections, and clear old records.'],
    [['.cu-grp'],'Pupils with two accounts','Pupils with the same name and grade. BULIG keeps the account with more work. Merge moves the answers, XP and progress, then switches the other account off.'],
    [['.cu-secs'],'Last year’s sections','Sections made before June 1. Archive them in one step: pupils and their work stay, and teachers can place them in new sections.'],
+   [['[data-cu-step]'],'Backup first','Download a backup first. The Delete buttons open after you make a backup today.'],
    [['#cu-clear'],'Clear old data','Delete old records such as the activity log, read notifications and sign-in attempts. Choose how old, tick the box, then tap Delete. Pupils’ answers, scores and XP are never removed. Make a backup first.']],
   add_teachers:[
    ['.tt-tabs','Add teachers','Adding teachers is a tab of the Teachers page. Teacher list shows your team.'],

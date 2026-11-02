@@ -13,9 +13,12 @@ if(PHP_SAPI!=='cli'){
 }
 function db():PDO{global $config;static $pdo;if(!$pdo){$pdo=new PDO("mysql:host={$config['host']};port={$config['port']};dbname={$config['name']};charset=utf8mb4",$config['user'],$config['pass'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);$pdo->exec("SET time_zone = '".date('P')."'");}return $pdo;}
 function q(string $sql,array $p=[]):PDOStatement{$s=db()->prepare($sql);$s->execute($p);return $s;}
-function rows(string $sql,array $p=[]):array{return q($sql,$p)->fetchAll();}
-function one(string $sql,array $p=[]):?array{return q($sql,$p)->fetch()?:null;}
-function val(string $sql,array $p=[]){return q($sql,$p)->fetchColumn();}
+function rows(string $sql,array $p=[]):array{$r=q($sql,$p)->fetchAll();if(!empty($GLOBALS['tc_collect']))foreach($r as $x)tc_keep($x);return $r;}
+function one(string $sql,array $p=[]):?array{$r=q($sql,$p)->fetch()?:null;if($r&&!empty($GLOBALS['tc_collect']))tc_keep($r);return $r;}
+function val(string $sql,array $p=[]){$v=q($sql,$p)->fetchColumn();if(is_string($v)&&!empty($GLOBALS['tc_collect'])&&preg_match('~^\s*SELECT\s+(?:\w+\.)?(name|title|subtitle|subject)\s+FROM~i',$sql))tc_keep(['name'=>$v]);return $v;}
+/** v208 Text from the database (names, message subjects, section and school names, module titles) is kept exactly as
+    written: Title Case is only for BULIG's own titles (app/views.php title_case_html). */
+function tc_keep($row):void{static $n=0;static $K=['name'=>1,'title'=>1,'subtitle'=>1,'subject'=>1,'section'=>1,'section_name'=>1,'school'=>1,'school_name'=>1,'teacher'=>1,'teacher_name'=>1,'pupil_name'=>1,'sender_name'=>1];if($n>4000||!is_array($row))return;foreach($row as $k=>$v){if(!is_string($k)||!isset($K[$k])||!is_string($v)||mb_strlen($v)<2||mb_strlen($v)>140)continue;$GLOBALS['tc_raw'][$v]=1;$n++;}}
 function e($s):string{return htmlspecialchars((string)$s,ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8');}
 function fail(string $message,int $code=400):never{throw new RuntimeException($message,$code);}
 function go(string $url):never{header('Location: '.$url);exit;}
@@ -281,7 +284,5 @@ function bulig_missing_files(array $missing):never{
 if($__missing=array_values(array_filter(BULIG_PARTS,fn($f)=>!is_file(__DIR__.'/'.$f.'.php'))))bulig_missing_files($__missing);
 foreach(BULIG_PARTS as $__part)require_once __DIR__.'/'.$__part.'.php';
 unset($__part,$__missing);
-
-
-
-
+/* v208 page views: remember text from the database so Title Case keeps it as written */
+if(($_SERVER['REQUEST_METHOD']??'GET')==='GET'&&PHP_SAPI!=='cli')$GLOBALS['tc_collect']=true;
