@@ -7011,3 +7011,15 @@ html.dark .formgrid .sp-reg{background:#13251b;border-color:#2e4234}html.dark .s
 /* hidden screen-reader labels inside a scrolling table stay inside it (they made the whole page scroll sideways on tablets) */
 .bk-gridwrap,.mp-list .mp-form,.table-wrap,.tbl-wrap{position:relative}
 @media(min-width:741px) and (max-width:899px){.mp-tbl .mp-act .btn{font-size:0;gap:0;padding:8px;min-width:40px;justify-content:center}.mp-tbl .mp-act .btn .icon,.mp-tbl .mp-act .btn svg{width:18px;height:18px}.mp-tbl .mp-act{gap:6px;flex-direction:column}.mp-tbl a.mp-who .avatar{display:none}}
+/* v208 Level 8 (under construction) popup: Bob the Worker */
+.qo-soonart{display:grid;place-items:center}.qo-soonart .qo-bob{height:150px;width:auto;filter:drop-shadow(0 6px 8px rgba(0,0,0,.2))}
+.jy-l8-g .jy-l8:focus-visible{outline:3px solid #f6c02c}
+.qo-lock .qo-soonart{height:auto!important;min-height:0;margin:0 auto 10px}.qo-lock .qo-soonart .qo-bob{position:static;height:140px}
+/* v208 Data cleanup: Clear old data */
+.cu-kinds{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));margin-top:10px}
+.cu-kind{display:grid;gap:6px;padding:14px 16px;border:1.5px solid var(--g200,#cfe7c9);border-radius:16px;background:#fff}
+.cu-kh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}.cu-kh b{font-size:1rem}.cu-n{font-size:.8rem;font-weight:700;color:var(--g700,#176444);background:var(--g50,#f5faee);border-radius:999px;padding:2px 10px}
+.cu-kind>small{color:var(--muted,#5d6a60);font-size:.84rem;line-height:1.4}
+.cu-krow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px}.cu-krow select{min-height:38px;padding:6px 10px;border-radius:10px}.cu-krow .cu-sure{display:flex;align-items:center;gap:6px;font-size:.84rem;font-weight:600}.cu-krow .cu-sure input{width:18px;height:18px;min-height:0}
+html.dark .cu-kind{background:#16231b;border-color:#2e4234}
+.cu-krow label.cu-sure{display:flex!important;flex-direction:row!important;align-items:center;gap:6px;margin:0}.cu-krow label.cu-sure input{flex:none;margin:0}.cu-krow>label:first-child{margin:0}.cu-krow .btn{margin-left:auto}

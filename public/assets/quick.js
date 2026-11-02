@@ -56,6 +56,9 @@
   if(o.pct!=null&&o.need){const bar=el('div','qo-prog'),i=el('i');bar.append(i);bar.style.setProperty('--w',Math.max(3,Math.min(100,+o.pct))+'%');extra.push(bar,el('p','qo-small',o.need+' · '+o.pct+'% done'));}
   overlay({cls:'qo-lock',art,title:o.title,text:o.text,extra,primary:o.go?{label:o.go.label,href:o.go.href}:{label:'Okay'},secondary:o.go?{label:'Okay'}:null});
  };
+ /* v208 something still being built (Level 8): Bob the Worker with his plans, a short message and Okay */
+ window.buligSoonOverlay=function(o){const art=el('div','qo-lockart qo-soonart');const b=el('img','qo-bob');b.src=o.img||'assets/images/characters/bob-blueprint.webp';b.alt='';art.append(b);
+  overlay({cls:'qo-lock qo-soon',art,title:o.title,text:o.text,extra:[],primary:{label:'Okay'},secondary:null});};
  document.addEventListener('click',e=>{const c=e.target.closest&&e.target.closest('[data-lock]');if(!c||e.target.closest('a'))return;const d=c.dataset;
   if(d.lockOpens)window.buligLockOverlay({title:d.lockTitle+' opens '+d.lockOpens,text:'Your class starts it together. You can practise the levels you finished while you wait.'});
   else if(d.lockSoon)window.buligLockOverlay({title:d.lockTitle+' is coming soon',text:'Your teacher is getting it ready. Check back soon!'});

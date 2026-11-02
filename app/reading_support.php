@@ -156,10 +156,40 @@ function cleanup_action(string $action):never{
    q('DELETE FROM pupil_sections WHERE section_id IN('.$in.')');q('UPDATE sections SET archived_at=NOW() WHERE id IN('.$in.')');
    audit('sections_archive',count($ids).' sections');db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   flash(count($ids).' '.(count($ids)===1?'section':'sections').' from last year archived. Pupils and their work are kept. Teachers can place them in new sections.');go('?page=cleanup');}
+ if($action==='cleanup_clear'){$k=(string)($_POST['kind']??'');$age=(string)($_POST['age']??'');$K=cleanup_kinds();
+  if(!isset($K[$k])||!isset(CLEANUP_AGES[$age]))fail('Choose what to clear.');if(empty($_POST['sure']))fail('Tick the box to confirm.');
+  [$label,$table,$col,$where]=$K[$k];$cut=$age==='all'?null:date('Y-m-d H:i:s',strtotime('-'.$age.' days'));
+  $n=(int)q('DELETE FROM '.$table.' WHERE '.$where.($cut?' AND '.$col.'<?':''),$cut?[$cut]:[])->rowCount();
+  audit('cleanup_clear',$label.' · '.CLEANUP_AGES[$age].' · '.$n.' removed');
+  flash(number_format($n).' '.($n===1?'record':'records').' removed from '.$label.'.');go('?page=cleanup#cu-clear');}
  fail('Unknown action.');
 }
+/* v208 Clear old data: records that pile up and are not needed for learning (the activity log, read notifications,
+   sign-in attempts, old help requests, earlier copies of changed answers, old messages). Pupils' answers, scores and XP
+   are never touched. [label, table, date column, rows that may go] */
+const CLEANUP_AGES=['30'=>'older than 30 days','90'=>'older than 3 months','180'=>'older than 6 months','365'=>'older than 1 year','all'=>'everything'];
+function cleanup_kinds():array{
+ $k=['log'=>['Activity log','audit_log','created_at','1=1','Every action in BULIG (sign-ins, changes, deletions). The cleanup itself is still written in the log.'],
+  'notif'=>['Read notifications','notifications','created_at','read_at IS NOT NULL','Bell notifications that were already read. Unread ones stay.'],
+  'login'=>['Sign-in attempts','login_attempts','attempted_at','1=1','Records of wrong passwords, used to slow down guessing.'],
+  'help'=>['“I need help” requests','help_requests','created_at','1=1','Old requests from pupils to their teachers.'],
+  'hist'=>['Earlier copies of answers','response_history','created_at','1=1','Older versions of answers that were changed or rechecked. The current answer and its score stay.'],
+  'msg'=>['Messages','admin_messages','created_at','1=1','Messages from the administrator, for everyone who got them.']];
+ static $ok=null;if($ok===null){$ok=[];foreach($k as $id=>$x){try{one('SELECT 1 FROM '.$x[1].' LIMIT 1');$ok[$id]=true;}catch(Throwable $e){$ok[$id]=false;}}}
+ return array_filter($k,fn($id)=>$ok[$id],ARRAY_FILTER_USE_KEY);
+}
+function cleanup_clear_card():string{
+ $h='<section class="card rs-card cu-clear" id="cu-clear"><div class="ws-hd"><h2>'.icon('trash').'Clear old data</h2><span class="rs-sub">Pupils’ answers, scores and XP are never removed</span></div><p class="muted">Old records make BULIG slower and backups bigger. Choose how old, tick the box, then tap Delete. This cannot be undone, so make a backup first in Print & download.</p><div class="cu-kinds">';
+ foreach(cleanup_kinds() as $id=>[$label,$table,$col,$where,$note]){
+  try{$all=(int)val('SELECT COUNT(*) FROM '.$table.' WHERE '.$where);$old=(int)val('SELECT COUNT(*) FROM '.$table.' WHERE '.$where.' AND '.$col.'<?',[date('Y-m-d H:i:s',strtotime('-90 days'))]);}catch(Throwable $e){continue;}
+  $h.='<form method="post" class="cu-kind">'.csrf_field().'<input type="hidden" name="action" value="cleanup_clear"><input type="hidden" name="kind" value="'.$id.'"><div class="cu-kh"><b>'.e($label).'</b><span class="cu-n">'.number_format($all).' '.($all===1?'record':'records').($old?' · '.number_format($old).' older than 3 months':'').'</span></div><small>'.e($note).'</small>'
+   .'<div class="cu-krow"><label><span class="sr-only">How old</span><select name="age">';
+  foreach(CLEANUP_AGES as $a=>$t)$h.='<option value="'.$a.'"'.((string)$a==='90'?' selected':'').'>'.e(ucfirst($t)).'</option>';
+  $h.='</select></label><label class="cu-sure"><input type="checkbox" name="sure" value="1" required>I want to delete these</label><button class="btn danger small"'.($all?'':' disabled').'>'.icon('trash').'Delete</button></div></form>';}
+ return $h.'</div></section>';
+}
 function cleanup_view(array $u):void{
- echo hm_head('DATA CLEANUP','Data cleanup','Join pupils who have two accounts, and put away last year’s sections in one step.');
+ echo hm_head('DATA CLEANUP','Data cleanup','Join pupils who have two accounts, put away last year’s sections, and clear old records like the activity log.');
  $d=cleanup_duplicates();
  echo '<section class="card rs-card"><div class="ws-hd"><h2>'.icon('people').'Pupils with two accounts</h2><span class="rs-sub">Same name and grade</span></div>';
  if(!$d)echo '<p class="rs-ok">'.icon('check').'No duplicate pupils found.</p>';
@@ -177,6 +207,7 @@ function cleanup_view(array $u):void{
  else{echo '<ul class="cu-secs">';foreach(array_slice($old,0,40) as $s)echo '<li><b>Grade '.(int)$s['grade_level'].' · '.e($s['name']).'</b><small>'.e($s['teacher']).' · '.(int)$s['pupils'].' pupils · made '.date('M Y',strtotime((string)$s['created_at'])).'</small></li>';echo '</ul>'.(count($old)>40?'<p class="muted">and '.(count($old)-40).' more</p>':'');
   echo '<form method="post" class="cu-form">'.csrf_field().'<input type="hidden" name="action" value="cleanup_archive"><label class="cu-sure"><input type="checkbox" name="sure" value="1" required>Archive '.(count($old)===1?'this section':'these '.count($old).' sections').'. Pupils, scores and work stay. Pupils show as “Not placed yet”.</label><button class="btn primary">'.icon('download').'Archive in one step</button></form>';}
  echo '<p class="muted">To move every pupil up a grade as well, use Settings › New school year.</p></section>';
+ echo cleanup_clear_card();
 }
 
 /* ---------------- v206: pupil wording ----------------

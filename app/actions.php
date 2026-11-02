@@ -9,7 +9,7 @@ function action():void{
  if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
  if($action==='reading_decision')rv_action();
  if($action==='offline_report')rs_offline_report(require_role('pupil'));
- if($action==='cleanup_merge'||$action==='cleanup_archive')cleanup_action($action);
+ if($action==='cleanup_merge'||$action==='cleanup_archive'||$action==='cleanup_clear')cleanup_action($action);
  if($action==='class_goal'){$t=require_role('teacher');rs_put('class_goal_'.(int)$t['id'],(string)max(50,min(20000,(int)($_POST['goal']??500))));flash('Weekly reading goal saved.');go('?page=dashboard#rs-challenge');}
  if(in_array($action,['message_preview','message_send'],true))messages_action($action);
  if($action==='message_reply')message_reply_action();
