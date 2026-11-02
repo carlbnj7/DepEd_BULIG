@@ -6736,3 +6736,10 @@ html.map-lite .rf::after{animation:none;display:none}
  .mp-tbl tr.mp-gh th{white-space:normal}.mp-tbl tr.mp-gh th span{display:inline}
  select{max-width:100%}}
 @media(max-width:740px){.mp-tbl tr.mp-item{grid-template-columns:30px minmax(0,1fr) auto}.mp-tbl tr.mp-item td{min-width:0}}
+/* v205 Reading Coach in the reading check's story: words turn green as BULIG hears them; the next word glows */
+.rk-sw{border-radius:6px;transition:background .25s,color .25s;padding:0 1px}
+.rk-coach-on .rk-sw{color:#5f6f63}
+.rk-sw.ok{background:#d6f5dc;color:#0f6a2c!important}
+.rk-sw.sk{color:#9a7a3a!important}
+.rk-sw.nx{background:#ffe27a;color:#0e3b28!important;box-shadow:0 0 0 2px #ffe27a}
+html.dark .rk-sw.ok{background:#1f4a2b;color:#bff0c9!important}html.dark .rk-sw.nx{background:#6b5310;color:#fff!important;box-shadow:0 0 0 2px #6b5310}

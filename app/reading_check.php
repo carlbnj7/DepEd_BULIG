@@ -350,7 +350,7 @@ function rc_story_page(array $u,array $row,array $s):void{
  $g=(int)$s['grade'];$st=rc_story($g);if(!$st){$s['parts'][5]['st']='fail';rc_after_part($s,5);rc_save((int)$row['id'],$s);if(!empty($s['result']))rc_finish(rc_row((int)$row['pupil_id']),$s);go('?page=rcheck');}
  head('Reading check','activity-page l1-page l4-page rk-page');
  echo '<div class="l1-app l4-app">'.rc_head('Read a story',$s).'<main class="l1-main activity-main">';notice();
- $dir='Tap the microphone, then read the title and the story out loud. Tap it again when you finish.';
+ $dir='Tap the microphone, then read the title and the story out loud. Each word turns green when BULIG hears it. Tap the microphone again when you finish.';
  echo '<form method="post" class="rk-form" data-rc-story data-words="'.count($st[1]).'">'.csrf_field().'<input type="hidden" name="action" value="rc_submit"><input type="hidden" name="rc_token" value="'.e($s['token']).'"><input type="hidden" name="sr" value="" data-rc-sr><input type="hidden" name="heard[0]" value="" data-rc-heard><input type="hidden" name="audio[0]" value="" data-rc-audio><input type="hidden" name="secs" value="" data-rc-secs>';
  echo '<span class="l1-tag">READ A STORY</span><div class="l1-q sm l4-dir"><p>'.e($dir).'</p>'.l1_speaker($dir).'</div>';
  /* The microphone (and Send) sit at the top and stay on screen, so the pupil taps it and reads straight down the story. */

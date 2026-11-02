@@ -83,14 +83,25 @@
  const sf=$('form[data-rc-story]');
  if(sf){const go=$('[data-rc-go]',sf),label=$('[data-rc-label]',sf),sub=$('[data-rc-sub]',sf),send=$('[data-rc-send]',sf),heard=$('[data-rc-heard]',sf),audio=$('[data-rc-audio]',sf),secs=$('[data-rc-secs]',sf),srIn=$('[data-rc-sr]',sf);
   let state='idle',L=null,R=null,t0=0,tick=null;
+  /* v205 Reading Coach: the words of the story light up as BULIG hears them (green) and the next word glows, so the pupil
+     can follow. It is a reading check, so the coach never reads the story first or helps with a word. */
+  const card=$('.l4-card',sf),W=[];
+  if(card){const tw=document.createTreeWalker(card,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.nodeValue.trim()&&!n.parentElement.closest('button,script,style,.l1-spk')?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT});const nodes=[];while(tw.nextNode())nodes.push(tw.currentNode);
+   nodes.forEach(n=>{const f=document.createDocumentFragment();n.nodeValue.split(/(\s+)/).forEach(part=>{if(!part)return;if(/^\s+$/.test(part)){f.append(part);return;}const sp=document.createElement('span');sp.className='rk-sw';sp.textContent=part;const k=norm(part);if(k){sp.dataset.k=k;W.push(sp);}f.append(sp);});n.replaceWith(f);});}
+  const near=(a,b)=>a===b||(b.length>=5&&Math.abs(a.length-b.length)<=1&&[...b].filter((c,i)=>a[i]===c).length>=b.length-1);
+  const follow=t=>{if(!W.length)return;const toks=String(t).split(/\s+/).map(norm).filter(Boolean);let p=0;const ok=new Set();
+   for(const x of toks){for(let k=0;k<=3&&p+k<W.length;k++){if(near(x,W[p+k].dataset.k)){ok.add(p+k);p=p+k+1;break;}}}
+   W.forEach((w,i)=>{w.classList.toggle('ok',ok.has(i));w.classList.toggle('nx',i===p);w.classList.toggle('sk',i<p&&!ok.has(i));});
+   if(W[p]){const r=W[p].getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-140)W[p].scrollIntoView({block:'center',behavior:'smooth'});}};
+  const coachReset=on=>{W.forEach((w,i)=>{w.classList.remove('ok','sk','nx');if(on&&i===0)w.classList.add('nx');});if(card)card.classList.toggle('rk-coach-on',!!on);};
   go.addEventListener('click',async()=>{
    if(state==='rec'){if(Date.now()-t0<1500)return;state='busy';clearInterval(tick);go.classList.remove('on');label.textContent='Saving…';
     const s=(Date.now()-t0)/1000;const res=L?await L.stop():{text:'',err:'none',got:false};const data=R?await R.stop():'';
     heard.value=res.text.trim();audio.value=data;secs.value=String(Math.round(s));srIn.value=L&&(res.got||!res.err)?'ok':'off';
     if(!heard.value&&!data){state='idle';label.textContent='Tap and read the title and the story';sub.textContent='I could not hear you. Try again in a quiet place.';return;}
-    state='done';label.textContent='Your reading · '+fmt(s);sub.textContent='Tap Send. Or tap the microphone to read again.';send.hidden=false;send.focus({preventScroll:true});return;}
+    if(card)card.classList.remove('rk-coach-on');W.forEach(w=>w.classList.remove('nx'));state='done';label.textContent='Your reading · '+fmt(s);sub.textContent='Tap Send. Or tap the microphone to read again.';send.hidden=false;send.focus({preventScroll:true});return;}
    if(state==='busy')return;state='busy';hush();send.hidden=true;heard.value='';audio.value='';
-   L=SR?listener(true):null;if(L&&!L.start())L=null;R=(!L||together)?recorder():null;if(R&&!(await R.start()))R=null;
+   L=SR?listener(true,follow):null;if(L&&!L.start())L=null;R=(!L||together)?recorder():null;if(R&&!(await R.start()))R=null;coachReset(!!L);
    if(!L&&!R){state='idle';label.textContent='Read the story to your teacher';sub.textContent='This device cannot listen here. Tap Send when you finish.';srIn.value='off';send.hidden=false;return;}
    state='rec';t0=Date.now();go.classList.add('on');label.textContent='0:00';sub.textContent='Read now. Tap the microphone when you finish.';tick=setInterval(()=>{label.textContent=fmt((Date.now()-t0)/1000);if(Date.now()-t0>600000)go.click();},250);});}
 
