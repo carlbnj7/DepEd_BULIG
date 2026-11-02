@@ -261,10 +261,14 @@
   const vcN=s=>{const w=String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9']+/g,'');return /^\d+$/.test(w)&&+w<NUMW.length?NUMW[+w]:w;};
   /* words that sound the same ("then" / "den", "wet" / "wed"); the vowel stays, so short-vowel words are still told apart */
   const vcS=w=>w.replace(/^th/,'d').replace(/th/g,'d').replace(/^wh/,'w').replace(/ph/g,'f').replace(/ck/g,'k').replace(/c(?=[aou]|$)/g,'k').replace(/q/g,'k').replace(/x/g,'ks').replace(/(.)\1+/g,'$1').replace(/([^aeiou])e$/,'$1').replace(/[dt]$/,'T').replace(/[gk]$/,'K').replace(/[bp]$/,'P').replace(/[sz]$/,'S');
-  const vcEq=(g,a)=>g===a||(g.length>1&&vcS(g)===vcS(a))||(a.length>=5&&vcL1(g,a));
+  /* v208 how BULIG listens to this pupil (set by the teacher): 'accent' also takes common accent sound changes (i/e, o/u,
+     p/f, b/v, s/z/sh, a last consonant not said); 'support' (Speech support) never marks a spoken word wrong: the teacher listens */
+  const SPM=(document.querySelector('meta[name="bulig-speech"]')||{}).content||'';
+  const vcA=k=>k.replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
+  const vcEq=(g,a)=>g===a||(g.length>1&&vcS(g)===vcS(a))||(a.length>=5&&vcL1(g,a))||(SPM==='accent'&&g.length>1&&vcA(vcS(g.replace(/th/g,'t')))===vcA(vcS(a.replace(/th/g,'t'))));
   const vcL1=(a,b)=>{if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,d=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue;}if(++d>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++;}}return d+(a.length-i)+(b.length-j)<=1;};
   const vcWant=()=>{if(spinOut&&spinOut.textContent.trim()&&spinOut.textContent.trim()!=='?')return [spinOut.textContent.trim()];return vcList;};
-  const vcHit=t=>{const want=vcWant();if(!want.length||!t)return null;const got=t.split(/\s+/).map(vcN).filter(Boolean);
+  const vcHit=t=>{const want=vcWant();if(!want.length||!t)return null;if(SPM==='support')return true;const got=t.split(/\s+/).map(vcN).filter(Boolean);
    return want.every(e=>String(e).split('|').some(a=>{a=vcN(a);return got.some(g=>vcEq(g,a));}));};
   /* v207 Picture Coach (Reading Coach style): one chip for each name to say; the chip and its picture turn green as soon as
      BULIG hears the name; stars when all are said (fewer tries, more stars). */
@@ -288,11 +292,12 @@
   const wlMark=t=>{if(!wlWords.length||!t)return;const got=String(t).split(/\s+/).map(vcN).filter(Boolean);
    wlWords.forEach(x=>{if(x.classList.contains('wl-ok'))return;const a=vcN(x.textContent.trim());if(got.some(g=>vcEq(g,a))){x.classList.remove('wl-no');x.classList.add('wl-ok');}});wlShow(false);};
   const wlReset=()=>{if(!wlWords.length)return;wlWords.forEach(x=>x.classList.remove('wl-ok','wl-no'));wlShow(false);};
-  const wlEnd=w=>{if(!wlWords.length)return;wlMark(w);wlWords.forEach(x=>{if(!x.classList.contains('wl-ok'))x.classList.add('wl-no');});wlShow(true);if(wlCount()===wlWords.length)sfx('correct');};
+  if(SPM==='support')wlWords.forEach(x=>x.addEventListener('click',()=>{x.classList.remove('wl-no');x.classList.add('wl-ok');wlShow(false);}));   /* Speech support: the pupil taps each word as they read it */
+  const wlEnd=w=>{if(!wlWords.length)return;wlMark(w);if(SPM==='support'){wlShow(false);return;}wlWords.forEach(x=>{if(!x.classList.contains('wl-ok'))x.classList.add('wl-no');});wlShow(true);if(wlCount()===wlWords.length)sfx('correct');};
   wlShow(false);r.dataset.idleLabel=label.textContent;
   let vcOk=false;const vcSay=(ok,w)=>{r.classList.toggle('vc-ok',ok);r.classList.toggle('vc-no',!ok);vcOk=ok;pcResult(ok);
-   sub.textContent=ok?'Great! You said it right!':'Not yet. I heard \u201c'+w+'\u201d. Tap the microphone and try again.';if(ok)sfx('correct');else sfx('tryagain');};
-  const vcEnd=w=>{pcMark(w);wlEnd(w);const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
+   sub.textContent=ok&&SPM==='support'?'Thank you! Your teacher will listen to it.':ok?'Great! You said it right!':'Not yet. I heard \u201c'+w+'\u201d. Tap the microphone and try again.';if(ok)sfx('correct');else sfx('tryagain');};
+  const vcEnd=w=>{if(SPM==='support'&&w)vcList.forEach((v,i)=>{if(!pcFound.has(i)&&pcChips[i]){pcFound.add(i);pcChips[i].className='pc-chip ok';pcChips[i].textContent=String(v).split('|')[0];}});pcMark(w);wlEnd(w);const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
   function srStart(){if(!SRC)return;said=[];part='';srErr='';srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=true;
     sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();pcMark(t);wlMark(t);if(wlWords.length&&r.dataset.state==='rec'&&wlCount()===wlWords.length&&!r.dataset.wlAuto){r.dataset.wlAuto='1';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
     sr.onerror=e=>{srErr=e.error||'';if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};

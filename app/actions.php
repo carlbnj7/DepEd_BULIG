@@ -123,6 +123,7 @@ function action():void{
   if($new!==(string)($_POST['confirm_password']??''))fail('The new passwords do not match.');
   q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);saved_login_clear((int)$u['id']);card_forget_starter((int)$u['id']);session_regenerate_id(true);audit('change_password','');flash('Password changed. Use your new password next time.');go($u['role']==='pupil'?'?page=settings':'?page=profile');
  }
+ if($action==='speech_mode'){speech_save(require_role('teacher'));}   // v208 how BULIG listens to a pupil
  if($action==='set_start_level'){
   $u=require_role('teacher');$tid=(int)$u['id'];$back=(string)($_POST['back']??'');if(!preg_match('~^\?page=(manage(&id=[0-9]+)?|pupil&id=[0-9]+)$~',$back))$back='?page=manage';
   $pupils=isset($_POST['pupil'])?[(int)$_POST['pupil']]:array_map('intval',(array)($_POST['pupils']??[]));$pupils=array_values(array_unique(array_filter($pupils)));

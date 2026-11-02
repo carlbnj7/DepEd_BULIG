@@ -11,7 +11,10 @@
  const norm=w=>{w=String(w).toLowerCase().replace(/[^a-z0-9']/g,'');return /^\d+$/.test(w)&&+w<NUMW.length?NUMW[+w]:w;};
  /* words that sound the same ("then" for "den"), as in Word Coach; the vowel stays */
  const snd=w=>w.replace(/^th/,'d').replace(/th/g,'d').replace(/^wh/,'w').replace(/ph/g,'f').replace(/ck/g,'k').replace(/c(?=[aou]|$)/g,'k').replace(/q/g,'k').replace(/x/g,'ks').replace(/(.)\1+/g,'$1').replace(/([^aeiou])e$/,'$1').replace(/[dt]$/,'T').replace(/[gk]$/,'K').replace(/[bp]$/,'P').replace(/[sz]$/,'S');
- const same=(a,b)=>a===b||(a.length>1&&snd(a)===snd(b));
+ /* v208 Accent-friendly / Speech support, set by the teacher (see l2a.js) */
+ const SPM=(document.querySelector('meta[name="bulig-speech"]')||{}).content||'';
+ const acc=k=>k.replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
+ const same=(a,b)=>a===b||(a.length>1&&snd(a)===snd(b))||(SPM==='accent'&&a.length>1&&acc(snd(a.replace(/th/g,'t')))===acc(snd(b.replace(/th/g,'t'))));
  function say(t,btn){if(!synth)return;synth.cancel();const u=new SpeechSynthesisUtterance(t);const v=voice();if(v)u.voice=v;u.lang=v?v.lang:'en-US';u.rate=.8;
   if(btn){btn.classList.add('on');const off=()=>btn.classList.remove('on');u.onend=off;u.onerror=off;}synth.speak(u);}
  box.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b){e.preventDefault();say(b.dataset.say,b);}});
@@ -27,7 +30,7 @@
    const r=new Rec();live=r;r.lang='en-US';r.interimResults=true;r.maxAlternatives=5;let got=false;
    li.classList.remove('ok','no');li.classList.add('listen');b.setAttribute('aria-pressed','true');
    r.onresult=ev=>{for(const res of ev.results)for(const alt of res)if(alt.transcript.split(/\s+/).some(x=>same(norm(x),norm(word)))){got=true;try{r.stop();}catch(e){}}};
-   const end=()=>{if(live!==r)return;live=null;li.classList.remove('listen');b.setAttribute('aria-pressed','false');li.classList.add(got?'ok':'no');
+   const end=()=>{if(live!==r)return;live=null;if(SPM==='support')got=true;li.classList.remove('listen');b.setAttribute('aria-pressed','false');li.classList.add(got?'ok':'no');
     const m=li.querySelector('.rs-msg');if(m)m.textContent=got?'Great!':'Try again';count();};
    r.onend=end;r.onerror=end;try{r.start();}catch(e){end();}
    setTimeout(()=>{if(live===r)try{r.stop();}catch(e){}},5000);

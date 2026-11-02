@@ -39,7 +39,7 @@ function rs_teacher_card(int $tid):string{
  if(!$s)return $h.'<p class="rs-ok">'.icon('check').'No one is struggling. BULIG lists a pupil here when their last '.RS_MIN_READS.' or more Word Coach readings average under '.RS_LOW.'%.</p></section>';
  foreach($groups as $lv=>$list)$h.='<div class="rs-group">'.icon('people').'<div><b>Small group idea · '.e(level_label((int)$lv)).'</b><small>'.e(implode(', ',array_map(fn($p)=>tf_first($p),$list))).' find the same reading hard. Read the story with them together, then let each one read a part.</small></div></div>';
  $h.='<div class="rs-list">';
- foreach(array_slice($s,0,8) as $p)$h.='<a class="rs-row" href="?page=pupil&amp;id='.(int)$p['id'].'">'.avatar($p).'<span class="rs-tx"><b>'.e($p['name']).'</b><small>'.e(($p['level_id']?level_label((int)$p['level_id']):'No level yet').' · '.$p['reads'].' readings').'</small>'
+ foreach(array_slice($s,0,8) as $p)$h.='<a class="rs-row" href="?page=pupil&amp;id='.(int)$p['id'].'">'.avatar($p).'<span class="rs-tx"><b>'.e($p['name']).speech_mark((int)$p['id']).'</b><small>'.e(($p['level_id']?level_label((int)$p['level_id']):'No level yet').' · '.$p['reads'].' readings').'</small>'
   .($p['words']?'<span class="rs-words">'.implode('',array_map(fn($w)=>'<i>'.e($w).'</i>',$p['words'])).'</span>':'').'<em>'.(isset($inGroup[(int)$p['id']])?'Small group':'Reread together').': '.(isset($inGroup[(int)$p['id']])?'join the group above.':'sit with them and read the story again, slowly.').'</em></span><strong class="rs-pct">'.$p['avg'].'%</strong></a>';
  return $h.'</div>'.(count($s)>8?'<p class="muted">'.(count($s)-8).' more pupils. Open My pupils to see everyone.</p>':'').'</section>';
 }
@@ -111,7 +111,7 @@ function rs_offline_waiting(int $tid):array{
 function rs_offline_card(int $tid):string{
  $w=rs_offline_waiting($tid);if(!$w)return '';$why=['signin'=>'needs to sign in again','order'=>'must finish an earlier activity','failed'=>'the upload stopped','wait'=>'waiting for internet'];
  $h='<section class="card rs-card" id="rs-offline"><div class="ws-hd"><h2>'.icon('download').'Work waiting to upload</h2><span class="rs-sub">Answers made offline, still on the pupil’s phone</span></div><div class="rs-list">';
- foreach($w as $p)$h.='<a class="rs-row" href="?page=pupil&amp;id='.$p['id'].'">'.avatar($p).'<span class="rs-tx"><b>'.e($p['name']).'</b><small>'.$p['n'].' '.($p['n']===1?'answer':'answers').' · '.e($why[$p['why']]??'waiting for internet').' · seen '.e(date('M j, g:i a',strtotime($p['at']))).'</small><em>Ask them to open BULIG with internet. The answers upload by themselves.</em></span><strong class="rs-pct">'.$p['n'].'</strong></a>';
+ foreach($w as $p)$h.='<a class="rs-row" href="?page=pupil&amp;id='.$p['id'].'">'.avatar($p).'<span class="rs-tx"><b>'.e($p['name']).speech_mark((int)$p['id']).'</b><small>'.$p['n'].' '.($p['n']===1?'answer':'answers').' · '.e($why[$p['why']]??'waiting for internet').' · seen '.e(date('M j, g:i a',strtotime($p['at']))).'</small><em>Ask them to open BULIG with internet. The answers upload by themselves.</em></span><strong class="rs-pct">'.$p['n'].'</strong></a>';
  return $h.'</div></section>';
 }
 
@@ -369,3 +369,39 @@ function instruction_tidy(string $t):string{
 /** v207: instructions fixed one by one (database/instruction-fixes.json): the exact text BULIG showed => the clear
     direction for a pupil who answers in BULIG (teacher procedures, classroom games, headings with no direction). */
 function instruction_fixes():array{static $m=null;if($m===null){$f=__DIR__.'/../database/instruction-fixes.json';$m=is_file($f)?(json_decode((string)file_get_contents($f),true)?:[]):[];}return $m;}
+
+/* v208 Speech support, chosen by the teacher for each pupil (kept in settings as speech_<pupil id>, no SQL):
+   - standard: BULIG listens as before.
+   - accent:   Accent-friendly. Common sound changes in Philippine and Lumad accents count as right: i/e, o/u, p/f, b/v,
+               th as t or d, s/z/sh, and a last consonant that is not said ("des" for "desk").
+   - support:  Speech support (for example cleft palate). BULIG never marks a spoken word wrong and takes no hearts.
+               The pupil reads with Max and taps each word as they say it; the recording goes to the teacher, who
+               listens and scores it. Pupils and classmates never see the setting. */
+const SPEECH_MODES=['standard'=>['Standard','BULIG listens and checks each word.'],
+ 'accent'=>['Accent-friendly','For a different accent (for example pupils from the mountains or Lumad communities). Sounds like i and e, o and u, p and f, b and v, and a last sound that is not said count as right.'],
+ 'support'=>['Speech support','For a pupil with a speech need, such as cleft palate. BULIG never marks a spoken word wrong and takes no hearts. The pupil taps each word as they read it, and you listen to the recording and score it.']];
+function speech_mode(int $pid):string{static $c=[];if(isset($c[$pid]))return $c[$pid];
+ try{$v=(string)val('SELECT setting_value FROM settings WHERE setting_key=?',['speech_'.$pid]);}catch(Throwable $e){$v='';}return $c[$pid]=isset(SPEECH_MODES[$v])?$v:'standard';}
+/** The signed-in pupil's speech setting ('standard' for everyone else). */
+function speech_me():string{try{$u=current_user();}catch(Throwable $e){$u=null;}return $u&&($u['role']??'')==='pupil'?speech_mode((int)$u['id']):'standard';}
+/** Accent-friendly key of a word (th is said as t): the sound changes above give the same key. */
+function accent_key(string $w):string{
+ $w=say_sound(str_replace('th','t',strtolower($w)));$w=preg_replace(['~sh~','~z~','~S$~','~f~','~v~','~ee~','~oo~','~e~','~u~','~T$~','~K$~','~P$~'],['s','s','s','p','b','i','o','i','o','t','k','p'],$w)??$w;
+ return preg_replace(['~([^aeiou])s$~','~([aeiou][^aeiou])[^aeiou]$~'],['$1','$1'],$w)??$w;}
+/** v208 the small red plus beside the name of a pupil with Speech support (teacher and admin pages only, never on class screens). */
+function speech_mark(int $pid):string{
+ if(speech_mode($pid)!=='support')return '';$t='Speech support: BULIG does not mark spoken words wrong. You listen and score.';
+ return '<span class="sp-mark" title="'.e($t).'" aria-label="'.e($t).'" role="img"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 4h5v5.5H20v5h-5.5V20h-5v-5.5H4v-5h5.5z"/></svg></span>';}
+/** Teacher, pupil page: the speech setting card. */
+function speech_card(int $pid,string $first):string{
+ $m=speech_mode($pid);$h='<section class="card sp-card" id="speech"><div class="section-heading"><h2>'.icon('mic').' How BULIG listens to '.e($first).'</h2><span class="status">'.e(SPEECH_MODES[$m][0]).'</span></div>';
+ $h.='<p class="muted">Choose this for a pupil with a different accent or a speech need. Only you see it. You can change it any time.</p><form method="post" class="sp-form">'.csrf_field().'<input type="hidden" name="action" value="speech_mode"><input type="hidden" name="pupil" value="'.$pid.'">';
+ foreach(SPEECH_MODES as $k=>[$t,$d])$h.='<label class="sp-opt"><input type="radio" name="mode" value="'.$k.'"'.($k===$m?' checked':'').'><span><b>'.e($t).'</b><small>'.e($d).'</small></span></label>';
+ return $h.'<button class="btn primary">'.icon('check').'Save</button></form></section>';
+}
+function speech_save(array $u):void{
+ $pid=(int)($_POST['pupil']??0);own_pupil($pid);$m=(string)($_POST['mode']??'');if(!isset(SPEECH_MODES[$m]))fail('Choose how BULIG listens.');
+ if($m==='standard')q('DELETE FROM settings WHERE setting_key=?',['speech_'.$pid]);
+ else q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['speech_'.$pid,$m]);
+ audit('speech_mode','Pupil '.$pid.': '.$m);flash('Saved: '.SPEECH_MODES[$m][0].'.');go('?page=pupil&id='.$pid.'#speech');
+}

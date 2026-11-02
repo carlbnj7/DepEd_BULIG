@@ -66,7 +66,10 @@
  const sound=w=>{w=String(w).toLowerCase();if(/^\d+$/.test(w)&&+w<NUMW.length)w=NUMW[+w];
   return w.replace(/^th/,'d').replace(/th/g,'d').replace(/^wh/,'w').replace(/ph/g,'f').replace(/ck/g,'k').replace(/c(?=[aou]|$)/g,'k').replace(/q/g,'k').replace(/x/g,'ks')
    .replace(/(.)\1+/g,'$1').replace(/([^aeiou])e$/,'$1').replace(/[dt]$/,'T').replace(/[gk]$/,'K').replace(/[bp]$/,'P').replace(/[sz]$/,'S');};
- const near=(h,t)=>h===t||(t.length>=5&&lev(h,t)<=1)||(h.length>1&&sound(h)===sound(t));
+ /* v208 how BULIG listens to this pupil, set by the teacher: '' (standard), 'accent' (Accent-friendly) or 'support' (Speech support) */
+ const SPM=(document.querySelector('meta[name="bulig-speech"]')||{}).content||'';
+ const accent=k=>k.replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
+ const near=(h,t)=>h===t||(t.length>=5&&lev(h,t)<=1)||(h.length>1&&sound(h)===sound(t))||(SPM==='accent'&&h.length>1&&accent(sound(h.replace(/th/g,'t')))===accent(sound(t.replace(/th/g,'t'))));
  const heardOk=(alts,unit)=>{const want=unit.map(norm).filter(Boolean);if(!want.length)return true;
   for(const alt of alts){const got=alt.split(/\s+/).map(norm).filter(Boolean);
    if(want.length===1){if(got.some(g=>near(g,want[0])))return true;continue;}
@@ -174,6 +177,7 @@
    }
    function beginListening(){
     if(!alive)return;
+    if(SPM==='support'){readAlong();return;}
     let p=0,sessBase=0,last=Date.now(),hintT=null,ended=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Each word turns green when you say it right.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
     box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':'Audio unavailable — teacher review needed';
@@ -196,6 +200,19 @@
     W.forEach((x,i)=>{x.onclick=()=>{if(ended)return;say(all[i],.6);if(S[i]!=='ok'&&i>=p){set(i,'miss');if(i===p){p++;sessBase=p;show();if(p>=N)finish();}}};});
     show();startListening();}
    const live=()=>alive;
+   /* v208 Speech support (set by the teacher): BULIG does not judge the words. The pupil reads aloud and taps each word
+      as they say it (or Next word); nothing is marked wrong and no hearts are lost. The recording goes to the teacher. */
+   function readAlong(){
+    let p=0;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');$('[data-c]').textContent='Read for your teacher';
+    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Read it out loud. Tap each word as you say it.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span></div><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-nextw">'+svg.skip+'Next word</button><button type="button" class="btn primary wc-fin">'+svg.ok+'I finished reading</button></div><p class="wc-auto">Take your time. Your teacher will listen to your reading.</p></div>';
+    box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':'Audio unavailable — tell your teacher';
+    const show=()=>{for(let i=0;i<N;i++)paint(i,i<p?'ok':i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
+    const go=i=>{if(i>=p&&i<N){p=i+1;show();}};
+    W.forEach((x,i)=>{x.onclick=()=>go(i);});
+    box.querySelector('.wc-nextw').onclick=()=>go(p);
+    const tick=setInterval(()=>{const st=box.querySelector('[data-st]');if(!st||!alive){clearInterval(tick);return;}const el=Math.round((Date.now()-t0)/1000);st.textContent=Math.floor(el/60)+':'+String(el%60).padStart(2,'0');},1000);
+    box.querySelector('.wc-fin').onclick=()=>{clearInterval(tick);ov.classList.remove('wc-reading');secs=Math.round((Date.now()-t0)/1000);all.forEach((w,i)=>{got[i]=-1;fails[i]=0;});summary();};
+    show();}
 
    /* 3) The missed words, one at a time: the pupil says it again (no help first). 2nd try 2/3, 3rd try 1/3, then 0. */
    function fix(list){

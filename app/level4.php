@@ -37,6 +37,9 @@ function l4_drop_title(string $said,string $title):string{
 }
 function l4_norm(string $w):string{return preg_replace('~[^a-z0-9\']+~','',mb_strtolower(str_replace(['’','‘'],"'",$w)));}
 /** A near miss (said almost right): same sound key, one or two letters off, or the same start of a long word. */
+/** The same word; with Accent-friendly (v208) also a word said with a common accent sound change. */
+function l4_eq(string $p,string $h):bool{static $acc=null;if($p===$h)return true;$acc??=function_exists('speech_me')&&speech_me()==='accent';
+ return $acc&&$p!==''&&$h!==''&&accent_key($p)===accent_key($h);}
 function l4_similar(string $a,string $b):bool{
  if($a===''||$b==='')return false;if(metaphone($a)===metaphone($b))return true;
  $n=max(strlen($a),strlen($b));return levenshtein($a,$b)<=max(1,intdiv($n,3))||(strlen($a)>=4&&strlen($b)>=4&&substr($a,0,3)===substr($b,0,3));
@@ -50,7 +53,7 @@ function l4_miscues(array $words,string $heard):array{
  $P=array_values(array_map('l4_norm',$words));$H=array_values(array_filter(array_map('l4_norm',preg_split('/\s+/u',$heard)),'strlen'));
  $n=count($P);$m=count($H);$INF=1e9;$D=array_fill(0,$n+1,array_fill(0,$m+1,$INF));$B=$D;$D[0][0]=0;
  for($i=0;$i<=$n;$i++)for($j=0;$j<=$m;$j++){$c=$D[$i][$j];if($c>=$INF)continue;
-  if($i<$n&&$j<$m){$x=$P[$i]===$H[$j]?0:(l4_similar($P[$i],$H[$j])||strrev($P[$i])===$H[$j]?0.6:1);if($c+$x<$D[$i+1][$j+1]){$D[$i+1][$j+1]=$c+$x;$B[$i+1][$j+1]='s';}}
+  if($i<$n&&$j<$m){$x=l4_eq($P[$i],$H[$j])?0:(l4_similar($P[$i],$H[$j])||strrev($P[$i])===$H[$j]?0.6:1);if($c+$x<$D[$i+1][$j+1]){$D[$i+1][$j+1]=$c+$x;$B[$i+1][$j+1]='s';}}
   if($i<$n&&$c+1<$D[$i+1][$j]){$D[$i+1][$j]=$c+1;$B[$i+1][$j]='d';}
   if($j<$m){$rep=($j>0&&$H[$j]===$H[$j-1])||($i>0&&in_array($H[$j],array_slice($P,max(0,$i-3),min(3,$i)),true));$x=$rep?0.9:1;if($c+$x<$D[$i][$j+1]){$D[$i][$j+1]=$c+$x;$B[$i][$j+1]=$rep?'r':'i';}}
   if($i+1<$n&&$j+1<$m&&$P[$i]!==$P[$i+1]&&$P[$i]===$H[$j+1]&&$P[$i+1]===$H[$j]&&$c+1<$D[$i+2][$j+2]){$D[$i+2][$j+2]=$c+1;$B[$i+2][$j+2]='t';}
@@ -59,7 +62,7 @@ function l4_miscues(array $words,string $heard):array{
   if($b==='s'){$ops[]=['s',$i-1,$j-1];$i--;$j--;}elseif($b==='d'){$ops[]=['d',$i-1,0];$i--;}elseif($b==='t'){$ops[]=['t',$i-2,$j-2];$i-=2;$j-=2;}else{$ops[]=[$b,$i,$j-1];$j--;}}
  $cnt=array_fill(0,7,0);$marks=[];$extra=[];$lastRep=-2;
  foreach(array_reverse($ops) as [$o,$i,$j]){
-  if($o==='s'){if($P[$i]===$H[$j])continue;
+  if($o==='s'){if(l4_eq($P[$i],$H[$j]))continue;
    if(strlen($P[$i])>1&&strrev($P[$i])===$H[$j]){$cnt[6]++;$marks[$i]=['k'=>'rev','h'=>$H[$j]];}
    elseif(l4_similar($P[$i],$H[$j])){$cnt[0]++;$marks[$i]=['k'=>'mis','h'=>$H[$j]];}else{$cnt[2]++;$marks[$i]=['k'=>'sub','h'=>$H[$j]];}}
   elseif($o==='d'){$cnt[1]++;$marks[$i]=['k'=>'om'];}
@@ -72,6 +75,7 @@ function l4_miscues(array $words,string $heard):array{
 /** BULIG's score for one reading, in the shape the teacher's table saves ('auto' => 1). Words BULIG did not hear count
     as omissions (v172: also when only part was read). Null only when the recognizer heard no word at all. */
 function l4_auto(array $a,string $said,int $secs):?array{
+ if(function_exists('speech_me')&&speech_me()==='support')return null;   /* v208 Speech support: the teacher scores the reading */
  $nt=0;$w=l4_words($a,$nt);$p=level4_passage_parts($a);if(!$w||!$p)return null;$words=(int)$p['words']?:count($w);
  $said=trim(mb_substr($said,0,8000));
  /* v208: a pupil who reads the title first is not marked for extra words when the module's word count leaves the title out */

@@ -6984,3 +6984,14 @@ html.dark:has(body.activity-page){background:linear-gradient(180deg,#0c2233 0,#1
 html.dark body.activity-page:not(#_),html.dark body.activity-page:not(#_) .l1-app{background:transparent!important}
 html.dark:has(body.activity-page){background:radial-gradient(30px 30px at 95% 190px,#fff6d0 0,#f3e3a0 60%,transparent 63%),radial-gradient(2px 2px at 10% 140px,#fff 98%,transparent),radial-gradient(2px 2px at 24% 230px,#fff 98%,transparent),radial-gradient(2px 2px at 41% 170px,#fff 98%,transparent),radial-gradient(2px 2px at 58% 260px,#fff 98%,transparent),radial-gradient(2px 2px at 72% 200px,#fff 98%,transparent),radial-gradient(2px 2px at 93% 290px,#fff 98%,transparent),linear-gradient(180deg,#0b1d2e 0,#10283a 320px,#11241a 620px,#0f2016 100%)!important}
 html.dark body.activity-page::after{opacity:.5;background:radial-gradient(40% 120px at 10% 100%,#183322 60%,transparent 61%),radial-gradient(35% 100px at 55% 100%,#1a3824 60%,transparent 61%),radial-gradient(40% 130px at 95% 100%,#16301f 60%,transparent 61%)}
+/* v208 teacher, pupil page: How BULIG listens (Standard, Accent-friendly, Speech support) */
+.sp-form{display:grid;gap:8px;margin-top:10px}.sp-opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--g200,#cfe7c9);border-radius:16px;background:#fff;cursor:pointer}
+.sp-opt:has(input:checked){border-color:var(--y400,#ffc629);background:var(--y50,#fffbeb)}.sp-opt input{margin-top:4px;accent-color:var(--g700,#176444)}
+.sp-opt b{display:block}.sp-opt small{display:block;color:var(--muted,#5d6a60);font-size:.85rem;line-height:1.4;margin-top:2px}.sp-form .btn{justify-self:start}
+html.dark .sp-opt{background:#16231b;border-color:#2e4234}html.dark .sp-opt:has(input:checked){background:#2a2614;border-color:#6d5a22}html.dark .sp-opt small{color:#a9b8ad}
+.sp-form .sp-opt{display:flex!important;flex-direction:row;align-items:flex-start;gap:12px}.sp-form .sp-opt input{flex:none;width:20px;height:20px;min-height:0;margin:3px 0 0;padding:0}.sp-form .sp-opt>span{flex:1;min-width:0}.sp-opt b{font-size:1rem;margin-bottom:2px}.sp-opt small{font-weight:500}
+/* v208 Speech support: a small red plus right after the pupil's name (teacher and admin pages) */
+.sp-mark{display:inline-grid;place-items:center;flex:none;width:18px;height:18px;margin-left:6px;border-radius:50%;background:#d92d20;color:#fff;vertical-align:.1em;box-shadow:0 0 0 2px #fff,0 1px 3px rgba(0,0,0,.25);cursor:help}
+.sp-mark svg{width:12px;height:12px}
+.hm-head h1 .sp-mark{width:26px;height:26px;margin-left:10px;vertical-align:.15em}.hm-head h1 .sp-mark svg{width:17px;height:17px}
+html.dark .sp-mark{box-shadow:0 0 0 2px #16231b}
