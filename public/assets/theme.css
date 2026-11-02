@@ -6931,3 +6931,56 @@ body:has(.tour-help-dock) .activity-header>div:not(.activity-progress) strong{ov
 html.dark .l2-say.rc-dock{background:#1f2a22;border-color:#5a4d1f}html.dark .l2-say.rc-dock>.l1-rl{color:#eef5f0}html.dark .l2-say.rc-dock>.l1-rs{color:#a9bcb0}
 html.dark .pc-chip{background:#16231b;border-color:#7a6a2c;color:#d8c27a}html.dark .pc-chip.ok{background:#16842f;border-color:#16842f;color:#fff}
 .l2-say.rc-dock>.l1-rl,.l2-say.rc-dock>.l1-rs{text-align:left;justify-self:start}
+/* v207 word list coach: the words turn green as BULIG hears them, red if not read; counter and stars in the dock */
+.l3-grid > span{transition:background .25s,border-color .25s,color .25s,transform .25s}
+.l3-grid > span.wl-ok{background:#16842f!important;border-color:#16842f!important;color:#fff!important;transform:scale(1.04)}
+.l3-grid > span.wl-no{background:#fdecea!important;border-color:#e57373!important;color:#c62828!important}
+.wl-box{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.wl-n{font-size:.9rem;color:#5b6b60}.wl-n b{font-size:1.15rem;color:#16842f}
+.wl-box .pc-stars{padding:2px 0}
+html.dark .wl-n{color:#a9bcb0}
+/* ---- v207 Reading Coach: Max next to a speech bubble with the text, and 5 hearts for each missed word ---- */
+.wc-scene{display:flex;align-items:flex-end;gap:8px;min-height:0}
+.wc-ov.wc-reading .wc-scene{flex:1}
+.wc-pal{flex:none;width:92px;height:auto;align-self:flex-end;margin-bottom:6px;filter:drop-shadow(0 6px 8px rgba(14,59,40,.18))}
+.wc-ov .wc-box > img{display:none}
+.wc-txt.wc-bubble{position:relative;flex:1;min-width:0;background:#fff!important;border:2px solid #f6df92!important;border-radius:20px!important;box-shadow:0 8px 20px -14px rgba(14,59,40,.45)}
+.wc-txt.wc-bubble::before{content:"";position:absolute;left:-11px;bottom:26px;width:18px;height:18px;background:#fff;border-left:2px solid #f6df92;border-bottom:2px solid #f6df92;transform:rotate(45deg)}
+.wc-ov.wc-sheetmode .wc-scene{display:none}
+.wc-hearts{display:inline-flex;gap:6px;align-items:center}
+.wc-hearts i{display:block;width:30px;height:30px}.wc-hearts svg{width:100%;height:100%}
+.wc-hearts i.on svg{fill:#ff4b4b;stroke:#c62828;stroke-width:1.2}
+.wc-hearts i.off svg{fill:#e3e7e4;stroke:#c9cfcb;stroke-width:1.2}
+.wc-hearts i.lost{animation:wcHeartLost .7s ease-out}
+@keyframes wcHeartLost{0%{transform:scale(1.25)}40%{transform:scale(.7) rotate(-12deg)}100%{transform:scale(1)}}
+.wc-hpop{display:inline-flex;align-items:center;gap:3px;margin-left:8px;padding:2px 9px;border-radius:12px;background:#fff;border:2px solid #f3c1c1;color:#e53935;font-weight:900;font-size:.9rem;animation:wcHpop 1.4s ease-out forwards}
+.wc-hpop svg{width:16px;height:16px;fill:#ff4b4b}
+@keyframes wcHpop{0%{opacity:0;transform:translateY(6px)}20%{opacity:1;transform:none}80%{opacity:1}100%{opacity:.85}}
+.wc-hrow{justify-content:center}
+.wc-hsum{margin:4px 0 0;text-align:center;font-weight:800;color:#c62828}.wc-hsum b{font-size:1.1rem}
+@media(prefers-reduced-motion:reduce){.wc-hearts i.lost,.wc-hpop{animation:none}}
+@media(max-width:600px){.wc-pal{width:70px}}
+html.dark .wc-txt.wc-bubble,html.dark .wc-txt.wc-bubble::before{background:#16231b!important;border-color:#5a4d1f!important}
+.wc-ov.wc-reading .wc-scene{align-items:stretch}.wc-ov.wc-reading .wc-txt.wc-bubble{flex:1;max-height:none}
+.wc-ov.wc-reading .wc-txt.wc-bubble::before{bottom:34px}
+.wc-hsum.ok{color:#16842f}
+/* v208: Reading Coach buttons use the same styles as the rest of BULIG (green primary, white secondary with yellow border) */
+.wc-skip.btn.primary{background:var(--btn-green);color:#fff;border:1px solid var(--g800)}
+.wc-box .btn.ghost,.wc-sum .btn.ghost,.wc-gate.wc-done .btn,.rk-sh-again{background:#fff;color:var(--g700);border:2px solid var(--y300);box-shadow:var(--shadow-sm)}
+.wc-box .btn.ghost:hover,.wc-sum .btn.ghost:hover,.wc-gate.wc-done .btn:hover,.rk-sh-again:hover{border-color:var(--y500);background:var(--y50)}
+html.dark .wc-box .btn.ghost,html.dark .wc-sum .btn.ghost,html.dark .wc-gate.wc-done .btn,html.dark .rk-sh-again{background:#16231b;color:#e8f0ea;border-color:#6d5a22}
+.wc-row .btn,.wc-dockbtns .btn,.rk-sh-btns button{border-radius:16px}
+/* v207: Max stands beside the story now, so the coach box below uses one full-width column */
+.wc-ov .wc-box{grid-template-columns:1fr}
+.wc-txt .wc-w.wc-tw{font-weight:800}
+/* v208 activity background: Jeepney road (sky and clouds, town hills, and the road Jeepy drives on). Plain gradients only: no pictures, no animation, so it stays fast on old phones. */
+html:has(body.activity-page){background:radial-gradient(90px 26px at 15% 200px,#fff 60%,transparent 62%),radial-gradient(110px 28px at 70% 240px,#fff 60%,transparent 62%),linear-gradient(180deg,#bfe4fb 0,#e3f4fe 320px,#f3fae9 600px,#e4f3cf 100%)!important}
+body.activity-page::before{height:120px;background:repeating-linear-gradient(90deg,#ffd54f 0,#ffd54f 34px,transparent 34px,transparent 68px) 0 52px/100% 4px no-repeat,linear-gradient(0deg,#9fd27c 0,#9fd27c 22px,#3b4148 22px,#3b4148 86px,#e9c23b 86px,#e9c23b 90px,transparent 90px)}
+body.activity-page::after{opacity:.8;top:auto;bottom:110px;height:150px;background:radial-gradient(40% 120px at 10% 100%,#cfe9c4 60%,transparent 61%),radial-gradient(35% 100px at 55% 100%,#d6edc9 60%,transparent 61%),radial-gradient(40% 130px at 95% 100%,#c7e5bb 60%,transparent 61%)}
+html.dark body.activity-page::before{height:120px;background:repeating-linear-gradient(90deg,#b8962e 0,#b8962e 34px,transparent 34px,transparent 68px) 0 52px/100% 4px no-repeat,linear-gradient(0deg,#1c3822 0,#1c3822 22px,#20252b 22px,#20252b 86px,#8a7224 86px,#8a7224 90px,transparent 90px)}
+html.dark:has(body.activity-page){background:linear-gradient(180deg,#0c2233 0,#10283a 260px,#11241a 520px,#0f2016 100%)!important}
+@media(max-width:740px){body.activity-page::before{height:90px;background:repeating-linear-gradient(90deg,#ffd54f 0,#ffd54f 26px,transparent 26px,transparent 52px) 0 40px/100% 3px no-repeat,linear-gradient(0deg,#9fd27c 0,#9fd27c 16px,#3b4148 16px,#3b4148 66px,#e9c23b 66px,#e9c23b 69px,transparent 69px)}body.activity-page::after{bottom:84px;height:110px}}
+/* dark mode: a night sky with a moon and a few stars over the same road (plain gradients, no animation) */
+html.dark body.activity-page:not(#_),html.dark body.activity-page:not(#_) .l1-app{background:transparent!important}
+html.dark:has(body.activity-page){background:radial-gradient(30px 30px at 95% 190px,#fff6d0 0,#f3e3a0 60%,transparent 63%),radial-gradient(2px 2px at 10% 140px,#fff 98%,transparent),radial-gradient(2px 2px at 24% 230px,#fff 98%,transparent),radial-gradient(2px 2px at 41% 170px,#fff 98%,transparent),radial-gradient(2px 2px at 58% 260px,#fff 98%,transparent),radial-gradient(2px 2px at 72% 200px,#fff 98%,transparent),radial-gradient(2px 2px at 93% 290px,#fff 98%,transparent),linear-gradient(180deg,#0b1d2e 0,#10283a 320px,#11241a 620px,#0f2016 100%)!important}
+html.dark body.activity-page::after{opacity:.5;background:radial-gradient(40% 120px at 10% 100%,#183322 60%,transparent 61%),radial-gradient(35% 100px at 55% 100%,#1a3824 60%,transparent 61%),radial-gradient(40% 130px at 95% 100%,#16301f 60%,transparent 61%)}

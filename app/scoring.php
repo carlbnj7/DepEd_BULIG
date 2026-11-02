@@ -106,9 +106,13 @@ function say_words():array{static $w;if($w===null){$f=__DIR__.'/../database/say-
 /** What BULIG heard on a recorded answer, or null when the device did not listen. */
 function key_said(string $g):?string{return preg_match('~\)\s*said:\s*(.+)$~su',$g,$m)?trim($m[1]):null;}
 /** Share of the expected words heard (each heard word counts once), 0 to 1. */
+function say_num_words(string $w):string{static $n=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];return preg_match('~^\d+$~',$w)&&(int)$w<count($n)?$n[(int)$w]:$w;}
+/** v207: how a word sounds: "then" = "den", "wet" = "wed", "10" = "ten" (the vowel stays, so bed and bad differ) */
+function say_sound(string $w):string{$w=say_num_words($w);
+ $w=preg_replace(['~^th~','~th~','~^wh~','~ph~','~ck~','~c(?=[aou]|$)~','~q~','~x~','~(.)\1+~','~([^aeiou])e$~','~[dt]$~','~[gk]$~','~[bp]$~','~[sz]$~'],['d','d','w','f','k','k','k','ks','$1','$1','T','K','P','S'],$w)??$w;return $w;}
 function say_match(array $exp,string $heard):float{
- if(!$exp)return 1.0;$h=array_count_values(array_filter(array_map('key_letters',preg_split('~\s+~u',$heard)),'strlen'));$ok=0;
- foreach($exp as $w)foreach(explode('|',$w) as $alt){$alt=key_letters($alt);if(($h[$alt]??0)>0){$h[$alt]--;$ok++;break;}}
+ if(!$exp)return 1.0;$h=array_count_values(array_filter(array_map(fn($x)=>say_sound(key_letters($x)),preg_split('~\s+~u',$heard)),'strlen'));$ok=0;
+ foreach($exp as $w)foreach(explode('|',$w) as $alt){$alt=say_sound(key_letters($alt));if(($h[$alt]??0)>0){$h[$alt]--;$ok++;break;}}
  return round($ok/count($exp),2);
 }
 /** Level 1 (oral) answers, checked by BULIG (v172): 0 to 1. With the words to say (expected_text): the share BULIG heard

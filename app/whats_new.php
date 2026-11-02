@@ -3,32 +3,32 @@
    BULIG is updated: a construction sign with Bob and the new things for their role. Closing it keeps a copy on the
    bell (Notifications), and ?whatsnew=1 opens it again. Seen is kept in settings (whatsnew_<update>_<id>), no SQL.
    For a new update: change WHATS_NEW_ID and the lists below. */
-const WHATS_NEW_ID='v206';
+const WHATS_NEW_ID='v207';
 const WHATS_NEW=[
  /* shown before signing in too (on the login page, after the opening screen), once on each device */
  'guest'=>[
-  ['mic','Reading Coach in every level','Read the story, and BULIG stops by itself at the last word. You see your stars, then it is sent to your teacher.'],
-  ['book','Easier to read','Settings has Bigger text and Easy-read letters, a plain letter style that helps many readers.'],
-  ['star','My practice words','Hard words from Word Coach are kept in one list. Max says each word, then you say it.'],
-  ['phone','Faster pictures','Pictures are smaller now, so pages open faster on phones.'],
+  ['mic','Read with Max','When you read a story, Max stands beside it. Each word turns green when you say it right.'],
+  ['star','5 hearts for each word','Missed a word? Say it again. You have 5 hearts for each word, like lives in a game.'],
+  ['check','Word cards turn green','In Level 3, say each word and its card turns green.'],
+  ['edit','Clearer instructions','Instructions in every level are shorter and easier to follow.'],
  ],
  'pupil'=>[
-  ['mic','Read, and it sends itself','Read the story to the last word. BULIG stops by itself, shows your stars, and sends it to your teacher.'],
-  ['star','My practice words','Your hard words are in My practice words. Tap to hear Max say a word, then say it to him.'],
-  ['ladder','Class reading challenge','Your Home shows how many words your class read this week. Read to help your class reach the goal!'],
-  ['book','Bigger text and easy letters','In Settings, turn on Bigger text or Easy-read letters if reading on the screen is hard.'],
+  ['mic','Read with Max','When you read a story, Max stands beside it. Each word turns green when you say it right.'],
+  ['star','5 hearts for each word','Missed a word? Say it again. You have 5 hearts for each word. A heart goes away when the word is not right yet.'],
+  ['check','Word cards turn green','In Level 3, say each word and its card turns green. When all are green, you are done!'],
+  ['edit','BULIG hears you better','Numbers like 10 and words that sound alike, like "then" and "den", are now heard right.'],
  ],
  'teacher'=>[
-  ['alert','Readers who need help','Home lists pupils whose Word Coach scores stay low, with their hard words, and suggests a reread or a small group.'],
-  ['ladder','Class reading challenge','Set a weekly words goal on Home. Pupils see the class progress bar on their Home.'],
-  ['phone','Work waiting to upload','Home shows which pupils have answers still on their phone that did not upload yet.'],
-  ['mic','Reading Coach in every level','Pupils read the story; BULIG stops at the last word and sends the reading to you by itself.'],
+  ['mic','Reading Coach with hearts','In Level 4 stories and other reading activities, pupils get 5 hearts for each missed word. Hearts lost are shown at the end.'],
+  ['check','Level 3 word cards','In Levels 3A and 3B, each word card turns green as the pupil says it.'],
+  ['edit','Better listening','Numbers ("10" and "ten") and sound-alike words ("then" and "den") are now counted as right.'],
+  ['book','Clearer instructions','Instructions in all levels were checked and made shorter and easier for pupils.'],
  ],
  'admin'=>[
-  ['search','Data cleanup','A new page joins pupils who have two accounts, and archives last year\'s sections in one step.'],
-  ['alert','Readers who need help','Teachers now see pupils with low Word Coach scores, with a reread or small group idea.'],
-  ['book','Easier to read','My profile and pupil Settings have Bigger text and Easy-read letters.'],
-  ['phone','Faster pictures','Large pictures are smaller now, so pages open faster on phones.'],
+  ['mic','Reading Coach with hearts','Level 4 stories and other reading activities give pupils 5 hearts for each missed word.'],
+  ['check','Level 3 word cards','In Levels 3A and 3B, word cards turn green as the pupil says each word.'],
+  ['edit','Better listening','Numbers and sound-alike words are now matched correctly when pupils read aloud.'],
+  ['search','Bug fixes','Fixes for the word bank, practice words and button colours.'],
  ],
 ];
 function wn_key(int $uid):string{return 'whatsnew_'.WHATS_NEW_ID.'_'.$uid;}

@@ -28,6 +28,13 @@ function l4_words(array $a,int &$titleN=0):array{
  $t=preg_split('/\s+/u',trim((string)$p['title']),-1,PREG_SPLIT_NO_EMPTY);if($t&&count($w)+count($t)===(int)$p['words']){$w=array_merge($t,$w);$titleN=count(array_filter($t,fn($x)=>l4_norm($x)!==''));}
  return array_values(array_filter($w,fn($x)=>l4_norm($x)!==''));
 }
+/** The reading without the title words said at its start (in order; a word heard a little wrong still counts). */
+function l4_drop_title(string $said,string $title):string{
+ $t=array_values(array_filter(array_map('l4_norm',preg_split('/\s+/u',$title)),'strlen'));$h=preg_split('/\s+/u',trim($said),-1,PREG_SPLIT_NO_EMPTY);
+ if(!$t||count($h)<=count($t))return $said;$k=0;
+ foreach($t as $i=>$x){$y=l4_norm((string)($h[$i]??''));if($y===$x||l4_similar($x,$y))$k++;else break;}
+ return $k===count($t)?implode(' ',array_slice($h,$k)):$said;
+}
 function l4_norm(string $w):string{return preg_replace('~[^a-z0-9\']+~','',mb_strtolower(str_replace(['’','‘'],"'",$w)));}
 /** A near miss (said almost right): same sound key, one or two letters off, or the same start of a long word. */
 function l4_similar(string $a,string $b):bool{
@@ -65,8 +72,10 @@ function l4_miscues(array $words,string $heard):array{
 /** BULIG's score for one reading, in the shape the teacher's table saves ('auto' => 1). Words BULIG did not hear count
     as omissions (v172: also when only part was read). Null only when the recognizer heard no word at all. */
 function l4_auto(array $a,string $said,int $secs):?array{
- $w=l4_words($a);$p=level4_passage_parts($a);if(!$w||!$p)return null;$words=(int)$p['words']?:count($w);
- $said=trim(mb_substr($said,0,8000));$heard=count(array_filter(array_map('l4_norm',preg_split('/\s+/u',$said)),'strlen'));
+ $nt=0;$w=l4_words($a,$nt);$p=level4_passage_parts($a);if(!$w||!$p)return null;$words=(int)$p['words']?:count($w);
+ $said=trim(mb_substr($said,0,8000));
+ /* v208: a pupil who reads the title first is not marked for extra words when the module's word count leaves the title out */
+ if(!$nt&&trim((string)$p['title'])!==''){$cut=l4_drop_title($said,(string)$p['title']);if($cut!==$said&&l4_drop_title(implode(' ',$w),(string)$p['title'])===implode(' ',$w))$said=$cut;}   /* not when the story itself starts with the title words */$heard=count(array_filter(array_map('l4_norm',preg_split('/\s+/u',$said)),'strlen'));
  if($heard<1)return null;
  $r=l4_miscues($w,$said);$tot=min($words,array_sum($r['m']));$score=round(($words-$tot)/$words*100,1);
  return ['m'=>$r['m'],'total'=>$tot,'words'=>$words,'score'=>$score,'level'=>l4_level($score),'secs'=>$secs,'wpm'=>$secs?(int)round(($words-$tot)/$secs*60):0,
@@ -111,7 +120,7 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
   $say='Read the following passage aloud. Tap the microphone when you start, and tap it again when you finish. BULIG listens and scores your reading.';
   echo '<div class="l1-q sm l4-dir"><p>'.e($say).'</p>'.l1_speaker($say).'</div>';ob_start();
   /* v183: the microphone sits above the passage and stays at the top of the screen while the pupil scrolls and reads */
-  if(!$readonly)echo roxanne_timer().'<div class="l1-rec l4-rec rec-top" data-l1-rec data-max="600"'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_attr((string)$a['expected_text']):'').'><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
+  if(!$readonly)echo roxanne_timer().'<div class="l1-rec l4-rec rec-top" data-l1-rec data-max="600"'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_attr((string)$a['expected_text']).(($pp=level4_passage_parts($a))&&trim((string)$pp['title'])!==''?' data-wc-title="'.e(trim((string)$pp['title'])).'"':''):'').'><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
    .'<div class="l1-play" data-rec-play hidden><button type="button" class="l1-pbtn" data-rec-listen aria-label="Play my reading">'.l1_icon('play').'</button><span class="l1-bar"><i></i></span><span class="l1-len" data-rec-len></span></div>'
    .'<button type="button" class="l1-heard" data-rec-heard>'.l1_icon('ok').'Done</button>'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_input(0):'').'</div>';
   echo level4_passage($a);

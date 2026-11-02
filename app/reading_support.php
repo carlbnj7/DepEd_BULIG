@@ -361,6 +361,8 @@ function instruction_tidy(string $t):string{
   $w=preg_split('~\s+~u',$s);$lower=count(array_filter($w,fn($x)=>preg_match('~^[a-z]~u',$x)));
   if(count($w)>=6&&$lower>=4&&!preg_match('~^(?:PRE|POST|SET|Part|Activity|Lesson|Assessment|Formative|Exercise)\b~u',$s)&&preg_match('~[.!?]$~u',$s))$keep[]=$s;
   elseif(count($w)>=8&&$lower>=5&&preg_match('~[.!?]$~u',$s))$keep[]=$s;}
+ /* a word bank in the heading is part of the direction ("Word Bank: stove, napkin, …") */
+ if(preg_match('~\b(Word Bank|Words to use|Choices)\s*:\s*(.+)$~iu',$head,$wb))$body=rtrim($body).' '.$wb[1].': '.trim($wb[2]," \t·.").'.';
  return trim(implode(' ',$keep).' '.$body);
 }
 
