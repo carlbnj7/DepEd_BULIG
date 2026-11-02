@@ -261,11 +261,22 @@
   const vcWant=()=>{if(spinOut&&spinOut.textContent.trim()&&spinOut.textContent.trim()!=='?')return [spinOut.textContent.trim()];return vcList;};
   const vcHit=t=>{const want=vcWant();if(!want.length||!t)return null;const got=t.split(/\s+/).map(vcN).filter(Boolean);
    return want.every(e=>String(e).split('|').some(a=>{a=vcN(a);return got.some(g=>g===a||(a.length>=5&&vcL1(g,a)));}));};
-  let vcOk=false;const vcSay=(ok,w)=>{r.classList.toggle('vc-ok',ok);r.classList.toggle('vc-no',!ok);vcOk=ok;
+  /* v207 Picture Coach (Reading Coach style): one chip for each name to say; the chip and its picture turn green as soon as
+     BULIG hears the name; stars when all are said (fewer tries, more stars). */
+  const pcBox=$('[data-pc-names]',r),pcStars=$('[data-pc-stars]',r),pcPics=$$('.l2-pics .l2-pic',c);const pcFound=new Set();
+  const pcChips=pcBox?vcList.map((v,i)=>{const b=document.createElement('span');b.className='pc-chip';b.textContent=vcList.length>1?String(i+1):'?';b.setAttribute('aria-label','Name '+(i+1)+': not said yet');pcBox.append(b);return b;}):[];
+  const pcPic=i=>pcPics.length===vcList.length?pcPics[i]:(vcList.length===1?pcPics[0]:null);
+  const pcMark=t=>{if(!pcChips.length||!t)return;const got=String(t).split(/\s+/).map(vcN).filter(Boolean);
+   vcList.forEach((v,i)=>{if(pcFound.has(i))return;const hit=String(v).split('|').find(a=>{a=vcN(a);return got.some(g=>g===a||(a.length>=5&&vcL1(g,a)));});
+    if(hit){pcFound.add(i);const ch=pcChips[i];ch.className='pc-chip ok';ch.textContent=hit;ch.setAttribute('aria-label','Name '+(i+1)+': '+hit+', said right');const pic=pcPic(i);if(pic){pic.classList.remove('pc-no');pic.classList.add('pc-ok');}}});};
+  const pcReset=()=>{if(!pcChips.length)return;pcFound.clear();pcChips.forEach((ch,i)=>{ch.className='pc-chip';ch.textContent=vcList.length>1?String(i+1):'?';});pcPics.forEach(x=>x.classList.remove('pc-ok','pc-no'));if(pcStars)pcStars.hidden=true;};
+  const pcResult=ok=>{if(!pcChips.length)return;pcChips.forEach((ch,i)=>{if(!pcFound.has(i)){ch.classList.add('no');const pic=pcPic(i);if(pic)pic.classList.add('pc-no');}});
+   if(ok&&pcStars){const k=Math.max(1,3-(tries[c.dataset.n]||0)),all=vcList.length>1?'them all':'it';pcStars.innerHTML='<b>'+'\u2605'.repeat(k)+'<i>'+'\u2605'.repeat(3-k)+'</i></b><span>'+(k===3?'Super! You said '+all+' right!':'Well done! You said '+all+'!')+'</span>';pcStars.hidden=false;}};
+  let vcOk=false;const vcSay=(ok,w)=>{r.classList.toggle('vc-ok',ok);r.classList.toggle('vc-no',!ok);vcOk=ok;pcResult(ok);
    sub.textContent=ok?'Great! You said it right!':'Not yet. I heard \u201c'+w+'\u201d. Tap the microphone and try again.';if(ok)sfx('correct');else sfx('tryagain');};
-  const vcEnd=w=>{const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
+  const vcEnd=w=>{pcMark(w);const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
   function srStart(){if(!SRC)return;said=[];part='';srErr='';srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=true;
-    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
+    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();pcMark(t);if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
     sr.onerror=e=>{srErr=e.error||'';if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
     sr.onend=()=>{if(part){said.push(part);part='';}if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
    make();try{sr.start();}catch(e){srOn=false;}}
@@ -273,7 +284,7 @@
   const ui=s=>{r.dataset.state=s;go.classList.toggle('on',s==='rec');go.hidden=s==='done';play.hidden=s!=='done';
    label.textContent=s==='rec'?'0:00':s==='done'?(rd?'Your reading':'Your answer'):(rd?'Tap and read the story aloud':'Tap and say it');sub.textContent=s==='rec'?'Speak now. Tap again to stop.':'';};
   if(!canRec&&!solo){go.hidden=true;label.textContent='Say it out loud to your teacher.';}
-  async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';vcOk=false;r.classList.remove('vc-ok','vc-no');window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
+  async function start(){if(r.dataset.state==='starting'||r.dataset.state==='rec')return;r.dataset.state='starting';vcOk=false;r.classList.remove('vc-ok','vc-no');pcReset();window.speechSynthesis&&speechSynthesis.cancel();if(url){URL.revokeObjectURL(url);url='';}inp.value='';
    if(solo){srStart();if(srOn){t0=Date.now();ui('rec');tick=setInterval(()=>{secs=(Date.now()-t0)/1000;label.textContent=fmt(secs);if(secs>=(+r.dataset.max||45))stop();
      if(!srOn&&srErr){clearInterval(tick);if(srErr==='not-allowed'){ui('idle');label.textContent='Tap the microphone to try again.';sub.textContent=micMsg({name:'NotAllowedError'});if(heard)heard.hidden=false;}else if(!heardText()){solo=false;r.dataset.state='idle';start();}else stop();}},250);return;}solo=false;}
    try{st=await getMic();}catch(e){r.dataset.state='idle';label.textContent='Tap the microphone to try again.';sub.textContent=micMsg(e);if(heard)heard.hidden=false;return;}
@@ -297,7 +308,12 @@
   heard.addEventListener('click',()=>{const on=heard.getAttribute('aria-pressed')!=='true';heard.setAttribute('aria-pressed',on?'true':'false');if(on){inp.value='';if(url){URL.revokeObjectURL(url);url='';}ui('idle');}set(c,p,on?'(done)':'');});});
  /* ---------- moving between cards ---------- */
  const dots=document.createElement('div');dots.className='l2-cdots';
- if(cards.length>1){cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.textContent=String(i+1);b.setAttribute('aria-label','Card '+(i+1));b.addEventListener('click',()=>show(i));dots.append(b);});deck.before(dots);}
+ /* v205: a reading card shows a book, an instructions card shows an i; only the answer cards are numbered 1, 2, 3 */
+ const ROLE={story:['<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7M8 11h7"/>','Reading'],aloud:['<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><rect x="10" y="6" width="4" height="7" rx="2"/>','Read aloud'],info:['<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>','Instructions']};
+ if(cards.length>1){cards.forEach((c,i)=>{const b=document.createElement('button');b.type='button';const r=ROLE[c.dataset.role];
+   if(r){b.className='l2-cd-'+c.dataset.role;b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+r[0]+'</svg>';b.setAttribute('aria-label',r[1]);b.title=r[1];}
+   else{b.textContent=c.dataset.q||String(i+1);b.setAttribute('aria-label','Question '+(c.dataset.q||i+1));}
+   b.addEventListener('click',()=>show(i));dots.append(b);});deck.before(dots);}
  function paintDots(){$$('button',dots).forEach((b,i)=>{b.classList.toggle('cur',i===at);b.classList.toggle('ok',!ro&&needs(cards[i])&&cardAnswer(cards[i])!=='');b.classList.toggle('ck-out',cst[cards[i].dataset.n]==='out');});}
  function show(i){at=Math.max(0,Math.min(cards.length-1,i));cards.forEach((c,k)=>c.hidden=k!==at);window.speechSynthesis&&speechSynthesis.cancel();
   const last=at===cards.length-1,saved=fb&&fb.classList.contains('success');prev.hidden=at===0||saved;
@@ -319,7 +335,7 @@
   const unchecked=cards.find(c=>keyed(c)&&!autoOnly(c)&&!cst[c.dataset.n]&&cardAnswer(c)!=='');
   if(unchecked){e.preventDefault();e.stopImmediatePropagation();show(cards.indexOf(unchecked));checkCard(unchecked).then(ok=>{if(ok)form.requestSubmit();});return;}const empty=cards.filter(c=>needs(c)&&cardAnswer(c)==='');if(!empty.length)return;
   e.preventDefault();e.stopImmediatePropagation();const n=cards.indexOf(empty[0])+1;fb.className='answer-feedback l1-fb tryagain';fb.replaceChildren();
-  const t=document.createElement('strong');t.textContent=empty.length===1?'Card '+n+' has no answer yet.':empty.length+' cards have no answer yet.';
+  const t=document.createElement('strong');t.textContent=empty.length===1?(empty[0].dataset.q?'Question '+empty[0].dataset.q:'Card '+n)+' has no answer yet.':empty.length+' questions have no answer yet.';
   const row=document.createElement('div');row.className='l2-row';const g=document.createElement('button'),a=document.createElement('button');g.type=a.type='button';g.className='l1-btn2';a.className='l1-btn2';g.textContent='Go to card '+n;a.textContent='Submit anyway';
   g.addEventListener('click',()=>{fb.replaceChildren();fb.className='answer-feedback l1-fb';show(+n-1);});a.addEventListener('click',()=>{fb.replaceChildren();fb.className='answer-feedback l1-fb';sure=true;form.requestSubmit();sure=false;});row.append(g,a);fb.append(t,row);},true);
  if(fb)new MutationObserver(()=>{if(fb.classList.contains('success')){drafts.forEach(k=>{try{localStorage.removeItem(k);}catch(_){}});prev.hidden=true;if(next)next.hidden=true;dots.remove();$$('.l2-ans',deck).forEach(x=>x.classList.add('locked'));}}).observe(fb,{attributes:true,attributeFilter:['class']});

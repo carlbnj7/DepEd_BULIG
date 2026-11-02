@@ -649,14 +649,14 @@ def test_whats_new(p):
     q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
     q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
     _, _, text = p.req('?page=dashboard')
-    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'Reply to messages' in text)
+    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'There’s a new update' in text and 'bob-blueprint' in text and 'practice words' in text)
     _, _, text = p.req('?page=dashboard')
     check('The popup comes only once', 'data-wn' not in text)
     check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
     _, _, text = Client().req('?page=login&role=pupil')
-    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v203"' in text and 'BULIG has a new update!' in text and ' hidden ' in text)
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v206"' in text and 'BULIG has a new update!' in text and ' hidden ' in text)
 
 
 def test_notifications(p):

@@ -28,6 +28,7 @@ function offline_manifest(array $u):never{
  if(!level_available($pid,$level)){$files=[level_cover($level)=>1];
   foreach(rows('SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND a.published=1'.GRADE_SQL,[$level,$g]) as $a){foreach(activity_images($a) as $src){$f=resolved_image_path((string)$src);if($f)$files[$f]=1;}
    /* The pictures on its cards too (matching pictures, story pictures). */
+   foreach(function_exists('draw_picks_srcs')?draw_picks_srcs($a):[] as $src){$f=resolved_image_path((string)$src);if($f)$files[$f]=1;}
    $set=level2_card_set($a);foreach($set['cards']??[] as $c){foreach(array_merge(array_column($c['images']??[],'src'),array_values($c['choice_images']??[])) as $src){$f=resolved_image_path((string)$src);if($f)$files[$f]=1;}}}
   echo json_encode(['uid'=>$pid,'level'=>$level,'title'=>level_label($level),'locked'=>true,'lessons'=>[],'pages'=>[],'assets'=>array_keys($files)]);exit;}
  $lessons=[];
@@ -78,6 +79,7 @@ function demo_offline_size(int $level,int $grade):int{
  $root=__DIR__.'/../public/';$files=[];$n=0;
  foreach(rows('SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1 AND a.published=1'.GRADE_SQL,[$level,$grade]) as $a){$n++;
   foreach(activity_images($a) as $src){$f=resolved_image_path((string)$src);if($f)$files[strtok($f,'?')]=1;}
+  foreach(function_exists('draw_picks_srcs')?draw_picks_srcs($a):[] as $src){$f=resolved_image_path((string)$src);if($f)$files[strtok($f,'?')]=1;}
   $set=level2_card_set($a);foreach($set['cards']??[] as $c)foreach(array_merge(array_column($c['images']??[],'src'),array_values($c['choice_images']??[])) as $src){$f=resolved_image_path((string)$src);if($f)$files[strtok($f,'?')]=1;}}
  foreach(offline_extra_assets($level) as $f)$files[$f]=1;
  $bytes=0;foreach(array_keys($files) as $f)if(is_file($root.$f))$bytes+=filesize($root.$f);

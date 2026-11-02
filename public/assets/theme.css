@@ -6592,3 +6592,342 @@ html.dark body.activity-page::before{background:radial-gradient(120% 90px at 15%
 html.dark body.activity-page::after{opacity:.25}
 .ap-jeep.jp-0{left:0%}.ap-jeep.jp-5{left:5%}.ap-jeep.jp-10{left:10%}.ap-jeep.jp-15{left:15%}.ap-jeep.jp-20{left:20%}.ap-jeep.jp-25{left:25%}.ap-jeep.jp-30{left:30%}.ap-jeep.jp-35{left:35%}.ap-jeep.jp-40{left:40%}.ap-jeep.jp-45{left:45%}.ap-jeep.jp-50{left:50%}.ap-jeep.jp-55{left:55%}.ap-jeep.jp-60{left:60%}.ap-jeep.jp-65{left:65%}.ap-jeep.jp-70{left:70%}.ap-jeep.jp-75{left:75%}.ap-jeep.jp-80{left:80%}.ap-jeep.jp-85{left:85%}.ap-jeep.jp-90{left:90%}.ap-jeep.jp-95{left:95%}.ap-jeep.jp-100{left:100%}
 .ap-seg.ap-road a{position:relative;z-index:1;flex:none;display:grid;place-items:center}.ap-seg.ap-road a i{width:9px;height:9px;border-radius:50%;background:#fff;opacity:.55;display:block}.ap-seg.ap-road a.d i{background:#3fbf6f;opacity:1}.ap-seg.ap-road a.c i{background:#ffc629;opacity:1}
+/* v205 cards with nothing to answer: a book (reading) or an i (instructions) instead of a number */
+.l2-cdots button[class^="l2-cd-"],.l2-cdots button[class*=" l2-cd-"]{display:inline-grid;place-items:center;padding:0 8px;background:#fff7dc;border-color:#f1d27a;color:#7a5200}
+.l2-cdots button.l2-cd-info{background:#e8f1fb;border-color:#b7cfee;color:#244f86}
+.l2-cdots button[class*="l2-cd-"] svg{width:18px;height:18px}
+.l2-cdots button[class*="l2-cd-"].cur{background:var(--btn-green);border-color:#0a6a20;color:#fff}
+.l2-cnum.l2-role-story,.l2-cnum.l2-role-aloud,.l2-cnum.l2-role-info{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#fff7dc;color:#7a5200;letter-spacing:0}
+.l2-cnum.l2-role-info{background:#e8f1fb;color:#244f86}
+.l2-cnum[class*="l2-role-"] svg{width:16px;height:16px;flex:none}
+html.dark .l2-cdots button[class*="l2-cd-"]:not(.cur),html.dark .l2-cnum.l2-role-story,html.dark .l2-cnum.l2-role-aloud{background:#2a2614;border-color:#5c4f1f;color:#ffe08a}
+html.dark .l2-cdots button.l2-cd-info:not(.cur),html.dark .l2-cnum.l2-role-info{background:#16263a;border-color:#2c4767;color:#b9d4f5}
+/* v205 speed: the road maps keep their look, but the scenery no longer moves all the time (every tree, flower, star
+   and the road's centre line made phones repaint the whole map on every frame). */
+.pfm-sway,.pfm-dash,.pfm-stars{animation:none!important}
+.pfm-stars path:first-child{filter:none}
+.pfm-stars path{paint-order:stroke}
+html.map-lite :is(.pfm-cloud,.pfm-birds,.pfm-bird,.pfm-ripple,.pfm-duck,.pfm-smoke,.pfm-sunr,.pfm-flagwave,.pfm-c-spark,.jy-glow,.pfm-flag,.pfm-cur .pfm-disc){animation:none!important}
+.jy-svg,.pfm-svg,svg.pf-map{contain:layout paint}
+/* v205 My profile: the character pictures fit inside their tiles (they were 120px in tiles narrower than that);
+   the select circle is hidden (the green check shows the choice), so nothing sits on the faces. */
+.me-pic .avatar-options{max-width:none;grid-template-columns:repeat(auto-fill,minmax(100px,1fr))!important;gap:10px}
+.me-pic .avatar-option{flex-direction:column;gap:6px;padding:10px 6px 8px!important;min-width:0}
+.me-pic .avatar-option input{position:absolute!important;opacity:0;width:1px!important;height:1px!important;pointer-events:none}
+.me-pic .avatar-option-picture{width:100%;max-width:92px;aspect-ratio:1;height:auto}
+.me-pic .avatar-option-picture>img{width:100%!important;height:100%!important;border-width:3px}
+.me-pic .avatar-picked{position:absolute;right:-2px;top:-2px;bottom:auto}
+@media(max-width:740px){.me-pic .avatar-options{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px}.me-pic .avatar-option-picture{max-width:70px}}
+/* v205 rank frames round the pupil's picture */
+.rf{position:relative;display:inline-block;width:var(--rf,150px);aspect-ratio:1;flex:none;isolation:isolate}
+.rf>.avatar,.rf>img.avatar{position:absolute!important;left:15%;top:15%;width:70%!important;height:70%!important;border-radius:50%;object-fit:cover;border:0!important;box-shadow:none!important;background:#fff;z-index:0}
+.rf>.rf-svg{position:absolute;inset:-16%;width:132%;height:132%;z-index:1;overflow:visible;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(14,59,40,.28))}
+.rf>.rf-badge{position:absolute;left:50%;bottom:-27%;width:38%;height:auto;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.rf.rf-t8 .rf-svg,.rf.rf-t9 .rf-svg{animation:rf-glow 3s ease-in-out infinite}
+@keyframes rf-glow{50%{filter:drop-shadow(0 0 10px rgba(255,214,79,.85))}}
+html.map-lite .rf .rf-svg{animation:none}
+@media(prefers-reduced-motion:reduce){.rf .rf-svg{animation:none}}
+.me-av .rf{--rf:120px;margin:18px 22px 26px}
+@media(max-width:740px){.me-av .rf{--rf:118px;margin:16px auto 28px}}
+.me-av .rf>img.rf-badge{width:38%!important;height:auto!important;border:0!important;border-radius:0!important;box-shadow:none!important;object-fit:contain;background:none}
+.me-av .rf>img.avatar{width:70%!important;height:70%!important}
+@media(max-width:740px){.me-av .rf{--rf:96px;margin:22px 26px 18px 20px}.me-av .rf:is(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin:24px 36px 18px 30px}}
+/* v205: the pupil's picture in the banner is bigger and always has its rank frame */
+.identity-photo.has-rf{position:relative;display:block;flex:none;margin:14px 22px 14px 14px}
+.identity-photo.has-rf .rf{--rf:108px}
+.identity-photo.has-rf .rf>img.avatar{width:70%!important;height:70%!important;border:0!important;box-shadow:none!important}
+.identity-photo.has-rf .photo-edit{position:absolute;right:-2px;bottom:2px;z-index:3}
+.identity-compact .identity-photo.has-rf .rf{--rf:84px}
+.identity-compact .identity-photo.has-rf{margin:10px 18px 10px 10px}
+@media(max-width:740px){.identity-photo.has-rf .rf{--rf:86px}.identity-photo.has-rf{margin:12px 18px 12px 12px}.identity-compact .identity-photo.has-rf .rf{--rf:70px}.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin-left:24px;margin-right:26px}}
+.identity-photo.has-rf .rf{--rf:132px}.identity-compact .identity-photo.has-rf .rf{--rf:112px}
+.identity-photo.has-rf{margin:18px 28px 18px 18px}.identity-compact .identity-photo.has-rf{margin:16px 26px 16px 16px}
+@media(max-width:740px){.identity-photo.has-rf .rf,.identity-compact .identity-photo.has-rf .rf{--rf:100px}.identity-photo.has-rf,.identity-compact .identity-photo.has-rf{margin:16px 20px 16px 14px}.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin-left:28px;margin-right:30px}}
+/* v205b frames: the photo fills the frame (no gap); the ornaments reach out 30% on each side */
+.rf>.avatar,.rf>img.avatar,.me-av .rf>img.avatar,.identity-photo.has-rf .rf>img.avatar{left:10%!important;top:10%!important;width:80%!important;height:80%!important;object-fit:cover;border:0!important;box-shadow:none!important}
+.rf>.rf-svg{inset:-30%!important;width:160%!important;height:160%!important;filter:drop-shadow(0 4px 6px rgba(10,20,10,.35))}
+.identity-photo.has-rf .rf{--rf:112px}.identity-compact .identity-photo.has-rf .rf{--rf:96px}
+.identity-photo.has-rf{margin:38px 44px 40px 40px}.identity-compact .identity-photo.has-rf{margin:34px 38px 36px 34px}
+.identity-photo.has-rf .photo-edit{right:4%;bottom:14%}
+.me-av .rf{--rf:120px;margin:42px 46px 46px}
+@media(max-width:740px){.identity-photo.has-rf .rf,.identity-compact .identity-photo.has-rf .rf{--rf:88px}.identity-photo.has-rf,.identity-compact .identity-photo.has-rf,.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin:32px 34px 34px 30px}
+ .me-av .rf,.me-av .rf:is(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){--rf:92px;margin:34px 36px 36px 32px}}
+/* v205c: bigger framed pictures (the margins leave room for the wings and the crown) */
+.identity-photo.has-rf .rf{--rf:150px}.identity-compact .identity-photo.has-rf .rf{--rf:124px}
+.identity-photo.has-rf,.identity-compact .identity-photo.has-rf,.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin:calc(var(--rfm,150px)*.42) calc(var(--rfm,150px)*.36) calc(var(--rfm,150px)*.4) calc(var(--rfm,150px)*.34)}
+.identity-photo.has-rf{--rfm:150px}.identity-compact .identity-photo.has-rf{--rfm:124px}
+.me-av .rf,.me-av .rf:is(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){--rf:170px;margin:72px 62px 66px}
+@media(max-width:740px){.identity-photo.has-rf .rf,.identity-compact .identity-photo.has-rf .rf{--rf:112px}.identity-photo.has-rf,.identity-compact .identity-photo.has-rf{--rfm:112px}
+ .me-av .rf,.me-av .rf:is(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){--rf:128px;margin:54px 44px 50px 40px}}
+/* a light sweeps across the frame now and then */
+.rf::after{content:"";position:absolute;inset:-6%;border-radius:50%;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);background-size:300% 100%;background-position:120% 0;animation:rf-sweep 6s ease-in-out 1.5s infinite;mix-blend-mode:overlay}
+@keyframes rf-sweep{0%,70%{background-position:120% 0}100%{background-position:-120% 0}}
+html.map-lite .rf::after{animation:none;display:none}
+/* rank up: the new frame flies in with light rays and sparkles */
+.rf-up{position:fixed;inset:0;z-index:9500;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(40,20,80,.55),rgba(5,8,20,.88));animation:rfu-in .35s ease-out}
+.rf-up[hidden]{display:none}
+.rf-up-box{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#fff;padding:20px}
+.rf-up-rays{position:absolute;left:50%;top:40%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,214,79,.32) 0 9deg,transparent 9deg 22deg);-webkit-mask:radial-gradient(circle,#000 20%,transparent 68%);mask:radial-gradient(circle,#000 20%,transparent 68%);animation:rfu-spin 14s linear infinite}
+.rf-up-stage{position:relative;width:200px;height:200px;margin:90px 0 60px}
+.rf-up-stage .rf{--rf:200px;position:absolute;inset:0}
+.rf-up-stage .rf-old{animation:rfu-out .9s ease-in forwards}
+.rf-up-stage .rf-new{opacity:0;animation:rfu-pop 1.1s cubic-bezier(.2,1.5,.4,1) .75s forwards}
+.rf-up-flash{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;background:#fff;opacity:0;animation:rfu-flash .9s ease-out .7s}
+.rf-up i.sp{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;background:#ffd54f;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);opacity:0;animation:rfu-sp 1.4s ease-out forwards}
+.rf-up h2{margin:0;font-size:2.2rem;font-weight:900;letter-spacing:.04em;background:linear-gradient(#fff6c8,#f6c94a 55%,#c58b1c);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #5a3a06);opacity:0;animation:rfu-txt .6s ease-out 1.4s forwards}
+.rf-up p{margin:0;font-size:1.05rem;font-weight:700;opacity:0;animation:rfu-txt .6s ease-out 1.6s forwards}
+.rf-up .btn{margin-top:10px;opacity:0;animation:rfu-txt .5s ease-out 1.9s forwards}
+@keyframes rfu-in{from{opacity:0}}
+@keyframes rfu-spin{to{transform:rotate(360deg)}}
+@keyframes rfu-out{0%{transform:scale(1)}50%{transform:scale(1.08) rotate(-4deg);filter:brightness(1.6)}100%{transform:scale(.2) rotate(30deg);opacity:0;filter:brightness(3)}}
+@keyframes rfu-pop{0%{opacity:0;transform:scale(.2) rotate(-25deg)}60%{opacity:1;transform:scale(1.18) rotate(4deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes rfu-flash{0%{opacity:0;transform:scale(1)}20%{opacity:1}100%{opacity:0;transform:scale(30)}}
+@keyframes rfu-sp{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.3) rotate(160deg)}}
+@keyframes rfu-txt{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rf-up *{animation-duration:.01s!important;animation-delay:0s!important}.rf::after{animation:none}}
+@media(max-width:740px){.rf-up-stage{width:160px;height:160px;margin:70px 0 50px}.rf-up-stage .rf{--rf:160px}.rf-up h2{font-size:1.8rem}.rf-up-rays{width:420px;height:420px;margin:-210px 0 0 -210px}}
+/* v205d: the photo fills the frame: a rank-coloured backdrop behind the character (no white gap), the character zoomed to fill */
+.rf>.rf-ph{position:absolute;left:10%;top:10%;width:80%;height:80%;border-radius:50%;overflow:hidden;z-index:0;background:radial-gradient(circle at 50% 38%,#ffffff 0,var(--rfc1,#e8f2ff) 45%,var(--rfc2,#9cc4ef) 100%)}
+.rf>.rf-ph>img.avatar,.me-av .rf>.rf-ph>img.avatar,.identity-photo.has-rf .rf>.rf-ph>img.avatar{position:absolute!important;left:0!important;top:0!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:none!important;object-fit:cover;transform:scale(1.12) translateY(4%)}
+.rf>.rf-ph>img.default-avatar{transform:none}
+.rf-beginner{--rfc1:#fbe6c8;--rfc2:#d89a55}.rf-learner{--rfc1:#dceaff;--rfc2:#7fb0ea}.rf-explorer{--rfc1:#ffe0d8;--rfc2:#e85b4a}.rf-achiever{--rfc1:#dcf7dc;--rfc2:#5fd06a}.rf-champion{--rfc1:#dff3ff;--rfc2:#8fd0ff}
+.rf-guardian{--rfc1:#efe0ff;--rfc2:#b37cf0}.rf-elite{--rfc1:#ffe0dc;--rfc2:#f0584c}.rf-master{--rfc1:#fff3cf;--rfc2:#f6c94a}.rf-legend{--rfc1:#dcebff;--rfc2:#6fb2ff}.rf-mythic{--rfc1:#ffe0f4;--rfc2:#ff7fd0}
+/* tighter banner spacing round the framed picture */
+.identity-photo.has-rf,.identity-compact .identity-photo.has-rf,.identity-photo.has-rf:has(.rf-t5,.rf-t6,.rf-t7,.rf-t8,.rf-t9){margin:calc(var(--rfm,150px)*.36) calc(var(--rfm,150px)*.26) calc(var(--rfm,150px)*.32) calc(var(--rfm,150px)*.2)}
+.identity-banner:has(.identity-photo.has-rf){padding-top:14px;padding-bottom:14px}
+@media(max-width:740px){.identity-banner:has(.identity-photo.has-rf){gap:10px;padding-left:12px;padding-right:12px}}
+/* v205 preview: teachers and administrators use the pupils' bottom tab bar on phones; "More" opens the full menu */
+@media(max-width:740px){
+ :is(.role-teacher,.role-admin) .mobile-menu-toggle{display:none!important}
+ :is(.role-teacher,.role-admin).workspace{padding-bottom:106px!important}
+ .staff-tabbar .tab-more{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--font-fun);font-size:.64rem;font-weight:700;color:#a9d3b4;padding:6px 0 4px;border:0;background:none;border-radius:14px;cursor:pointer}
+ html:not(.lg-lite) body.workspace .staff-tabbar .tab-more{text-shadow:0 1px 2px rgba(0,36,16,.4)}
+ .staff-tabbar .tab-more .icon{width:22px;height:22px}
+ :is(.role-teacher,.role-admin) .tour-help{bottom:104px}
+}
+
+/* v205: teachers and administrators get the pupils' phone top bar (bell, dark mode, sign out) with their tab bar */
+@media(max-width:740px){.role-teacher .mobile-signout{display:block;position:absolute;right:12px;top:14px;z-index:30}}
+@media(max-width:740px){.role-admin .mobile-signout{display:block;position:absolute;right:12px;top:14px;z-index:30}}
+@media(max-width:740px){.role-teacher .mobile-signout{right:64px}}
+@media(max-width:740px){.role-admin .mobile-signout{right:64px}}
+@media(max-width:740px){.role-teacher .mobile-signout button span{display:none}.role-teacher .mobile-signout button{width:42px;height:42px;padding:0;justify-content:center;border-radius:50%}.role-teacher .mobile-signout{top:12px}}
+@media(max-width:740px){.role-admin .mobile-signout button span{display:none}.role-admin .mobile-signout button{width:42px;height:42px;padding:0;justify-content:center;border-radius:50%}.role-admin .mobile-signout{top:12px}}
+@media(max-width:740px){html:not(.lg-lite) body.role-teacher:not(.view-lesson):not(.view-certificate) .notif-m.pupil{position:fixed;top:12px;left:14px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-admin:not(.view-lesson):not(.view-certificate) .notif-m.pupil{position:fixed;top:12px;left:14px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-teacher:not(.view-lesson):not(.view-certificate) .mode-mobile.mode-pupil{position:fixed;top:14px;right:66px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-admin:not(.view-lesson):not(.view-certificate) .mode-mobile.mode-pupil{position:fixed;top:14px;right:66px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-teacher:not(.view-lesson):not(.view-certificate) .mobile-signout{position:fixed;top:12px;right:12px;z-index:70}}
+@media(max-width:740px){html:not(.lg-lite) body.role-admin:not(.view-lesson):not(.view-certificate) .mobile-signout{position:fixed;top:12px;right:12px;z-index:70}}
+/* v205e phones: long school or teacher names no longer widen the Home cards past the screen */
+.ah-bento>*,.ah-kpis>*,.so-his>*,.hl-grid>*,.hm-g2>*{min-width:0}
+.ah-tx b,.ah-tx small,.so-hi-s b,.hm-clear a{overflow-wrap:anywhere}
+.ah-tx small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:740px){.ah-bento,.so-his{grid-template-columns:minmax(0,1fr)!important}.ah-bento:not(.th-bento)>section.card:last-child{grid-column:auto}
+ .ah-li{gap:10px;padding:10px 12px}.ah-li strong{font-size:1.15rem;flex:none}.ah-ic{width:36px;height:36px}
+ .ah-hero{padding:18px 16px}.ah-kpis{gap:8px}.ah-kpis>div{padding:10px 12px;column-gap:8px}.ah-kpis>div>span{width:34px;height:34px}.ah-kpis b{font-size:1.25rem}
+ .sc-pick{width:100%!important;max-width:100%}.sc-pick select{min-width:0!important;width:100%}
+ .mainwrap,.main{max-width:100vw;overflow-x:clip}}
+/* v205e phones: My pupils keeps long section and pupil names inside the card */
+@media(max-width:740px){
+ .mp-bar{min-width:0}.mp-bar select,.mp-bar input,.mp-bsel select{max-width:100%!important;width:100%!important;min-width:0!important;box-sizing:border-box}
+ .mp-tbl td,.mp-tbl th{overflow-wrap:break-word;white-space:normal!important}.mp-tbl{width:100%;max-width:100%}
+ .mp-tbl a.mp-who{flex:1 1 auto;min-width:0;white-space:normal}.mp-tbl a.mp-who>*:not(.avatar){min-width:0;overflow-wrap:break-word}
+ .mp-tbl tr.mp-gh th{white-space:normal}.mp-tbl tr.mp-gh th span{display:inline}
+ select{max-width:100%}}
+@media(max-width:740px){.mp-tbl tr.mp-item{grid-template-columns:30px minmax(0,1fr) auto}.mp-tbl tr.mp-item td{min-width:0}}
+/* v205 Reading Coach in the reading check's story: words turn green as BULIG hears them; the next word glows */
+.rk-sw{border-radius:6px;transition:background .25s,color .25s;padding:0 1px}
+.rk-coach-on .rk-sw{color:#5f6f63}
+.rk-sw.ok{background:#d6f5dc;color:#0f6a2c!important}
+.rk-sw.sk{color:#9a7a3a!important}
+.rk-sw.nx{background:#ffe27a;color:#0e3b28!important;box-shadow:0 0 0 2px #ffe27a}
+html.dark .rk-sw.ok{background:#1f4a2b;color:#bff0c9!important}html.dark .rk-sw.nx{background:#6b5310;color:#fff!important;box-shadow:0 0 0 2px #6b5310}
+/* v205 reading check story: steps, word progress, and the "Great reading!" sheet */
+.rk-steps{list-style:none;display:flex;gap:8px;margin:0 0 12px;padding:0;flex-wrap:wrap}
+.rk-steps li{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid var(--line,#e9e2cc);font-weight:700;font-size:.85rem;color:#6a7a6e}
+.rk-steps li span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#e8eee3;color:#3a4a3e;font-size:.75rem;font-weight:900}
+.rk-steps li.on{background:#fff7d6;border-color:#f1d27a;color:#0e3b28}.rk-steps li.on span{background:#ffc629;color:#3d2a00}
+.rk-steps li.done{color:#176444;border-color:#cfe7d3;background:#eef8ef}.rk-steps li.done span{background:#1d7a3c;color:#fff}
+.rk-prog{flex:1 1 140px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px;min-width:120px;font-size:.85rem;color:#5f6f63}
+.rk-prog b{font-size:1.3rem;color:#0f6a2c;font-variant-numeric:tabular-nums}
+.rk-prog i{flex:1 1 100%;height:8px;border-radius:8px;background:#e5ecdf;overflow:hidden}.rk-prog u{display:block;height:100%;width:0;background:linear-gradient(90deg,#3fbf6f,#1d7a3c);border-radius:8px;transition:width .4s}
+.rk-prog[hidden]{display:none}
+.rk-sheet{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,30,18,.45);animation:rk-fade .25s ease-out}
+.rk-sh-in{width:min(520px,100%);background:#fffdf6;border-radius:28px 28px 0 0;padding:26px 22px calc(22px + env(safe-area-inset-bottom));text-align:center;box-shadow:0 -10px 30px rgba(10,30,18,.25);animation:rk-up .35s cubic-bezier(.2,1.2,.4,1)}
+@media(min-width:741px){.rk-sheet{align-items:center}.rk-sh-in{border-radius:28px}}
+.rk-sh-ic{display:inline-grid;place-items:center;width:64px;height:64px;border-radius:50%;background:linear-gradient(#6fdc86,#1d7a3c);color:#fff;box-shadow:0 6px 16px rgba(29,122,60,.4)}.rk-sh-ic svg{width:34px;height:34px}
+.rk-sh-in h2{margin:12px 0 10px;font-size:1.6rem;color:#0e3b28}
+.rk-sh-stats{display:flex;justify-content:center;gap:12px;margin:0 0 14px}
+.rk-sh-stats>div{min-width:110px;padding:10px 14px;border-radius:16px;background:#eef8ef;border:1px solid #cfe7d3}.rk-sh-stats b{display:block;font-size:1.4rem;color:#0f6a2c;font-variant-numeric:tabular-nums}.rk-sh-stats small{color:#5f6f63;font-weight:600}
+.rk-sh-play{display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 10px;border-radius:999px;border:2px solid #cfe7d3;background:#fff;font:700 1rem var(--font-fun,inherit);color:#176444;cursor:pointer}
+.rk-sh-pi{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#1d7a3c;color:#fff}.rk-sh-pi svg{width:18px;height:18px}
+.rk-sh-play.on .rk-sh-pi{background:#e2452b}
+.rk-sh-note{margin:14px 0;color:#5f6f63;font-size:.92rem}
+.rk-sh-btns{display:flex;gap:10px;flex-wrap:wrap}
+.rk-sh-btns>*{flex:1 1 180px;min-height:54px;margin:0!important;display:inline-flex!important;align-items:center;justify-content:center;gap:8px}
+.rk-sh-again{border-radius:16px;border:2px solid #e3e6df;background:#fff;font:700 1rem var(--font-fun,inherit);color:#0e3b28;cursor:pointer}.rk-sh-again svg{width:20px;height:20px}
+.rk-sh-btns .rk-send{width:auto}
+@keyframes rk-up{from{transform:translateY(60%);opacity:0}}@keyframes rk-fade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){.rk-sheet,.rk-sh-in{animation:none}}
+html.dark .rk-sh-in{background:#13251b;color:#e8f0ea}html.dark .rk-sh-in h2{color:#e8f0ea}html.dark .rk-steps li,html.dark .rk-sh-again,html.dark .rk-sh-play{background:#16231b;border-color:#2e4234;color:#e8f0ea}
+.rk-storybar .rk-prog{flex:1 1 100%;order:3;margin-top:2px}
+/* v205 Word Coach finish: reading time, listen back, and sending to the teacher */
+.wc-time{display:inline-flex;align-items:center;gap:6px;margin:6px 0 2px;font-weight:700;color:#5f6f63}.wc-time svg{width:18px;height:18px}
+.wc-listen{display:inline-flex;align-items:center;gap:8px;margin:8px auto 0;padding:9px 16px;border-radius:999px;border:2px solid #cfe7d3;background:#fff;font-weight:700;color:#176444;cursor:pointer}.wc-listen svg{width:20px;height:20px}.wc-listen.on{border-color:#e2452b;color:#e2452b}
+.wc-listen[hidden]{display:none}
+.wc-count{margin:10px 0 0;font-weight:700;color:#7a5200;background:#fff7d6;border:1px solid #f1d27a;border-radius:12px;padding:8px 12px}.wc-count b{font-size:1.2rem}
+/* v205 Word Coach while the pupil reads: the story fills the screen, the controls are one slim dock at the bottom */
+.wc-ov.wc-reading .wc-panel{display:flex;flex-direction:column;height:min(900px,calc(100vh - 32px));height:min(900px,calc(100dvh - 32px))}
+.wc-ov.wc-reading .wc-txt{flex:1;max-height:none;font-size:1.45rem;line-height:2.1;scroll-behavior:smooth}
+.wc-ov.wc-reading .wc-box{flex:none;display:block;margin-top:10px;padding:10px 12px;border-radius:18px;text-align:left}
+.wc-ov.wc-reading .wc-box>img,.wc-ov.wc-reading .wc-step,.wc-ov.wc-reading .wc-say{display:none}
+.wc-ov.wc-reading .wc-dockrow{display:flex;align-items:center;gap:10px;margin:0;justify-content:flex-start}
+.wc-ov.wc-reading .wc-mic{flex:none}
+.wc-dockst{display:flex;flex-direction:column;min-width:0;flex:1}.wc-dockst b{font-size:1rem}.wc-dockst span{font-size:.78rem;color:#7a5200;font-weight:600}
+.wc-ov.wc-reading .wc-dockbtns{display:flex;gap:8px;margin:8px 0 0}.wc-ov.wc-reading .wc-dockbtns .btn{flex:1;min-height:46px;margin:0;justify-content:center}
+.wc-auto{display:none;margin:6px 0 0;font-size:.78rem;color:#5f6f63;text-align:center}.wc-ov.wc-reading .wc-auto{display:block}
+.wc-ov.wc-reading .wc-hint{margin:6px 0 0}
+@media(max-width:600px){.wc-ov.wc-reading .wc-panel{height:100%}.wc-ov.wc-reading .wc-txt{font-size:1.3rem}}
+/* v205 reading check: the same slim reading dock as Word Coach, pinned at the bottom while reading */
+.rk-sh-count{margin:4px 0 12px;font-weight:700;color:#7a5200;background:#fff7d6;border:1px solid #f1d27a;border-radius:12px;padding:8px 12px}.rk-sh-count b{font-size:1.2rem}
+.rk-storybar{background:linear-gradient(135deg,#fffaf0,#fff3d6)!important;border:2px solid #f2d27a!important}
+@media(max-width:740px){.rk-page .rk-storybar{position:fixed;top:auto;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;margin:0;box-shadow:0 -6px 22px rgba(15,61,36,.25)}
+ .rk-page .rk-form{padding-bottom:150px}.rk-page .l4-card .l4-pass,.rk-page .l4-card p{font-size:1.25rem;line-height:2}}
+/* v205 one finish sheet for Word Coach (all levels) and the BULIG reading check: stars, right / missed tally, auto-send */
+.wc-stars{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 10px}.wc-stars .ac-stars i{width:40px;height:40px}.wc-stars .wc-pct{font-size:1.6rem;font-weight:900;color:#7a5200;margin:0}
+.wc-tally{flex-wrap:wrap}.wc-tally>div{min-width:92px;flex:1 1 92px}
+.wc-tally>div.g{background:#e6f7ea;border-color:#bfe6c8}.wc-tally>div.g b{color:#0f6a2c}
+.wc-tally>div.r{background:#fdeceb;border-color:#f3c9c4}.wc-tally>div.r b{color:#b4462c}
+.wc-ov.wc-sheetmode{place-items:end center;padding:0}
+.wc-ov.wc-sheetmode .wc-panel{background:transparent;box-shadow:none;padding:0;width:min(560px,100%);max-height:100vh;display:flex;flex-direction:column;justify-content:flex-end}
+.wc-ov.wc-sheetmode .wc-top,.wc-ov.wc-sheetmode .wc-x{display:none}
+.wc-ov.wc-sheetmode .wc-txt{display:none}
+.wc-ov.wc-sheetmode .wc-box{display:block;background:none;border:0;padding:0;margin:0}
+.wc-ov.wc-sheetmode .wc-sum.rk-sh-in{width:100%;max-height:92vh;overflow:auto;box-sizing:border-box}
+@media(min-width:741px){.wc-ov.wc-sheetmode{place-items:center}}
+.wc-sum .rk-sh-btns .rk-send{flex:1 1 100%}.wc-sum .rk-sh-again svg{width:20px;height:20px}
+.wc-sum .wc-chips{justify-content:center;margin:0 0 6px}
+/* the reading dock looks like the reading check's: a big round stop button and the timer */
+.wc-ov.wc-reading .wc-box{background:linear-gradient(135deg,#fffaf0,#fff3d6);border:2px solid #f2d27a}
+.wc-ov.wc-reading .wc-mic{width:58px;height:58px;box-shadow:0 0 0 6px rgba(226,69,43,.15),0 6px 14px rgba(226,69,43,.35)}
+.wc-ov.wc-reading .wc-dockst b{font-size:1.2rem;font-variant-numeric:tabular-nums}
+.wc-sum .rk-send svg,.wc-sum .wc-read svg{width:22px!important;height:22px!important;flex:none}
+.wc-sum .rk-send{min-height:56px;font-size:1.1rem}
+.wc-ov.wc-reading .wc-panel{background:#fffdf6}
+.wc-ov.wc-reading .wc-txt{background:#fff;border:0;border-radius:22px;box-shadow:0 6px 18px -10px rgba(14,59,40,.3);text-align:center;padding:18px 16px}
+/* v205: while the More menu is open on a phone, the floating top buttons hide (they covered the menu) */
+@media(max-width:740px){body.sidebar-open :is(.notif-m,.mode-mobile,.mobile-signout,.pupil-tabbar,.tour-help){opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:opacity .15s}}
+/* ---- v204 reading support: readers who need help, class challenge, offline waiting, practice words, data cleanup ---- */
+.rs-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;margin:16px 0}
+.rs-cols>.card{margin:0;min-width:0}
+.rs-card .ws-hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}.rs-card .ws-hd h2{display:flex;align-items:center;gap:8px}.rs-card .ws-hd h2 .icon{width:22px;height:22px;color:#16842f}
+.rs-sub{font-size:.8rem;color:#6b7a70}
+.rs-ok{display:flex;gap:8px;align-items:flex-start;color:#2f5a3a;margin:6px 0}.rs-ok .icon{flex:none;color:#16842f}
+.rs-list{display:grid;gap:8px}
+.rs-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;border:1px solid rgba(12,38,20,.1);background:#fff;text-decoration:none!important;color:inherit!important;min-width:0}
+.rs-row .avatar,.rs-row img{width:40px;height:40px}
+.rs-tx{display:grid;gap:2px;min-width:0}.rs-tx b{overflow-wrap:break-word}.rs-tx small{color:#6b7a70}
+.rs-tx em{font-style:normal;font-size:.82rem;color:#7d5a00}
+.rs-words{display:flex;flex-wrap:wrap;gap:4px;margin:2px 0}.rs-words i{font-style:normal;font-size:.78rem;padding:2px 8px;border-radius:99px;background:#fdecea;color:#a12a1f;font-weight:700}
+.rs-pct{font-size:1.15rem;color:#c62828;font-weight:800}
+.rs-group{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--y50,#fffbeb);border:1px solid var(--y300,#ffd966);margin-bottom:10px}
+.rs-group .icon{flex:none;color:#b88900}.rs-group small{display:block;color:#5c4a14}
+.rs-big{margin:4px 0 8px;font-size:1rem}.rs-big b{font-size:1.6rem;color:#16842f}
+progress.rs-bar{-webkit-appearance:none;appearance:none;display:block;width:100%;height:14px;border:0;border-radius:99px;background:#eef3ef;overflow:hidden;color:#16842f}
+progress.rs-bar::-webkit-progress-bar{background:#eef3ef;border-radius:99px}
+progress.rs-bar::-webkit-progress-value{background:linear-gradient(90deg,#16842f,#3fb35a);border-radius:99px}
+progress.rs-bar::-moz-progress-bar{background:linear-gradient(90deg,#16842f,#3fb35a);border-radius:99px}
+.rs-goal{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-top:10px}.rs-goal label{display:grid;gap:4px;font-size:.85rem;font-weight:700}.rs-goal input{width:140px}
+.rs-chp{margin:16px 0}.rs-chh{display:flex;gap:12px;align-items:center;margin-bottom:6px}.rs-chh small{display:block;color:#6b7a70}
+.rs-pic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:#e6f4ea;color:#16842f}
+.rs-plink{display:flex;align-items:center;gap:12px;margin:16px 0;text-decoration:none!important;color:inherit!important}.rs-plink>span:nth-child(2){flex:1;min-width:0}.rs-plink small{display:block;color:#6b7a70}
+.rs-pwl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px}
+.rs-pwl li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding:10px 12px;border-radius:16px;border:2px solid #e3eae5;background:#fff}
+.rs-pwl li b{font-size:1.3rem;overflow-wrap:anywhere}.rs-pwl li .rs-msg{grid-column:2;font-size:.78rem;color:#6b7a70}
+.rs-pwl li .l1-spk{grid-row:1/3}.rs-pwl li .rs-mic{grid-row:1/3;grid-column:3}
+.rs-mic{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:99px;border:0;background:#c62828;color:#fff;font-weight:700;cursor:pointer;min-height:40px}.rs-mic .icon{width:18px;height:18px}
+.rs-pwl li.listen{border-color:#c62828}.rs-pwl li.listen .rs-mic{animation:rsPulse 1s infinite}
+.rs-pwl li.ok{border-color:#16842f;background:#e6f4ea}.rs-pwl li.ok .rs-msg{color:#16842f;font-weight:700}
+.rs-pwl li.no .rs-msg{color:#a12a1f;font-weight:700}
+.rs-spk.on{outline:3px solid #ffc629}
+.rs-note{display:flex;gap:6px;align-items:center;margin-top:12px}.rs-note .icon{width:18px;height:18px}
+@keyframes rsPulse{50%{box-shadow:0 0 0 8px rgba(198,40,40,.18)}}
+@media(prefers-reduced-motion:reduce){.rs-pwl li.listen .rs-mic{animation:none}}
+.cu-grp{padding:12px;border:1px solid rgba(12,38,20,.1);border-radius:16px;margin-bottom:12px;display:grid;gap:10px}
+.cu-list{display:grid;gap:8px}.cu-p{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:#f7f9f7;min-width:0}
+.cu-p.keep{background:#e6f4ea}.cu-p span{display:grid;min-width:0}.cu-p small{color:#6b7a70;overflow-wrap:break-word}.cu-p .avatar,.cu-p img{width:36px;height:36px}
+.cu-form{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.cu-sure{display:flex;gap:8px;align-items:flex-start;font-size:.88rem;flex:1 1 260px}.cu-sure input{margin-top:3px}
+.cu-secs{list-style:none;padding:0;margin:0 0 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:8px}
+.cu-secs li{padding:8px 12px;border-radius:12px;background:#f7f9f7;display:grid}.cu-secs small{color:#6b7a70}
+html.dark .rs-row,html.dark .rs-pwl li{background:#16231b;border-color:#2e4234}html.dark .rs-row b,html.dark .rs-pwl li b{color:#eef5f0}
+html.dark .rs-sub,html.dark .rs-tx small,html.dark .rs-chh small,html.dark .rs-plink small,html.dark .cu-p small,html.dark .cu-secs small{color:#a9bcb0}
+html.dark .rs-tx em{color:#ffd966}html.dark .rs-ok{color:#cfe8d6}
+html.dark .rs-group{background:rgba(255,198,41,.1);border-color:rgba(255,198,41,.35)}html.dark .rs-group small{color:#f3e2a6}
+html.dark .rs-pwl li.ok{background:rgba(22,132,47,.2)}html.dark .cu-p,html.dark .cu-secs li{background:#1b2a20}html.dark .cu-p.keep{background:rgba(22,132,47,.22)}
+html.dark progress.rs-bar,html.dark progress.rs-bar::-webkit-progress-bar{background:#26382c}html.dark .rs-pic{background:rgba(22,132,47,.22);color:#7fd18f}
+html.dark .rs-words i{background:rgba(198,40,40,.22);color:#ffb4ab}
+/* ---- v204 accessibility: Bigger text and Easy-read letters (Settings) ---- */
+html.a11y-big{font-size:112.5%}
+html.a11y-easy{--font-fun:Verdana,Tahoma,'Segoe UI',Arial,sans-serif;--font-body:Verdana,Tahoma,'Segoe UI',Arial,sans-serif}
+html.a11y-easy body,html.a11y-easy body :is(p,li,span,b,small,em,label,a,button,input,textarea,select,h1,h2,h3,h4,td,th){font-family:Verdana,Tahoma,'Segoe UI',Arial,sans-serif!important;letter-spacing:.04em;word-spacing:.14em}
+html.a11y-easy body :is(p,li){line-height:1.75}
+html.a11y-easy body :is(p,li){font-style:normal}
+.cu-form label.cu-sure{display:flex!important;flex-direction:row;align-items:flex-start;gap:10px;font-weight:600;margin:0}.cu-form label.cu-sure input{width:20px;height:20px;flex:none;margin:2px 0 0;min-height:0}
+/* ---- v206 answer screens (phones) ---- */
+/* the lesson title no longer runs under the help friend in the green header */
+body:has(.tour-help-dock) .activity-header>div:not(.activity-progress){padding-right:58px;min-width:0}
+body:has(.tour-help-dock) .activity-header>div:not(.activity-progress) strong{overflow-wrap:anywhere}
+/* one microphone at a time: the old "Tap and say it" recorder waits until Word Coach with Max is done */
+.l1-rec.wc-locked{display:none!important}
+/* reading the words comes before counting them */
+.l2-ans:has(.l2-nums)>.l2-words{order:-2}.l2-ans:has(.l2-nums)>.l2-how{order:-1}
+/* bigger words in Draw a line to match */
+.l2-match .match-word,.l2-match .match-choice span{font-size:15.5px!important;line-height:1.25}.l2-match .match-item:has(img) .match-word{font-size:13px!important}
+@media(max-width:640px){
+ .ck-row .ck-go{flex:1 1 100%;min-height:50px;font-size:1.05rem}
+ .ck-row .ck-msg{flex:1 1 100%;text-align:center;margin:0}
+ .l2-draw-tools{gap:6px}.l2-pen{width:34px;height:34px;flex:none}
+ .l2-draw-clear{min-height:38px!important;padding:0 12px!important;font-size:.85rem!important;width:auto!important;flex:none;white-space:nowrap;margin-left:auto}
+ .l2-draw{min-width:0}.l2-canvas{max-width:100%}
+}
+/* True or False cards: two big keys, T and F */
+.l2-tiles.tf .l2-keys{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.l2-tiles.tf .l2-key:not(.sp):not(.er){min-height:64px;font-size:1.8rem;font-weight:900}
+.l2-tiles.tf .l2-key[data-key="T"]{background:#e6f4ea;border-color:#16842f;color:#16842f}.l2-tiles.tf .l2-key[data-key="F"]{background:#fdecea;border-color:#c62828;color:#c62828}
+@media(max-width:640px){.l2-match .match-board{column-gap:30px!important;padding:12px 6px!important}}
+.l2-match .match-word,.l2-match .match-choice span{hyphens:manual;-webkit-hyphens:manual}
+/* v206 picture cards that replaced drawing: a speaker on each picture says its name */
+.l2-picw{position:relative;display:grid;min-width:0}.l2-picw>.l2-pic{width:100%;height:100%}
+.l2-picw>.l2-picsay{position:absolute;left:6px;bottom:6px;width:34px;height:34px;min-height:0;padding:0;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.l2-picw>.l2-picsay svg{width:16px;height:16px}
+/* drawn diagrams (shapes, clocks, sets): one per row, big enough to see the details */
+.l2-pics.dpw{grid-template-columns:minmax(0,1fr)!important;gap:10px}
+.l2-pics.dpw .l2-pic{aspect-ratio:auto;padding:6px}.l2-pics.dpw .l2-pic img{width:100%;max-height:230px;height:auto;object-fit:contain}
+@media(min-width:760px){.l2-pics.dpw{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+/* ---- v207 "say it" cards in the Reading Coach style: a yellow coach dock under the pictures, a big red microphone,
+   one chip for each name to say (green when BULIG hears it), green pictures and stars ---- */
+.l2-say.rc-dock{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:14px;row-gap:8px;margin-top:14px;padding:12px 16px;border-radius:22px;background:var(--y50,#fffbeb);border:1.5px solid #f6df92;box-shadow:0 12px 26px -18px rgba(14,59,40,.55)}
+.l2-say.rc-dock>.l1-mic{grid-row:1/3;width:64px;height:64px;box-shadow:0 0 0 6px rgba(226,69,43,.15),0 6px 14px rgba(226,69,43,.35)}
+.l2-say.rc-dock>.l1-mic svg{width:30px;height:30px}
+.l2-say.rc-dock>.l1-rl{grid-column:2;align-self:end;font-size:1.02rem;line-height:1.25;color:#173a26;font-variant-numeric:tabular-nums}
+.l2-say.rc-dock>.l1-rs{grid-column:2;align-self:start;font-size:.84rem;color:#5b6b60;min-height:0}
+.l2-say.rc-dock>.l1-heard{grid-column:3;grid-row:1/3;align-self:center}
+.l2-say.rc-dock[data-state=rec]>.l1-rl{color:#c62828}
+.l2-say.rc-dock>.l1-play{grid-column:1/-1}
+.pc-names{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pc-chip{min-width:46px;min-height:40px;padding:6px 14px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;font-weight:800;font-size:1.05rem;background:#fff;border:2px dashed #e3c766;color:#a08a3c;transition:background .25s,border-color .25s,color .25s,transform .25s}
+.pc-chip.ok{background:#16842f;border:2px solid #16842f;color:#fff;transform:scale(1.06)}
+.pc-chip.ok::before{content:"✓ ";font-weight:900}
+.pc-chip.no{border-style:solid;border-color:#e57373;color:#c62828;background:#fdecea}
+.pc-stars{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0 2px;text-align:center}
+.pc-stars b{font-size:2rem;letter-spacing:4px;color:#f2b10c;line-height:1}.pc-stars b i{font-style:normal;color:#e3e7e4}
+.pc-stars span{font-weight:800;color:#16683f}
+.l2-pic.pc-ok{outline:4px solid #16842f;outline-offset:2px;border-radius:16px;position:relative}
+.l2-pic.pc-ok::after{content:"✓";position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;background:#16842f;color:#fff;display:grid;place-items:center;font-weight:900}
+.l2-pic.pc-no{outline:3px solid #e57373;outline-offset:2px;border-radius:16px}
+@media(max-width:640px){.l2-say.rc-dock{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:20;grid-template-columns:auto minmax(0,1fr)}.l2-say.rc-dock>.l1-heard{grid-column:1/-1;grid-row:auto;justify-self:stretch}}
+html.dark .l2-say.rc-dock{background:#1f2a22;border-color:#5a4d1f}html.dark .l2-say.rc-dock>.l1-rl{color:#eef5f0}html.dark .l2-say.rc-dock>.l1-rs{color:#a9bcb0}
+html.dark .pc-chip{background:#16231b;border-color:#7a6a2c;color:#d8c27a}html.dark .pc-chip.ok{background:#16842f;border-color:#16842f;color:#fff}
+.l2-say.rc-dock>.l1-rl,.l2-say.rc-dock>.l1-rs{text-align:left;justify-self:start}

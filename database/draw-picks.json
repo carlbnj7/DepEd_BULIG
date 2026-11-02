@@ -1,0 +1,1297 @@
+{
+ "version": "2026-11-02 pictures instead of drawing (v206)",
+ "cards": {
+  "2:0:2:learn:4|2": {
+   "kind": "picks",
+   "how": "Tap the 5 pictures that begin with the sound /r/.",
+   "images": [
+    {
+     "src": "assets/images/level2a/art-031-724881a449d7.webp",
+     "say": "ring"
+    },
+    {
+     "src": "assets/images/level2a/art-018-f192020f0534.webp",
+     "say": "pig"
+    },
+    {
+     "src": "assets/images/level2a/art-048-1c4b26fd8e46.webp",
+     "say": "rat"
+    },
+    {
+     "src": "assets/images/level2a/art-030-55803f1e502e.webp",
+     "say": "sun"
+    },
+    {
+     "src": "assets/images/level2a/art-040-2d477c074128.webp",
+     "say": "rabbit"
+    },
+    {
+     "src": "assets/images/level2a/art-047-243d28ccefc0.webp",
+     "say": "dog"
+    },
+    {
+     "src": "assets/images/level2a/art-031-25951ae3e8a8.webp",
+     "say": "ribbon"
+    },
+    {
+     "src": "assets/images/level2a/art-029-ff389b3c0d7a.webp",
+     "say": "ball"
+    },
+    {
+     "src": "assets/images/level2a/art-112-4f3eb2820e97.webp",
+     "say": "rope"
+    }
+   ],
+   "key": {
+    "req": [
+     1,
+     3,
+     5,
+     7,
+     9
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find 5 pictures which have an initial sound of letter /r/."
+  },
+  "2:0:3:learn:5|1": {
+   "kind": "picks",
+   "how": "Tap the 5 pictures that begin with the sound /a/.",
+   "images": [
+    {
+     "src": "assets/images/level2a/art-006-6e738cf0c668.webp",
+     "say": "ant"
+    },
+    {
+     "src": "assets/images/level2b/art-056-d271d0df37ce.webp",
+     "say": "umbrella"
+    },
+    {
+     "src": "assets/images/level6/g4/dp-apple.webp",
+     "say": "apple"
+    },
+    {
+     "src": "assets/images/level2a/art-006-7efb90e0c3c8.webp",
+     "say": "bed"
+    },
+    {
+     "src": "assets/images/level2a/art-010-191bae52412d.webp",
+     "say": "ax"
+    },
+    {
+     "src": "assets/images/level2a/art-011-bb5fec32cd43.webp",
+     "say": "fish"
+    },
+    {
+     "src": "assets/images/level2b/art-039-5a89edd4b2a4.webp",
+     "say": "alligator"
+    },
+    {
+     "src": "assets/images/level2a/art-009-72763c4b89e2.webp",
+     "say": "sun"
+    },
+    {
+     "src": "assets/images/level2b/art-056-1c0e9488b22e.webp",
+     "say": "avocado"
+    }
+   ],
+   "key": {
+    "req": [
+     1,
+     3,
+     5,
+     7,
+     9
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find 5 pictures which have an initial sound of /a/."
+  },
+  "2:0:4:learn:3|6": {
+   "kind": "picks",
+   "how": "Tap the 5 pictures that begin with the sound /d/.",
+   "images": [
+    {
+     "src": "assets/images/level2a/art-006-ca5ebc2380d8.webp",
+     "say": "dog"
+    },
+    {
+     "src": "assets/images/level2a/art-018-f192020f0534.webp",
+     "say": "pig"
+    },
+    {
+     "src": "assets/images/level2a/art-047-497bf7b99a3f.webp",
+     "say": "doll"
+    },
+    {
+     "src": "assets/images/level2a/art-007-80e9e2a37052.webp",
+     "say": "fan"
+    },
+    {
+     "src": "assets/images/level2a/art-063-f2b518f2eaf3.webp",
+     "say": "door"
+    },
+    {
+     "src": "assets/images/level2a/art-011-fe11945e7ec7.webp",
+     "say": "bell"
+    },
+    {
+     "src": "assets/images/level2b/art-014-d4d28edede6f.webp",
+     "say": "drum"
+    },
+    {
+     "src": "assets/images/level2a/art-012-6e68c0fc0833.webp",
+     "say": "cup"
+    },
+    {
+     "src": "assets/images/level2a/art-083-4a05b3267a7d.webp",
+     "say": "dress"
+    }
+   ],
+   "key": {
+    "req": [
+     1,
+     3,
+     5,
+     7,
+     9
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find 5 pictures which have an initial sound /d/."
+  },
+  "2:0:5:learn:3|6": {
+   "kind": "picks",
+   "how": "Tap 3 pictures that begin with the sound /s/.",
+   "images": [
+    {
+     "src": "assets/images/level2a/art-009-72763c4b89e2.webp",
+     "say": "sun"
+    },
+    {
+     "src": "assets/images/level2a/art-008-9cf49d014c89.webp",
+     "say": "cat"
+    },
+    {
+     "src": "assets/images/level2a/art-009-405874a11b95.webp",
+     "say": "soap"
+    },
+    {
+     "src": "assets/images/level2a/art-009-8abd363902a8.webp",
+     "say": "bus"
+    },
+    {
+     "src": "assets/images/level3/l08-intro-sack.webp",
+     "say": "sack"
+    },
+    {
+     "src": "assets/images/level2a/art-007-80e9e2a37052.webp",
+     "say": "fan"
+    },
+    {
+     "src": "assets/images/level2a/art-013-1cf68452a44e.webp",
+     "say": "star"
+    },
+    {
+     "src": "assets/images/level2a/art-006-ca5ebc2380d8.webp",
+     "say": "dog"
+    },
+    {
+     "src": "assets/images/level2a/art-006-7efb90e0c3c8.webp",
+     "say": "bed"
+    }
+   ],
+   "key": {
+    "req": [],
+    "opt": [
+     1,
+     3,
+     5,
+     7
+    ],
+    "min": 3
+   },
+   "text": "Find three pictures whose names have an initial sound of /s/."
+  },
+  "7:4:1100:pre:4|2": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-circ5-sizes.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circ5-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circ5-noline.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find five circles of the same size, with a straight line joining the circles through the middle."
+  },
+  "7:4:1100:pre:4|3": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-pie4-2.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-pie3-1.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-pie4-1.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a big circle divided into four equal parts, with one part shaded."
+  },
+  "7:4:1100:pre:4|5": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-circle-word.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-square-word.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circle-square-word.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     1
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a big circle with the word circle inside it."
+  },
+  "7:4:1100:pre:4|6": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-circle-side.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circle-in.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circle-edge.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a big circle with a smaller circle inside it."
+  },
+  "7:4:22300:post:4|2": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-circ5-sizes.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circ5-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circ5-noline.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find five circles of the same size, with a straight line joining the circles through the middle."
+  },
+  "7:4:22300:post:4|3": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-pie4-2.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-pie3-1.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-pie4-1.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a big circle divided into four equal parts, with one part shaded."
+  },
+  "7:4:22300:post:4|5": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-circle-word.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-square-word.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circle-square-word.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     1
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a big circle with the word circle inside it."
+  },
+  "7:4:22300:post:4|6": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-circle-side.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circle-in.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circle-edge.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a big circle with a smaller circle inside it."
+  },
+  "7:4:15214:learn:1|4": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-square-b.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-circle-c.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-square-c.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a square with the third letter of the alphabet inside it."
+  },
+  "7:4:16215:learn:1|2": {
+   "kind": "pick",
+   "how": "Tap the nipa hut.",
+   "images": [
+    {
+     "src": "assets/images/level2a/art-031-13c068b9ba02.webp",
+     "say": "house"
+    },
+    {
+     "src": "assets/images/level2a/art-011-a1f2e5c2a262.webp",
+     "say": "nipa hut"
+    },
+    {
+     "src": "assets/images/level2a/art-088-fb0324f964dc.webp",
+     "say": "tent"
+    },
+    {
+     "src": "assets/images/level2a/art-086-fee054655307.webp",
+     "say": "school"
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the nipa hut."
+  },
+  "7:4:16215:learn:1|5": {
+   "kind": "picks",
+   "how": "Tap a thing that can be seen inside the nipa hut. You may tap more than one.",
+   "images": [
+    {
+     "src": "assets/images/level5/g1/m007-1.webp",
+     "say": "chair"
+    },
+    {
+     "src": "assets/images/level2a/art-082-fbcb84bfa644.webp",
+     "say": "tree"
+    },
+    {
+     "src": "assets/images/level6/g4/dp-table.webp",
+     "say": "table"
+    },
+    {
+     "src": "assets/images/level2a/art-138-5ccb3d2e8b35.webp",
+     "say": "car"
+    },
+    {
+     "src": "assets/images/level2a/art-006-7efb90e0c3c8.webp",
+     "say": "bed"
+    },
+    {
+     "src": "assets/images/level2a/art-082-79d36254258c.webp",
+     "say": "clock"
+    }
+   ],
+   "key": {
+    "req": [],
+    "opt": [
+     1,
+     3,
+     5
+    ],
+    "min": 1
+   },
+   "text": "Find one of the things that can be seen inside the nipa hut."
+  },
+  "7:5:12500:post:4|5": {
+   "kind": "pick",
+   "how": "Tap the clock that shows the time in the story.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-clock-12.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-9.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-3.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-6.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the clock that shows the time the story happened."
+  },
+  "7:5:15213:learn:1|1": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-game1-same.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game1-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game1-left.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a big circle between two small circles, with your face in the big circle."
+  },
+  "7:5:15213:learn:1|2": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-game2-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game2-onlybig.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     1
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the picture with faces in the two small circles too."
+  },
+  "7:5:15213:learn:1|3": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-game3-circle.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game3-squarebig.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game3-ok.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a square around the three circles."
+  },
+  "7:5:15213:learn:1|4": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-game4-above.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game4-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game4-empty.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a rectangle under the square, with your name, grade and section inside it."
+  },
+  "7:5:15213:learn:1|5": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-game5-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game5-lower.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-game5-nobox.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     1
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the name of your school in capital letters below the rectangle, with a rectangle around it."
+  },
+  "7:5:16214:learn:1|6": {
+   "kind": "picks",
+   "how": "Tap all the vegetables she bought.",
+   "images": [
+    {
+     "src": "assets/images/level2b/art-056-0e758eb4c832.webp",
+     "say": "cabbage"
+    },
+    {
+     "src": "assets/images/level2b/art-038-594ae1a197aa.webp",
+     "say": "banana"
+    },
+    {
+     "src": "assets/images/level2a/art-009-8b2d5e9176fa.webp",
+     "say": "beans"
+    },
+    {
+     "src": "assets/images/level2a/art-011-bb5fec32cd43.webp",
+     "say": "fish"
+    },
+    {
+     "src": "assets/images/level2b/art-056-6b101b9bb497.webp",
+     "say": "tomato"
+    },
+    {
+     "src": "assets/images/level2a/art-012-c0b21b41f2f8.webp",
+     "say": "beef"
+    },
+    {
+     "src": "assets/images/level6/g4/dp-onion.webp",
+     "say": "onion"
+    },
+    {
+     "src": "assets/images/level6/g4/dp-carrot.webp",
+     "say": "carrot"
+    }
+   ],
+   "key": {
+    "req": [
+     1,
+     3,
+     5,
+     7,
+     8
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the vegetables she bought."
+  },
+  "7:5:17215:learn:1|1": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-house1-below.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-house1-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-house1-sq.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a big rectangle with a triangle over it."
+  },
+  "7:5:17215:learn:1|2": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-house2-horiz.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-house2-one.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-house2-ok.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find two vertical lines in the middle of the rectangle."
+  },
+  "7:5:17215:learn:1|3": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-house3-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-house3-one.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-house3-sq.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     1
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a small circle inside a bigger circle in the middle of the two vertical lines."
+  },
+  "7:5:17215:learn:1|4": {
+   "kind": "pick",
+   "how": "Which picture follows the direction? Tap it.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-house4-two.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-house4-ok.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-house4-one.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a square on each side of the vertical lines, with four horizontal lines inside each square."
+  },
+  "7:6:1100:pre:4|5": {
+   "kind": "pick",
+   "how": "Tap the things that looked like birds.",
+   "images": [
+    {
+     "src": "assets/images/level2a/art-011-2d8ccece9d85.webp",
+     "say": "bird"
+    },
+    {
+     "src": "assets/images/level6/g4/dp-kites.webp",
+     "say": "kites"
+    },
+    {
+     "src": "assets/images/level2b/art-044-8b9ef9a106ef.webp",
+     "say": "airplane"
+    },
+    {
+     "src": "assets/images/level2b/art-014-bcd9ab2fd5ca.webp",
+     "say": "cloud"
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the things that looked like birds."
+  },
+  "7:6:22300:post:4|5": {
+   "kind": "pick",
+   "how": "Tap the things that looked like birds.",
+   "images": [
+    {
+     "src": "assets/images/level2a/art-011-2d8ccece9d85.webp",
+     "say": "bird"
+    },
+    {
+     "src": "assets/images/level6/g4/dp-kites.webp",
+     "say": "kites"
+    },
+    {
+     "src": "assets/images/level2b/art-044-8b9ef9a106ef.webp",
+     "say": "airplane"
+    },
+    {
+     "src": "assets/images/level2b/art-014-bcd9ab2fd5ca.webp",
+     "say": "cloud"
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the things that looked like birds."
+  },
+  "7:6:21220:learn:1|11": {
+   "kind": "pick",
+   "how": "Tap the apple that tells how many feet high the apple trees grow.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-apple-20.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-apple-60.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-apple-40.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the apple that shows how many feet high the apple trees grow."
+  },
+  "8:1:35235:learn:1|3": {
+   "kind": "pick",
+   "how": "Tap what Samy had.",
+   "images": [
+    {
+     "src": "assets/images/level2a/art-011-fe11945e7ec7.webp",
+     "say": "bell"
+    },
+    {
+     "src": "assets/images/level2b/art-014-d4d28edede6f.webp",
+     "say": "drum"
+    },
+    {
+     "src": "assets/images/level2a/art-029-ff389b3c0d7a.webp",
+     "say": "ball"
+    },
+    {
+     "src": "assets/images/level2b/art-057-72772d2e7205.webp",
+     "say": "guitar"
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find what Samy had."
+  },
+  "8:1:36236:learn:1|3": {
+   "kind": "pick",
+   "how": "Tap the picture with three colored boats.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-boats-2.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-boats-3-plain.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-boats-3.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find the three boats with colors."
+  },
+  "8:1:39239:learn:1|4": {
+   "kind": "pick",
+   "how": "Tap the picture with two triangles like these.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-sq-2.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-tri-2.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-tri-3.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find two triangles like these."
+  },
+  "8:1:43243:learn:1|4": {
+   "kind": "pick",
+   "how": "Tap the clock that shows twelve o’clock.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-clock-3.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-6.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-12.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-9.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a clock that shows twelve o’clock time."
+  },
+  "8:1:43243:learn:1|5": {
+   "kind": "pick",
+   "how": "Tap the clock that shows three o’clock.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-clock-12.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-3.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-9.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-clock-6.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a clock that shows three o’clock time."
+  },
+  "8:2:33233:learn:1|3": {
+   "kind": "pick",
+   "how": "Tap the set of three apples.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-apples-2.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-apples-3.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-apples-4.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     2
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a set of three apples."
+  },
+  "8:2:33233:learn:1|4": {
+   "kind": "pick",
+   "how": "Tap the set of 2 tables and 1 chair.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-set-1t2c.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-set-2t2c.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-set-2t1c.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     3
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find a set of 2 tables and 1 chair."
+  },
+  "8:2:33233:learn:1|5": {
+   "kind": "pick",
+   "how": "Tap the two equivalent sets, each having 4 members.",
+   "images": [
+    {
+     "src": "assets/images/level6/g4/dp-eq-4-4.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-eq-4-3.webp",
+     "say": ""
+    },
+    {
+     "src": "assets/images/level6/g4/dp-eq-2-2.webp",
+     "say": ""
+    }
+   ],
+   "key": {
+    "req": [
+     1
+    ],
+    "opt": [],
+    "min": 0
+   },
+   "text": "Find two equivalent sets, each having 4 members."
+  },
+  "8:4:9209:learn:1|1": {
+   "kind": "pick",
+   "how": "Tap your favorite sport, or a sport you do not like. Then tell your teacher about it.",
+   "images": [
+    {
+     "src": "assets/images/level2b/art-051-2b2f9d41bf36.webp",
+     "say": "basketball"
+    },
+    {
+     "src": "assets/images/level2a/art-011-8f24e95c6e7a.webp",
+     "say": "volleyball"
+    },
+    {
+     "src": "assets/images/level2b/art-033-65e7d53c714b.webp",
+     "say": "running"
+    }
+   ],
+   "key": {
+    "req": [],
+    "opt": [
+     1,
+     2,
+     3
+    ],
+    "min": 1
+   },
+   "text": "Pick and tell to the teacher what is your favorite sport or which sport you don’t like and describe them."
+  },
+  "7:5:17215:learn:1|5": {
+   "text": "What is in the picture? Label the picture."
+  },
+  "8:2:33233:learn:1|6": {
+   "text": "Write the sum of the equivalent sets you found."
+  },
+  "2:0:3:learn:5|0": {
+   "text": "Find 5 pictures which have an initial sound of /a/."
+  },
+  "8:4:9209:learn:1|0": {
+   "text": "Pick and tell to the teacher what is your favorite sport or which sport you don’t like and describe them."
+  },
+  "2:0:7:learn:2|0": {
+   "text": "Read the words. Tap the three words that have the same ending sound."
+  },
+  "2:0:7:learn:2|1": {
+   "text": "Which three words have the same ending sound?"
+  },
+  "2:0:7:learn:2|2": {
+   "text": "Which three words have the same ending sound?"
+  },
+  "2:0:7:learn:2|3": {
+   "text": "Which three words have the same ending sound?"
+  },
+  "2:0:7:learn:2|4": {
+   "text": "Which three words have the same ending sound?"
+  },
+  "2:0:7:learn:2|5": {
+   "text": "Which three words have the same ending sound?"
+  },
+  "2:0:7:learn:3|0": {
+   "text": "Look at each picture and say its name. What is its ending sound? Tap /n/, /g/, /d/ or /t/."
+  },
+  "2:0:7:learn:3|1": {
+   "text": "What is the ending sound of this picture?",
+   "choices": [
+    "/n/",
+    "/g/",
+    "/d/",
+    "/t/"
+   ],
+   "key": {
+    "eq": "/g/"
+   }
+  },
+  "2:0:7:learn:3|2": {
+   "text": "What is the ending sound of this picture?",
+   "choices": [
+    "/n/",
+    "/g/",
+    "/d/",
+    "/t/"
+   ],
+   "key": {
+    "eq": "/g/"
+   }
+  },
+  "2:0:7:learn:3|3": {
+   "text": "What is the ending sound of this picture?",
+   "choices": [
+    "/n/",
+    "/g/",
+    "/d/",
+    "/t/"
+   ],
+   "key": {
+    "eq": "/n/"
+   }
+  },
+  "2:0:7:learn:3|4": {
+   "text": "What is the ending sound of this picture?",
+   "choices": [
+    "/n/",
+    "/g/",
+    "/d/",
+    "/t/"
+   ],
+   "key": {
+    "eq": "/n/"
+   }
+  },
+  "2:0:7:learn:3|5": {
+   "text": "What is the ending sound of this picture?",
+   "choices": [
+    "/n/",
+    "/g/",
+    "/d/",
+    "/t/"
+   ],
+   "key": {
+    "eq": "/t/"
+   }
+  },
+  "2:0:7:learn:3|6": {
+   "text": "What is the ending sound of this picture?",
+   "choices": [
+    "/n/",
+    "/g/",
+    "/d/",
+    "/t/"
+   ],
+   "key": {
+    "eq": "/d/"
+   }
+  },
+  "2:0:7:learn:3|7": {
+   "text": "What is the ending sound of this picture?",
+   "choices": [
+    "/n/",
+    "/g/",
+    "/d/",
+    "/t/"
+   ],
+   "key": {
+    "eq": "/d/"
+   }
+  },
+  "2:0:7:learn:3|8": {
+   "text": "What is the ending sound of this picture?",
+   "choices": [
+    "/n/",
+    "/g/",
+    "/d/",
+    "/t/"
+   ],
+   "key": {
+    "eq": "/t/"
+   }
+  }
+ }
+}

@@ -79,20 +79,53 @@
   skip.addEventListener('click',()=>{if(busy||hold||!words[i])return;hold=true;keep('-','');next(false);});
   show();}
 
+ const MIC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>',PLAY='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>',AGAIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 4v6h6"/><path d="M5.5 15a7 7 0 1 0 1.6-7.4L4 10"/></svg>';
  /* ---------- Read a story ---------- */
  const sf=$('form[data-rc-story]');
  if(sf){const go=$('[data-rc-go]',sf),label=$('[data-rc-label]',sf),sub=$('[data-rc-sub]',sf),send=$('[data-rc-send]',sf),heard=$('[data-rc-heard]',sf),audio=$('[data-rc-audio]',sf),secs=$('[data-rc-secs]',sf),srIn=$('[data-rc-sr]',sf);
-  let state='idle',L=null,R=null,t0=0,tick=null;
+  let state='idle',L=null,R=null,t0=0,tick=null,autoStop=false;
+  /* v205 Reading Coach: the words of the story light up as BULIG hears them (green) and the next word glows, so the pupil
+     can follow. It is a reading check, so the coach never reads the story first or helps with a word. */
+  const card=$('.l4-card',sf),W=[];
+  if(card){const tw=document.createTreeWalker(card,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.nodeValue.trim()&&!n.parentElement.closest('button,script,style,.l1-spk')?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT});const nodes=[];while(tw.nextNode())nodes.push(tw.currentNode);
+   nodes.forEach(n=>{const f=document.createDocumentFragment();n.nodeValue.split(/(\s+)/).forEach(part=>{if(!part)return;if(/^\s+$/.test(part)){f.append(part);return;}const sp=document.createElement('span');sp.className='rk-sw';sp.textContent=part;const k=norm(part);if(k){sp.dataset.k=k;W.push(sp);}f.append(sp);});n.replaceWith(f);});}
+  const near=(a,b)=>a===b||(b.length>=5&&Math.abs(a.length-b.length)<=1&&[...b].filter((c,i)=>a[i]===c).length>=b.length-1);
+  const follow=t=>{if(!W.length)return;const toks=String(t).split(/\s+/).map(norm).filter(Boolean);let p=0;const ok=new Set();
+   for(const x of toks){for(let k=0;k<=3&&p+k<W.length;k++){if(near(x,W[p+k].dataset.k)){ok.add(p+k);p=p+k+1;break;}}}
+   W.forEach((w,i)=>{w.classList.toggle('ok',ok.has(i));w.classList.toggle('nx',i===p);w.classList.toggle('sk',i<p&&!ok.has(i));});
+   if(pn)pn.textContent=String(ok.size);if(pb)pb.style.width=Math.min(100,Math.round(p/W.length*100))+'%';
+   if(p>=W.length&&state==='rec'&&!autoStop){autoStop=true;setTimeout(()=>{if(state==='rec')go.click();},700);}
+   if(W[p]){const r=W[p].getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-140)W[p].scrollIntoView({block:'center',behavior:'smooth'});}};
+  const pn=$('[data-rc-pn]',sf),pb=$('[data-rc-pb]',sf),prog=$('[data-rc-prog]',sf),steps=$$('[data-rc-steps] li',sf);
+  if(prog&&W.length){const t=prog.querySelector('span');if(t)t.textContent=' of '+W.length+' words';}
+  const step=n=>steps.forEach((li,i)=>{li.classList.toggle('on',i===n);li.classList.toggle('done',i<n);});
+  /* the "Great reading!" sheet: listen back, read again, or send to the teacher */
+  let sheet=null;const closeSheet=()=>{if(sheet){sheet.remove();sheet=null;}};
+  const openSheet=(s,data)=>{closeSheet();const n=$$('.rk-sw.ok',sf).length;sheet=document.createElement('div');sheet.className='rk-sheet';sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-labelledby','rk-sh-t');
+   const miss=W.length&&n?W.length-n:0,pc=W.length&&n?Math.round(n/W.length*100):0,st=pc>=95?3:pc>=80?2:pc>=50?1:0;
+   sheet.innerHTML='<div class="rk-sh-in"><span class="rk-sh-ic">'+MIC+'</span><h2 id="rk-sh-t">'+(n&&pc<80?'Good reading!':'Great reading!')+'</h2>'
+    +(W.length&&n?'<div class="wc-stars"><span class="ac-stars st3" role="img" aria-label="'+st+' of 3 stars">'+'<i></i>'.repeat(st)+'<i class="off"></i>'.repeat(3-st)+'</span><b class="wc-pct">'+pc+'%</b></div>':'')
+    +'<div class="rk-sh-stats wc-tally"><div><b>'+fmt(s)+'</b><small>reading time</small></div>'+(W.length&&n?'<div class="g"><b>'+n+'</b><small>words right</small></div><div class="r"><b>'+miss+'</b><small>words missed</small></div>':'')+'</div>'
+    +(data?'<button type="button" class="rk-sh-play" data-sh-play><span class="rk-sh-pi">'+PLAY+'</span>Listen to my reading</button>':'')
+    +'<p class="rk-sh-note">Your teacher will listen to your reading and check your level.</p><div class="rk-sh-btns"><button type="button" class="rk-sh-again" data-sh-again>'+AGAIN+'Read again</button></div></div>';
+   const btns=sheet.querySelector('.rk-sh-btns');btns.append(send);send.hidden=false;sf.append(sheet);setTimeout(()=>send.focus({preventScroll:true}),200);
+   /* sends to the teacher by itself after 5 seconds; Read again or Listen stops the countdown */
+   const cnt=document.createElement('p');cnt.className='rk-sh-count';cnt.setAttribute('aria-live','polite');cnt.innerHTML='Sending to your teacher in <b>5</b>…';btns.before(cnt);let left=5;
+   const cd=setInterval(()=>{if(!sheet){clearInterval(cd);return;}left--;cnt.querySelector('b').textContent=String(left);if(left<=0){clearInterval(cd);cnt.textContent='Sending…';sf.requestSubmit?sf.requestSubmit(send):send.click();}},1000);
+   const stopCd=()=>{clearInterval(cd);cnt.remove();};sheet.addEventListener('click',e=>{if(e.target.closest('[data-sh-again],[data-sh-play]'))stopCd();});
+   const pl=sheet.querySelector('[data-sh-play]');if(pl){let au=null;pl.addEventListener('click',()=>{if(!au){au=new Audio(data);au.addEventListener('ended',()=>pl.classList.remove('on'));}if(!au.paused){au.pause();pl.classList.remove('on');return;}au.currentTime=0;au.play().then(()=>pl.classList.add('on')).catch(()=>{});});}
+   sheet.querySelector('[data-sh-again]').addEventListener('click',()=>{const bar=$('.rk-storybar',sf);bar.append(send);send.hidden=true;closeSheet();step(0);go.click();});};
+  const coachReset=on=>{W.forEach((w,i)=>{w.classList.remove('ok','sk','nx');if(on&&i===0)w.classList.add('nx');});if(card)card.classList.toggle('rk-coach-on',!!on);};
   go.addEventListener('click',async()=>{
    if(state==='rec'){if(Date.now()-t0<1500)return;state='busy';clearInterval(tick);go.classList.remove('on');label.textContent='Saving…';
     const s=(Date.now()-t0)/1000;const res=L?await L.stop():{text:'',err:'none',got:false};const data=R?await R.stop():'';
     heard.value=res.text.trim();audio.value=data;secs.value=String(Math.round(s));srIn.value=L&&(res.got||!res.err)?'ok':'off';
     if(!heard.value&&!data){state='idle';label.textContent='Tap and read the title and the story';sub.textContent='I could not hear you. Try again in a quiet place.';return;}
-    state='done';label.textContent='Your reading · '+fmt(s);sub.textContent='Tap Send. Or tap the microphone to read again.';send.hidden=false;send.focus({preventScroll:true});return;}
+    if(card)card.classList.remove('rk-coach-on');W.forEach(w=>w.classList.remove('nx'));state='done';label.textContent='Your reading · '+fmt(s);sub.textContent='Tap Send to my teacher, or read again.';step(2);openSheet(s,data);return;}
    if(state==='busy')return;state='busy';hush();send.hidden=true;heard.value='';audio.value='';
-   L=SR?listener(true):null;if(L&&!L.start())L=null;R=(!L||together)?recorder():null;if(R&&!(await R.start()))R=null;
+   L=SR?listener(true,follow):null;if(L&&!L.start())L=null;R=(!L||together)?recorder():null;if(R&&!(await R.start()))R=null;autoStop=false;coachReset(!!L);if(prog){prog.hidden=!L||!W.length;}if(pn)pn.textContent='0';if(pb)pb.style.width='0%';step(1);closeSheet();
    if(!L&&!R){state='idle';label.textContent='Read the story to your teacher';sub.textContent='This device cannot listen here. Tap Send when you finish.';srIn.value='off';send.hidden=false;return;}
-   state='rec';t0=Date.now();go.classList.add('on');label.textContent='0:00';sub.textContent='Read now. Tap the microphone when you finish.';tick=setInterval(()=>{label.textContent=fmt((Date.now()-t0)/1000);if(Date.now()-t0>600000)go.click();},250);});}
+   state='rec';t0=Date.now();go.classList.add('on');label.textContent='0:00';sub.textContent='Read to the last word. BULIG finishes by itself.';tick=setInterval(()=>{label.textContent=fmt((Date.now()-t0)/1000);if(Date.now()-t0>600000)go.click();},250);});}
 
  /* ---------- cards: read the question aloud when a new card opens (Part 3 is an oral test) ---------- */
  const deck=$('[data-l2-deck]');

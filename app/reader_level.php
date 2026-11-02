@@ -149,3 +149,67 @@ function rl_celebration(array $u,array &$seen,int &$shown):string{
  }
  $seen['h']=$sum;$seen['r']=$r['level'];return $out;
 }
+
+/* ---------- v205 rank frames: a frame round the pupil's picture in the style of their rank badge (gold metal, gems,
+   wings, laurels, crowns), like a game's avatar border. It grows with the rank. Colours follow the badges in
+   assets/images/ranks. ---------- */
+/* [rank colour, light rank colour, gem colour, ornament: leaves/wings colour, extras] */
+const RK_FRAME=['beginner'=>['#9a5a24','#d89a55','#ffcf3a','#4fae3a'],'learner'=>['#2f5fae','#7fb0ea','#3fb0ff','#c9d3de'],
+ 'explorer'=>['#b52a22','#e85b4a','#ff3b3b','#f2c13a'],'achiever'=>['#1f8a2e','#5fd06a','#2fe04a','#3fb83a'],
+ 'champion'=>['#2a7fd0','#8fd0ff','#53c3ff','#8fd0ff'],'guardian'=>['#6a33b8','#b37cf0','#c35cff','#a35ae8'],
+ 'elite'=>['#b8241d','#f0584c','#ff3a3a','#e8402f'],'master'=>['#c98a12','#ffe08a','#ffb31a','#f6d36b'],
+ 'legend'=>['#1d5fc9','#6fb2ff','#3d9bff','#3a8cf0'],'mythic'=>['#b8237f','#ff7fd0','#ff4fc8','#f04fb8']];
+function rank_frame_svg(string $k,int $tier,int $lv=0):string{
+ /* v205b: an ornate frame in the style of game avatar borders. viewBox 240; the photo fills the circle r=60 (no gap). */
+ [$c,$cl,$gem,$orn]=RK_FRAME[$k]??RK_FRAME['beginner'];$id='rf'.$k;$O='#4a2f04';
+ $d='<defs><linearGradient id="'.$id.'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c8"/><stop offset=".25" stop-color="#f6cf5a"/><stop offset=".55" stop-color="#c58b1c"/><stop offset=".8" stop-color="#f3d679"/><stop offset="1" stop-color="#8a5a10"/></linearGradient>'
+  .'<linearGradient id="'.$id.'h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffbe0"/><stop offset=".5" stop-color="#e8b23a"/><stop offset="1" stop-color="#7a4c08"/></linearGradient>'
+  .'<linearGradient id="'.$id.'c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'.$cl.'"/><stop offset="1" stop-color="'.$c.'"/></linearGradient>'
+  .'<linearGradient id="'.$id.'f" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="'.$c.'"/><stop offset=".6" stop-color="'.$orn.'"/><stop offset="1" stop-color="#ffffff" stop-opacity=".85"/></linearGradient>'
+  .'<radialGradient id="'.$id.'m" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="'.$gem.'"/><stop offset="1" stop-color="'.$c.'"/></radialGradient>'
+  .'<radialGradient id="'.$id.'a" cx="50%" cy="50%" r="50%"><stop offset=".45" stop-color="'.$gem.'" stop-opacity=".55"/><stop offset="1" stop-color="'.$gem.'" stop-opacity="0"/></radialGradient></defs>';
+ $G='url(#'.$id.'g)';$H='url(#'.$id.'h)';$M='url(#'.$id.'m)';$F='url(#'.$id.'f)';
+ $mir=fn(string $p)=>'<g>'.$p.'</g><g transform="translate(240 0) scale(-1 1)">'.$p.'</g>';
+ $gemD=fn(float $x,float $y,float $r)=>'<path d="M'.$x.' '.($y-$r*1.5).' L'.($x+$r).' '.$y.' L'.$x.' '.($y+$r*1.5).' L'.($x-$r).' '.$y.'Z" fill="'.$H.'" stroke="'.$O.'" stroke-width="1.4"/>'
+  .'<path d="M'.$x.' '.($y-$r*1.1).' L'.($x+$r*.7).' '.$y.' L'.$x.' '.($y+$r*1.1).' L'.($x-$r*.7).' '.$y.'Z" fill="'.$M.'"/><path d="M'.($x-$r*.3).' '.($y-$r*.5).' L'.$x.' '.($y-$r*.95).' L'.($x+$r*.15).' '.($y-$r*.4).'Z" fill="#fff" opacity=".9"/>';
+ $orb=fn(float $x,float $y,float $r)=>'<circle cx="'.$x.'" cy="'.$y.'" r="'.($r+3).'" fill="'.$H.'" stroke="'.$O.'" stroke-width="1.3"/><circle cx="'.$x.'" cy="'.$y.'" r="'.$r.'" fill="'.$M.'"/><circle cx="'.($x-$r*.35).'" cy="'.($y-$r*.4).'" r="'.($r*.32).'" fill="#fff" opacity=".85"/>';
+ $s=$d;
+ /* glow behind (higher ranks) */
+ if($tier>=3){$R=96+$tier*2;$s.='<path fill-rule="evenodd" d="M'.(120-$R).' 120a'.$R.' '.$R.' 0 1 0 '.(2*$R).' 0a'.$R.' '.$R.' 0 1 0 -'.(2*$R).' 0ZM50 120a70 70 0 1 0 140 0a70 70 0 1 0 -140 0Z" fill="url(#'.$id.'a)"/>';}
+ /* rank-colour flames / feathers behind everything */
+ if($tier>=4)$s.=$mir('<path d="M86 200 C40 190 12 142 22 92 C34 134 60 164 96 180Z" fill="'.$F.'" stroke="'.$O.'" stroke-opacity=".6" stroke-width="1.4"/>'.($tier>=6?'<path d="M64 172 C22 148 12 92 32 46 C38 92 52 132 76 166Z" fill="'.$F.'" stroke="'.$O.'" stroke-opacity=".6" stroke-width="1.4" opacity=".9"/>':''));
+ /* big outer blades sweeping up (Guardian and up) */
+ if($tier>=5)$s.=$mir('<path d="M58 176 C14 148 8 76 40 14 C34 70 40 118 72 160Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.8" stroke-linejoin="round"/><path d="M42 28 C30 76 38 120 66 158" fill="none" stroke="#fff6c8" stroke-opacity=".75" stroke-width="2"/>');
+ /* inner blades hugging the ring (Learner and up) */
+ if($tier>=1)$s.=$mir('<path d="M50 162 C24 128 26 82 52 48 C44 88 46 124 64 154Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.6" stroke-linejoin="round"/><path d="M50 58 C38 92 40 124 56 152" fill="none" stroke="#fff6c8" stroke-opacity=".7" stroke-width="1.6"/>');
+ /* laurels (Beginner) */
+ if($tier===0)$s.=$mir(implode('',array_map(fn($a)=>'<path transform="translate('.round(120+84*cos(deg2rad($a)),1).' '.round(120+84*sin(deg2rad($a)),1).') rotate('.($a+50).')" d="M0 0 Q9 -8 22 0 Q9 8 0 0Z" fill="'.$orn.'" stroke="'.$O.'" stroke-opacity=".6" stroke-width="1.1"/>',[110,124,138,152,166,180])));
+ /* the ring: dark base, thick bevelled gold, rank band, thin gold lip hugging the photo */
+ $s.='<circle cx="120" cy="122" r="69" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="18"/>'
+  .'<circle cx="120" cy="120" r="69" fill="none" stroke="'.$G.'" stroke-width="17"/>'
+  .'<circle cx="120" cy="120" r="77.5" fill="none" stroke="'.$O.'" stroke-width="1.6"/>'
+  .'<circle cx="120" cy="120" r="69" fill="none" stroke="url(#'.$id.'c)" stroke-width="6"/>'
+  .'<circle cx="120" cy="120" r="69" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1" stroke-dasharray="3 5"/>'
+  .'<circle cx="120" cy="120" r="61.6" fill="none" stroke="'.$H.'" stroke-width="3.4"/>'
+  .'<circle cx="120" cy="120" r="60.2" fill="none" stroke="'.$O.'" stroke-width="1"/>'
+  .'<path d="M62 92 A63 63 0 0 1 112 52" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2.6" stroke-linecap="round"/>';
+ /* studs on the ring */
+ foreach(($tier>=7?[20,55,125,160]:($tier>=2?[35,145]:[])) as $a){$r=deg2rad($a);$s.=$gemD(round(120+69*cos($r),1),round(120-69*sin($r),1),4.2);}
+ /* top crest: a gold spire with a big gem; side leaves; a crown from Master up */
+ $s.=$mir('<path d="M120 12 C108 26 104 40 106 52 L120 58Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.6" stroke-linejoin="round"/>'.($tier>=2?'<path d="M106 50 C92 46 82 36 80 22 C94 30 102 38 110 46Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.4"/>':''));
+ $s.=$gemD(120,40,($tier>=5?10:8));
+ if($tier>=7)$s.='<path d="M96 22 L100 2 L110 14 L120 -4 L130 14 L140 2 L144 22Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.6" stroke-linejoin="round"/>'.$orb(120,8,3).($tier>=9?$mir('<path d="M98 20 C84 8 82 -6 90 -14 C92 -2 98 8 106 14Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.4"/>'):'');
+ /* bottom: rank-colour fins, gem orbs and the level plaque */
+ if($tier>=3)$s.=$mir('<path d="M100 196 C80 206 60 204 46 192 C64 190 80 186 96 180Z" fill="'.$F.'" stroke="'.$O.'" stroke-width="1.3"/>');
+ $s.=$mir('<path d="M116 184 C102 186 92 192 88 204 L104 198 L116 202Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.5" stroke-linejoin="round"/>');
+ if($tier>=2)$s.=$orb(86,190,5.2).$orb(154,190,5.2);
+ $s.='<path d="M98 180 H142 L146 192 L120 214 L94 192Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.8" stroke-linejoin="round"/>'
+  .'<rect x="99" y="181" width="42" height="20" rx="10" fill="#140d24" stroke="'.$H.'" stroke-width="1.6"/>'
+  .($lv?'<text x="120" y="196" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="800" font-size="13.5" fill="#fff">'.$lv.'</text>':'');
+ return '<svg class="rf-svg" viewBox="0 0 240 240" aria-hidden="true">'.$s.'</svg>';
+}
+/** The pupil's picture inside their rank frame. */
+function rank_framed_avatar(array $u,?int $pid=null,string $cls=''):string{
+ $pid=$pid??(int)$u['id'];try{$k=rk_of((int)rl_info($pid)['level']);}catch(Throwable $e){return avatar($u);}
+ return '<span class="rf rf-'.$k['k'].' rf-t'.$k['i'].($cls?' '.$cls:'').'" data-rf-tier="'.$k['i'].'" data-rf-name="'.e($k['name']).'" role="img" aria-label="'.e($u['name'].' · '.$k['name'].' frame').'"><span class="rf-ph">'.avatar($u).'</span>'.rank_frame_svg($k['k'],$k['i'],(int)rl_info($pid)['level']).($k['i']>0?'<template class="rf-prev">'.rank_frame_svg(RK_RANKS[$k['i']-1][0],$k['i']-1,$k['from']-1).'</template>':'').'</span>';
+}
