@@ -16,10 +16,10 @@ function privacy_agreed(int $uid):bool{try{return (bool)val('SELECT 1 FROM setti
 /** The four things everyone should know, in words for pupils or for adults. [icon, title, text] */
 function privacy_points(string $role):array{
  if($role==='pupil')return [
-  ['user','What we keep','Your name, school, class, reading levels and scores. No home address and no phone number.'],
-  ['mic','Your voice','Max records your reading so your teacher can check it. Recordings are deleted after '.PRIVACY_KEEP_DAYS.' days.'],
-  ['lock','Who can see it','Only you, your teacher and the school administrator. BULIG never shares or sells your data.'],
-  ['shield','Your rights','You can see your data, fix it or ask to delete it. Ask your teacher or the school administrator.']];
+  ['user','What we keep','Your name, your class and your scores. Not where you live. Not your phone number.'],
+  ['mic','Your voice','Max records you when you read. Your teacher listens to help you. After '.PRIVACY_KEEP_DAYS.' days, it is deleted.'],
+  ['lock','Who can see it','Only you, your teacher and your school. Never strangers.'],
+  ['shield','You can ask','Want to see, fix or delete your data? Ask your teacher.']];
  return [
   ['user','What we keep','Names, IDs, LRN and sex of pupils, schools, sections, reading levels, answers, scores and XP.'],
   ['mic','Voice recordings','Kept only so teachers can check readings. Deleted after '.PRIVACY_KEEP_DAYS.' days; readings still waiting to be checked stay until they are checked.'],
@@ -38,10 +38,10 @@ function privacy_pop(?array $u):string{
   .'<img class="wn-bob" src="'.e(friend_img('claude','shield')).'" alt="Claude the Guard" width="150" height="326">'
   .'<form method="post" class="wn-body">'.csrf_field().'<input type="hidden" name="action" value="privacy_agree"><input type="hidden" name="back" value="'.e($back).'">'
   .'<span class="wn-badge">'.icon('shield').'DATA PRIVACY</span><h2 id="pv-title">Your Data Is Safe With BULIG</h2>'
-  .'<p class="wn-say"><b>Claude the Guard:</b> '.($kid?'Before we start, here is how BULIG keeps your information safe.':'Before you start, here is how BULIG keeps personal information safe.').'</p>'
+  .'<p class="wn-say"><b>Claude the Guard:</b> '.($kid?'I keep your data safe. Here is what you need to know.':'Before you start, here is how BULIG keeps personal information safe.').'</p>'
   .privacy_list(privacy_points((string)$u['role']))
-  .'<label class="pv-check"><input type="checkbox" name="agree" value="1" required data-pv-tick><span>I have read the <a href="?page=privacy" target="_blank" rel="noopener">Privacy Notice</a> and I agree to how BULIG uses my data.</span></label>'
-  .'<p class="pv-note">'.icon('shield').'Following the Data Privacy Act of 2012 (RA 10173)</p>'
+  .'<label class="pv-check"><input type="checkbox" name="agree" value="1" required data-pv-tick><span>'.($kid?'I understand, and I agree to the <a href="?page=privacy" target="_blank" rel="noopener">Privacy Notice</a>.':'I have read the <a href="?page=privacy" target="_blank" rel="noopener">Privacy Notice</a> and I agree to how BULIG uses my data.').'</span></label>'
+  .'<p class="pv-note">'.icon('shield').($kid?'BULIG follows the law that keeps your data safe (RA 10173)':'Following the Data Privacy Act of 2012 (RA 10173)').'</p>'
   .'<button class="btn primary wn-ok" data-pv-ok disabled>'.icon('check').($kid?'I Agree, Let’s Go':'I Agree').'</button></form>'
   .'<div class="wn-tape wn-tape-b" aria-hidden="true"></div></div></div>';
 }

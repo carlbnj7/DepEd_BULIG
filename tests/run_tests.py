@@ -676,6 +676,12 @@ def test_privacy(p):
     check('The sign-in page links to the Privacy Notice', 'pv-login' in text and '?page=privacy' in text)
     tour = open(os.path.join(ROOT, 'public/assets/tour.js'), encoding='utf8').read()
     check('The tours show My Data and Privacy and the Privacy Notice', tour.count("'.pv-card'") >= 3 and 'privacy:' in tour)
+    r = php_cli('probe.php', 'board_tries', 0)
+    b, c1 = r.get('board') or {}, r.get('card') or {}
+    check('Bug #139: a matching board keeps the pairs right after many Checks (17 of 18 is not 0%)', b.get('of') and b.get('pts') == b['of'] - 1, r)
+    check('A one-answer card still loses a third of its point for a wrong try', c1.get('of') == 1 and abs(float(c1.get('pts') or 0) - 0.67) < 0.01, r)
+    js = open(os.path.join(ROOT, 'public/assets/bug-updates.js'), encoding='utf8').read()
+    check('Bug report updates show Bob the Worker’s popup with a look for each status', all(w in js for w in ('Bob Fixed It!', 'Bob Is Working On It', 'We Checked Your Report', 'We Got Your Report', 'bug_popup_ack')))
     r = php_cli('probe.php', 'privacy_purge', 0)
     check('Recordings older than 60 days are deleted, except readings still waiting for the teacher', r.get('old_gone') is True and r.get('new_kept') is True and r.get('waiting_kept') is True, r)
 

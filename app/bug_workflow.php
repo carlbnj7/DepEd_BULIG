@@ -77,7 +77,7 @@ function bugflow_action(string $action):void{
  bugflow_apply($u,(int)($_POST['id']??0),(string)($_POST['status']??''),trim((string)($_POST['reply']??'')),(int)($_POST['deduct_xp']??0),(int)($_POST['version']??-1));flash('Report updated. The reporter has been notified.');go('?page=bug_report&id='.(int)$_POST['id']);
 }
 function bugflow_poll():never{
- $u=require_role('pupil','teacher');$event=bugflow_ready()?one('SELECT e.id,e.report_id,e.status,e.body,e.deducted_xp FROM bug_report_updates e JOIN bug_reports b ON b.id=e.report_id WHERE b.reporter_id=? AND e.popup_seen_at IS NULL ORDER BY e.id LIMIT 1',[$u['id']]):null;
+ $u=require_role('pupil','teacher');$event=bugflow_ready()?one('SELECT e.id,e.report_id,e.status,e.body,e.deducted_xp,b.summary FROM bug_report_updates e JOIN bug_reports b ON b.id=e.report_id WHERE b.reporter_id=? AND e.popup_seen_at IS NULL ORDER BY e.id LIMIT 1',[$u['id']]):null;
  header('Cache-Control: no-store');header('Content-Type: application/json');echo json_encode(['update'=>$event],JSON_UNESCAPED_UNICODE);exit;
 }
 function bugflow_admin(array $u):void{
