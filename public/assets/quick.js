@@ -71,7 +71,7 @@
   const art=img=>{const a=el('div','qo-lockart qo-soonart');const b=el('img','qo-bob');b.src='assets/images/characters/max-'+img+'.webp?v=2';b.alt='';a.append(b);return a;};
   document.addEventListener('click',e=>{if(pass||!window.isSecureContext&&location.hostname!=='localhost')return;const b=e.target.closest&&e.target.closest(SEL);if(!b||b.disabled||b.getAttribute('aria-disabled')==='true')return;
    if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)&&!(window.SpeechRecognition||window.webkitSpeechRecognition))return;
-   if(mic==='granted'||(mic==='unknown'&&seen()))return;
+   if(mic==='granted'||(mic!=='denied'&&seen()))return;   /* iPhones ask every visit: Max explains only the first time */
    e.preventDefault();e.stopImmediatePropagation();
    if(mic==='denied'){overlay({cls:'qo-lock qo-soon qo-mic',art:art('hello'),title:'I can’t hear you yet',text:'The microphone is turned off for BULIG. Ask a grown-up to tap the lock or the “aA” beside the web address, then turn on Microphone. Then tap the microphone again.',extra:[],primary:{label:'Okay'},secondary:null});return;}
    const ex=el('div','qo-micask');ex.innerHTML='<b>bulig wants to use your microphone</b><span class="qo-micbtns"><i>Block</i><em>Allow</em></span>';
