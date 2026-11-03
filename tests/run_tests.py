@@ -293,6 +293,7 @@ def run_pages(acc):
     test_jeepy(p)
     test_story(p)
     test_notifications(p)
+    test_privacy(p)
     test_whats_new(p)
     test_level4_scoring()
 
@@ -486,6 +487,7 @@ def test_castle(p6, acc):
     st = php_cli('probe.php', 'castle_setup', acc['pupil6']['uid'])
     if not check('Level 7 can be marked finished for the pupil', st.get('lessons') and st.get('open'), st):
         return
+    mysql('-N', '-e', f"INSERT IGNORE INTO settings(setting_key,setting_value) VALUES('privacy_ok_{acc['pupil6']['uid']}',NOW())", db=DB['name'])
     _, _, text = p6.req('?page=dashboard')
     check('The next page opens the Reading Castle scene', 'data-rc' in text and 'Open the gates' in text and 'Welcome to the Reading Castle!' in text)
     _, _, text = p6.req('?page=dashboard')
@@ -638,6 +640,46 @@ def test_jeepy(p):
     check('Jeepy says hello only once', 'name="bulig-friends"' not in text and q(f"SELECT COUNT(*) FROM settings WHERE setting_key='jeepy_met_{uid}'") == '1')
 
 
+def test_privacy(p):
+    """v209 Data privacy (RA 10173): Claude the Guard asks once, the Privacy Notice opens for everyone, My Data downloads."""
+    section('5c3b. Data privacy')
+    q = lambda sql: mysql('-N', '-e', sql, db=DB['name']).stdout.strip()
+    _, _, text = p.req('?page=dashboard')
+    me = re.search(r'name="bulig-uid" content="(\d+)"', text)
+    uid = int(me.group(1)) if me else 0
+    q(f"DELETE FROM settings WHERE setting_key='privacy_ok_{uid}'")
+    _, _, text = p.req('?page=dashboard')
+    check('The first page shows Claude the Guard’s privacy popup with the four points and RA 10173', 'data-pv' in text and 'claude-shield' in text and 'Your Data Is Safe With BULIG' in text and 'RA 10173' in text and 'name="agree"' in text)
+    check('Bob’s update popup waits until the privacy popup is answered', 'data-wn ' not in text and 'data-wn>' not in text)
+    status, _, text = p.req('index.php', {'action': 'privacy_agree', 'back': 'dashboard', 'csrf': p.token('?page=dashboard')})
+    check('Agreeing without ticking the box is refused', q(f"SELECT COUNT(*) FROM settings WHERE setting_key='privacy_ok_{uid}'") == '0')
+    status, url, text = p.req('index.php', {'action': 'privacy_agree', 'agree': '1', 'back': 'settings', 'csrf': p.token('?page=dashboard')})
+    check('Ticking the box and tapping I Agree saves the answer and goes back to the page', q(f"SELECT COUNT(*) FROM settings WHERE setting_key='privacy_ok_{uid}'") == '1' and 'page=settings' in url, url)
+    _, _, text = p.req('?page=settings')
+    check('The privacy popup comes only once', 'data-pv' not in text)
+    check('Settings has My Data and Privacy with Download, the Privacy Notice and Ask to Delete', 'pv-card' in text and '?page=my_data' in text and '?page=privacy' in text and 'privacy_delete_ask' in text and 'You agreed to the Privacy Notice on' in text)
+    _, _, text = p.req('?page=privacy')
+    check('The Privacy Notice page opens with every part', 'BULIG Privacy Notice' in text and all(w in text for w in ('What BULIG collects', 'Voice recordings', 'How we protect it', 'Your rights', 'National Privacy Commission')))
+    status, _, body = p.req('?page=my_data')
+    try:
+        d = json.loads(body)
+    except ValueError:
+        d = {}
+    check('Download My Data gives the pupil’s own records as JSON, without the password', status == 200 and d.get('account', {}).get('role') == 'pupil' and 'answers' in d and 'password' not in body and 'hash' not in body, body[:200])
+    q("DELETE FROM notifications WHERE kind='privacy'")
+    p.req('index.php', {'action': 'privacy_delete_ask', 'csrf': p.token('?page=settings')})
+    check('Ask to Delete My Account tells the administrator and the teacher', int(q("SELECT COUNT(*) FROM notifications WHERE kind='privacy'") or 0) >= 2)
+    g = Client()
+    status, url, text = g.req('?page=privacy')
+    check('Before signing in, the Privacy Notice opens too (not sent to sign in)', status == 200 and 'BULIG Privacy Notice' in text and 'page=login' not in urllib.parse.urlsplit(url).query)
+    _, _, text = g.req('?page=login')
+    check('The sign-in page links to the Privacy Notice', 'pv-login' in text and '?page=privacy' in text)
+    tour = open(os.path.join(ROOT, 'public/assets/tour.js'), encoding='utf8').read()
+    check('The tours show My Data and Privacy and the Privacy Notice', tour.count("'.pv-card'") >= 3 and 'privacy:' in tour)
+    r = php_cli('probe.php', 'privacy_purge', 0)
+    check('Recordings older than 60 days are deleted, except readings still waiting for the teacher', r.get('old_gone') is True and r.get('new_kept') is True and r.get('waiting_kept') is True, r)
+
+
 def test_whats_new(p):
     """Bob the Worker's "There's a new update" popup: once per account, then on the bell, and again with ?whatsnew=1."""
     section('5c4. New update popup (Bob the Worker)')
@@ -656,7 +698,7 @@ def test_whats_new(p):
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
     _, _, text = Client().req('?page=login&role=pupil')
-    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v208"' in text and 'bulig has a new update!' in text.lower() and ' hidden ' in text)
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v209"' in text and 'bulig has a new update!' in text.lower() and ' hidden ' in text)
 
 
 def test_notifications(p):

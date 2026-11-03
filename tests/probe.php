@@ -44,6 +44,13 @@ $out=match($what){
   $mod=(int)val('SELECT m.id FROM modules m WHERE m.level_id=? AND (m.grade_level IS NULL OR m.grade_level=?) ORDER BY m.id LIMIT 1',[$L,pupil_grade($pid)]);$no=cycle_numbers($mod)['no'];$one=array_search(1,$no,true);$two=array_search(2,$no,true);
   $o=['one'=>lesson_cycle_opens((int)$one),'two'=>lesson_cycle_opens((int)$two),'date'=>$d,'locked'=>lesson_cycle_locked($pid,(int)$two,$L)];
   if($old===null||$old===false)q("DELETE FROM settings WHERE setting_key='lesson_cycles'");else q("UPDATE settings SET setting_value=? WHERE setting_key='lesson_cycles'",[$old]);return $o;})(),
+ /* v209: recordings older than 60 days go; new ones and readings still waiting for the teacher stay */
+ 'privacy_purge'=>(function():array{$dir=l1_recordings_dir().'/999999';@mkdir($dir,0750,true);$old=$dir.'/old.webm';$new=$dir.'/new.webm';$wait=$dir.'/wait.webm';
+  foreach([$old,$new,$wait] as $f)file_put_contents($f,'x');touch($old,time()-61*86400);touch($wait,time()-90*86400);
+  $c=one('SELECT id,pupil_id,activity_id FROM activity_completion LIMIT 1');$rid=0;
+  if($c){q("INSERT INTO reading_verifications(completion_id,pupil_id,activity_id,state,audio_paths) VALUES(?,?,?,'pending',?)",[$c['id'],$c['pupil_id'],$c['activity_id'],json_encode(['0'=>'999999/wait.webm'])]);$rid=(int)db()->lastInsertId();}
+  $n=privacy_purge(true);$o=['deleted'=>$n,'old_gone'=>!is_file($old),'new_kept'=>is_file($new),'waiting_kept'=>$c?is_file($wait):true];
+  if($rid)q('DELETE FROM reading_verifications WHERE id=?',[$rid]);foreach([$old,$new,$wait] as $f)@unlink($f);@rmdir($dir);return $o;})(),
  /* Reading Castle (v182): mark every Level 7 lesson finished for the pupil and forget that the castle was seen */
  'castle_setup'=>(function()use($pid):array{$n=0;foreach(level_lessons(CASTLE_LEVEL,pupil_grade($pid)) as $l){q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=NOW()',[$pid,$l['id']]);$n++;}
   q('DELETE FROM settings WHERE setting_key=?',[castle_key($pid)]);friends_mark_met($pid);return ['lessons'=>$n,'open'=>castle_open($pid)];})(),

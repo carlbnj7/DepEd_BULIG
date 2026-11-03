@@ -15,6 +15,7 @@ function action():void{
  if($action==='message_reply')message_reply_action();
  if(in_array($action,['push_subscribe','push_prefs','push_off','push_test'],true))push_action($action);
  if(str_starts_with($action,'rc_'))rc_action($action);
+ if($action==='privacy_agree'||$action==='privacy_delete_ask')privacy_action($action);   // v209 data privacy
  if($action==='rate_app'||$action==='rate_later')rate_action($action);/* app ratings (v152) */
  if($action==='moved_seen')staff_action($action);
  if($action==='move_section')pupils_move_section(require_role('teacher'));
