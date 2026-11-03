@@ -704,6 +704,10 @@ def test_chat(acc):
     q(f'INSERT IGNORE INTO teacher_pupils(teacher_id,pupil_id) VALUES({tid},{pid}),({tid},{oid})')
     for c, label in [(t, 'Teacher'), (p, 'Pupil'), (a, 'Administrator')]:
         check(label + ' can open the chat page', c.req('?page=chat')[0] == 200)
+    _, _, text = p.req('?page=messages')
+    check('Messages opens the Messenger inbox: faces on top, chats with pictures, and the School row (no separate menu item)', 'mz-inbox' in text and 'mz-faces' in text and 'mz-av' in text and 'tab=school' in text and 'school administrator' in text.lower() and 'href="?page=chat"' not in text)
+    _, _, text = t.req('?page=messages&tab=school')
+    check('The School row opens the school messages, with a way back to all chats', 'msg-shell' in text and 'mz-inbox' not in text and 'All chats' in text)
     t.req('index.php', {'action': 'chat_send', 'csrf': t.token('?page=chat'), 'with': pid, 'body': 'Hello <b>Test</b>, please read Lesson 3.'})
     check('The teacher sends a message to their pupil', q(f'SELECT COUNT(*) FROM chat_messages m JOIN chats c ON c.id=m.chat_id WHERE c.teacher_id={tid} AND c.pupil_id={pid}') == '1')
     check('The pupil gets a bell notification', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={pid} AND kind='chat'") >= '1')
@@ -725,7 +729,7 @@ def test_chat(acc):
     t.req('index.php', {'action': 'chat_class', 'csrf': t.token('?page=chat&class=1'), 'section': 0, 'body': 'Good morning, class!'})
     check('Message the class sends one message to each pupil in their own chat', q("SELECT COUNT(*) FROM chat_messages WHERE body='Good morning, class!'") == str(n))
     _, _, text = t.req('?page=chat')
-    check('The teacher sees each pupil with the newest chat first', 'chat with pupils' in text.lower() and 'message the class' in text.lower() and 'msg-item' in text)
+    check('The teacher sees each pupil with the newest chat first', 'message the class' in text.lower() and 'mz-row' in text and 'MY PUPILS' in text or 'CHATS' in text)
     cid = q(f'SELECT id FROM chats WHERE teacher_id={tid} AND pupil_id={pid}')
     _, _, text = a.req(f'?page=chat&id={cid}')
     check('The administrator can read the chat, but cannot write in it', 'Yes, teacher!' in text and 'Read only' in text and 'chat_send' not in text)
@@ -1374,7 +1378,7 @@ def test_bug_workflow(acc):
     check('Reporter can see their report history','my bug reports' in p.req(page)[2].lower())
     q(f'UPDATE pupil_xp SET total={int(old or 0)} WHERE pupil_id={pid}')
     for client in [a,p,t]:
-        _,_,text=client.req('?page=messages')
+        _,_,text=client.req('?page=messages&tab=school')
         check('Messages uses split-list and reading panels','msg-shell' in text and 'msg-list' in text and 'msg-panel' in text)
     _,_,text=a.req('?page=messages&compose=1')
     check('Message compose remains inside selected panel','msg-shell has-selection' in text and 'New message' in text)

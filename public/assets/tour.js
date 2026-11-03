@@ -20,6 +20,7 @@
  if(page==='lesson')key=$('[data-l1-start]')?'l1-start':$('.l2-app')?'l2':$('.l1-app')?'l1':$('#activity-form')?'activity':($('.completion-card')?'lesson-done':'');
  if(page==='class_demo')key=$('#l1-demo')?'l1-demo':$('#class-demo')?'demo-slide':($('.demo-catalog')?'class_demo':'');
  if(page==='pupil')key='pupil-detail';
+ if(page==='messages'&&(q.get('tab')==='chat'||document.querySelector('.ch-shell')))key='chat';   // v209 the chat tab of Messages
 
  /* Steps: [target selector(s) or null for a centred card, title, text] */
  const P={
@@ -198,7 +199,8 @@
    [['.msg-search'],'Find a message','Type a word to find an older message.'],
    [['.msg-panel'],'Read it here','The message you tap opens here.']],
   chat:[
-   [['.mc-log','.msg-list'],'Chat with your teacher','Your messages with your teacher. Only you, your teacher and your school can see them.'],
+   [['.mz-faces'],'Your teacher and your school','Tap a face to chat. A green dot means they are on BULIG now.'],
+   [['.mz-list','.mc-log'],'Your chats','Your chats, newest first. Bold means a new message. Only you, your teacher and your school can see them.'],
    [['[data-mc-photo]'],'Send a photo','Tap here to send a picture, for example a page that is hard for you.'],
    [['[data-mc-mic]'],'Send your voice','Tap the microphone and talk. Tap the arrow to send it, or the trash to stop.'],
    [['.mc-send textarea'],'Write a message','Type your message here, then tap the green arrow.']],
@@ -317,9 +319,9 @@
    [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.']],
   privacy:P.privacy,
   chat:[
-   [['.msg-list'],'Chat with pupils','Every pupil in your class, newest chat first. A yellow number shows new messages.'],
-   [['a[href="?page=chat&amp;class=1"]','a[href*="class=1"]'],'Message the class','Send one message to all your pupils or to one section. Each pupil gets it in their own chat and replies only to you.'],
-   [['.msg-search'],'Find a pupil','Type a name to find a pupil quickly.'],
+   [['.mz-list'],'Chats with pupils','Your pupils, newest chat first. A green number shows new messages. School is your messages from the administrator.'],
+   [['.mz-face[href*="class=1"]','a[href*="class=1"]'],'Message the class','Send one message to all your pupils or to one section. Each pupil gets it in their own chat and replies only to you.'],
+   [['.mz-search'],'Find a pupil','Type a name to find a pupil quickly.'],
    [['[data-mc-photo]'],'Photos and voice','Send a photo or a voice message, like in Messenger. Files are deleted after 60 days.']],
   profile:P.profile.concat([['.rt-pcard','Rate BULIG','Five quick questions with stars. Your answers help the Division improve BULIG.']]),
   rate:[
@@ -457,7 +459,8 @@
    ['.pv-page h1','Privacy Notice','How BULIG follows the Data Privacy Act of 2012 (RA 10173). Every teacher and pupil agrees to it the first time they sign in.'],
    [['.pv-item'],'Each part','What is collected, why, how it is protected, who sees it, how long it is kept, and everyone’s rights.']],
   chat:[
-   [['.msg-list'],'Class chats','Chats between teachers and their pupils, newest first. You can read them to keep children safe; only the teacher and the pupil write.']],
+   [['.mz-faces'],'New and sent messages','Write a new message to pupils and teachers, or open the messages you sent.'],
+   [['.mz-list'],'Class chats','Chats between teachers and their pupils, newest first. You can read them to keep children safe; only the teacher and the pupil write.']],
   cleanup:[
    [['.hm-head'],'Data cleanup','Join pupils with two accounts, put away last year’s sections, and clear old records.'],
    [['.cu-grp'],'Pupils with two accounts','Pupils with the same name and grade. BULIG keeps the account with more work. Merge moves the answers, XP and progress, then switches the other account off.'],

@@ -85,7 +85,24 @@ function messages_pager(int $p,int $total,int $size,string $base):void{echo '<na
 
 
 /** Messenger-style split pane; existing sending, access checks and read receipts are unchanged. */
+/** v209 The tabs on Messages: the chat with the teacher (pupils) or with the pupils (teachers) or the class chats
+    (administrator), and the school messages. */
+function messages_tab(array $u):string{
+ if(!function_exists('chat_ready')||!chat_ready())return 'school';$t=(string)($_GET['tab']??'');if($t==='chat'||$t==='school')return $t;
+ if(isset($_GET['id'])&&$u['role']!=='admin'||!empty($_GET['compose'])||!empty($_GET['preview']))return 'school';
+ if($u['role']==='admin'&&isset($_GET['id'])&&$t==='')return 'school';
+ return 'chat';
+}
+function messages_tabs(array $u,string $on):string{
+ if(!function_exists('chat_ready')||!chat_ready())return '';$cn=chat_unread($u);$sn=messages_unread($u);
+ $chat=['pupil'=>'My teacher','teacher'=>'My pupils','admin'=>'Class chats'][$u['role']]??'Chats';$school=$u['role']==='admin'?'Sent messages':'School';
+ $a=fn($k,$l,$n,$ic)=>'<a class="bg-tab'.($on===$k?' on':'').'" href="?page=messages&amp;tab='.$k.'"'.($on===$k?' aria-current="page"':'').'>'.icon($ic).$l.($n?'<b>'.$n.'</b>':'').'</a>';
+ return '<nav class="bg-tabs msg-tabs" aria-label="Messages">'.$a('chat',$chat,$cn,$u['role']==='admin'?'shield':'comic').$a('school',$school,$sn,'mega').'</nav>';
+}
 function messages_view(array $u):void{
+ $tab=messages_tab($u);
+ if($tab==='chat'){chat_view($u);return;}
+ if(function_exists('chat_ready')&&chat_ready())echo '<a class="btn secondary small mz-backall" href="?page=messages&amp;tab=chat">'.icon('arrow','flip').'All chats</a>';   // v209 the school messages open from the School row of the inbox
  if(!messages_ready()){messages_content($u);return;}
  $admin=$u['role']==='admin';$uid=(int)$u['id'];$id=(int)($_GET['id']??0);$selected=$id||!empty($_GET['compose'])||!empty($_GET['preview']);$search=mb_substr(trim((string)($_GET['search']??'')),0,100);$p=max(1,min(100000,(int)($_GET['listpage']??1)));
  $where=$admin?'m.sender_id=?':'r.user_id=?';$params=[$uid];if($search!==''){$where.=' AND (m.subject LIKE ? OR m.body LIKE ?)';$params[]='%'.$search.'%';$params[]='%'.$search.'%';}

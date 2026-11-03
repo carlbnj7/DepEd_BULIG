@@ -962,6 +962,13 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
    const u=new URL(location.href);u.searchParams.set('t',Date.now());u.hash='msg-end';location.replace(u.toString());}
   catch(x){say(x.message||'It could not be sent. Please check the internet and try again.');busy=false;go.disabled=false;voice=null;mode();}});
  mode();})();
+// v209 an open chat fits the screen: its header stays in view and the newest message is at the bottom of the chat
+(()=>{const c=document.querySelector('.mz-chat');if(!c)return;const fit=()=>{if(innerWidth<900){const y=c.getBoundingClientRect().top+scrollY-84;scrollTo(0,Math.max(0,y));}else scrollTo(0,0);const l=c.querySelector('.mz-log');if(l)l.scrollTop=l.scrollHeight;};
+ requestAnimationFrame(fit);addEventListener('load',()=>setTimeout(fit,60),{once:true});const l=c.querySelector('.mz-log');c.querySelectorAll('.mz-log img').forEach(i=>i.addEventListener('load',()=>{if(l)l.scrollTop=l.scrollHeight;},{once:true}));})();
+// v209 Messages search: type a name and only the matching chats and faces stay
+(()=>{const q=document.querySelector('[data-mz-search]');if(!q)return;const box=q.closest('.mz-inbox'),none=box.querySelector('[data-mz-none]');
+ q.addEventListener('input',()=>{const t=q.value.trim().toLowerCase();let n=0;box.querySelectorAll('.mz-row').forEach(r=>{const ok=!t||(r.dataset.name||r.textContent.toLowerCase()).includes(t);r.hidden=!ok;if(ok)n++;});
+  box.querySelectorAll('.mz-face').forEach(f=>{f.hidden=!!t&&!f.textContent.toLowerCase().includes(t);});box.querySelectorAll('.mz-sec').forEach(s=>{s.hidden=!!t;});if(none)none.hidden=n>0;});})();
 // v209 a voice message in a chat bubble: play or pause, the bars fill while it plays, the time counts down
 document.addEventListener('click',e=>{const b=e.target.closest('.mc-play');if(!b)return;const v=b.closest('[data-mc-voice]'),a=v&&v.querySelector('audio');if(!a)return;
  document.querySelectorAll('[data-mc-voice] audio').forEach(o=>{if(o!==a&&!o.paused)o.pause();});
