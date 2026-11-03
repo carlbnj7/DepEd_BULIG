@@ -30,7 +30,7 @@ function privacy_list(array $pts):string{$h='<ul class="wn-list">';foreach($pts 
 
 /** The popup after signing in, or '' when this person already agreed. */
 function privacy_pop(?array $u):string{
- if(!$u||privacy_agreed((int)$u['id']))return '';
+ if(!$u||($_GET['page']??'')==='privacy'||privacy_agreed((int)$u['id']))return '';   // the notice page itself is read first, without the popup on top
  if(function_exists('teacher_must_change')&&teacher_must_change($u))return '';
  $kid=$u['role']==='pupil';$page=(string)($_GET['page']??'dashboard');$back=preg_match('~^[a-z_]{1,30}$~',$page)?$page:'dashboard';
  return '<div class="wn-shade pv-shade" data-pv role="dialog" aria-modal="true" aria-labelledby="pv-title"><div class="wn-box pv-box">'
@@ -40,14 +40,24 @@ function privacy_pop(?array $u):string{
   .'<span class="wn-badge">'.icon('shield').'DATA PRIVACY</span><h2 id="pv-title">Your Data Is Safe With BULIG</h2>'
   .'<p class="wn-say"><b>Claude the Guard:</b> '.($kid?'I keep your data safe. Here is what you need to know.':'Before you start, here is how BULIG keeps personal information safe.').'</p>'
   .privacy_list(privacy_points((string)$u['role']))
-  .'<label class="pv-check"><input type="checkbox" name="agree" value="1" required data-pv-tick><span>'.($kid?'I understand, and I agree to the <a href="?page=privacy" target="_blank" rel="noopener">Privacy Notice</a>.':'I have read the <a href="?page=privacy" target="_blank" rel="noopener">Privacy Notice</a> and I agree to how BULIG uses my data.').'</span></label>'
+  .'<label class="pv-check"><input type="checkbox" name="agree" value="1" required data-pv-tick><span>'.($kid?'I understand, and I agree to the <a href="?page=privacy" data-pv-more>Privacy Notice</a>.':'I have read the <a href="?page=privacy" data-pv-more>Privacy Notice</a> and I agree to how BULIG uses my data.').'</span></label>'
   .'<p class="pv-note">'.icon('shield').($kid?'BULIG follows the law that keeps your data safe (RA 10173)':'Following the Data Privacy Act of 2012 (RA 10173)').'</p>'
-  .'<button class="btn primary wn-ok" data-pv-ok disabled>'.icon('check').($kid?'I Agree, Let’s Go':'I Agree').'</button></form>'
+  .'<button class="btn primary wn-ok" data-pv-ok disabled>'.icon('check').($kid?'I Agree, Let’s Go':'I Agree').'</button>'
+  .'<div class="pv-full" data-pv-full hidden><span class="wn-badge">'.icon('info').'PRIVACY NOTICE</span><h2>'.($kid?'All About Your Data':'BULIG Privacy Notice').'</h2>'.privacy_list(privacy_notice_parts($kid)).'<button type="button" class="btn secondary wn-ok" data-pv-back>'.icon('arrow','flip').'Back</button></div></form>'
   .'<div class="wn-tape wn-tape-b" aria-hidden="true"></div></div></div>';
 }
 
 /** The full notice: [icon, title, text] for each part. */
-function privacy_notice_parts():array{return [
+function privacy_notice_parts(bool $kid=false):array{if($kid)return [
+ ['user','What we keep','Your name, your LRN, your class and school, your scores, XP and badges, and your reading voice. Not where you live. Not your phone number.'],
+ ['book','Why we keep it','So your teacher can help you read better, and see how much you grow.'],
+ ['mic','Your voice','Max records you only when you read. Your teacher listens to help you. After '.PRIVACY_KEEP_DAYS.' days, it is deleted.'],
+ ['lock','How we keep it safe','Your password is locked, so no one can read it. Only you, your teacher and your school can open your work.'],
+ ['people','Who can see it','Only you, your teacher and your school. BULIG never gives your data to strangers or to other companies.'],
+ ['clock','How long we keep it','While you study in your school.'],
+ ['shield','You can ask','You can see your data, get a copy, fix it, or ask to delete it. Just ask your teacher.'],
+ ['info','Need help?','Ask your teacher or your school. They can talk to the people in charge of keeping data safe.']];
+ return [
  ['user','What BULIG collects','Pupils: name, LRN, sex, grade, section, school, reading levels, answers, scores, XP, badges, learning days and voice recordings of readings. Teachers and administrators: name, ID, school and sex. No home address, phone number or photo is required.'],
  ['book','Why we collect it','To teach reading with the official DepEd BULIG modules, to check pupils’ readings, to track progress and to print report cards and certificates. Nothing is used for advertising.'],
  ['mic','Voice recordings','Max records a pupil’s reading only while the pupil reads. Teachers listen to check it. Recordings are deleted '.PRIVACY_KEEP_DAYS.' days after they are made; a reading that still waits for its teacher stays until it is checked.'],
@@ -57,13 +67,13 @@ function privacy_notice_parts():array{return [
  ['shield','Your rights','You may be informed, see your data, download it, correct it, object, and ask for it to be deleted. Use My Data and Privacy on your profile or settings, or ask your teacher or the school administrator.'],
  ['info','Contact','For questions or complaints, contact the Data Protection Officer of the DepEd Schools Division of Bukidnon, or the National Privacy Commission (privacy.gov.ph).']];}
 
-function privacy_notice_html(bool $guest):string{
- $h='<section class="card pv-page"><span class="eyebrow">DATA PRIVACY</span><h1>'.icon('shield').'BULIG Privacy Notice</h1>'
-  .'<p class="muted">How BULIG follows the Data Privacy Act of 2012 (Republic Act 10173). Version '.e(PRIVACY_ID).'.</p><div class="pv-grid pv-grid-1">';
- foreach(privacy_notice_parts() as [$i,$t,$d])$h.='<div class="pv-item">'.icon($i).'<span><b>'.e($t).'</b><small>'.e($d).'</small></span></div>';
+function privacy_notice_html(bool $guest,bool $kid=false):string{
+ $h='<section class="card pv-page"><span class="eyebrow">DATA PRIVACY</span><h1>'.icon('shield').($kid?'All About Your Data':'BULIG Privacy Notice').'</h1>'
+  .'<p class="muted">'.($kid?'BULIG follows the law that keeps your data safe (RA 10173).':'How BULIG follows the Data Privacy Act of 2012 (Republic Act 10173). Version '.e(PRIVACY_ID).'.').'</p><div class="pv-grid pv-grid-1">';
+ foreach(privacy_notice_parts($kid) as [$i,$t,$d])$h.='<div class="pv-item">'.icon($i).'<span><b>'.e($t).'</b><small>'.e($d).'</small></span></div>';
  return $h.'</div>'.($guest?'<a class="btn primary" href="?page=login">'.icon('arrow').'Back to sign in</a>':'').'</section>';
 }
-function privacy_view(?array $u):void{echo privacy_notice_html(!$u);}
+function privacy_view(?array $u):void{echo privacy_notice_html(!$u,($u['role']??'')==='pupil');}
 
 /** "My Data and Privacy" on the profile (teachers, administrators) or the settings page (pupils). */
 function privacy_card(array $u):string{
@@ -103,7 +113,8 @@ function privacy_my_data(array $u):never{
   'name_parts'=>$safe('SELECT first_name,middle_name,last_name,name_ext FROM user_names WHERE user_id=?',[$id]),
   'school'=>$safe('SELECT s.name FROM schools s JOIN users u ON u.school_id=s.id WHERE u.id=?',[$id]),
   'privacy_agreed_on'=>(string)(val('SELECT setting_value FROM settings WHERE setting_key=?',[privacy_key($id)])?:''),
-  'app_ratings'=>$safe('SELECT stars,overall,comment,created_at FROM app_ratings WHERE user_id=?',[$id])];
+  'app_ratings'=>$safe('SELECT stars,overall,comment,created_at FROM app_ratings WHERE user_id=?',[$id]),
+  'my_chat_messages'=>$safe('SELECT m.created_at,m.body,m.media_kind FROM chat_messages m WHERE m.author_id=? ORDER BY m.id',[$id])];
  if($u['role']==='pupil'){
   $d+=['pupil'=>$safe('SELECT grade_level,section FROM pupils WHERE user_id=?',[$id]),'details'=>$safe('SELECT sex,lrn FROM pupil_details WHERE pupil_id=?',[$id]),
    'teachers'=>$safe('SELECT u.name FROM teacher_pupils t JOIN users u ON u.id=t.teacher_id WHERE t.pupil_id=?',[$id]),
@@ -134,6 +145,10 @@ function privacy_purge(bool $force=false):int{
    if(!$f->isFile()||$f->getMTime()>=$cut||$f->getFilename()==='.htaccess')continue;
    $rel=ltrim(str_replace('\\','/',substr($f->getPathname(),strlen($root))),'/');if(isset($keep[$rel]))continue;
    if(@unlink($f->getPathname()))$n++;}
+  /* v209: photos and voice messages in Messages, after the same number of days */
+  $mroot=function_exists('media_dir')?realpath(media_dir()):false;$m=0;
+  if($mroot)foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($mroot,FilesystemIterator::SKIP_DOTS)) as $f)if($f->isFile()&&$f->getMTime()<$cut&&$f->getFilename()!=='.htaccess'&&@unlink($f->getPathname()))$m++;
+  if($m)audit('privacy_purge',$m.' message photos and voice messages older than '.PRIVACY_KEEP_DAYS.' days deleted');$n+=$m;
   if($n)audit('privacy_purge',$n.' voice recordings older than '.PRIVACY_KEEP_DAYS.' days deleted');
   return $n;
  }catch(Throwable $e){return 0;}

@@ -935,9 +935,67 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  const b=box.querySelector('[data-wn-close]'),open=()=>{box.hidden=false;if(b)setTimeout(()=>b.focus({preventScroll:true}),300);};
  /* a pupil's welcome sheet comes first; Bob waits until it is closed */
  if(window.pfOverlayOpen&&window.pfOverlayOpen()){box.hidden=true;document.addEventListener('pf:overlays-done',open,{once:true});}else open();})();
+// v209 Messages: send a photo or a voice message (tap the mic, tap the arrow to send, the trash to cancel). Photos are made smaller first.
+(()=>{const f=document.querySelector('form.mc-send');if(!f||!f.querySelector('[data-mc-photo]'))return;
+ const $=s=>f.querySelector(s),ta=$('#mc-body'),file=$('[data-mc-file]'),chip=$('[data-mc-chip]'),thumb=$('[data-mc-thumb]'),what=$('[data-mc-what]'),rec=$('[data-mc-rec]'),time=$('[data-mc-time]'),err=$('[data-mc-err]'),go=$('.mc-go'),mic=$('[data-mc-mic]'),pic=$('[data-mc-photo]');
+ let photo=null,voice=null,secs=0,mr=null,stream=null,tick=null,t0=0,parts=[],busy=false;
+ const say=t=>{err.textContent=t||'';};
+ const mode=()=>{const r=!!mr;rec.hidden=!r;ta.hidden=r;mic.hidden=r||!!photo;pic.hidden=r||!!voice;chip.hidden=!photo;f.classList.toggle('mc-recording',r);ta.required=!photo&&!voice&&!r;};
+ const clear=()=>{photo=null;voice=null;secs=0;thumb.removeAttribute('src');file.value='';mode();};
+ const dataUrl=b=>new Promise(res=>{const r=new FileReader();r.onload=()=>res(String(r.result||''));r.onerror=()=>res('');r.readAsDataURL(b);});   // the page allows data: pictures, not blob:
+ const small=src=>new Promise(res=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);c.toBlob(b=>res(b),'image/jpeg',.85);};im.onerror=()=>res(null);im.src=src;});
+ pic.addEventListener('click',()=>file.click());
+ file.addEventListener('change',async()=>{const x=file.files&&file.files[0];if(!x)return;say('');if(x.size>25*1024*1024){say('This photo is too big. Please choose a smaller one.');file.value='';return;}const b=await small(await dataUrl(x));if(!b){say('This photo could not be opened. Please choose another one.');file.value='';return;}photo=b;thumb.src=await dataUrl(b);what.textContent='1 photo ready to send';mode();});
+ $('[data-mc-clear]').addEventListener('click',clear);
+ const stopAll=()=>{clearInterval(tick);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;};
+ mic.addEventListener('click',async()=>{say('');if(!navigator.mediaDevices||!window.MediaRecorder){say('Voice messages do not work in this browser. Please type your reply.');return;}
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:true});}catch(e){say('BULIG cannot use the microphone. Allow the microphone for this site, then try again.');return;}
+  const type=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg'].find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t))||'';
+  parts=[];mr=new MediaRecorder(stream,type?{mimeType:type}:undefined);mr.ondataavailable=e=>{if(e.data&&e.data.size)parts.push(e.data);};mr.start(250);t0=Date.now();time.textContent='0:00';
+  tick=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);time.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');if(s>=120)go.click();},250);mode();});
+ const finish=()=>new Promise(res=>{if(!mr)return res(null);const r=mr;r.onstop=()=>{const b=new Blob(parts,{type:r.mimeType||'audio/webm'});res(b.size?b:null);};secs=Math.max(1,Math.round((Date.now()-t0)/1000));try{r.stop();}catch(e){res(null);}mr=null;stopAll();});
+ $('[data-mc-cancel]').addEventListener('click',async()=>{await finish();voice=null;mode();});
+ f.addEventListener('submit',async e=>{if(!mr&&!photo)return;e.preventDefault();if(busy)return;
+  if(mr){voice=await finish();if(!voice){say('Nothing was recorded. Please try again.');mode();return;}}
+  busy=true;go.disabled=true;say('Sending…');const d=new FormData(f);d.set('ajax','1');if(photo)d.set('photo',photo,'photo.jpg');if(voice){d.set('voice',voice,'voice.'+(voice.type.includes('mp4')?'m4a':voice.type.includes('ogg')?'ogg':'webm'));d.set('voice_secs',String(secs));}
+  try{const r=await fetch('index.php',{method:'POST',body:d,credentials:'same-origin',headers:{Accept:'application/json'}});const j=await r.json().catch(()=>({}));if(!r.ok||!j.ok)throw new Error(j.error||'');
+   const u=new URL(location.href);u.searchParams.set('t',Date.now());u.hash='msg-end';location.replace(u.toString());}
+  catch(x){say(x.message||'It could not be sent. Please check the internet and try again.');busy=false;go.disabled=false;voice=null;mode();}});
+ mode();})();
+// v209 an open chat fits the screen: its header stays in view and the newest message is at the bottom of the chat
+(()=>{const c=document.querySelector('.mz-chat');if(!c)return;const fit=()=>{if(innerWidth<900){const y=c.getBoundingClientRect().top+scrollY-84;scrollTo(0,Math.max(0,y));}else scrollTo(0,0);const l=c.querySelector('.mz-log');if(l)l.scrollTop=l.scrollHeight;};
+ requestAnimationFrame(fit);addEventListener('load',()=>setTimeout(fit,60),{once:true});const l=c.querySelector('.mz-log');c.querySelectorAll('.mz-log img').forEach(i=>i.addEventListener('load',()=>{if(l)l.scrollTop=l.scrollHeight;},{once:true}));})();
+// v209 Messages search: type a name and only the matching chats and faces stay
+(()=>{const q=document.querySelector('[data-mz-search]');if(!q)return;const box=q.closest('.mz-inbox'),none=box.querySelector('[data-mz-none]');
+ q.addEventListener('input',()=>{const t=q.value.trim().toLowerCase();let n=0;box.querySelectorAll('.mz-row').forEach(r=>{const ok=!t||(r.dataset.name||r.textContent.toLowerCase()).includes(t);r.hidden=!ok;if(ok)n++;});
+  box.querySelectorAll('.mz-face').forEach(f=>{f.hidden=!!t&&!f.textContent.toLowerCase().includes(t);});box.querySelectorAll('.mz-sec').forEach(s=>{s.hidden=!!t;});if(none)none.hidden=n>0;});})();
+// v209 a voice message in a chat bubble: play or pause, the bars fill while it plays, the time counts down
+document.addEventListener('click',e=>{const b=e.target.closest('.mc-play');if(!b)return;const v=b.closest('[data-mc-voice]'),a=v&&v.querySelector('audio');if(!a)return;
+ document.querySelectorAll('[data-mc-voice] audio').forEach(o=>{if(o!==a&&!o.paused)o.pause();});
+ if(!v.dataset.ready){v.dataset.ready='1';const d=v.querySelector('[data-mc-dur]'),full=d.textContent,bars=[...v.querySelectorAll('.mc-wave i')];
+  const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+  a.addEventListener('timeupdate',()=>{const dur=isFinite(a.duration)&&a.duration>0?a.duration:0;if(dur)d.textContent=fmt(Math.max(0,dur-a.currentTime));const k=dur?a.currentTime/dur:0;bars.forEach((x,i)=>x.classList.toggle('on',i/bars.length<k));});
+  a.addEventListener('play',()=>v.classList.add('playing'));a.addEventListener('pause',()=>v.classList.remove('playing'));a.addEventListener('ended',()=>{v.classList.remove('playing');d.textContent=full;bars.forEach(x=>x.classList.remove('on'));});
+  a.addEventListener('error',()=>{d.textContent='Cannot play';});}
+ if(a.paused)a.play().catch(()=>{});else a.pause();});
+// v209 Bug reports: a ready reply for the chosen status (Fixed, Processing …). Typing your own words keeps them; changing the status again only replaces a ready message.
+(()=>{const t=document.querySelector('[data-bug-auto]'),sel=document.getElementById('bug-status');if(!t||!sel)return;let M={};try{M=JSON.parse(t.dataset.bugAuto)||{};}catch(e){return;}
+ const note=document.querySelector('[data-bug-auto-note]'),reset=document.querySelector('[data-bug-auto-reset]');let auto='';
+ const put=()=>{auto=M[sel.value]||'';t.value=auto;if(note)note.hidden=!auto;};
+ sel.addEventListener('change',()=>{if(t.value.trim()===''||t.value===auto)put();});reset?.addEventListener('click',()=>{put();t.focus();});
+ if(t.value.trim()==='')put();
+ /* the XP deduction and its check box only for Rejected; the XP reward note only for Fixed */
+ const parts=[...document.querySelectorAll('[data-bug-for]')],show=()=>parts.forEach(p=>{p.hidden=p.dataset.bugFor!==sel.value;});sel.addEventListener('change',show);show();
+ const form=sel.form,box=form&&form.querySelector('[name=confirm_false]');
+ form?.addEventListener('submit',e=>{if(sel.value!=='rejected')return;if(box&&!box.checked){e.preventDefault();box.focus();box.closest('label')?.classList.add('ck-shake');return;}if(!confirm('Reject this report? A pupil loses up to 10 XP once.'))e.preventDefault();});})();
 // v209 Claude the Guard's privacy popup: the I Agree button opens when the box is ticked. A pupil's welcome sheet comes first.
 (()=>{const box=document.querySelector('[data-pv]');if(!box)return;const t=box.querySelector('[data-pv-tick]'),b=box.querySelector('[data-pv-ok]');
  const sync=()=>{b.disabled=!t.checked;};t.addEventListener('change',sync);sync();
+ /* the Privacy Notice opens inside the popup (a link would open the same page with this popup again) */
+ const full=box.querySelector('[data-pv-full]'),main=[...box.querySelectorAll('.wn-body>:not([data-pv-full]):not(input)')];
+ const view=on=>{if(!full)return;full.hidden=!on;main.forEach(x=>x.hidden=on);box.querySelector('.wn-box').scrollTop=0;(on?full.querySelector('[data-pv-back]'):box.querySelector('[data-pv-more]'))?.focus({preventScroll:true});};
+ box.querySelectorAll('[data-pv-more]').forEach(a=>a.addEventListener('click',e=>{if(!full)return;e.preventDefault();e.stopPropagation();view(true);}));
+ full?.querySelector('[data-pv-back]')?.addEventListener('click',()=>view(false));
  const open=()=>{box.hidden=false;setTimeout(()=>t.focus({preventScroll:true}),300);};
  if(window.pfOverlayOpen&&window.pfOverlayOpen()){box.hidden=true;document.addEventListener('pf:overlays-done',open,{once:true});}else open();})();
 /* The Reading Castle (app/castle.php): after Level 7, the castle scene. "Open the gates" swings the doors open, light pours

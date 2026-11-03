@@ -85,7 +85,24 @@ function messages_pager(int $p,int $total,int $size,string $base):void{echo '<na
 
 
 /** Messenger-style split pane; existing sending, access checks and read receipts are unchanged. */
+/** v209 The tabs on Messages: the chat with the teacher (pupils) or with the pupils (teachers) or the class chats
+    (administrator), and the school messages. */
+function messages_tab(array $u):string{
+ if(!function_exists('chat_ready')||!chat_ready())return 'school';$t=(string)($_GET['tab']??'');if($t==='chat'||$t==='school')return $t;
+ if(isset($_GET['id'])&&$u['role']!=='admin'||!empty($_GET['compose'])||!empty($_GET['preview']))return 'school';
+ if($u['role']==='admin'&&isset($_GET['id'])&&$t==='')return 'school';
+ return 'chat';
+}
+function messages_tabs(array $u,string $on):string{
+ if(!function_exists('chat_ready')||!chat_ready())return '';$cn=chat_unread($u);$sn=messages_unread($u);
+ $chat=['pupil'=>'My teacher','teacher'=>'My pupils','admin'=>'Class chats'][$u['role']]??'Chats';$school=$u['role']==='admin'?'Sent messages':'School';
+ $a=fn($k,$l,$n,$ic)=>'<a class="bg-tab'.($on===$k?' on':'').'" href="?page=messages&amp;tab='.$k.'"'.($on===$k?' aria-current="page"':'').'>'.icon($ic).$l.($n?'<b>'.$n.'</b>':'').'</a>';
+ return '<nav class="bg-tabs msg-tabs" aria-label="Messages">'.$a('chat',$chat,$cn,$u['role']==='admin'?'shield':'comic').$a('school',$school,$sn,'mega').'</nav>';
+}
 function messages_view(array $u):void{
+ $tab=messages_tab($u);
+ if($tab==='chat'||($u['role']!=='admin'&&function_exists('chat_ready')&&chat_ready()&&empty($_GET['compose'])&&empty($_GET['preview']))){chat_view($u);return;}   // v209 pupils and teachers: the School chat opens in the Messenger look too
+ if(function_exists('chat_ready')&&chat_ready())echo '<a class="btn secondary small mz-backall" href="?page=messages&amp;tab=chat">'.icon('arrow','flip').'All chats</a>';   // v209 the school messages open from the School row of the inbox
  if(!messages_ready()){messages_content($u);return;}
  $admin=$u['role']==='admin';$uid=(int)$u['id'];$id=(int)($_GET['id']??0);$selected=$id||!empty($_GET['compose'])||!empty($_GET['preview']);$search=mb_substr(trim((string)($_GET['search']??'')),0,100);$p=max(1,min(100000,(int)($_GET['listpage']??1)));
  $where=$admin?'m.sender_id=?':'r.user_id=?';$params=[$uid];if($search!==''){$where.=' AND (m.subject LIKE ? OR m.body LIKE ?)';$params[]='%'.$search.'%';$params[]='%'.$search.'%';}
@@ -100,6 +117,55 @@ function messages_view(array $u):void{
  echo '</section></div>';
 }
 
+/* ---------- v209 photos and voice messages in replies (database/migrations/038_message_media.sql) ----------
+   One photo or one voice message per reply. Photos are made smaller and saved again as JPEG (this also removes the
+   hidden location data a phone puts in a photo). Files are private: only the two people in the chat can open them,
+   through ?page=msg_media. They are deleted after 60 days (privacy_purge), like reading recordings. */
+const MEDIA_KEEP_DAYS=60;
+function media_ready():bool{static $ok;if($ok===null){try{$ok=replies_ready()&&(bool)one("SHOW COLUMNS FROM message_replies LIKE 'media_kind'");}catch(Throwable $e){$ok=false;}}return $ok;}
+function media_dir():string{return __DIR__.'/../storage/messages';}
+/** Save the uploaded photo or voice message for the chat with $with: [kind, path, seconds]. */
+function media_save(int $with):array{
+ $dir=media_dir().'/'.$with;if(!is_dir($dir)&&!@mkdir($dir,0750,true)&&!is_dir($dir))fail('Photos and voice messages cannot be saved right now. Please try again later.',500);
+ $name=date('YmdHis').'-'.bin2hex(random_bytes(6));
+ if(!empty($_FILES['photo']['tmp_name'])){$f=$_FILES['photo'];
+  if(($f['error']??1)!==UPLOAD_ERR_OK||!is_uploaded_file($f['tmp_name']))fail('The photo could not be sent. Please try again.');
+  if($f['size']>8*1024*1024)fail('This photo is too big. Please choose a smaller one (up to 8 MB).');
+  $info=@getimagesize($f['tmp_name']);if(!$info||!in_array($info[2],[IMAGETYPE_JPEG,IMAGETYPE_PNG,IMAGETYPE_WEBP,IMAGETYPE_GIF],true))fail('Please send a photo (JPEG, PNG or WebP).');
+  $path=$with.'/'.$name.'.jpg';
+  if(function_exists('imagecreatefromstring')&&($im=@imagecreatefromstring((string)file_get_contents($f['tmp_name'])))){
+   $w=imagesx($im);$h=imagesy($im);$k=min(1,1600/max($w,$h));if($k<1){$n=imagecreatetruecolor((int)round($w*$k),(int)round($h*$k));imagefill($n,0,0,imagecolorallocate($n,255,255,255));imagecopyresampled($n,$im,0,0,0,0,imagesx($n),imagesy($n),$w,$h);imagedestroy($im);$im=$n;}
+   else{$n=imagecreatetruecolor($w,$h);imagefill($n,0,0,imagecolorallocate($n,255,255,255));imagecopy($n,$im,0,0,0,0,$w,$h);imagedestroy($im);$im=$n;}
+   $ok=imagejpeg($im,media_dir().'/'.$path,85);imagedestroy($im);if(!$ok)fail('The photo could not be saved. Please try again.',500);
+  }elseif($info[2]===IMAGETYPE_JPEG){if(!@move_uploaded_file($f['tmp_name'],media_dir().'/'.$path))fail('The photo could not be saved. Please try again.',500);}
+  else fail('Please send a JPEG photo.');
+  return ['photo',$path,null];}
+ $f=$_FILES['voice'];
+ if(($f['error']??1)!==UPLOAD_ERR_OK||!is_uploaded_file($f['tmp_name']))fail('The voice message could not be sent. Please try again.');
+ if($f['size']>6*1024*1024)fail('This voice message is too long. Please keep it under 2 minutes.');
+ $head=(string)file_get_contents($f['tmp_name'],false,null,0,16);
+ if(str_starts_with($head,"\x1A\x45\xDF\xA3"))$ext='webm';elseif(str_starts_with($head,'OggS'))$ext='ogg';elseif(substr($head,4,4)==='ftyp')$ext='m4a';elseif(str_starts_with($head,'ID3')||(strlen($head)>1&&ord($head[0])===0xFF&&(ord($head[1])&0xE0)===0xE0))$ext='mp3';else fail('This voice message could not be read. Please record again.');
+ $path=$with.'/'.$name.'.'.$ext;if(!@move_uploaded_file($f['tmp_name'],media_dir().'/'.$path))fail('The voice message could not be saved. Please try again.',500);
+ return ['voice',$path,max(1,min(600,(int)($_POST['voice_secs']??0)))];
+}
+/** The photo or voice message inside a chat bubble. */
+function media_bubble(array $r,string $src=''):string{
+ if(empty($r['media_kind']))return '';$src=$src!==''?$src:'?page=msg_media&amp;id='.(int)$r['id'];$gone=!is_file(media_dir().'/'.(string)$r['media_path']);
+ if($r['media_kind']==='photo')return $gone?'<p class="mc-gone">'.icon('image').'This photo was deleted after '.MEDIA_KEEP_DAYS.' days.</p>':'<a class="mc-photo" href="'.$src.'" target="_blank" rel="noopener"><img src="'.$src.'" alt="Photo" loading="lazy"></a>';
+ $s=(int)$r['media_secs'];$t=floor($s/60).':'.str_pad((string)($s%60),2,'0',STR_PAD_LEFT);
+ if($gone)return '<p class="mc-gone">'.icon('mic').'This voice message was deleted after '.MEDIA_KEEP_DAYS.' days.</p>';
+ $bars='';for($k=0;$k<24;$k++)$bars.='<i class="mc-b'.(int)(abs(sin($k*1.7+(int)$r['id'])*cos($k*.6))*4).'"></i>';
+ return '<div class="mc-voice" data-mc-voice><button type="button" class="mc-play" aria-label="Play the voice message">'.icon('play','mc-pl').icon('pause','mc-pa').'</button><span class="mc-wave">'.$bars.'</span><span class="mc-dur" data-mc-dur>'.$t.'</span><audio preload="none" src="'.$src.'"></audio></div>';
+}
+/** Open a photo or voice message: only the person in the chat and the administrator who sent the message. */
+function media_open(?array $u):never{
+ if(!$u||!media_ready())fail('Not found.',404);$r=one('SELECT x.*,m.sender_id FROM message_replies x JOIN admin_messages m ON m.id=x.message_id WHERE x.id=?',[(int)($_GET['id']??0)]);
+ if(!$r||empty($r['media_path'])||((int)$r['user_id']!==(int)$u['id']&&!($u['role']==='admin'&&(int)$r['sender_id']===(int)$u['id'])))fail('Not found.',404);
+ $root=realpath(media_dir());$f=realpath(media_dir().'/'.$r['media_path']);if(!$root||!$f||!str_starts_with($f,$root.DIRECTORY_SEPARATOR)||!is_file($f))fail('This file was deleted after '.MEDIA_KEEP_DAYS.' days.',404);
+ $type=['jpg'=>'image/jpeg','webm'=>'audio/webm','ogg'=>'audio/ogg','m4a'=>'audio/mp4','mp3'=>'audio/mpeg'][strtolower(pathinfo($f,PATHINFO_EXTENSION))]??'application/octet-stream';
+ header('Content-Type: '.$type);header('Content-Length: '.filesize($f));header('Cache-Control: private, max-age=86400');header('X-Content-Type-Options: nosniff');readfile($f);exit;
+}
+
 /* ---------- v203 replies: a private chat for each person under each message (Messenger style) ---------- */
 function replies_ready():bool{static $ok;if($ok===null){try{$ok=messages_ready()&&(bool)one("SHOW TABLES LIKE 'message_replies'");}catch(Throwable $e){$ok=false;}}return $ok;}
 /** Unread items for the menu: new messages and administrator replies (pupils and teachers) or new replies (administrators). */
@@ -111,21 +177,26 @@ function messages_unread(array $u):int{
 function message_reply_action():never{
  $u=current_user();if(!$u)fail('Please sign in again.',403);$admin=$u['role']==='admin';if($admin&&!empty($_SESSION['pin_pending']))fail('Verify your admin PIN first.',403);
  if(!replies_ready())fail('Replies are not set up yet. Please tell your school administrator.');
- $mid=(int)($_POST['message_id']??0);$body=trim(str_replace(["\r\n","\r"],"\n",(string)($_POST['body']??'')));
- if($body===''||mb_strlen($body)>2000)fail('Write a reply (up to 2,000 characters).');
+ $mid=(int)($_POST['message_id']??0);$body=trim(str_replace(["\r\n","\r"],"\n",(string)($_POST['body']??'')));$ajax=!empty($_POST['ajax']);
+ $hasMedia=media_ready()&&(!empty($_FILES['photo']['tmp_name'])||!empty($_FILES['voice']['tmp_name']));   // v209 a photo or a voice message
+ if(($body===''&&!$hasMedia)||mb_strlen($body)>2000)fail('Write a reply (up to 2,000 characters).');
  $m=one('SELECT * FROM admin_messages WHERE id=?',[$mid]);if(!$m)fail('Message not found.',404);
  if($admin){if((int)$m['sender_id']!==(int)$u['id'])fail('Message not found.',404);$with=(int)($_POST['with']??0);}else $with=(int)$u['id'];
  if(!one('SELECT 1 FROM message_recipients WHERE message_id=? AND user_id=?',[$mid,$with]))fail('Message not found.',404);
  db()->beginTransaction();try{
   q('SELECT id FROM users WHERE id=? FOR UPDATE',[$u['id']]);
   /* a double tap or a resent form never posts the same reply twice; at most 30 replies an hour */
-  if(one('SELECT 1 FROM message_replies WHERE message_id=? AND user_id=? AND author_id=? AND body=? AND created_at>=NOW()-INTERVAL 30 SECOND',[$mid,$with,$u['id'],$body])){db()->commit();go('?page=messages&id='.$mid.($admin?'&with='.$with:'').'#msg-end');}
+  if(!$hasMedia&&one('SELECT 1 FROM message_replies WHERE message_id=? AND user_id=? AND author_id=? AND body=? AND created_at>=NOW()-INTERVAL 30 SECOND',[$mid,$with,$u['id'],$body])){db()->commit();if($ajax){header('Content-Type: application/json');echo '{"ok":true}';exit;}go('?page=messages&id='.$mid.($admin?'&with='.$with:'').'#msg-end');}
   if((int)val('SELECT COUNT(*) FROM message_replies WHERE author_id=? AND created_at>=NOW()-INTERVAL 1 HOUR',[$u['id']])>=30)fail('You sent many replies in the last hour. Please wait a little.');
-  q('INSERT INTO message_replies(message_id,user_id,author_id,body) VALUES(?,?,?,?)',[$mid,$with,$u['id'],$body]);
+  $media=$hasMedia?media_save($with):null;
+  if($media)q('INSERT INTO message_replies(message_id,user_id,author_id,body,media_kind,media_path,media_secs) VALUES(?,?,?,?,?,?,?)',[$mid,$with,$u['id'],$body,$media[0],$media[1],$media[2]]);
+  else q('INSERT INTO message_replies(message_id,user_id,author_id,body) VALUES(?,?,?,?)',[$mid,$with,$u['id'],$body]);
+  $say=$body!==''?$body:($media&&$media[0]==='photo'?'Sent a photo':'Sent a voice message');
   if($admin)notify($with,'note','Reply: '.mb_substr((string)$m['subject'],0,150),'Your school administrator replied.','?page=messages&id='.$mid.'#msg-end');
-  elseif($m['sender_id'])notify((int)$m['sender_id'],'note','Reply from '.$u['name'],mb_substr($body,0,200),'?page=messages&id='.$mid.'&with='.$with.'#msg-end');
+  elseif($m['sender_id'])notify((int)$m['sender_id'],'note','Reply from '.$u['name'],mb_substr($say,0,200),'?page=messages&id='.$mid.'&with='.$with.'#msg-end');
   db()->commit();
- }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+ }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();if(!empty($media[1]))@unlink(media_dir().'/'.$media[1]);throw $e;}
+ if($ajax){header('Content-Type: application/json');echo '{"ok":true}';exit;}
  go('?page=messages&id='.$mid.($admin?'&with='.$with:'').'#msg-end');
 }
 /** One chat: the message first, then the replies, then the box to write a reply. */
@@ -141,9 +212,9 @@ function message_chat(array $m,int $with,bool $admin,array $person):string{
  $h.='<div class="mc-day">'.e(date('F j, Y',strtotime((string)$m['created_at']))).'</div>';
  $h.='<div class="mc-row '.($admin?'me':'them').'"><div class="mc-bub mc-first"><b>'.e($m['subject']).'</b><p>'.nl2br(e($m['body'])).'</p>'.$when($m['created_at']).'</div></div>';
  foreach($rows as $r){$mine=(int)$r['author_id']===$uid||($admin&&(int)$r['author_id']!==(int)$r['user_id']);
-  $h.='<div class="mc-row '.($mine?'me':'them').'"><div class="mc-bub"><p>'.nl2br(e($r['body'])).'</p>'.$when($r['created_at']).($mine&&$r['read_at']?'<span class="mc-seen">Seen</span>':'').'</div></div>';}
+  $h.='<div class="mc-row '.($mine?'me':'them').'"><div class="mc-bub'.(!empty($r['media_kind'])?' mc-media':'').'">'.media_bubble($r).((string)$r['body']!==''?'<p>'.nl2br(e($r['body'])).'</p>':'').$when($r['created_at']).($mine&&$r['read_at']?'<span class="mc-seen">Seen</span>':'').'</div></div>';}
  $h.='<span id="msg-end"></span></div>';
- if(replies_ready())$h.='<form method="post" class="mc-send">'.csrf_field().'<input type="hidden" name="action" value="message_reply"><input type="hidden" name="message_id" value="'.$mid.'">'.($admin?'<input type="hidden" name="with" value="'.$with.'">':'').'<label class="sr-only" for="mc-body">Write a reply</label><textarea id="mc-body" name="body" rows="1" maxlength="2000" required placeholder="Write a reply…"></textarea><button class="mc-go" aria-label="Send">'.icon('arrow').'</button></form>';
+ if(replies_ready())$h.='<form method="post" class="mc-send">'.csrf_field().'<input type="hidden" name="action" value="message_reply"><input type="hidden" name="message_id" value="'.$mid.'">'.($admin?'<input type="hidden" name="with" value="'.$with.'">':'').''.(media_ready()?'<div class="mc-chip" data-mc-chip hidden><img alt="" data-mc-thumb><small data-mc-what>1 photo ready to send</small><button type="button" class="mc-ic" data-mc-clear aria-label="Remove">'.icon('close').'</button></div><button type="button" class="mc-ic" data-mc-photo aria-label="Send a photo">'.icon('image').'</button><input type="file" accept="image/*" data-mc-file hidden><button type="button" class="mc-ic" data-mc-mic aria-label="Record a voice message">'.icon('mic').'</button><div class="mc-rec" data-mc-rec hidden><span class="mc-dot"></span><b data-mc-time>0:00</b><span class="mc-recl">Recording…</span><button type="button" class="mc-ic" data-mc-cancel aria-label="Cancel recording">'.icon('trash').'</button></div>':'').'<label class="sr-only" for="mc-body">Write a reply</label><textarea id="mc-body" name="body" rows="1" maxlength="2000" required placeholder="Write a reply…"></textarea><button class="mc-go" aria-label="Send">'.icon('arrow').'</button><p class="mc-err" role="status" data-mc-err></p></form>';
  else $h.='<p class="mc-off">Replies are not set up yet.</p>';
  return '<div class="mc">'.$h.'</div>';
 }

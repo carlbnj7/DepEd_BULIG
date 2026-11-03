@@ -14,7 +14,7 @@
  const busyNow=()=>document.documentElement.classList.contains('bulig-boot')||document.querySelector('.wn-shade:not([hidden]):not(.bu-shade),[data-hello]:not(.out),[data-welcome]:not([hidden]),.fr-ov:not([hidden])')||(window.pfOverlayOpen&&window.pfOverlayOpen());
  function show(u){
   const L=LOOK[u.status]||LOOK.open,xp=parseInt(u.deducted_xp,10)||0;
-  const reply=String(u.body||'').replace(/\s*XP deducted:\s*\d+\.?\s*$/,'').trim();
+  const reply=String(u.body||'').replace(/\s*XP deducted:\s*\d+\.?\s*$/,'').replace(/\s*You earned \d+ XP for this helpful report!\s*$/,'').trim();
   const shade=el('div','wn-shade bu-shade bu-'+L.c);shade.setAttribute('role','dialog');shade.setAttribute('aria-modal','true');shade.setAttribute('aria-labelledby','bu-title');
   const box=el('div','wn-box bu-box');const tape=el('div','wn-tape');tape.setAttribute('aria-hidden','true');
   const bob=el('img','wn-bob');bob.src='assets/images/characters/bob-'+L.pose+'.webp?v=2';bob.alt='Bob the Worker';bob.width=150;bob.height=326;
@@ -23,6 +23,7 @@
   const rep=el('div','bu-report');rep.append(el('small','','REPORT #'+u.report_id),el('b','',u.summary?String(u.summary):'Your bug report'));
   body.append(badge,h,say,rep);
   if(reply){const m=el('div','bu-msg');const hd=el('small','');hd.append(svg(IC.chat),document.createTextNode('MESSAGE FROM THE BULIG TEAM'));m.append(hd,el('p','',reply));body.append(m);}
+  const won=/You earned (\d+) XP/.exec(String(u.body||''));if(u.status==='fixed'&&won)body.append(el('p','bu-reward','+'+won[1]+' XP · Thank you for finding a real problem!'));
   if(u.status==='rejected'&&xp>0)body.append(el('p','bu-xp','−'+xp+' XP'+' · Please send a report only when something is really not working.'));
   const acts=el('div','bu-acts');const ok=el('button','btn primary wn-ok');ok.type='button';ok.append(svg(IC.check),document.createTextNode(u.status==='fixed'?'Yay, Thank You Bob!':'Got It, Bob!'));
   const link=el('a','btn secondary bu-link');link.href='?page=bug_report&id='+encodeURIComponent(u.report_id);link.append(svg(IC.arrow),document.createTextNode('See the Report and Replies'));
