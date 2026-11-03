@@ -18,6 +18,7 @@ function del_settings(int $id):void{
 }
 function del_files(?string $avatar,int $id,bool $pupil):void{
  if($avatar&&preg_match('~^assets/uploads/[A-Za-z0-9._-]+$~',$avatar))@unlink(__DIR__.'/../public/'.$avatar);
+ $md=realpath(__DIR__.'/../storage/messages/'.$id);if($md&&str_starts_with($md,(string)realpath(__DIR__.'/../storage/messages'))){foreach(glob($md.'/*')?:[] as $f)if(is_file($f))@unlink($f);@rmdir($md);}   // v209 photos and voice messages of this person's chats
  if(!$pupil)return;$dir=realpath(__DIR__.'/../storage/recordings/'.$id);
  if($dir&&str_starts_with($dir,(string)realpath(__DIR__.'/../storage/recordings'))){
   $it=new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir,FilesystemIterator::SKIP_DOTS),RecursiveIteratorIterator::CHILD_FIRST);

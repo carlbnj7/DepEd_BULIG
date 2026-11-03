@@ -313,6 +313,9 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
  /* v205: a card with nothing to answer is marked as a reading (book) or as instructions (i), and only the answer cards are numbered */
  $role=[];$tasks=0;foreach($order as $i){$k=array_values(array_diff($cards[$i]['ui']['answer']??[],['look','read']));$rd=in_array('read',$cards[$i]['ui']['answer']??[],true);
   $role[$i]=$k?['task',++$tasks]:[$rd?'aloud':(str_word_count(strip_tags((string)($cards[$i]['text']??'')))>=25||!empty($cards[$i]['images'])?'story':'info'),0];}
+ /* v209: a page with nothing to answer (only stories, pictures and directions) ends with Next, not Submit, so pupils are not
+    asked to submit when there is no answer (a story read aloud with the Reading Coach is something to do: it keeps Submit) */
+ $noAns=!$tasks&&!in_array('aloud',array_column($role,0),true);
  foreach($order as $pos=>$i){$c=$cards[$i];$n=$i+1;$kinds=$c['ui']['answer']??[];
   if(in_array('read',$kinds,true)&&!empty($c['ui']['wct'])&&function_exists('wc_display'))$c['text']=wc_display((string)$c['text'],$c['ui']['wct']);   // v186: the story only, not its directions
   $tiles=in_array('tiles',$kinds,true);
@@ -337,7 +340,7 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
   if($readonly){$ans=$saved[$n]??'';echo '<div class="l2-saved">'.l1_icon('ok').'<span>'.($ans!==''?nl2br(e($ans)):'Saved').'</span></div>';if(!empty($aud[(string)$n]))echo '<div class="l1-mine"><audio controls preload="none" src="?page=recording&amp;id='.(int)$a['completion_id'].'&amp;n='.$n.'"></audio></div>';}
   echo '</section>';}
  echo '</div><div class="l1-end"><div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns"><button type="button" class="l1-btn2" data-l2-prev hidden>'.l1_icon('prev').'Back</button>';
- if(!$readonly)echo '<button type="button" class="l1-big" data-l2-next'.($N<2?' hidden':'').'>Next card '.l1_icon('next').'</button><button id="submit-answer" class="l1-big" type="submit"'.($N>1?' hidden':'').'>Submit '.l1_icon('ok').'</button>';
+ if(!$readonly)echo '<button type="button" class="l1-big" data-l2-next'.($N<2?' hidden':'').'>Next card '.l1_icon('next').'</button><button id="submit-answer" class="l1-big" type="submit"'.($N>1?' hidden':'').($noAns?' data-noans':'').'>'.($noAns?'Next '.l1_icon('next'):'Submit '.l1_icon('ok')).'</button>';
  else echo '<button type="button" class="l1-big" data-l2-next'.($N<2?' hidden':'').'>Next card '.l1_icon('next').'</button>';
  echo '<a id="next-activity" class="l1-big" href="?page=lesson&amp;id='.$lid.'"'.($readonly&&$N<2?'':' hidden').' data-l2-done>'.($doneAll===count($all)?'Finish lesson':'Next').' '.l1_icon('next').'</a></div></div></form></main></div>';foot();
 }
