@@ -44,10 +44,10 @@ function chat_pic(array $p,string $size='56',bool $dot=false):string{
 function chat_ago(string $t):string{$x=strtotime($t);if(!$x)return '';if(date('Y-m-d',$x)===date('Y-m-d'))return date('g:i A',$x);if($x>time()-6*86400)return date('D',$x);return date('M j',$x);}
 function chat_admin_user():?array{static $a=false;if($a===false)$a=one("SELECT id,name,role,avatar_path FROM users WHERE role='admin' AND active=1 ORDER BY id LIMIT 1");return $a?:null;}
 /** The School row: the newest school message for a pupil or teacher. */
-function chat_school_row(array $u):string{
+function chat_school_row(array $u,bool $on=false):string{
  if(!function_exists('messages_ready')||!messages_ready())return '';
  $m=one('SELECT m.subject,m.body,m.created_at FROM message_recipients r JOIN admin_messages m ON m.id=r.message_id WHERE r.user_id=? ORDER BY m.id DESC LIMIT 1',[(int)$u['id']]);$n=messages_unread($u);$ad=chat_admin_user()??['id'=>0,'role'=>'admin'];
- return '<a class="mz-row'.($n?' new':'').'" href="?page=messages&amp;tab=school" data-name="school administrator">'.chat_pic($ad).'<span class="mz-t"><b><span class="mz-n">School administrator</span><span class="mz-tag mz-tag-s">School</span></b><small>'.($m?e(mb_substr((string)$m['subject'],0,60)).' · '.e(chat_ago((string)$m['created_at'])):'Messages from your school show here').'</small></span>'.($n?'<span class="mz-badge">'.$n.'</span>':'').'</a>';
+ return '<a class="mz-row'.($n?' new':'').($on?' on':'').'" href="?page=messages&amp;tab=school#msg-end" data-name="school administrator">'.chat_pic($ad).'<span class="mz-t"><b><span class="mz-n">School administrator</span><span class="mz-tag mz-tag-s">School</span></b><small>'.($m?e(mb_substr((string)$m['subject'],0,60)).' · '.e(chat_ago((string)$m['created_at'])):'Messages from your school show here').'</small></span>'.($n?'<span class="mz-badge">'.$n.'</span>':'').'</a>';
 }
 function chat_face(string $href,string $pic,string $name,bool $on=false):string{return '<a class="mz-face'.($on?' on':'').'" href="'.$href.'"><span class="mz-ring">'.$pic.'</span><span>'.e($name).'</span></a>';}
 
@@ -60,23 +60,25 @@ function chat_view(array $u):void{
  $people=$teacher?rows($sql.'JOIN users u ON u.id=t.pupil_id AND u.active=1 LEFT JOIN chats c ON c.teacher_id=t.teacher_id AND c.pupil_id=u.id WHERE t.teacher_id=? ORDER BY c.last_at IS NULL,c.last_at DESC,u.name',[$uid,$uid,$uid])
   :rows($sql.'JOIN users u ON u.id=t.teacher_id AND u.active=1 LEFT JOIN chats c ON c.teacher_id=u.id AND c.pupil_id=t.pupil_id WHERE t.pupil_id=? ORDER BY c.last_at IS NULL,c.last_at DESC,u.name',[$uid,$uid,$uid]);
  $sel=null;foreach($people as $p)if((int)$p['id']===$with)$sel=$p;if($with&&!$sel)fail('You can chat only with '.($teacher?'your own pupils':'your teacher').'.',404);
- $class=$teacher&&($_GET['class']??'')==='1';
- echo '<div class="mz-shell'.($sel||$class?' has-sel':'').'"><aside class="mz-inbox card" aria-label="Chats"><div class="mz-top">'.chat_pic($u,'38').'<h1>Messages</h1></div>'
+ $class=$teacher&&($_GET['class']??'')==='1';$school=!$sel&&!$class&&(($_GET['tab']??'')==='school'||isset($_GET['id']));
+ if(isset($_GET['id'])&&!val('SELECT 1 FROM message_recipients WHERE message_id=? AND user_id=?',[(int)$_GET['id'],$uid]))fail('Message not found.',404);   // only your own school messages   // v209 the School chat opens here too, in the same look
+ echo '<div class="mz-shell'.($sel||$class||$school?' has-sel':'').'"><aside class="mz-inbox card" aria-label="Chats"><div class="mz-top">'.chat_pic($u,'38').'<h1>Messages</h1></div>'
   .'<label class="mz-search">'.icon('search').'<span class="sr-only">Search</span><input type="search" placeholder="Search" data-mz-search autocomplete="off"></label><div class="mz-faces">';
  if($teacher)echo '<a class="mz-face" href="?page=messages&amp;tab=chat&amp;class=1"><span class="mz-ring mz-ring-y"><span class="mz-av mz-56 mz-ic">'.icon('people').'</span></span><span>Message the class</span></a>';
  foreach(array_slice($people,0,$teacher?8:6) as $p)echo chat_face('?page=messages&amp;tab=chat&amp;with='.(int)$p['id'].'#msg-end',chat_pic($p,'56',true),chat_name((string)$p['name']),$sel&&(int)$p['id']===(int)$sel['id']);
- $ad=chat_admin_user();if($ad)echo chat_face('?page=messages&amp;tab=school',chat_pic($ad),'School');
+ $ad=chat_admin_user();if($ad)echo chat_face('?page=messages&amp;tab=school#msg-end',chat_pic($ad),'School',$school);
  echo '</div><p class="mz-sec">CHATS</p><nav class="mz-list" aria-label="Chats">';
  $rows='';$more='';
  foreach($people as $p){$nr=(int)$p['nr'];$has=$p['chat']&&$p['lastb']!==null;
   $r='<a class="mz-row'.($nr?' new':'').($sel&&(int)$p['id']===(int)$sel['id']?' on':'').'" href="?page=messages&amp;tab=chat&amp;with='.(int)$p['id'].'#msg-end" data-name="'.e(mb_strtolower((string)$p['name'])).'">'.chat_pic($p,'56',true).'<span class="mz-t"><b><span class="mz-n">'.e($p['name']).'</span>'.(!$teacher?'<span class="mz-tag">'.(count($people)>1?'Teacher':'My teacher').'</span>':'').'</b><small>'.($has?e(mb_substr((string)$p['lastb'],0,70)).' · '.e(chat_ago((string)$p['last_at'])):($teacher?'No messages yet':'Say hello to your teacher!')).'</small></span>'.($nr?'<span class="mz-badge">'.$nr.'</span>':'').'</a>';
   if($has||!$teacher)$rows.=$r;else $more.=$r;}
- echo $rows.chat_school_row($u);
+ echo $rows.chat_school_row($u,$school);
  if($more!=='')echo '<p class="mz-sec">MY PUPILS</p>'.$more;
  if(!$people)echo '<p class="mz-empty">'.($teacher?'Add pupils to your class first.':'You do not have a teacher in BULIG yet.').'</p>';
  echo '<p class="mz-empty" data-mz-none hidden>No one with that name.</p></nav></aside><section class="mz-pane card" aria-label="Chat">';
  if($class)echo chat_class_form($u);
  elseif($sel)echo chat_box($u,$sel);
+ elseif($school)echo chat_school_box($u);
  else echo '<div class="mz-hello">'.icon('comic').'<h2>'.($teacher?'Chat with your pupils':'Chat with your teacher').'</h2><p>'.($teacher?'Choose a pupil, or send one message to the whole class.':'Tap your teacher’s picture to start.').'</p><p class="muted">Send words, a photo or a voice message. Only the two of you and your school administrator can see the chat.</p></div>';
  echo '</section></div>';
 }
@@ -87,7 +89,7 @@ function chat_log(array $rows,int $me,array $faceOf,bool $readOnly=false,array $
  foreach($rows as $i=>$r){$t=strtotime((string)$r['created_at']);$a=(int)$r['author_id'];
   if($t-$prevT>900){$h.='<div class="mz-time">'.e(date('Y-m-d',$t)===date('Y-m-d')?'Today '.date('g:i A',$t):date('M j, g:i A',$t)).'</div>';$prevA=null;}
   $next=$rows[$i+1]??null;$endGroup=!$next||(int)$next['author_id']!==$a||strtotime((string)$next['created_at'])-$t>900;$mine=$a===$me;
-  $body=media_bubble($r,'?page=chat_media&amp;id='.(int)$r['id']).((string)$r['body']!==''?'<p>'.nl2br(e($r['body'])).'</p>':'');
+  $body=(!empty($r['title'])?'<b class="mz-subj">'.e($r['title']).'</b>':'').media_bubble($r,$r['src']??'?page=chat_media&amp;id='.(int)$r['id']).((string)$r['body']!==''?'<p>'.nl2br(e($r['body'])).'</p>':'');
   $h.='<div class="mz-m '.($mine?'me':'them').($endGroup?' end':'').'">'.(!$mine?($endGroup?($faceOf[$a]??''):'<span class="mz-sp"></span>'):'').'<div class="mz-b'.(!empty($r['media_kind'])?' mz-media':'').'" title="'.e(date('M j, g:i A',$t)).'">'.($readOnly&&$prevA!==$a?'<b class="mz-who">'.e($names[$a]??'').'</b>':'').$body.'</div></div>';
   if($i===$lastMine&&!$readOnly&&$r['read_at'])$h.='<div class="mz-seen" title="Seen">'.($faceOf['other']??'').'</div>';
   $prevT=$t;$prevA=$a;}
@@ -107,6 +109,33 @@ function chat_box(array $u,array $o):string{
  $h.='<form method="post" class="mc-send mz-send">'.csrf_field().'<input type="hidden" name="action" value="chat_send"><input type="hidden" name="with" value="'.(int)$o['id'].'">'
   .($m?'<div class="mc-chip" data-mc-chip hidden><img alt="" data-mc-thumb><small data-mc-what>1 photo ready to send</small><button type="button" class="mc-ic" data-mc-clear aria-label="Remove">'.icon('close').'</button></div><button type="button" class="mc-ic" data-mc-photo aria-label="Send a photo">'.icon('image').'</button><input type="file" accept="image/*" data-mc-file hidden><button type="button" class="mc-ic" data-mc-mic aria-label="Record a voice message">'.icon('mic').'</button><div class="mc-rec" data-mc-rec hidden><span class="mc-dot"></span><b data-mc-time>0:00</b><span class="mc-recl">Recording…</span><button type="button" class="mc-ic" data-mc-cancel aria-label="Cancel recording">'.icon('trash').'</button></div>':'')
   .'<label class="sr-only" for="mc-body">Write a message</label><textarea id="mc-body" name="body" rows="1" maxlength="'.CHAT_MAX.'" required placeholder="Message…"></textarea><button class="mc-go" aria-label="Send">'.icon('arrow').'</button><p class="mc-err" role="status" data-mc-err></p></form>';
+ return $h.'</div>';
+}
+
+/** v209 The School chat for a pupil or teacher: every message from the administrator and the replies, as one chat.
+    A reply goes under the newest message (each message keeps its own private replies, as before). */
+function chat_school_box(array $u):string{
+ $uid=(int)$u['id'];$ad=chat_admin_user()??['id'=>0,'role'=>'admin','name'=>'School administrator'];
+ $msgs=function_exists('messages_ready')&&messages_ready()?rows('SELECT m.id,m.sender_id,m.subject,m.body,m.created_at,r.read_at FROM message_recipients r JOIN admin_messages m ON m.id=r.message_id WHERE r.user_id=? ORDER BY m.id DESC LIMIT 60',[$uid]):[];
+ $items=[];foreach($msgs as $m)$items[]=['id'=>0,'author_id'=>(int)$m['sender_id'],'title'=>$m['subject'],'body'=>(string)$m['body'],'created_at'=>$m['created_at'],'read_at'=>$m['read_at']];
+ $ids=array_map(fn($m)=>(int)$m['id'],$msgs);$rep=[];
+ if($ids&&function_exists('replies_ready')&&replies_ready()){
+  $rep=rows('SELECT * FROM message_replies WHERE user_id=? AND message_id IN ('.implode(',',$ids).') ORDER BY id',[$uid]);
+  foreach($rep as $r){$r['src']='?page=msg_media&amp;id='.(int)$r['id'];$items[]=$r;}
+  q('UPDATE message_replies SET read_at=NOW() WHERE user_id=? AND message_id IN ('.implode(',',$ids).') AND (author_id IS NULL OR author_id<>user_id) AND read_at IS NULL',[$uid]);
+  q('UPDATE message_recipients SET read_at=COALESCE(read_at,NOW()) WHERE user_id=? AND message_id IN ('.implode(',',$ids).')',[$uid]);
+  q("UPDATE notifications SET read_at=COALESCE(read_at,NOW()) WHERE user_id=? AND url LIKE '?page=messages%' AND read_at IS NULL",[$uid]);}
+ usort($items,fn($a,$b)=>strtotime((string)$a['created_at'])<=>strtotime((string)$b['created_at']));
+ /* the administrator may be another admin account than the first one: their face is the admin face */
+ $face=[];foreach($items as $it)if((int)$it['author_id']!==$uid)$face[(int)$it['author_id']]=chat_pic($ad,'28');$face['other']=chat_pic($ad,'16');
+ $h='<div class="mc mz-chat"><header class="mc-head mz-hd"><a class="mc-back" href="?page=messages&amp;tab=chat" aria-label="Back to chats">'.icon('arrow').'</a>'.chat_pic($ad,'40',true).'<div><b>School administrator</b><small>Messages from your school</small></div></header><div class="mc-log mz-log" role="log" aria-label="Conversation">';
+ if(!$items)$h.='<div class="mz-start">'.chat_pic($ad,'72').'<b>School administrator</b><small>Messages from your school will show here.</small></div>';
+ $h.=chat_log($items,$uid,$face).'<span id="msg-end"></span></div>';
+ if($msgs&&function_exists('replies_ready')&&replies_ready()){$m=function_exists('media_ready')&&media_ready();
+  $h.='<form method="post" class="mc-send mz-send">'.csrf_field().'<input type="hidden" name="action" value="message_reply"><input type="hidden" name="message_id" value="'.(int)$msgs[0]['id'].'">'
+   .($m?'<div class="mc-chip" data-mc-chip hidden><img alt="" data-mc-thumb><small data-mc-what>1 photo ready to send</small><button type="button" class="mc-ic" data-mc-clear aria-label="Remove">'.icon('close').'</button></div><button type="button" class="mc-ic" data-mc-photo aria-label="Send a photo">'.icon('image').'</button><input type="file" accept="image/*" data-mc-file hidden><button type="button" class="mc-ic" data-mc-mic aria-label="Record a voice message">'.icon('mic').'</button><div class="mc-rec" data-mc-rec hidden><span class="mc-dot"></span><b data-mc-time>0:00</b><span class="mc-recl">Recording…</span><button type="button" class="mc-ic" data-mc-cancel aria-label="Cancel recording">'.icon('trash').'</button></div>':'')
+   .'<label class="sr-only" for="mc-body">Write a reply</label><textarea id="mc-body" name="body" rows="1" maxlength="2000" required placeholder="Message…"></textarea><button class="mc-go" aria-label="Send">'.icon('arrow').'</button><p class="mc-err" role="status" data-mc-err></p></form>';}
+ elseif(!$msgs)$h.='<p class="mz-ro">'.icon('info').'You can reply after your school sends you a message.</p>';
  return $h.'</div>';
 }
 

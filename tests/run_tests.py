@@ -707,7 +707,7 @@ def test_chat(acc):
     _, _, text = p.req('?page=messages')
     check('Messages opens the Messenger inbox: faces on top, chats with pictures, and the School row (no separate menu item)', 'mz-inbox' in text and 'mz-faces' in text and 'mz-av' in text and 'tab=school' in text and 'school administrator' in text.lower() and 'href="?page=chat"' not in text)
     _, _, text = t.req('?page=messages&tab=school')
-    check('The School row opens the school messages, with a way back to all chats', 'msg-shell' in text and 'mz-inbox' not in text and 'All chats' in text)
+    check('The School row opens the school messages in the same Messenger chat, with the inbox beside it', 'mz-chat' in text and 'mz-inbox' in text and 'Messages from your school' in text and 'msg-shell' not in text)
     t.req('index.php', {'action': 'chat_send', 'csrf': t.token('?page=chat'), 'with': pid, 'body': 'Hello <b>Test</b>, please read Lesson 3.'})
     check('The teacher sends a message to their pupil', q(f'SELECT COUNT(*) FROM chat_messages m JOIN chats c ON c.id=m.chat_id WHERE c.teacher_id={tid} AND c.pupil_id={pid}') == '1')
     check('The pupil gets a bell notification', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={pid} AND kind='chat'") >= '1')
@@ -1272,7 +1272,7 @@ def test_messages(acc):
     # v203 replies: a private chat for each person under each message
     pid=int(acc['pupil1']['uid'])
     status,url,text=p.req('index.php',{'action':'message_reply','csrf':p.token(page+'&id='+str(mid)),'message_id':mid,'body':'Thank you! <b>I will read.</b>'})
-    check('Pupil replies to a message and sees it in the chat',status==200 and 'mc-row me' in text and '&lt;b&gt;I will read.&lt;/b&gt;' in text)
+    check('Pupil replies to a message and sees it in the chat',status==200 and ('mc-row me' in text or 'mz-m me' in text) and '&lt;b&gt;I will read.&lt;/b&gt;' in text)
     p.req('index.php',{'action':'message_reply','csrf':p.token(page+'&id='+str(mid)),'message_id':mid,'body':'Thank you! <b>I will read.</b>'})
     check('A double tap does not post the same reply twice',q(f'SELECT COUNT(*) FROM message_replies WHERE message_id={mid}')=='1')
     check('Pupil cannot reply to a message sent to someone else',p.req('index.php',{'action':'message_reply','csrf':p.token(page),'message_id':teacher_mid,'body':'hi'})[0]==404)
@@ -1379,7 +1379,7 @@ def test_bug_workflow(acc):
     q(f'UPDATE pupil_xp SET total={int(old or 0)} WHERE pupil_id={pid}')
     for client in [a,p,t]:
         _,_,text=client.req('?page=messages&tab=school')
-        check('Messages uses split-list and reading panels','msg-shell' in text and 'msg-list' in text and 'msg-panel' in text)
+        check('Messages uses split-list and reading panels',('msg-shell' in text and 'msg-list' in text and 'msg-panel' in text) or ('mz-shell' in text and 'mz-inbox' in text and 'mz-pane' in text))
     _,_,text=a.req('?page=messages&compose=1')
     check('Message compose remains inside selected panel','msg-shell has-selection' in text and 'New message' in text)
 

@@ -101,7 +101,7 @@ function messages_tabs(array $u,string $on):string{
 }
 function messages_view(array $u):void{
  $tab=messages_tab($u);
- if($tab==='chat'){chat_view($u);return;}
+ if($tab==='chat'||($u['role']!=='admin'&&function_exists('chat_ready')&&chat_ready()&&empty($_GET['compose'])&&empty($_GET['preview']))){chat_view($u);return;}   // v209 pupils and teachers: the School chat opens in the Messenger look too
  if(function_exists('chat_ready')&&chat_ready())echo '<a class="btn secondary small mz-backall" href="?page=messages&amp;tab=chat">'.icon('arrow','flip').'All chats</a>';   // v209 the school messages open from the School row of the inbox
  if(!messages_ready()){messages_content($u);return;}
  $admin=$u['role']==='admin';$uid=(int)$u['id'];$id=(int)($_GET['id']??0);$selected=$id||!empty($_GET['compose'])||!empty($_GET['preview']);$search=mb_substr(trim((string)($_GET['search']??'')),0,100);$p=max(1,min(100000,(int)($_GET['listpage']??1)));
