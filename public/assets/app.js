@@ -935,6 +935,11 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
  const b=box.querySelector('[data-wn-close]'),open=()=>{box.hidden=false;if(b)setTimeout(()=>b.focus({preventScroll:true}),300);};
  /* a pupil's welcome sheet comes first; Bob waits until it is closed */
  if(window.pfOverlayOpen&&window.pfOverlayOpen()){box.hidden=true;document.addEventListener('pf:overlays-done',open,{once:true});}else open();})();
+// v209 Claude the Guard's privacy popup: the I Agree button opens when the box is ticked. A pupil's welcome sheet comes first.
+(()=>{const box=document.querySelector('[data-pv]');if(!box)return;const t=box.querySelector('[data-pv-tick]'),b=box.querySelector('[data-pv-ok]');
+ const sync=()=>{b.disabled=!t.checked;};t.addEventListener('change',sync);sync();
+ const open=()=>{box.hidden=false;setTimeout(()=>t.focus({preventScroll:true}),300);};
+ if(window.pfOverlayOpen&&window.pfOverlayOpen()){box.hidden=true;document.addEventListener('pf:overlays-done',open,{once:true});}else open();})();
 /* The Reading Castle (app/castle.php): after Level 7, the castle scene. "Open the gates" swings the doors open, light pours
    out, the pupil's character walks in, fireworks and confetti burst, and a friendly voice welcomes them. */
 (()=>{const box=document.querySelector('[data-rc]');if(!box)return;const fx=box.querySelector('[data-rc-fx]'),calm=matchMedia('(prefers-reduced-motion: reduce)').matches;let timer=null,last=document.activeElement;

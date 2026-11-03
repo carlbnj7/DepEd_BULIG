@@ -44,6 +44,20 @@ $out=match($what){
   $mod=(int)val('SELECT m.id FROM modules m WHERE m.level_id=? AND (m.grade_level IS NULL OR m.grade_level=?) ORDER BY m.id LIMIT 1',[$L,pupil_grade($pid)]);$no=cycle_numbers($mod)['no'];$one=array_search(1,$no,true);$two=array_search(2,$no,true);
   $o=['one'=>lesson_cycle_opens((int)$one),'two'=>lesson_cycle_opens((int)$two),'date'=>$d,'locked'=>lesson_cycle_locked($pid,(int)$two,$L)];
   if($old===null||$old===false)q("DELETE FROM settings WHERE setting_key='lesson_cycles'");else q("UPDATE settings SET setting_value=? WHERE setting_key='lesson_cycles'",[$old]);return $o;})(),
+ /* v209 bug #139: a matching board keeps the pairs right after many Checks; a one-answer card still loses a third per wrong try */
+ 'board_tries'=>(function():array{$o=['board'=>null,'card'=>null];
+  foreach(rows("SELECT a.* FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (5,6,7) AND a.phase='learn' ORDER BY a.id") as $a){$k=activity_key($a);if(!$k)continue;
+   foreach($k as $n=>$c){if($o['board']===null&&$c['t']==='match'&&count($c['a'])>=4){$p=[];$i=0;foreach($c['a'] as $x=>$l)$p[]=$x.'-'.(++$i===1?'z':$l);$s=key_score($a,"BULIG card answers\nCard $n: ".implode(', ',$p)."\nTries: $n=4");$c2=$s['cards'][$n]??[];$o['board']=['pts'=>$c2['pts']??null,'of'=>$c2['of']??null];}
+    if($o['card']===null&&$c['t']==='choice'){$s=key_score($a,"BULIG card answers\nCard $n: ".$c['a']."\nTries: $n=1");$c2=$s['cards'][$n]??[];$o['card']=['pts'=>$c2['pts']??null,'of'=>$c2['of']??null];}}
+   if($o['board']!==null&&$o['card']!==null)break;}
+  return $o;})(),
+ /* v209: recordings older than 60 days go; new ones and readings still waiting for the teacher stay */
+ 'privacy_purge'=>(function():array{$dir=l1_recordings_dir().'/999999';@mkdir($dir,0750,true);$old=$dir.'/old.webm';$new=$dir.'/new.webm';$wait=$dir.'/wait.webm';
+  foreach([$old,$new,$wait] as $f)file_put_contents($f,'x');touch($old,time()-61*86400);touch($wait,time()-90*86400);
+  $c=one('SELECT id,pupil_id,activity_id FROM activity_completion LIMIT 1');$rid=0;
+  if($c){q("INSERT INTO reading_verifications(completion_id,pupil_id,activity_id,state,audio_paths) VALUES(?,?,?,'pending',?)",[$c['id'],$c['pupil_id'],$c['activity_id'],json_encode(['0'=>'999999/wait.webm'])]);$rid=(int)db()->lastInsertId();}
+  $n=privacy_purge(true);$o=['deleted'=>$n,'old_gone'=>!is_file($old),'new_kept'=>is_file($new),'waiting_kept'=>$c?is_file($wait):true];
+  if($rid)q('DELETE FROM reading_verifications WHERE id=?',[$rid]);foreach([$old,$new,$wait] as $f)@unlink($f);@rmdir($dir);return $o;})(),
  /* Reading Castle (v182): mark every Level 7 lesson finished for the pupil and forget that the castle was seen */
  'castle_setup'=>(function()use($pid):array{$n=0;foreach(level_lessons(CASTLE_LEVEL,pupil_grade($pid)) as $l){q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=NOW()',[$pid,$l['id']]);$n++;}
   q('DELETE FROM settings WHERE setting_key=?',[castle_key($pid)]);friends_mark_met($pid);return ['lessons'=>$n,'open'=>castle_open($pid)];})(),

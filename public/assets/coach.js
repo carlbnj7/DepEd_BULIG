@@ -15,24 +15,26 @@
  const Rec=window.SpeechRecognition||window.webkitSpeechRecognition,synth=window.speechSynthesis||null;
  // Record only the pupil phase. Never record Max's opening demonstration or continue after closing.
  async function captureReading(live){
-  let media=null,mr=null,chunks=[],timer=null,expired=false,ended=false,failure='';
-  const cleanup=()=>{clearTimeout(timer);if(media)media.getTracks().forEach(t=>t.stop());};
+  let media=null,mr=null,chunks=[],timer=null,expired=false,ended=false,failure='',ac=null;
+  const cleanup=()=>{clearTimeout(timer);if(media)media.getTracks().forEach(t=>t.stop());try{if(ac&&ac.state!=='closed')ac.close();}catch(e){}ac=null;};   /* v208: the meter's audio is closed too (an iPhone has one microphone) */
   try{
    if(!navigator.mediaDevices||!window.MediaRecorder)return null;
-   media=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+   const ask=()=>navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+   /* v208 iPhone: the speech checker may still hold the microphone for a moment, so wait and try once more */
+   try{media=await ask();}catch(e1){if(e1&&e1.name==='NotAllowedError'&&!APPLE)throw e1;await new Promise(r=>setTimeout(r,900));media=await ask();}
    // Some microphone implementations mute capture when recognition starts. Never save that as evidence.
    media.getAudioTracks().forEach(t=>{t.addEventListener('mute',()=>{if(!ended&&mr&&mr.state==='recording'){expired=true;failure='The microphone was interrupted while Word Coach was listening. This attempt has no complete recording.';}});t.addEventListener('ended',()=>{if(!ended)expired=true;});});
    const type=(APPLE?['audio/mp4','audio/webm;codecs=opus','audio/webm']:['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg;codecs=opus']).find(t=>MediaRecorder.isTypeSupported(t));
    /* v208 live microphone meter: how loud the pupil is right now (0 to 1) */
-   let an=null,buf=null,ac=null;try{const AC=window.AudioContext||window.webkitAudioContext;if(AC){ac=new AC();const src=ac.createMediaStreamSource(media);an=ac.createAnalyser();an.fftSize=512;src.connect(an);buf=new Uint8Array(an.fftSize);}}catch(e){an=null;}
+   let an=null,buf=null;try{const AC=window.AudioContext||window.webkitAudioContext;if(AC&&!(APPLE&&!live)){ac=new AC();const src=ac.createMediaStreamSource(media);an=ac.createAnalyser();an.fftSize=512;src.connect(an);buf=new Uint8Array(an.fftSize);}}catch(e){an=null;}
    const level=()=>{if(!an)return -1;an.getByteTimeDomainData(buf);let sum=0;for(let k=0;k<buf.length;k++){const v=(buf[k]-128)/128;sum+=v*v;}return Math.min(1,Math.sqrt(sum/buf.length)*4);};
    mr=new MediaRecorder(media,type?{mimeType:type,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000});
    let resolve;const result=new Promise(r=>resolve=r);
    mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
    mr.onerror=()=>{expired=true;failure='The browser could not finish the audio recording.';cleanup();resolve('');};
-   mr.onstop=()=>{cleanup();try{if(ac)ac.close();}catch(e){}const blob=new Blob(chunks,{type:(mr.mimeType||'audio/webm').split(';')[0]});if(expired||blob.size<200||blob.size>6000000){resolve('');return;}const f=new FileReader();f.onload=()=>resolve(String(f.result));f.onerror=()=>resolve('');f.readAsDataURL(blob);};
+   mr.onstop=()=>{cleanup();const blob=new Blob(chunks,{type:(mr.mimeType||'audio/webm').split(';')[0]});if(expired||blob.size<200||blob.size>6000000){resolve('');return;}const f=new FileReader();f.onload=()=>resolve(String(f.result));f.onerror=()=>resolve('');f.readAsDataURL(blob);};
    mr.start(500);if(!live)mr.pause();timer=setTimeout(()=>{expired=true;if(mr.state!=='inactive')mr.stop();},600000);
-   return {level,closeMeter(){try{if(ac)ac.close();}catch(e){}},error(){return failure;},valid(){return !expired&&media.getAudioTracks().every(t=>t.readyState==='live'&&!t.muted);},pause(){if(mr.state==='recording')mr.pause();},resume(){if(mr.state==='paused')mr.resume();},stop(){if(!ended){ended=true;if(mr.state!=='inactive')mr.stop();else cleanup();}return result;},cancel(){expired=true;this.stop();cleanup();}};
+   return {level,error(){return failure;},valid(){return !expired&&media.getAudioTracks().every(t=>t.readyState==='live'&&!t.muted);},pause(){if(mr.state==='recording')mr.pause();},resume(){if(mr.state==='paused')mr.resume();},stop(){if(!ended){ended=true;if(mr.state!=='inactive')mr.stop();else cleanup();}return result;},cancel(){expired=true;this.stop();cleanup();}};
   }catch(e){cleanup();return null;}
  }
 
@@ -298,15 +300,15 @@
    /* v203: the Word Coach score is kept, but the recording for the teacher was lost. iPhones and iPads use one microphone:
       while the speech checker listens, iOS can cut the recording. So the pupil reads it once more with only the recorder on
       (no speech checker, no Max voice), and that recording goes to the teacher with the score. */
-   function recordOnly(resultValue,why){if(!alive)return;hush();gen++;
+   function recordOnly(resultValue,why){if(!alive)return;hush();gen++;ov.classList.remove('wc-sheetmode','wc-reading');   /* v208: a normal coach card, not the see-through score sheet */
     $('[data-c]').textContent='Record for your teacher';$('[data-bar]').style.width='100%';W.forEach(x=>{x.classList.remove('cur','nx','dim');x.onclick=null;});
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your score is saved!</b> Now read it all once more so your teacher can hear you.</p><p class="wc-note" data-audio-error></p><div class="wc-row"><button type="button" class="btn primary wc-rec-start">'+svg.mic+'Start recording</button></div></div>';
-    box.querySelector('[data-audio-error]').textContent=(why||'The recording stopped while Word Coach was listening.')+' Your score is kept.';
+    box.querySelector('[data-audio-error]').textContent=(APPLE&&!/empty/i.test(why||'')?'On iPhone and iPad, Max listens to your words first, then records your reading in a second step.':(why||'The recording stopped while Word Coach was listening.'))+' Your score is kept.';
     box.querySelector('.wc-rec-start').onclick=async()=>{const st=box.querySelector('.wc-rec-start');st.disabled=true;st.textContent='Starting the microphone…';
      const clip=await captureReading(true);if(!alive){if(clip)clip.cancel();return;}
      if(!clip){st.disabled=false;st.innerHTML=svg.mic+'Try again';box.querySelector('[data-audio-error]').textContent='BULIG could not open the microphone. In Settings, allow the microphone for this website, then try again.';return;}
      recording=clip;const t1=Date.now();
-     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Recording…</b> Read all the words out loud.</p><div class="wc-row"><span class="wc-mic">'+svg.mic+'</span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span><b>Recording for your teacher</b></div><div class="wc-row"><button type="button" class="btn primary wc-rec-stop">'+svg.ok+'I finished reading</button></div></div>';
+     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Recording…</b> Read all the words out loud.</p><div class="wc-row"><span class="wc-mic">'+svg.mic+'</span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span><b>Recording for your teacher</b></div><p class="wc-hear" data-hear aria-live="polite"></p><div class="wc-row"><button type="button" class="btn primary wc-rec-stop">'+svg.ok+'I finished reading</button></div></div>';liveMeter(box,clip,()=>alive,false);
      box.querySelector('.wc-rec-stop').onclick=async()=>{const b=box.querySelector('.wc-rec-stop');b.disabled=true;b.textContent='Saving recording…';recording=null;
       const a=await clip.stop();const err=clip.error();if(!alive)return;
       if(!a){recordOnly(resultValue,err||'The recording was empty.');return;}

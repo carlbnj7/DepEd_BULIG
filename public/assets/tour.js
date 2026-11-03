@@ -174,7 +174,13 @@
    ['.st-glass','Glass look','Menus and buttons look like clear glass. Turn it off if this phone feels slow.'],
    [['a.st-row[href="?page=offline"]'],'Offline lessons','Save lessons on this device so they open even without internet.'],
    ['.st-pw','Your password','Tap here when you want to change your password.'],
-   ['.st-about','About BULIG','See who made BULIG.']],
+   ['.st-about','About BULIG','See who made BULIG.'],
+   [['.pv-card'],'My data and privacy','What BULIG keeps about you, and who can see it. Tap Download My Data to get a copy, or read the Privacy Notice.']],
+  privacy:pupil?[
+   ['.pv-page h1','Privacy Notice','How BULIG keeps your information safe.'],
+   [['.pv-item'],'What we keep','Your name, class and scores. No home address and no phone number.']]:[
+   ['.pv-page h1','Privacy Notice','How BULIG follows the Data Privacy Act of 2012 (RA 10173).'],
+   [['.pv-item'],'Each part','What is collected, why, how it is protected, who sees it, how long it is kept, and your rights.']],
   profile:pupil?[
    ['.me-hero','Your profile','Your picture, your name and your class.'],
    [['.me-av .rf'],'Your rank frame','This frame shows your rank. The number at the bottom is your level. Keep learning to unlock wings and a crown!'],
@@ -185,7 +191,8 @@
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
    ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.'],
-   [['.a11y-card'],'Easier to read','Bigger text and Easy-read letters, on this device.']],
+   [['.a11y-card'],'Easier to read','Bigger text and Easy-read letters, on this device.'],
+   [['.pv-card'],'My data and privacy','What BULIG keeps about you and who can see it. Download your data, read the Privacy Notice, or ask to delete your account. BULIG follows the Data Privacy Act (RA 10173).']],
   messages:[
    [['.msg-list'],'Your messages','Every message you get in BULIG is listed here. Tap one to read it.'],
    [['.msg-search'],'Find a message','Type a word to find an older message.'],
@@ -303,6 +310,7 @@
    ['#learning-path','Learning path','Every level and lesson with its status. Open a level to mark lessons done in class.'],
    [['.cd-actions'],'Mark as done in class','Tick lessons or activities you did together, then save. Use "Undo" if you made a mistake.'],
    [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.']],
+  privacy:P.privacy,
   profile:P.profile.concat([['.rt-pcard','Rate BULIG','Five quick questions with stars. Your answers help the Division improve BULIG.']]),
   rate:[
    ['.rt-rows','Five quick questions','Tap 1 to 5 stars for each one. Your overall rating is the average.'],
@@ -433,7 +441,11 @@
     ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
    [['.a11y-card'],'Easier to read','Bigger text and Easy-read letters, on this device.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
-   [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.']],
+   [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
+   [['.pv-card'],'My data and privacy','What BULIG keeps about you and who can see it. Download your data, read the Privacy Notice,. BULIG follows the Data Privacy Act (RA 10173).']],
+  privacy:[
+   ['.pv-page h1','Privacy Notice','How BULIG follows the Data Privacy Act of 2012 (RA 10173). Every teacher and pupil agrees to it the first time they sign in.'],
+   [['.pv-item'],'Each part','What is collected, why, how it is protected, who sees it, how long it is kept, and everyone’s rights.']],
   cleanup:[
    [['.hm-head'],'Data cleanup','Join pupils with two accounts, put away last year’s sections, and clear old records.'],
    [['.cu-grp'],'Pupils with two accounts','Pupils with the same name and grade. BULIG keeps the account with more work. Merge moves the answers, XP and progress, then switches the other account off.'],

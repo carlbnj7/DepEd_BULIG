@@ -170,7 +170,7 @@ function key_score(array $a,string $response):?array{
   $k=$key[$n]??null;$g=(string)($got[$n]??'');[$pts,$of,$want,$t]=key_card_points($k,$g);
   if(!$k&&($exp=say_words()[activity_key_id($a).':'.$n]??say_expected($set['cards'][$n-1]??[],$dir))){$t='say';$want=implode(', ',array_map(fn($x)=>explode('|',$x)[0],$exp));$h=key_said($g);if($h!==null)$pts=say_match($exp,$h);}/* pronunciation (v172) */
   $ok=$pts>=$of;$tr=($k||$t==='say')?($tries[$n]??0):0;   // v185: a voice check's tries count too
-  if($tr)$pts=round($pts*max(0,1-$tr/KEY_TRIES),2);/* each wrong try takes away a third (v172) */
+  if($tr&&$of<=1)$pts=round($pts*max(0,1-$tr/KEY_TRIES),2);/* each wrong try takes away a third (v172); v209: not on a matching or ordering board, where Check says how many pairs are right and the pupil fixes the rest (the pairs right at the end are the score) */
   if(isset($wc[$n])&&$wc[$n]['p']!==null)$pts=round($of*$wc[$n]['p']/100,2);/* v184: the Word Coach run is the reading: its score counts */
   $right+=$pts;$total+=$of;$cards[$n]=['got'=>$g,'want'=>$want,'pts'=>$pts,'of'=>$of,'t'=>$t,'fix'=>!empty($k['fix']),'ok'=>$ok,'tries'=>$tr];}
  return $total?['right'=>$right,'total'=>$total,'cards'=>$cards]:null;
@@ -179,7 +179,7 @@ function key_score(array $a,string $response):?array{
 /** v183: "Done" activities (actions, games, pair work) and drawings have nothing to mark, so they count as done (no score).
     Before, they were saved as 0 of 1: 0 stars, and the pupil could not go on. This fixes saved answers once. */
 function done_scores_repair():void{
- static $ran=false;if($ran)return;$ran=true;
+ static $ran=false;if($ran)return;$ran=true;board_tries_repair();
  if(val("SELECT 1 FROM settings WHERE setting_key='fix_done_scores'"))return;
  foreach(rows("SELECT c.id,c.pupil_id,c.activity_id,c.status,c.response,c.rubric_scores,c.reviewed_by,a.phase FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE a.response_mode IN ('perform','drawing') AND c.max_score=1 AND c.score=0") as $r){
   $j=json_decode((string)($r['rubric_scores']??''),true);if(is_array($j)&&isset($j['teacher_score']))continue;
@@ -190,6 +190,22 @@ function done_scores_repair():void{
  q("INSERT INTO settings(setting_key,setting_value) VALUES('fix_done_scores','1') ON DUPLICATE KEY UPDATE setting_value='1'");
 }
 
+/** v209 (bug report #139): matching and ordering boards lost a third of their points for every Check with a pair still
+    wrong, so 17 of 18 pairs right could end as 0%. Once: score those saved answers again (only when the score goes up),
+    and a lesson activity that was sent back because of it counts as done. A score the teacher gave stays. */
+function board_tries_repair():void{
+ try{if(val("SELECT 1 FROM settings WHERE setting_key='fix_board_tries'"))return;
+  foreach(rows("SELECT c.id,c.pupil_id,c.activity_id,c.status,c.score,c.max_score,c.reviewed_by,c.response,c.rubric_scores,a.phase FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.response LIKE '%Tries: %' AND c.max_score IS NOT NULL") as $r){
+   $j=json_decode((string)($r['rubric_scores']??''),true);if(is_array($j)&&(isset($j['teacher_score'])||isset($j['l4'])))continue;
+   $key=activity_key(one('SELECT * FROM activities WHERE id=?',[(int)$r['activity_id']])??[])??[];$tr=card_tries((string)$r['response']);$hit=false;
+   foreach($tr as $n=>$t)if($t&&in_array($key[$n]['t']??$key[(string)$n]['t']??'',['match','order'],true))$hit=true;if(!$hit)continue;
+   $s=key_score(['id'=>(int)$r['activity_id']],(string)$r['response']);if(!$s||!$s['total']||$s['right']<=(float)$r['score']+1e-9)continue;
+   q('UPDATE activity_completion SET score=?,max_score=? WHERE id=?',[$s['right'],$s['total'],(int)$r['id']]);
+   if($r['status']==='retry'&&$r['phase']==='learn'&&$r['reviewed_by']===null&&round($s['right']/$s['total']*100,6)>=STAR_PASS){q("UPDATE activity_completion SET status='completed' WHERE id=?",[(int)$r['id']]);if(function_exists('update_learning'))update_learning((int)$r['pupil_id'],(int)$r['activity_id']);}
+  }
+  q("INSERT INTO settings(setting_key,setting_value) VALUES('fix_board_tries','1') ON DUPLICATE KEY UPDATE setting_value='1'");
+ }catch(Throwable $e){}
+}
 /** Save the auto score on a completion (score / max_score), unless the teacher has already set one. */
 function key_save_score(int $cid):void{
  $c=one('SELECT c.id,c.response,c.activity_id,c.reviewed_at,c.rubric_scores FROM activity_completion c WHERE c.id=?',[$cid]);if(!$c)return;
