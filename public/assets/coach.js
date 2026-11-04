@@ -210,27 +210,27 @@
    function beginListening(){
     if(!alive)return;
     if(SPM==='support'){readAlong();return;}
-    let p=0,sessBase=0,last=Date.now(),hintT=null,ended=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
-    const PK='wcprog:'+key;const keep=()=>{};
+    let p=0,last=Date.now(),hintT=null,restartT=null,ended=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
+    const PK='wcprog:'+key;
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Each word turns green when you say it right.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
     box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':(APPLE?'Checking words — recording is the next step':'Audio unavailable — teacher review needed');liveMeter(box,recording,()=>alive,false);
     const hint=box.querySelector('[data-hint]');
-    const show=()=>{keep();for(let i=0;i<N;i++)if(!S[i])paint(i,i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
+    const show=()=>{for(let i=0;i<N;i++)if(!S[i])paint(i,i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
     const set=(i,v)=>{S[i]=v;paint(i,v==='ok'?'ok':'miss');};
-    const finish=()=>{if(ended)return;ended=true;try{localStorage.removeItem(PK);}catch(e){}ov.classList.remove('wc-reading');secs=Math.round((Date.now()-t0)/1000);clearInterval(hintT);if(stream)stream.stop();for(let i=0;i<N;i++)if(S[i]!=='ok')set(i,'miss');
+    const finish=()=>{if(ended)return;ended=true;try{localStorage.removeItem(PK);}catch(e){}ov.classList.remove('wc-reading');secs=Math.round((Date.now()-t0)/1000);clearInterval(hintT);clearTimeout(restartT);if(stream)stream.stop();for(let i=0;i<N;i++)if(S[i]!=='ok')set(i,'miss');
      for(let i=0;i<N;i++)if(S[i]==='ok')got[i]=1;else fails[i]=1;setTimeout(()=>alive&&fix(),700);};
     const align=heard=>{if(ended)return;const toks=heard.split(/\s+/).map(norm).filter(Boolean);let q=p;const st={};
-     /* the next 4 words, or (when the pupil read on) the same word further on: the reading always goes on */
+     /* Bounded ordered alignment: exact words first, then accent tolerance; repeated words do not advance twice. */
      for(const t of toks){if(q>0&&near(t,T[q-1])&&!near(t,T[q]))continue;let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k])){hit=k;break;}
 
       if(hit>=0){for(let m=q;m<q+hit;m++)st[m]='miss';st[q+hit]='ok';q=q+hit+1;}}
      if(q<p)return;for(let i=p;i<q;i++)if(st[i]&&S[i]!=='ok')set(i,st[i]);else if(st[i]==='ok')set(i,'ok');
      if(q>p){p=q;last=Date.now();hint.hidden=true;}show();if(p>=N)finish();};
-    const startListening=()=>{stream=listenAll(align,()=>{sessBase=p;},reason=>{if(!alive||ended)return;ended=true;clearInterval(hintT);stream=null;noListen(reason);});};
-    box.querySelector('.wc-skipw').onclick=()=>{if(p<N){if(stream)stream.stop();set(p,'miss');p++;sessBase=p;last=Date.now();hint.hidden=true;show();if(p>=N)finish();else setTimeout(()=>{if(alive&&!ended)startListening();},400);}};
+    const startListening=()=>{if(!alive||ended)return;clearTimeout(restartT);if(stream)stream.stop();stream=listenAll(align,()=>{},reason=>{if(!alive||ended)return;ended=true;clearInterval(hintT);stream=null;noListen(reason);});};
+    box.querySelector('.wc-skipw').onclick=()=>{if(p<N){gen++;hush();clearTimeout(restartT);if(stream)stream.stop();set(p,'miss');p++;last=Date.now();hint.hidden=true;show();if(p>=N)finish();else restartT=setTimeout(startListening,400);}};
     box.querySelector('.wc-done').onclick=finish;
     hintT=setInterval(()=>{const stl=box.querySelector('[data-st]'),el=Math.round((Date.now()-t0)/1000);if(stl)stl.textContent=Math.floor(el/60)+':'+String(el%60).padStart(2,'0');const note=box.querySelector('[data-recording-note]');if(note&&recording&&!recording.valid())note.textContent='Recording interrupted — please retry this reading';if(!live()||ended){clearInterval(hintT);return;}if(Date.now()-last>7000&&p<N){hint.hidden=false;hint.innerHTML='Stuck on <b>“'+esc(all[p])+'”</b>? Tap it to hear it, or tap <b>Skip this word</b>.';}},1000);
-    W.forEach((x,i)=>{x.onclick=()=>{if(ended)return;if(stream)stream.stop();say(all[i],.6,()=>{if(alive&&!ended)setTimeout(()=>{if(alive&&!ended)startListening();},400);});if(S[i]!=='ok'&&i>=p){set(i,'miss');if(i===p){p++;sessBase=p;show();if(p>=N)finish();}}};});
+    W.forEach((x,i)=>{x.onclick=()=>{if(ended)return;clearTimeout(restartT);if(stream)stream.stop();say(all[i],.6,()=>{if(alive&&!ended)restartT=setTimeout(startListening,400);});if(S[i]!=='ok'&&i>=p){set(i,'miss');if(i===p){p++;show();if(p>=N)finish();}}};});
     show();startListening();}
    const live=()=>alive;
    /* v208 Speech support (set by the teacher): BULIG does not judge the words. The pupil reads aloud and taps each word
