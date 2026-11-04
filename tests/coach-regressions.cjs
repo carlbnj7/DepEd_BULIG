@@ -6,21 +6,35 @@ const tick=ms=>{const end=clock+ms;for(;;){const entry=[...timers].filter(([,v])
 let instances=[];class Rec{constructor(){instances.push(this)}start(){this.onstart?.()}abort(){this.onend?.()}}
 const ctx={Rec,APPLE:true,setTimeout:later,clearTimeout:i=>timers.delete(i),queueMicrotask:fn=>fn()};vm.createContext(ctx);
 vm.runInContext(source.slice(source.indexOf(' const listenAll='),source.indexOf('\n const words='))+';this.listenAll=listenAll;',ctx);
-let words=[],stops=[];let listener=ctx.listenAll(t=>words.push(t),()=>{},r=>stops.push(r));
+let words=[],stops=[],previews=[];let listener=ctx.listenAll(t=>words.push(t),()=>{},r=>stops.push(r),t=>previews.push(t));
 const result=(r,values)=>r.onresult({results:values.map(([t,final])=>Object.assign([{transcript:t}],{isFinal:final}))});
-let r=instances.at(-1);result(r,[['wrong',false]]);assert.deepEqual(words,[]);
+let r=instances.at(-1);result(r,[['wrong',false]]);assert.deepEqual(words,[]);assert.equal(previews.at(-1),'wrong');result(r,[['cat',false]]);assert.equal(previews.at(-1),'cat');assert.deepEqual(words,[]);
 result(r,[['cat',true],['wrong',false]]);result(r,[['cat',true],['hat',true]]);assert.deepEqual(words,['cat','hat']);
-r.onend();tick(400);assert.equal(instances.length,2);result(r,[['stale',true]]);assert.deepEqual(words,['cat','hat']);
+r.onend();assert.equal(previews.at(-1),'');tick(400);assert.equal(instances.length,2);result(r,[['stale',true]]);assert.deepEqual(words,['cat','hat']);
 r=instances.at(-1);r.onerror({error:'network'});tick(1000);assert.equal(instances.length,3);assert.deepEqual(stops,[]);
 tick(21000);assert.ok(instances.length>=4,'silent engine restarts');listener.stop();const count=instances.length;tick(60000);assert.equal(instances.length,count);
 listener=ctx.listenAll(t=>words.push(t),()=>{},r=>stops.push(r));r=instances.at(-1);result(r,[['second',true]]);assert.equal(words.at(-1),'second');r.onerror({error:'not-allowed'});tick(60000);assert.deepEqual(stops,['not-allowed']);
 function matching(mode='',vowel=false){const c={document:{querySelector:q=>q.includes('vowel')?(vowel?{}:null):{content:mode}}};vm.createContext(c);vm.runInContext(source.slice(source.indexOf(' const lev='),source.indexOf('\n /* One listen:'))+';this.near=near;',c);return c.near;}
 assert.equal(matching()('10','ten'),true);assert.equal(matching()('den','then'),true);assert.equal(matching()('bad','bed'),false);assert.equal(matching('',true)('ship','sheep'),false);assert.equal(matching('accent')('bery','very'),true);assert.equal(matching()('','cat'),false);
-function align(expected,heard){const c={T:expected,N:expected.length,S:[],p:0,sessBase:0,ended:false,norm:w=>w.toLowerCase(),near:matching(),Date,st:{},hint:{},show(){},finish(){},set(i,v){c.st[i]=v}};vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    const align='),source.indexOf('    const startListening='))+';this.align=align;',c);for(const h of heard)c.align(h);return c.st;}
+function align(expected,heard){const c={T:expected,N:expected.length,S:[],p:0,sessBase:0,alive:true,ended:false,clearPreview(){},previewWords:[],W:[],norm:w=>w.toLowerCase(),near:matching(),Date,st:{},hint:{},show(){},finish(){},set(i,v){c.st[i]=v}};vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    const align='),source.indexOf('    const startListening='))+';this.align=align;',c);for(const h of heard)c.align(h);return c.st;}
 assert.deepEqual(align(['cat','hat','mat'],['cat cat hat mat']),{0:'ok',1:'ok',2:'ok'});
 assert.deepEqual(align(['cat','hat','mat'],['cat mat']),{0:'ok',1:'miss',2:'ok'});
 assert.deepEqual(align(['the','cat','and','the','dog'],['the cat','and the dog']),{0:'ok',1:'ok',2:'ok',3:'ok',4:'ok'});
 console.log('PASS: final-only incremental results, stale events, restarts/watchdog, permission stop, second run, accents/vowels, repeats/skips/order.');
+
+function previewAlignment(){
+ const marks=[new Set(),new Set(),new Set()];
+ const c={T:['cat','hat','mat'],N:3,S:[],p:0,alive:true,ended:false,norm:w=>w.toLowerCase(),near:matching(),Date,hint:{},show(){},finish(){c.finished=true;},set(i,v){c.S[i]=v;marks[i].delete('mid');},W:marks.map(m=>({classList:{add:v=>m.add(v),remove:v=>m.delete(v)},scrollIntoView(){}}))};
+ vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    let previewWords='),source.indexOf('    const startListening='))+';this.align=align;',c);
+ c.align('cat hat mat',false);assert.deepEqual(marks.map(m=>m.has('mid')),[true,true,true]);assert.equal(c.p,0);assert.equal(c.S.length,0);assert.equal(c.finished,undefined);
+ c.align('cat',false);assert.deepEqual(marks.map(m=>m.has('mid')),[true,false,false]);
+ c.align('cat');assert.equal(c.p,1);assert.equal(c.S[0],'ok');assert.equal(marks[0].has('mid'),false);
+ c.align('hat',false);assert.equal(c.S[1],undefined);c.align('',false);assert.equal(marks[1].has('mid'),false);
+ c.ended=true;c.align('hat mat',false);assert.equal(marks[1].has('mid'),false);
+}
+previewAlignment();
+console.log('PASS: immediate provisional highlights, corrected hypotheses, final-only score/progress and cleared previews.');
+
 async function recordingCase(mode){
  let track={readyState:'live',muted:false,addEventListener(){},stop(){this.readyState='ended';}},closed=0;
  class Recorder{static isTypeSupported(t){return t==='audio/mp4'}constructor(){this.state='inactive';this.mimeType='audio/mp4'}start(){this.state='recording'}pause(){this.state='paused'}resume(){this.state='recording'}stop(){this.state='inactive';if(mode==='stalled')return;queueMicrotask(()=>{this.ondataavailable({data:new Blob([mode==='empty'?'':new Uint8Array(800)])});this.onstop();});}}
