@@ -87,7 +87,7 @@ function l1_save_audio(string $data,int $pid,int $aid):string{
  elseif(str_starts_with($head,'ID3')||(ord($head[0])===0xFF&&(ord($head[1])&0xE0)===0xE0))$ext=strtolower($m[1])==='aac'?'aac':'mp3';else fail('This recording could not be read. Please record again.');
  $dir=l1_recordings_dir().'/'.$pid;if(!is_dir($dir)&&!@mkdir($dir,0750,true)&&!is_dir($dir))fail('Recordings cannot be saved on the server right now. Please tell your teacher.',500);
  $name=$aid.'-'.date('YmdHis').'-'.bin2hex(random_bytes(4)).'.'.$ext;
- if(@file_put_contents($dir.'/'.$name,$bin,LOCK_EX)===false)fail('Recordings cannot be saved on the server right now. Please tell your teacher.',500);
+ if(@file_put_contents($dir.'/'.$name,$bin,LOCK_EX)!==strlen($bin)){@unlink($dir.'/'.$name);fail('Recordings cannot be saved on the server right now. Please tell your teacher.',500);}
  return $pid.'/'.$name;
 }
 
