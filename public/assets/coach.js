@@ -15,9 +15,9 @@
  const Rec=window.SpeechRecognition||window.webkitSpeechRecognition,synth=window.speechSynthesis||null;
  // Record only the pupil phase. Never record Max's opening demonstration or continue after closing.
  async function captureReading(live){
-  let media=null,mr=null,chunks=[],timer=null,stopTimer=null,expired=false,ended=false,failure='',ac=null,bytes=0,settled=false;
+  let media=null,mr=null,chunks=[],timer=null,stopTimer=null,expired=false,ended=false,failure='',ac=null,decoder=null,bytes=0,settled=false;
   let resolve;const result=new Promise(r=>resolve=r);
-  const cleanup=()=>{clearTimeout(timer);if(media)media.getTracks().forEach(t=>t.stop());try{if(ac&&ac.state!=='closed')ac.close().catch(()=>{});}catch(e){}ac=null;};
+  const cleanup=()=>{clearTimeout(timer);if(media)media.getTracks().forEach(t=>t.stop());try{if(ac&&ac.state!=='closed')ac.close().catch(()=>{});}catch(e){}ac=null;if(decoder){try{decoder.close().catch(()=>{});}catch(e){}decoder=null;}};
   const settle=value=>{if(settled)return;settled=true;clearTimeout(stopTimer);cleanup();resolve(value);};
   try{
    if(!navigator.mediaDevices||!window.MediaRecorder)return null;
@@ -35,14 +35,13 @@
     ended=true;if(!stopTimer)stopTimer=setTimeout(()=>{failure='The audio could not be checked. Please record again.';settle('');},15000);cleanup();const blob=new Blob(chunks,{type:(mr.mimeType||type||'audio/webm').split(';')[0]});
     if(expired||blob.size<200||blob.size>6000000){failure=failure||'The recording was empty or interrupted. Please record again.';settle('');return;}
     // Container bytes alone are not proof of playable audio. Decode after releasing capture.
-    let decoder=null;try{
+    try{
      const AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw Error('decoder');decoder=new AC();
      const decoded=await decoder.decodeAudioData(await blob.arrayBuffer());let energy=0;
      for(let c=0;c<decoded.numberOfChannels;c++){const data=decoded.getChannelData(c);for(let i=0;i<data.length;i+=32)energy+=data[i]*data[i];}
      if(!Number.isFinite(decoded.duration)||decoded.duration<0.4||energy<0.00001)throw Error('empty');
      if(settled)return;const f=new FileReader();f.onload=()=>settle(String(f.result));f.onerror=()=>settle('');f.readAsDataURL(blob);
     }catch(e){failure='The recording is silent or could not be played. Please record again.';settle('');}
-    finally{if(decoder)decoder.close().catch(()=>{});}
    };
    mr.start(500);if(!live)mr.pause();timer=setTimeout(()=>{expired=true;failure='The recording time limit was reached. Please try again.';stop();},600000);
    const stop=()=>{if(!ended){ended=true;stopTimer=setTimeout(()=>{failure='The browser did not finish saving. Please record again.';settle('');},15000);try{if(mr.state!=='inactive')mr.stop();else settle('');}catch(e){settle('');}}return result;};

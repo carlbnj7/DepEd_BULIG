@@ -30,12 +30,25 @@ jobs:
           persist-credentials: false
       - run: sudo apt-get update && sudo apt-get install -y php-cli php-mysql php-mbstring php-xml php-gd php-zip mariadb-client
       - run: node --check public/assets/coach.js && node tests/coach-regressions.cjs && node tests/audit-regressions.cjs
-      - run: python3 tests/run_tests.py
+      - name: PHP and database integration
+        id: integration
+        continue-on-error: true
+        run: python3 tests/run_tests.py
       - run: |
           python3 -m venv /tmp/bulig-ui
           /tmp/bulig-ui/bin/pip install playwright
           /tmp/bulig-ui/bin/playwright install --with-deps chromium
       - run: /tmp/bulig-ui/bin/python tests/reading_ui.py
+      - name: Verify pre-existing failures against original dev commit
+        if: always() && steps.integration.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          git fetch origin 8d9b4141b49a4b61a4157b5be870ae541a3909a6 --depth=1
+          git worktree add --detach /tmp/bulig-baseline 8d9b4141b49a4b61a4157b5be870ae541a3909a6
+          python3 tests/run_tests.py --root /tmp/bulig-baseline
+      - name: Preserve integration failure status
+        if: always() && steps.integration.outcome == 'failure'
+        run: exit 1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
