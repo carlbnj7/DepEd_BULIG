@@ -24,13 +24,13 @@ console.log('PASS: final-only incremental results, stale events, restarts/watchd
 
 function previewAlignment(){
  const marks=[new Set(),new Set(),new Set()];
- const c={T:['cat','hat','mat'],N:3,S:[],p:0,alive:true,ended:false,norm:w=>w.toLowerCase(),near:matching(),Date,hint:{},show(){},finish(){c.finished=true;},set(i,v){c.S[i]=v;marks[i].delete('mid');},W:marks.map(m=>({classList:{add:v=>m.add(v),remove:v=>m.delete(v)},scrollIntoView(){}}))};
+ const c={T:['cat','hat','mat'],N:3,S:[],p:0,alive:true,ended:false,norm:w=>w.toLowerCase(),near:matching(),Date,hint:{},show(){},finish(){c.finished=true;},set(i,v){c.S[i]=v;marks[i].delete('wc-heard');},W:marks.map(m=>({classList:{add:v=>m.add(v),remove:v=>m.delete(v)},scrollIntoView(){}}))};
  vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    let previewWords='),source.indexOf('    const startListening='))+';this.align=align;',c);
- c.align('cat hat mat',false);assert.deepEqual(marks.map(m=>m.has('mid')),[true,true,true]);assert.equal(c.p,0);assert.equal(c.S.length,0);assert.equal(c.finished,undefined);
- c.align('cat',false);assert.deepEqual(marks.map(m=>m.has('mid')),[true,false,false]);
- c.align('cat');assert.equal(c.p,1);assert.equal(c.S[0],'ok');assert.equal(marks[0].has('mid'),false);
- c.align('hat',false);assert.equal(c.S[1],undefined);c.align('',false);assert.equal(marks[1].has('mid'),false);
- c.ended=true;c.align('hat mat',false);assert.equal(marks[1].has('mid'),false);
+ c.align('cat hat mat',false);assert.deepEqual(marks.map(m=>m.has('wc-heard')),[true,true,true]);assert.equal(c.p,0);assert.equal(c.S.length,0);assert.equal(c.finished,undefined);
+ c.align('cat',false);assert.deepEqual(marks.map(m=>m.has('wc-heard')),[true,false,false]);
+ c.align('cat');assert.equal(c.p,1);assert.equal(c.S[0],'ok');assert.equal(marks[0].has('wc-heard'),false);
+ c.align('hat',false);assert.equal(c.S[1],undefined);c.align('',false);assert.equal(marks[1].has('wc-heard'),false);
+ c.ended=true;c.align('hat mat',false);assert.equal(marks[1].has('wc-heard'),false);
 }
 previewAlignment();
 console.log('PASS: immediate provisional highlights, corrected hypotheses, final-only score/progress and cleared previews.');

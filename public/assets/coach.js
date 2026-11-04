@@ -212,7 +212,7 @@
     if(SPM==='support'){readAlong();return;}
     let p=0,last=Date.now(),hintT=null,restartT=null,ended=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
     const PK='wcprog:'+key;
-    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Yellow means Max is checking; green means confirmed.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
+    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Blue means Max heard you; green means confirmed.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
     box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':(APPLE?'Checking words — recording is the next step':'Audio unavailable — teacher review needed');liveMeter(box,recording,()=>alive,false);
     const hint=box.querySelector('[data-hint]');
     const show=()=>{for(let i=0;i<N;i++)if(!S[i])paint(i,i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
@@ -220,13 +220,13 @@
     const finish=()=>{if(ended)return;ended=true;try{localStorage.removeItem(PK);}catch(e){}ov.classList.remove('wc-reading');secs=Math.round((Date.now()-t0)/1000);clearInterval(hintT);clearTimeout(restartT);if(stream)stream.stop();for(let i=0;i<N;i++)if(S[i]!=='ok')set(i,'miss');
      for(let i=0;i<N;i++)if(S[i]==='ok')got[i]=1;else fails[i]=1;setTimeout(()=>alive&&fix(),700);};
     let previewWords=[];
-    const clearPreview=()=>{previewWords.forEach(i=>W[i].classList.remove('mid'));previewWords=[];};
+    const clearPreview=()=>{previewWords.forEach(i=>W[i].classList.remove('wc-heard'));previewWords=[];};
     const align=(heard,confirmed=true)=>{clearPreview();if(ended||!alive)return;const toks=heard.split(/\s+/).map(norm).filter(Boolean);let q=p;const st={};
      /* Bounded ordered alignment: exact words first, then accent tolerance; repeated words do not advance twice. */
      for(const t of toks){if(q>0&&near(t,T[q-1])&&!near(t,T[q]))continue;let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k])){hit=k;break;}
 
       if(hit>=0){for(let m=q;m<q+hit;m++)st[m]='miss';st[q+hit]='ok';q=q+hit+1;}}
-     if(!confirmed){for(let i=p;i<q;i++)if(st[i]==='ok'&&S[i]!=='ok'){W[i].classList.add('mid');previewWords.push(i);}if(previewWords.length){last=Date.now();hint.hidden=true;W[previewWords[previewWords.length-1]].scrollIntoView({block:'nearest',behavior:'smooth'});}return;}
+     if(!confirmed){for(let i=p;i<q;i++)if(st[i]==='ok'&&S[i]!=='ok'){W[i].classList.add('wc-heard');previewWords.push(i);}if(previewWords.length){last=Date.now();hint.hidden=true;W[previewWords[previewWords.length-1]].scrollIntoView({block:'nearest',behavior:'smooth'});}return;}
      if(q<p)return;for(let i=p;i<q;i++)if(st[i]&&S[i]!=='ok')set(i,st[i]);else if(st[i]==='ok')set(i,'ok');
      if(q>p){p=q;last=Date.now();hint.hidden=true;}show();if(p>=N)finish();};
     const startListening=()=>{if(!alive||ended)return;clearTimeout(restartT);if(stream)stream.stop();stream=listenAll(align,()=>{},reason=>{if(!alive||ended)return;ended=true;clearInterval(hintT);stream=null;noListen(reason);},heard=>align(heard,false));};
