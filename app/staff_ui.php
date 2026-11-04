@@ -142,7 +142,7 @@ function print_centre_view(array $u):void{
  $certOpts=[];foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)$certOpts[(int)$l['id']]=level_label((int)$l['id']).' · '.($ready[(int)$l['id']]??0).' ready';
  $levOpts=[];foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)$levOpts[(int)$l['id']]=level_label((int)$l['id']);
  $btn=fn($t)=>'<div class="pc-btns"><button class="btn primary">'.icon('print').e($t).'</button></div>';$f=fn($page,$inner)=>'<form method="get" action="" class="pc-form"><input type="hidden" name="page" value="'.$page.'">'.$inner.'</form>';
- $img=fn($n)=>is_file(__DIR__.'/../public/assets/images/print/'.$n.'.webp')?'assets/images/print/'.$n.'.webp':'icon:print';
+ $img=fn($n)=>is_file(__DIR__.'/../public/assets/images/print/'.$n.'.webp')?'assets/images/print/'.$n.'.webp?v='.filemtime(__DIR__.'/../public/assets/images/print/'.$n.'.webp'):'icon:print';
  echo hm_head('PRINT CENTRE','Everything you can print','Choose what to print and for whom. Each one opens a preview first, with a green <b>Print or save as PDF</b> button.');
  if(!$pupils){echo '<section class="empty">'.icon('people').'<h2>No pupils yet.</h2><p>Add pupils first. Then their tickets, report cards and certificates are ready to print here.</p><a class="btn primary" href="?page=accounts">'.icon('useredit').'Add pupils</a></section>';return;}
  echo '<div class="pc-grid">'.section_report_card($secs,$img);

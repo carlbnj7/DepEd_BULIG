@@ -23,36 +23,78 @@ function finished_levels(int $pid):array{
 function level_cover(int $level):string{$f='assets/images/covers/level-'.$level.'.webp';return is_file(__DIR__.'/../public/'.$f)?$f:'assets/bulig-logo.png';}
 
 /* ---------- certificates ---------- */
+/** v209 A name as it should print: "JUAN DELA CRUZ" or "juan dela cruz" → "Juan Dela Cruz". A word already written in
+    mixed letters (McDonald, MAEd) stays as typed; initials, "Jr." and degrees like "Ed.D." are kept right; II, III, IV stay capital. */
+function name_case(string $s):string{
+ $s=trim(preg_replace('~\s+~u',' ',$s));if($s==='')return '';
+ return preg_replace_callback('~[^\s\-]+~u',function($m){$w=$m[0];
+  if(preg_match('~^(i{1,3}|iv|v|vi{0,3}|ix|x)[.,]?$~iu',$w))return mb_strtoupper($w);   // roman numerals
+  $low=mb_strtolower($w);if($w!==mb_strtoupper($w)&&$w!==$low)return $w;                // mixed case: as typed
+  return preg_replace_callback('~(^|[.\'’])(\p{L})~u',fn($x)=>$x[1].mb_strtoupper($x[2]),$low);   // Ed.D., O'Neil
+ },$s);
+}
+/** The school of a pupil (or the default school): [school name, principal, school logo]. */
+function cert_school(int $pid):array{
+ $s=function_exists('schools_ready')&&schools_ready()?(school_row(user_school_id($pid))??school_row(school_default_id())):null;
+ $set=fn($k)=>function_exists('admin_setting')?admin_setting($k,''):'';
+ $name=trim((string)($s['name']??''))?:$set('school_name');$head=trim((string)($s['head']??''))?:$set('school_head');
+ $logo=(string)($s['logo']??'');if($logo===''||!is_file(__DIR__.'/../public/'.$logo)){$logo=$set('logo_school');if($logo===''||!is_file(__DIR__.'/../public/'.$logo))$logo='';}
+ return [$name,name_case($head),$logo];
+}
+/** v209 The background of the certificate's white part: soft coloured dots, gold stars, faint letters and a green
+    wave, so the page is not plain white (light enough to print and read). */
+function cert_main_art():string{
+ $dots='';foreach([[760,60,40,'#ffd23f'],[790,140,18,'#4dabf7'],[700,30,14,'#ff7a1a'],[60,740,46,'#2f9e44'],[140,770,20,'#da77f2'],[30,660,14,'#ffd23f'],[780,720,30,'#ff7a1a'],[720,770,16,'#2f9e44']] as [$x,$y,$r,$c])$dots.='<circle cx="'.$x.'" cy="'.$y.'" r="'.$r.'" fill="'.$c.'" opacity=".18"/>';
+ $stars='';foreach([[640,90,1.2],[760,230,.9],[90,600,1],[40,500,.7],[700,640,1.1],[380,740,.8],[560,30,.7]] as [$x,$y,$k])$stars.='<path transform="translate('.$x.' '.$y.') scale('.$k.')" d="M12 2l3 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.8 5.7 21.4l1.5-7.1L1.8 9.4 9 8.6z" fill="#e2b93b" opacity=".35"/>';
+ $abc='';foreach([[690,330,60,12,'A'],[740,470,48,-10,'b'],[40,420,52,-12,'c'],[560,720,44,8,'D']] as [$x,$y,$z,$r,$t])$abc.='<text x="'.$x.'" y="'.$y.'" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="'.$z.'" fill="#17633a" opacity=".07" transform="rotate('.$r.' '.$x.' '.$y.')">'.$t.'</text>';
+ return '<svg class="cz-bg" viewBox="0 0 823 794" preserveAspectRatio="none" aria-hidden="true"><rect width="823" height="794" fill="#fffbec"/>'.$dots.$stars.$abc
+  .'<path d="M0 794V700Q120 660 250 700T520 720T823 690V794Z" fill="#2f9e44" opacity=".1"/></svg>';
+}
+/** The pictures behind the green band: soft sun rays, sparkles, floating letters, little books and a hill. */
+function cert_band_art():string{
+ $sp=fn($x,$y,$r,$o)=>'<path d="M'.$x.' '.($y-$r).'l'.($r*.28).' '.($r*.72).' '.($r*.72).' '.($r*.28).'-'.($r*.72).' '.($r*.28).'-'.($r*.28).' '.($r*.72).'-'.($r*.28).'-'.($r*.72).'-'.($r*.72).'-'.($r*.28).' '.($r*.72).'-'.($r*.28).'z" fill="#ffd23f" opacity="'.$o.'"/>';
+ $lt=fn($x,$y,$t,$sz,$rot,$o)=>'<text x="'.$x.'" y="'.$y.'" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="'.$sz.'" fill="#fff" opacity="'.$o.'" transform="rotate('.$rot.' '.$x.' '.$y.')">'.$t.'</text>';
+ $bk=fn($x,$y,$c,$rot)=>'<g transform="translate('.$x.' '.$y.') rotate('.$rot.')" opacity=".22"><path d="M0 0h16v22H2a2 2 0 0 1-2-2z" fill="'.$c.'"/><path d="M16 0h16v20a2 2 0 0 1-2 2H16z" fill="#fff"/><path d="M16 0v22" stroke="#0a4a26" stroke-width="1"/></g>';
+ $rays='';for($i=0;$i<12;$i++)$rays.='<path d="M150 300 L'.round(150+420*cos(deg2rad($i*30)),1).' '.round(300+420*sin(deg2rad($i*30)),1).' L'.round(150+420*cos(deg2rad($i*30+12)),1).' '.round(300+420*sin(deg2rad($i*30+12)),1).'Z" fill="#fff" opacity=".035"/>';
+ return '<svg class="cz-art" viewBox="0 0 300 794" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'.$rays
+  .'<circle cx="150" cy="300" r="120" fill="#ffd23f" opacity=".07"/><circle cx="150" cy="300" r="70" fill="#ffd23f" opacity=".07"/>'
+  .$sp(40,70,10,.7).$sp(262,150,8,.6).$sp(30,420,7,.5).$sp(270,470,11,.65).$sp(60,560,6,.5).$sp(240,40,6,.5).$sp(250,610,7,.45)
+  .$lt(18,200,'A',34,-14,.10).$lt(250,250,'b',30,12,.10).$lt(28,330,'c',26,8,.09).$lt(240,380,'D',28,-10,.09).$lt(205,120,'e',22,10,.08).$lt(70,480,'F',22,-8,.08)
+  .$bk(232,520,'#ff7a1a',-12).$bk(36,250,'#4dabf7',10).$bk(200,330,'#da77f2',6)
+  .'<path d="M0 690 Q80 650 150 672 T300 660 V794 H0Z" fill="#2f9e44" opacity=".45"/><path d="M0 720 Q90 690 170 708 T300 700 V794 H0Z" fill="#46b46b" opacity=".35"/>'
+  .'<g fill="#ffd23f" opacity=".5"><circle cx="40" cy="712" r="3"/><circle cx="96" cy="700" r="2.5"/><circle cx="210" cy="716" r="3"/><circle cx="262" cy="704" r="2.5"/></g></svg>';
+}
 function certificate_html(array $p,int $level,string $date,string $teacher):string{
  $title=(string)val('SELECT title FROM bulig_levels WHERE id=?',[$level]);$title=preg_replace('~\s*·\s*Level \w+$~u','',$title);
- $code=preg_replace('~^Level\s*~','',level_label($level));
- /* corner ornament (drawn once, turned for each corner) */
- $corner='<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M6 114V30Q6 6 30 6h84" fill="none" stroke="#c9a227" stroke-width="5"/><path d="M18 114V40q0-22 22-22h74" fill="none" stroke="#176444" stroke-width="2.5"/><circle cx="30" cy="30" r="9" fill="#c9a227"/><circle cx="30" cy="30" r="4" fill="#fffdf5"/><path d="M52 12l4 7 8 1-6 5 2 8-8-4-7 4 2-8-6-5 8-1z" fill="#c9a227"/><path d="M12 52l4 7 8 1-6 5 2 8-8-4-7 4 2-8-6-5 8-1z" fill="#c9a227"/></svg>';
- $star='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.8 5.7 21.4l1.5-7.1L1.8 9.4 9 8.6z" fill="#e2b93b" stroke="#c9a227" stroke-width="1"/></svg>';
- $seal='<svg viewBox="0 0 160 190" aria-hidden="true"><path d="M48 112l-22 70 24-12 14 22 16-62z" fill="#176444"/><path d="M112 112l22 70-24-12-14 22-16-62z" fill="#0e3b28"/>'
-  .'<g transform="translate(80 80)">'.implode('',array_map(fn($i)=>'<path d="M0-74l9 14H-9z" fill="#c9a227" transform="rotate('.($i*15).')"/>',range(0,23))).'</g>'
+ $code=preg_replace('~^Level\s*~','',level_label($level));$pid=(int)($p['id']??0);
+ [$school,$head,$slogo]=cert_school($pid);$dlogo=function_exists('division_logo')?division_logo():'';
+ $kid=friend_img('jarvis','cheer');   // Jarvis the Robot cheers on every certificate
+ $seal='<svg viewBox="0 0 160 160" aria-hidden="true"><g transform="translate(80 80)">'.implode('',array_map(fn($i)=>'<path d="M0-76l9 14H-9z" fill="#c9a227" transform="rotate('.($i*15).')"/>',range(0,23))).'</g>'
   .'<circle cx="80" cy="80" r="62" fill="#e2b93b" stroke="#fff8dc" stroke-width="4"/><circle cx="80" cy="80" r="52" fill="none" stroke="#8a5a00" stroke-width="1.5" stroke-dasharray="3 4"/>'
-  .'<text x="80" y="66" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="800" font-size="15" fill="#5a3c00" letter-spacing="2">BULIG</text>'
-  .'<text x="80" y="96" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="800" font-size="26" fill="#0e3b28">LEVEL '.e($code).'</text>'
-  .'<text x="80" y="116" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="10" fill="#5a3c00" letter-spacing="1.5">COMPLETED</text></svg>';
- return '<article class="cert-page"><div class="cert cert2">'
-  .'<span class="c2-corner tl">'.$corner.'</span><span class="c2-corner tr">'.$corner.'</span><span class="c2-corner bl">'.$corner.'</span><span class="c2-corner br">'.$corner.'</span>'
-  .'<div class="cert-in"><img class="c2-mark" src="assets/bulig-logo.png" alt="" aria-hidden="true">'
-  .'<div class="c2-top"><img class="cert-logo" src="assets/bulig-logo.png" alt="BULIG"><span class="c2-org">Bukidnon’s Unified Literacy and Intervention Gateway</span></div>'
-  .'<div class="c2-ribbon"><span>Certificate of Completion</span></div>'
-  .'<p class="cert-small">This certificate is proudly given to</p><h2 class="cert-name">'.e($p['name']).'</h2>'
-  .'<p class="cert-small">for successfully completing</p><p class="cert-level">'.e(level_label($level)).' · '.e($title).'</p>'
-  .'<p class="c2-stars">'.$star.$star.$star.$star.$star.'</p>'
-  .'<p class="cert-meta">Grade '.e((string)$p['grade_level']).((string)$p['section']!==''?' · '.e((string)$p['section']):'').' · Given on '.e(date('F j, Y',strtotime($date))).'</p>'
-  .'<div class="cert-sign"><span><b>'.e($teacher!==''?$teacher:' ').'</b>Teacher</span><span><b>&nbsp;</b>School Head</span></div></div>'
-  .'<img class="c2-kids" src="'.e(level_cover($level)).'" alt=""><span class="c2-seal">'.$seal.'</span></div></article>';
+  .'<text x="80" y="66" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="15" fill="#5a3c00" letter-spacing="2">BULIG</text>'
+  .'<text x="80" y="95" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="'.(mb_strlen($code)>2?20:24).'" fill="#0e3b28">LEVEL '.e($code).'</text>'
+  .'<text x="80" y="114" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="10" fill="#5a3c00" letter-spacing="1.5">COMPLETED</text></svg>';
+ $logo=fn($f,$alt)=>$f!==''?'<img class="cz-lg" src="'.e($f).'" alt="'.e($alt).'">':'<span class="cz-lg cz-slot" aria-hidden="true"></span>';
+ $grade='Grade '.e((string)$p['grade_level']).((string)($p['section']??'')!==''?' · '.e(name_case((string)$p['section'])):'');
+ $sign=fn($n,$r)=>'<div class="cz-sg"><b>'.($n!==''?e($n):'&nbsp;').'</b><i></i><span>'.$r.'</span></div>';
+ return '<article class="cert-page"><div class="cert cz">'
+  .'<aside class="cz-side">'.cert_band_art().'<img class="cz-bulig" src="assets/brand/bulig-gamified.webp" alt="BULIG"><div class="cz-lvl"><b>'.e($code).'</b><span>LEVEL COMPLETED</span><small>'.e($title).'</small></div><img class="cz-kid" src="'.e($kid).'" alt=""></aside>'
+  .'<div class="cz-main">'.cert_main_art().'<img class="cz-mark" src="assets/brand/bulig-gamified-mark.webp" alt="" aria-hidden="true">'
+  .'<header class="cz-hd"><span class="cz-logos">'.$logo($dlogo,'Division logo').($slogo!==''?$logo($slogo,'School logo'):'').'</span><p>Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon'.($school!==''?'<br><strong>'.e($school).'</strong>':'').'</p></header>'
+  .'<h2 class="cz-t">Certificate of Completion</h2><i class="cz-gold"></i>'
+  .'<p class="cz-s">This certificate is proudly presented to</p><h3 class="cert-name cz-name">'.e(name_case((string)$p['name'])).'</h3>'
+  .'<p class="cz-tx">'.$grade.', for successfully completing <b>'.e(level_label($level)).' · '.e($title).'</b> of the BULIG reading program. Given on '.e(date('F j, Y',strtotime($date))).'.</p>'
+  .'<p class="cz-stars" aria-hidden="true">'.str_repeat('<svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.8 5.7 21.4l1.5-7.1L1.8 9.4 9 8.6z" fill="#e2b93b" stroke="#c9a227" stroke-width="1"/></svg>',5).'</p>'
+  .'<p class="cz-cheer">Congratulations! Keep reading, and keep growing.</p>'
+  .'<div class="cz-sigs">'.$sign(name_case($teacher),'Class Adviser').$sign($head,'School Principal').'</div>'
+  .'<span class="cz-seal">'.$seal.'</span></div></div></article>';
 }
 function pupil_teacher_name(int $pid):string{return (string)(val('SELECT u.name FROM teacher_pupils t JOIN users u ON u.id=t.teacher_id WHERE t.pupil_id=? LIMIT 1',[$pid])?:'');}
 /** Pupil: their own certificate for one finished level. */
 function certificate_view(array $u):void{
  $pid=(int)$u['id'];$level=(int)($_GET['level']??0);$date=level_finished_at($pid,$level);
  if(!$date)fail('Finish every lesson of this level to get its certificate.',404);
- $p=one('SELECT u.name,p.grade_level,p.section FROM users u JOIN pupils p ON p.user_id=u.id WHERE u.id=?',[$pid]);
+ $p=one('SELECT u.id,u.name,p.grade_level,p.section FROM users u JOIN pupils p ON p.user_id=u.id WHERE u.id=?',[$pid]);
  echo '<div class="pageheading no-print"><div><span class="eyebrow">MY CERTIFICATE</span><h1>Well done, '.e(explode(' ',trim($u['name']))[0]).'!</h1><p class="muted">Print it or save it as a PDF.</p></div></div><div class="cert-tools no-print"><button type="button" class="btn primary" data-print>'.icon('download').'Print or save as PDF</button><a class="btn secondary" href="?page=achievements">'.icon('star').'Back to my achievements</a></div>';
  echo certificate_html($p,$level,$date,pupil_teacher_name($pid));
 }

@@ -51,6 +51,14 @@ $out=match($what){
     if($o['card']===null&&$c['t']==='choice'){$s=key_score($a,"BULIG card answers\nCard $n: ".$c['a']."\nTries: $n=1");$c2=$s['cards'][$n]??[];$o['card']=['pts'=>$c2['pts']??null,'of'=>$c2['of']??null];}}
    if($o['board']!==null&&$o['card']!==null)break;}
   return $o;})(),
+ /* v209 certificate: names print with capital first letters; the principal comes from the school details */
+ 'cert_check'=>(function()use($pid):array{$o=[];foreach(['JUAN DELA CRUZ','ROBERTO M. SANTOS, ED.D.','Ma. Luisa McDonald','JOSE RIZAL III'] as $t)$o['names'][]=name_case($t);
+  $sid=(int)val('SELECT school_id FROM users WHERE id=?',[$pid]);$old=$sid?val('SELECT head FROM schools WHERE id=?',[$sid]):null;
+  if($sid)q('UPDATE schools SET head=? WHERE id=?',['MARIA P. REYES',$sid]);else q("INSERT INTO settings(setting_key,setting_value) VALUES('school_head','MARIA P. REYES') ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)");
+  $p=one('SELECT u.id,u.name,p.grade_level,p.section FROM users u JOIN pupils p ON p.user_id=u.id WHERE u.id=?',[$pid]);$p['name']='PEDRO PENDUKO';
+  $h=certificate_html($p,1,date('Y-m-d'),'ANA SANTOS');
+  $o['principal']=str_contains($h,'Maria P. Reyes')&&str_contains($h,'School Principal');$o['pupil']=str_contains($h,'Pedro Penduko');$o['teacher']=str_contains($h,'Ana Santos')&&str_contains($h,'Class Adviser');$o['jarvis']=str_contains($h,'jarvis-cheer');$o['division']=str_contains($h,'Department of Education');
+  if($sid)q('UPDATE schools SET head=? WHERE id=?',[$old,$sid]);return $o;})(),
  /* v209: recordings older than 60 days go; new ones and readings still waiting for the teacher stay */
  'privacy_purge'=>(function():array{$dir=l1_recordings_dir().'/999999';@mkdir($dir,0750,true);$old=$dir.'/old.webm';$new=$dir.'/new.webm';$wait=$dir.'/wait.webm';
   foreach([$old,$new,$wait] as $f)file_put_contents($f,'x');touch($old,time()-61*86400);touch($wait,time()-90*86400);
