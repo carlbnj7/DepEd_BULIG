@@ -398,6 +398,7 @@ def run_pages(acc):
         test_bug_reports(a)
     test_messages(acc)
     test_chat(acc)
+    test_certificate(acc)
     test_bug_workflow(acc)
     test_reading_verification(acc)
 
@@ -659,7 +660,7 @@ def test_privacy(p):
     check('Ticking the box and tapping I Agree saves the answer and goes back to the page', q(f"SELECT COUNT(*) FROM settings WHERE setting_key='privacy_ok_{uid}'") == '1' and 'page=settings' in url, url)
     _, _, text = p.req('?page=settings')
     check('The privacy popup comes only once', 'data-pv' not in text)
-    check('Settings has My Data and Privacy with Download, the Privacy Notice and Ask to Delete', 'pv-card' in text and '?page=my_data' in text and '?page=privacy' in text and 'privacy_delete_ask' in text and 'You agreed to the Privacy Notice on' in text)
+    check('Settings has My Data and Privacy with Download and the Privacy Notice, but no delete request for pupils', 'pv-card' in text and '?page=my_data' in text and '?page=privacy' in text and 'privacy_delete_ask' not in text and 'You agreed to the Privacy Notice on' in text)
     _, _, text = p.req('?page=privacy')
     check('A pupil’s Privacy Notice uses easy words, without the popup on top', 'All About Your Data' in text and all(w in text for w in ('Why we keep it', 'How we keep it safe', 'You can ask')) and 'data-pv' not in text)
     status, _, body = p.req('?page=my_data')
@@ -669,8 +670,8 @@ def test_privacy(p):
         d = {}
     check('Download My Data gives the pupil’s own records as JSON, without the password', status == 200 and d.get('account', {}).get('role') == 'pupil' and 'answers' in d and 'password' not in body and 'hash' not in body, body[:200])
     q("DELETE FROM notifications WHERE kind='privacy'")
-    p.req('index.php', {'action': 'privacy_delete_ask', 'csrf': p.token('?page=settings')})
-    check('Ask to Delete My Account tells the administrator and the teacher', int(q("SELECT COUNT(*) FROM notifications WHERE kind='privacy'") or 0) >= 2)
+    st = p.req('index.php', {'action': 'privacy_delete_ask', 'csrf': p.token('?page=settings')})[0]
+    check('A pupil cannot send an account delete request', st == 403 and q("SELECT COUNT(*) FROM notifications WHERE kind='privacy'") == '0')
     g = Client()
     status, url, text = g.req('?page=privacy')
     check('Before signing in, the Privacy Notice opens too (not sent to sign in)', status == 200 and 'BULIG Privacy Notice' in text and 'page=login' not in urllib.parse.urlsplit(url).query)
@@ -733,7 +734,23 @@ def test_chat(acc):
     cid = q(f'SELECT id FROM chats WHERE teacher_id={tid} AND pupil_id={pid}')
     _, _, text = a.req(f'?page=chat&id={cid}')
     check('The administrator can read the chat, but cannot write in it', 'Yes, teacher!' in text and 'Read only' in text and 'chat_send' not in text)
+    md = os.path.join(ROOT, 'storage', 'messages', str(pid)); os.makedirs(md, exist_ok=True); open(os.path.join(md, 'chat-test.jpg'), 'wb').write(b'\xff\xd8\xff\xe0chatjpeg')
+    q(f"INSERT INTO chat_messages(chat_id,author_id,body,media_kind,media_path) VALUES({cid},{pid},'','photo','{pid}/chat-test.jpg')"); cm = q('SELECT MAX(id) FROM chat_messages')
+    check('The pupil and the teacher of the chat can open its photo', p.req(f'?page=chat_media&id={cm}')[0] == 200 and t.req(f'?page=chat_media&id={cm}')[0] == 200)
+    check('Another pupil cannot open a photo from someone else’s chat', other.req(f'?page=chat_media&id={cm}')[0] == 404)
+    check('The administrator can open it, to keep children safe', a.req(f'?page=chat_media&id={cm}')[0] == 200)
+    os.remove(os.path.join(md, 'chat-test.jpg'))
     check('The administrator cannot send chat messages', a.req('index.php', {'action': 'chat_send', 'csrf': a.token('?page=chat'), 'with': pid, 'body': 'hi'})[0] == 403)
+
+
+def test_certificate(acc):
+    """v209 Certificate: the principal from the school details, names with capital first letters, Jarvis and the logos."""
+    section('Certificates: principal and names')
+    r = php_cli('probe.php', 'cert_check', acc['pupil1']['uid'])
+    check('Names typed in capitals print with capital first letters only (Ed.D., McDonald and III kept)', r.get('names') == ['Juan Dela Cruz', 'Roberto M. Santos, Ed.D.', 'Ma. Luisa McDonald', 'Jose Rizal III'], r)
+    check('The principal is filled in from the school details (no typing)', r.get('principal') is True, r)
+    check('The pupil and the adviser names are fixed too', r.get('pupil') is True and r.get('teacher') is True, r)
+    check('The certificate has the DepEd heading and Jarvis', r.get('division') is True and r.get('jarvis') is True, r)
 
 
 def test_whats_new(p):

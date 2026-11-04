@@ -9,7 +9,7 @@
 const CHAT_MAX=1000;
 
 function chat_ready():bool{static $ok;if($ok===null){try{$ok=(bool)one("SHOW TABLES LIKE 'chat_messages'");}catch(Throwable $e){$ok=false;}}return $ok;}
-function chat_allowed(int $teacher,int $pupil):bool{return (bool)val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$teacher,$pupil]);}
+function chat_allowed(int $teacher,int $pupil):bool{return (bool)val('SELECT 1 FROM teacher_pupils t JOIN users a ON a.id=t.teacher_id AND a.active=1 JOIN users b ON b.id=t.pupil_id AND b.active=1 WHERE t.teacher_id=? AND t.pupil_id=?',[$teacher,$pupil]);}   // both accounts must be switched on
 /** The chat of a teacher and a pupil (made when the first message is sent). */
 function chat_id(int $teacher,int $pupil,bool $make=false):int{
  $id=(int)val('SELECT id FROM chats WHERE teacher_id=? AND pupil_id=?',[$teacher,$pupil]);

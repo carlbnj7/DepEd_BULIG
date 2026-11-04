@@ -90,7 +90,7 @@ function sp_pupils(int $sid):void{
  if(!$list){echo '<p class="muted dir-empty">No pupils match.</p></section>';return;}
  echo '<div class="tablewrap"><table class="sp-tbl"><thead><tr><th>Pupil</th><th>Grade · section</th><th>Teacher</th><th>Level</th><th>Lessons finished</th><th>XP</th></tr></thead><tbody>';
  foreach($list as $r){$lv=$r['level_id']===null?'—':((int)$r['level_id']?level_label((int)$r['level_id']):'Reading check');
-  echo '<tr><td><span class="sp-pp">'.avatar($r).'<span><b>'.e($r['name']).'</b><small>'.e($r['public_id']).((int)$r['active']?'':' · Off').'</small></span></span></td><td>'.((int)$r['grade_level']?'Grade '.(int)$r['grade_level']:'—').($r['section']!==null&&$r['section']!==''?' · '.e($r['section']):'').'</td><td>'.e((string)$r['teachers']?:'—').'</td><td>'.e($lv).'</td><td><b>'.(int)$r['done'].'</b></td><td>'.number_format((int)$r['xp']).'</td></tr>';}
+  echo '<tr><td><span class="sp-pp">'.avatar($r).'<span><b>'.e($r['name']).'</b><small>'.e($r['public_id']).((int)$r['active']?'':' · Off').'</small></span></span></td><td data-l="Grade">'.((int)$r['grade_level']?'Grade '.(int)$r['grade_level']:'—').($r['section']!==null&&$r['section']!==''?' · '.e($r['section']):'').'</td><td data-l="Teacher">'.e((string)$r['teachers']?:'—').'</td><td data-l="Level">'.e($lv).'</td><td data-l="Lessons"><b>'.(int)$r['done'].'</b></td><td data-l="XP">'.number_format((int)$r['xp']).'</td></tr>';}
  echo '</tbody></table></div></section>';
 }
 

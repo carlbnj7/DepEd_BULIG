@@ -965,6 +965,9 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
 // v209 an open chat fits the screen: its header stays in view and the newest message is at the bottom of the chat
 (()=>{const c=document.querySelector('.mz-chat');if(!c)return;const fit=()=>{if(innerWidth<900){const y=c.getBoundingClientRect().top+scrollY-84;scrollTo(0,Math.max(0,y));}else scrollTo(0,0);const l=c.querySelector('.mz-log');if(l)l.scrollTop=l.scrollHeight;};
  requestAnimationFrame(fit);addEventListener('load',()=>setTimeout(fit,60),{once:true});const l=c.querySelector('.mz-log');c.querySelectorAll('.mz-log img').forEach(i=>i.addEventListener('load',()=>{if(l)l.scrollTop=l.scrollHeight;},{once:true}));})();
+// v209 school form: the district list follows the municipality
+document.querySelectorAll('[data-muni]').forEach(m=>{const d=m.closest('form').querySelector('[data-muni-d]');if(!d)return;m.addEventListener('change',()=>{let L=[];try{L=JSON.parse(m.selectedOptions[0].dataset.d||'[]');}catch(e){}d.replaceChildren(new Option('Choose a district',''),...L.map(x=>new Option(x,x)));});});
+document.querySelectorAll('[data-muni-f]').forEach(m=>{const d=m.form.querySelector('[data-muni-fd]');m.addEventListener('change',()=>{let L=[];try{L=JSON.parse((m.selectedOptions[0].dataset.d)||'[]');}catch(e){}d.replaceChildren(new Option('All districts',''),...L.map(x=>new Option(x,x)));});});
 // v209 Messages search: type a name and only the matching chats and faces stay
 (()=>{const q=document.querySelector('[data-mz-search]');if(!q)return;const box=q.closest('.mz-inbox'),none=box.querySelector('[data-mz-none]');
  q.addEventListener('input',()=>{const t=q.value.trim().toLowerCase();let n=0;box.querySelectorAll('.mz-row').forEach(r=>{const ok=!t||(r.dataset.name||r.textContent.toLowerCase()).includes(t);r.hidden=!ok;if(ok)n++;});
