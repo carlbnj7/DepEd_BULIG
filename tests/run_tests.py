@@ -660,7 +660,7 @@ def test_privacy(p):
     check('Ticking the box and tapping I Agree saves the answer and goes back to the page', q(f"SELECT COUNT(*) FROM settings WHERE setting_key='privacy_ok_{uid}'") == '1' and 'page=settings' in url, url)
     _, _, text = p.req('?page=settings')
     check('The privacy popup comes only once', 'data-pv' not in text)
-    check('Settings has My Data and Privacy with Download, the Privacy Notice and Ask to Delete', 'pv-card' in text and '?page=my_data' in text and '?page=privacy' in text and 'privacy_delete_ask' in text and 'You agreed to the Privacy Notice on' in text)
+    check('Settings has My Data and Privacy with Download and the Privacy Notice, but no delete request for pupils', 'pv-card' in text and '?page=my_data' in text and '?page=privacy' in text and 'privacy_delete_ask' not in text and 'You agreed to the Privacy Notice on' in text)
     _, _, text = p.req('?page=privacy')
     check('A pupil’s Privacy Notice uses easy words, without the popup on top', 'All About Your Data' in text and all(w in text for w in ('Why we keep it', 'How we keep it safe', 'You can ask')) and 'data-pv' not in text)
     status, _, body = p.req('?page=my_data')
@@ -670,8 +670,8 @@ def test_privacy(p):
         d = {}
     check('Download My Data gives the pupil’s own records as JSON, without the password', status == 200 and d.get('account', {}).get('role') == 'pupil' and 'answers' in d and 'password' not in body and 'hash' not in body, body[:200])
     q("DELETE FROM notifications WHERE kind='privacy'")
-    p.req('index.php', {'action': 'privacy_delete_ask', 'csrf': p.token('?page=settings')})
-    check('Ask to Delete My Account tells the administrator and the teacher', int(q("SELECT COUNT(*) FROM notifications WHERE kind='privacy'") or 0) >= 2)
+    st = p.req('index.php', {'action': 'privacy_delete_ask', 'csrf': p.token('?page=settings')})[0]
+    check('A pupil cannot send an account delete request', st == 403 and q("SELECT COUNT(*) FROM notifications WHERE kind='privacy'") == '0')
     g = Client()
     status, url, text = g.req('?page=privacy')
     check('Before signing in, the Privacy Notice opens too (not sent to sign in)', status == 200 and 'BULIG Privacy Notice' in text and 'page=login' not in urllib.parse.urlsplit(url).query)

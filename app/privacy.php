@@ -81,7 +81,7 @@ function privacy_card(array $u):string{
   .'<p class="muted">'.($kid?'Here is what BULIG keeps about you, and what you can do with it.':'What BULIG keeps about you, and what you can do with it.').'</p><div class="pv-grid">';
  foreach(privacy_points((string)$u['role']) as [$i,$t,$d])$h.='<div class="pv-item">'.icon($i).'<span><b>'.e($t).'</b><small>'.e($d).'</small></span></div>';
  $h.='</div><div class="pv-acts"><a class="btn primary" href="?page=my_data">'.icon('download').'Download My Data</a><a class="btn secondary" href="?page=privacy">'.icon('info').'Read the Privacy Notice</a>';
- if($u['role']!=='admin')$h.='<form method="post" class="pv-del">'.csrf_field().'<input type="hidden" name="action" value="privacy_delete_ask"><button class="btn quiet" data-confirm="'.e($kid?'Ask to delete your account? Your teacher and the school administrator will be told.':'Ask the school administrator to delete your account?').'">'.icon('trash').'Ask to Delete My Account</button></form>';
+ if($u['role']==='teacher')$h.='<form method="post" class="pv-del">'.csrf_field().'<input type="hidden" name="action" value="privacy_delete_ask"><button class="btn quiet" data-confirm="'.e($kid?'Ask to delete your account? Your teacher and the school administrator will be told.':'Ask the school administrator to delete your account?').'">'.icon('trash').'Ask to Delete My Account</button></form>';
  $ok=one('SELECT setting_value FROM settings WHERE setting_key=?',[privacy_key((int)$u['id'])]);
  return $h.'</div><p class="pv-dpo">'.($ok?'You agreed to the Privacy Notice on '.e(date('F j, Y',strtotime((string)$ok['setting_value']))).'. ':'').'Questions? Contact the Data Protection Officer, DepEd Schools Division of Bukidnon.</p></section>';
 }
@@ -94,7 +94,7 @@ function privacy_action(string $action):never{
   audit('privacy_agree','Privacy Notice '.PRIVACY_ID);
   $b=(string)($_POST['back']??'dashboard');go('?page='.(preg_match('~^[a-z_]{1,30}$~',$b)?$b:'dashboard'));}
  if($action==='privacy_delete_ask'){
-  if($u['role']==='admin')fail('Administrators delete accounts on the Teachers page.');
+  if($u['role']!=='teacher')fail($u['role']==='pupil'?'Please ask your teacher or the school administrator.':'Administrators delete accounts on the Teachers page.',403);   // v209 pupils cannot send this request
   $title=$u['name'].' asked to delete their account';$body=$u['public_id'].' · '.ucfirst((string)$u['role']).' · Data Privacy Act request. Check, then delete the account if it is right.';
   $url=$u['role']==='pupil'?'?page=pupil&id='.(int)$u['id'].'&tab=account':'?page=accounts';
   foreach(rows("SELECT id FROM users WHERE role='admin' AND active=1") as $a)notify((int)$a['id'],'privacy',$title,$body,$u['role']==='pupil'?'?page=accounts':$url);

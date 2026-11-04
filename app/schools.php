@@ -10,7 +10,7 @@
    - Without the update file BULIG works as before (one school, from Settings). */
 
 const SCHOOL_KEYS=['school_name'=>'name','school_id'=>'school_no','school_district'=>'district','school_head'=>'head','school_code'=>'code','logo_school'=>'logo'];
-const SCHOOL_ACTIONS=['school_add','school_save','school_logo','school_logo_remove','teacher_school','school_delete'];
+const SCHOOL_ACTIONS=['muni_add','muni_delete','school_add','school_save','school_logo','school_logo_remove','teacher_school','school_delete'];
 
 function schools_ready():bool{static $r=null;if($r===null){try{$r=(bool)one("SHOW TABLES LIKE 'schools'")&&(bool)one("SHOW COLUMNS FROM users LIKE 'school_id'");}catch(Throwable $e){$r=false;}}return $r;}
 function school_rows(bool $activeOnly=false):array{static $c=null;if(!schools_ready())return [];if($c===null)$c=rows('SELECT * FROM schools ORDER BY id');return $activeOnly?array_values(array_filter($c,fn($s)=>(int)$s['active']===1)):$c;}
@@ -97,6 +97,11 @@ function schools_view():void{
  $cnt=school_counts();$all=school_rows();$yy=date('y');
  admin_heading('PEOPLE','Schools','Each school has its own code, name and logo. Teachers belong to a school, and their pupils get IDs with that school’s code.','<a class="btn primary" href="#add-school">'.icon('useredit').'Add a school</a>');
  echo admin_kpis([['school',count($all),count($all)===1?'School':'Schools','',false],['user',array_sum(array_column($cnt,'t')),'Teachers','',false],['people',number_format(array_sum(array_column($cnt,'p'))),'Pupils','',false],['book',array_sum(array_column($cnt,'s')),'Sections','',false]]);
+ $fm=(string)($_GET['muni']??'');$fd=(string)($_GET['district']??'');$M=munis();if(!isset($M[$fm]))$fm='';
+ if($M){echo '<form method="get" class="card sc-filter"><input type="hidden" name="page" value="schools"><label>Municipality<select name="muni" data-muni-f><option value="">All municipalities</option>';foreach($M as $m=>$n)echo '<option'.($m===$fm?' selected':'').' data-d="'.e(json_encode(muni_districts($m,(int)$n))).'">'.e($m).'</option>';
+  echo '</select></label><label>District<select name="district" data-muni-fd><option value="">All districts</option>';if($fm!=='')foreach(muni_districts($fm,(int)$M[$fm]) as $d)echo '<option'.($d===$fd?' selected':'').'>'.e($d).'</option>';
+  echo '</select></label><button class="btn primary">'.icon('search').'Show</button>'.($fm!==''?'<a class="btn quiet" href="?page=schools">Clear</a>':'').'</form>';
+  if($fm!==''){$ok=$fd!==''?[$fd]:muni_districts($fm,(int)$M[$fm]);$all=array_values(array_filter($all,fn($x)=>in_array((string)$x['district'],$ok,true)));if(!$all)echo '<section class="card"><p class="muted">No school in '.e($fd!==''?$fd:$fm).' yet.</p></section>';}}
  echo '<div class="sc-grid">';
  foreach($all as $i=>$s){$sid=(int)$s['id'];$c=$cnt[$sid]??['t'=>0,'p'=>0,'s'=>0];$logo=$s['logo']!==''&&is_file(__DIR__.'/../public/'.$s['logo']);
   echo '<section class="card sc-card" id="school-'.$sid.'"><div class="sc-top">'.($logo?'<img class="sc-logo" src="'.e($s['logo']).'" alt="">':'<span class="sc-logo c'.($i%4).'">'.e($s['code']).'</span>').'<div><h3>'.e($s['name']!==''?$s['name']:$s['code']).'</h3><small>'.e(trim(($s['school_no']!==''?'School ID '.$s['school_no']:'').($s['district']!==''?' · '.$s['district']:''),' ·')?:'Add the School ID and district in View school').'</small></div><span class="sc-tag c'.($i%4).'">'.e($s['code']).'</span></div>';
@@ -105,7 +110,7 @@ function schools_view():void{
  echo '</div>';
  echo '<section class="card sc-add" id="add-school"><h2>'.icon('useredit').' Add a school</h2><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_add">'.school_fields(['code'=>'','name'=>'','school_no'=>'','district'=>'','head'=>''],true)
   .'<p class="sc-full sc-prev" data-sc-prev>Pupils of this school will get IDs like <b>CODE'.$yy.'0001</b>. Teachers like <b>CODET0001</b>.</p><button class="btn primary">'.icon('check').'Save school</button></form></section>';
- echo '<p class="muted">The Division logo is the same for every school: Settings › School info.</p>';
+ echo muni_card().'<p class="muted">The Division logo is the same for every school: Settings › School info.</p>';
 }
 /** v196: Edit and Delete for one school, shown on its own page (View school) under "Manage this school". */
 function school_manage_box(array $s,array $c,bool $open=false):string{
@@ -127,11 +132,34 @@ function school_fields(array $s,bool $add=false):string{
  return '<label class="sc-full">School name<input name="name" required maxlength="150" value="'.e($s['name']).'" placeholder="e.g. Manolo Fortich Central Elementary School"'.($add?' data-sc-name':'').'></label>'
   .'<label>School code<input name="code"'.($add?' readonly tabindex="-1" class="sc-autocode"':' required').' maxlength="10" pattern="[A-Za-z]{3,10}" value="'.e($s['code']).'" placeholder="'.($add?'Type the school name first':'e.g. MFCES').'" data-sc-code'.($add?' data-sc-auto data-taken="'.e($taken).'"':'').'>'.($add?'<small class="muted">Made by itself from the school name, for example Plantation Elementary School → PES. If another school has PES, it becomes PLES.</small>':'').'</label>'
   .'<label>School ID<input name="school_no" maxlength="40" value="'.e($s['school_no']).'" placeholder="e.g. 128001"></label>'
-  .'<label>District<input name="district" maxlength="150" value="'.e($s['district']).'" placeholder="e.g. Manolo Fortich District"></label>'
+  .muni_fields((string)$s['district'])
   .'<label>School head<input name="head" maxlength="150" value="'.e($s['head']).'" placeholder="Name of the principal"></label>';
+}
+/* v209 Municipalities and districts: the administrator adds each municipality and how many districts it has
+   (Manolo Fortich, 2 → Manolo Fortich District I and II). Kept in settings (no SQL). A school picks them from lists. */
+function munis():array{$j=json_decode(function_exists('admin_setting')?admin_setting('municipalities','[]'):'[]',true);return is_array($j)?$j:[];}
+function roman(int $n):string{$r='';foreach(['X'=>10,'IX'=>9,'V'=>5,'IV'=>4,'I'=>1] as $k=>$v)while($n>=$v){$r.=$k;$n-=$v;}return $r;}
+function muni_districts(string $m,int $n):array{if($n<=1)return [$m.' District'];$o=[];for($i=1;$i<=$n;$i++)$o[]=$m.' District '.roman($i);return $o;}
+function muni_fields(string $cur):string{
+ $M=munis();if(!$M)return '<label>District<input name="district" maxlength="150" value="'.e($cur).'" placeholder="Add municipalities first, under Municipalities and districts"></label>';
+ $selM='';foreach($M as $m=>$n)if(in_array($cur,muni_districts($m,(int)$n),true))$selM=$m;
+ $h='<label>Municipality<select data-muni required><option value="">Choose a municipality</option>';foreach($M as $m=>$n)$h.='<option'.($m===$selM?' selected':'').' data-d="'.e(json_encode(muni_districts($m,(int)$n))).'">'.e($m).'</option>';
+ $h.='</select></label><label>District<select name="district" data-muni-d required><option value="">Choose a district</option>';
+ if($selM!=='')foreach(muni_districts($selM,(int)$M[$selM]) as $d)$h.='<option'.($d===$cur?' selected':'').'>'.e($d).'</option>';
+ elseif($cur!=='')$h.='<option selected>'.e($cur).'</option>';
+ return $h.'</select></label>';
+}
+function muni_card():string{
+ $h='<section class="card sc-add" id="munis"><h2>'.icon('school').' Municipalities and districts</h2><p class="muted">Add each municipality and how many districts it has. Schools then choose them from a list.</p>';
+ foreach(munis() as $m=>$n)$h.='<form method="post" class="sc-muni">'.csrf_field().'<input type="hidden" name="action" value="muni_delete"><input type="hidden" name="muni" value="'.e($m).'"><span><b>'.e($m).'</b><small>'.e(implode(', ',muni_districts($m,(int)$n))).'</small></span><button class="btn quiet small" data-confirm="Remove '.e($m).'?">'.icon('trash').'Remove</button></form>';
+ return $h.'<form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="muni_add"><label>Municipality<input name="muni" maxlength="80" required placeholder="e.g. Manolo Fortich"></label><label>Number of districts<input name="n" type="number" min="1" max="10" value="1" required></label><button class="btn primary">'.icon('check').'Save municipality</button></form></section>';
 }
 function school_actions(string $action):void{
  require_role('admin');if(!schools_ready())fail('Import live-update/031_schools.sql in phpMyAdmin first.');
+ if($action==='muni_add'||$action==='muni_delete'){$M=munis();$m=function_exists('name_case')?name_case((string)($_POST['muni']??'')):trim((string)($_POST['muni']??''));if($m===''||mb_strlen($m)>80)fail('Type the municipality.');
+  if($action==='muni_add'){$M[$m]=max(1,min(10,(int)($_POST['n']??1)));ksort($M);}else unset($M[$m]);
+  q("INSERT INTO settings(setting_key,setting_value) VALUES('municipalities',?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)",[json_encode($M,JSON_UNESCAPED_UNICODE)]);
+  audit($action,$m);flash($action==='muni_add'?$m.' is saved.':$m.' is removed.');go('?page=schools#munis');}
  $id=(int)($_POST['id']??0);
  if($action==='teacher_school'){$t=admin_teacher($id);$sid=(int)($_POST['school_id']??0);if(!school_row($sid))fail('Choose a school.');
   db()->beginTransaction();try{q('UPDATE users SET school_id=? WHERE id=?',[$sid,$id]);q('UPDATE users SET school_id=? WHERE id IN (SELECT pupil_id FROM teacher_pupils WHERE teacher_id=?)',[$sid,$id]);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
