@@ -203,8 +203,8 @@
     if(APPLE){
      if(recording)recording.pause();
      $('[data-c]').textContent='Your turn';
-     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Tap below, then read aloud. First Max checks your words. Then you will read once more to record for your teacher.</p><button type="button" class="btn primary wc-start-reading">'+svg.mic+'Start my reading</button></div>';
-     box.querySelector('.wc-start-reading').onclick=()=>{if(recording)recording.resume();beginListening();};
+     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Tap below, then read aloud. Max will try to check your words and record this reading for your teacher together.</p><button type="button" class="btn primary wc-start-reading">'+svg.mic+'Start my reading</button></div>';
+     box.querySelector('.wc-start-reading').onclick=async()=>{const b=box.querySelector('.wc-start-reading');b.disabled=true;b.textContent='Starting microphone…';if(!practice)recording=await captureReading(true);if(!alive){if(recording)recording.cancel();return;}if(!practice&&!recording){b.disabled=false;b.textContent='Try microphone again';return;}beginListening();};
     }else{if(recording)recording.resume();beginListening();}
    }
    function beginListening(){
