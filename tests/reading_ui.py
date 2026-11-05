@@ -62,9 +62,10 @@ try:
    assert page.evaluate('readingDone.audio.length>200')
   for apple in [False,True,True,False]:
    harness(apple)
-   if apple:assert page.evaluate('testTracks.some(t=>t.readyState==="live")'), 'Concurrent attempt must capture audio during speech recognition'
+   if apple:assert page.evaluate('testTracks.length===0'), 'Apple must not open capture during speech recognition'
    page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
-   page.locator('.wc-ov').wait_for(state='detached')
+   if apple:finish_recording()
+   else:page.locator('.wc-ov').wait_for(state='detached')
    saved()
   print('PASS: real Chromium recording/decode; Apple two-phase isolation; repeated fresh attempts. Apple UA simulation is not a physical iPhone test.')
   harness();page.locator('[data-recording-note]').filter(has_text='Recording for your teacher').wait_for(state='visible');page.locator('.wc-x').click()
@@ -73,15 +74,14 @@ try:
   for mode in ['error','throw','missing']:
    harness(True,mode);page.locator('.wc-retry-listen').wait_for(state='visible')
    assert page.locator('[data-wc-val]').input_value()==''
-   page.locator('.wc-audio-only').click();page.locator('.wc-fin').click();page.locator('.wc-read').click()
-   if page.locator('.wc-rec-start').count():finish_recording()
-   else:page.locator('.wc-ov').wait_for(state='detached')
-   saved('na|')
+   page.locator('.wc-audio-only').click();page.locator('.wc-fin').wait_for(state='visible');page.wait_for_timeout(1600);page.locator('.wc-fin').click();page.locator('.wc-read').click()
+   page.locator('.wc-ov').wait_for(state='detached');saved('na|')
   print('PASS: recognition unavailable/denied/start failure offers unscored teacher recording, not invented marks.')
   harness(True)
-  page.evaluate("testTracks.at(-1).dispatchEvent(new Event('mute'))")
   page.locator('.wc-read').wait_for(state='visible',timeout=15000);page.locator('.wc-read').click()
-  page.locator('.wc-rec-start').wait_for(state='visible')
+  page.locator('.wc-rec-start').click();page.locator('.wc-rec-stop').wait_for(state='visible')
+  page.evaluate("testTracks.at(-1).dispatchEvent(new Event('mute'))")
+  page.locator('.wc-rec-stop').click();page.locator('.wc-rec-start').wait_for(state='visible')
   assert page.locator('[data-coach-audio]').input_value()==''
   assert page.evaluate('readingDone===null && testTracks.every(t=>t.readyState==="ended")')
   finish_recording();saved()
@@ -90,3 +90,4 @@ try:
 finally:
  server.terminate();server.wait(timeout=10)
  t.mysql('-e',f"DROP DATABASE IF EXISTS `{t.DB['name']}`")
+

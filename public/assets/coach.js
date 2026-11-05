@@ -1,7 +1,7 @@
 /* Word Coach (v184, app/coach.php). Every reading recorder with data-wc gets Max the coach first:
    1) Max reads the whole text while the words light up (Skip goes straight on);
    2) the pupil reads it all aloud (Max does not say it first); each word turns green when BULIG hears it said right
-      (Apple checks speech first, then requests a separate teacher recording);
+      (phones check speech first, then request a separate teacher recording);
    3) the words not said right, one at a time, each with 5 hearts (v207): a wrong try takes a heart; the more hearts kept, the
       more points (5 hearts 5/6 of a point ... 1 heart 1/6); with no hearts left the word goes on the practise list (0).
       A word right the first time is worth 1 point;
@@ -13,6 +13,9 @@
  // Browser identity never disables recognition. Apple browsers get an explicit listening gesture.
  const APPLE=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)||(/Safari\//.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/.test(navigator.userAgent));
  const Rec=window.SpeechRecognition||window.webkitSpeechRecognition,synth=window.speechSynthesis||null;
+ // Mobile speech services may take exclusive microphone ownership. Do not hold a
+ // getUserMedia stream (even paused) while requesting native recognition.
+ const SEPARATE=APPLE||/Android/i.test(navigator.userAgent);
  // Record only the pupil phase. Never record Max's opening demonstration or continue after closing.
  async function captureReading(live){
   let media=null,mr=null,chunks=[],timer=null,stopTimer=null,expired=false,ended=false,failure='',ac=null,decoder=null,bytes=0,settled=false;
@@ -198,14 +201,13 @@
    const paint=(i,cls)=>{W[i].classList.remove('cur','dim','ok','mid','bad','miss','nx');if(cls)W[i].classList.add(cls);};
    async function pass(){
     box.innerHTML='<p class="wc-say">Preparing your reading recording… Your teacher can listen to this attempt.</p>';
-    if(!practice&&!APPLE)recording=await captureReading();if(!alive){if(recording)recording.cancel();return;}
-    if(!Rec){noListen('unavailable');return;}
-    if(APPLE){
+   if(!practice&&!SEPARATE)recording=await captureReading();if(!alive){if(recording)recording.cancel();return;}
+    if(SEPARATE){
      if(recording)recording.pause();
      $('[data-c]').textContent='Your turn';
-     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Tap below, then read aloud. Max will try to check your words and record this reading for your teacher together.</p><button type="button" class="btn primary wc-start-reading">'+svg.mic+'Start my reading</button></div>';
-     box.querySelector('.wc-start-reading').onclick=async()=>{const b=box.querySelector('.wc-start-reading');b.disabled=true;b.textContent='Starting microphone…';if(!practice)recording=await captureReading(true);if(!alive){if(recording)recording.cancel();return;}if(!practice&&!recording){b.disabled=false;b.textContent='Try microphone again';return;}beginListening();};
-    }else{if(recording)recording.resume();beginListening();}
+     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Tap below to check your words. Afterwards, record your reading for your teacher.</p><button type="button" class="btn primary wc-start-reading">'+svg.mic+'Start my reading</button></div>';
+     box.querySelector('.wc-start-reading').onclick=()=>{hush();if(!Rec){noListen('unavailable');return;}if(SPM==='support'){noListen('support');return;}beginListening();};
+    }else{if(!Rec){noListen('unavailable');return;}if(recording)recording.resume();beginListening();}
    }
    function beginListening(){
     if(!alive)return;
@@ -213,7 +215,7 @@
     let p=0,last=Date.now(),hintT=null,restartT=null,ended=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
     const PK='wcprog:'+key;
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Blue means Max heard you; green means confirmed.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
-    box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':(APPLE?'Checking words — recording is the next step':'Audio unavailable — teacher review needed');liveMeter(box,recording,()=>alive,false);
+    box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':(SEPARATE?'Checking words — recording is the next step':'Audio unavailable — teacher review needed');liveMeter(box,recording,()=>alive,false);
     const hint=box.querySelector('[data-hint]');
     const show=()=>{for(let i=0;i<N;i++)if(!S[i])paint(i,i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
     const set=(i,v)=>{S[i]=v;paint(i,v==='ok'?'ok':'miss');};
@@ -278,7 +280,8 @@
     const why=reason==='network'?'The speech service could not connect. Check your connection and try again.':(['not-allowed','service-not-allowed'].includes(reason)?'Please allow microphone and speech recognition access in your browser, then try again.':'Word Coach could not start listening. Please try again.');
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say">'+why+'</p><div class="wc-row"><button type="button" class="btn primary wc-retry-listen">'+svg.mic+'Try listening again</button><button type="button" class="btn ghost wc-audio-only">Let my teacher review</button></div><p class="wc-note">Teacher review alone does not give an automatic pronunciation score.</p></div>';
     box.querySelector('.wc-retry-listen').onclick=()=>{close();open(false);};
-    box.querySelector('.wc-audio-only').onclick=()=>{
+    box.querySelector('.wc-audio-only').onclick=async()=>{
+     if(!recording){const b=box.querySelector('.wc-audio-only');b.disabled=true;b.textContent='Starting microphone…';recording=await captureReading(true);if(!alive){if(recording)recording.cancel();return;}if(!recording){b.disabled=false;b.textContent='Try microphone again';return;}}
      if(recording)recording.resume();
      $('[data-c]').textContent='Read for your teacher';
      box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Read it all out loud for your teacher.</p><button type="button" class="btn primary wc-fin">'+svg.ok+'I finished reading</button><p class="wc-note">'+(recording&&recording.valid()?'Recording for your teacher.':'Audio is unavailable. Please retry with microphone access before submitting.')+'</p></div>';
@@ -324,7 +327,7 @@
    function recordOnly(resultValue,why){if(!alive)return;if(stream){stream.stop();stream=null;}if(preview)preview.pause();hush();gen++;ov.classList.remove('wc-sheetmode','wc-reading');   /* v208: a normal coach card, not the see-through score sheet */
     $('[data-c]').textContent='Record for your teacher';$('[data-bar]').style.width='100%';W.forEach(x=>{x.classList.remove('cur','nx','dim');x.onclick=null;});
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your word check is ready!</b> Now read it all once more so your teacher can hear you.</p><p class="wc-note" data-audio-error></p><div class="wc-row"><button type="button" class="btn primary wc-rec-start">'+svg.mic+'Start recording</button></div></div>';
-    box.querySelector('[data-audio-error]').textContent=(APPLE&&!/empty/i.test(why||'')?'On iPhone and iPad, Max listens to your words first, then records your reading in a second step.':(why||'The recording stopped while Word Coach was listening.'))+' Your word-check result is kept until you finish this attempt.';
+    box.querySelector('[data-audio-error]').textContent=(SEPARATE&&!why?'On this phone, Max checks your words first, then records your reading separately.':(why||'The recording stopped while Word Coach was listening.'))+' Your word-check result is kept until you finish this attempt.';
     box.querySelector('.wc-rec-start').onclick=async()=>{const st=box.querySelector('.wc-rec-start');st.disabled=true;st.textContent='Starting the microphone…';
      const clip=await captureReading(true);if(!alive){if(clip)clip.cancel();return;}
      if(!clip){st.disabled=false;st.innerHTML=svg.mic+'Try again';box.querySelector('[data-audio-error]').textContent='BULIG could not open the microphone. In Settings, allow the microphone for this website, then try again.';return;}

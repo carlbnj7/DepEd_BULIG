@@ -46,3 +46,11 @@ async function recordingCase(mode){
  assert.equal(!!value,mode==='valid');assert.equal(track.readyState,'ended');if(['valid','silent','short','corrupt'].includes(mode))assert.equal(closed,1);return value;
 }
 (async()=>{for(const mode of ['valid','empty','silent','short','corrupt','stalled'])await recordingCase(mode);console.log('PASS: final audio chunks, decoded signal/duration, empty/silent/corrupt rejection, stopped tracks and bounded finalization.');})().catch(e=>{console.error(e);process.exitCode=1;});
+
+async function mobileStart(separate, support=false, available=true){
+ let handler,captures=0,listens=0,fallback=0;
+ const c={SEPARATE:separate,practice:false,recording:null,alive:true,Rec:available?{}:null,SPM:support?'support':'',IMG:()=>'',svg:{mic:''},hush(){},noListen(){fallback++},beginListening(){listens++},captureReading:async()=>{captures++;return {resume(){}}},$:()=>({}),box:{innerHTML:'',querySelector:()=>({set onclick(fn){handler=fn}})}};
+ vm.createContext(c);vm.runInContext(source.slice(source.indexOf('   async function pass()'),source.indexOf('   function beginListening()'))+';this.pass=pass;',c);
+ await c.pass();if(separate){assert.equal(captures,0);assert.equal(listens,0);handler();assert.equal(captures,0);assert.equal(listens,support||!available?0:1);assert.equal(fallback,support||!available?1:0);}else{assert.equal(captures,1);assert.equal(listens,1);}
+}
+(async()=>{await mobileStart(true);await mobileStart(true,true);await mobileStart(true,false,false);await mobileStart(false);console.log('PASS: mobile gesture starts speech synchronously without opening recorder; desktop retains simultaneous capture.');})().catch(e=>{console.error(e);process.exitCode=1;});
