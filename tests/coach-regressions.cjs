@@ -54,3 +54,13 @@ async function mobileStart(separate, support=false, available=true){
  await c.pass();if(separate){assert.equal(captures,0);assert.equal(listens,0);handler();assert.equal(captures,0);assert.equal(listens,support||!available?0:1);assert.equal(fallback,support||!available?1:0);}else{assert.equal(captures,1);assert.equal(listens,1);}
 }
 (async()=>{await mobileStart(true);await mobileStart(true,true);await mobileStart(true,false,false);await mobileStart(false);console.log('PASS: mobile gesture starts speech synchronously without opening recorder; desktop retains simultaneous capture.');})().catch(e=>{console.error(e);process.exitCode=1;});
+
+// A missing phrase must not strand the pointer for the rest of a story.
+const passage=['tomorrow','is','june','twelve','we','will','celebrate','our','independence','day'];
+const recovered=align(passage,['celebrate our independence day']);
+assert.equal(recovered[6],'ok');assert.equal(recovered[9],'ok');
+for(let i=0;i<6;i++)assert.equal(recovered[i],'miss');
+assert.deepEqual(align(passage,['independence']),{},'one distant word must not award skipped text');
+const repeated=['a','b','c','d','red','fox','runs','e','red','fox','runs'];
+assert.deepEqual(align(repeated,['red fox runs']),{},'ambiguous distant phrase must not jump');
+console.log('PASS: dropped-phrase recovery without crediting skipped words or jumping on isolated/ambiguous words.');

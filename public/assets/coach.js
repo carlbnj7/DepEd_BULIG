@@ -225,8 +225,13 @@
     const clearPreview=()=>{previewWords.forEach(i=>W[i].classList.remove('wc-heard'));previewWords=[];};
     const align=(heard,confirmed=true)=>{clearPreview();if(ended||!alive)return;const toks=heard.split(/\s+/).map(norm).filter(Boolean);let q=p;const st={};
      /* Bounded ordered alignment: exact words first, then accent tolerance; repeated words do not advance twice. */
-     for(const t of toks){if(q>0&&near(t,T[q-1])&&!near(t,T[q]))continue;let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k])){hit=k;break;}
-
+     for(let ti=0;ti<toks.length;ti++){const t=toks[ti];if(q>0&&near(t,T[q-1])&&!near(t,T[q]))continue;let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k])){hit=k;break;}
+      // Recover after several dropped/skipped words, but never jump on one
+      // common word. Require a unique three-word exact phrase in this window.
+      if(hit<0&&ti+2<toks.length){let anchor=-1;
+       for(let k=4;k<=24&&q+k+2<N;k++)if(t===T[q+k]&&toks[ti+1]===T[q+k+1]&&toks[ti+2]===T[q+k+2]){if(anchor>=0){anchor=-1;break;}anchor=k;}
+       if(anchor>=0)hit=anchor;
+      }
       if(hit>=0){for(let m=q;m<q+hit;m++)st[m]='miss';st[q+hit]='ok';q=q+hit+1;}}
      if(!confirmed){for(let i=p;i<q;i++)if(st[i]==='ok'&&S[i]!=='ok'){W[i].classList.add('wc-heard');previewWords.push(i);}if(previewWords.length){last=Date.now();hint.hidden=true;W[previewWords[previewWords.length-1]].scrollIntoView({block:'nearest',behavior:'smooth'});}return;}
      if(q<p)return;for(let i=p;i<q;i++)if(st[i]&&S[i]!=='ok')set(i,st[i]);else if(st[i]==='ok')set(i,'ok');
