@@ -16,26 +16,32 @@
  // Mobile speech services may take exclusive microphone ownership. Do not hold a
  // getUserMedia stream (even paused) while requesting native recognition.
  const SEPARATE=APPLE||/Android/i.test(navigator.userAgent);
+ // Older cached sound scripts may have selected playback-only ambient mode.
+ const microphoneSession=()=>{try{if(navigator.audioSession)navigator.audioSession.type='auto';}catch(e){}};
  // Record only the pupil phase. Never record Max's opening demonstration or continue after closing.
  async function captureReading(live){
+  microphoneSession();
   let media=null,mr=null,chunks=[],timer=null,stopTimer=null,expired=false,ended=false,failure='',ac=null,decoder=null,bytes=0,settled=false;
   let resolve;const result=new Promise(r=>resolve=r);
   const cleanup=()=>{clearTimeout(timer);if(media)media.getTracks().forEach(t=>t.stop());try{if(ac&&ac.state!=='closed')ac.close().catch(()=>{});}catch(e){}ac=null;if(decoder){try{decoder.close().catch(()=>{});}catch(e){}decoder=null;}};
   const settle=value=>{if(settled)return;settled=true;clearTimeout(stopTimer);cleanup();resolve(value);};
   try{
    if(!navigator.mediaDevices||!window.MediaRecorder)return null;
-   const ask=()=>navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
-   try{media=await ask();}catch(e){if(['NotAllowedError','SecurityError'].includes(e.name))throw e;await new Promise(r=>setTimeout(r,900));media=await ask();}
+   const ask=(audio)=>new Promise((resolve,reject)=>{let done=false;
+    const timeout=setTimeout(()=>{done=true;const e=new Error('Microphone permission timed out');e.name='NotAllowedError';reject(e);},15000);
+    navigator.mediaDevices.getUserMedia({audio}).then(s=>{if(done){s.getTracks().forEach(t=>t.stop());return;}done=true;clearTimeout(timeout);resolve(s);},e=>{if(done)return;done=true;clearTimeout(timeout);reject(e);});
+   });
+   try{media=await ask({echoCancellation:true,noiseSuppression:true});}catch(e){if(['NotAllowedError','SecurityError'].includes(e.name))throw e;await new Promise(r=>setTimeout(r,900));media=await ask(true);}
    media.getAudioTracks().forEach(t=>{t.addEventListener('mute',()=>{if(!ended&&mr&&mr.state==='recording'){expired=true;failure='The microphone was interrupted. Please record the whole reading again.';}});t.addEventListener('ended',()=>{if(!ended){expired=true;failure='The microphone disconnected. Please record again.';}});});
    // Prefer AAC/MP4 when supported: Safari and Chrome can both play it.
-   const type=['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'].find(t=>MediaRecorder.isTypeSupported(t));
+   const type=['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'].find(t=>typeof MediaRecorder.isTypeSupported==='function'&&MediaRecorder.isTypeSupported(t));
    let an=null,buf=null;try{const AC=window.AudioContext||window.webkitAudioContext;if(AC&&!APPLE){ac=new AC();ac.resume().catch(()=>{});const src=ac.createMediaStreamSource(media);an=ac.createAnalyser();an.fftSize=512;src.connect(an);buf=new Uint8Array(an.fftSize);}}catch(e){an=null;}
    const level=()=>{if(!an)return -1;an.getByteTimeDomainData(buf);let sum=0;for(let k=0;k<buf.length;k++){const v=(buf[k]-128)/128;sum+=v*v;}return Math.min(1,Math.sqrt(sum/buf.length)*4);};
-   mr=new MediaRecorder(media,type?{mimeType:type,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000});
+   try{mr=new MediaRecorder(media,type?{mimeType:type,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000});}catch(e){mr=new MediaRecorder(media,type?{mimeType:type}:undefined);}
    mr.ondataavailable=e=>{if(e.data&&e.data.size){chunks.push(e.data);bytes+=e.data.size;if(bytes>6000000){expired=true;failure='This recording is too long. Please try a shorter reading.';if(mr.state!=='inactive')mr.stop();}}};
    mr.onerror=()=>{expired=true;failure='The browser could not finish the audio recording.';settle('');};
    mr.onstop=async()=>{
-    ended=true;if(!stopTimer)stopTimer=setTimeout(()=>{failure='The audio could not be checked. Please record again.';settle('');},15000);cleanup();const blob=new Blob(chunks,{type:(mr.mimeType||type||'audio/webm').split(';')[0]});
+    if(settled)return;ended=true;if(!stopTimer)stopTimer=setTimeout(()=>{failure='The audio could not be checked. Please record again.';settle('');},15000);cleanup();const blob=new Blob(chunks,{type:(mr.mimeType||type||'audio/webm').split(';')[0]});
     if(expired||blob.size<200||blob.size>6000000){failure=failure||'The recording was empty or interrupted. Please record again.';settle('');return;}
     // Container bytes alone are not proof of playable audio. Decode after releasing capture.
     try{
@@ -104,35 +110,39 @@
   return false;};
 
  /* One listen: resolves with the transcripts, '' when nothing was heard, or null when this device cannot listen */
- const listen=signal=>new Promise(res=>{if(!Rec){res(null);return;}let r;try{r=new Rec();}catch(e){res(null);return;}
+ const listen=signal=>new Promise(res=>{microphoneSession();if(!Rec){res(null);return;}let r;try{r=new Rec();}catch(e){res(null);return;}
   r.lang='en-US';r.interimResults=false;r.maxAlternatives=5;r.continuous=false;let out=[],done=false,timer=null;
   const cancel=()=>fin(null);
   const fin=v=>{if(done)return;done=true;clearTimeout(timer);signal.removeEventListener('abort',cancel);try{r.abort();}catch(e){}res(v);};
   if(signal.aborted){fin(null);return;}signal.addEventListener('abort',cancel,{once:true});
-  r.onresult=e=>{for(const x of e.results)for(const a of x)out.push(a.transcript);};
+  r.onresult=e=>{for(let i=0;i<e.results.length;i++)for(let j=0;j<e.results[i].length;j++)out.push(e.results[i][j].transcript);};
   r.onerror=e=>{fin(['not-allowed','service-not-allowed','network','audio-capture','language-not-supported'].includes(e.error)?null:'');};
   r.onend=()=>fin(out.length?out:'');
-  try{r.start();}catch(e){fin(null);}if(!done)timer=setTimeout(()=>fin(out.length?out:''),9000);});
+  try{r.start();}catch(e){fin(null);}if(!done)timer=setTimeout(()=>{timer=setTimeout(()=>fin(out.length?out:''),2000);try{r.stop();}catch(e){fin(out.length?out:'');}},9000);});
 
 
  /* Listen while the pupil reads: onText(all words heard in this listening session), onNew() when a new session starts
     (Chrome stops after a pause, so BULIG starts again), onStop() when this device cannot listen any more. */
- const listenAll=(onText,onNew,onStop,onInterim=()=>{})=>{let on=true,r=null,restart=null,watch=null,failures=0;
-  const stop=()=>{on=false;onInterim('');clearTimeout(restart);clearTimeout(watch);const old=r;r=null;try{old&&old.abort();}catch(e){}};
+ const listenAll=(onText,onNew,onStop,onInterim=()=>{})=>{let on=true,r=null,restart=null,watch=null,drainTimer=null,draining=false,drained=null,failures=0;
+  const stop=()=>{on=false;onInterim('');clearTimeout(restart);clearTimeout(watch);clearTimeout(drainTimer);if(drained){const done=drained;drained=null;done();}const old=r;r=null;try{old&&old.abort();}catch(e){}};
   const fail=reason=>{if(!on)return;stop();queueMicrotask(()=>onStop(reason));};
-  const start=()=>{if(!on)return;let current;try{current=new Rec();}catch(e){fail('unavailable');return;}r=current;
+  const start=()=>{if(!on)return;microphoneSession();let current;try{current=new Rec();}catch(e){fail('unavailable');return;}r=current;
    current.lang='en-US';current.continuous=!APPLE;current.interimResults=true;current.maxAlternatives=1;let finalCount=0,finished=false;
-   const end=()=>{if(finished||!on||r!==current)return;finished=true;onInterim('');clearTimeout(watch);r=null;restart=setTimeout(start,Math.min(2000,350*(1+failures)));};
-   const arm=()=>{clearTimeout(watch);watch=setTimeout(()=>{try{current.abort();}catch(e){}end();},20000);};
+   const end=()=>{if(finished||!on||r!==current)return;finished=true;onInterim('');clearTimeout(watch);r=null;clearTimeout(drainTimer);if(draining){stop();return;}restart=setTimeout(start,Math.min(2000,350*(1+failures)));};
+   const arm=()=>{clearTimeout(watch);if(draining)return;watch=setTimeout(()=>{drainTimer=setTimeout(()=>{try{current.abort();}catch(e){}end();},2000);try{current.stop();}catch(e){}},20000);};
    current.onstart=()=>{if(on&&r===current){onNew();arm();}};
-   current.onresult=e=>{if(!on||r!==current)return;arm();failures=0;onInterim('');
+   current.onresult=e=>{if(!on||r!==current)return;if(!draining){clearTimeout(drainTimer);drainTimer=null;}arm();failures=0;onInterim('');
     // Consume each final result once. Interim hypotheses can be revised and must never earn points.
     for(let i=finalCount;i<e.results.length;i++){if(!e.results[i].isFinal)break;finalCount=i+1;onText(e.results[i][0].transcript);}
     if(!on||r!==current)return;let pending='';for(let i=finalCount;i<e.results.length;i++)if(!e.results[i].isFinal)pending+=' '+e.results[i][0].transcript;onInterim(pending.trim());
    };
    current.onerror=e=>{if(!on||r!==current)return;if(['not-allowed','service-not-allowed','language-not-supported'].includes(e.error)){fail(e.error);return;}if(e.error!=='no-speech'&&e.error!=='aborted'&&++failures>3){fail(e.error);return;}try{current.abort();}catch(x){}end();};
    current.onend=end;try{current.start();arm();}catch(e){if(e.name==='NotAllowedError')fail('not-allowed');else if(++failures>3)fail('unavailable');else end();}
-  };start();return {stop};};
+  };
+  const finish=()=>new Promise(resolve=>{if(!on){resolve();return;}draining=true;drained=resolve;clearTimeout(restart);clearTimeout(watch);if(!r){stop();return;}
+   drainTimer=setTimeout(stop,2000);try{r.stop();}catch(e){stop();}
+  });
+  start();return {stop,finish};};
  const words=t=>String(t).split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w));
  const lines=t=>{const out=[];let cur=[];for(const w of words(t)){cur.push(w);if(/[.!?]["”’)]*$/.test(w)||cur.length>=12){out.push(cur);cur=[];}}if(cur.length)out.push(cur);return out;};
  const stars=p=>p>=95?3:p>=80?2:p>=50?1:0;
@@ -167,7 +177,7 @@
    if(!practice){audioField().value='';if(val)val.value='';}
    const ov=document.createElement('div');ov.className='wc-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Word Coach with Max');
    ov.innerHTML='<div class="wc-panel"><button type="button" class="wc-x" aria-label="Close">'+svg.close+'</button><div class="wc-top"><span class="wc-eb">WORD COACH</span><div class="wc-prog"><span data-c></span><div class="wc-bar"><i data-bar></i></div></div></div><div class="wc-txt" data-txt></div><div class="wc-box" data-box></div></div>';
-   document.body.appendChild(ov);document.body.classList.add('wc-open');
+   document.body.appendChild(ov);document.body.classList.add('wc-open');if(window.buligSfx&&window.buligSfx.quiet)window.buligSfx.quiet();
    const $=s=>ov.querySelector(s),txt=$('[data-txt]'),box=$('[data-box]');
    /* v207: Max stands next to a speech bubble with the text to read; his pose follows the coach box */
    const scene=document.createElement('div');scene.className='wc-scene';const pal=document.createElement('img');pal.className='wc-pal';pal.alt='';pal.src=IMG('hello');
@@ -200,30 +210,31 @@
    const N=all.length,T=all.map(norm),S=all.map(()=>null),fails=all.map(()=>0),got=all.map(()=>null);hlTotal=0;let stream=null,t0=0,secs=0;
    const paint=(i,cls)=>{W[i].classList.remove('cur','dim','ok','mid','bad','miss','nx');if(cls)W[i].classList.add(cls);};
    async function pass(){
-    box.innerHTML='<p class="wc-say">Preparing your reading recording… Your teacher can listen to this attempt.</p>';
-   if(!practice&&!SEPARATE)recording=await captureReading();if(!alive){if(recording)recording.cancel();return;}
-    if(SEPARATE){
-     if(recording)recording.pause();
-     $('[data-c]').textContent='Your turn';
-     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Tap below to check your words. Afterwards, record your reading for your teacher.</p><button type="button" class="btn primary wc-start-reading">'+svg.mic+'Start my reading</button></div>';
-     box.querySelector('.wc-start-reading').onclick=()=>{hush();if(!Rec){noListen('unavailable');return;}if(SPM==='support'){noListen('support');return;}beginListening();};
-    }else{if(!Rec){noListen('unavailable');return;}if(recording)recording.resume();beginListening();}
+    $('[data-c]').textContent='Your turn';
+    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Tap below, then read when Max is listening.'+(SEPARATE?' Afterwards, record your reading for your teacher.':'')+'</p><button type="button" class="btn primary wc-start-reading">'+svg.mic+'Start my reading</button></div>';
+    box.querySelector('.wc-start-reading').onclick=async()=>{hush();
+     if(!Rec){noListen('unavailable');return;}if(SPM==='support'){noListen('support');return;}
+     const button=box.querySelector('.wc-start-reading');button.disabled=true;button.textContent='Starting microphone…';
+     // On mobile do not await anything before start(): retain the tap's user activation.
+     if(!practice&&!SEPARATE)recording=await captureReading(true);
+     if(!alive){if(recording)recording.cancel();return;}beginListening();
+    };
    }
    function beginListening(){
     if(!alive)return;
     if(SPM==='support'){readAlong();return;}
-    let p=0,last=Date.now(),hintT=null,restartT=null,ended=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
+    let p=0,last=Date.now(),hintT=null,restartT=null,ended=false,finishing=false,heardFinal=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
     const PK='wcprog:'+key;
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Blue means Max heard you; green means confirmed.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
     box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':(SEPARATE?'Checking words — recording is the next step':'Audio unavailable — teacher review needed');liveMeter(box,recording,()=>alive,false);
     const hint=box.querySelector('[data-hint]');
     const show=()=>{for(let i=0;i<N;i++)if(!S[i])paint(i,i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
     const set=(i,v)=>{S[i]=v;paint(i,v==='ok'?'ok':'miss');};
-    const finish=()=>{if(ended)return;ended=true;try{localStorage.removeItem(PK);}catch(e){}ov.classList.remove('wc-reading');secs=Math.round((Date.now()-t0)/1000);clearInterval(hintT);clearTimeout(restartT);if(stream)stream.stop();for(let i=0;i<N;i++)if(S[i]!=='ok')set(i,'miss');
-     for(let i=0;i<N;i++)if(S[i]==='ok')got[i]=1;else fails[i]=1;setTimeout(()=>alive&&fix(),700);};
+    const finish=async()=>{if(ended||finishing)return;finishing=true;clearInterval(hintT);clearTimeout(restartT);if(stream)await stream.finish();if(!alive||ended)return;ended=true;if(!heardFinal){ov.classList.remove('wc-reading');noListen('no-speech');return;}try{localStorage.removeItem(PK);}catch(e){}ov.classList.remove('wc-reading');secs=Math.round((Date.now()-t0)/1000);clearInterval(hintT);clearTimeout(restartT);if(stream)stream.stop();for(let i=0;i<N;i++)if(S[i]!=='ok')set(i,'miss');
+     for(let i=0;i<N;i++)if(S[i]==='ok')got[i]=1;else fails[i]=1;if(recording){const clip=recording;recording=null;recordingResult=clip.stop().then(x=>{audio=x;recordingError=clip.error();return x;});await recordingResult;}if(alive)setTimeout(()=>alive&&fix(),350);};
     let previewWords=[];
     const clearPreview=()=>{previewWords.forEach(i=>W[i].classList.remove('wc-heard'));previewWords=[];};
-    const align=(heard,confirmed=true)=>{clearPreview();if(ended||!alive)return;const toks=heard.split(/\s+/).map(norm).filter(Boolean);let q=p;const st={};
+    const align=(heard,confirmed=true)=>{clearPreview();if(ended||!alive)return;const toks=heard.split(/\s+/).map(norm).filter(Boolean);if(confirmed&&toks.length)heardFinal=true;let q=p;const st={};
      /* Bounded ordered alignment: exact words first, then accent tolerance; repeated words do not advance twice. */
      for(const t of toks){if(q>0&&near(t,T[q-1])&&!near(t,T[q]))continue;let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k])){hit=k;break;}
 
@@ -232,10 +243,10 @@
      if(q<p)return;for(let i=p;i<q;i++)if(st[i]&&S[i]!=='ok')set(i,st[i]);else if(st[i]==='ok')set(i,'ok');
      if(q>p){p=q;last=Date.now();hint.hidden=true;}show();if(p>=N)finish();};
     const startListening=()=>{if(!alive||ended)return;clearTimeout(restartT);if(stream)stream.stop();stream=listenAll(align,()=>{},reason=>{if(!alive||ended)return;ended=true;clearInterval(hintT);stream=null;noListen(reason);},heard=>align(heard,false));};
-    box.querySelector('.wc-skipw').onclick=()=>{if(p<N){gen++;hush();clearTimeout(restartT);if(stream)stream.stop();set(p,'miss');p++;last=Date.now();hint.hidden=true;show();if(p>=N)finish();else restartT=setTimeout(startListening,400);}};
+    box.querySelector('.wc-skipw').onclick=()=>{if(!finishing&&p<N){gen++;hush();clearTimeout(restartT);if(stream)stream.stop();set(p,'miss');p++;last=Date.now();hint.hidden=true;show();if(p>=N)finish();else restartT=setTimeout(startListening,400);}};
     box.querySelector('.wc-done').onclick=finish;
     hintT=setInterval(()=>{const stl=box.querySelector('[data-st]'),el=Math.round((Date.now()-t0)/1000);if(stl)stl.textContent=Math.floor(el/60)+':'+String(el%60).padStart(2,'0');const note=box.querySelector('[data-recording-note]');if(note&&recording&&!recording.valid())note.textContent='Recording interrupted — please retry this reading';if(!live()||ended){clearInterval(hintT);return;}if(Date.now()-last>7000&&p<N){hint.hidden=false;hint.innerHTML='Stuck on <b>“'+esc(all[p])+'”</b>? Tap it to hear it, or tap <b>Skip this word</b>.';}},1000);
-    W.forEach((x,i)=>{x.onclick=()=>{if(ended)return;clearTimeout(restartT);if(stream)stream.stop();say(all[i],.6,()=>{if(alive&&!ended)restartT=setTimeout(startListening,400);});if(S[i]!=='ok'&&i>=p){set(i,'miss');if(i===p){p++;show();if(p>=N)finish();}}};});
+    W.forEach((x,i)=>{x.onclick=()=>{if(ended||finishing)return;clearTimeout(restartT);if(stream)stream.stop();say(all[i],.6,()=>{if(alive&&!ended)restartT=setTimeout(startListening,400);});if(S[i]!=='ok'&&i>=p){set(i,'miss');if(i===p){p++;show();if(p>=N)finish();}}};});
     show();startListening();}
    const live=()=>alive;
    /* v208 Speech support (set by the teacher): BULIG does not judge the words. The pupil reads aloud and taps each word
@@ -261,7 +272,7 @@
     const HS='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8.2 3.3 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.7 0 6 3.7 4.5 7.3C19.5 16.4 12 21 12 21z"/></svg>';
     const hl=all.map(()=>0);   // hearts lost on each word
     const tries=(i,pop)=>'<span class="wc-hearts" role="img" aria-label="'+(HEARTS-hl[i])+' hearts left">'+Array.from({length:HEARTS},(_,k)=>'<i class="'+(k<HEARTS-hl[i]?'on':'off')+(pop&&k===HEARTS-hl[i]?' lost':'')+'">'+HS+'</i>').join('')+'</span>'+(pop?'<span class="wc-hpop">−1 '+HS+'</span>':'');
-    const nextWord=()=>{if(!alive)return;if(at>=todo.length){summary();return;}const i=todo[at];focus(i,i);prog(at,todo.length,'Missed word');ask(i);};
+    const nextWord=()=>{if(!alive)return;if(at>=todo.length){summary();return;}const i=todo[at];focus(i,i);prog(at,todo.length,'Missed word');if(SEPARATE){box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<p class="wc-say">Tap, then read this word.</p><button type="button" class="btn primary wc-again">'+svg.mic+'Say it</button></div>';box.querySelector('.wc-again').onclick=()=>{hush();ask(i);};}else ask(i);};
     const ask=i=>{if(!Rec){got[i]=null;at++;nextWord();return;}
      box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<p class="wc-say">Read this word again.</p><div class="wc-row"><span class="wc-mic">'+svg.mic+'</span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span><b>Listening…</b></div><div class="wc-row wc-hrow">'+tries(i)+'</div></div>';
      listen(attemptAbort.signal).then(alts=>{if(!alive)return;
@@ -274,10 +285,10 @@
     nextWord();}
 
    /* Only an absent API or a real recognition error opens this choice; never browser identity. */
-   function noListen(reason){if(!alive)return;const recordStart=Date.now();W.forEach((x,i)=>{paint(i,'');x.onclick=null;});
+   function noListen(reason){if(!alive)return;if(stream){stream.stop();stream=null;}if(recording){recording.cancel();recording=null;}ov.classList.remove('wc-reading');const recordStart=Date.now();W.forEach((x,i)=>{paint(i,'');x.onclick=null;});
     if(recording)recording.pause();
     $('[data-c]').textContent='Listening paused';
-    const why=reason==='network'?'The speech service could not connect. Check your connection and try again.':(['not-allowed','service-not-allowed'].includes(reason)?'Please allow microphone and speech recognition access in your browser, then try again.':'Word Coach could not start listening. Please try again.');
+    const why=reason==='no-speech'?'No confirmed words came back from the speech service. No pronunciation score has been assigned. Try listening again, or record for your teacher.':reason==='network'?'The speech service could not connect. Check your connection and try again.':(['not-allowed','service-not-allowed'].includes(reason)?'Please allow microphone and speech recognition access in your browser, then try again.':'Word Coach could not start listening. Please try again.');
     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say">'+why+'</p><div class="wc-row"><button type="button" class="btn primary wc-retry-listen">'+svg.mic+'Try listening again</button><button type="button" class="btn ghost wc-audio-only">Let my teacher review</button></div><p class="wc-note">Teacher review alone does not give an automatic pronunciation score.</p></div>';
     box.querySelector('.wc-retry-listen').onclick=()=>{close();open(false);};
     box.querySelector('.wc-audio-only').onclick=async()=>{
@@ -347,4 +358,5 @@
   }
  });
 })();
+
 

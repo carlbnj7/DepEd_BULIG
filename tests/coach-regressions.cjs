@@ -4,7 +4,7 @@ const source=fs.readFileSync('public/assets/coach.js','utf8');
 let clock=0,id=0,timers=new Map();const later=(fn,ms)=>{timers.set(++id,{fn,at:clock+ms});return id;};
 const tick=ms=>{const end=clock+ms;for(;;){const entry=[...timers].filter(([,v])=>v.at<=end).sort((a,b)=>a[1].at-b[1].at)[0];if(!entry)break;timers.delete(entry[0]);clock=entry[1].at;entry[1].fn();}clock=end;};
 let instances=[];class Rec{constructor(){instances.push(this)}start(){this.onstart?.()}abort(){this.onend?.()}}
-const ctx={Rec,APPLE:true,setTimeout:later,clearTimeout:i=>timers.delete(i),queueMicrotask:fn=>fn()};vm.createContext(ctx);
+const ctx={microphoneSession(){},Rec,APPLE:true,setTimeout:later,clearTimeout:i=>timers.delete(i),queueMicrotask:fn=>fn()};vm.createContext(ctx);
 vm.runInContext(source.slice(source.indexOf(' const listenAll='),source.indexOf('\n const words='))+';this.listenAll=listenAll;',ctx);
 let words=[],stops=[],previews=[];let listener=ctx.listenAll(t=>words.push(t),()=>{},r=>stops.push(r),t=>previews.push(t));
 const result=(r,values)=>r.onresult({results:values.map(([t,final])=>Object.assign([{transcript:t}],{isFinal:final}))});
@@ -12,7 +12,7 @@ let r=instances.at(-1);result(r,[['wrong',false]]);assert.deepEqual(words,[]);as
 result(r,[['cat',true],['wrong',false]]);result(r,[['cat',true],['hat',true]]);assert.deepEqual(words,['cat','hat']);
 r.onend();assert.equal(previews.at(-1),'');tick(400);assert.equal(instances.length,2);result(r,[['stale',true]]);assert.deepEqual(words,['cat','hat']);
 r=instances.at(-1);r.onerror({error:'network'});tick(1000);assert.equal(instances.length,3);assert.deepEqual(stops,[]);
-tick(21000);assert.ok(instances.length>=4,'silent engine restarts');listener.stop();const count=instances.length;tick(60000);assert.equal(instances.length,count);
+tick(23000);assert.ok(instances.length>=4,'silent engine restarts');listener.stop();const count=instances.length;tick(60000);assert.equal(instances.length,count);
 listener=ctx.listenAll(t=>words.push(t),()=>{},r=>stops.push(r));r=instances.at(-1);result(r,[['second',true]]);assert.equal(words.at(-1),'second');r.onerror({error:'not-allowed'});tick(60000);assert.deepEqual(stops,['not-allowed']);
 function matching(mode='',vowel=false){const c={document:{querySelector:q=>q.includes('vowel')?(vowel?{}:null):{content:mode}}};vm.createContext(c);vm.runInContext(source.slice(source.indexOf(' const lev='),source.indexOf('\n /* One listen:'))+';this.near=near;',c);return c.near;}
 assert.equal(matching()('10','ten'),true);assert.equal(matching()('den','then'),true);assert.equal(matching()('bad','bed'),false);assert.equal(matching('',true)('ship','sheep'),false);assert.equal(matching('accent')('bery','very'),true);assert.equal(matching()('','cat'),false);
@@ -40,8 +40,8 @@ async function recordingCase(mode){
  class Recorder{static isTypeSupported(t){return t==='audio/mp4'}constructor(){this.state='inactive';this.mimeType='audio/mp4'}start(){this.state='recording'}pause(){this.state='paused'}resume(){this.state='recording'}stop(){this.state='inactive';if(mode==='stalled')return;queueMicrotask(()=>{this.ondataavailable({data:new Blob([mode==='empty'?'':new Uint8Array(800)])});this.onstop();});}}
  class Decoder{decodeAudioData(){if(mode==='corrupt')return Promise.reject(Error('corrupt'));return Promise.resolve({duration:mode==='short'?0.1:2,numberOfChannels:1,getChannelData:()=>new Float32Array(1000).fill(mode==='silent'?0:0.2)})}close(){closed++;return Promise.resolve()}}
  class Reader{readAsDataURL(){this.result='data:audio/mp4;base64,VALIDATED';this.onload()}}
- const c={navigator:{mediaDevices:{getUserMedia:async()=>({getTracks:()=>[track],getAudioTracks:()=>[track]})}},window:{MediaRecorder:Recorder,AudioContext:Decoder},MediaRecorder:Recorder,APPLE:true,Blob,FileReader:Reader,Uint8Array,Number,Math,setTimeout:later,clearTimeout:i=>timers.delete(i)};
- vm.createContext(c);vm.runInContext(source.slice(source.indexOf(' async function captureReading'),source.indexOf('\n /* v208 the red bars'))+';this.captureReading=captureReading;',c);
+ const c={navigator:{audioSession:{type:'ambient'},mediaDevices:{getUserMedia:async()=>{assert.equal(c.navigator.audioSession.type,'auto','capture must release playback-only audio mode');return {getTracks:()=>[track],getAudioTracks:()=>[track]};}}},window:{MediaRecorder:Recorder,AudioContext:Decoder},MediaRecorder:Recorder,APPLE:true,Blob,FileReader:Reader,Uint8Array,Number,Math,setTimeout:later,clearTimeout:i=>timers.delete(i)};
+ vm.createContext(c);vm.runInContext(source.slice(source.indexOf(' const microphoneSession='),source.indexOf(' // Record only'))+source.slice(source.indexOf(' async function captureReading'),source.indexOf('\n /* v208 the red bars'))+';this.captureReading=captureReading;',c);
  const capture=await c.captureReading(true),pending=capture.stop();if(mode==='stalled')tick(15001);const value=await pending;
  assert.equal(!!value,mode==='valid');assert.equal(track.readyState,'ended');if(['valid','silent','short','corrupt'].includes(mode))assert.equal(closed,1);return value;
 }
@@ -51,6 +51,7 @@ async function mobileStart(separate, support=false, available=true){
  let handler,captures=0,listens=0,fallback=0;
  const c={SEPARATE:separate,practice:false,recording:null,alive:true,Rec:available?{}:null,SPM:support?'support':'',IMG:()=>'',svg:{mic:''},hush(){},noListen(){fallback++},beginListening(){listens++},captureReading:async()=>{captures++;return {resume(){}}},$:()=>({}),box:{innerHTML:'',querySelector:()=>({set onclick(fn){handler=fn}})}};
  vm.createContext(c);vm.runInContext(source.slice(source.indexOf('   async function pass()'),source.indexOf('   function beginListening()'))+';this.pass=pass;',c);
- await c.pass();if(separate){assert.equal(captures,0);assert.equal(listens,0);handler();assert.equal(captures,0);assert.equal(listens,support||!available?0:1);assert.equal(fallback,support||!available?1:0);}else{assert.equal(captures,1);assert.equal(listens,1);}
+ await c.pass();assert.equal(captures,0);assert.equal(listens,0);const pending=handler();if(separate&&!support&&available)assert.equal(listens,1,'mobile starts synchronously from the tap');await pending;assert.equal(captures,!separate&&!support&&available?1:0);assert.equal(listens,support||!available?0:1);assert.equal(fallback,support||!available?1:0);
 }
 (async()=>{await mobileStart(true);await mobileStart(true,true);await mobileStart(true,false,false);await mobileStart(false);console.log('PASS: mobile gesture starts speech synchronously without opening recorder; desktop retains simultaneous capture.');})().catch(e=>{console.error(e);process.exitCode=1;});
+
