@@ -101,11 +101,13 @@
  const SPM=(document.querySelector('meta[name="bulig-speech"]')||{}).content||'';
  const VST=!!document.querySelector('meta[name="bulig-vowel"]');   /* a lesson that teaches a vowel: vowels are checked strictly */
  const accent=k=>(VST?k:k.replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o')).replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
- const near=(h,t)=>!!h&&!!t&&(h===t||(t.length>=5&&h.replace(/[^aeiou]/g,'')===t.replace(/[^aeiou]/g,'')&&lev(h,t)<=1)||(h.length>1&&sound(h)===sound(t))||(SPM==='accent'&&h.length>1&&accent(sound(h.replace(/th/g,'t')))===accent(sound(t.replace(/th/g,'t')))));
- const heardOk=(alts,unit)=>{const want=unit.map(norm).filter(Boolean);if(!want.length)return true;
+ // Only Tim's Ball: tolerate the reported name transcriptions, not general vowel substitutions.
+ const timAlias=(h,t)=>t==='tim'?h==='team':t==="tim's"&&['tims','teams',"team's",'themes',"theme's"].includes(h);
+ const near=(h,t,timStory=false)=>!!h&&!!t&&(h===t||(!VST&&timStory&&timAlias(h,t))||(t.length>=5&&h.replace(/[^aeiou]/g,'')===t.replace(/[^aeiou]/g,'')&&lev(h,t)<=1)||(h.length>1&&sound(h)===sound(t))||(SPM==='accent'&&h.length>1&&accent(sound(h.replace(/th/g,'t')))===accent(sound(t.replace(/th/g,'t')))));
+ const heardOk=(alts,unit,timStory=false)=>{const want=unit.map(norm).filter(Boolean);if(!want.length)return true;
   for(const alt of alts){const got=alt.split(/\s+/).map(norm).filter(Boolean);
-   if(want.length===1){if(got.some(g=>near(g,want[0])))return true;continue;}
-   const pool=[...got];let hit=0;for(const w of want){const i=pool.findIndex(g=>near(g,w));if(i>=0){hit++;pool.splice(i,1);}}
+   if(want.length===1){if(got.some(g=>near(g,want[0],timStory)))return true;continue;}
+   const pool=[...got];let hit=0;for(const w of want){const i=pool.findIndex(g=>near(g,w,timStory));if(i>=0){hit++;pool.splice(i,1);}}
    if(hit/want.length>=.8)return true;}
   return false;};
 
@@ -149,6 +151,7 @@
  const starHtml=(n,of)=>'<span class="ac-stars st'+of+'" role="img" aria-label="'+n+' of '+of+' stars">'+'<i></i>'.repeat(n)+'<i class="off"></i>'.repeat(of-n)+'</span>';
 
  recs.forEach((rec,ix)=>{
+  const timStory=/^Tim['’]s\s+Ball$/i.test((rec.dataset.wcTitle||'').trim());
   /* v208: Level 4 stories: the title is read too (it comes first, on its own line), so reading it is not a miss */
   const tw=words(rec.dataset.wcTitle||'').length,text=(tw?rec.dataset.wcTitle+' ':'')+(rec.dataset.wc||'');if(!words(rec.dataset.wc||'').length)return;
   const val=rec.querySelector('[data-wc-val]');const card=rec.closest('.l2-card');const key='wc:'+actId+':'+(card?card.dataset.n:0);
@@ -236,7 +239,7 @@
     const clearPreview=()=>{previewWords.forEach(i=>W[i].classList.remove('wc-heard'));previewWords=[];};
     const align=(heard,confirmed=true)=>{clearPreview();if(ended||!alive)return;const toks=heard.split(/\s+/).map(norm).filter(Boolean);if(confirmed&&toks.length)heardFinal=true;let q=p;const st={};
      /* Bounded ordered alignment: exact words first, then accent tolerance; repeated words do not advance twice. */
-     for(const t of toks){if(q>0&&near(t,T[q-1])&&!near(t,T[q]))continue;let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k])){hit=k;break;}
+     for(const t of toks){if(q>0&&near(t,T[q-1],timStory)&&!near(t,T[q],timStory))continue;let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k],timStory)){hit=k;break;}
 
       if(hit>=0){for(let m=q;m<q+hit;m++)st[m]='miss';st[q+hit]='ok';q=q+hit+1;}}
      if(!confirmed){for(let i=p;i<q;i++)if(st[i]==='ok'&&S[i]!=='ok'){W[i].classList.add('wc-heard');previewWords.push(i);}if(previewWords.length){last=Date.now();hint.hidden=true;W[previewWords[previewWords.length-1]].scrollIntoView({block:'nearest',behavior:'smooth'});}return;}
@@ -277,7 +280,7 @@
      box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<p class="wc-say">Read this word again.</p><div class="wc-row"><span class="wc-mic">'+svg.mic+'</span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span><b>Listening…</b></div><div class="wc-row wc-hrow">'+tries(i)+'</div></div>';
      listen(attemptAbort.signal).then(alts=>{if(!alive)return;
       if(alts===null||alts===''){box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<div class="wc-res y">I did not hear you. Say it a little louder. (No heart lost.)</div><div class="wc-row">'+tries(i)+'<button type="button" class="btn primary wc-again">'+svg.mic+'Say it</button></div></div>';box.querySelector('.wc-again').onclick=()=>ask(i);return;}
-      if(heardOk(alts,[all[i]])){got[i]=practice?1:Math.max(0,HEARTS-hl[i])/(HEARTS+1);paint(i,'mid');box.innerHTML='<img src="'+IMG('thumbs')+'" alt=""><div>'+step+big(i)+'<div class="wc-res g">Yes! You got it.</div></div>';at++;setTimeout(nextWord,1000);return;}
+      if(heardOk(alts,[all[i]],timStory)){got[i]=practice?1:Math.max(0,HEARTS-hl[i])/(HEARTS+1);paint(i,'mid');box.innerHTML='<img src="'+IMG('thumbs')+'" alt=""><div>'+step+big(i)+'<div class="wc-res g">Yes! You got it.</div></div>';at++;setTimeout(nextWord,1000);return;}
       fails[i]++;hl[i]++;hlTotal=(hlTotal||0)+1;const heard=String(alts[0]||'').trim();
       if(hl[i]>=HEARTS){got[i]=0;paint(i,'bad');box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<div class="wc-row wc-hrow">'+tries(i)+'</div><div class="wc-res y">No hearts left for this word. Listen: <b>'+esc(all[i])+'</b>. It goes to My practice words.</div></div>';say(all[i],.55,()=>{at++;setTimeout(nextWord,500);});return;}
       box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<div class="wc-row wc-hrow">'+tries(i,true)+'</div><div class="wc-res y">Not yet!'+(heard?' You said “'+esc(heard)+'”.':'')+' '+(HEARTS-hl[i])+' '+(HEARTS-hl[i]===1?'heart':'hearts')+' left for this word.</div><div class="wc-row"><button type="button" class="btn ghost wc-slow">'+svg.spk+'Hear it</button><button type="button" class="btn primary wc-again">'+svg.mic+'Say it again</button></div></div>';
@@ -358,5 +361,6 @@
   }
  });
 })();
+
 
 

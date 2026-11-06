@@ -16,15 +16,26 @@ tick(23000);assert.ok(instances.length>=4,'silent engine restarts');listener.sto
 listener=ctx.listenAll(t=>words.push(t),()=>{},r=>stops.push(r));r=instances.at(-1);result(r,[['second',true]]);assert.equal(words.at(-1),'second');r.onerror({error:'not-allowed'});tick(60000);assert.deepEqual(stops,['not-allowed']);
 function matching(mode='',vowel=false){const c={document:{querySelector:q=>q.includes('vowel')?(vowel?{}:null):{content:mode}}};vm.createContext(c);vm.runInContext(source.slice(source.indexOf(' const lev='),source.indexOf('\n /* One listen:'))+';this.near=near;',c);return c.near;}
 assert.equal(matching()('10','ten'),true);assert.equal(matching()('den','then'),true);assert.equal(matching()('bad','bed'),false);assert.equal(matching('',true)('ship','sheep'),false);assert.equal(matching('accent')('bery','very'),true);assert.equal(matching()('','cat'),false);
-function align(expected,heard){const c={T:expected,N:expected.length,S:[],p:0,sessBase:0,alive:true,ended:false,clearPreview(){},previewWords:[],W:[],norm:w=>w.toLowerCase(),near:matching(),Date,st:{},hint:{},show(){},finish(){},set(i,v){c.st[i]=v}};vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    const align='),source.indexOf('    const startListening='))+';this.align=align;',c);for(const h of heard)c.align(h);return c.st;}
+// Name aliases are scoped to the story and disabled for vowel-focused lessons.
+assert.equal(matching()('team','tim',true),true);
+for(const heard of ['tims','teams',"team's",'themes',"theme's"])assert.equal(matching()(heard,"tim's",true),true);
+assert.equal(matching()('team','tim'),false);
+assert.equal(matching()('themes',"tim's"),false);
+assert.equal(matching('',true)('team','tim',true),false);
+assert.equal(matching()('theme','tim',true),false);
+assert.equal(matching()('team',"tim's",true),false);
+assert.equal(matching()('tim','team',true),false);
+assert.equal(matching()('ship','sheep',true),false);
+function align(expected,heard,timStory=false){const c={timStory,T:expected,N:expected.length,S:[],p:0,sessBase:0,alive:true,ended:false,clearPreview(){},previewWords:[],W:[],norm:w=>w.toLowerCase(),near:matching(),Date,st:{},hint:{},show(){},finish(){},set(i,v){c.st[i]=v}};vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    const align='),source.indexOf('    const startListening='))+';this.align=align;',c);for(const h of heard)c.align(h);return c.st;}
 assert.deepEqual(align(['cat','hat','mat'],['cat cat hat mat']),{0:'ok',1:'ok',2:'ok'});
 assert.deepEqual(align(['cat','hat','mat'],['cat mat']),{0:'ok',1:'miss',2:'ok'});
 assert.deepEqual(align(['the','cat','and','the','dog'],['the cat','and the dog']),{0:'ok',1:'ok',2:'ok',3:'ok',4:'ok'});
+assert.deepEqual(align(["tim's",'ball','tim','has','a','red','ball'],['themes ball team has a red ball'],true),{0:'ok',1:'ok',2:'ok',3:'ok',4:'ok',5:'ok',6:'ok'});
 console.log('PASS: final-only incremental results, stale events, restarts/watchdog, permission stop, second run, accents/vowels, repeats/skips/order.');
 
 function previewAlignment(){
  const marks=[new Set(),new Set(),new Set()];
- const c={T:['cat','hat','mat'],N:3,S:[],p:0,alive:true,ended:false,norm:w=>w.toLowerCase(),near:matching(),Date,hint:{},show(){},finish(){c.finished=true;},set(i,v){c.S[i]=v;marks[i].delete('wc-heard');},W:marks.map(m=>({classList:{add:v=>m.add(v),remove:v=>m.delete(v)},scrollIntoView(){}}))};
+ const c={timStory:false,T:['cat','hat','mat'],N:3,S:[],p:0,alive:true,ended:false,norm:w=>w.toLowerCase(),near:matching(),Date,hint:{},show(){},finish(){c.finished=true;},set(i,v){c.S[i]=v;marks[i].delete('wc-heard');},W:marks.map(m=>({classList:{add:v=>m.add(v),remove:v=>m.delete(v)},scrollIntoView(){}}))};
  vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    let previewWords='),source.indexOf('    const startListening='))+';this.align=align;',c);
  c.align('cat hat mat',false);assert.deepEqual(marks.map(m=>m.has('wc-heard')),[true,true,true]);assert.equal(c.p,0);assert.equal(c.S.length,0);assert.equal(c.finished,undefined);
  c.align('cat',false);assert.deepEqual(marks.map(m=>m.has('wc-heard')),[true,false,false]);
@@ -54,4 +65,5 @@ async function mobileStart(separate, support=false, available=true){
  await c.pass();assert.equal(captures,0);assert.equal(listens,0);const pending=handler();if(separate&&!support&&available)assert.equal(listens,1,'mobile starts synchronously from the tap');await pending;assert.equal(captures,!separate&&!support&&available?1:0);assert.equal(listens,support||!available?0:1);assert.equal(fallback,support||!available?1:0);
 }
 (async()=>{await mobileStart(true);await mobileStart(true,true);await mobileStart(true,false,false);await mobileStart(false);console.log('PASS: mobile gesture starts speech synchronously without opening recorder; desktop retains simultaneous capture.');})().catch(e=>{console.error(e);process.exitCode=1;});
+
 
