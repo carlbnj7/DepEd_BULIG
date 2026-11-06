@@ -183,8 +183,12 @@ function l2a_match_board(array $c,bool $readonly,string $saved=''):string{
     Level 5 tests are listening tests, where the module has the story read aloud. */
 function l2a_readalong(array $a):bool{$lv=lesson_level((int)$a['lesson_id']);return $lv===6||(in_array($lv,[7,8],true)&&$a['phase']==='learn');}
 /** Card words: "___ og" shows the blank as a box the letter tiles fill. $n letters: one short line per missing letter. */
+function l2a_underlined_text(string $text,string $under=''):string{
+ $h=nl2br(e($text));
+ return $under===''?$h:preg_replace('~\b('.preg_quote(e($under),'~').')\b~u','<u>$1</u>',$h,1);
+}
 function l2a_text(string $t,bool $tiles,string $under='',int $n=0):string{
- if($t==='')return '';$h=nl2br(e($t));if($under!=='')$h=preg_replace('~\b('.preg_quote(e($under),'~').')\b~u','<u>$1</u>',$h,1);
+ if($t==='')return '';$h=l2a_underlined_text($t,$under);
  return '<div class="l2-word'.(mb_strlen($t)>40?' long':'').'">'.blank_html($h,$n,$tiles).'</div>';
 }
 /** How many letters a blank stands for: "n ___ t" with the answer "e" (or "net") is 1, "___ og" with "fr" is 2,
@@ -387,7 +391,7 @@ function l2a_demo_view(array $u,int $level=2,int $grade=0):void{$code=l2a_code($
   echo '<template class="l1d-t demo-template" data-lesson="'.$lid.'" data-id="'.(int)$a['id'].'" data-card="'.$d['i'].'" data-title="'.e($title).'" data-part="'.e($set['module_title'].($N>1?' · Card '.($d['i']+1).' of '.$N:'')).'" data-say="'.e(trim(($d['i']?'':$set['instruction'].' ').($c['story']??'').' '.($c['speak']??$txt))).'"><span class="demo-slide-meta" hidden>'.e($title).' · '.e(l1_phase_label($a['phase'])).'</span><h1 class="sr-only">'.e($set['module_title']).'</h1>';
   if($level>=6){echo l5_demo_card($a,$set,$c,$d['i']+1,$pics).'</template>';continue;}
   echo '<div class="l1d-'.($pics?'two':'one').' l2d">';
-  echo '<div class="l1d-txt"><span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span><p class="l2d-dir">'.nl2br(e($set['instruction'])).'</p>'.(!empty($c['ui']['grid'])?'<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>':'').($txt!==''&&empty($c['ui']['grid'])?'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(nl2br(e($txt)),$blanks[(int)$a['id']][$d['i']]??0).'</p>':'');
+  echo '<div class="l1d-txt"><span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span><p class="l2d-dir">'.nl2br(e($set['instruction'])).'</p>'.(!empty($c['ui']['grid'])?'<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>':'').($txt!==''&&empty($c['ui']['grid'])?'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(l2a_underlined_text($txt,(string)($c['underline']??'')),$blanks[(int)$a['id']][$d['i']]??0).'</p>':'');
   if($txt===''&&!empty($c['ui']['word']))echo '<p class="l1d-q">'.e($c['ui']['word']).'</p>';
   if(!empty($c['build']))echo l3_build_tiles($c['build'],0,true).'<details class="l5d-key"><summary>'.l1_icon('ok').'Show the answer</summary><p>'.e($c['build']['word']).'</p></details>';
   if(!empty($c['ui']['opts'])){foreach($c['ui']['opts'] as $row)echo '<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$row)).'</div>';}
@@ -419,12 +423,12 @@ function l5_demo_card(array $a,array $set,array $c,int $n,string $pics):string{
  if(!empty($c['story']))$h.='<h2 class="l5d-story">'.e($c['story']).'</h2>';
  if(!empty($c['strip'])){$h.='<p class="l1d-q">'.nl2br(e($txt)).'</p>'.l2a_letter_box($c['strip']);}
  elseif(in_array('lgrid',$kinds,true)){$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll"><table class="letter-grid l5d-grid" aria-label="Letter puzzle">';foreach($c['grid'] as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.=$ch===' '||$ch==='.'?'<td class="blank"></td>':'<td>'.e($ch).'</td>';$h.='</tr>';}$h.='</table></div>';}
- elseif(in_array('match',$kinds,true))$h.=($txt!==''?'<p class="l5d-lead">'.blank_html(nl2br(e($txt)),0).'</p>':'').'<div class="l5d-scroll">'.str_replace('<img src=','<img data-src=',l2a_match_board($c,true)).'</div>';
+ elseif(in_array('match',$kinds,true))$h.=($txt!==''?'<p class="l5d-lead">'.blank_html(l2a_underlined_text($txt,(string)($c['underline']??'')),0).'</p>':'').'<div class="l5d-scroll">'.str_replace('<img src=','<img data-src=',l2a_match_board($c,true)).'</div>';
  elseif(in_array('xcells',$kinds,true))$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll">'.preg_replace(['~<input[^>]*>~','~<p class="l2-how">.*?</p>~s'],'',l2a_xcells($c['ui']['xc'],0)).'</div>';
  elseif(!empty($c['ui']['box']))$h.='<p class="l1d-q">'.e($txt).'</p>'.l2a_letter_box($c['ui']['box']);
  elseif(in_array('spin',$kinds,true))$h.='<p class="l1d-q">'.e($txt).'</p><div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['spin'])).'</div>';
  elseif(!empty($c['ui']['grid']))$h.='<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>';
- elseif($txt!=='')$h.=mb_strlen($txt)>170?'<div class="l5d-read">'.blank_html(nl2br(e($txt)),0).'</div>':'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(nl2br(e($txt)),0).'</p>';
+ elseif($txt!=='')$h.=mb_strlen($txt)>170?'<div class="l5d-read">'.blank_html(l2a_underlined_text($txt,(string)($c['underline']??'')),0).'</div>':'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(l2a_underlined_text($txt,(string)($c['underline']??'')),0).'</p>';
  if(!empty($c['words']))$h.='<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
  if(!empty($c['ui']['labels'])&&count($kinds)>1){$h.='<ol class="l5d-order">';foreach($c['ui']['labels'] as $lab)$h.='<li><span class="l5d-box" aria-hidden="true"></span>'.e($lab).'</li>';$h.='</ol>';}
  elseif($c['choices']){$long=max(array_map('mb_strlen',array_map('strval',$c['choices'])))>24;$h.=$long?'<ul class="l5d-ch">'.implode('',array_map(fn($w)=>'<li>'.e($w).'</li>',$c['choices'])).'</ul>':'<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['choices'])).'</div>';}

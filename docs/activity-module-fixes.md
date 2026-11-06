@@ -28,3 +28,11 @@ Full database integration and physical-device tests remain required. The local b
 3. Level 2A lesson 15 activity 248: example first, then nine questions. Ensure only questions are scored. Select /i/ to check rejection, then /a/. Verify the rat picture is a rat.
 4. Level 2A lesson 13 pretest: questions 1–5 show Part A; 6–8 show Part B. One tap replaces the previous answer. Submit and verify teacher results.
 5. Repeat on Android Chrome, iPhone Safari/Home Screen and laptop. Check narrow-screen scrolling, keyboard focus, saved answers and offline re-download. Check an unrelated grade/lesson remains unchanged.
+
+## Picture and underline follow-up
+- Level 3B dr post-test card 2 now uses the existing child-drawing illustration instead of the sandcastle/play picture. Answer remains draw. The dragon card and other dr pictures were visually checked.
+- Restored 57 explicit target words in Grade 5 Level 5 vocabulary cards (source pages 6, 7, 23, 25, 26, 36, 37), checked against module sentences and choices. Context-clue target underlines are visible in the source; pre/post-test targets are inferred from their sentence/answer pairs where the source also lacks the underline.
+- Level 2B page 23 card 4 underlines toy, not gave, for its rhyming choice.
+- Teacher Class Demo now retains target underlines through the same escaped formatter as pupil cards.
+- Passed tests/picture-underline-fixes.php (including prior activity tests) and node tests/audit-regressions.cjs. PHP syntax checks passed. Full tests/run_tests.py blocked by missing app/bootstrap.php in the partial checkout; database/browser integration not verified here.
+- No SQL migration. No microphone or recording changes.
