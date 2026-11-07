@@ -103,7 +103,7 @@
  const accent=k=>(VST?k:k.replace(/ee/g,'i').replace(/oo/g,'o').replace(/e/g,'i').replace(/u/g,'o')).replace(/sh/g,'s').replace(/z/g,'s').replace(/S$/,'s').replace(/f/g,'p').replace(/v/g,'b').replace(/T$/,'t').replace(/K$/,'k').replace(/P$/,'p').replace(/([^aeiou])s$/,'$1').replace(/([aeiou][^aeiou])[^aeiou]$/,'$1');
  // Only Tim's Ball: tolerate the reported name transcriptions, not general vowel substitutions.
  const timAlias=(h,t)=>t==='tim'?h==='team':t==="tim's"&&['tims','teams',"team's",'themes',"theme's"].includes(h);
- const near=(h,t,timStory=false)=>!!h&&!!t&&(h===t||(!VST&&timStory&&timAlias(h,t))||(t.length>=5&&h.replace(/[^aeiou]/g,'')===t.replace(/[^aeiou]/g,'')&&lev(h,t)<=1)||(h.length>1&&sound(h)===sound(t))||(SPM==='accent'&&h.length>1&&accent(sound(h.replace(/th/g,'t')))===accent(sound(t.replace(/th/g,'t')))));
+ const near=(h,t,timStory=false)=>!!h&&!!t&&(h===t||(t.includes("'")&&h===t.replace(/'/g,''))||(!VST&&timStory&&timAlias(h,t))||(t.length>=5&&h.replace(/[^aeiou]/g,'')===t.replace(/[^aeiou]/g,'')&&lev(h,t)<=1)||(h.length>1&&sound(h)===sound(t))||(SPM==='accent'&&h.length>1&&accent(sound(h.replace(/th/g,'t')))===accent(sound(t.replace(/th/g,'t')))));
  const heardOk=(alts,unit,timStory=false)=>{const want=unit.map(norm).filter(Boolean);if(!want.length)return true;
   for(const alt of alts){const got=alt.split(/\s+/).map(norm).filter(Boolean);
    if(want.length===1){if(got.some(g=>near(g,want[0],timStory)))return true;continue;}
@@ -129,13 +129,13 @@
   const stop=()=>{on=false;onInterim('');clearTimeout(restart);clearTimeout(watch);clearTimeout(drainTimer);if(drained){const done=drained;drained=null;done();}const old=r;r=null;try{old&&old.abort();}catch(e){}};
   const fail=reason=>{if(!on)return;stop();queueMicrotask(()=>onStop(reason));};
   const start=()=>{if(!on)return;microphoneSession();let current;try{current=new Rec();}catch(e){fail('unavailable');return;}r=current;
-   current.lang='en-US';current.continuous=!APPLE;current.interimResults=true;current.maxAlternatives=1;let finalCount=0,finished=false;
+   current.lang='en-US';current.continuous=!APPLE;current.interimResults=true;current.maxAlternatives=5;let finalCount=0,finished=false;
    const end=()=>{if(finished||!on||r!==current)return;finished=true;onInterim('');clearTimeout(watch);r=null;clearTimeout(drainTimer);if(draining){stop();return;}restart=setTimeout(start,Math.min(2000,350*(1+failures)));};
    const arm=()=>{clearTimeout(watch);if(draining)return;watch=setTimeout(()=>{drainTimer=setTimeout(()=>{try{current.abort();}catch(e){}end();},2000);try{current.stop();}catch(e){}},20000);};
    current.onstart=()=>{if(on&&r===current){onNew();arm();}};
    current.onresult=e=>{if(!on||r!==current)return;if(!draining){clearTimeout(drainTimer);drainTimer=null;}arm();failures=0;onInterim('');
     // Consume each final result once. Interim hypotheses can be revised and must never earn points.
-    for(let i=finalCount;i<e.results.length;i++){if(!e.results[i].isFinal)break;finalCount=i+1;onText(e.results[i][0].transcript);}
+    for(let i=finalCount;i<e.results.length;i++){if(!e.results[i].isFinal)break;finalCount=i+1;onText(e.results[i][0].transcript,true,Array.from(e.results[i],a=>a.transcript));}
     if(!on||r!==current)return;let pending='';for(let i=finalCount;i<e.results.length;i++)if(!e.results[i].isFinal)pending+=' '+e.results[i][0].transcript;onInterim(pending.trim());
    };
    current.onerror=e=>{if(!on||r!==current)return;if(['not-allowed','service-not-allowed','language-not-supported'].includes(e.error)){fail(e.error);return;}if(e.error!=='no-speech'&&e.error!=='aborted'&&++failures>3){fail(e.error);return;}try{current.abort();}catch(x){}end();};
@@ -237,11 +237,20 @@
      for(let i=0;i<N;i++)if(S[i]==='ok')got[i]=1;else fails[i]=1;if(recording){const clip=recording;recording=null;recordingResult=clip.stop().then(x=>{audio=x;recordingError=clip.error();return x;});await recordingResult;}if(alive)setTimeout(()=>alive&&fix(),350);};
     let previewWords=[];
     const clearPreview=()=>{previewWords.forEach(i=>W[i].classList.remove('wc-heard'));previewWords=[];};
-    const align=(heard,confirmed=true)=>{clearPreview();if(ended||!alive)return;const toks=heard.split(/\s+/).map(norm).filter(Boolean);if(confirmed&&toks.length)heardFinal=true;let q=p;const st={};
-     /* Bounded ordered alignment: exact words first, then accent tolerance; repeated words do not advance twice. */
-     for(const t of toks){if(q>0&&near(t,T[q-1],timStory)&&!near(t,T[q],timStory))continue;let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k],timStory)){hit=k;break;}
-
-      if(hit>=0){for(let m=q;m<q+hit;m++)st[m]='miss';st[q+hit]='ok';q=q+hit+1;}}
+    const align=(heard,confirmed=true,alternatives=[])=>{clearPreview();if(ended||!alive)return;
+     // Compare complete alternatives; never assemble words from conflicting hypotheses.
+     const candidates=confirmed&&alternatives.length?alternatives:[heard];let best=null;
+     for(const candidate of candidates){const toks=candidate.split(/\s+/).map(norm).filter(Boolean);let q=p,score=0;const st={};
+      for(let ti=0;ti<toks.length;ti++){const t=toks[ti];if(q>0&&near(t,T[q-1],timStory)&&!near(t,T[q],timStory))continue;
+       let hit=-1;for(let k=0;k<=3&&q+k<N;k++)if(t===T[q+k]){hit=k;break;}
+       if(hit<0)for(let k=0;k<=3&&q+k<N;k++)if(near(t,T[q+k],timStory)){hit=k;break;}
+       // Recover after a longer skipped phrase only with two consecutive exact words.
+       if(hit<0&&ti+1<toks.length)for(let k=4;k<=12&&q+k+1<N;k++)if(t===T[q+k]&&toks[ti+1]===T[q+k+1]){hit=k;break;}
+       if(hit>=0){score+=(t===T[q+hit]?3:2)-hit*.15;for(let m=q;m<q+hit;m++)st[m]='miss';st[q+hit]='ok';q+=hit+1;}
+      }
+      if(!best||score>best.score)best={q,st,score};
+     }
+     if(confirmed&&String(heard).trim())heardFinal=true;const {q,st}=best||{q:p,st:{}};
      if(!confirmed){for(let i=p;i<q;i++)if(st[i]==='ok'&&S[i]!=='ok'){W[i].classList.add('wc-heard');previewWords.push(i);}if(previewWords.length){last=Date.now();hint.hidden=true;W[previewWords[previewWords.length-1]].scrollIntoView({block:'nearest',behavior:'smooth'});}return;}
      if(q<p)return;for(let i=p;i<q;i++)if(st[i]&&S[i]!=='ok')set(i,st[i]);else if(st[i]==='ok')set(i,'ok');
      if(q>p){p=q;last=Date.now();hint.hidden=true;}show();if(p>=N)finish();};
@@ -283,12 +292,12 @@
       if(heardOk(alts,[all[i]],timStory)){got[i]=practice?1:Math.max(0,HEARTS-hl[i])/(HEARTS+1);paint(i,'mid');box.innerHTML='<img src="'+IMG('thumbs')+'" alt=""><div>'+step+big(i)+'<div class="wc-res g">Yes! You got it.</div></div>';at++;setTimeout(nextWord,1000);return;}
       fails[i]++;hl[i]++;hlTotal=(hlTotal||0)+1;const heard=String(alts[0]||'').trim();
       if(hl[i]>=HEARTS){got[i]=0;paint(i,'bad');box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<div class="wc-row wc-hrow">'+tries(i)+'</div><div class="wc-res y">No hearts left for this word. Listen: <b>'+esc(all[i])+'</b>. It goes to My practice words.</div></div>';say(all[i],.55,()=>{at++;setTimeout(nextWord,500);});return;}
-      box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<div class="wc-row wc-hrow">'+tries(i,true)+'</div><div class="wc-res y">Not yet!'+(heard?' You said “'+esc(heard)+'”.':'')+' '+(HEARTS-hl[i])+' '+(HEARTS-hl[i]===1?'heart':'hearts')+' left for this word.</div><div class="wc-row"><button type="button" class="btn ghost wc-slow">'+svg.spk+'Hear it</button><button type="button" class="btn primary wc-again">'+svg.mic+'Say it again</button></div></div>';
+      box.innerHTML='<img src="'+IMG('point')+'" alt=""><div>'+step+big(i)+'<div class="wc-row wc-hrow">'+tries(i,true)+'</div><div class="wc-res y">Not yet!'+(heard?' The speech service heard “'+esc(heard)+'”.':'')+' '+(HEARTS-hl[i])+' '+(HEARTS-hl[i]===1?'heart':'hearts')+' left for this word.</div><div class="wc-row"><button type="button" class="btn ghost wc-slow">'+svg.spk+'Hear it</button><button type="button" class="btn primary wc-again">'+svg.mic+'Say it again</button></div></div>';
       box.querySelector('.wc-slow').onclick=()=>say(all[i],.5);box.querySelector('.wc-again').onclick=()=>{gen++;hush();ask(i);};});};
     nextWord();}
 
    /* Only an absent API or a real recognition error opens this choice; never browser identity. */
-   function noListen(reason){if(!alive)return;if(stream){stream.stop();stream=null;}if(recording){recording.cancel();recording=null;}ov.classList.remove('wc-reading');const recordStart=Date.now();W.forEach((x,i)=>{paint(i,'');x.onclick=null;});
+   function noListen(reason){if(!alive)return;if(stream){stream.stop();stream=null;}const continuing=!!(recording&&recording.valid());if(recording&&!continuing){recording.cancel();recording=null;}ov.classList.remove('wc-reading');const recordStart=continuing?t0:Date.now();W.forEach((x,i)=>{paint(i,'');x.onclick=null;});
     if(recording)recording.pause();
     $('[data-c]').textContent='Listening paused';
     const why=reason==='no-speech'?'No confirmed words came back from the speech service. No pronunciation score has been assigned. Try listening again, or record for your teacher.':reason==='network'?'The speech service could not connect. Check your connection and try again.':(['not-allowed','service-not-allowed'].includes(reason)?'Please allow microphone and speech recognition access in your browser, then try again.':'Word Coach could not start listening. Please try again.');
@@ -298,7 +307,7 @@
      if(!recording){const b=box.querySelector('.wc-audio-only');b.disabled=true;b.textContent='Starting microphone…';recording=await captureReading(true);if(!alive){if(recording)recording.cancel();return;}if(!recording){b.disabled=false;b.textContent='Try microphone again';return;}}
      if(recording)recording.resume();
      $('[data-c]').textContent='Read for your teacher';
-     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> Read it all out loud for your teacher.</p><button type="button" class="btn primary wc-fin">'+svg.ok+'I finished reading</button><p class="wc-note">'+(recording&&recording.valid()?'Recording for your teacher.':'Audio is unavailable. Please retry with microphone access before submitting.')+'</p></div>';
+     box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Your turn!</b> '+(continuing?'Continue from where you stopped. Your earlier audio is kept.':'Read it all out loud for your teacher.')+'</p><button type="button" class="btn primary wc-fin">'+svg.ok+'I finished reading</button><p class="wc-note">'+(recording&&recording.valid()?'Recording for your teacher.':'Audio is unavailable. Please retry with microphone access before submitting.')+'</p></div>';
      box.querySelector('.wc-fin').onclick=()=>{secs=Math.round((Date.now()-recordStart)/1000);all.forEach((w,i)=>{got[i]=-1;fails[i]=0;});summary();};
     };
    }
@@ -361,6 +370,7 @@
   }
  });
 })();
+
 
 
 

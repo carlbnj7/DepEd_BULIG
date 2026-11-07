@@ -26,7 +26,7 @@ assert.equal(matching()('theme','tim',true),false);
 assert.equal(matching()('team',"tim's",true),false);
 assert.equal(matching()('tim','team',true),false);
 assert.equal(matching()('ship','sheep',true),false);
-function align(expected,heard,timStory=false){const c={timStory,T:expected,N:expected.length,S:[],p:0,sessBase:0,alive:true,ended:false,clearPreview(){},previewWords:[],W:[],norm:w=>w.toLowerCase(),near:matching(),Date,st:{},hint:{},show(){},finish(){},set(i,v){c.st[i]=v}};vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    const align='),source.indexOf('    const startListening='))+';this.align=align;',c);for(const h of heard)c.align(h);return c.st;}
+function align(expected,heard,timStory=false){const c={timStory,T:expected,N:expected.length,S:[],p:0,sessBase:0,alive:true,ended:false,clearPreview(){},previewWords:[],W:[],norm:w=>w.toLowerCase(),near:matching(),Date,st:{},hint:{},show(){},finish(){},set(i,v){c.st[i]=v}};vm.createContext(c);vm.runInContext('let last=0;'+source.slice(source.indexOf('    const align='),source.indexOf('    const startListening='))+';this.align=align;',c);for(const h of heard)Array.isArray(h)?c.align(h[0],true,h):c.align(h);return c.st;}
 assert.deepEqual(align(['cat','hat','mat'],['cat cat hat mat']),{0:'ok',1:'ok',2:'ok'});
 assert.deepEqual(align(['cat','hat','mat'],['cat mat']),{0:'ok',1:'miss',2:'ok'});
 assert.deepEqual(align(['the','cat','and','the','dog'],['the cat','and the dog']),{0:'ok',1:'ok',2:'ok',3:'ok',4:'ok'});
@@ -67,3 +67,20 @@ async function mobileStart(separate, support=false, available=true){
 (async()=>{await mobileStart(true);await mobileStart(true,true);await mobileStart(true,false,false);await mobileStart(false);console.log('PASS: mobile gesture starts speech synchronously without opening recorder; desktop retains simultaneous capture.');})().catch(e=>{console.error(e);process.exitCode=1;});
 
 
+
+
+assert.equal(matching()('mothers', "mother's"),true);
+assert.equal(matching()('mother', "mother's"),false);
+assert.deepEqual(align(['cat','sat'],[['cap sat','cat sat']]),{0:'ok',1:'ok'});
+assert.deepEqual(align(['one','two','three','four','five','cat','sat'],['cat sat']),{0:'miss',1:'miss',2:'miss',3:'miss',4:'miss',5:'ok',6:'ok'});
+assert.deepEqual(align(['one','two','three','four','five','cat','sat'],['cat']),{});
+console.log('PASS: complete alternate hypotheses, apostrophes, anchored recovery and isolated-word rejection.');
+async function preserveRecording(){
+ let cancelled=0,paused=0,resumed=0,captures=0,finished=0;
+ const buttons={};const c={alive:true,stream:{stop(){}},recording:{valid:()=>true,cancel(){cancelled++},pause(){paused++},resume(){resumed++}},ov:{classList:{remove(){}}},t0:1000,Date:{now:()=>5000},W:[],paint(){},$:()=>({}),IMG:()=>'',svg:{mic:'',ok:''},box:{innerHTML:'',querySelector:s=>buttons[s]||(buttons[s]={})},close(){},open(){},captureReading:async()=>{captures++},all:['cat'],got:[],fails:[],summary(){finished++}};
+ vm.createContext(c);vm.runInContext(source.slice(source.indexOf('   function noListen('),source.indexOf('   /* 4) Stars'))+';this.noListen=noListen;',c);
+ c.noListen('network');assert.equal(cancelled,0);assert.equal(paused,1);
+ await buttons['.wc-audio-only'].onclick();assert.equal(captures,0);assert.equal(resumed,1);assert.match(c.box.innerHTML,/earlier audio is kept/);
+ buttons['.wc-fin'].onclick();assert.equal(finished,1);assert.equal(c.secs,4);assert.equal(c.got[0],-1);
+}
+preserveRecording().then(()=>console.log('PASS: recognition failure preserves and resumes recording without an automatic score.')).catch(e=>{console.error(e);process.exitCode=1;});
