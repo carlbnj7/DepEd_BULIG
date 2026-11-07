@@ -2,7 +2,7 @@
    construction sign as What's new), one look per status: Fixed, Working on it, Not a bug, Received. */
 (()=>{
  const marker=document.querySelector('[data-bug-updates]');if(!marker)return;
- let busy=false,shown=null;const csrf=document.querySelector('meta[name="csrf"]')?.content||'';
+ let busy=false,shown=null,retryTimer=null;const csrf=document.querySelector('meta[name="csrf"]')?.content||'';
  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text)n.textContent=text;return n;};
  const svg=d=>{const n=document.createElementNS('http://www.w3.org/2000/svg','svg');n.setAttribute('viewBox','0 0 24 24');n.setAttribute('fill','none');n.setAttribute('stroke','currentColor');n.setAttribute('stroke-width','2.2');n.setAttribute('stroke-linecap','round');n.setAttribute('stroke-linejoin','round');n.setAttribute('aria-hidden','true');n.innerHTML=d;return n;};
  const IC={check:'<path d="M5 12l4 4 10-10"/>',tool:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',inbox:'<path d="M3 13h5l2 3h4l2-3h5"/><path d="M5 5h14l2 8v6H3v-6z"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>'};
@@ -38,9 +38,11 @@
   link.addEventListener('click',async e=>{e.preventDefault();await ack();location.href=link.href;});
  }
  async function poll(){
-  if(busy||shown||document.hidden||navigator.onLine===false)return;if(busyNow()){setTimeout(poll,4000);return;}busy=true;
+  if(busy||shown||document.hidden||navigator.onLine===false)return;if(busyNow()){if(retryTimer===null)retryTimer=setTimeout(()=>{retryTimer=null;poll();},4000);return;}
+  if(retryTimer!==null){clearTimeout(retryTimer);retryTimer=null;}busy=true;
   try{const res=await fetch('?page=bug_updates',{credentials:'same-origin',cache:'no-store',headers:{Accept:'application/json'}});if(!res.ok)return;const data=await res.json();if(data.update&&!busyNow())show(data.update);}
   catch(e){}finally{busy=false;}
  }
  poll();setInterval(poll,45000);document.addEventListener('visibilitychange',poll);window.addEventListener('online',poll);
 })();
+

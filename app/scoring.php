@@ -27,7 +27,7 @@ function activity_key_id(array $a):?string{
  $r=one('SELECT a.phase,a.position,l.position lpos,IFNULL(m.grade_level,0) g,m.level_id lv FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE a.id=?',[$id]);
  return $c[$id]=$r?level_family((int)$r['lv']).':'.$r['g'].':'.$r['lpos'].':'.$r['phase'].':'.$r['position']:null;
 }
-function activity_key(array $a):?array{$id=activity_key_id($a);return $id?(answer_keys()['keys'][$id]??null):null;}
+function activity_key(array $a):?array{if(!isset($a['lesson_id']))$a=one('SELECT * FROM activities WHERE id=?',[(int)$a['id']])??$a;$id=activity_key_id($a);$keys=$id?(answer_keys()['keys'][$id]??[]):[];if(isset($a['lesson_id'])&&function_exists('module_activity_keys'))$keys=module_activity_keys($a,$keys);return $keys?:null;}
 
 /** The pupil's answer for each card, from "BULIG card answers / Card n (no. t): ...". */
 function card_answers(string $response):array{
@@ -325,3 +325,4 @@ function ac_practice(int $pid,array $a,array $old,string $answer):array{
  $msg=$better?'Better! Your new best score is '.$num($best).' of '.$num($of).'.':'Your best score stays '.$num($best).' of '.$num($of).'.';
  return ['message'=>$msg,'card'=>ac_card($a,['response'=>$answer],['fresh'=>true,'practice'=>true,'best'=>$msg])];
 }
+
