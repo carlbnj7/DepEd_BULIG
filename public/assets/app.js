@@ -276,8 +276,28 @@ function setup(board){if(board.dataset.ready)return;board.dataset.ready='1';cons
  /* v177: tap only. Dragging was dropped: a long choice made the line miss, and scrolling past it on a phone cancelled the tap. */
  if(box&&box.value)for(const m of box.value.matchAll(/(\d+)\s*-\s*([a-z])/gi))pairs.set(m[1],m[2].toLowerCase());
  board.addEventListener('redraw',draw);board.addEventListener('dragstart',e=>e.preventDefault());board.querySelectorAll('img').forEach(i=>i.draggable=false);new ResizeObserver(draw).observe(board);board.querySelectorAll('img').forEach(i=>i.addEventListener('load',draw));draw();}
-function scan(root){(root||document).querySelectorAll('[data-match-board]').forEach(setup);}
-scan();new MutationObserver(()=>scan()).observe(document.body,{childList:true,subtree:true});
+function scan(root){
+ if(root.nodeType===1&&root.matches('[data-match-board]'))setup(root);
+ root.querySelectorAll('[data-match-board]').forEach(setup);
+}
+scan(document);
+// Inspect inserted subtrees only. Timers, word highlighting and SVG line redraws
+// must not repeatedly search the entire activity DOM.
+new MutationObserver(records=>{
+ const added=new Set();
+ for(const record of records)for(const node of record.addedNodes){
+  if(node.nodeType!==1||!node.isConnected||node.closest('[data-match-board]'))continue;
+  added.add(node);
+ }
+ for(const node of added){
+  let parent=node.parentElement,covered=false;
+  while(parent){if(added.has(parent)){covered=true;break;}parent=parent.parentElement;}
+  if(!covered)scan(node);
+ }
+ // A newly inserted board itself also needs initialization (closest includes self).
+ for(const record of records)for(const node of record.addedNodes)
+  if(node.nodeType===1&&node.isConnected&&node.matches('[data-match-board]'))setup(node);
+}).observe(document.body,{childList:true,subtree:true});
 document.addEventListener('click',e=>{if(e.target.closest('[data-native-next],[data-native-prev],#demo-next,#demo-prev'))setTimeout(()=>document.querySelectorAll('[data-match-board]').forEach(b=>b.dispatchEvent(new Event('redraw'))),50);});})();
 
 /* Level 5 letter puzzles: tap letters to mark the words you find */
@@ -1109,3 +1129,4 @@ document.querySelectorAll('[data-tab-more]').forEach(b=>b.addEventListener('clic
 (function(){const sw=[...document.querySelectorAll('[data-a11y-switch]')];if(!sw.length)return;const d=document.documentElement;
  const save=()=>{const v=['big','easy'].filter(k=>d.classList.contains('a11y-'+k)).join(' ');try{localStorage.setItem('bulig-a11y',v);}catch(e){}};
  sw.forEach(s=>{const k=s.dataset.a11ySwitch;s.checked=d.classList.contains('a11y-'+k);s.addEventListener('change',()=>{d.classList.toggle('a11y-'+k,s.checked);sw.forEach(o=>{if(o!==s&&o.dataset.a11ySwitch===k)o.checked=s.checked;});save();});});})();
+

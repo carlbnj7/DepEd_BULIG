@@ -5,6 +5,8 @@
    - Words, pictures and directions come from database/level2-cards.json (checked against the module).
    - Class Demo: a lesson start slide, then one slide per card. */
 
+require_once __DIR__.'/activity_module_fixes.php';
+
 /* Level 2A (level id 2) and Level 2B (level id 3) share these screens. */
 function l2a_ui():array{static $u=null;if($u===null){$u=['lessons'=>[],'pages'=>[]];foreach(['2a','2b'] as $k){$f=__DIR__.'/../database/level'.$k.'-ui.json';$j=is_file($f)?(json_decode((string)file_get_contents($f),true)?:[]):[];$u['lessons']+=$j['lessons']??[];foreach($j['pages']??[] as $pk=>$pv)$u['pages'][$k.':'.$pk]=$pv;}}return $u;}
 function l2a_is(int $lid):bool{return in_array(lesson_level($lid),[2,3,4,9],true);}
@@ -32,7 +34,7 @@ function l2a_set(array $a):?array{static $c=[];$id=(int)($a['id']??0);if($id&&ar
    if(empty($dp['images'])||!in_array('draw',$cd['ui']['answer']??[],true))continue;
    $cd['ui']['answer']=array_values(array_map(fn($k)=>$k==='draw'?$dp['kind']:$k,$cd['ui']['answer']));$cd['ui']['how']=$dp['how'];$cd['ui']['was_draw']=1;
    $cd['images']=array_map(fn($im)=>['src'=>$im['src'],'alt'=>$im['say']!==''?$im['say']:'Picture','label'=>'','say'=>$im['say']],$dp['images']);unset($cd['ui']['ref']);}}
- unset($cd);return $id?($c[$id]=$s):$s;}
+ unset($cd);$s=module_activity_set($a,$s);return $id?($c[$id]=$s):$s;}
 function l2a_set_raw(array $a):?array{if(level_family(lesson_level((int)$a['lesson_id']))===4)return l3_set($a);if(lesson_level((int)$a['lesson_id'])===6)return function_exists('wc_story')?wc_story(l5_set($a),$a):l5_set($a);if(in_array(lesson_level((int)$a['lesson_id']),[7,8],true))return function_exists('wc_story')?wc_story(l6_set($a),$a):l6_set($a);$s=level2_card_set($a);if(!$s)return null;$u=l2a_ui()['pages'][l2a_key($a)]??['title'=>$s['title'],'cards'=>[]];$s['module_title']=$u['title'];foreach($s['cards'] as $i=>&$c){$c['ui']=($u['cards'][$i]??[])+['answer'=>['tiles']];if(isset($c['ui']['text']))$c['text']=$c['ui']['text'];if(isset($c['ui']['choices']))$c['choices']=$c['ui']['choices'];}unset($c);return $s;}
 /* ---------------- Level 3 (Word Recognition, level id 4): the same card screens ----------------
    Titles and directions come from database/level3-ui.json (the module's own words, made by tools/level3/build_ui.py).
@@ -181,8 +183,12 @@ function l2a_match_board(array $c,bool $readonly,string $saved=''):string{
     Level 5 tests are listening tests, where the module has the story read aloud. */
 function l2a_readalong(array $a):bool{$lv=lesson_level((int)$a['lesson_id']);return $lv===6||(in_array($lv,[7,8],true)&&$a['phase']==='learn');}
 /** Card words: "___ og" shows the blank as a box the letter tiles fill. $n letters: one short line per missing letter. */
+function l2a_underlined_text(string $text,string $under=''):string{
+ $h=nl2br(e($text));
+ return $under===''?$h:preg_replace('~\b('.preg_quote(e($under),'~').')\b~u','<u>$1</u>',$h,1);
+}
 function l2a_text(string $t,bool $tiles,string $under='',int $n=0):string{
- if($t==='')return '';$h=nl2br(e($t));if($under!=='')$h=preg_replace('~\b('.preg_quote(e($under),'~').')\b~u','<u>$1</u>',$h,1);
+ if($t==='')return '';$h=l2a_underlined_text($t,$under);
  return '<div class="l2-word'.(mb_strlen($t)>40?' long':'').'">'.blank_html($h,$n,$tiles).'</div>';
 }
 /** How many letters a blank stands for: "n ___ t" with the answer "e" (or "net") is 1, "___ og" with "fr" is 2,
@@ -247,6 +253,7 @@ function l2a_is_tf(string $t):bool{return (bool)preg_match('~\bT\b[^.]{0,30}\btr
 function l2a_answer(array $c,int $n,bool $readonly):string{
  if($readonly)return '';$h='';
  foreach($c['ui']['answer']??[] as $p=>$kind){
+  if($kind==='chip'&&!empty($c['ui']['body'])){$h.=module_body_answer($p);continue;}
   if($kind==='tiles'){$t=$c['ui']['tiles']??str_split('abcdefghijklmnopqrstuvwxyz');
    $h.='<div class="l2-tiles'.(count($t)<=15?' big':'').($t===['T','F']?' tf':'').'" data-part="'.$p.'" data-kind="tiles">'.(preg_match('~_{2,}~',$c['text'])?'':'<output class="l2-out" data-out aria-live="polite"></output>').'<div class="l2-keys">';foreach($t as $k)$h.='<button type="button" class="l2-key" data-key="'.e($k).'">'.e($k).'</button>';
    $h.='<button type="button" class="l2-key sp" data-key=" " aria-label="Space">space</button><button type="button" class="l2-key er" data-erase aria-label="Erase">'.l1_icon('prev').'</button></div></div>';}
@@ -328,7 +335,7 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
   if(!empty($c['story']))echo '<h3 class="l2-story">'.e($c['story']).'</h3>';
   if(!empty($c['ui']['practice'])){$pr=$c['ui']['practice'];$c['text']=$pr['q'];   // v186: the story of a "(Read Aloud)" question, then the question
    echo '<div class="l2-ra"><h3 class="l2-story">'.e($pr['title']).'</h3>'.(!$readonly&&function_exists('wc_context')&&wc_context()?'<div class="l2-read" data-wc="'.e($pr['story']).'"><p class="l2-how"><b>Read the story aloud first.</b> Max helps you: each word turns green when you say it right.</p></div>':'').'<p class="l2-ra-text">'.e($pr['story']).'</p></div>';}
-  if(!empty($c['ui']['grid'])){$g=$c['ui']['grid'];$lines=max(array_map('mb_strlen',$g))>14;echo '<div class="l3-grid'.($lines?' lines':'').(count($g)>12?' many':'').(!$lines&&count($g)<=10&&count($g)%2===0?' cols2':'').'">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$g)).'</div>'.l2a_pictures($c,$n);}
+  if(!empty($c['ui']['grid'])){$g=$c['ui']['grid'];$lines=max(array_map('mb_strlen',$g))>14;echo '<div class="l3-grid'.(!empty($c['ui']['module_chart'])?' module-word-chart':'').($lines?' lines':'').(count($g)>12?' many':'').(!$lines&&count($g)<=10&&count($g)%2===0?' cols2':'').'">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$g)).'</div>'.l2a_pictures($c,$n);}
   elseif(in_array('match',$kinds,true))echo ((string)$c['text']!==''?l2a_text((string)$c['text'],false,'',$blanks[$i]??0):'').l2a_match_board($c,$readonly,$readonly?(string)($saved[$n]??''):'');
   else echo (in_array('words',$kinds,true)&&!$readonly?'':l2a_text((string)$c['text'],$tiles&&!$readonly,(string)($c['underline']??''),$blanks[$i]??0)).l2a_pictures($c,$n);
   if(!empty($c['words']))echo '<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
@@ -384,7 +391,7 @@ function l2a_demo_view(array $u,int $level=2,int $grade=0):void{$code=l2a_code($
   echo '<template class="l1d-t demo-template" data-lesson="'.$lid.'" data-id="'.(int)$a['id'].'" data-card="'.$d['i'].'" data-title="'.e($title).'" data-part="'.e($set['module_title'].($N>1?' · Card '.($d['i']+1).' of '.$N:'')).'" data-say="'.e(trim(($d['i']?'':$set['instruction'].' ').($c['story']??'').' '.($c['speak']??$txt))).'"><span class="demo-slide-meta" hidden>'.e($title).' · '.e(l1_phase_label($a['phase'])).'</span><h1 class="sr-only">'.e($set['module_title']).'</h1>';
   if($level>=6){echo l5_demo_card($a,$set,$c,$d['i']+1,$pics).'</template>';continue;}
   echo '<div class="l1d-'.($pics?'two':'one').' l2d">';
-  echo '<div class="l1d-txt"><span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span><p class="l2d-dir">'.nl2br(e($set['instruction'])).'</p>'.(!empty($c['ui']['grid'])?'<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>':'').($txt!==''&&empty($c['ui']['grid'])?'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(nl2br(e($txt)),$blanks[(int)$a['id']][$d['i']]??0).'</p>':'');
+  echo '<div class="l1d-txt"><span class="l1-tag">'.e(mb_strtoupper($set['module_title'])).'</span><p class="l2d-dir">'.nl2br(e($set['instruction'])).'</p>'.(!empty($c['ui']['grid'])?'<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>':'').($txt!==''&&empty($c['ui']['grid'])?'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(l2a_underlined_text($txt,(string)($c['underline']??'')),$blanks[(int)$a['id']][$d['i']]??0).'</p>':'');
   if($txt===''&&!empty($c['ui']['word']))echo '<p class="l1d-q">'.e($c['ui']['word']).'</p>';
   if(!empty($c['build']))echo l3_build_tiles($c['build'],0,true).'<details class="l5d-key"><summary>'.l1_icon('ok').'Show the answer</summary><p>'.e($c['build']['word']).'</p></details>';
   if(!empty($c['ui']['opts'])){foreach($c['ui']['opts'] as $row)echo '<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$row)).'</div>';}
@@ -416,12 +423,12 @@ function l5_demo_card(array $a,array $set,array $c,int $n,string $pics):string{
  if(!empty($c['story']))$h.='<h2 class="l5d-story">'.e($c['story']).'</h2>';
  if(!empty($c['strip'])){$h.='<p class="l1d-q">'.nl2br(e($txt)).'</p>'.l2a_letter_box($c['strip']);}
  elseif(in_array('lgrid',$kinds,true)){$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll"><table class="letter-grid l5d-grid" aria-label="Letter puzzle">';foreach($c['grid'] as $row){$h.='<tr>';foreach(preg_split('//u',(string)$row,-1,PREG_SPLIT_NO_EMPTY) as $ch)$h.=$ch===' '||$ch==='.'?'<td class="blank"></td>':'<td>'.e($ch).'</td>';$h.='</tr>';}$h.='</table></div>';}
- elseif(in_array('match',$kinds,true))$h.=($txt!==''?'<p class="l5d-lead">'.blank_html(nl2br(e($txt)),0).'</p>':'').'<div class="l5d-scroll">'.str_replace('<img src=','<img data-src=',l2a_match_board($c,true)).'</div>';
+ elseif(in_array('match',$kinds,true))$h.=($txt!==''?'<p class="l5d-lead">'.blank_html(l2a_underlined_text($txt,(string)($c['underline']??'')),0).'</p>':'').'<div class="l5d-scroll">'.str_replace('<img src=','<img data-src=',l2a_match_board($c,true)).'</div>';
  elseif(in_array('xcells',$kinds,true))$h.=($txt!==''?'<p class="l2d-dir">'.nl2br(e($txt)).'</p>':'').'<div class="l5d-scroll">'.preg_replace(['~<input[^>]*>~','~<p class="l2-how">.*?</p>~s'],'',l2a_xcells($c['ui']['xc'],0)).'</div>';
  elseif(!empty($c['ui']['box']))$h.='<p class="l1d-q">'.e($txt).'</p>'.l2a_letter_box($c['ui']['box']);
  elseif(in_array('spin',$kinds,true))$h.='<p class="l1d-q">'.e($txt).'</p><div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['spin'])).'</div>';
  elseif(!empty($c['ui']['grid']))$h.='<div class="l3-grid demo">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['ui']['grid'])).'</div>';
- elseif($txt!=='')$h.=mb_strlen($txt)>170?'<div class="l5d-read">'.blank_html(nl2br(e($txt)),0).'</div>':'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(nl2br(e($txt)),0).'</p>';
+ elseif($txt!=='')$h.=mb_strlen($txt)>170?'<div class="l5d-read">'.blank_html(l2a_underlined_text($txt,(string)($c['underline']??'')),0).'</div>':'<p class="l1d-q'.(mb_strlen($txt)>60?' l':'').'">'.blank_html(l2a_underlined_text($txt,(string)($c['underline']??'')),0).'</p>';
  if(!empty($c['words']))$h.='<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
  if(!empty($c['ui']['labels'])&&count($kinds)>1){$h.='<ol class="l5d-order">';foreach($c['ui']['labels'] as $lab)$h.='<li><span class="l5d-box" aria-hidden="true"></span>'.e($lab).'</li>';$h.='</ol>';}
  elseif($c['choices']){$long=max(array_map('mb_strlen',array_map('strval',$c['choices'])))>24;$h.=$long?'<ul class="l5d-ch">'.implode('',array_map(fn($w)=>'<li>'.e($w).'</li>',$c['choices'])).'</ul>':'<div class="l2-bank big">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['choices'])).'</div>';}
@@ -445,3 +452,4 @@ function l2a_role_badge(string $r):string{
  $ic=['story'=>'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7M8 11h7"/>','aloud'=>'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/><rect x="10" y="6" width="4" height="7" rx="2"/>','info'=>'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>'][$r]??'';
  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.$ic.'</svg>'.(['story'=>'Read this · no answer needed','aloud'=>'Read it aloud','info'=>'Instructions · no answer needed'][$r]??'');
 }
+

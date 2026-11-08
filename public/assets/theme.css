@@ -7350,3 +7350,42 @@ html.dark .cert.cz{background:#fffdf5}
 /* Provisional Word Coach speech; confirmed words retain their green styling. */
 .wc-w.wc-heard{background:#dbeafe;color:#1e40af;box-shadow:inset 0 -3px 0 #2563eb}
 html.dark .wc-w.wc-heard{background:#172f50;color:#bfdbfe;box-shadow:inset 0 -3px 0 #60a5fa}
+
+
+/* Module-verified body identification and readable blend charts. */
+/* Hotspots use the original 337 x 600 pupil artwork coordinates. */
+.body-map{position:relative;width:min(100%,440px);margin:0 auto;aspect-ratio:337/600;isolation:isolate}
+.body-map>img{display:block;width:100%;height:100%;max-width:none;object-fit:contain;pointer-events:none;user-select:none}
+.body-map>.body-hit{position:absolute;box-sizing:border-box;min-width:0;min-height:0;margin:0;padding:0;background:transparent;border:2px solid transparent;border-radius:45%;cursor:pointer;touch-action:manipulation;transform:translate(-50%,-50%)}
+.body-map>.body-hit:hover,.body-map>.body-hit:focus-visible{border-color:#1769aa;background:#248bda22;outline:2px solid #fff;outline-offset:1px}
+.body-map>.body-hit[aria-pressed="true"]{border-color:#1769aa;box-shadow:0 0 0 2px #fff;background:#248bda33}
+.body-map>.body-head{left:60.5341%;top:10.1667%;width:43.3234%;height:14.3333%}
+.body-map>.body-eye-left{left:49.2582%;top:22.5000%;width:8.9021%;height:7.3333%}
+.body-map>.body-eye-right{left:69.1395%;top:24.5000%;width:11.2760%;height:7.3333%}
+.body-map>.body-nose{left:57.5668%;top:26.5000%;width:7.1217%;height:3.0000%}
+.body-map>.body-mouth{left:56.6766%;top:30.8333%;width:17.2107%;height:5.3333%}
+.body-map>.body-arm-left{left:20.7715%;top:32.3333%;width:13.0564%;height:11.3333%}
+.body-map>.body-arm-right{left:82.4926%;top:52.8333%;width:13.0564%;height:6.6667%}
+.l3-grid.module-word-chart{grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr))}
+
+/* Activity layout audit: shared by Levels 1, 2A/2B, 3A/3B, 4, 5, 6 and 7.
+   Scope excludes Class Demo and the body-map's precisely aligned hotspots. */
+body.activity-page:not(.l1-demo-page) .l1-form,
+body.activity-page:not(.l1-demo-page) .l2-card,
+body.activity-page:not(.l1-demo-page) .l1-card{min-width:0;max-width:100%;box-sizing:border-box}
+body.activity-page:not(.l1-demo-page) .l1-btns{flex-wrap:wrap}
+body.activity-page:not(.l1-demo-page) .l1-btns>:is(.l1-big,.l1-btn2){flex:1 1 140px;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
+body.activity-page:not(.l1-demo-page) .l2-chip{max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere;box-sizing:border-box}
+body.activity-page:not(.l1-demo-page) .l2-chips.long{align-items:stretch}
+body.activity-page:not(.l1-demo-page) .l2-chips.long .l2-chip{flex:1 1 240px}
+body.activity-page:not(.l1-demo-page) :is(.l2-word,.l2-lab,.l2-bank span,.l1-q,.l2-saved){overflow-wrap:anywhere;min-width:0;max-width:100%}
+body.activity-page:not(.l1-demo-page) .l2-picw{width:100%;max-width:100%;box-sizing:border-box}
+body.activity-page:not(.l1-demo-page) .l2-card .l2-pics.n1 .l2-pic img{width:auto!important;height:auto!important;max-width:100%;max-height:min(440px,55vh)!important;object-fit:contain}
+body.activity-page:not(.l1-demo-page) .l2-xc-clues{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+body.activity-page:not(.l1-demo-page) :is(.l2-xc-scroll,.l2-xc-clues>div,.l2-match,.match-item,.match-choice){min-width:0;max-width:100%;box-sizing:border-box}
+body.activity-page:not(.l1-demo-page) .l1-mine audio{width:100%;max-width:100%}
+@media(max-width:480px){
+ body.activity-page:not(.l1-demo-page) .l2-card .l2-pics.n1 .l2-pic img{max-height:clamp(180px,45vh,320px)!important}
+ body.activity-page:not(.l1-demo-page) .l2-chips.long .l2-chip{flex-basis:100%}
+ body.activity-page:not(.l1-demo-page) .l1-btns>:is(.l1-big,.l1-btn2){padding:12px 10px;font-size:1.05rem;min-height:48px}
+}
