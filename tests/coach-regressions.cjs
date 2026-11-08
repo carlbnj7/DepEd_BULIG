@@ -58,16 +58,14 @@ async function recordingCase(mode){
 }
 (async()=>{for(const mode of ['valid','empty','silent','short','corrupt','stalled'])await recordingCase(mode);console.log('PASS: final audio chunks, decoded signal/duration, empty/silent/corrupt rejection, stopped tracks and bounded finalization.');})().catch(e=>{console.error(e);process.exitCode=1;});
 
-async function mobileStart(separate, support=false, available=true){
- let handler,captures=0,listens=0,fallback=0;
- const c={SEPARATE:separate,practice:false,recording:null,alive:true,Rec:available?{}:null,SPM:support?'support':'',IMG:()=>'',svg:{mic:''},hush(){},noListen(){fallback++},beginListening(){listens++},captureReading:async()=>{captures++;return {resume(){}}},$:()=>({}),box:{innerHTML:'',querySelector:()=>({set onclick(fn){handler=fn}})}};
- vm.createContext(c);vm.runInContext(source.slice(source.indexOf('   async function pass()'),source.indexOf('   function beginListening()'))+';this.pass=pass;',c);
- await c.pass();assert.equal(captures,0);assert.equal(listens,0);const pending=handler();if(separate&&!support&&available)assert.equal(listens,1,'mobile starts synchronously from the tap');await pending;assert.equal(captures,!separate&&!support&&available?1:0);assert.equal(listens,support||!available?0:1);assert.equal(fallback,support||!available?1:0);
+// The one-reading adapter replaces the legacy split mobile start.
+// Lifecycle and DOM coverage: one-reading-engine.mjs and one-reading-ui.cjs.
+{
+ let start,starts=0;const c={alive:true,$:()=>({}),IMG:()=>'',svg:{mic:''},hush(){},localRead(){starts++},box:{innerHTML:'',querySelector:()=>({set onclick(fn){start=fn}})}};
+ vm.createContext(c);vm.runInContext(source.slice(source.indexOf('   async function pass()'),source.indexOf('   async function localRead()'))+';this.pass=pass;',c);
+ c.pass();assert.equal(starts,0);start();assert.equal(starts,1);
+ console.log('PASS: Start gesture invokes the shared-capture reading adapter once.');
 }
-(async()=>{await mobileStart(true);await mobileStart(true,true);await mobileStart(true,false,false);await mobileStart(false);console.log('PASS: mobile gesture starts speech synchronously without opening recorder; desktop retains simultaneous capture.');})().catch(e=>{console.error(e);process.exitCode=1;});
-
-
-
 
 assert.equal(matching()('mothers', "mother's"),true);
 assert.equal(matching()('mother', "mother's"),false);
