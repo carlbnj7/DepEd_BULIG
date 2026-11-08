@@ -11,6 +11,7 @@
  'use strict';
  const recs=[...document.querySelectorAll('[data-wc]')];if(!recs.length)return;
  const ENGINE_URL=new URL('one-reading/engine.mjs',document.currentScript.src).href;
+ if(!document.querySelector('link[data-wc-guide-style]')){const link=document.createElement('link');link.rel='stylesheet';link.href=new URL('one-reading/guide.css',document.currentScript.src).href;link.dataset.wcGuideStyle='';document.head.append(link);}
  // Browser identity never disables recognition. Apple browsers get an explicit listening gesture.
  const APPLE=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)||(/Safari\//.test(navigator.userAgent)&&!/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/.test(navigator.userAgent));
  const Rec=window.SpeechRecognition||window.webkitSpeechRecognition,synth=window.speechSynthesis||null;
@@ -381,6 +382,7 @@
    }
 
    const afterGuide=()=>{
+    ov.classList.remove('wc-guide');
    if(practice){const prev=(store.get(key)||'').split('|')[1]||'';const hard=prev.split(' ').filter(Boolean);
     if(hard.length){all.splice(0,all.length,...hard);txt.innerHTML=all.map((w,i)=>'<span class="wc-w">'+esc(w)+'</span>').join(' ');W.splice(0,W.length,...txt.querySelectorAll('.wc-w'));
      all.forEach((w,i)=>{fails[i]=1;got[i]=null;});fix(all.map((w,i)=>i));return;}}
@@ -388,11 +390,14 @@
    readAll();
    };
    const showGuide=()=>{
+    ov.classList.add('wc-guide');
     $('[data-c]').textContent='Before you read';
-    box.innerHTML='<img src="'+IMG('hello')+'" alt=""><div><h2>Ready to read with Max?</h2><ol><li>Listen to Max, or skip when you are ready.</li><li>Tap <b>Start my reading</b> and allow the microphone.</li><li>Read the whole passage once. The same reading is recorded for your teacher.</li><li>Tap <b>Finish reading</b>. Max checks the words; you may practise words he missed.</li><li>Listen to your recording, then send it to your teacher.</li></ol><p class="wc-note">Keep this page open. Blue word highlights can take a little time. The first setup downloads the free word checker.</p><p data-prepare role="status">Preparing word checker…</p><button type="button" class="btn primary wc-guide-go" disabled>Let’s begin</button></div>';
-    const start=box.querySelector('.wc-guide-go'),message=box.querySelector('[data-prepare]');
-    const prepare=async()=>{start.disabled=true;try{const {ReadingEngine}=await import(ENGINE_URL);if(!alive)return;if(!localEngine)localEngine=new ReadingEngine();await localEngine.load(t=>{if(alive)message.textContent=t;});if(!alive)return;message.textContent='Ready! Your teacher will receive the same reading. No second recording is needed.';start.disabled=false;start.textContent='Let’s begin';start.onclick=afterGuide;}catch(e){if(!alive)return;message.textContent=e.message;start.disabled=false;start.textContent='Try loading again';start.onclick=prepare;}};
-    prepare();start.focus();
+    box.innerHTML='<img class="wc-guide-max" src="'+IMG('hello')+'" alt="Max, your reading coach, waves hello" width="180" height="180"><div><span class="wc-eb">MAX’S READING GUIDE</span><h2 id="wc-guide-title">Ready to read with Max?</h2><ol><li>Listen to Max, or skip when you are ready.</li><li>Tap <b>Start my reading</b> and allow the microphone.</li><li>Read the whole passage once. The same reading is recorded for your teacher.</li><li>Tap <b>Finish reading</b>. Max checks the words; you may practise words he missed.</li><li>Listen to your recording, then send it to your teacher.</li></ol><p class="wc-note">Keep this page open. Blue word highlights can take a little time. The first setup downloads the free word checker.</p><div class="wc-guide-loading" aria-busy="true"><progress aria-label="Preparing word checker" max="1"></progress><p data-prepare role="status">Preparing word checker…</p></div><button type="button" class="btn primary wc-guide-go" disabled>Let’s begin</button></div>';
+    ov.setAttribute('aria-labelledby','wc-guide-title');
+    const start=box.querySelector('.wc-guide-go'),message=box.querySelector('[data-prepare]'),loading=box.querySelector('.wc-guide-loading'),progress=loading.querySelector('progress');
+    const enter=()=>{ov.removeAttribute('aria-labelledby');afterGuide();};
+    const prepare=async()=>{start.disabled=true;start.textContent='Preparing word checker…';loading.setAttribute('aria-busy','true');progress.removeAttribute('value');try{const {ReadingEngine}=await import(ENGINE_URL);if(!alive)return;if(!localEngine)localEngine=new ReadingEngine();await localEngine.load(t=>{if(alive)message.textContent=t;});if(!alive)return;message.textContent='Ready! Your teacher will receive the same reading. No second recording is needed.';start.disabled=false;start.textContent='Let’s begin';loading.setAttribute('aria-busy','false');progress.value=1;start.onclick=enter;start.focus();}catch(e){if(!alive)return;message.textContent=e.message;loading.setAttribute('aria-busy','false');progress.value=0;start.disabled=false;start.textContent='Try loading again';start.onclick=prepare;}};
+    prepare();$('.wc-x').focus();
    };
    showGuide();
   }

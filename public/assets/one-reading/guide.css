@@ -1,0 +1,15 @@
+/* Dedicated pre-reading popup; existing lesson and reading layouts stay intact. */
+.wc-guide .wc-panel{width:min(700px,100%);padding:34px 24px 24px}
+.wc-guide .wc-scene,.wc-guide .wc-top{display:none}
+.wc-guide .wc-box{display:grid;grid-template-columns:140px minmax(0,1fr);align-items:start;gap:18px;margin:0;padding:22px;text-align:left}
+.wc-guide .wc-box>.wc-guide-max{display:block;width:140px;height:180px;object-fit:contain;margin:30px 0 0}
+.wc-guide h2{font-size:1.55rem;line-height:1.2;margin:12px 0 16px}
+.wc-guide ol{padding-left:22px;margin:0;line-height:1.55}
+.wc-guide li+li{margin-top:9px}
+.wc-guide-loading{margin:16px 0;padding:12px;background:#fff;border:1px solid #dbe8db;border-radius:14px}
+.wc-guide-loading progress{display:block;width:100%;height:12px;accent-color:#167341}
+.wc-guide-loading p{font-size:.9rem;line-height:1.4;margin:8px 0 0}
+.wc-guide-go{width:100%;white-space:normal}
+.wc-guide-go:disabled{opacity:.65;cursor:wait}
+html.dark .wc-guide-loading{background:#19251d;border-color:#405446}
+@media(max-width:600px){.wc-guide .wc-panel{height:auto;max-height:calc(100dvh - 20px);border-radius:22px;padding:40px 12px 14px;align-self:center}.wc-ov.wc-guide{padding:10px;place-items:center}.wc-guide .wc-box{display:block;padding:16px}.wc-guide .wc-box>.wc-guide-max{float:right;width:85px;height:100px;margin:0 0 8px 10px}.wc-guide h2{font-size:1.35rem}.wc-guide ol{clear:both}.wc-guide .wc-eb{font-size:.65rem}}
