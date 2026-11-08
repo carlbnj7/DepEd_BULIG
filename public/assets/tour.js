@@ -20,6 +20,7 @@
  if(page==='lesson')key=$('[data-l1-start]')?'l1-start':$('.l2-app')?'l2':$('.l1-app')?'l1':$('#activity-form')?'activity':($('.completion-card')?'lesson-done':'');
  if(page==='class_demo')key=$('#l1-demo')?'l1-demo':$('#class-demo')?'demo-slide':($('.demo-catalog')?'class_demo':'');
  if(page==='pupil')key='pupil-detail';
+ if(page==='dashboard'&&document.querySelector('.mon-head'))key=document.querySelector('.mon-badge')?'view_dash':'role_dash';   // v211 role dashboards
  if(page==='messages'&&(q.get('tab')==='chat'||document.querySelector('.ch-shell')))key='chat';   // v209 the chat tab of Messages
 
  /* Steps: [target selector(s) or null for a centred card, title, text] */
@@ -380,6 +381,32 @@
    [['main h1'],'Certificates','Certificates for pupils who finished every lesson of a level. Print them from here.']]
  };
  const A={
+  role_dash:[
+   [['.mon-head'],'Your dashboard','Your role and your area: the whole division, a municipality, a district or one school.'],
+   [['.mon-manage'],'Accounts you manage','How many accounts you made for the level below you. Create an account or give a role to someone who already has one.'],
+   [['.mon-manage .btn.primary'],'Create an account','Opens the Organization page. Choose the role and the place, then a new person or an existing account.'],
+   [['.mon-head~.ws-kpis','.ws-kpis'],'Your area at a glance','Schools, teachers, pupils, who learned this week, lessons finished and readings waiting for teachers.'],
+   [['.mon-lv'],'Pupils by reading level','How many pupils are on each level in your area.'],
+   [['.mon-cmp'],'Compared','Schools side by side (teachers, for a School Admin): pupils, who learned this week, lessons and readings waiting.'],
+   [['.role-switch'],'Switch role','Have more than one role? Switch here without signing out.'],
+   [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
+  view_dash:[
+   [['.mon-head'],'View only','You can look and compare. Changes are made by the teachers and administrators.'],
+   [['.ws-kpis'],'Your area at a glance','Schools, teachers, pupils, who learned this week, lessons finished and readings waiting.'],
+   [['.mon-lv'],'Pupils by reading level','How many pupils are on each level in your area.'],
+   [['.mon-cmp'],'Compared','Schools (or teachers, for a Principal) side by side.'],
+   [['.role-switch'],'Switch role','Have more than one role? Switch here without signing out.']],
+  org:[
+   [['.oc-root'],'Your organization','The Division at the top, then each municipality, its districts and their schools.'],
+   [['.oc-m>summary'],'A municipality','Its Municipal Admin and Viewer. Tap it to fold or open its districts.'],
+   [['.oc-d'],'A district','Its District Admin and Supervisor, and its schools with their teachers and pupils.'],
+   [['#org-review'],'Schools waiting for a district','Choose each school’s district. BULIG never guesses.'],
+   [['.org-addp'],'Add a person to a role','1. Choose the role and where. 2. A new person (BULIG makes the ID and password) or someone who already has an account.'],
+   [['.org-list'],'People and their roles','Everyone you manage, with their roles. New password makes a new password; the × removes a role.'],
+   [['.org-ph .btn'],'Print passes','Print an ID card for each person you manage.']],
+  admin_passes:[
+   [['.lc-tools'],'Print ID cards','Choose what to show, then press Print. Each ID card has the ID, the starting password and a QR code.'],
+   [['.idc'],'One ID card','The QR code fills in the ID on the sign-in page. The password is always typed.']],
   credits:[
    ['.cr-hero','Credits','BULIG is made from the official DepEd modules of the Schools Division of Bukidnon.'],
    [['.cr-cols .cr-card'],'The BULIG module','The writers, designers and checkers who made the Reading Toolkit.'],
@@ -437,11 +464,8 @@
    ['.ws-btns','Check again','Run the check again after you fix something.']],
   settings:[
    [['.sch-card'],'Level schedule','Choose the date each level opens. Pupils who finish early wait for that date, so the class moves together. Fill the dates for me sets one level per week.'],
-   ['nav.ws-tabs','Settings sections','Security, school details, announcements, the school year and account IDs.'],
-   [['nav.ws-tabs a[href*="tab=ids"]'],'Account IDs','Set your school code (for example PCES). New pupils get IDs like PCES260001 and teachers PCEST0001. Old IDs can be switched here after BULIG saves a backup.'],
-   [['#switch-ids'],'Switch to the new IDs','See every old ID next to its new one. BULIG saves a backup first; passwords and progress stay the same, and old IDs still sign in.'],
+   ['nav.ws-tabs','Settings sections','Security, school details, announcements and the school year. You see the tabs your role may use.'],
    [['.rc-logoset'],'Report card logos','Upload the Division and school logos. They print at the top of every Reading Progress Report Card.'],
-   ['#admin-pin','Admin PIN','Change the 4-digit PIN you enter after your password.'],
    [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG protects accounts from wrong passwords.']],
   ratings:[
    ['.hm-head','App ratings','How pupils and teachers rate BULIG. Each person counts once: their latest rating.'],
@@ -500,7 +524,7 @@
  const steps=raw.filter(Boolean);
  const seenKey='bulig-tour-'+me.id+'-dashboard';
  /* The automatic offer appears once per account, on the dashboard only; the server remembers it. */
- function markDone(){if(key!=='dashboard'||me.seen)return;me.seen=true;store(seenKey,'1');
+ function markDone(){if(page!=='dashboard'||me.seen)return;me.seen=true;store(seenKey,'1');
   try{const fd=new FormData();fd.set('csrf',(document.querySelector('meta[name="csrf"]')||{}).content||'');fd.set('action','tour_seen');fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'},keepalive:true}).catch(()=>{});}catch(e){}}
  /* v208 Title Case for tour titles, as on the pages ("What to do" -> "What to Do") */
  const SMALL=new Set('a an and as at but by for from in into nor of on onto or per the to vs via with'.split(' '));
@@ -622,7 +646,7 @@ if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeo
   o.querySelector('.tour-yes').onclick=()=>{o.remove();metGeorge();};
   o.querySelector('.tour-no').onclick=()=>{o.remove();metGeorge();start();};
   document.body.append(o);setTimeout(()=>o.querySelector('.tour-yes').focus({preventScroll:true}),80);}
- const ready=()=>{if(key!=='dashboard')return;if(window.buligFriendsMet)me.met=true;   // Jarvis already said hello in "Meet your BULIG friends"
+ const ready=()=>{if(page!=='dashboard')return;if(document.querySelector('[data-role-pop]'))return;if(window.buligFriendsMet)me.met=true;   // Jarvis already said hello in "Meet your BULIG friends"
  if(me.seen){if(!me.met&&me.guide)setTimeout(meet,900);return;}if(answeredHere())markDone();else setTimeout(offer,900);};
  if(window.pfOverlayOpen&&window.pfOverlayOpen())document.addEventListener('pf:overlays-done',ready,{once:true});else ready();
 })();

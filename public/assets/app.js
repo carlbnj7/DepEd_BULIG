@@ -1136,3 +1136,10 @@ document.querySelectorAll('[data-tab-more]').forEach(b=>b.addEventListener('clic
  const save=()=>{const v=['big','easy'].filter(k=>d.classList.contains('a11y-'+k)).join(' ');try{localStorage.setItem('bulig-a11y',v);}catch(e){}};
  sw.forEach(s=>{const k=s.dataset.a11ySwitch;s.checked=d.classList.contains('a11y-'+k);s.addEventListener('change',()=>{d.classList.toggle('a11y-'+k,s.checked);sw.forEach(o=>{if(o!==s&&o.dataset.a11ySwitch===k)o.checked=s.checked;});save();});});})();
 
+/* v211 Organization: the "For" list shows only places that fit the chosen role (municipality, district or school) */
+(function(){document.querySelectorAll('[data-org-role]').forEach(function(r){var f=r.form&&r.form.querySelector('[data-org-scope]');if(!f)return;
+ function sync(){var lv=(r.selectedOptions[0]||{}).dataset||{};var first=null;[].forEach.call(f.options,function(o){var ok=o.dataset.level===lv.level;o.hidden=!ok;o.disabled=!ok;if(ok&&!first)first=o});if(f.selectedOptions[0]&&f.selectedOptions[0].disabled&&first)first.selected=true;}
+ r.addEventListener('change',sync);sync();});})();
+/* v211 Choose Your Role popup: close with the button or Escape (the role stays as it is) */
+(function(){var p=document.querySelector('[data-role-pop]');if(!p)return;function close(){p.remove();document.removeEventListener('keydown',k)}function k(e){if(e.key==='Escape')close()}
+ var b=p.querySelector('[data-role-pop-close]');if(b){b.addEventListener('click',close);b.focus()}document.addEventListener('keydown',k);})();

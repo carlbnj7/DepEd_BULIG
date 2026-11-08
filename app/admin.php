@@ -222,7 +222,7 @@ function admin_log_view():void{
 }
 function admin_log_detail(array $r):string{
  $d=(string)$r['details'];
- if($r['action']==='login')return $d==='admin'?'Administrator · password and PIN':ucfirst($d);
+ if($r['action']==='login')return $d==='admin'?'Administrator · password':ucfirst($d);
  if($r['action']==='admin_pin_failed')return 'Wrong try number '.$d;
  if(in_array($r['action'],['update_account','edit_activity','admin_toggle_activity','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','new_pictures'],true)&&ctype_digit($d)){
   $u=one('SELECT name,public_id FROM users WHERE id=?',[(int)$d]);if($u&&$r['action']!=='edit_activity'&&$r['action']!=='admin_toggle_activity')return $u['name'].' · '.$u['public_id'];
@@ -271,7 +271,7 @@ function bulig_sql_dump(callable $write):void{
 
 /* ---------------------------------------------------------------- Settings */
 function admin_settings_view(array $u):void{
- $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','year'=>'School year','schedule'=>'Schedule & cycles','ids'=>'Account IDs'];if(!isset($tabs[$tab]))$tab='security';
+ $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','year'=>'School year','schedule'=>'Schedule & cycles'];if(function_exists('rbac_can')){if(!rbac_can('school_info'))unset($tabs['school']);if(!rbac_can('announce'))unset($tabs['announcements']);if(!rbac_can('year'))unset($tabs['year'],$tabs['schedule']);}   // v211 role limitsif(!isset($tabs[$tab]))$tab='security';
  admin_heading('SETTINGS','Your BULIG workspace.','Security, school details, announcements and the end of the school year.');
  echo '<nav class="ws-tabs">';foreach($tabs as $k=>$v)echo '<a class="'.($tab===$k?'on':'').'" href="?page=settings&amp;tab='.$k.'">'.e($v).'</a>';echo '</nav>';
  if($tab==='security'){echo '<div class="ws-g2">';admin_pin_settings($u);
@@ -284,7 +284,7 @@ function admin_settings_view(array $u):void{
   $list=admin_announcements();if(!$list)echo '<p class="muted">No announcements yet.</p>';
   foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
   echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
- if($tab==='ids')account_ids_settings_view($u);
+ /* v211 the Account IDs tab is removed: IDs never change */
  if($tab==='schedule'){schedule_admin_view();if(function_exists('cycle_admin_view'))cycle_admin_view();}
  if($tab==='year'){$b=admin_setting('last_backup_at','');$fresh=$b!==''&&admin_days_since($b)<1;
   $counts=[];foreach(rows("SELECT pu.grade_level g,COUNT(*) n FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 GROUP BY pu.grade_level") as $r)$counts[(int)$r['g']]=(int)$r['n'];

@@ -6,7 +6,7 @@ const BUG_STATES=['open'=>'Open','processing'=>'Processing','fixed'=>'Fixed','re
 /** New reports have a stable reporter ID; legacy notifications are never guessed from names. */
 function bugflow_create(array $u,string $summary,string $context):int{
  q('INSERT INTO bug_reports(reporter_id,summary,context) VALUES(?,?,?)',[$u['id'],mb_substr($summary,0,300),$context]);$id=(int)db()->lastInsertId();
- foreach(rows("SELECT id FROM users WHERE role='admin' AND active=1") as $ad){q("INSERT INTO notifications(user_id,kind,title,body,url) VALUES(?,'bug',?,?,?)",[$ad['id'],mb_substr('Bug report from '.$u['name'].' ('.$u['public_id'].')',0,200),mb_substr($context,0,300),'?page=bug_report&id='.$id]);q('INSERT INTO bug_report_links(notification_id,report_id) VALUES(?,?)',[(int)db()->lastInsertId(),$id]);}
+ foreach((function_exists('rbac_bug_admins')?array_map(fn($i)=>['id'=>$i],rbac_bug_admins()):rows("SELECT id FROM users WHERE role='admin' AND active=1")) as $ad){/* v211 only the Division Admin */q("INSERT INTO notifications(user_id,kind,title,body,url) VALUES(?,'bug',?,?,?)",[$ad['id'],mb_substr('Bug report from '.$u['name'].' ('.$u['public_id'].')',0,200),mb_substr($context,0,300),'?page=bug_report&id='.$id]);q('INSERT INTO bug_report_links(notification_id,report_id) VALUES(?,?)',[(int)db()->lastInsertId(),$id]);}
  return $id;
 }
 function bugflow_notify(int $report,int $admin,string $status,string $body,int $deducted):void{

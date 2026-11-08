@@ -87,7 +87,7 @@ function new_account_id(string $role,?string $code=null,?string $yy=null):string
 }
 /** True when an ID already has the v2 shape for its role. */
 function account_id_is_v2(string $id,string $role):bool{
- return match($role){'pupil'=>(bool)preg_match('/^[A-Z]{3,10}\d{6,}$/D',$id),'teacher'=>(bool)preg_match('/^[A-Z]{3,10}T\d{4,}$/D',$id),default=>(bool)preg_match('/^A\d{6,}$/D',$id)};
+ return match($role){'pupil'=>(bool)preg_match('/^[A-Z]{3,10}\d{6,}$/D',$id),'teacher'=>(bool)preg_match('/^[A-Z]{3,10}T\d{4,}$/D',$id),default=>(bool)preg_match('/^(A|DV|MA|MV|DA|DS|SA|SP)\d{6,}$/D',$id)};   // v211 role letters for admin accounts
 }
 
 /* ---------- old IDs ---------- */
@@ -197,6 +197,7 @@ function account_ids_undo():int{
 /* ---------- admin: actions, downloads and the Settings › Account IDs tab ---------- */
 function account_ids_action(string $action):never{
  $u=require_role('admin');$back='?page=settings&tab=ids';
+ if(in_array($action,['admin_school_code','admin_ids_switch','admin_ids_undo'],true))fail('IDs never change in BULIG. This was removed.',403);   // v211
  if($action==='admin_school_code'){
   $c=strtoupper(trim((string)($_POST['school_code']??'')));
   if(!valid_school_code($c)){flash('Use 3 to 10 letters (A–Z) for the school code, for example PCES.');go($back);}
@@ -226,7 +227,7 @@ function account_ids_download(string $what):never{
  fclose($h);exit;
 }
 /** A short note on the admin Overview while some accounts still have an old ID. */
-function account_ids_admin_notice():string{
+function account_ids_admin_notice():string{return '';   // v211 IDs never change: no switch notice
  if(!account_ids_ready())return '';$n=count(account_ids_old());if(!$n)return '';
  return '<a class="ids-notice" href="?page=settings&amp;tab=ids#switch-ids">'.icon('key').'<span><b>New account IDs are ready</b><small>'.$n.' '.($n===1?'account still uses':'accounts still use').' an old ID. Open Settings › Account IDs to switch them.</small></span>'.icon('arrow').'</a>';
 }

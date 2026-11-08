@@ -9,6 +9,13 @@
 
 /** The menu of each role: [page, icon, label, extra] or ['g', group word] or ['hr']. */
 function staff_nav_list(array $u):array{
+ $l=staff_nav_list_all($u);
+ /* v211 the system pages (bug reports, activity log, data cleanup) belong to the Division Admin only */
+ if(($u['role']??'')==='admin'&&($u['active_role']??'central_admin')!=='central_admin')$l=array_values(array_filter($l,fn($x)=>!in_array($x[0],['bugs','activity_log','cleanup'],true)));
+ if(($u['role']??'')==='admin'&&function_exists('rbac_can'))$l=array_values(array_filter($l,fn($x)=>!(in_array($x[0],ROLE_CAP_PAGES['teachers'],true)&&!rbac_can('teachers'))));
+ return $l;
+}
+function staff_nav_list_all(array $u):array{
  if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['practice','sound','My practice words'],['story','comic','Story time'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['bug_report','alert','My bug reports'],['messages','comic','Messages',['count'=>(function_exists('messages_unread')?messages_unread($u):0)+(function_exists('chat_unread')?chat_unread($u):0)]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile'],['settings','settings','Settings']];
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['leaderboard','star','Leaderboard'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
@@ -55,12 +62,13 @@ function staff_find_list(string $role):array{
   ['App ratings','How pupils and teachers rate BULIG','?page=ratings','star'],['School reports','Progress by grade and section','?page=reports','chart'],
   ['Print & download','Every print and download','?page=print','print'],['Download a backup','Print & download › Backup','?page=print#pc-backup','download'],['Activity log','Who did what, and when','?page=activity_log','clock'],
   ['Settings','Security, school info, announcements, school year','?page=settings','settings'],['Data cleanup','Merge pupils with two accounts, archive last year’s sections','?page=cleanup','db'],['School logos','Settings › School info','?page=settings&tab=school','image'],['Post an announcement','Settings › Announcements','?page=settings&tab=announcements','mega'],['End of school year','Settings › School year','?page=settings&tab=year','cal'],
-  ['Account IDs','Settings › Account IDs','?page=settings&tab=ids','key'],['My profile and password','Photo, character, dark mode, password','?page=profile','user'],['Where things are now','What moved in the new menu','?page=moved','info']];
+  ['My profile and password','Photo, character, dark mode, password','?page=profile','user'],['Where things are now','What moved in the new menu','?page=moved','info']];
 }
 function staff_find_box(string $role):string{
  $list=staff_find_list($role);$cu=current_user();
  if(!empty($cu['view_only'])){$ok=['dashboard','org','reports','directory','messages','notifications','profile','school'];$list=array_values(array_filter($list,fn($x)=>preg_match('~page=([a-z_]+)~',$x[2],$m)&&in_array($m[1],$ok,true)));}   // v210 viewers only see viewing pages
  elseif(($cu['active_role']??'central_admin')!=='central_admin')$list=array_values(array_filter($list,fn($x)=>!preg_match('~page=(cleanup|activity_log)\b|pc-backup~',$x[2])));
+ if(function_exists('rbac_can')&&($cu['role']??'')==='admin')$list=array_values(array_filter($list,fn($x)=>!((!rbac_can('teachers')&&preg_match('~page=(teacher_cards|teacher_import|add_teachers|moved)\b~',$x[2]))||(!rbac_can('year')&&preg_match('~tab=(year|schedule)\b~',$x[2]))||(!rbac_can('announce')&&preg_match('~tab=announcements\b~',$x[2]))||(!rbac_can('school_info')&&preg_match('~tab=school\b~',$x[2])))));   // v211 role limits
  $items=array_map(fn($x)=>[$x[0],$x[1],$x[2],icon($x[3])],$list);
  return '<div class="nv-find" data-find=\''.e(json_encode($items,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)).'\'>'.icon('search').'<input type="search" placeholder="Search" aria-label="Search" autocomplete="off" data-find-input><div class="nv-results" role="listbox" aria-label="Pages found" data-find-out hidden></div></div>';
 }
@@ -246,12 +254,12 @@ function admin_print_view(array $u):void{
  $tc=(int)val("SELECT COUNT(*) FROM users WHERE role='teacher' AND active=1");
  admin_heading('PRINT & DOWNLOAD','Everything you can print or download','Choose one. Print items open a preview first; download items save an Excel file you can open on any computer.');
  echo '<div class="pc-grid">';
- echo print_card('pc-passes',$img('teacher-passes'),'Teacher Passes','Each teacher’s ID, starter password and a QR code to sign in. Up to 10 on one A4 sheet.','<div class="pc-btns"><a class="btn primary" href="?page=teacher_cards">'.icon('print').'Print '.$tc.' passes</a></div>','Also on the Teachers page.');
- echo print_card('pc-apass','icon:shield','My Admin Pass','Your administrator ID with a QR code. Scan it on a phone’s sign-in page to fill in your ID; you still type your password and PIN.','<div class="pc-btns"><a class="btn primary" href="?page=admin_pass">'.icon('print').'Print my pass</a></div>');
+ if(!function_exists('rbac_can')||rbac_can('teachers'))echo print_card('pc-passes',$img('teacher-passes'),'Teacher Passes','Each teacher’s ID, starter password and a QR code to sign in. Up to 10 on one A4 sheet.','<div class="pc-btns"><a class="btn primary" href="?page=teacher_cards">'.icon('print').'Print '.$tc.' passes</a></div>','Also on the Teachers page.');
+ echo print_card('pc-apass','icon:shield','My Admin Pass','Your administrator ID with a QR code. Scan it on a phone’s sign-in page to fill in your ID; you still type your password.','<div class="pc-btns"><a class="btn primary" href="?page=admin_pass">'.icon('print').'Print my pass</a></div>','Keep it private, like a password.');
  echo print_card('pc-report',$img('school-report'),'School report','Progress by grade and section, ready for the principal or the division.','<form method="get" class="pc-form"><input type="hidden" name="page" value="reports">'.print_select('Period','period',['year'=>'This school year','month'=>'This month','3m'=>'Last 3 months','all'=>'All time']).'<div class="pc-btns"><button class="btn primary">'.icon('print').'Open to print</button><a class="btn secondary" href="?page=report_csv">'.icon('excel').'Excel</a></div></form>','Also on the School reports page.');
  echo print_card('pc-backup','icon:db','Backup','A copy of all BULIG records. Keep it on a USB drive or in Google Drive once a month.','<div class="pc-btns"><a class="btn primary" href="?page=backup_csv">'.icon('download').'Excel backup</a><a class="btn secondary" href="?page=backup_sql">'.icon('db').'Full database</a></div>','Also in Settings › School year.',admin_setting('last_backup_at','')===''?'NOT DONE YET':'');
  echo print_card('pc-log','icon:clock','Activity log','Sign-ins, wrong passwords and every change to accounts and lessons.','<div class="pc-btns"><a class="btn primary" href="?page=log_csv">'.icon('excel').'Download Excel</a></div>','Also on the Activity log page.');
- echo print_card('pc-ids','icon:key','Account ID list','Every teacher and pupil ID, with old IDs next to the new ones.','<div class="pc-btns"><a class="btn primary" href="?page=ids_csv">'.icon('excel').'Download Excel</a></div>','Also in Settings › Account IDs.');
+ echo print_card('pc-ids','icon:key','Account ID list','Every administrator, teacher and pupil ID in one Excel file.','<div class="pc-btns"><a class="btn primary" href="?page=ids_csv">'.icon('excel').'Download Excel</a></div>','');
  echo print_card('pc-tlist','icon:people','Teacher list template','Fill in this Excel file to add the whole teaching team at once.','<div class="pc-btns"><a class="btn primary" href="?page=teacher_template">'.icon('excel').'Download template</a></div>','Upload it in Add teachers › Many teachers.');
  echo '</div><div class="pc-tip"><i>'.icon('info').'</i><div><b>Tip:</b> To keep a copy instead of printing, choose <b>Save as PDF</b> in the print window.</div></div>';
 }
