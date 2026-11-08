@@ -34,7 +34,7 @@ function action():void{
   $u=null;foreach($cands as $c)if(password_verify($pw,$c['password_hash'])){$u=$c;break;}
   if($u)$role=$u['role'];elseif($any)$role='auto';
   if(!$u){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
-  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if(strcasecmp($id,(string)$u['public_id'])!==0)flash('Your '.$role.' ID is now '.$u['public_id'].'. Your old ID still works, but please use the new one.');session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher'){$_SESSION['teacher_welcome']=1;$_SESSION['offer_save']=1;}if($role!=='admin')$_SESSION['hello']=1;audit('login',$role);go('?page=dashboard');
+  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if(strcasecmp($id,(string)$u['public_id'])!==0)flash('Your '.$role.' ID is now '.$u['public_id'].'. Your old ID still works, but please use the new one.');session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher'){$_SESSION['teacher_welcome']=1;$_SESSION['offer_save']=1;}$_SESSION['hello']=1;   /* v211 admins get the welcome too (the PIN step that showed it is gone) */audit('login',$role);go('?page=dashboard');
  }
  if($action==='key_login'){
   /* One scan of a sign-in ticket: the QR code opens a "Hi, NAME!" page, and this button signs the pupil in. */
@@ -91,7 +91,7 @@ function action():void{
  if(in_array($action,['admin_pin','admin_pin_create','admin_pin_cancel','change_admin_pin'],true)){admin_pin_actions($action);return;}
  if($action==='create_account'){
   $u=require_role('admin','teacher');$role=$u['role']==='admin'?'teacher':'pupil';$nm=name_input();
-  if($role==='teacher'&&isset($_POST['school_id']))school_use((int)$_POST['school_id']);/* v174: the new teacher's school */$name=$nm['name'];$password=$role==='pupil'?'12345678':(string)($_POST['password']??'');
+  if($role==='teacher'&&isset($_POST['school_id']))school_use((int)$_POST['school_id']);/* v174: the new teacher's school */$name=$nm['name'];if(function_exists('dupe_guard'))dupe_guard($name,$role,$role==='teacher'?(int)(school_ctx_id()?:0):(int)($u['school_id']??0),$role==='teacher'?'?page=add_teachers':'?page=accounts');   /* v211 same name already in BULIG? */$password=$role==='pupil'?'12345678':(string)($_POST['password']??'');
   if($role==='teacher'&&cards_ready()){
    $sx=(string)($_POST['teacher_sex']??'');if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Use a name of 2–150 characters.');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');
    db()->beginTransaction();try{$c=teacher_create($name,$sx);name_parts_save($c['id'],$nm['parts']);audit('create_teacher',$c['public']);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}

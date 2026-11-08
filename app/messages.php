@@ -88,7 +88,7 @@ function messages_pager(int $p,int $total,int $size,string $base):void{echo '<na
 /** v209 The tabs on Messages: the chat with the teacher (pupils) or with the pupils (teachers) or the class chats
     (administrator), and the school messages. */
 function messages_tab(array $u):string{
- if(!function_exists('chat_ready')||!chat_ready())return 'school';$t=(string)($_GET['tab']??'');if($t==='chat'||$t==='school')return $t;
+ if(!function_exists('chat_ready')||!chat_ready())return 'school';if($u['role']==='admin')return 'school';   // v211 no class chats for administrators$t=(string)($_GET['tab']??'');if($t==='chat'||$t==='school')return $t;
  if(isset($_GET['id'])&&$u['role']!=='admin'||!empty($_GET['compose'])||!empty($_GET['preview']))return 'school';
  if($u['role']==='admin'&&isset($_GET['id'])&&$t==='')return 'school';
  return 'chat';
@@ -121,7 +121,7 @@ function messages_view(array $u):void{
 /** v211 The administrator's Sent messages in the Messenger look: the list on the left, the message (read status
     and private replies) or a new message on the right. On a phone, one side shows at a time. */
 function messages_sent_mz(array $u,array $list,int $id,bool $selected,string $search,int $p):void{
- echo '<div class="mz-shell mz-sentbox'.($selected?' has-sel':'').'"><aside class="mz-inbox card" aria-label="Sent messages"><div class="mz-top"><a class="mc-back mz-back" href="?page=messages&amp;tab=chat" aria-label="All chats" title="All chats">'.icon('arrow').'</a><h1>Sent messages</h1></div>'
+ echo '<div class="mz-shell mz-sentbox'.($selected?' has-sel':'').'"><aside class="mz-inbox card" aria-label="Sent messages"><div class="mz-top">'.chat_pic($u,'38').'<h1>Messages</h1></div><p class="mz-sec">SENT MESSAGES · CLASS CHATS ARE PRIVATE</p>'
   .'<form method="get" class="mz-search">'.icon('search').'<input type="hidden" name="page" value="messages"><input type="hidden" name="tab" value="school"><label class="sr-only" for="mz-sq">Search messages</label><input id="mz-sq" type="search" name="search" maxlength="100" value="'.e($search).'" placeholder="Search sent messages"></form>'
   .'<a class="btn primary mz-new" href="?page=messages&amp;tab=school&amp;compose=1">'.icon('edit').'New message</a><nav class="mz-list" aria-label="Sent messages">';
  foreach($list as $m){$on=(int)$m['id']===$id;$nr=(int)$m['nr'];

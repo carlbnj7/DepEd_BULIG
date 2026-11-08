@@ -45,10 +45,7 @@ function checkup_data():array{
  $nosecT=rows("SELECT u.id,u.name,u.public_id,u.created_at FROM users u WHERE u.role='teacher' AND u.active=1 AND NOT EXISTS(SELECT 1 FROM sections s WHERE s.teacher_id=u.id".ck_live_sql().') ORDER BY u.name');
  if($nosecT)$issues[]=['nosect','warn','user',count($nosecT).' teacher'.(count($nosecT)===1?' has':'s have').' no section','A teacher adds sections on the My sections page. You can also move a section to them from the Teachers page.',$nosecT];
  else $good[]='Every teacher has a section';
- // 7. Administrators without a PIN
- try{$nopin=rows("SELECT u.id,u.name FROM users u LEFT JOIN admin_security a ON a.user_id=u.id WHERE u.role='admin' AND u.active=1 AND (a.pin_hash IS NULL OR a.pin_hash='')");}catch(Throwable $e){$nopin=[];}
- if($nopin)$issues[]=['nopin','warn','key',count($nopin).' administrator'.(count($nopin)===1?' has':'s have').' no PIN yet','BULIG asks for a PIN the next time they sign in.',$nopin];
- else $good[]='Every administrator has a PIN';
+ // 7. (v211) Administrator PINs were removed: no PIN check
  $off=(int)val("SELECT COUNT(*) FROM users WHERE role IN ('pupil','teacher') AND active=0");
  $nP=count($pupils);$nT=(int)val("SELECT COUNT(*) FROM users WHERE role='teacher' AND active=1");
  return ['issues'=>$issues,'good'=>$good,'off'=>$off,'pupils'=>$nP,'teachers'=>$nT,'bad'=>count(array_filter($issues,fn($i)=>$i[1]==='bad')),'warn'=>count(array_filter($issues,fn($i)=>$i[1]==='warn'))];

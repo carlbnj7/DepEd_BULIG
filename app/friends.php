@@ -109,7 +109,7 @@ function friends_meta(?array $cu):string{
 function claude_tip(array $u):string{
  $tips=['pupil'=>['Keep your password a secret. Only you, your teacher and your family should know it.','Using a shared computer or phone? Tap Sign out when you are done.','Never tell your password to a friend, even a best friend.','Someone knows your password? Tell your teacher. They can make you a new one.'],
   'teacher'=>['Never share your password, even with another teacher.','Using a school computer? Sign out before you leave it.','Keep printed sign-in tickets in a safe place, away from other pupils.','A pupil forgot their password? Open the pupil, then Account, and make a new ticket.'],
-  'admin'=>['Your PIN protects BULIG. Never write it down near the computer.','Open Account check every week: it finds turned-off and doubled accounts.','A teacher left the school? Move their pupils, then turn the account off.','Download a backup before every update.']][$u['role']]??[];
+  'admin'=>['Keep your password secret. Never write it down near the computer.','Open Account check every week: it finds turned-off and doubled accounts.','A teacher left the school? Move their pupils, then turn the account off.','Download a backup before every update.']][$u['role']]??[];
  if(!$tips)return '';$d=(int)date('z');$pose=['hello','shield','thumbs'][$d%3];
  return '<aside class="cl-tip" aria-label="Safety tip from Claude the Protector"><img src="'.e(friend_img('claude',$pose)).'" alt="" width="60" height="100" loading="lazy"><div><b>Claude the Protector</b><span>'.e($tips[$d%count($tips)]).'</span></div></aside>';
 }

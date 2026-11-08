@@ -3,7 +3,7 @@
    - A pupil chats only with their own teachers (teacher_pupils); a teacher only with their own pupils.
    - Text, one photo or one voice message per message (the same as Messages: app/messages.php media_*).
    - A teacher can send the same message to the whole class or one section: each pupil gets it in their own chat.
-   - The administrator can read every chat (read only), to keep children safe.
+   - v211 Private like Messenger: only the teacher and the pupil of a chat can read it. Administrators cannot open it.
    - The other person gets a bell notification; the menu shows how many messages are new. */
 
 const CHAT_MAX=1000;
@@ -54,7 +54,7 @@ function chat_face(string $href,string $pic,string $name,bool $on=false):string{
 function chat_view(array $u):void{
  if(!chat_ready()){echo '<section class="card"><h1>Chat is being set up</h1><p>Please tell your school administrator to import database/migrations/039_teacher_chat.sql.</p></section>';return;}
  $role=$u['role'];$uid=(int)$u['id'];chat_touch($u);
- if($role==='admin'){chat_admin_view($u);return;}
+ if($role==='admin'){$_GET['tab']='school';messages_view($u);return;}   // v211 administrators never see class chats: their own Sent messages
  $with=(int)($_GET['with']??0);$teacher=$role==='teacher';
  $sql='SELECT u.id,u.name,u.public_id,u.avatar_path,u.role,c.id chat,c.last_at,(SELECT COUNT(*) FROM chat_messages m WHERE m.chat_id=c.id AND m.read_at IS NULL AND (m.author_id IS NULL OR m.author_id<>?)) nr,(SELECT CONCAT(IF(m.author_id=?,\'You: \',\'\'),IF(m.media_kind=\'photo\',\'Photo\',IF(m.media_kind=\'voice\',\'Voice message\',m.body))) FROM chat_messages m WHERE m.chat_id=c.id ORDER BY m.id DESC LIMIT 1) lastb FROM teacher_pupils t ';
  $people=$teacher?rows($sql.'JOIN users u ON u.id=t.pupil_id AND u.active=1 LEFT JOIN chats c ON c.teacher_id=t.teacher_id AND c.pupil_id=u.id WHERE t.teacher_id=? ORDER BY c.last_at IS NULL,c.last_at DESC,u.name',[$uid,$uid,$uid])
@@ -178,10 +178,10 @@ function chat_action(string $action):never{
  go('?page=messages&tab=chat&with='.$with.'#msg-end');
 }
 
-/** A photo or voice message in a chat: the teacher and the pupil of that chat, and the administrator. */
+/** A photo or voice message in a chat: only the teacher and the pupil of that chat. */
 function chat_media(?array $u):never{
  if(!$u||!chat_ready())fail('Not found.',404);$r=one('SELECT m.*,c.teacher_id,c.pupil_id FROM chat_messages m JOIN chats c ON c.id=m.chat_id WHERE m.id=?',[(int)($_GET['id']??0)]);
- if(!$r||empty($r['media_path'])||!in_array((int)$u['id'],[(int)$r['teacher_id'],(int)$r['pupil_id']],true)&&$u['role']!=='admin')fail('Not found.',404);
+ if(!$r||empty($r['media_path'])||!in_array((int)$u['id'],[(int)$r['teacher_id'],(int)$r['pupil_id']],true))fail('Not found.',404);   // v211 only the two people in the chat
  $root=realpath(media_dir());$f=realpath(media_dir().'/'.$r['media_path']);if(!$root||!$f||!str_starts_with($f,$root.DIRECTORY_SEPARATOR)||!is_file($f))fail('This file was deleted after '.MEDIA_KEEP_DAYS.' days.',404);
  $type=['jpg'=>'image/jpeg','webm'=>'audio/webm','ogg'=>'audio/ogg','m4a'=>'audio/mp4','mp3'=>'audio/mpeg'][strtolower(pathinfo($f,PATHINFO_EXTENSION))]??'application/octet-stream';
  header('Content-Type: '.$type);header('Content-Length: '.filesize($f));header('Cache-Control: private, max-age=86400');header('X-Content-Type-Options: nosniff');readfile($f);exit;

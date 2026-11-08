@@ -145,7 +145,7 @@ function rbac_sync_legacy():void{
 function role_switch_action():never{
  $u=current_user();if(!$u)fail('Please sign in again.',401);$k=(string)($_POST['role']??'');
  foreach($u['roles'] as $r)if(rbac_key($r)===$k){
-  session_regenerate_id(true);$_SESSION['active_role']=$k;unset($_SESSION['school_filter']);
+  session_regenerate_id(true);$_SESSION['active_role']=$k;unset($_SESSION['school_filter']);$_SESSION['hello']=1;
   try{q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['last_role_'.(int)$u['id'],$k]);}catch(Throwable $e){}
   audit('role_switch',$k);go('?page=dashboard');}
  fail('This role is not assigned to your account.',403);
@@ -209,7 +209,9 @@ function org_view(array $u):void{
  $rows=array_values(array_filter($rows,fn($x)=>org_in_my_scope($u,$x['role'],(int)$x['scope_id'])));
  echo '<section class="card org-people" id="org-people"><div class="ws-hd"><h2>'.icon('useredit').'Add a person to a role</h2></div>';
  if(!empty($_SESSION['org_new'])){$n=$_SESSION['org_new'];   // v211 stays until "I saved them" (a reload does not lose it)
-  echo '<div class="role-pop org-newpop" role="dialog" aria-modal="true" aria-labelledby="on-t"><div class="role-pop-box card org-new">'.icon('check').'<div><h2 id="on-t">'.e($n['title']??'Account created').'</h2><p><b>'.e($n['name']).'</b> · '.e($n['role']).'</p><p>Give these to them. Write them down now.</p><dl><dt>ID</dt><dd>'.e($n['id']).'</dd><dt>Password</dt><dd>'.e($n['pw']).'</dd></dl><p class="muted">They can change the password after signing in.</p><div class="org-newbtns"><a class="btn secondary" href="?page=admin_passes&amp;id='.e($n['id']).'">'.icon('print').'Print their pass</a><form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_new_ok"><button class="btn primary">'.icon('check').'I saved them</button></form></div></div></div></div>';}
+  $card='';if(!empty($n['uid'])&&($n['rk']??'')!==''&&($n['rk']==='teacher'||isset(ROLES[$n['rk']]))){[$cs,$cm]=$n['rk']==='teacher'?[(int)$n['scope'],0]:role_place_ids($n['rk'],(int)$n['scope']);
+   $card='<div class="org-newcard">'.staff_id_card(['school'=>$cs,'muni'=>$cm,'name'=>(string)$n['name'],'role'=>ROLES[$n['rk']][0]??'Teacher','place'=>rbac_scope_name($n['rk']==='teacher'?'school_admin':$n['rk'],(int)$n['scope']),'id'=>$n['id'],'pw'=>$n['pw'],'qr'=>'?page=login&id='.rawurlencode((string)$n['id']),'pic'=>staff_pic((int)$n['uid'],$n['rk']==='teacher'?'teacher':'admin'),'scan'=>'Scan to fill in my ID','n'=>1]).'</div><script src="'.asset_url('qrcode.js').'" defer></script><script src="'.asset_url('cards.js').'" defer></script>';}
+  echo '<div class="role-pop org-newpop" role="dialog" aria-modal="true" aria-labelledby="on-t"><div class="role-pop-box card org-new'.($card!==''?' has-card':'').'">'.$card.'<div class="org-newtx">'.icon('check').'<h2 id="on-t">'.e($n['title']??'Account created').'</h2><p><b>'.e($n['name']).'</b> · '.e($n['role']).'</p>'.($card!==''?'<p>Their ID and starting password are on the ID card. Print it, or write them down now.</p>':'<p>Give these to them. Write them down now.</p><dl><dt>ID</dt><dd>'.e($n['id']).'</dd><dt>Password</dt><dd>'.e($n['pw']).'</dd></dl>').'<p class="muted">They can change the password after signing in.</p><div class="org-newbtns">'.(isset(ROLES[$n['rk']??''])?'<a class="btn secondary" href="?page=admin_passes&amp;id='.e($n['id']).'">'.icon('print').'Print their ID card</a>':(($n['rk']??'')==='teacher'?'<a class="btn secondary" href="?page=teacher_cards&amp;t='.(int)$n['uid'].'">'.icon('print').'Print their ID card</a>':'')).'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_new_ok"><button class="btn primary">'.icon('check').'I saved them</button></form></div></div></div></div>';}
  $mk=array_merge($can,ROLE_CREATES[$r]??[]);
  if($mk&&!$view){$scopes=org_scope_options($u);if(isset(ROLE_CREATES[$r]))$scopes=['school'=>[(int)$u['scope_id']=>rbac_scope_name($r,(int)$u['scope_id'])]];
   echo '<form method="post" class="org-addp" id="org-create">'.csrf_field().'<input type="hidden" name="action" value="org_add">'
@@ -223,13 +225,13 @@ function org_view(array $u):void{
   if(isset(ROLE_CREATES[$r])){$secs=rows("SELECT s.id,s.grade_level,s.name,t.name tn FROM sections s JOIN users t ON t.id=s.teacher_id AND t.active=1 WHERE s.archived_at IS NULL AND t.school_id=? ORDER BY s.grade_level,s.name",[(int)$u['scope_id']]);
    echo '<div class="org-grid"><label data-for="pupil">Pupil’s class<select name="section"><option value="0">Choose a class</option>';foreach($secs as $x)echo '<option value="'.(int)$x['id'].'">Grade '.(int)$x['grade_level'].' · '.e($x['name']).' · '.e(name_case((string)$x['tn'])).'</option>';echo '</select></label></div>';}
   echo '</div>';
-  if($can)echo '<div class="org-f-ex"><label>Their BULIG ID<input name="public_id" maxlength="30" placeholder="e.g. TCEST0001" autocapitalize="characters"></label></div>';
+  if($can)echo '<div class="org-f-ex"><label>Their BULIG ID or name<input name="public_id" maxlength="30" placeholder="Type an ID or a name, e.g. TCEST0001" autocapitalize="characters" autocomplete="off" data-org-lookup role="combobox" aria-expanded="false" aria-controls="org-lk" aria-autocomplete="list"></label><div class="org-lk" id="org-lk" role="listbox" hidden></div></div>';
   echo '<button class="btn primary">'.icon('check').'Add to this role</button></form>';}
  echo '<div class="ws-hd org-ph"><h2>'.icon('people').'People and their roles</h2>'.($can&&!$view?'<a class="btn secondary small" href="?page=admin_passes">'.icon('print').'Print passes</a>':'<span class="rs-sub">'.count($rows).'</span>').'</div><p class="muted">One person can hold several roles with one account. They choose a role after signing in, and switch from the menu.</p><div class="org-list">';
  $by=[];foreach($rows as $x)$by[(int)$x['user_id']][]=$x;
  foreach($by as $uid=>$xs){$self=$uid===(int)$u['id'];
   $mine=!$view&&!$self&&(bool)array_filter($xs,fn($x)=>in_array($x['role'],$can,true));
-  echo '<div class="org-prow"><span class="org-pn"><b>'.e(name_case((string)$xs[0]['name'])).'</b><small>'.e($xs[0]['public_id']).'</small>'.($mine?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_reset_pw"><input type="hidden" name="user" value="'.$uid.'"><button class="linkbutton org-pw" data-confirm="Make a new password for '.e(name_case((string)$xs[0]['name'])).'? The old password stops working.">'.icon('key').'New password</button></form>':'').($mine?'<form method="post" class="org-sex">'.csrf_field().'<input type="hidden" name="action" value="org_sex"><input type="hidden" name="user" value="'.$uid.'"><span>ID picture</span>'.(function($uid){$m=function_exists('tf_is_male')&&tf_is_male($uid);return '<button name="sex" value="female" class="'.($m?'':'on').'" aria-pressed="'.($m?'false':'true').'">Female</button><button name="sex" value="male" class="'.($m?'on':'').'" aria-pressed="'.($m?'true':'false').'">Male</button>';})($uid).'</form>':'').'</span><span class="org-rc">';
+  echo '<div class="org-prow"><span class="org-pn"><b>'.e(name_case((string)$xs[0]['name'])).'</b><small>'.e($xs[0]['public_id']).'</small>'.($mine?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_reset_pw"><input type="hidden" name="user" value="'.$uid.'"><button class="linkbutton org-pw" data-confirm="Make a new password for '.e(name_case((string)$xs[0]['name'])).'? The old password stops working.">'.icon('key').'New password</button></form>':'').'</span><span class="org-rc">';
   foreach($xs as $x){$rm=!$view&&!$self&&in_array($x['role'],$can,true);
    echo '<span class="org-chip'.(in_array($x['role'],ROLE_VIEWERS,true)?' v':'').'">'.e(ROLES[$x['role']][0]).($x['scope_id']?'<small>'.e(rbac_scope_name($x['role'],(int)$x['scope_id'])).'</small>':'')
     .($rm?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_unappoint"><input type="hidden" name="id" value="'.(int)$x['id'].'"><button class="org-x" aria-label="Remove this role" title="Remove this role" data-confirm="Remove this role from '.e($x['name']).'? Their account and data stay.">'.icon('close').'</button></form>':'').'</span>';}
@@ -288,15 +290,13 @@ function org_action(string $action):never{
   if(!val('SELECT 1 FROM municipalities WHERE id=?',[$mid]))fail('Municipality not found.',404);$f=save_uploaded_image('logo');$old=muni_logo($mid);
   admin_set('muni_logo_'.$mid,$f);if($old!==''&&str_starts_with($old,'assets/uploads/')&&$old!==$f)@unlink(__DIR__.'/../public/'.$old);audit('org_muni_logo',(string)$mid);flash('Municipality logo saved. It prints on the ID cards.');go('?page=org');}
  if($action==='org_id_design'){if($r!=='central_admin')fail('Only the Division Admin chooses the ID design.',403);$d=(string)($_POST['design']??'a');if(!in_array($d,['a','b','c'],true))$d='a';admin_set('id_design',$d);flash('ID card design saved.');go((string)($_POST['back']??'')==='teacher_cards'?'?page=teacher_cards':'?page=admin_passes');}
- if($action==='org_sex'){$t=(int)($_POST['user']??0);$ok=false;foreach(rows('SELECT role,scope_id FROM user_roles WHERE user_id=?',[$t]) as $x)if(in_array($x['role'],ROLE_APPOINTS[$r]??[],true)&&org_in_my_scope($u,$x['role'],(int)$x['scope_id']))$ok=true;
-  if(!$ok||$t===(int)$u['id'])fail('You can change this only for the people you manage.',403);tf_set_sex($t,(string)($_POST['sex']??''));audit('org_sex',(string)$t);go('?page=org#org-people');}
  if($action==='org_new_ok'){unset($_SESSION['org_new']);go('?page=org#org-people');}
  if($action==='org_reset_pw'){$t=(int)($_POST['user']??0);if($t===(int)$u['id'])fail('Change your own password in My profile.',403);
   $ok=false;foreach(rows('SELECT role,scope_id FROM user_roles WHERE user_id=?',[$t]) as $x)if(in_array($x['role'],ROLE_APPOINTS[$r]??[],true)&&org_in_my_scope($u,$x['role'],(int)$x['scope_id']))$ok=true;
   $p=one("SELECT id,name,public_id FROM users WHERE id=? AND role='admin' AND active=1",[$t]);if(!$ok||!$p)fail('You can make a new password only for the people you manage.',403);
   $pw=substr(str_replace(['+','/','=','0','O','l','I'],'',base64_encode(random_bytes(12))),0,10);
   q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($pw,PASSWORD_DEFAULT),$t]);try{q('DELETE FROM remember_tokens WHERE user_id=?',[$t]);}catch(Throwable $e){}if(function_exists('saved_login_clear'))saved_login_clear($t);
-  rbac_keep_starter($t,$pw);audit('org_reset_pw',(string)$p['public_id']);$_SESSION['org_new']=['title'=>'New password made','name'=>name_case((string)$p['name']),'role'=>'BULIG account','id'=>$p['public_id'],'pw'=>$pw];go('?page=org#org-people');}
+  rbac_keep_starter($t,$pw);audit('org_reset_pw',(string)$p['public_id']);$fr=one('SELECT role,scope_id FROM user_roles WHERE user_id=? ORDER BY id LIMIT 1',[$t]);$_SESSION['org_new']=['title'=>'New password made','name'=>name_case((string)$p['name']),'role'=>$fr?ROLES[$fr['role']][0].' · '.rbac_scope_name($fr['role'],(int)$fr['scope_id']):'BULIG account','id'=>$p['public_id'],'pw'=>$pw,'uid'=>$t,'rk'=>$fr['role']??'','scope'=>(int)($fr['scope_id']??0)];go('?page=org#org-people');}
  if($action==='org_add')$action=((string)($_POST['mode']??'new'))==='existing'?'org_appoint':'org_create';   // v211 one form: a new person or an existing account
  $u=current_user();if(!$u||($u['role']??'')!=='admin')fail('Not allowed.',403);if(!rbac_ready())fail('Import 040_hierarchy_roles.sql first.');
  $r=$u['active_role'];$name=fn($k)=>name_case(mb_substr(trim((string)($_POST[$k]??'')),0,120));
@@ -323,12 +323,13 @@ function org_action(string $action):never{
   [$lv,$sid]=array_pad(explode(':',(string)($_POST['scope']??'')),2,'0');$sid=(int)$sid;if($lv!==ROLES[$role][3])fail('Choose a '.ROLES[$role][3].' for this role.');
   if(!org_in_my_scope($u,$role,$sid))fail('Choose a place inside your area.',403);
   $ni=name_input();$nm=name_case(mb_substr($ni['name'],0,150));if(mb_strlen($nm)<3)fail('Type the person’s full name.');
+  dupe_guard($nm,$role,0,'?page=org#org-people');   // v211 same name already in BULIG?
   $pw=substr(str_replace(['+','/','=','0','O','l','I'],'',base64_encode(random_bytes(12))),0,10);
   db()->beginTransaction();try{$pid=rbac_account_id($role);
    q('INSERT INTO users(public_id,role,name,password_hash,school_id) VALUES(?,?,?,?,?)',[$pid,'admin',$nm,password_hash($pw,PASSWORD_DEFAULT),$lv==='school'?$sid:null]);$id=(int)db()->lastInsertId();
    q('INSERT INTO admins VALUES(?)',[$id]);name_parts_save($id,$ni['parts']);rbac_keep_starter($id,$pw);if(function_exists('tf_set_sex'))tf_set_sex($id,(string)($_POST['sex']??''));q('INSERT INTO user_roles(user_id,role,scope_id,appointed_by) VALUES(?,?,?,?)',[$id,$role,$sid,$u['id']]);
    audit('org_create',$pid.' '.$role.':'.$sid);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
-  $_SESSION['org_new']=['name'=>$nm,'role'=>ROLES[$role][0].' · '.rbac_scope_name($role,$sid),'id'=>$pid,'pw'=>$pw];go('?page=org#org-people');}
+  $_SESSION['org_new']=['name'=>$nm,'role'=>ROLES[$role][0].' · '.rbac_scope_name($role,$sid),'id'=>$pid,'pw'=>$pw,'uid'=>$id,'rk'=>$role,'scope'=>$sid];go('?page=org#org-people');}
  if($action==='org_unappoint'){$x=one('SELECT * FROM user_roles WHERE id=?',[(int)($_POST['id']??0)]);if(!$x)fail('Not found.',404);
   if((int)$x['user_id']===(int)$u['id']||!in_array($x['role'],ROLE_APPOINTS[$r]??[],true)||!org_in_my_scope($u,$x['role'],(int)$x['scope_id']))fail('You cannot remove this role.',403);
   q('DELETE FROM user_roles WHERE id=?',[$x['id']]);audit('org_unappoint',$x['user_id'].' '.$x['role'].':'.$x['scope_id']);flash('Role removed. The account and its data stay.');go('?page=org#org-people');}
@@ -340,6 +341,7 @@ function org_action(string $action):never{
 function org_create_school_account(array $u):never{
  $role=(string)$_POST['role'];$sid=(int)$u['scope_id'];if(!$sid)fail('Your role has no school.',403);
  $ni=name_input();$nm=name_case(mb_substr($ni['name'],0,150));if(mb_strlen($nm)<3)fail('Type the person’s full name.');
+ dupe_guard($nm,$role,$sid,'?page=org#org-people');   // v211 same name already in BULIG?
  db()->beginTransaction();try{
   if($role==='teacher'){if(!cards_ready())fail('Import database/migrations/018_pupil_cards.sql first.');$sx=(string)($_POST['sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');
    $c=teacher_create($nm,$sx);name_parts_save($c['id'],$ni['parts']);school_mark_user($c['id'],$sid);$pid=$c['public'];$pw=$c['pw'];}
@@ -347,7 +349,7 @@ function org_create_school_account(array $u):never{
    $pid=new_account_id('pupil');q('INSERT INTO users(public_id,role,name,password_hash,school_id) VALUES(?,?,?,?,?)',[$pid,'pupil',$nm,password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT),$sid]);$id=(int)db()->lastInsertId();
    name_parts_save($id,$ni['parts']);q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,(int)$sec['grade_level'],$sec['name']]);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$sec['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$sec['teacher_id'],$id]);$pw=new_pupil_password($id);}
   audit('org_create',$pid.' '.$role.':'.$sid);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
- $_SESSION['org_new']=['name'=>$nm,'role'=>ROLES[$role][0].' · '.rbac_scope_name('school_admin',$sid),'id'=>$pid,'pw'=>$pw];go('?page=org#org-people');
+ $_SESSION['org_new']=['name'=>$nm,'role'=>ROLES[$role][0].' · '.rbac_scope_name('school_admin',$sid),'id'=>$pid,'pw'=>$pw,'uid'=>$role==='teacher'?(int)$c['id']:0,'rk'=>$role,'scope'=>$sid];go('?page=org#org-people');
 }
 
 /* ---------- v210 view-only dashboard: Municipal Viewer, District Supervisor, School Principal ---------- */
@@ -381,7 +383,6 @@ function monitor_dashboard(array $u):void{
   echo '<tr><td><b>'.e(in_array($r,['principal','school_admin'],true)?name_case((string)$x['name']):(string)$x['name']).'</b>'.(!empty($x['district'])?'<small class="muted"> · '.e($x['district']).'</small>':'').'</td><td data-l="Pupils">'.number_format((int)$x['pupils']).'</td><td data-l="Learned this week">'.number_format((int)$x['act']).' <small class="muted">('.$pct.'%)</small></td><td data-l="Lessons finished">'.number_format((int)$x['done']).'</td><td data-l="Readings waiting">'.number_format((int)$x['wait']).'</td></tr>';}
  if(!$rows)echo '<tr><td colspan="5" class="muted">Nothing to show yet.</td></tr>';
  echo '</tbody></table></div></section>';
- echo '<div class="ws-btns"><a class="btn secondary" href="?page=org">'.icon('school').'Organization</a><a class="btn secondary" href="?page=reports">'.icon('chart').'School reports</a><a class="btn secondary" href="?page=messages">'.icon('comic').'Messages</a>'.($vo?'':'<a class="btn secondary" href="?page=dashboard&amp;tools=1">'.icon('settings').'Admin tools</a>').'</div>';
 }
 /** v211 The top of an admin role's dashboard: the accounts this role creates and manages, with counts and buttons. */
 function role_manage_panel(array $u):string{
@@ -466,4 +467,48 @@ function staff_pic(int $uid,string $kind):string{
  if($p!==''&&function_exists('local_image_file')&&local_image_file($p))return $p;
  $m=function_exists('tf_is_male')&&tf_is_male($uid);
  return char_src(($kind==='teacher'?'teacher-':'admin-').($m?'male':'female'),'hello');
+}
+
+/** v211 The people an administrator can give a role to, for the ID lookup (teachers and administrators in their area). */
+function org_lookup():never{
+ $u=current_user();$q=trim((string)($_GET['q']??''));header('Content-Type: application/json; charset=utf-8');header('Cache-Control: no-store');
+ if(mb_strlen($q)<2||empty(ROLE_APPOINTS[$u['active_role']??'']??[])){echo '[]';exit;}
+ $like='%'.str_replace(['\\','%','_'],['\\\\','\\%','\\_'],$q).'%';$S=$u['scope_schools']??null;
+ $rows=rows("SELECT u.id,u.public_id,u.name,u.role,u.school_id FROM users u WHERE u.active=1 AND u.role IN ('teacher','admin') AND u.id<>? AND (u.public_id LIKE ? OR u.name LIKE ?) ORDER BY u.public_id=? DESC,u.name LIMIT 40",[(int)$u['id'],$like,$like,strtoupper($q)]);
+ $out=[];
+ foreach($rows as $r){
+  if($r['role']==='teacher'){if($S!==null&&!in_array((int)$r['school_id'],$S,true))continue;$what='Teacher'.(($sn=(string)(val("SELECT COALESCE(NULLIF(name,''),code) FROM schools WHERE id=?",[(int)$r['school_id']])?:''))!==''?' · '.$sn:'');}
+  else{$rs=rows('SELECT role,scope_id FROM user_roles WHERE user_id=?',[(int)$r['id']]);$mine=array_filter($rs,fn($x)=>org_in_my_scope($u,$x['role'],(int)$x['scope_id']));
+   if(($u['active_role']??'')!=='central_admin'&&!$mine)continue;$x=$rs[0]??null;$what=$x?ROLES[$x['role']][0].(($pl=rbac_scope_name($x['role'],(int)$x['scope_id']))!==''?' · '.$pl:''):'Administrator';}
+  $out[]=['id'=>$r['public_id'],'name'=>name_case((string)$r['name']),'what'=>$what,'pic'=>staff_pic((int)$r['id'],$r['role']==='teacher'?'teacher':'admin')];
+  if(count($out)>=8)break;}
+ echo json_encode($out,JSON_UNESCAPED_UNICODE);exit;
+}
+
+/* ---------- v211 Same name check: before a new account is made, BULIG shows anyone with the same name ---------- */
+/** Stops the form when an active account has the same name (pupils and teachers: in the same school), and asks
+    "Is this the same person?" in a popup. "Create a new account anyway" sends the form again with confirm_new. */
+function dupe_guard(string $name,string $role,int $school,string $back):void{
+ if(!empty($_POST['confirm_new']))return;$n=mb_strtolower(preg_replace('/\s+/u',' ',trim($name)));if($n==='')return;
+ if($role==='pupil'||$role==='teacher'){$sql="role=?".($school?' AND school_id='.(int)$school:'');$args=[$role];}
+ else{$sql="role IN ('admin','teacher')";$args=[];}
+ $m=rows("SELECT id,name,public_id,role,school_id FROM users WHERE active=1 AND $sql AND LOWER(TRIM(name))=? ORDER BY id LIMIT 5",array_merge($args,[$n]));
+ if(!$m)return;
+ $post=$_POST;unset($post['csrf']);$out=[];
+ foreach($m as $r){$what=ucfirst((string)$r['role']);
+  if($r['role']==='admin'&&rbac_ready()){$x=one('SELECT role,scope_id FROM user_roles WHERE user_id=? ORDER BY id LIMIT 1',[(int)$r['id']]);if($x)$what=ROLES[$x['role']][0].(($pl=rbac_scope_name($x['role'],(int)$x['scope_id']))!==''?' · '.$pl:'');}
+  elseif($r['school_id']&&($sn=(string)(val("SELECT COALESCE(NULLIF(name,''),code) FROM schools WHERE id=?",[(int)$r['school_id']])?:''))!=='')$what.=' · '.$sn;
+  $out[]=['id'=>$r['public_id'],'name'=>name_case((string)$r['name']),'what'=>$what,'role'=>$r['role'],'pic'=>$r['role']==='pupil'?(function_exists('chat_pic')?'':''):staff_pic((int)$r['id'],$r['role']==='teacher'?'teacher':'admin')];}
+ $_SESSION['dupe']=['post'=>$post,'matches'=>$out,'name'=>$name];go($back);
+}
+function dupe_hidden(array $a,string $pre=''):string{$h='';foreach($a as $k=>$v){$n=$pre===''?(string)$k:$pre.'['.$k.']';$h.=is_array($v)?dupe_hidden($v,$n):'<input type="hidden" name="'.e($n).'" value="'.e((string)$v).'">';}return $h;}
+function dupe_popup(?array $u):string{
+ if(!$u||empty($_SESSION['dupe']))return '';$d=$_SESSION['dupe'];unset($_SESSION['dupe']);$p=$d['post'];
+ $org=in_array($p['action']??'',['org_add','org_create'],true)&&isset(ROLES[$p['role']??''])&&!in_array($p['role'],['teacher','pupil'],true);
+ $h='<div class="role-pop dupe-pop" role="dialog" aria-modal="true" aria-labelledby="dp-t" data-role-pop><div class="role-pop-box card">'.icon('alert').'<h2 id="dp-t">'.e($d['name']).' is already in BULIG</h2><p class="muted">Is this the same person? Using their account keeps one account and one ID.</p><div class="dupe-list">';
+ foreach($d['matches'] as $m){$h.='<div class="dupe-row">'.($m['pic']!==''?'<img src="'.e($m['pic']).'" alt="">':'<span class="dupe-ic">'.icon('user').'</span>').'<span><b>'.e($m['name']).'</b><small>'.e($m['id']).' · '.e($m['what']).'</small></span>';
+  if($org&&$m['role']!=='pupil')$h.='<form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_add"><input type="hidden" name="mode" value="existing"><input type="hidden" name="public_id" value="'.e($m['id']).'"><input type="hidden" name="role" value="'.e($p['role']).'"><input type="hidden" name="scope" value="'.e((string)($p['scope']??'')).'"><button class="btn primary small">'.icon('check').'Yes, use this account</button></form>';
+  $h.='</div>';}
+ $h.='</div><form method="post" class="dupe-new">'.csrf_field().dupe_hidden($p).'<input type="hidden" name="confirm_new" value="1"><button class="btn secondary">'.icon('useredit').'No, create a new account anyway</button></form><button type="button" class="btn quiet role-pop-x" data-role-pop-close>Cancel</button></div></div>';
+ return $h;
 }

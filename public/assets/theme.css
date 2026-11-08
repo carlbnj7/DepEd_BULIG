@@ -7574,3 +7574,39 @@ html.dark .idc{color:#17331f}
 .org-sex{display:flex;align-items:center;gap:4px;margin-top:6px;font-size:.74rem;color:var(--muted)}.org-sex span{margin-right:4px}
 .org-sex button{padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:#fff;font:inherit;font-weight:700;color:var(--muted);cursor:pointer}.org-sex button.on{background:var(--green);border-color:var(--green);color:#fff}
 html.dark .org-sex button{background:#16231b}html.dark .org-sex button.on{background:#2f9e5c}
+/* v211 the new account popup shows the ID card */
+.org-newpop .org-new.has-card{width:min(820px,100%);display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.org-newpop .org-newtx{display:flex;flex-direction:column;gap:4px;min-width:0}.org-newpop .org-newtx>svg{width:26px;height:26px;color:#2f9e44}
+.org-newpop .org-newtx dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:8px 0}.org-newpop .org-newtx dd{margin:0;font-family:ui-monospace,Menlo,monospace;font-weight:700;font-size:1.05rem}
+.org-newbtns{display:grid;gap:8px;margin-top:10px}.org-newbtns .btn,.org-newbtns form{width:100%}.org-newbtns form .btn{width:100%;justify-content:center}.org-newbtns>.btn{justify-content:center}
+.org-newcard .idc{box-shadow:0 10px 30px rgba(20,60,35,.25)}
+@media(max-width:760px){.org-newpop .org-new.has-card{grid-template-columns:1fr;justify-items:center}.org-newcard .idc{--u:3.6px}}
+.org-new .idc dl{display:grid;grid-template-columns:1fr;gap:calc(var(--u)*.4);margin:0}
+.org-new .idc dd{margin:0 0 calc(var(--u)*.6);font-family:inherit;letter-spacing:normal;font-size:inherit}
+.org-new .idc dd.idc-id{font-size:calc(var(--u)*2.7);letter-spacing:.06em}.org-new .idc dd.idc-pw{font-family:ui-monospace,Menlo,monospace;font-size:calc(var(--u)*2.7)}.org-new .idc dd.idc-pw.own{font-family:inherit;font-size:calc(var(--u)*1.9)}
+.org-new .idc dt{font-weight:800}.org-new .idc>svg{display:none}.org-new.has-card>.org-newcard{line-height:1.2}
+/* v211 ID lookup on the Organization page */
+.org-f-ex{position:relative}
+.org-lk{position:absolute;left:0;right:0;top:100%;z-index:30;margin-top:4px;padding:6px;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 28px rgba(20,60,35,.18);max-height:340px;overflow:auto}
+.org-lk-o{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:10px;background:transparent;text-align:left;font:inherit;cursor:pointer;color:var(--ink)}
+.org-lk-o:hover,.org-lk-o.on{background:var(--mint)}
+.org-lk-o img,.org-lk-chosen img{width:40px;height:40px;flex:none;border-radius:50%;object-fit:cover;object-position:top;background:#f1f5ef;border:2px solid #f5c518}
+.org-lk-o span,.org-lk-chosen span{display:flex;flex-direction:column;min-width:0}.org-lk-o b,.org-lk-chosen b{font-weight:800}.org-lk-o small,.org-lk-chosen small{color:var(--muted);font-size:.8rem;overflow-wrap:anywhere}
+.org-lk-none{margin:6px 8px;color:var(--muted);font-size:.86rem}
+.org-lk-chosen{display:flex;align-items:center;gap:10px;margin-top:8px;padding:8px 12px;border-radius:12px;background:var(--mint);border:1px solid var(--green)}
+html.dark .org-lk{background:#16231b;border-color:#2e4234}html.dark .org-lk-o{color:#e8f0ea}html.dark .org-lk-o:hover,html.dark .org-lk-o.on,html.dark .org-lk-chosen{background:#243629}
+/* v211 ID card B: a livelier header (gold sunburst behind the photo, soft pattern, curved gold edge) */
+.idc-b::before{height:calc(var(--u)*33);border-bottom:none;border-radius:0 0 50% 50%/0 0 calc(var(--u)*7) calc(var(--u)*7);box-shadow:0 calc(var(--u)*1.2) 0 var(--y);
+ background:radial-gradient(circle at 50% 108%,rgba(255,214,64,.55) 0 calc(var(--u)*9),rgba(255,214,64,.18) calc(var(--u)*9.2),transparent calc(var(--u)*17)),
+ repeating-conic-gradient(from -3deg at 50% 108%,rgba(255,226,120,.20) 0 6deg,transparent 6deg 15deg),
+ radial-gradient(rgba(255,255,255,.10) 1px,transparent 1.3px) 0 0/calc(var(--u)*2.4) calc(var(--u)*2.4),
+ linear-gradient(160deg,#0f4d2c 0%,var(--g) 35%,var(--g2) 70%,#2f9e5c 100%)}
+.idc-b::after{content:"";position:absolute;left:0;right:0;top:0;height:calc(var(--u)*1.4);background:linear-gradient(90deg,var(--y),#fff3b0,var(--y))}
+/* v211 same name check popup */
+.dupe-pop .role-pop-box{width:min(600px,100%)}.dupe-pop .role-pop-box>svg{width:34px;height:34px;color:#c98a00}
+.dupe-list{display:grid;gap:8px;margin:12px 0}
+.dupe-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:var(--mint);border:1px solid var(--line)}
+.dupe-row img,.dupe-ic{width:48px;height:48px;flex:none;border-radius:50%;object-fit:cover;object-position:top;background:#fff;border:2px solid #f5c518;display:grid;place-items:center}.dupe-ic svg{width:22px;height:22px;color:var(--green)}
+.dupe-row>span{display:flex;flex-direction:column;flex:1 1 180px;min-width:0}.dupe-row small{color:var(--muted)}.dupe-row form{margin:0}
+.dupe-new{margin-top:6px}.dupe-new .btn{width:100%;justify-content:center}
+html.dark .dupe-row{background:#243629;border-color:#2e4234}
