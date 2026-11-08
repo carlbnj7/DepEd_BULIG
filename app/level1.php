@@ -77,17 +77,27 @@ function l1_position(int $lid):int{static $c=[];if(!isset($c[$lid]))$c[$lid]=les
 
 function l1_recordings_dir():string{return __DIR__.'/../storage/recordings';}
 
+/** Canonical PCM WAV emitted by the one-reading engine (16 kHz, mono, 16-bit). */
+function l1_valid_pcm_wav(string $bin):bool{
+ $len=strlen($bin);if($len<8044||substr($bin,0,4)!=='RIFF'||substr($bin,8,4)!=='WAVE'||substr($bin,12,4)!=='fmt '||substr($bin,36,4)!=='data')return false;
+ $u=unpack('Vriff',substr($bin,4,4))+unpack('Vfmt/vformat/vchannels/Vrate/Vbytes/valign/vbits',substr($bin,16,20))+unpack('Vdata',substr($bin,40,4));
+ if($u['riff']!==$len-8||$u['fmt']!==16||$u['format']!==1||$u['channels']!==1||$u['rate']!==16000||$u['bytes']!==32000||$u['align']!==2||$u['bits']!==16||$u['data']!==$len-44||$u['data']%2!==0)return false;
+ // Reject a syntactically valid but all-zero recording.
+ return strspn($bin,"\0",44)!==$len-44;
+}
+
 /** Check a recording sent as a data URL and keep it on the server. Returns the stored path (relative to storage/recordings). */
 function l1_save_audio(string $data,int $pid,int $aid):string{
- if(!preg_match('~^data:audio/(webm|ogg|mp4|mpeg|aac|x-m4a)(?:;codecs=[a-z0-9.,"\- ]+)?;base64,([A-Za-z0-9+/=]+)$~i',$data,$m))fail('This recording could not be read. Please record again.');
+ if(!preg_match('~^data:audio/(webm|ogg|mp4|mpeg|aac|x-m4a|wav)(?:;codecs=[a-z0-9.,"\- ]+)?;base64,([A-Za-z0-9+/=]+)$~i',$data,$m))fail('This recording could not be read. Please record again.');
  $bin=base64_decode($m[2],true);if($bin===false||strlen($bin)<200)fail('This recording is empty. Please record again.');
  if(strlen($bin)>9000000)fail('This recording is too long. Please record again.');
  $head=substr($bin,0,12);
- if(str_starts_with($head,"\x1A\x45\xDF\xA3"))$ext='webm';elseif(str_starts_with($head,'OggS'))$ext='ogg';elseif(substr($head,4,4)==='ftyp')$ext='m4a';
+ if(substr($head,0,4)==='RIFF'&&substr($head,8,4)==='WAVE'){if(!l1_valid_pcm_wav($bin))fail('This WAV recording is incomplete or invalid. Please record again.');$ext='wav';}
+ elseif(str_starts_with($head,"\x1A\x45\xDF\xA3"))$ext='webm';elseif(str_starts_with($head,'OggS'))$ext='ogg';elseif(substr($head,4,4)==='ftyp')$ext='m4a';
  elseif(str_starts_with($head,'ID3')||(ord($head[0])===0xFF&&(ord($head[1])&0xE0)===0xE0))$ext=strtolower($m[1])==='aac'?'aac':'mp3';else fail('This recording could not be read. Please record again.');
  $dir=l1_recordings_dir().'/'.$pid;if(!is_dir($dir)&&!@mkdir($dir,0750,true)&&!is_dir($dir))fail('Recordings cannot be saved on the server right now. Please tell your teacher.',500);
  $name=$aid.'-'.date('YmdHis').'-'.bin2hex(random_bytes(4)).'.'.$ext;
- if(@file_put_contents($dir.'/'.$name,$bin,LOCK_EX)===false)fail('Recordings cannot be saved on the server right now. Please tell your teacher.',500);
+ if(@file_put_contents($dir.'/'.$name,$bin,LOCK_EX)!==strlen($bin)){@unlink($dir.'/'.$name);fail('Recordings cannot be saved on the server right now. Please tell your teacher.',500);}
  return $pid.'/'.$name;
 }
 
@@ -101,9 +111,9 @@ function l1_recording(array $u):never{
  if($c&&($_GET['page']??'')!=='reading_audio'&&isset($_GET['n'])){$m=json_decode((string)($c['audio_paths']??''),true)?:[];$c['audio_path']=$m[(string)(int)$_GET['n']]??null;}
  if(!$c||!$c['audio_path'])fail('Recording not found.',404);
  if($u['role']==='teacher')own_pupil((int)$c['pupil_id']);elseif((int)$u['id']!==(int)$c['pupil_id'])fail('Recording not found.',404);
- $path=(string)$c['audio_path'];if(!preg_match('~^\d+/[0-9]+-\d{14}-[0-9a-f]{8}\.(webm|ogg|m4a|mp3|aac)$~',$path,$m))fail('Recording not found.',404);
+ $path=(string)$c['audio_path'];if(!preg_match('~^\d+/[0-9]+-\d{14}-[0-9a-f]{8}\.(webm|ogg|m4a|mp3|aac|wav)$~',$path,$m))fail('Recording not found.',404);
  $f=l1_recordings_dir().'/'.$path;if(!is_file($f))fail('This recording is no longer on the server.',404);
- $type=['webm'=>'audio/webm','ogg'=>'audio/ogg','m4a'=>'audio/mp4','mp3'=>'audio/mpeg','aac'=>'audio/aac'][$m[1]];
+ $type=['webm'=>'audio/webm','ogg'=>'audio/ogg','m4a'=>'audio/mp4','mp3'=>'audio/mpeg','aac'=>'audio/aac','wav'=>'audio/wav'][$m[1]];
  while(ob_get_level())ob_end_clean();
  $size=filesize($f);$start=0;$end=$size-1;
  header('Content-Type: '.$type);header('Accept-Ranges: bytes');header('Cache-Control: private, no-store');header('X-Content-Type-Options: nosniff');
@@ -386,4 +396,5 @@ function l1_rubric_form(int $position,array $r):string{
  }
  return $h.'<input type="hidden" name="'.$n.'[_]" value="1"></fieldset>';
 }
+
 

@@ -11,8 +11,8 @@
  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
  const KEY='bulig-sfx',get=()=>{try{return localStorage.getItem(KEY);}catch(e){return null;}},put=v=>{try{localStorage.setItem(KEY,v);}catch(e){}};
  const isOn=()=>get()!=='0';
- /* iPhone and iPad: follow the silent switch. */
- try{if(navigator.audioSession)navigator.audioSession.type='ambient';}catch(e){}
+ /* Let the browser select a microphone-compatible session when recording starts. */
+ try{if(navigator.audioSession)navigator.audioSession.type='auto';}catch(e){}
  let ctx=null,out=null,noiseBuf=null,pending=null;
  function audio(){if(!ctx){try{ctx=new AC();out=ctx.createGain();out.gain.value=.32;out.connect(ctx.destination);}catch(e){ctx=null;}}return ctx;}
  function noise(){if(!noiseBuf){const n=ctx.sampleRate*.6;noiseBuf=ctx.createBuffer(1,n,ctx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<n;i++)d[i]=Math.random()*2-1;}return noiseBuf;}
@@ -38,16 +38,16 @@
   ding(){tone('sine',NOTES.E6,0,0,.9,.4);tone('sine',NOTES.E6*2.01,0,0,.4,.08);tone('sine',NOTES.B5,0,.1,.7,.18);},
   page(){hiss(0,.2,5000,1400,.35,'highpass');tone('sine',500,900,.02,.08,.06);}
  };
- const busy=()=>{try{return window.speechSynthesis&&(speechSynthesis.speaking||speechSynthesis.pending);}catch(e){return false;}};
+ const busy=()=>{if(document.body.classList.contains('wc-open'))return true;try{return window.speechSynthesis&&(speechSynthesis.speaking||speechSynthesis.pending);}catch(e){return false;}};
  /* Browsers allow sound only after a tap on the page. A sound asked for before that waits for the first tap (only a moment). */
  function play(name,force){if(!SOUNDS[name]||(!force&&(!isOn()||busy())))return;if(!audio())return;
-  const go=()=>{try{SOUNDS[name]();document.dispatchEvent(new CustomEvent('bulig:sfx',{detail:name}));}catch(e){}};
+  const go=()=>{if(busy())return;try{SOUNDS[name]();document.dispatchEvent(new CustomEvent('bulig:sfx',{detail:name}));}catch(e){}};
   if(ctx.state==='running')return go();
   ctx.resume().then(()=>{if(ctx.state==='running')go();else pending={name,at:Date.now()};}).catch(()=>{pending={name,at:Date.now()};});
   setTimeout(()=>{if(ctx.state!=='running')pending={name,at:Date.now()};},120);}
- const unlock=()=>{if(!audio())return;if(ctx.state!=='running')ctx.resume().then(()=>{if(pending&&Date.now()-pending.at<1500&&isOn())try{SOUNDS[pending.name]();}catch(e){}pending=null;}).catch(()=>{});};
+ const unlock=()=>{if(busy()||!isOn()||!audio())return;if(ctx.state!=='running')ctx.resume().then(()=>{if(pending&&Date.now()-pending.at<1500&&isOn())try{SOUNDS[pending.name]();}catch(e){}pending=null;}).catch(()=>{});};
  ['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,unlock,{capture:true,passive:true}));
- window.buligSfx={play:n=>play(n),on:isOn};
+ window.buligSfx={play:n=>play(n),on:isOn,quiet(){pending=null;if(ctx&&ctx.state==='running')ctx.suspend().catch(()=>{});}};
  /* v208 a soft chime and a tiny buzz when a read word turns green (the Sounds setting turns both off) */
  let lastWord=0;window.buligWordOk=(buzz)=>{if(!isOn())return;const t=Date.now();if(t-lastWord<120)return;lastWord=t;play('word');if(buzz!==false&&navigator.vibrate)try{navigator.vibrate(12);}catch(e){}};
 
@@ -84,3 +84,4 @@
  if(sw){const row=sw.closest('.st-sfx');if(row)row.hidden=false;sw.checked=isOn();
   sw.addEventListener('change',()=>{put(sw.checked?'1':'0');if(sw.checked)play('correct',true);if(tst)tst(sw.checked?'Sound effects are on.':'Sound effects are off.',sw.checked?'ok':'in');});}
 })();
+

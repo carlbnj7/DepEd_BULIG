@@ -35,7 +35,17 @@
 
  /* ---------- waiting answers (IndexedDB) ---------- */
  const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open('bulig-offline',1);r.onupgradeneeded=()=>r.result.createObjectStore('answers',{keyPath:'key'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});
- const tx=(mode,fn)=>idb().then(db=>new Promise((res,rej)=>{const t=db.transaction('answers',mode),q=fn(t.objectStore('answers'));t.oncomplete=()=>res(q&&'result' in q?q.result:undefined);t.onerror=()=>rej(t.error);}));
+ const tx=(mode,fn)=>idb().then(db=>new Promise((res,rej)=>{
+  let t,q,settled=false;
+  const finish=(error)=>{if(settled)return;settled=true;db.close();if(error)rej(error);else res(q&&'result' in q?q.result:undefined);};
+  try{
+   t=db.transaction('answers',mode);
+   t.oncomplete=()=>finish();
+   t.onerror=()=>finish(t.error||new Error('Offline storage failed.'));
+   t.onabort=()=>finish(t.error||new Error('Offline storage was interrupted.'));
+   q=fn(t.objectStore('answers'));
+  }catch(error){if(t)try{t.abort();}catch(e){}finish(error);}
+ }));
  const waiting=()=>tx('readonly',s=>s.getAll()).then(a=>(a||[]).filter(i=>i.uid===uid).sort((x,y)=>x.at<y.at?-1:x.at>y.at?1:0)).catch(()=>[]);
  const put=i=>tx('readwrite',s=>s.put(i)),del=k=>tx('readwrite',s=>s.delete(k));
 
@@ -391,7 +401,17 @@
 
   /* ---------- "Mark as done" without internet ---------- */
   const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open('bulig-offline',1);r.onupgradeneeded=()=>r.result.createObjectStore('answers',{keyPath:'key'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});
-  const tx=(mode,fn)=>idb().then(db=>new Promise((res,rej)=>{const t=db.transaction('answers',mode),q=fn(t.objectStore('answers'));t.oncomplete=()=>res(q&&'result' in q?q.result:undefined);t.onerror=()=>rej(t.error);}));
+  const tx=(mode,fn)=>idb().then(db=>new Promise((res,rej)=>{
+  let t,q,settled=false;
+  const finish=(error)=>{if(settled)return;settled=true;db.close();if(error)rej(error);else res(q&&'result' in q?q.result:undefined);};
+  try{
+   t=db.transaction('answers',mode);
+   t.oncomplete=()=>finish();
+   t.onerror=()=>finish(t.error||new Error('Offline storage failed.'));
+   t.onabort=()=>finish(t.error||new Error('Offline storage was interrupted.'));
+   q=fn(t.objectStore('answers'));
+  }catch(error){if(t)try{t.abort();}catch(e){}finish(error);}
+ }));
   const waitingDone=()=>tx('readonly',s=>s.getAll()).then(a=>(a||[]).filter(i=>i.kind==='class_done'&&i.uid===tid).sort((x,y)=>x.at<y.at?-1:1)).catch(()=>[]);
   document.addEventListener('submit',e=>{const f=e.target;if(e.defaultPrevented||!f.matches||!f.matches('form.cd-modal')||online())return;e.preventDefault();
    const fields=[...new FormData(f)].filter(([k,v])=>k!=='csrf'&&typeof v==='string');
@@ -419,4 +439,5 @@
    if(Object.keys(dm().units).length&&$('[data-demo-off-card]'))setTimeout(()=>saveHome().catch(()=>{}),2500);}
  }
 })();
+
 
