@@ -1475,6 +1475,21 @@ def test_reading_verification(acc):
     check('Duplicate submission gives no extra XP',q(f'SELECT total FROM pupil_xp WHERE pupil_id={pid}')=='3')
 
 
+    # v209 Verify All Readings: only ticked, pending readings of the teacher's own pupils; never twice; no missing audio
+    q(f"UPDATE activity_completion SET status='retry' WHERE id={cid}")
+    p.req('index.php',data,accept_json=True)
+    b1=q(f"SELECT id FROM reading_verifications WHERE completion_id={cid} AND state='pending' ORDER BY id DESC LIMIT 1")
+    done=q("SELECT id FROM reading_verifications WHERE state='verified' ORDER BY id LIMIT 1")
+    _,_,page=t.req('?page=reading_reviews&show=pending')
+    check('Verify All Readings shows the pending count, filters and ticks that open after playing','data-rv-batch' in page and 'data-rv-pick' in page and 'disabled' in page and 'name="pupil"' in page and 'name="section"' in page)
+    batch={'action':'reading_verify_batch','ids[]':[b1,done,'99999999'],'csrf':t.token('?page=reading_reviews')}
+    status,_,text=t.req('index.php',batch)
+    check('Batch verifies only the ticked pending reading and skips verified or unknown ones',status==200 and q(f'SELECT state FROM reading_verifications WHERE id={b1}')=='verified' and q(f"SELECT COUNT(*) FROM audit_log WHERE action='reading_verify_batch'")=='1')
+    t.req('index.php',batch)
+    check('Sending the same batch again verifies nothing twice',q(f"SELECT COUNT(*) FROM response_history WHERE completion_id={cid} AND status='verified'")==q(f"SELECT COUNT(*) FROM reading_verifications WHERE completion_id={cid} AND state='verified'"))
+    check('A pupil cannot send Verify All Readings',p.req('index.php',dict(batch,csrf=p.token()))[0]==403)
+    check('An empty batch is refused',t.req('index.php',{'action':'reading_verify_batch','csrf':t.token('?page=reading_reviews')})[0]==400)
+
 def main():
     os.chdir(ROOT)
     print('BULIG automatic tests' + ('' if ROOT == os.path.dirname(HERE) else ' for ' + ROOT))

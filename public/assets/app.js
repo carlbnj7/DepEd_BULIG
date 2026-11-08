@@ -988,6 +988,12 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
 // v209 school form: the district list follows the municipality
 document.querySelectorAll('[data-muni]').forEach(m=>{const d=m.closest('form').querySelector('[data-muni-d]');if(!d)return;m.addEventListener('change',()=>{let L=[];try{L=JSON.parse(m.selectedOptions[0].dataset.d||'[]');}catch(e){}d.replaceChildren(new Option('Choose a district',''),...L.map(x=>new Option(x,x)));});});
 document.querySelectorAll('[data-muni-f]').forEach(m=>{const d=m.form.querySelector('[data-muni-fd]');m.addEventListener('change',()=>{let L=[];try{L=JSON.parse((m.selectedOptions[0].dataset.d)||'[]');}catch(e){}d.replaceChildren(new Option('All districts',''),...L.map(x=>new Option(x,x)));});});
+// v209 Verify All Readings: a tick opens only after that card's recording was played; the button counts the ticks
+(()=>{const f=document.querySelector('[data-rv-batch]');if(!f)return;const go=f.querySelector('[data-rv-go]'),n=f.querySelector('[data-rv-n]'),picks=[...document.querySelectorAll('[data-rv-pick]')];
+ const sync=()=>{const k=picks.filter(p=>p.checked).length;n.textContent=k;go.disabled=!k;};
+ picks.forEach(p=>{const card=p.closest('.rv-review');card&&card.querySelectorAll('audio').forEach(a=>a.addEventListener('play',()=>{p.disabled=false;card.classList.add('rv-heard');const h=card.querySelector('[data-rv-hint]');if(h)h.textContent='I listened. Include this reading in Verify selected readings';},{once:true}));p.addEventListener('change',sync);});
+ f.querySelector('[data-rv-all]').addEventListener('click',()=>{const open=picks.filter(p=>!p.disabled);if(!open.length){alert('Play the recordings first. Only readings you listened to can be ticked.');return;}open.forEach(p=>p.checked=true);sync();});
+ f.addEventListener('submit',e=>{const k=picks.filter(p=>p.checked).length;if(!k||!confirm('Verify '+k+' reading'+(k===1?'':'s')+' you listened to? The pupils will be notified.')){e.preventDefault();return;}go.disabled=true;});sync();})();
 // v209 Messages search: type a name and only the matching chats and faces stay
 (()=>{const q=document.querySelector('[data-mz-search]');if(!q)return;const box=q.closest('.mz-inbox'),none=box.querySelector('[data-mz-none]');
  q.addEventListener('input',()=>{const t=q.value.trim().toLowerCase();let n=0;box.querySelectorAll('.mz-row').forEach(r=>{const ok=!t||(r.dataset.name||r.textContent.toLowerCase()).includes(t);r.hidden=!ok;if(ok)n++;});
