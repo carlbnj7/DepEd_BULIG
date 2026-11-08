@@ -5,6 +5,9 @@ function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing
 function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=(review&tab=(todo|done|all)(&pupil=[0-9]+)?|pupil&id=[0-9]+&tab=answers(&p=[0-9]+)?)$~',$b)?$b:'?page=qcheck';}
 function action():void{
  check_csrf();$action=(string)($_POST['action']??'');unset($_SESSION['notif_live']);
+ if(function_exists('rbac_guard_action'))rbac_guard_action($action);   // v210 viewer roles only look; system-wide actions are for the Central Admin
+ if($action==='role_switch')role_switch_action();
+ if(str_starts_with($action,'org_'))org_action($action);
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
  if($action==='reading_decision'||$action==='reading_verify_batch')rv_action();
@@ -31,7 +34,7 @@ function action():void{
   $u=null;foreach($cands as $c)if(password_verify($pw,$c['password_hash'])){$u=$c;break;}
   if($u)$role=$u['role'];elseif($any)$role='auto';
   if(!$u){q('INSERT INTO login_attempts(identifier_hash) VALUES(?)',[$key]);audit('login_failed',mb_substr($role.' · '.$id,0,60));login_back($role,$id,$key);}
-  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if(strcasecmp($id,(string)$u['public_id'])!==0)flash('Your '.$role.' ID is now '.$u['public_id'].'. Your old ID still works, but please use the new one.');if($role==='admin')admin_pin_start($u);session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher'){$_SESSION['teacher_welcome']=1;$_SESSION['offer_save']=1;}if($role!=='admin')$_SESSION['hello']=1;audit('login',$role);go('?page=dashboard');
+  q('DELETE FROM login_attempts WHERE identifier_hash=?',[$key]);if(strcasecmp($id,(string)$u['public_id'])!==0)flash('Your '.$role.' ID is now '.$u['public_id'].'. Your old ID still works, but please use the new one.');session_regenerate_id(true);$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));if($role==='pupil')$_SESSION['pupil_welcome']=1;if($role==='teacher'){$_SESSION['teacher_welcome']=1;$_SESSION['offer_save']=1;}if($role!=='admin')$_SESSION['hello']=1;audit('login',$role);go('?page=dashboard');
  }
  if($action==='key_login'){
   /* One scan of a sign-in ticket: the QR code opens a "Hi, NAME!" page, and this button signs the pupil in. */

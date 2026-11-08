@@ -565,7 +565,7 @@ document.querySelectorAll('.tf-toast').forEach(t=>setTimeout(()=>t.remove(),4600
 
 /* Done in class: Class Demo panel and pupil learning path (v36) */
 (function(){
- document.querySelectorAll('.cd-bar i[data-w]').forEach(i=>{i.style.width=i.dataset.w+'%';});
+ document.querySelectorAll('.cd-bar i[data-w],.mon-bar b[data-w]').forEach(i=>{i.style.width=i.dataset.w+'%';});
  const ov=document.getElementById('cd-panel'),openB=document.querySelector('[data-cd-open]');if(!ov||!openB)return;
  const f=ov.querySelector('form'),btn=f.querySelector('[data-cd-submit] span');
  const count=()=>{const n=f.querySelectorAll('input[name="pupils[]"]:checked').length;btn.textContent=n?'Mark done for '+n+' '+(n===1?'pupil':'pupils'):'Choose pupils first';f.querySelector('[data-cd-submit]').disabled=!n;
@@ -1016,7 +1016,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('.mc-play');if(!b
  /* the XP deduction and its check box only for Rejected; the XP reward note only for Fixed */
  const parts=[...document.querySelectorAll('[data-bug-for]')],show=()=>parts.forEach(p=>{p.hidden=p.dataset.bugFor!==sel.value;});sel.addEventListener('change',show);show();
  const form=sel.form,box=form&&form.querySelector('[name=confirm_false]');
- form?.addEventListener('submit',e=>{if(sel.value!=='rejected')return;if(box&&!box.checked){e.preventDefault();box.focus();box.closest('label')?.classList.add('ck-shake');return;}if(!confirm('Reject this report? A pupil loses up to 10 XP once.'))e.preventDefault();});})();
+ form?.addEventListener('submit',e=>{if(sel.value!=='rejected')return;if(box&&!box.checked){e.preventDefault();box.focus();box.closest('label')?.classList.add('ck-shake');return;}if(!confirm('Reject this report? The reporter will be told why.'))e.preventDefault();});})();
 // v209 Claude the Guard's privacy popup: the I Agree button opens when the box is ticked. A pupil's welcome sheet comes first.
 (()=>{const box=document.querySelector('[data-pv]');if(!box)return;const t=box.querySelector('[data-pv-tick]'),b=box.querySelector('[data-pv-ok]');
  const sync=()=>{b.disabled=!t.checked;};t.addEventListener('change',sync);sync();

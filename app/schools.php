@@ -13,7 +13,8 @@ const SCHOOL_KEYS=['school_name'=>'name','school_id'=>'school_no','school_distri
 const SCHOOL_ACTIONS=['muni_add','muni_delete','school_add','school_save','school_logo','school_logo_remove','teacher_school','school_delete'];
 
 function schools_ready():bool{static $r=null;if($r===null){try{$r=(bool)one("SHOW TABLES LIKE 'schools'")&&(bool)one("SHOW COLUMNS FROM users LIKE 'school_id'");}catch(Throwable $e){$r=false;}}return $r;}
-function school_rows(bool $activeOnly=false):array{static $c=null;if(!schools_ready())return [];if($c===null)$c=rows('SELECT * FROM schools ORDER BY id');return $activeOnly?array_values(array_filter($c,fn($s)=>(int)$s['active']===1)):$c;}
+function school_rows(bool $activeOnly=false):array{static $c=null;if(!schools_ready())return [];if($c===null){$c=rows('SELECT * FROM schools ORDER BY id');$my=function_exists('rbac_my_schools')?rbac_my_schools():null;if($my!==null)$c=array_values(array_filter($c,fn($s)=>in_array((int)$s['id'],$my,true)));}   // v210 a role sees only the schools of its area
+ return $activeOnly?array_values(array_filter($c,fn($s)=>(int)$s['active']===1)):$c;}
 function school_row(int $id):?array{foreach(school_rows() as $s)if((int)$s['id']===$id)return $s;return null;}
 function school_default_id():int{$r=school_rows();return $r?(int)$r[0]['id']:0;}
 function school_label(array $s):string{return $s['code'].($s['name']!==''?' · '.$s['name']:'');}
@@ -22,7 +23,7 @@ function school_use(int $id):void{if($id&&school_row($id))$GLOBALS['bulig_school
 /** The school of one account (teachers and pupils; 0 for administrators). */
 function user_school_id(int $uid):int{if(!schools_ready())return 0;static $c=[];return $c[$uid]??=(int)val('SELECT school_id FROM users WHERE id=?',[$uid]);}
 /** The administrator's school filter: 0 = all schools. */
-function school_filter_id():int{if(!schools_ready()||count(school_rows())<2)return 0;$f=(int)($_SESSION['school_filter']??0);return school_row($f)?$f:0;}
+function school_filter_id():int{if(!schools_ready())return 0;$my=function_exists('rbac_my_schools')?rbac_my_schools():null;if($my!==null&&count($my)===1)return $my[0];if(count(school_rows())<2)return 0;$f=(int)($_SESSION['school_filter']??0);return school_row($f)?$f:0;}
 /** The school in use for this request, or 0 (then the first school). */
 function school_ctx_id():int{
  if(!schools_ready())return 0;if(!empty($GLOBALS['bulig_school']))return (int)$GLOBALS['bulig_school'];
@@ -41,9 +42,9 @@ function school_setting_save(string $key,string $value):bool{
 /** Put a new teacher or pupil in the school in use (a pupil: their teacher's school). */
 function school_mark_user(int $uid,?int $school=null):void{if(!schools_ready())return;$sid=$school??(school_ctx_id()?:school_default_id());if($sid)q('UPDATE users SET school_id=? WHERE id=?',[$sid,$uid]);}
 /** SQL limiting accounts to the administrator's school filter (alias of the users table). */
-function school_users_sql(string $a='u'):string{$f=school_filter_id();return $f?' AND '.$a.'.school_id='.$f:'';}
+function school_users_sql(string $a='u'):string{$f=school_filter_id();if($f)return ' AND '.$a.'.school_id='.$f;$my=function_exists('rbac_my_schools')?rbac_my_schools():null;return $my===null?'':' AND '.$a.'.school_id IN ('.($my?implode(',',array_map('intval',$my)):'0').')';}
 /** SQL limiting sections (alias s) to the filter: sections of that school's teachers. */
-function school_sections_sql():string{$f=school_filter_id();return $f?' AND s.teacher_id IN (SELECT id FROM users WHERE role=\'teacher\' AND school_id='.$f.')':'';}
+function school_sections_sql():string{$f=school_filter_id();$my=function_exists('rbac_my_schools')?rbac_my_schools():null;$in=$f?(string)$f:($my===null?'':($my?implode(',',array_map('intval',$my)):'0'));return $in!==''?' AND s.teacher_id IN (SELECT id FROM users WHERE role=\'teacher\' AND school_id IN ('.$in.'))':'';}
 
 /* ---------- the filter bar on the administrator's pages ---------- */
 function school_filter_bar(string $page,string $extra=''):string{

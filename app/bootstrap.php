@@ -27,7 +27,7 @@ function csrf():string{return $_SESSION['csrf']??=bin2hex(random_bytes(32));}
 function csrf_field():string{return '<input type="hidden" name="csrf" value="'.csrf().'">';}
 function check_csrf():void{if(!hash_equals(csrf(),(string)($_POST['csrf']??'')))fail('Your session changed. Reload the page and try again.',403);}
 /** The signed-in user. Read once per page (a page asks for it many times); every change to a user ends with a redirect, so it is never stale. */
-function current_user():?array{static $c=[];if(empty($_SESSION['uid']))return null;$id=(int)$_SESSION['uid'];if(!array_key_exists($id,$c))$c[$id]=one('SELECT * FROM users WHERE id=? AND active=1',[$id]);if(!$c[$id]){unset($_SESSION['uid']);return null;}return $c[$id];}
+function current_user():?array{static $c=[];if(empty($_SESSION['uid']))return null;$id=(int)$_SESSION['uid'];if(!array_key_exists($id,$c))$c[$id]=one('SELECT * FROM users WHERE id=? AND active=1',[$id]);if(!$c[$id]){unset($_SESSION['uid']);return null;}if(function_exists('rbac_apply')&&!isset($c[$id]['active_role'])){$c[$id]=$c[$id]+['active_role'=>null];$c[$id]=rbac_apply($c[$id]);}return $c[$id];}
 function require_role(string ...$roles):array{$u=current_user();if(!$u)fail('Please sign in again.',401);if(!in_array($u['role'],$roles,true))fail('You do not have access to this page.',403);return $u;}
 function own_pupil(int $pid):void{$u=require_role('teacher');if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$u['id'],$pid]))fail('This pupil is not assigned to you.',403);}
 function audit(string $action,string $detail):void{q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[current_user()['id']??null,$action,$detail]);}
@@ -273,7 +273,7 @@ function next_learning_lesson_check(int $pid):?array{
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['coach','whats_new','privacy','chat','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support'];
+const BULIG_PARTS=['coach','whats_new','privacy','chat','rbac','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
  if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}

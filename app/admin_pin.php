@@ -74,7 +74,7 @@ function admin_pin_card(int $uid):void{
  echo '<div class="pin-note">'.icon('lock').'<span>'.($create?'Avoid easy PINs like 1234. You can change it later in Settings.':$left.' '.($left===1?'try':'tries').' left · '.ADMIN_PIN_TRIES.' wrong PINs lock admin sign-in for '.ADMIN_PIN_LOCK_MINUTES.' minutes.').'</span></div>';
  echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_pin_cancel"><button class="admin-entry pin-cancel" type="submit">Cancel and go back</button></form>';
 }
-function admin_pin_settings(array $u):void{
+function admin_pin_settings(array $u):void{return;   // v210 the admin PIN step is removed: admins sign in with their ID and password
  $has=(bool)admin_security((int)$u['id'])['pin_hash'];
  echo '<section class="card" id="admin-pin"><h2>'.icon('shield').' Admin PIN</h2><p class="muted">Your 4-digit PIN is asked after your password every time you sign in as administrator.</p><form method="post" class="formgrid">'.csrf_field().'<input type="hidden" name="action" value="change_admin_pin">';
  if($has)echo '<label>Current PIN<input name="current_pin" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required autocomplete="off"></label>';

@@ -1,6 +1,6 @@
 <?php
 function bugflow_ready():bool{static $r;if($r===null){try{$r=(bool)one("SHOW TABLES LIKE 'bug_report_updates'");}catch(Throwable $e){$r=false;}}return $r;}
-const BUG_FALSE_REPORT_XP=10;
+const BUG_FALSE_REPORT_XP=0;   // v210: rejected reports no longer take XP away
 const BUG_VALID_REPORT_XP=10;   // v209: a pupil whose report is fixed earns XP once (a real bug, found and told)
 const BUG_STATES=['open'=>'Open','processing'=>'Processing','fixed'=>'Fixed','rejected'=>'Rejected'];
 /** New reports have a stable reporter ID; legacy notifications are never guessed from names. */
@@ -41,7 +41,7 @@ function bugflow_apply(array $u,int $id,string $status,string $reply,int $reques
   }
   if($r['status']===$status&&$reply===''){db()->commit();return;}
   if($reply==='')$reply=['open'=>'Your report is open.','processing'=>'We are checking your report.','fixed'=>'The reported issue has been marked as fixed.','rejected'=>'Your report has been rejected.'][$status];
-  if($status==='rejected'&&$r['status']!=='rejected')$reply.=' XP deducted: '.$deducted.'.';
+  if($status==='rejected'&&$r['status']!=='rejected'&&$deducted)$reply.=' XP deducted: '.$deducted.'.';
   /* v209: a valid report (marked Fixed) gives the pupil XP, only once for each report */
   if($status==='fixed'&&$r['status']!=='fixed'&&!(int)$r['penalty_applied']&&val('SELECT role FROM users WHERE id=?',[$r['reporter_id']])==='pupil'&&!val('SELECT 1 FROM settings WHERE setting_key=?',['bug_reward_'.$id])){
    q('INSERT INTO pupil_xp(pupil_id,total) VALUES(?,?) ON DUPLICATE KEY UPDATE total=total+VALUES(total)',[$r['reporter_id'],BUG_VALID_REPORT_XP]);
@@ -139,9 +139,9 @@ function bugflow_view(array $u):void{
   if($r['status']!=='rejected'){
    if($r['role']==='pupil'&&!val('SELECT 1 FROM settings WHERE setting_key=?',['bug_reward_'.$id]))echo '<div class="bug-reward-notice" data-bug-for="fixed"'.($r['status']==='fixed'?'':' hidden').'>'.icon('star').'<span><strong>Helpful report: +'.BUG_VALID_REPORT_XP.' XP</strong> When you mark it Fixed, the pupil gets '.BUG_VALID_REPORT_XP.' XP once, for finding a real problem.</span></div>';
    echo '<div data-bug-for="rejected" hidden>';
-   if($r['role']==='pupil')echo '<div class="bug-penalty-notice"><strong>Automatic false-report deduction: '.BUG_FALSE_REPORT_XP.' XP</strong><p>Applies only when you reject a confirmed false report. It is capped at available earned XP and applied once. XP-based reader level/rank may decrease; lesson scores stay unchanged.</p></div>';
+   if($r['role']==='pupil'&&BUG_FALSE_REPORT_XP)echo '<div class="bug-penalty-notice"><strong>Automatic false-report deduction: '.BUG_FALSE_REPORT_XP.' XP</strong><p>Applies only when you reject a confirmed false report. It is capped at available earned XP and applied once. XP-based reader level/rank may decrease; lesson scores stay unchanged.</p></div>';
    else echo '<div class="bug-penalty-notice">This reporter is a teacher. No pupil XP will be deducted.</div>';
-   echo '<label class="bug-confirm"><input type="checkbox" name="confirm_false" value="1"><span>I reviewed this report and confirm the rejection'.($r['role']==='pupil'?' and the automatic XP deduction':'').'.</span></label></div>';
+   echo '<label class="bug-confirm"><input type="checkbox" name="confirm_false" value="1"><span>I reviewed this report and confirm the rejection'.($r['role']==='pupil'&&BUG_FALSE_REPORT_XP?' and the automatic XP deduction':'').'.</span></label></div>';
   }else echo '<div class="bug-penalty-notice"><strong>Report closed</strong><p>Recorded deduction: '.(int)$r['deducted_xp'].' XP. Further replies will not deduct again.</p></div>';
   echo '<button class="btn primary" data-bug-save>Save and notify</button></form></aside>';
  }
