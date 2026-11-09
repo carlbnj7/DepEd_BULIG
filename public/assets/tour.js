@@ -218,7 +218,7 @@
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
-   [['.bb'],'Bulletin Board','Announcements from the administrator are pinned here as notes, newest first.'],
+   [['.bb'],'Bulletin Board','Announcements from the administrator are pinned here as notes, newest first. Tap Open to see them all.'],
    [['.ah-hero','.hm-head'],'Teacher Home','Your class at a glance: your pupils, who learned this week and lessons finished. Tap your photo to change it.'],
    ['#tf-todo','Needs you today','Pupils who need a check-in, reading checks, help requests and readings to verify. Only what needs you shows big; the rest is a green check.'],
    [['#rs-readers'],'Readers who need help','Pupils whose Word Coach scores stay under 60% in 3 or more readings, with the words they miss. BULIG suggests a reread together, or a small group when several pupils on one level find the same reading hard.'],
@@ -386,7 +386,7 @@
  };
  const A={
   role_dash:[
-   [['.bb'],'Bulletin Board','Announcements for your area are pinned here as notes, newest first.'],
+   [['.bb'],'Bulletin Board','Announcements for your area are pinned here as notes, newest first. Tap Open to see them all.'],
    [['.mon-head'],'Your dashboard','Your role and your area: the whole division, a municipality, a district or one school.'],
    [['.mon-manage'],'Accounts you manage','How many accounts you made for the level below you. Create an account or give a role to someone who already has one.'],
    [['.mon-manage .btn.primary'],'Create an account','Opens the Organization page. Choose the role and the place, then a new person or an existing account.'],
@@ -418,7 +418,7 @@
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
-   [['.bb'],'Bulletin Board','Announcements from the administrator are pinned here as notes, newest first.'],
+   [['.bb'],'Bulletin Board','Announcements from the administrator are pinned here as notes, newest first. Tap Open to see them all.'],
    [['.ah-hero','.pageheading'],'Admin Home','The whole school at a glance: pupils, teachers, sections and activities this week.'],
    [['.ah-b-today','.hm-checkup'],'Needs you today','Only what needs you shows big. Everything that is fine is a green check.'],
    [['.sc-pick','.sc-filter'],'Choose a school','See one school’s numbers, or all schools.'],

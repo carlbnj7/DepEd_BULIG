@@ -7712,3 +7712,21 @@ html.dark .dupe-row{background:#243629;border-color:#2e4234}
 .bb-empty{grid-column:1/-1;margin:6px 0;color:#fff;font-weight:700;text-align:center}
 @media(max-width:600px){.bb{padding:10px}.bb-cork{padding:18px 10px 12px;gap:20px}}
 body.activity-page:not(.l1-demo-page) .l2-chips.long .l2-chip{flex:0 0 auto!important}   /* v212 long choices stacked: natural height (a 240px basis made them 240px tall) */
+/* v212b Bulletin board: a small bar until it is opened */
+details.bb{padding:8px 10px}
+details.bb>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:4px 6px;border-radius:14px}
+details.bb>summary::-webkit-details-marker{display:none}
+details.bb>summary:focus-visible{outline:3px solid #f6c02c;outline-offset:2px}
+.bb-sum{display:flex;flex-direction:column;min-width:0;flex:1}.bb-sum b{font-size:1.02rem;color:#fff6e0}.bb-sum small{color:#f3dfbf;font-weight:600;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bb-peekpins{display:flex;gap:4px}.bb-peekpins i{width:22px;height:26px;border-radius:3px;background:#fff4a8;box-shadow:0 2px 4px rgba(0,0,0,.25);transform:rotate(-6deg);position:relative}.bb-peekpins i:nth-child(2){background:#ffd6e2;transform:rotate(4deg)}.bb-peekpins i:nth-child(3){background:#d4ecff;transform:rotate(-2deg)}
+.bb-peekpins i::before{content:"";position:absolute;top:-3px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:#d62d20}
+.bb-open,.bb-close{padding:6px 14px;border-radius:99px;background:#f6c02c;color:#5a3a10;font-weight:800;font-size:.84rem}
+.bb-close,details.bb[open] .bb-open{display:none}details.bb[open] .bb-close{display:inline-block}
+details.bb[open] .bb-peekpins{display:none}
+details.bb .bb-tools{display:flex;justify-content:flex-end;padding:8px 6px 0}
+details.bb .bb-cork{margin-top:10px}
+details.bb[open]{padding:14px}
+details.bb[open] .bb-cork{animation:bb-in .25s ease}
+@keyframes bb-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){details.bb[open] .bb-cork{animation:none}}
+@media(max-width:600px){.bb-peekpins{display:none}}

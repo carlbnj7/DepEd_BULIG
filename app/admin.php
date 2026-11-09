@@ -33,12 +33,15 @@ function admin_announcements(bool $activeOnly=false):array{
 }
 /** v212 The bulletin board: each announcement is a note pinned on a cork board (teachers' Overview, the admin home, Settings). */
 function announcements_board(array $list,string $edit=''):string{
- $h='<section class="bb" aria-label="Bulletin board"><header class="bb-head"><span class="bb-ic">'.icon('mega').'</span><h2>Bulletin Board</h2>'.($edit!==''?'<a class="bb-edit" href="'.e($edit).'">'.icon('edit').'Post or edit</a>':'').'</header><div class="bb-cork">';
+ /* v212b small at first: a bar with the newest note; tap it to open the whole board */
+ $n=count($list);$first=$list?(string)(array_values($list)[0]['title']??''):'';
+ $h='<details class="bb" aria-label="Bulletin board"><summary class="bb-head"><span class="bb-ic">'.icon('mega').'</span><span class="bb-sum"><b>Bulletin Board</b><small>'.($n?$n.' '.($n===1?'announcement':'announcements').' · '.e(mb_strimwidth($first,0,60,'…')):'No announcements right now').'</small></span><span class="bb-peekpins" aria-hidden="true">'.str_repeat('<i></i>',min(3,max(1,$n))).'</span><span class="bb-open">Open</span><span class="bb-close">Close</span></summary>'
+  .($edit!==''?'<div class="bb-tools"><a class="bb-edit" href="'.e($edit).'">'.icon('edit').'Post or edit</a></div>':'').'<div class="bb-cork">';
  if(!$list)$h.='<p class="bb-empty">No announcements right now.</p>';
  foreach(array_values($list) as $i=>$a){$at=(string)($a['at']??'');
   $h.='<article class="bb-note c'.($i%4).'"><span class="bb-pin" aria-hidden="true"></span><h3>'.e($a['title']).'</h3>'.(($a['message']??'')!==''?'<p>'.nl2br(e($a['message'])).'</p>':'')
    .'<footer>'.(($a['by']??'')!==''?'<span>'.e($a['by']).'</span>':'').($at!==''?'<time>'.e(date('M j, Y',strtotime($at))).'</time>':'').(($a['until']??'')!==''?'<small>Until '.e(date('M j',strtotime($a['until']))).'</small>':'').'</footer></article>';}
- return $h.'</div></section>';
+ return $h.'</div></details>';
 }
 /** The bulletin board on the teachers' Overview (only when there is an announcement). */
 function teacher_announcements():void{
