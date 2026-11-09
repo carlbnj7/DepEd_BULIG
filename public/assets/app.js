@@ -1169,7 +1169,7 @@ document.querySelectorAll('[data-tab-more]').forEach(b=>b.addEventListener('clic
 /* v212 Elementary / Junior High first, then the grade: a grade list with both groups gets a "School level" choice before it. */
 (function(){
  function stage(sel){
-  if(sel.dataset.stageDone)return;var gs=sel.querySelectorAll('optgroup');if(gs.length!==2)return;if(sel.querySelector('option[value="0"]'))return;
+  if(sel.dataset.stageDone)return;var gs=sel.querySelectorAll('optgroup');if(gs.length!==2||gs[0].label!=='Elementary'||gs[1].label!=='Junior High School')return;   /* grade lists only */if(sel.querySelector('option[value="0"]'))return;
   sel.dataset.stageDone='1';var all=Array.prototype.map.call(gs,function(g){return {label:g.label,opts:Array.prototype.slice.call(g.children)};});
   var st=document.createElement('select');st.className='grade-stage';st.setAttribute('aria-label','School level');
   all.forEach(function(g,i){var o=document.createElement('option');o.value=String(i);o.textContent=g.label;st.appendChild(o);});

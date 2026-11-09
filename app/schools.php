@@ -103,16 +103,16 @@ function schools_view():void{
   echo '</select></label><label>District<select name="district" data-muni-fd><option value="">All districts</option>';if($fm!=='')foreach(muni_districts($fm,(int)$M[$fm]) as $d)echo '<option'.($d===$fd?' selected':'').'>'.e($d).'</option>';
   echo '</select></label><button class="btn primary">'.icon('search').'Show</button>'.($fm!==''?'<a class="btn quiet" href="?page=schools">Clear</a>':'').'</form>';
   if($fm!==''){$ok=$fd!==''?[$fd]:muni_districts($fm,(int)$M[$fm]);$all=array_values(array_filter($all,fn($x)=>in_array((string)$x['district'],$ok,true)));if(!$all)echo '<section class="card"><p class="muted">No school in '.e($fd!==''?$fd:$fm).' yet.</p></section>';}}
- $ft=(string)($_GET['type']??'');if(!isset(SCHOOL_TYPES[$ft]))$ft='';
- $tc=['elementary'=>0,'jhs'=>0,'integrated'=>0];foreach($all as $x)$tc[school_type((int)$x['id'])]++;
- echo '<nav class="sc-types" aria-label="School level">';foreach([''=>'All schools · '.count($all),'elementary'=>'Elementary · '.$tc['elementary'],'jhs'=>'Junior High · '.$tc['jhs'],'integrated'=>'Integrated · '.$tc['integrated']] as $k=>$v)if($k===''||$tc[$k])echo '<a class="chip'.($ft===$k?' on':'').'" href="?page=schools'.($fm!==''?'&amp;muni='.rawurlencode($fm):'').($fd!==''?'&amp;district='.rawurlencode($fd):'').($k!==''?'&amp;type='.$k:'').'">'.e($v).'</a>';echo '</nav>';
- $groups=[];foreach($all as $i=>$x){$t=school_type((int)$x['id']);if($ft===''||$ft===$t)$groups[$t][$i]=$x;}
- foreach(['elementary'=>'Elementary schools','jhs'=>'Junior High schools','integrated'=>'Integrated schools'] as $gk=>$gt){if(empty($groups[$gk]))continue;
+ $ft=(string)($_GET['type']??'');$grp=fn(string $t)=>school_is_als($t)?'als':$t;if(!in_array($ft,['elementary','jhs','integrated','als'],true))$ft='';
+ $tc=['elementary'=>0,'jhs'=>0,'integrated'=>0,'als'=>0];foreach($all as $x)$tc[$grp(school_type((int)$x['id']))]++;
+ echo '<nav class="sc-types" aria-label="School level">';foreach([''=>'All schools · '.count($all),'elementary'=>'Elementary · '.$tc['elementary'],'jhs'=>'Junior High · '.$tc['jhs'],'integrated'=>'Integrated · '.$tc['integrated'],'als'=>'ALS · '.$tc['als']] as $k=>$v)if($k===''||$tc[$k])echo '<a class="chip'.($ft===$k?' on':'').'" href="?page=schools'.($fm!==''?'&amp;muni='.rawurlencode($fm):'').($fd!==''?'&amp;district='.rawurlencode($fd):'').($k!==''?'&amp;type='.$k:'').'">'.e($v).'</a>';echo '</nav>';
+ $groups=[];foreach($all as $i=>$x){$t=$grp(school_type((int)$x['id']));if($ft===''||$ft===$t)$groups[$t][$i]=$x;}
+ foreach(['elementary'=>'Elementary schools','jhs'=>'Junior High schools','integrated'=>'Integrated schools','als'=>'ALS learning centers (Alternative Learning System)'] as $gk=>$gt){if(empty($groups[$gk]))continue;
  echo '<h2 class="sc-gh">'.e($gt).' <span>'.count($groups[$gk]).'</span></h2><div class="sc-grid">';
  foreach($groups[$gk] as $i=>$s){$sid=(int)$s['id'];$c=$cnt[$sid]??['t'=>0,'p'=>0,'s'=>0];$logo=$s['logo']!==''&&is_file(__DIR__.'/../public/'.$s['logo']);
   echo '<section class="card sc-card" id="school-'.$sid.'"><div class="sc-top">'.($logo?'<img class="sc-logo" src="'.e($s['logo']).'" alt="">':'<span class="sc-logo c'.($i%4).'">'.e($s['code']).'</span>').'<div><h3>'.e($s['name']!==''?$s['name']:$s['code']).'</h3><small>'.e(trim(($s['school_no']!==''?'School ID '.$s['school_no']:'').($s['district']!==''?' · '.$s['district']:''),' ·')?:'Add the School ID and district in View school').'</small></div><span class="sc-tag c'.($i%4).'">'.e($s['code']).'</span></div>';
   echo '<div class="sc-stats"><div><b>'.$c['t'].'</b><span>Teachers</span></div><div><b>'.number_format($c['p']).'</b><span>Pupils</span></div><div><b>'.$c['s'].'</b><span>Sections</span></div></div>';
-  echo '<div class="ws-btns sc-viewrow"><span class="sc-lv sc-lv-'.$gk.'">'.e(school_type_label($gk)).'</span><a class="btn primary small" href="?page=school&amp;id='.$sid.'">'.icon('eye').'View school</a></div></section>';}
+  echo '<div class="ws-btns sc-viewrow"><span class="sc-lv sc-lv-'.$gk.'">'.e(school_type_label(school_type($sid))).'</span><a class="btn primary small" href="?page=school&amp;id='.$sid.'">'.icon('eye').'View school</a></div></section>';}
  echo '</div>';}
  echo '<section class="card sc-add" id="add-school"><h2>'.icon('useredit').' Add a school</h2><form method="post" class="sc-form">'.csrf_field().'<input type="hidden" name="action" value="school_add">'.school_fields(['code'=>'','name'=>'','school_no'=>'','district'=>'','head'=>''],true)
   .'<p class="sc-full sc-prev" data-sc-prev>Pupils of this school will get IDs like <b>CODE'.$yy.'0001</b>. Teachers like <b>CODET0001</b>.</p><button class="btn primary">'.icon('check').'Save school</button></form></section>';
@@ -145,7 +145,8 @@ function school_fields(array $s,bool $add=false):string{
    (Manolo Fortich, 2 → Manolo Fortich District I and II). Kept in settings (no SQL). A school picks them from lists. */
 function munis():array{$j=json_decode(function_exists('admin_setting')?admin_setting('municipalities','[]'):'[]',true);return is_array($j)?$j:[];}
 function roman(int $n):string{$r='';foreach(['X'=>10,'IX'=>9,'V'=>5,'IV'=>4,'I'=>1] as $k=>$v)while($n>=$v){$r.=$k;$n-=$v;}return $r;}
-function muni_districts(string $m,int $n):array{if($n<=1)return [$m.' District'];$o=[];for($i=1;$i<=$n;$i++)$o[]=$m.' District '.roman($i);return $o;}
+function muni_districts(string $m,int $n):array{if($n<=1)return [$m.' District',$m.' ALS District'];$o=[];for($i=1;$i<=$n;$i++)$o[]=$m.' District '.roman($i);for($i=1;$i<=$n;$i++)$o[]=$m.' ALS District '.roman($i);return $o;}   // v212 each town also has the same number of ALS districts (Alternative Learning System)
+function is_als_district(string $d):bool{return (bool)preg_match('/\bALS\b/u',$d);}
 function muni_fields(string $cur):string{
  $M=munis();if(!$M)return '<label>District<input name="district" maxlength="150" value="'.e($cur).'" placeholder="Add municipalities first, under Municipalities and districts"></label>';
  $selM='';foreach($M as $m=>$n)if(in_array($cur,muni_districts($m,(int)$n),true))$selM=$m;

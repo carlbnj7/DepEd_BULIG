@@ -251,8 +251,10 @@ function org_chart(array $u,array $munis):string{
  $h='<section class="card oc" aria-label="Organization chart"><div class="oc-root">'.icon('shield').'<div><small>Division Admin</small><b>Entire Division</b><span>'.$names('central_admin:0').'</span></div></div><div class="oc-tree">';
  foreach($munis as $m){$mid=(int)$m['id'];
   $ds=rows('SELECT * FROM districts WHERE municipality_id=?'.(ROLES[$r][3]==='district'?' AND id='.(int)$u['scope_id']:'').' ORDER BY name',[$mid]);
-  $dh='';$ns=0;
-  foreach($ds as $d){$did=(int)$d['id'];$ss=rows('SELECT id,code,name FROM schools WHERE district_id=? AND active=1'.($sch===null?'':($sch?' AND id IN ('.implode(',',$sch).')':' AND 0')).' ORDER BY name',[$did]);$ns+=count($ss);
+  $dh='';$ns=0;$alsHead=false;
+  usort($ds,fn($a,$b)=>(is_als_district((string)$a['name'])<=>is_als_district((string)$b['name']))?:strnatcasecmp((string)$a['name'],(string)$b['name']));   // v212 regular districts, then the ALS districts
+  foreach($ds as $d){$did=(int)$d['id'];
+   if(!$alsHead&&is_als_district((string)$d['name'])){$alsHead=true;$dh.='<h3 class="oc-als-h">'.icon('book').'ALS districts <small>Alternative Learning System</small></h3>';}$ss=rows('SELECT id,code,name FROM schools WHERE district_id=? AND active=1'.($sch===null?'':($sch?' AND id IN ('.implode(',',$sch).')':' AND 0')).' ORDER BY name',[$did]);$ns+=count($ss);
    $short=trim(preg_replace('/^'.preg_quote($m['name'],'/').'\s*/u','',$d['name']))?:$d['name'];
    $dh.='<article class="oc-d"><header><b>'.e($short).'</b><span>'.count($ss).' '.(count($ss)===1?'school':'schools').'</span></header><dl class="oc-ppl"><dt>District Admin</dt><dd>'.$names('district_admin:'.$did).'</dd><dt>Supervisor '.icon('eye').'</dt><dd>'.$names('district_supervisor:'.$did).'</dd></dl>'
     .(!$view&&($central||($r==='municipal_admin'&&(int)$u['scope_id']===$mid)||($r==='district_admin'&&(int)$u['scope_id']===$did))?'<form method="post" enctype="multipart/form-data" class="oc-logo oc-dlogo">'.csrf_field().'<input type="hidden" name="action" value="org_district_logo"><input type="hidden" name="id" value="'.$did.'">'.(district_logo($did)!==''?'<img src="'.e(district_logo($did)).'" alt="">':'').'<label>District logo<input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required></label><button class="btn secondary small">'.icon('image').'Upload</button></form>':'').'<ul class="oc-ss">';
