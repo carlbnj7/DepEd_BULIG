@@ -819,7 +819,10 @@ def test_roles(acc):
     status, url, text = n.req('?page=org')
     check('The new District Admin signs in and sees only their district', status == 200 and 'Manolo Fortich District I' in text and 'Libona District II' not in text)
     check('Role limits: a District Admin cannot open Teacher Passes or add teachers, and sees no Teacher Passes in the menu', n.req('?page=teacher_cards')[0] == 403 and n.req('?page=add_teachers')[0] == 403 and 'page=teacher_cards' not in n.req('?page=dashboard')[2] and n.req('index.php', {'action': 'admin_reset_password', 'id': tid, 'csrf': n.token('?page=org')})[0] == 403)
-    check('Role limits: a District Admin has no School year or Announcements settings', 'tab=year' not in n.req('?page=settings')[2] and n.req('index.php', {'action': 'admin_announcement_add', 'title': 'x', 'csrf': n.token('?page=settings')})[0] == 403)
+    check('Role limits: a District Admin has no School year settings', 'tab=year' not in n.req('?page=settings')[2])
+    n.req('index.php', {'action': 'admin_announcement_add', 'title': 'District only note', 'csrf': n.token('?page=settings&tab=announcements')})
+    ann = q("SELECT setting_value FROM settings WHERE setting_key='announcements'") or ''
+    check('A District Admin posts to the bulletin board for their own district only', 'District only note' in ann and '"level":"district"' in ann.replace(' ', '') and f'"id":{d1}' in ann.replace(' ', ''))
     check('A District Admin cannot create a Municipal Admin', n.req('index.php', {'action': 'org_create', 'name': 'Someone Else', 'role': 'municipal_admin', 'scope': 'municipality:1', 'csrf': n.token('?page=org')})[0] == 403)
     n.req('index.php', {'action': 'org_appoint', 'public_id': acc['teacher']['id'], 'role': 'school_admin', 'scope': f'school:{sid}', 'csrf': n.token('?page=org')})
     check('The teacher is now District Supervisor and School Admin too (same account)', q(f"SELECT COUNT(*) FROM user_roles WHERE user_id={tid}") == '2' and q(f"SELECT COUNT(*) FROM users WHERE public_id='{acc['teacher']['id']}'") == '1')

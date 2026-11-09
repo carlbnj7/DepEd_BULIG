@@ -25,7 +25,7 @@ const WHATS_NEW=[
  'admin'=>[
   ['school','Elementary and Junior High','BULIG finds each school’s type from its School ID or name: Elementary, Junior High or Integrated. You can change it.'],
   ['book','Junior High modules','Levels 4, 5, 6 and 7 for Grades 7 to 10, with answer keys and pictures. Import the update SQL first.'],
-  ['comic','Bulletin board','Your announcements are pinned on a bulletin board that every user sees.'],
+  ['comic','Bulletin board','Your announcements are pinned on a bulletin board for everyone in your area: Division, town, district or school.'],
   ['star','More levels are coming','The road map now shows Levels 9 to 14 ahead.'],
  ],
 ];

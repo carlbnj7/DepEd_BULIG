@@ -234,8 +234,8 @@ function admin_home(array $u):void{
  $B['levels']='<section class="card hm-levels"><div class="ws-hd"><h2>Pupils at each level</h2><a href="?page=reports">View report '.icon('arrow').'</a></div><div class="hl-grid">'.$lv.'</div></section>';
  $act=rows("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM activity_completion c JOIN pupil_sections ps ON ps.pupil_id=c.pupil_id JOIN sections s ON s.id=ps.section_id WHERE c.submitted_at>=?".admin_live_sections_sql()." GROUP BY s.id ORDER BY c DESC LIMIT 3",[date('Y-m-d',strtotime('-30 days'))]);
  $B['active']='<section class="card"><div class="ws-hd"><h2>Most active sections</h2><small class="muted">last 30 days</small></div><div class="ws-list">'.implode('',array_map(fn($a)=>'<div class="ws-li">'.icon('star').'<span>'.e($a['n']).'</span><span class="ws-sp ws-pill ok">'.number_format((int)$a['c']).'</span></div>',$act)).($act?'':'<p class="muted">No activity in the last 30 days yet.</p>').'</div></section>';
- $ann=admin_announcements(true);
- $B['ann']=announcements_board($ann,'?page=settings&tab=announcements');   // v212 a bulletin board
+ $ann=announcements_for($u);
+ $B['ann']=announcements_board($ann,rbac_can('announce')?'?page=settings&tab=announcements':'');   // v212 a bulletin board
  $B['tip']=claude_tip($u);
  /* v203 layout: a green welcome banner with the numbers, then a grid of cards (the "bento" layout the school chose) */
  $first=explode(' ',trim((string)$u['name']))[0];

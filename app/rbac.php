@@ -93,7 +93,7 @@ function rbac_must_choose(?array $u):bool{return $u&&count($u['roles']??[])>1&&e
     Municipal and District roles organize accounts and look at progress; the School Admin runs the school. */
 const ROLE_CAPS=[
  'teachers'=>['central_admin','school_admin'],        // add, edit, reset, deactivate, delete teachers; Teacher Passes; move pupils; sections
- 'announce'=>['central_admin','school_admin'],
+ 'announce'=>['central_admin','municipal_admin','district_admin','school_admin'],   // v213 each posts to their own area
  'school_info'=>['central_admin','municipal_admin','district_admin','school_admin'],
  'year'=>['central_admin'],                            // school year, schedule and lesson cycles
  'admin_passes'=>['central_admin','municipal_admin','district_admin']];
@@ -369,7 +369,7 @@ function monitor_dashboard(array $u):void{
  $wait=rv_ready()?$n("SELECT COUNT(*) FROM reading_verifications r JOIN users u ON u.id=r.pupil_id WHERE u.school_id IN ($in) AND r.state IN ('pending','missing')"):0;
  $vo=!empty($u['view_only']);
  echo '<div class="mon-head"><div><span class="eyebrow">'.e(mb_strtoupper(ROLES[$r][0])).($vo?' · VIEW ONLY':' · DASHBOARD').'</span><h1>'.e($place!==''?$place:'My area').'</h1><p class="muted">'.($vo?'Reading progress in your area. You can look and compare; changes are made by the teachers and administrators.':'Create and manage the accounts under you, and follow reading progress in your area.').'</p></div>'.($vo?'<span class="mon-badge">'.icon('eye').'View only</span>':'').'</div>';
- if(function_exists('announcements_board')&&($ann=admin_announcements(true)))echo announcements_board($ann,!$vo&&($u['active_role']??'')==='central_admin'?'?page=settings&tab=announcements':'');   // v212 bulletin board
+ if(function_exists('announcements_board')&&($ann=announcements_for($u))||(!$vo&&rbac_can('announce')))echo announcements_board($ann,!$vo&&rbac_can('announce')?'?page=settings&tab=announcements':'');   // v212 bulletin board
  if(!$vo)echo role_manage_panel($u);
  echo admin_kpis([['school',count($S),count($S)===1?'School':'Schools','',false],['user',$teachers,'Teachers','',false],['people',number_format($pupils),'Pupils','',false],['fire',number_format($active),'Learned this week',$pupils?round($active/$pupils*100).'% of pupils':'',false],['book',number_format($lessons),'Lessons finished this week','',false],['mic',number_format($wait),'Readings waiting for teachers','',false]]);
  /* pupils by reading level */

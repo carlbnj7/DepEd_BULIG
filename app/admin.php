@@ -31,6 +31,33 @@ function admin_announcements(bool $activeOnly=false):array{
  if($activeOnly)$list=array_values(array_filter($list,fn($a)=>($a['until']??'')===''||$a['until']>=date('Y-m-d')));
  return $list;
 }
+/** v213 Where a post belongs: the poster's own area (Division, municipality, district or school). Old posts are for the whole division. */
+function ann_area(?array $u):array{
+ $r=(string)($u['active_role']??'');$lv=(defined('ROLES')&&isset(ROLES[$r]))?ROLES[$r][3]:'system';$id=(int)($u['scope_id']??0);
+ if($lv==='system'||!$id||!function_exists('rbac_scope_name'))return ['level'=>'system','id'=>0,'name'=>'Whole division'];
+ return ['level'=>$lv,'id'=>$id,'name'=>rbac_scope_name($r,$id)];
+}
+/** The areas a person belongs to, from their school or role up to the municipality ("district:3"). null = sees every post. */
+function ann_chain(?array $u):?array{
+ if(!$u||!function_exists('rbac_ready')||!rbac_ready())return null;
+ $r=(string)($u['active_role']??'');$lv=isset(ROLES[$r])?ROLES[$r][3]:'school';
+ if(($u['role']??'')==='admin'&&$lv==='system')return null;
+ $c=[];$sid=0;$did=0;$mid=0;
+ if(($u['role']??'')==='admin'&&$lv==='municipality')$mid=(int)$u['scope_id'];
+ elseif(($u['role']??'')==='admin'&&$lv==='district')$did=(int)$u['scope_id'];
+ else $sid=($u['role']??'')==='admin'?(int)$u['scope_id']:(function_exists('user_school_id')?user_school_id((int)$u['id']):0);
+ if($sid){$c[]='school:'.$sid;$did=(int)(val('SELECT district_id FROM schools WHERE id=?',[$sid])?:0);}
+ if($did){$c[]='district:'.$did;$mid=(int)(val('SELECT municipality_id FROM districts WHERE id=?',[$did])?:0);}
+ if($mid)$c[]='municipality:'.$mid;
+ return $c;
+}
+/** The posts this person sees: Division posts, and posts of their municipality, district and school. */
+function announcements_for(?array $u,bool $activeOnly=true):array{
+ $l=admin_announcements($activeOnly);$c=ann_chain($u);if($c===null)return $l;
+ return array_values(array_filter($l,fn($a)=>($a['area']['level']??'system')==='system'||in_array(($a['area']['level']??'').':'.(int)($a['area']['id']??0),$c,true)));
+}
+/** The posts this person may remove: the Division Admin any, others only their own area's. */
+function ann_mine(array $a,?array $u):bool{$m=ann_area($u);if($m['level']==='system')return true;return ($a['area']['level']??'system')===$m['level']&&(int)($a['area']['id']??0)===$m['id'];}
 /** v212 The bulletin board: each announcement is a note pinned on a cork board (teachers' Overview, the admin home, Settings). */
 function announcements_board(array $list,string $edit=''):string{
  /* v212b small at first: a bar with the newest note; tap it to open the whole board */
@@ -40,12 +67,12 @@ function announcements_board(array $list,string $edit=''):string{
  if(!$list)$h.='<p class="bb-empty">No announcements right now.</p>';
  foreach(array_values($list) as $i=>$a){$at=(string)($a['at']??'');
   $h.='<article class="bb-note c'.($i%4).'"><span class="bb-pin" aria-hidden="true"></span><h3>'.e($a['title']).'</h3>'.(($a['message']??'')!==''?'<p>'.nl2br(e($a['message'])).'</p>':'')
-   .'<footer>'.(($a['by']??'')!==''?'<span>'.e($a['by']).'</span>':'').($at!==''?'<time>'.e(date('M j, Y',strtotime($at))).'</time>':'').(($a['until']??'')!==''?'<small>Until '.e(date('M j',strtotime($a['until']))).'</small>':'').'</footer></article>';}
+   .'<footer>'.(($a['by']??'')!==''?'<span>'.e($a['by']).(($a['area']['level']??'system')!=='system'&&($a['area']['name']??'')!==''?' · '.e($a['area']['name']):'').'</span>':'').($at!==''?'<time>'.e(date('M j, Y',strtotime($at))).'</time>':'').(($a['until']??'')!==''?'<small>Until '.e(date('M j',strtotime($a['until']))).'</small>':'').'</footer></article>';}
  return $h.'</div></details>';
 }
 /** The bulletin board on the teachers' Overview (only when there is an announcement). */
 function teacher_announcements():void{
- $l=admin_announcements(true);if($l)echo announcements_board($l);
+ $l=announcements_for(current_user());if($l)echo announcements_board($l);
 }
 
 /* ---------------------------------------------------------------- Overview */
@@ -292,11 +319,12 @@ function admin_settings_view(array $u):void{
   echo '<section class="card"><div class="ws-hd"><h2>'.icon('book').' School info</h2><small class="muted">Printed at the top of reports</small></div><form method="post" class="ws-formrow">'.csrf_field().'<input type="hidden" name="action" value="admin_school_info">';
   foreach(['school_name'=>['School name','e.g. Malaybalay Central Elementary School'],'school_id'=>['School ID','e.g. 128001'],'school_district'=>['District / Division','e.g. Malaybalay City Division'],'school_head'=>['School head','Name of the principal'],'school_year'=>['School year',admin_school_year()]] as $k=>[$l,$ph])echo '<label>'.$l.'<input name="'.$k.'" maxlength="150" value="'.e(admin_setting($k,'')).'" placeholder="'.e($ph).'"></label>';
   echo '<button class="btn primary">Save school info</button></form></section>'.(function_exists('rc_logo_settings')?rc_logo_settings():'');}
- if($tab==='announcements'){echo announcements_board(admin_announcements(true)).'<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('mega').' Announcements</h2><small class="muted">Shown on every teacher’s Overview</small></div>';
-  echo '<p class="muted">Every announcement is pinned on the Bulletin Board: teachers see it on their Overview.</p>';
-  $list=admin_announcements();if(!$list)echo '<p class="muted">No announcements yet.</p>';
-  foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
-  echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
+ if($tab==='announcements'){$ar=ann_area($u);$who=$ar['level']==='system'?'everyone in the division':'everyone in '.$ar['name'];
+  echo announcements_board(announcements_for($u)).'<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('mega').' Announcements</h2><small class="muted">Your posts reach '.e($who).'</small></div>';
+  echo '<p class="muted">Posts show only in the poster’s area: the Division Admin reaches every school, a Municipal Admin the town, a District Admin the district, a School Admin the school.</p>';
+  $list=array_values(array_filter(admin_announcements(),fn($a)=>ann_mine($a,$u)));if(!$list)echo '<p class="muted">No announcements yet.</p>';
+  foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.e($a['area']['name']??'Whole division').' · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
+  echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><p class="muted small">Shown to: <b>'.e($ar['level']==='system'?'Whole division':$ar['name']).'</b></p><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
  /* v211 the Account IDs tab is removed: IDs never change */
  if($tab==='schedule'){schedule_admin_view();if(function_exists('cycle_admin_view'))cycle_admin_view();}
  if($tab==='year'){$b=admin_setting('last_backup_at','');$fresh=$b!==''&&admin_days_since($b)<1;
@@ -350,8 +378,8 @@ function admin_actions(string $action):void{
  if($action==='admin_logo'||$action==='admin_logo_remove'){rc_logo_action($action);}
  if($action==='admin_school_info'){foreach(['school_name','school_id','school_district','school_head','school_year'] as $k)admin_set($k,mb_substr(trim((string)($_POST[$k]??'')),0,150));audit('school_info','saved');flash('School info saved.');go('?page=settings&tab=school');}
  if($action==='admin_announcement_add'){$title=trim((string)($_POST['title']??''));if($title===''||mb_strlen($title)>120)fail('Enter a title of up to 120 characters.');$until=(string)($_POST['until']??'');if($until!==''&&!preg_match('/^\d{4}-\d{2}-\d{2}$/',$until))$until='';
-  $list=admin_announcements();array_unshift($list,['id'=>bin2hex(random_bytes(6)),'title'=>$title,'message'=>mb_substr(trim((string)($_POST['message']??'')),0,400),'until'=>$until,'by'=>$u['name'],'at'=>date('Y-m-d H:i')]);admin_set('announcements',json_encode(array_slice($list,0,20),JSON_UNESCAPED_UNICODE));audit('announcement',$title);flash('Announcement pinned on the Bulletin Board. Teachers see it on their Overview.');go('?page=settings&tab=announcements');}
- if($action==='admin_announcement_delete'){$id=(string)($_POST['id']??'');admin_set('announcements',json_encode(array_values(array_filter(admin_announcements(),fn($a)=>$a['id']!==$id)),JSON_UNESCAPED_UNICODE));flash('Announcement removed.');go('?page=settings&tab=announcements');}
+  $list=admin_announcements();array_unshift($list,['id'=>bin2hex(random_bytes(6)),'title'=>$title,'message'=>mb_substr(trim((string)($_POST['message']??'')),0,400),'until'=>$until,'by'=>$u['name'],'at'=>date('Y-m-d H:i'),'area'=>ann_area($u)]);admin_set('announcements',json_encode(array_slice($list,0,100),JSON_UNESCAPED_UNICODE));audit('announcement',$title);flash('Announcement pinned on the Bulletin Board for '.(ann_area($u)['level']==='system'?'the whole division':ann_area($u)['name']).'.');go('?page=settings&tab=announcements');}
+ if($action==='admin_announcement_delete'){$id=(string)($_POST['id']??'');admin_set('announcements',json_encode(array_values(array_filter(admin_announcements(),fn($a)=>$a['id']!==$id||!ann_mine($a,$u))),JSON_UNESCAPED_UNICODE));flash('Announcement removed.');go('?page=settings&tab=announcements');}
  if($action==='admin_school_year'){
   if(trim((string)($_POST['confirm']??''))!=='NEW SCHOOL YEAR')fail('Type NEW SCHOOL YEAR (in capital letters) to confirm.');
   $b=admin_setting('last_backup_at','');if($b===''||admin_days_since($b)>=1)fail('Download a backup first (step 1), then start the new school year.');
