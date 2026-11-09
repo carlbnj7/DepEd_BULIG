@@ -235,7 +235,7 @@ function admin_home(array $u):void{
  $act=rows("SELECT CONCAT('Grade ',s.grade_level,' · ',s.name) n,COUNT(*) c FROM activity_completion c JOIN pupil_sections ps ON ps.pupil_id=c.pupil_id JOIN sections s ON s.id=ps.section_id WHERE c.submitted_at>=?".admin_live_sections_sql()." GROUP BY s.id ORDER BY c DESC LIMIT 3",[date('Y-m-d',strtotime('-30 days'))]);
  $B['active']='<section class="card"><div class="ws-hd"><h2>Most active sections</h2><small class="muted">last 30 days</small></div><div class="ws-list">'.implode('',array_map(fn($a)=>'<div class="ws-li">'.icon('star').'<span>'.e($a['n']).'</span><span class="ws-sp ws-pill ok">'.number_format((int)$a['c']).'</span></div>',$act)).($act?'':'<p class="muted">No activity in the last 30 days yet.</p>').'</div></section>';
  $ann=admin_announcements(true);
- $B['ann']='<section class="card"><div class="ws-hd"><h2>Announcement</h2><a href="?page=settings&amp;tab=announcements">Edit</a></div>'.($ann?'<div class="ws-ann"><b>'.e($ann[0]['title']).'</b>'.e($ann[0]['message']).'<small> · Shown to all teachers'.($ann[0]['until']?' until '.e(date('M j',strtotime($ann[0]['until']))):'').'</small></div>':'<p class="muted">No announcement. Post one for all teachers in Settings.</p>').'</section>';
+ $B['ann']=announcements_board($ann,'?page=settings&tab=announcements');   // v212 a bulletin board
  $B['tip']=claude_tip($u);
  /* v203 layout: a green welcome banner with the numbers, then a grid of cards (the "bento" layout the school chose) */
  $first=explode(' ',trim((string)$u['name']))[0];

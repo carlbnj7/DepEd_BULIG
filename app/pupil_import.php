@@ -77,7 +77,7 @@ function import_level(string $v,int $default):?int{
 function import_sheet_class(array $rows,int $headerRow):array{
  $out=[];foreach(array_slice($rows,0,$headerRow) as $r){$r=array_values($r);foreach($r as $i=>$c){$k=strtolower(trim(preg_replace('/\s+/',' ',$c)));$key=$k==='grade level'||$k==='grade level:'?'grade':($k==='section'||$k==='section:'?'section':null);
   if($key&&!isset($out[$key]))for($j=$i+1;$j<count($r);$j++)if(trim($r[$j])!==''){$out[$key]=trim($r[$j]);break;}}}
- if(isset($out['grade'])){$g=(int)preg_replace('/\D/','',$out['grade']);$out['grade']=$g>=1&&$g<=6?$g:0;}
+ if(isset($out['grade'])){$g=(int)preg_replace('/\D/','',$out['grade']);$out['grade']=grade_ok($g)?$g:0;}
  return $out;
 }
 /** SF1 names: "DELA CRUZ,JUAN JR., SANTOS" (last, first, middle). Returns [first, middle, last, extension]. */
@@ -122,7 +122,7 @@ function import_check(array $rows,array $teacher,int $defaultSection,int $defaul
   if($secName!==''){
    $match=null;foreach($sections as $s)if(strcasecmp(trim($s['name']),$secName)===0&&(!$grade||(int)$s['grade_level']===$grade))$match=$s;
    if($match)$row['section']=$match;
-   elseif($grade>=1&&$grade<=6){$row['new_section']=['name'=>mb_substr($sf1?$secName:import_name_case($secName),0,80),'grade_level'=>$grade];$nk=mb_strtolower($secName).'|'.$grade;if(!isset($newSeen[$nk])){$newSeen[$nk]=1;$row['notes'][]='New section “'.($sf1?$secName:import_name_case($secName)).'” (Grade '.$grade.') will be added.';}}
+   elseif(grade_ok($grade)){$row['new_section']=['name'=>mb_substr($sf1?$secName:import_name_case($secName),0,80),'grade_level'=>$grade];$nk=mb_strtolower($secName).'|'.$grade;if(!isset($newSeen[$nk])){$newSeen[$nk]=1;$row['notes'][]='New section “'.($sf1?$secName:import_name_case($secName)).'” (Grade '.$grade.') will be added.';}}
    elseif($default)$err('Section “'.$secName.'” is not one of your sections. Add a Grade column or create the section first.');
    else $err('Section “'.$secName.'” is not one of your sections. Add a Grade column or create the section first.');
   }elseif($default)$row['section']=$default;

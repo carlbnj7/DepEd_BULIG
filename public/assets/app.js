@@ -828,12 +828,12 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
     b+=`<rect x="${g0+2}" y="${RY+24}" width="8" height="16" rx="2" fill="${dk}" transform="rotate(25 ${g0+6} ${RY+32})"/>`;
     if(SY==='c'){const cx=g1+40,cb=RY-6,ch2=TH+70;b+=`<g class="jy-l8-crane"><rect x="${cx-3}" y="${cb-ch2}" width="6" height="${ch2}" fill="#f6b400"/><path d="M${cx-3} ${cb-ch2} ${Array.from({length:6},(_,k)=>`L${cx+3} ${cb-ch2+k*ch2/6+ch2/12} L${cx-3} ${cb-ch2+(k+1)*ch2/6}`).join(' ')}" stroke="#c98a00" stroke-width="1.4" fill="none"/><rect x="${cx-60}" y="${cb-ch2-6}" width="78" height="6" fill="#f6b400"/><rect x="${cx+8}" y="${cb-ch2-2}" width="12" height="10" fill="#555"/><rect x="${cx-8}" y="${cb-ch2+4}" width="14" height="10" rx="2" fill="#f6b400"/><path d="M${cx-48} ${cb-ch2} V${cb-TH-28}" stroke="#333" stroke-width="1.4"/><rect x="${cx-66}" y="${cb-TH-28}" width="36" height="6" rx="1" fill="${st}"/><rect x="${cx-10}" y="${cb-6}" width="20" height="6" fill="#555"/></g>`;}
     return {svg:b,g0,g1};};
-   let bg='',fg='',CONT=null;if(CP==='c'){const gx=sx+cw/2,gy=sy+ch*.93,rp=at(L*.985);bg+=`<ellipse cx="${gx}" cy="${gy+6}" rx="${cw*.62}" ry="${ch*.2}" fill="#a9d98a"/><ellipse cx="${gx}" cy="${gy}" rx="${cw*.56}" ry="${ch*.15}" fill="#bfe6a0"/><path d="M${rp.x} ${rp.y} Q${(rp.x+gx)/2+(phone?-20:30)} ${(rp.y+gy)/2} ${gx} ${gy}" fill="none" stroke="#d8c48a" stroke-width="${phone?14:18}" stroke-linecap="round"/><path d="M${rp.x} ${rp.y} Q${(rp.x+gx)/2+(phone?-20:30)} ${(rp.y+gy)/2} ${gx} ${gy}" fill="none" stroke="#efe2b6" stroke-width="${phone?10:13}" stroke-linecap="round" stroke-dasharray="1 0"/>`;}const bobW=phone?40:56,bobH=bobW*600/276;let L8x,L8y;
+   let bg='',fg='',CONT=null,NEXT='';if(CP==='c'){const gx=sx+cw/2,gy=sy+ch*.93,rp=at(L*.985);bg+=`<ellipse cx="${gx}" cy="${gy+6}" rx="${cw*.62}" ry="${ch*.2}" fill="#a9d98a"/><ellipse cx="${gx}" cy="${gy}" rx="${cw*.56}" ry="${ch*.15}" fill="#bfe6a0"/><path d="M${rp.x} ${rp.y} Q${(rp.x+gx)/2+(phone?-20:30)} ${(rp.y+gy)/2} ${gx} ${gy}" fill="none" stroke="#d8c48a" stroke-width="${phone?14:18}" stroke-linecap="round"/><path d="M${rp.x} ${rp.y} Q${(rp.x+gx)/2+(phone?-20:30)} ${(rp.y+gy)/2} ${gx} ${gy}" fill="none" stroke="#efe2b6" stroke-width="${phone?10:13}" stroke-linecap="round" stroke-dasharray="1 0"/>`;}const bobW=phone?40:56,bobH=bobW*600/276;let L8x,L8y;
    if(!phone){
     const RY=end.y-20,rx0=W+90+BO,rx1=W+320+BO,L8=W+EX-120;L8x=L8;L8y=RY;
     bg+=`<rect x="${W}" y="0" width="${EX}" height="${H}" fill="url(#jy-grass)"/><rect x="${W}" y="0" width="${EX}" height="${H}" fill="url(#jy-tuft)" opacity=".7"/><rect x="${W-1}" y="0" width="${EX+1}" height="${sky}" fill="url(#jy-sky2)"/><path d="M${W-1} ${sky+8} Q${W+EX*.5} ${sky-30} ${W+EX} ${sky+4} V${sky+50} H${W-1}Z" fill="#c8eab0"/>`;
     bg+=`<path d="M${W-1} ${sky*.8} L${W+EX*.22} ${sky*.42+10} L${W+EX*.4} ${sky*.7} L${W+EX*.62} ${sky*.36} L${W+EX*.8} ${sky*.66} L${W+EX} ${sky*.5} V${sky+20} H${W-1}Z" fill="url(#jy-mtn)"/><path d="M${W+EX*.62-16} ${sky*.36+16} L${W+EX*.62} ${sky*.36} L${W+EX*.62+16} ${sky*.36+16}Z" fill="#fff"/><path d="M${W-1} ${sky-6} Q${W+EX*.5} ${sky-24} ${W+EX} ${sky+2} V${sky+50} H${W-1}Z" fill="#c8eab0"/>`+`<ellipse cx="${W+BO+300}" cy="${sky+30}" rx="30" ry="11" fill="#e9d9a6"/><ellipse cx="${W+BO+300}" cy="${sky+30}" rx="24" ry="8" fill="#7fd0f2"/><path d="M${W+BO+284} ${sky+28}q6-3 12 0" stroke="#fff" stroke-width="1.6" fill="none"/>`+river([[W+BO+300,sky+32,14],[W+BO+282,sky+70,40],[W+BO+232,RY-90,110],[W+BO+205,RY,190],[W+BO+215,RY+70,205],[W+BO+260,H-60,215],[W+BO+250,H+20,225]]);
-    bg+=rd(`M${end.x} ${end.y} C${c1(80)} ${rx0-90} ${RY} ${rx0-12} ${RY}`)+rd(`M${rx1+12} ${RY} H${L8x} C${L8x+50} ${RY} ${L8x+60} ${RY-80} ${W+EX+30} ${RY-120}`);CONT=[L8x+64,RY-86,W+EX+10,RY-118];
+    bg+=rd(`M${end.x} ${end.y} C${c1(80)} ${rx0-90} ${RY} ${rx0-12} ${RY}`)+rd(`M${rx1+12} ${RY} H${L8x} C${L8x+60} ${RY} ${W+EX-50} ${RY-20} ${W+EX-34} ${RY-80} S${W+EX+6} ${Math.max(sky+40,RY-150)} ${W+EX+70} ${Math.max(sky+30,RY-160)}`);CONT=[W+EX-20,Math.max(sky+40,RY-150),W+EX+20,Math.max(sky+30,RY-160)];NEXT=`M${L8x} ${RY} C${L8x+60} ${RY} ${W+EX-50} ${RY-20} ${W+EX-34} ${RY-80} S${W+EX+6} ${Math.max(sky+40,RY-150)} ${W+EX+70} ${Math.max(sky+30,RY-160)}`;
     const br=bridge(rx0-16,rx1+16,RY,RY+64);fg+=`<g class="jy-l8-bridge">${br.svg}</g>`;
     fg+=barrier(br.g0-4,RY-10)+barrier(br.g1+26,RY-10)+cone(rx0-40,RY+32)+cone(rx0-24,RY+36)+sign(rx0-70,RY+92);
     fg+=`<g class="jy-l8-bob"><ellipse cx="${rx0-56}" cy="${RY+30}" rx="${bobW*.4}" ry="4" fill="#000" opacity=".18"/><image href="assets/images/characters/bob-blueprint.webp" x="${rx0-56-bobW/2}" y="${RY+30-bobH}" width="${bobW}" height="${bobH}"/></g>`;
@@ -841,7 +841,7 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
     const RY=top+190,rx0=96,rx1=226;L8x=44;L8y=RY;
     bg+=`<rect x="0" y="${top}" width="${W}" height="${EY+sky+12}" fill="url(#jy-grass)"/><rect x="0" y="${top}" width="${W}" height="${EY+sky+12}" fill="url(#jy-tuft)" opacity=".7"/><rect x="0" y="${top}" width="${W}" height="70" fill="url(#jy-sky2)"/>`;
     bg+=mtns(-10,W+10,top+74)+`<ellipse cx="200" cy="${top+86}" rx="24" ry="9" fill="#e9d9a6"/><ellipse cx="200" cy="${top+86}" rx="19" ry="6.5" fill="#7fd0f2"/>`+river([[200,top+88,12],[188,top+120,40],[164,RY-40,110],[160,RY,140],[150,RY+50,150],[80,top+300,165],[-40,top+330,175]]);
-    bg+=rd(`M${end.x} ${end.y} C${c1(90)} ${rx1+80} ${RY+6} ${rx1+10} ${RY}`)+rd(`M${rx0-10} ${RY} H${L8x} C${L8x-34} ${RY-30} ${L8x-6} ${top+100} ${L8x+70} ${top+60}`);CONT=[L8x+30,top+86,L8x+92,top+52];
+    bg+=rd(`M${end.x} ${end.y} C${c1(90)} ${rx1+80} ${RY+6} ${rx1+10} ${RY}`)+rd(`M${rx0-10} ${RY} H${L8x} C${L8x-14} ${RY} ${L8x-6} ${top+128} ${-70} ${top+112}`);CONT=[-40,top+112,-20,top+112];NEXT=`M${L8x} ${RY} C${L8x-14} ${RY} ${L8x-6} ${top+128} ${-70} ${top+112}`;
     const br=bridge(rx0-14,rx1+14,RY,RY+56);fg+=`<g class="jy-l8-bridge">${br.svg}</g>`;
     fg+=barrier(br.g0-4,RY-10)+barrier(br.g1+26,RY-10)+cone(rx1+34,RY+30)+cone(rx1+50,RY+33)+sign(end.x-92,RY+80);
     fg+=`<g class="jy-l8-bob"><ellipse cx="${rx1+66}" cy="${RY-22}" rx="${bobW*.4}" ry="4" fill="#000" opacity=".18"/><image href="assets/images/characters/bob-blueprint.webp" x="${rx1+66-bobW/2}" y="${RY-22-bobH}" width="${bobW}" height="${bobH}"/></g>`;
@@ -854,9 +854,21 @@ document.querySelectorAll('.rv-item form').forEach(f=>{const t=f.querySelector('
    /* the Level 8 stop (grey, with a dashed yellow "Coming soon" label) */
    const lw=phone?96:150,lh=phone?38:46,lx8=Math.max(4,Math.min(W+EX-lw-4,L8x-lw/2)),ly8=L8y+(phone?30:34);
    fg+=`<a class="jy-stop jy-lock jy-l8" tabindex="0" role="button" aria-label="Level 8, under construction"><g transform="translate(${L8x} ${L8y}) scale(${Z})"><ellipse cx="0" cy="24" rx="20" ry="6" fill="#000" opacity=".16"/><circle cy="5" r="20" fill="#9aa395"/><circle r="20" fill="url(#jy-lock)" stroke="#fff" stroke-width="4"/><text y="6" text-anchor="middle" font-size="16" font-weight="800" fill="#6b746c">8</text></g><g filter="url(#jy-sh)"><rect x="${lx8}" y="${ly8}" width="${lw}" height="${lh}" rx="${lh/2}" fill="#fff" stroke="#f6c02c" stroke-width="2" stroke-dasharray="6 4"/></g><text x="${lx8+lw/2}" y="${ly8+17}" text-anchor="middle" font-size="${phone?11:12.5}" font-weight="800" fill="#8a958d">Level 8</text><text x="${lx8+lw/2}" y="${ly8+(phone?30:35)}" text-anchor="middle" font-size="${phone?8.6:9.5}" fill="#b07a00" font-weight="700">Coming soon</text></a>`;
+   /* v212 Levels 9 to 14 ahead, on the road after Level 8: the same circle as Level 8, each one fainter, fading away */
+   if(NEXT){const tp=document.createElementNS(NS,'path');tp.setAttribute('d',NEXT);q('bg').appendChild(tp);const TL=tp.getTotalLength();let t=phone?48:62,st=phone?40:50;
+    fg+=`<g class="jy-more" tabindex="0" role="button" aria-label="Levels 9 to 14 are coming">`;let lab=null,pts=[];
+    for(let k=0;k<6&&t<TL-6;k++){const P=tp.getPointAtLength(t),op=(.85*Math.pow(.74,k)).toFixed(2),sc=(Z*(1-(phone?.12:.08)*k)).toFixed(2);pts.push(P);if(!lab)lab=P;
+     fg+=`<g opacity="${op}" transform="translate(${P.x.toFixed(1)} ${P.y.toFixed(1)}) scale(${sc})"><ellipse cx="0" cy="24" rx="20" ry="6" fill="#000" opacity=".16"/><circle cy="5" r="20" fill="#9aa395"/><circle r="20" fill="url(#jy-lock)" stroke="#fff" stroke-width="4"/><text y="6" text-anchor="middle" font-size="16" font-weight="800" fill="#6b746c">${9+k}</text></g>`;
+     t+=st;st*=phone?.82:.86;}
+    tp.remove();
+    if(pts[phone?0:2])lab=pts[phone?0:2];
+    if(lab)fg+=`<text x="${(lab.x+(phone?-14:-34)).toFixed(1)}" y="${(lab.y+(phone?-50:6)).toFixed(1)}" text-anchor="${phone?'start':'end'}" font-size="${phone?11:13}" font-weight="800" fill="#2f5d43" stroke="#fff" stroke-width="3" paint-order="stroke">More levels coming</text>`;
+    fg+=`</g>`;}
    q('bg').insertAdjacentHTML('beforeend',bg);
    const gx8=document.createElementNS(NS,'g');gx8.setAttribute('class','jy-l8-g');gx8.innerHTML=fg;q('top').appendChild(gx8);
    const go=ev=>{ev.preventDefault();if(window.buligSoonOverlay)window.buligSoonOverlay({title:'Level 8 is under construction',text:'Bob the Worker is still building the bridge to Level 8. It is not ready yet. Keep reading, and you will be one of the first to cross when it opens!',img:'assets/images/characters/bob-blueprint.webp'});};
+   const more=ev=>{ev.preventDefault();if(window.buligSoonOverlay)window.buligSoonOverlay({title:'More levels are coming',text:'Levels 9 to 14 are on the way. Keep reading and finishing your levels: new adventures are being built for you!',img:'assets/images/characters/bob-blueprint.webp'});};
+   gx8.querySelectorAll('.jy-more').forEach(x=>{x.style.cursor='pointer';x.addEventListener('click',more);x.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' ')more(ev);});});
    gx8.querySelectorAll('.jy-l8,.jy-l8-bob,.jy-l8-bridge').forEach(x=>{x.style.cursor='pointer';x.addEventListener('click',go);x.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' ')go(ev);});});}
   buligMapAnimations(svg);if(J>=0){const pj=document.querySelector('[data-jy-pop="'+J+'"]');if(pj)g.addEventListener('click',()=>jyPop(pj,g.querySelector('image')));else if(items[J].h)g.addEventListener('click',()=>{location.href=items[J].h;});}}
  build();let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,200);});
@@ -1154,3 +1166,23 @@ document.querySelectorAll('[data-tab-more]').forEach(b=>b.addEventListener('clic
   t=setTimeout(function(){var my=++seq;fetch('?page=org_lookup&q='+encodeURIComponent(q),{credentials:'same-origin',headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(j){if(my!==seq)return;items=j||[];cur=-1;draw()}).catch(function(){})},220)});
  inp.addEventListener('keydown',function(e){if(box.hidden)return;if(e.key==='ArrowDown'){cur=Math.min(items.length-1,cur+1);draw();e.preventDefault()}else if(e.key==='ArrowUp'){cur=Math.max(0,cur-1);draw();e.preventDefault()}else if(e.key==='Enter'&&cur>=0){pick(cur);e.preventDefault()}else if(e.key==='Escape')close()});
  inp.addEventListener('blur',function(){setTimeout(close,150)});})();
+/* v212 Elementary / Junior High first, then the grade: a grade list with both groups gets a "School level" choice before it. */
+(function(){
+ function stage(sel){
+  if(sel.dataset.stageDone)return;var gs=sel.querySelectorAll('optgroup');if(gs.length!==2)return;if(sel.querySelector('option[value="0"]'))return;
+  sel.dataset.stageDone='1';var all=Array.prototype.map.call(gs,function(g){return {label:g.label,opts:Array.prototype.slice.call(g.children)};});
+  var st=document.createElement('select');st.className='grade-stage';st.setAttribute('aria-label','School level');
+  all.forEach(function(g,i){var o=document.createElement('option');o.value=String(i);o.textContent=g.label;st.appendChild(o);});
+  var lab=document.createElement('label');lab.className='grade-stage-l';lab.appendChild(document.createTextNode('School level'));lab.appendChild(st);
+  var host=sel.closest('label')||sel;host.parentNode.insertBefore(lab,host);
+  var cur=sel.value;var pick=0;all.forEach(function(g,i){g.opts.forEach(function(o){if(o.value===cur&&o.selected)pick=i;});});
+  function fill(i,keep){var v=sel.value;sel.innerHTML='';var blank=sel.dataset.blank;if(blank!==undefined){var b=document.createElement('option');b.value='';b.textContent=blank;sel.appendChild(b);}
+   all[i].opts.forEach(function(o){sel.appendChild(o);});if(keep&&all[i].opts.some(function(o){return o.value===v;}))sel.value=v;else if(blank===undefined)sel.selectedIndex=0;else sel.value='';
+   if(!keep)sel.dispatchEvent(new Event('change',{bubbles:true}));}
+  var blankOpt=sel.querySelector(':scope > option[value=""]');if(blankOpt)sel.dataset.blank=blankOpt.textContent;
+  st.value=String(pick);fill(pick,true);st.addEventListener('change',function(){fill(+st.value,false);});
+ }
+ function run(root){(root||document).querySelectorAll('select').forEach(stage);}
+ if(document.readyState!=='loading')run();else document.addEventListener('DOMContentLoaded',function(){run();});
+ new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1)run(n);});});}).observe(document.documentElement,{childList:true,subtree:true});
+})();

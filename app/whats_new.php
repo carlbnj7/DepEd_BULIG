@@ -3,30 +3,30 @@
    BULIG is updated: a construction sign with Bob and the new things for their role. Closing it keeps a copy on the
    bell (Notifications), and ?whatsnew=1 opens it again. Seen is kept in settings (whatsnew_<update>_<id>), no SQL.
    For a new update: change WHATS_NEW_ID and the lists below. */
-const WHATS_NEW_ID='v211';
+const WHATS_NEW_ID='v212';
 const WHATS_NEW=[
  /* shown before signing in too (on the login page, after the opening screen), once on each device */
  'guest'=>[
-  ['school','One BULIG for the whole Division','Municipalities, districts and schools now work together, each with its own administrators.'],
-  ['user','One account, more than one role','If you have several roles, BULIG asks which one to use after you sign in.'],
-  ['shield','Your data is safe','BULIG follows the Data Privacy Act (RA 10173). Read the Privacy Notice under the Let’s go button.'],
+  ['school','BULIG is now in Junior High','Grades 7 to 10 can now use BULIG: Levels 4, 5, 6 and 7, each with its own Junior High module.'],
+  ['book','New pictures, every answer checked','The Junior High stories have new pictures, and every question has an answer key.'],
+  ['star','More levels are coming','Look at the road map: Levels 9 to 14 are on the way.'],
  ],
  'pupil'=>[
-  ['comic','Chat with your teacher','Send your teacher a message, a photo or a voice message in Messages.'],
-  ['star','A reward for real bugs','Found a problem and the administrator fixed it? You earn XP. No XP is taken away for other reports.'],
-  ['shield','Your data is safe','Claude the Guard tells you what BULIG keeps and who can see it. See My Data and Privacy in Settings.'],
+  ['school','Junior High is here','Grades 7 to 10 now have their own lessons: fluency, listening and vocabulary, reading comprehension and love for reading.'],
+  ['book','New pages before each test','A Pre-Assessment page before every pre-test, and a Post-Assessment page before every post-test.'],
+  ['star','More levels are coming','Look past Level 8 on your road map: Levels 9 to 14 are on the way!'],
  ],
  'teacher'=>[
-  ['check','Verify all readings','On Verify Readings, tick the readings you listened to and verify them all at once.'],
-  ['swap','More than one role','If you are also a School Admin or Principal, choose your role after signing in, or switch from the menu.'],
-  ['print','A new Teacher ID card','Your pass is now an ID card with your ID, starting password and QR code.'],
-  ['comic','Chats with pupils','Messages shows your pupils’ chats, newest first, with photos and voice messages.'],
+  ['school','Junior High is here','Make Grade 7 to 10 sections: choose Elementary or Junior High School, then the grade.'],
+  ['book','Levels 4 to 7 for Junior High','Each Junior High module is in BULIG with pictures, and every tap question is checked with an answer key.'],
+  ['check','Class demo for every grade','The class demo shows each level’s lessons for the grade you choose, Grade 1 to Grade 10.'],
+  ['comic','Announcements board','The administrator’s announcements are now pinned on a bulletin board.'],
  ],
  'admin'=>[
-  ['school','Organization','Municipalities, districts and schools in one tree. Add a person to a role: a new account or one that already exists.'],
-  ['shield','Roles and limits','Division, Municipal, District and School admins each see their own area. Viewers, Supervisors and Principals only look.'],
-  ['print','ID cards','Print ID cards for teachers and for the administrators you manage, each with a QR code.'],
-  ['key','IDs never change','The ID switch is gone. Lost a password? Use New password on the Organization page.'],
+  ['school','Elementary and Junior High','BULIG finds each school’s type from its School ID or name: Elementary, Junior High or Integrated. You can change it.'],
+  ['book','Junior High modules','Levels 4, 5, 6 and 7 for Grades 7 to 10, with answer keys and pictures. Import the update SQL first.'],
+  ['comic','Bulletin board','Your announcements are pinned on a bulletin board that every user sees.'],
+  ['star','More levels are coming','The road map now shows Levels 9 to 14 ahead.'],
  ],
 ];
 function wn_key(int $uid):string{return 'whatsnew_'.WHATS_NEW_ID.'_'.$uid;}

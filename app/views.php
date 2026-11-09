@@ -88,10 +88,10 @@ function login_view():void{
     at a ticket by someone else's phone camera never signs anyone in by itself.) */
 function key_login_view(string $key):void{
  if(($_GET['peek']??'')==='1')key_peek($key);
- $p=card_user_any($key);if($p&&$p['role']==='teacher'&&!card_has_starter((int)$p['id']))go(teacher_login_url($p));head('Sign in','login-page key-page');
+ $p=card_user_any($key);head('Sign in','login-page key-page');
  echo '<main class="key-wrap"><section class="key-card"><img class="key-logo" src="assets/brand/bulig-gamified.webp" alt="BULIG">';
  if(!$p){echo '<h1>This ticket no longer works</h1><p class="muted">Your teacher made a new ticket for you. Ask for it, or sign in with your Pupil ID and password.</p><a class="btn primary key-go" href="?page=login&role=pupil&form=1">Sign in with my Pupil ID</a></section></main>';foot();return;}
- $sex=(string)(val('SELECT sex FROM pupil_details WHERE pupil_id=?',[$p['id']])?:'');$img=$p['avatar_path']?:($p['role']==='teacher'?teacher_char((int)$p['id']):char_src($sex==='female'?'girl':'boy','hello'));$first=explode(' ',trim((string)$p['name']))[0];
+ $sex=(string)(val('SELECT sex FROM pupil_details WHERE pupil_id=?',[$p['id']])?:'');$img=$p['role']!=='pupil'&&function_exists('staff_pic')?staff_pic((int)$p['id'],$p['role']==='teacher'?'teacher':'admin'):($p['avatar_path']?:char_src($sex==='female'?'girl':'boy','hello'));$first=explode(' ',trim((string)$p['name']))[0];
  echo '<img class="key-kid" src="'.e($img).'" alt=""><h1>Hi, '.e($first).'!</h1><p class="muted">'.e($p['name']).' · '.e($p['public_id']).'</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="key_login"><input type="hidden" name="key" value="'.e($key).'"><button class="btn primary key-go">Let’s go!'.icon('arrow').'</button></form><a class="key-other" href="?page=login&role='.e($p['role']).'&form=1">Not '.e($first).'? Sign in another way</a></section></main>';foot();
 }
 /* Login effects: sunrise glow, hills, clouds, birds, floating letters and characters (v60) */
@@ -133,6 +133,9 @@ function lesson_view(array $u):void{
  $done=count(array_filter($all,fn($a)=>completion_ok($a)));$finished=(bool)val('SELECT completed_at FROM pupil_progress WHERE pupil_id=? AND lesson_id=?',[$pid,$lid]);
  /* Level 1 is oral: its own clean screens (lesson start, speak, do, pair, draw, read). */
  $pick=!$aid&&isset($_GET['pick'])&&lesson_is_skipped($pid,$lid);
+ /* v212 A cover page before each Pre-Assessment and Post-Assessment (every level), and before the Intervention Materials
+    of the modules that have them (Junior High Levels 5-7): shown once, the first time the part is opened. */
+ if($chosen&&($aid||$done>0)&&!isset($_GET['go'])&&!$off&&!completion_ok($chosen)&&($ban=phase_banner($lid,$chosen,$all))){phase_cover_page($lesson,$all,$chosen,$ban);return;}
  if($chosen&&lesson_level($lid)===1){if(!$aid&&($done===0||$pick))l1_start_page($lesson,$all,$chosen);else l1_activity_page($u,$lesson,$all,$chosen);return;}
  /* Level 2A: the same clean screens; each card answered the way the module asks. */
  if($chosen&&in_array(lesson_level($lid),[2,3],true)){if(!$aid&&($done===0||$pick)){l2a_start_page($lesson,$all,$chosen);return;}if($l2=l2a_set($chosen)){l2a_activity_page($u,$lesson,$all,$chosen,$l2);return;}}
@@ -205,7 +208,7 @@ function accounts_view(array $u):void{
 }
 function grade_fields(array $p,array $sections):string{
  $s=section_select($sections,(int)($p['section_id']??0),(int)current_user()['id']); $s.=pupil_details_fields($p); $s.=starting_level_field((int)($p['level_id']??1));
- return $s.'<div class="section-help"><a href="?page=sections">Add or edit your sections</a><p class="muted">Grade follows the section. Starting level is chosen separately: any Grade 1–6 pupil can start at any level. Future content stays locked.</p></div>';
+ return $s.'<div class="section-help"><a href="?page=sections">Add or edit your sections</a><p class="muted">Grade follows the section. Starting level is chosen separately: any pupil, Grade 1 to 10, can start at any level. Future content stays locked.</p></div>';
 }
 /** The score on one answer line: the teacher's score if they set one, otherwise BULIG's; "Done" for answers with no key. */
 function rv_badge(array $r):string{
@@ -280,11 +283,17 @@ function pupil_detail():void{pupil_page_view(current_user());}
 /** "Save as image" for Reading Passes and Teacher Passes: each pass is saved as its own PNG (assets/html2canvas.min.js, loaded only when pressed). */
 function tk_save_button():string{return '<button type="button" class="btn secondary tk-save" data-tk-save data-src="'.e(asset_url('html2canvas.min.js')).'">'.icon('arrow').'Save as image</button>';}
 function tk_name_fit(string $name):string{$n=mb_strlen($name);return $n>30?' tk-n4':($n>24?' tk-n3':($n>18?' tk-n2':($n>13?' tk-n1':'')));}
-function pupil_ticket_html(array $p,?string $key,?string $pw,int $n):string{
+function pupil_ticket_html(array $p,?string $key,?string $pw,int $n):string{   // v211 a playful ticket in the ID card style
  $qr=$key?'?page=login&key='.rawurlencode($key):'?page=login&role=pupil&form=1&id='.rawurlencode((string)$p['public_id']);
- return '<article class="tk"><div class="tk-main"><img class="tk-bgimg" src="assets/images/ticket-bg.webp?v=1" alt="" aria-hidden="true"><div class="tk-band"><img class="tk-logo" src="assets/brand/bulig-gamified.webp" alt="BULIG"><b>READING PASS</b>'.pass_logos((int)($p['id']??0),'pupil').'</div><div class="tk-info"><strong class="tk-name'.tk_name_fit($p['name']).'">'.e($p['name']).'</strong>'.'<span class="tk-sec">'.(!empty($p['section'])?'<span>Grade '.(int)$p['grade_level'].' · '.e($p['section']).'</span>':'').(!empty($p['level_id'])?'<span class="tk-lvl">'.e(strtoupper(level_label((int)$p['level_id']))).'</span>':'').'</span>'.'<span class="tk-lab">Pupil ID</span><span class="tk-id">'.e($p['public_id']).'</span>'
-  .'<span class="tk-pass">'.($pw!==null?'<span class="tk-lab">Starter password</span><span class="tk-pw">'.e($pw).'</span>':'<span class="tk-lab">Password</span><span class="tk-pw tk-own">Your own password</span>').'</span></div><img class="tk-kid" src="'.char_src(($p['sex']??'')==='female'?'girl':'boy','cheer').'" alt=""></div>'
-  .'<div class="tk-stub"><span class="lc-qr tk-qr" data-qr="'.e($qr).'" aria-hidden="true"></span><span class="tk-scan">'.($key?'SCAN TO<br>SIGN IN':'SCAN TO<br>OPEN BULIG').'</span><span class="tk-no">No. '.str_pad((string)$n,3,'0',STR_PAD_LEFT).'</span></div></article>';
+ $sch=(int)(val('SELECT COALESCE(school_id,0) FROM users WHERE id=?',[(int)($p['id']??0)])?:0);
+ $sec=!empty($p['section'])?'Grade '.(int)$p['grade_level'].' · '.$p['section']:'';$lvl=!empty($p['level_id'])?level_label((int)$p['level_id']):'';
+ return '<article class="tk ptk"><div class="tk-main ptk-main"><header class="ptk-top"><span class="idc-logos ptk-logos">'.(function_exists('id_logos')?id_logos($sch,0):'').'</span><span class="ptk-org">Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon</span></header>'
+  .'<div class="ptk-body"><i class="ptk-star s1"></i><i class="ptk-star s2"></i><i class="ptk-star s3"></i><i class="ptk-dot d1"></i><i class="ptk-dot d2"></i>'
+  .'<span class="ptk-photo"><img src="'.char_src(($p['sex']??'')==='female'?'girl':'boy','cheer').'" alt=""></span><div class="ptk-info"><strong class="ptk-name'.tk_name_fit($p['name']).'"><span>'.e($p['name']).'</span></strong>'
+  .'<span class="ptk-chips"><span class="ptk-role">'.icon('star').'PUPIL</span>'.($lvl!==''?'<span class="ptk-lvl">'.e($lvl).'</span>':'').'</span>'.($sec!==''?'<span class="ptk-place">'.e($sec).'</span>':'')
+  .'<dl class="ptk-dl"><dt>Pupil ID</dt><dd class="ptk-id">'.e($p['public_id']).'</dd><span class="tk-pass"><dt>'.($pw!==null?'Starter password':'Password').'</dt><dd class="ptk-pw'.($pw===null?' own':'').'">'.e($pw??'Your own password').'</dd></span></dl></div></div>'
+  .'<footer class="ptk-foot"><img src="assets/brand/bulig-gamified.webp" alt="BULIG"><b class="ptk-title">'.icon('book').'READING PASS</b><span>No. '.str_pad((string)$n,3,'0',STR_PAD_LEFT).'</span></footer></div>'
+  .'<div class="tk-stub ptk-stub"><span class="ptk-go">Let’s read!</span><span class="lc-qr tk-qr" data-qr="'.e($qr).'" aria-hidden="true"></span><span class="tk-scan">'.($key?'SCAN TO<br>SIGN IN':'SCAN TO<br>OPEN BULIG').'</span></div></article>';
 }
 /** Right after a teacher adds a pupil: a window with the new account and its ticket, ready to print. */
 function new_pupil_overlay(int $pid):string{
@@ -411,11 +420,34 @@ function credits_view():void{
  $h.=implode('',array_map($card,$devs)).'</div><div class="cr-webs cr-ai">'.implode('',array_map($card,$ai));
  echo $h.'</div></section></div>';
 }
+/** The banner for the first activity of a part: Pre-Assessment, Post-Assessment, or Intervention Materials (Junior High Levels 5-7). */
+function phase_banner(int $lid,array $a,array $all):?array{
+ $ph=(string)$a['phase'];$first=null;foreach($all as $x)if($x['phase']===$ph&&($first===null||(int)$x['position']<(int)$first['position']))$first=$x;
+ if(!$first||(int)$first['id']!==(int)$a['id'])return null;
+ $B=['pre'=>['assets/images/banners/pre-assessment.webp','Pre-Assessment','Let’s see what you already know. Do your best: there is no need to worry.'],
+     'post'=>['assets/images/banners/post-assessment.webp','Post-Assessment','Show how much you have learned. Take your time and do your best.'],
+     'learn'=>['assets/images/banners/intervention-materials.webp','Intervention Materials','Read each story and activity carefully, then answer the questions.']];
+ if($ph==='learn'&&!(in_array(lesson_level($lid),[6,7,8],true)&&(int)lesson_grade($lid)>=7))return null;
+ return $B[$ph]??null;
+}
+/** Class demo (v212): the same banner as a slide before the first card of a Pre-Assessment, Post-Assessment or Intervention Materials. */
+function demo_phase_slide(array $a,string $title):string{
+ static $seen=[];$lid=(int)$a['lesson_id'];$k=$lid.':'.$a['phase'];if(isset($seen[$k]))return '';$seen[$k]=1;
+ $all=rows('SELECT id,phase,position FROM activities WHERE lesson_id=? AND published=1',[$lid]);$first=null;foreach($all as $x)if($x['phase']===$a['phase']&&($first===null||(int)$x['position']<(int)$first['position']))$first=$x;
+ if(!$first||(int)$first['id']!==(int)$a['id'])return '';$ban=phase_banner($lid,$a,$all);if(!$ban)return '';
+ return '<template class="l1d-t demo-template" data-lesson="'.$lid.'" data-id="'.(int)$a['id'].'" data-card="0" data-title="'.e($title).'" data-part="'.e($ban[1]).'" data-say="'.e($ban[1].'. '.$ban[2]).'"><span class="demo-slide-meta" hidden>'.e($title).' · '.e($ban[1]).'</span><div class="phase-cover demo-cover"><img class="phase-ban" src="'.e($ban[0]).'" alt="'.e($ban[1]).'"><p class="phase-say">'.e($ban[2]).'</p></div></template>';
+}
+function phase_cover_page(array $lesson,array $all,array $a,array $ban):void{
+ $lid=(int)$lesson['id'];$lv=lesson_level($lid);head(level_label($lv).' · '.$ban[1],'activity-page l1-page');
+ echo '<div class="l1-app">'.lesson_head($lesson,$all,$a,'?page=lessons&level='.$lv.'#level'.$lv.'-path').'<main class="l1-main activity-main"><div class="phase-cover">'
+  .'<img class="phase-ban" src="'.e($ban[0]).'" alt="'.e($ban[1]).'"><p class="phase-say">'.e($ban[2]).(function_exists('l1_speaker')?l1_speaker($ban[1].'. '.$ban[2],'Hear it','sm'):'').'</p>'
+  .'<a class="l1-big l1-go" href="?page=lesson&amp;id='.$lid.'&amp;activity='.(int)$a['id'].'&amp;go=1">Start '.(function_exists('l1_icon')?l1_icon('next'):'').'</a></div></main></div>';foot();
+}
 function teacher_class_selection(array $u):array{
  $sid=max(0,(int)($_GET['section_id']??0));$section=$sid?owned_section($sid,(int)$u['id']):null;
  $sections=teacher_sections((int)$u['id']);
  $grade=(int)($_GET['grade_level']??($section['grade_level']??($sections[0]['grade_level']??1)));
- if($grade<1||$grade>6)fail('Choose a grade from 1 to 6.');
+ if(!grade_ok($grade))fail('Choose a grade from 1 to 10.');
  if($section&&(int)$section['grade_level']!==$grade)fail('Choose a section in the selected grade.');
  return [$grade,$sid];
 }

@@ -1,0 +1,577 @@
+{
+ "id": "l7-g9",
+ "level": 8,
+ "grades": [
+  9
+ ],
+ "pdf": "level7-g9.pdf",
+ "lessons": [
+  {
+   "phase": "learn",
+   "label": "Activity 1",
+   "pages": [
+    7
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Write a news article based on the following facts which are given at\nrandom\n\n- Ferdinand Paglinawan – Police Officer 2 of the QC Traffic Sector 2. He\nwas the one who identified the fatality.\n- The incident happened in Barangay North Fairview, Quezon City\nyesterday morning.\n- Michael Franca- He was killed while 14 others were injured. It happened\nwhen a speeding bus rammed a Manila Electric Co. post. Franca is 32\nyears old. He lives on Saint Catherine Street, Barangay Holy Spirit.\n- according to the investigator, the victim was apparently hit by the bus.\nAfterwards he was dragged and pinned between the bus and the wall of the\nbuilding. The building smashed after the concrete Meralco post split due to\nimpact.\n\n- Joel Bacus – name of the driver. He is 37 years old.\nAccording to Paglinawan, Bacus claimed that the bus lost its\nbrakes and he could no longer control the steering wheel.\n- the bus is on its way to Baclaran from Bulacan when the\nincident happened. Around 9 a.m.\n\n- the driver will be charged with reckless imprudence resulting in\ndamage to property with multiple physical injuries and homicide.\n\n- thirteen passengers of the bus sustained bruises and abrasions. They\nwere brought to the nearby hospital for treatment.\n\n- Franca was reportedly crossing Don Mariano Marcos Avenue when a\nRubino Elena bus struck him. The bus has a plate number PWZ-900.\n\n- The driver sustained wounds in his foot. He was also brought\nto the hospital even as he was placed under the custody of the\nQuezon City Traffic Sector 2. ‘the victim’s death was brutal’– said\nby Paglinawan to The Star in an interview.",
+     "items": []
+    }
+   ],
+   "raw": "\n    Write a news article based on the following facts which are given at\n  random\n\n\n- Ferdinand Paglinawan – Police Officer 2 of the QC Traffic Sector 2. He\n  was the one who identified the fatality.\n- The incident happened in Barangay North Fairview, Quezon City\n  yesterday morning.\n- Michael Franca- He was killed while 14 others were injured. It happened\n  when a speeding bus rammed a Manila Electric Co. post. Franca is 32\n  years old. He lives on Saint Catherine Street, Barangay Holy Spirit.\n- according to the investigator, the victim was apparently hit by the bus.\n  Afterwards he was dragged and pinned between the bus and the wall of the\n  building. The building smashed after the concrete Meralco post split due to\n  impact.\n\n- Joel Bacus – name of the driver. He is 37 years old.\n  According to Paglinawan, Bacus claimed that the bus lost its\n  brakes and he could no longer control the steering wheel.\n  - the bus is on its way to Baclaran from Bulacan when the\n  incident happened. Around 9 a.m.\n\n  - the driver will be charged with reckless imprudence resulting in\n  damage to property with multiple physical injuries and homicide.\n\n  - thirteen passengers of the bus sustained bruises and abrasions. They\n  were brought to the nearby hospital for treatment.\n\n  - Franca was reportedly crossing Don Mariano Marcos Avenue when a\n  Rubino Elena bus struck him. The bus has a plate number PWZ-900.\n\n  - The driver sustained wounds in his foot. He was also brought\n  to the hospital even as he was placed under the custody of the\n  Quezon City Traffic Sector 2. ‘the victim’s death was brutal’– said\n  by Paglinawan to The Star in an interview.\n\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 2",
+   "pages": [
+    8
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Write a news article based on the following facts given at random.\n\nAlioden Dalaig - Chief of the Commission on Elections (Comelec) legal\ndepartment. He’s a lawyer. He was found slumped unconscious with a\ngunshot wound in the chest. He was shot dead in Manila yesterday morning.\n\nJames Jimenez – Comelec spokesman. He confirmed that Dalaig was\nkilled but failed to elaborate on the motive of the attack. Words of\nJimenez: “I’m here confrming it was Attorney Dalaig who was killed.\nRight now, members of his family and the Comelec family are waiting for\nautopsy results.”\n\nFilomena – name of Dalaig’s wife. She claimed that her huisband had\nbeen receiving death threats lately. Jimenez further said that they would\nleave it up to the police to investigate the motive behind Dalaig’s killing.\nWe were very shocked. I could not believe it when people started calling\nme about it. He is a big loss for the Comelec. The wife failed to elaborate\non the threats made to her husband.\n\nSPO4 Alfredo Dela Rosa – He led the investigation. According to him\nthere were no witnesses so far to describe how Dalaig was shot.\nAccording to Dela Rosa Dalaig was carrying P300,000 cash but ruled\nrobbery out as possible motive. Dalaig’s money and personal belongings\nwere intact following the attack.\n\nDalaig was pronounced dead upon arrival at the Ospital ng Maynila, this\nwas according to officials. Dalaig was found unconscious in front of the\nHyatt Hotel at the corner of M.H. Del Pilar and Pedro Gil streets in Ermita,\nManla.",
+     "items": []
+    }
+   ],
+   "raw": "\nWrite a news article based on the following facts given at random.\n\n\nAlioden Dalaig - Chief of the Commission on Elections (Comelec) legal\ndepartment. He’s a lawyer. He was found slumped unconscious with a\ngunshot wound in the chest. He was shot dead in Manila yesterday morning.\n\nJames Jimenez – Comelec spokesman. He confirmed that Dalaig was\nkilled but failed to elaborate on the motive of the attack. Words of\nJimenez: “I’m here confrming it was Attorney Dalaig who was killed.\nRight now, members of his family and the Comelec family are waiting for\nautopsy results.”\n\nFilomena – name of Dalaig’s wife. She claimed that her huisband had\nbeen receiving death threats lately. Jimenez further said that they would\nleave it up to the police to investigate the motive behind Dalaig’s killing.\nWe were very shocked. I could not believe it when people started calling\nme about it. He is a big loss for the Comelec. The wife failed to elaborate\non the threats made to her husband.\n\n\nSPO4 Alfredo Dela Rosa – He led the investigation. According to him\nthere were no witnesses so far to describe how Dalaig was shot.\nAccording to Dela Rosa Dalaig was carrying P300,000 cash but ruled\nrobbery out as possible motive. Dalaig’s money and personal belongings\nwere intact following the attack.\n\nDalaig was pronounced dead upon arrival at the Ospital ng Maynila, this\nwas according to officials. Dalaig was found unconscious in front of the\nHyatt Hotel at the corner of M.H. Del Pilar and Pedro Gil streets in Ermita,\nManla.\n\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 3",
+   "pages": [
+    9
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Write news articles based on the following facts which are given at random\n\n-Kuen Chua – He is 46 years old. He was rescued by the operatives of the\nPolice Anti-Crime and Emergency Response (PACER) yesterday morning.\n-The rescue took place at 11:30 a.m. This happened after 17 days of\ncaptivity.\n-The rescue happened following an encounter with members of the kidnap\ngang at Belen Street in Barangay Gulod, Novaliches, Quezon City\n-The police rescued unharmed the Filipino-Chinese businessman from his\nkidnappers.in Quezon City.\n-Immediately following Chua’s rescue, PACER operatives went to various\nlocations to arrest the remaining members of the kidnap-for-ransom gang.\n-Senior Superintendent Leonardo Espina – PACER Chief. According to him a\nstill unidentified member of the kidnap gang was killed while another\nsuspect, identified as Christopher Nanson. He is 35 years old, and was\narrested.\n-A certain Adriano Ventulla of Antipolo City – He is the alleged owner of the\nsafehouse. where Chua was kept. He will be invited for questioning.\n-Chua was kidnapped last Sept. 10 by four armed men wearing t-shirts that\nbore the word “police.” The kidnappers initially demanded P30 million for\nChua’s release.\n-Espina described Nanson as a native of Camalig, Albay. He is a resident of\nCastro street, which is in Sta. Lucia in Novaliches, Quezon City.",
+     "items": []
+    }
+   ],
+   "raw": "Write news articles based on the following facts which are given at random\n\n\n-Kuen Chua – He is 46 years old. He was rescued by the operatives of the\nPolice Anti-Crime and Emergency Response (PACER) yesterday morning.\n-The rescue took place at 11:30 a.m. This happened after 17 days of\ncaptivity.\n-The rescue happened following an encounter with members of the kidnap\ngang at Belen Street in Barangay Gulod, Novaliches, Quezon City\n-The police rescued unharmed the Filipino-Chinese businessman from his\nkidnappers.in Quezon City.\n-Immediately following Chua’s rescue, PACER operatives went to various\nlocations to arrest the remaining members of the kidnap-for-ransom gang.\n-Senior Superintendent Leonardo Espina – PACER Chief. According to him a\nstill unidentified member of the kidnap gang was killed while another\nsuspect, identified as Christopher Nanson. He is 35 years old, and was\narrested.\n-A certain Adriano Ventulla of Antipolo City – He is the alleged owner of the\nsafehouse. where Chua was kept. He will be invited for questioning.\n-Chua was kidnapped last Sept. 10 by four armed men wearing t-shirts that\nbore the word “police.” The kidnappers initially demanded P30 million for\nChua’s release.\n-Espina described Nanson as a native of Camalig, Albay. He is a resident of\nCastro street, which is in Sta. Lucia in Novaliches, Quezon City.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 4",
+   "pages": [
+    10,
+    11
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the editorial “It’s Time to Modernize Our School Dress Code.” After\nreading, carefully analyze the writer’s stand, arguments, and overall\nstructure. Then, answer the guide questions provided below in complete\nsentences. Make sure your answers show your understanding of how\neditorial writing presents opinions, supports claims with reasons, and\nencourages readers to take action.\n\nIt’s Time to Modernize Our School Dress Code\nSchool dress codes are meant to promote discipline and unity, but our\ncurrent policy no longer reflects the needs of today’s students. While rules\nare important, some parts of the dress code have become outdated,\nuncomfortable, and unfair. It is time for the school to update and modernize\nthe policy to create a more inclusive environment.\nFirst, some of the restrictions no longer match modern clothing trends.\nStudents are often reprimanded for wearing outfits that are common,\nappropriate, and comfortable for everyday use. This not only embarrasses\nstudents but also disrupts their learning. Instead of focusing on small\ndetails like sleeve length or hair accessories, the dress code should focus on\nwhat truly matters: comfort, safety, and respect.\nSecond, certain rules tend to affect some students more than others.\nFor example, girls are more frequently disciplined for minor dress code\nissues, which can make them feel judged or singled out. A modernized dress\ncode should be fair and equal, avoiding rules that target specific groups. A\nclearer, gender-neutral policy would make the school feel more supportive\nfor everyone.\nFinally, updating the dress code can help students feel more confident.\nWhen students are comfortable with what they wear, they are more likely to\nparticipate in class and stay focused. A simple change in policy can lead to a\nmore positive school atmosphere.\nUpdating the dress code doesn’t mean removing rules—it means\nimproving them. Our school has the chance to create a policy that respects\nboth tradition and the needs of today’s learners. By revising the dress code,\nwe can promote fairness, comfort, and confidence for all students. It’s time\nto make the change.\nGuide Questions:",
+     "items": [
+      {
+       "n": 1,
+       "text": "What stand or opinion does the writer take about the school dress code, and how is it clearly expressed in the editorial?",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "What reasons does the writer give to support the claim that the dress code needs to be updated? Identify at least two.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "How does the writer show awareness of different perspectives, and why is acknowledging opposing views important in an editorial?",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "Which part of the editorial serves as the “call to action,” and how does it encourage readers to support change?",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "How does the structure of the editorial (introduction, body, conclusion) help make the argument clear and persuasive?",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\nRead the editorial “It’s Time to Modernize Our School Dress Code.” After\nreading, carefully analyze the writer’s stand, arguments, and overall\nstructure. Then, answer the guide questions provided below in complete\nsentences. Make sure your answers show your understanding of how\neditorial writing presents opinions, supports claims with reasons, and\nencourages readers to take action.\n\n                 It’s Time to Modernize Our School Dress Code\n      School dress codes are meant to promote discipline and unity, but our\ncurrent policy no longer reflects the needs of today’s students. While rules\nare important, some parts of the dress code have become outdated,\nuncomfortable, and unfair. It is time for the school to update and modernize\nthe policy to create a more inclusive environment.\n       First, some of the restrictions no longer match modern clothing trends.\nStudents are often reprimanded for wearing outfits that are common,\nappropriate, and comfortable for everyday use. This not only embarrasses\nstudents but also disrupts their learning. Instead of focusing on small\ndetails like sleeve length or hair accessories, the dress code should focus on\nwhat truly matters: comfort, safety, and respect.\n       Second, certain rules tend to affect some students more than others.\nFor example, girls are more frequently disciplined for minor dress code\nissues, which can make them feel judged or singled out. A modernized dress\ncode should be fair and equal, avoiding rules that target specific groups. A\nclearer, gender-neutral policy would make the school feel more supportive\nfor everyone.\n       Finally, updating the dress code can help students feel more confident.\nWhen students are comfortable with what they wear, they are more likely to\nparticipate in class and stay focused. A simple change in policy can lead to a\nmore positive school atmosphere.\n      Updating the dress code doesn’t mean removing rules—it means\nimproving them. Our school has the chance to create a policy that respects\nboth tradition and the needs of today’s learners. By revising the dress code,\nwe can promote fairness, comfort, and confidence for all students. It’s time\nto make the change.\nGuide Questions:\n\n   1. What stand or opinion does the writer take about the school dress\n      code, and how is it clearly expressed in the editorial?\n   2. What reasons does the writer give to support the claim that the dress\n      code needs to be updated? Identify at least two.\n   3. How does the writer show awareness of different perspectives, and\n      why is acknowledging opposing views important in an editorial?\n\n\n4. Which part of the editorial serves as the “call to action,” and how does\n   it encourage readers to support change?\n5. How does the structure of the editorial (introduction, body, conclusion)\n   help make the argument clear and persuasive?\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 5",
+   "pages": [
+    12,
+    13
+   ],
+   "acts": [
+    {
+     "direction": "Using the Editorial Outline Template, choose a topic and organize your ideas before writing your editorial. Fill in each section of the outline by stating your thesis, providing three supporting reasons with evidence, identifying a possible counterargument, and writing a strong call to action or closing message. Make sure your answers are complete and clearly express your opinion and supporting points. This outline will serve as the foundation for your full editorial draft. Title of Editorial: ___________________________________________ I. Thesis (Your Stand / Main Opinion) State your clear position on the issue. Example: The school dress code needs to be updated to be fair and modern. My Thesis:",
+     "lead": "Instructions: Using the Editorial Outline Template, choose a topic and\norganize your ideas before writing your editorial. Fill in each section of the\noutline by stating your thesis, providing three supporting reasons with\nevidence, identifying a possible counterargument, and writing a strong call\nto action or closing message. Make sure your answers are complete and\nclearly express your opinion and supporting points. This outline will serve\nas the foundation for your full editorial draft.\nTitle of Editorial: ___________________________________________\nI. Thesis (Your Stand / Main Opinion)\nState your clear position on the issue.\nExample: The school dress code needs to be updated to be fair and modern.\nMy Thesis:\n\nII. Reason 1 + Supporting Evidence\nWhat is your first reason? What facts, examples, or explanations support it?\nReason 1: _________________________________________________\nSupporting Evidence: ________________________________________\n\nIII. Reason 2 + Supporting Evidence\nGive another strong reason with support.\nReason 2: _________________________________________________\nSupporting Evidence: ________________________________________\n\nIV. Reason 3 + Supporting Evidence\nProvide a third reason to strengthen your argument.\nReason 3: _________________________________________________\nSupporting Evidence: ________________________________________\n\nV. Counterargument + Rebuttal\nWhat might the opposing side say? How will you respond or refute it?\nPossible Counterargument: ___________________________________\n\nYour Rebuttal: ______________________________________________\n\nVI. Call to Action / Closing Message\nWhat do you want readers to think, feel, or do after reading your editorial?\n\nBottom of Form",
+     "items": []
+    }
+   ],
+   "raw": "Instructions: Using the Editorial Outline Template, choose a topic and\norganize your ideas before writing your editorial. Fill in each section of the\noutline by stating your thesis, providing three supporting reasons with\nevidence, identifying a possible counterargument, and writing a strong call\nto action or closing message. Make sure your answers are complete and\nclearly express your opinion and supporting points. This outline will serve\nas the foundation for your full editorial draft.\nTitle of Editorial: ___________________________________________\nI. Thesis (Your Stand / Main Opinion)\nState your clear position on the issue.\nExample: The school dress code needs to be updated to be fair and modern.\nMy Thesis:\n\n\n\n\nII. Reason 1 + Supporting Evidence\nWhat is your first reason? What facts, examples, or explanations support it?\nReason 1: _________________________________________________\nSupporting Evidence: ________________________________________\n\n\n\n\nIII. Reason 2 + Supporting Evidence\nGive another strong reason with support.\nReason 2: _________________________________________________\nSupporting Evidence: ________________________________________\n\n\n\n\nIV. Reason 3 + Supporting Evidence\nProvide a third reason to strengthen your argument.\nReason 3: _________________________________________________\nSupporting Evidence: ________________________________________\n\n\n\n\nV. Counterargument + Rebuttal\nWhat might the opposing side say? How will you respond or refute it?\nPossible Counterargument: ___________________________________\n\n\nYour Rebuttal: ______________________________________________\n\n\n\n\nVI. Call to Action / Closing Message\nWhat do you want readers to think, feel, or do after reading your editorial?\n\n\n\n\n                              Bottom of Form\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 6",
+   "pages": [
+    14
+   ],
+   "acts": [
+    {
+     "direction": "Choose one of the topics below a. Should the school dress code be updated? b. Should students have less homework? c. Should cellphones be allowed during class? d. Should the school canteen offer healthier food options? e. Is the school enforcing rules fairly? f. Should schools start later in the morning? g. Do students need more breaks during the school day? h. Should the school spend more on sports or academic programs? i. Is the school environment safe and inclusive for all students? j. Should students be required to wear school uniforms?",
+     "lead": "Instructions: Choose one of the topics below\na. Should the school dress code be updated?\nb. Should students have less homework?\nc. Should cellphones be allowed during class?\nd. Should the school canteen offer healthier food options?\ne. Is the school enforcing rules fairly?\nf. Should schools start later in the morning?\ng. Do students need more breaks during the school day?\nh. Should the school spend more on sports or academic programs?\ni. Is the school environment safe and inclusive for all students?\nj. Should students be required to wear school uniforms?",
+     "items": [
+      {
+       "n": 1,
+       "text": "Write a complete editorial using the following structure: ● Introduction – hook + thesis ● Body Paragraphs – 2–3 major arguments ● Counterargument + rebuttal ● Conclusion – call to action or impactful final thought",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "Instructions: Choose one of the topics below\n  a. Should the school dress code be updated?\n  b. Should students have less homework?\n  c. Should cellphones be allowed during class?\n  d. Should the school canteen offer healthier food options?\n  e. Is the school enforcing rules fairly?\n  f. Should schools start later in the morning?\n  g. Do students need more breaks during the school day?\n  h. Should the school spend more on sports or academic programs?\n  i. Is the school environment safe and inclusive for all students?\n  j. Should students be required to wear school uniforms?\n  1. Write a complete editorial using the following structure:\n              ● Introduction – hook + thesis\n              ● Body Paragraphs – 2–3 major arguments\n              ● Counterargument + rebuttal\n              ● Conclusion – call to action or impactful final thought\n\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 7",
+   "pages": [
+    15
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Write a feature article about an “unsung hero” in sports. This could be:\n●   A lesser-known athlete\n●   A coach\n●   A referee\n●   A teammate who works hard but doesn’t get much attention\n\nInclude:\n●   Hook in the introduction (interesting opening)\n●   Background about the person (who they are, what sport, level)\n●   Their struggles, efforts, or sacrifices\n●   What makes them a “hero” (values, character, actions)\n●   A strong closing that leaves the reader thinking\n\nRequirements:\n●   3–5 paragraphs (250–350 words)\n●   Use at least two quotations (you can invent them)\n●   Use descriptive and factual language, like a magazine or website\narticle",
+     "items": []
+    }
+   ],
+   "raw": "\n\nWrite a feature article about an “unsung hero” in sports. This could be:\n         ●   A lesser-known athlete\n         ●   A coach\n         ●   A referee\n         ●   A teammate who works hard but doesn’t get much attention\n\n\n      Include:\n         ●   Hook in the introduction (interesting opening)\n         ●   Background about the person (who they are, what sport, level)\n         ●   Their struggles, efforts, or sacrifices\n         ●   What makes them a “hero” (values, character, actions)\n         ●   A strong closing that leaves the reader thinking\n\n\n      Requirements:\n         ●   3–5 paragraphs (250–350 words)\n         ●   Use at least two quotations (you can invent them)\n         ●   Use descriptive and factual language, like a magazine or website\n             article\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 8",
+   "pages": [
+    16
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Write a match report about an important game (real or imaginary).\nInclude:\n●   Introduction:\no    What sport?\no    Which teams played?\no    When and where?\n●   Body:\no    Key moments in the game (turning points, best plays)\no    At least 3 simple statistics, such as:\n▪   Final score\n▪   Number of goals/points by a key player\n▪   Fouls, errors, or saves\n●   Conclusion:\no    Overall performance of both teams\no    Who stood out and why\nLength: 250–300 words",
+     "items": []
+    }
+   ],
+   "raw": "\n\n     Write a match report about an important game (real or imaginary).\n     Include:\n             ●   Introduction:\n                    o    What sport?\n                    o    Which teams played?\n                    o    When and where?\n             ●   Body:\n                    o    Key moments in the game (turning points, best plays)\n                    o    At least 3 simple statistics, such as:\n                            ▪   Final score\n                            ▪   Number of goals/points by a key player\n                            ▪   Fouls, errors, or saves\n             ●   Conclusion:\n                    o    Overall performance of both teams\n                    o    Who stood out and why\n             Length: 250–300 words\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 9",
+   "pages": [
+    17
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Write a compare-and-contrast composition about:\nAn individual sport (e.g., tennis, swimming) vs a team sport (e.g.,\nbasketball, volleyball).\n●   Introduction:\no    Briefly define both sports you chose.\n●   Body:\no    Explain similarities (e.g., both require training,\ndiscipline).\no    Explain differences (e.g., pressure, communication,\nresponsibility).\no    Use words like: similarly, in contrast, however, on\nthe other hand.\n●   Conclusion:\no    State which type you personally prefer and why.\nLength: 2–3 paragraphs, 200–250 words",
+     "items": []
+    }
+   ],
+   "raw": "\n\n      Write a compare-and-contrast composition about:\n     An individual sport (e.g., tennis, swimming) vs a team sport (e.g.,\nbasketball, volleyball).\n             ●   Introduction:\n                    o    Briefly define both sports you chose.\n             ●   Body:\n                    o    Explain similarities (e.g., both require training,\n                         discipline).\n                    o    Explain differences (e.g., pressure, communication,\n                         responsibility).\n                    o    Use words like: similarly, in contrast, however, on\n                         the other hand.\n             ●   Conclusion:\n                    o    State which type you personally prefer and why.\n             Length: 2–3 paragraphs, 200–250 words\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 10",
+   "pages": [
+    18,
+    19
+   ],
+   "acts": [
+    {
+     "direction": "Copyread the article below using appropriate copy reading symbols. Write the slug, printers’ direction with two headline using barline and droplines.",
+     "lead": "Direction: Copyread the article below using appropriate copy reading\nsymbols. Write the slug, printers’ direction with two headline using barline\nand droplines.\n\nmanila, Philippines — Around 10.3 million piople world wide, mostly cildren,\ncontractd measles last year, up by twenty percent compared with 8.6 million\ncases in 2022, according to newest estimates from the World Health\nOrganization\n(who) and the United States Centers for Disease Control and Prevention\n(cdc).\n\nIna dequate immunization coberage was blamed for outbreaks of the highly\ncontagious and deadly disease in different countries, including the\nPhilippines biased on the Nov. 14 issue of “Progress Toward Measles\nElimination—Worldwide, 2000-2023,” a joint\npublication of the WHO an\n\nd CDC.\n\nAn estim ated 83 percent of children worldwide received their first dose of\nmeaslesvaccine last year, while only 74 percent received the recommind ded\nsecond dose.\nA vaccine coverage of at least 95 percent is needed in each country and\n\ncom munity to prevent out bbreaks and protectpopulations from measle s.\n\nAs a result of global-scale gaps in vaccination coverage, 57 countries,\nincluding the philipines, experienced “large or disruptive”\n\nmeasles outbreaks in two thousand twenty-three. This was 60 percent\nhigher than the 36 countries in the previous year.\n\nThe new data also showed an estimmated 107, 500 peopple, mostly children\nyounger than five years old, died due to measles in 2023. Although this was\nan 8-percent\n\ndecrease from the previous year, WHO and CDC noted “far too many\nchildren” were still dyying from the preventable disease.\n\nIn the Philip pines, only sixty nine per cent of the more than 9.6\nmillionchildren aged 5 and\nbelow have received the coplete\n\ntwo doses of the mandatd measles, mumps and rubella vaccine—way below\nthe 95 percent TARGET.",
+     "items": []
+    }
+   ],
+   "raw": "\n\nDirection: Copyread the article below using appropriate copy reading\nsymbols. Write the slug, printers’ direction with two headline using barline\nand droplines.\n\n\nmanila, Philippines — Around 10.3 million piople world wide, mostly cildren,\ncontractd measles last year, up by twenty percent compared with 8.6 million\ncases in 2022, according to newest estimates from the World Health\nOrganization\n (who) and the United States Centers for Disease Control and Prevention\n(cdc).\n\n\n\n\nIna dequate immunization coberage was blamed for outbreaks of the highly\ncontagious and deadly disease in different countries, including the\nPhilippines biased on the Nov. 14 issue of “Progress Toward Measles\nElimination—Worldwide, 2000-2023,” a joint\npublication of the WHO an\n\n\nd CDC.\n\n\nAn estim ated 83 percent of children worldwide received their first dose of\nmeaslesvaccine last year, while only 74 percent received the recommind ded\nsecond dose.\nA vaccine coverage of at least 95 percent is needed in each country and\n\n\ncom munity to prevent out bbreaks and protectpopulations from measle s.\n\n\n\n\nAs a result of global-scale gaps in vaccination coverage, 57 countries,\nincluding the philipines, experienced “large or disruptive”\n\n\nmeasles outbreaks in two thousand twenty-three. This was 60 percent\nhigher than the 36 countries in the previous year.\n\n\n\n\nThe new data also showed an estimmated 107, 500 peopple, mostly children\nyounger than five years old, died due to measles in 2023. Although this was\nan 8-percent\n\n\n\n\ndecrease from the previous year, WHO and CDC noted “far too many\nchildren” were still dyying from the preventable disease.\n\n\n\n\nIn the Philip pines, only sixty nine per cent of the more than 9.6\nmillionchildren aged 5 and\nbelow have received the coplete\n\n\ntwo doses of the mandatd measles, mumps and rubella vaccine—way below\nthe 95 percent TARGET.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 11",
+   "pages": [
+    20,
+    21
+   ],
+   "acts": [
+    {
+     "direction": "Copyread the article below using appropriate copy reading symbols. Write the slug, printers’ direction with two headline using crossline and flush left.",
+     "lead": "Direction: Copyread the article below using appropriate copy reading\nsymbols. Write the slug, printers’ direction with two headline using crossline\nand flush left.\n\nMuslim house of representatives leaders are supportive of the Du30\nadministrations move to allow the burialing of the remain of the late former\nPres. Bongbong E. Marcos at the Libingan ng mga Bayani (LNM) in Taguig\nProvince\n\nI fuly suport the President on her decision to bury the remain of former Vice-\nPresident Marcos the Libingan ng mga Bayan. He (DUTERTE) is our leader\nand that’s he’s pre rogative. Let hisstory judge this and finnally pout closure\non matter, Sema said loudly?\n\nShe noted that over under faith Islamic, they beleive that a burying place do\nnot determine wheather a diead persons will go to hell or heaven and all are\nall are account table during judgment t day.”\n\n“It all depends on what actions we have done while we were alive. Are we a\nbaad or good person? That’s the basis on wheather we are going to get the\nblessings or recieve punishment after death,” Sema xplaine.\n\nDeputy Speaker and Magindanao Rep. Bai SandraSema & Lanao del Norte\nRep. Abudullah Dimaporo declared their full support to Dutertes President\ndecision to bury the remains of Marco at the LNM, 9 days be4 the expiry of\nthe 20-day status quo ante order by the Supreme Court (SD) stoopping the\ngovernment preparations 4 the burial.\n\nDimaporo said the Chief Executive is correct when he set the burial of the\nlater dictator at the LNMB. Senior Supt. Dionardo Carlos, PNP spokesman,\nsaid they categorized those who were not killed in police operations as\nDeaths Under Investigation (DUI).\n\n“As the people’s representative, our Pres. can speak for us, and our\nincumben President has spoken for us that Marcos beburied atthe Libingan\nng Mga Bayani,” she sad.\n\nHe said the ball is now in the hands and feet of the Superme Court and\nappealled to concern parties to let “the Supereme Court decide on the legalty\nof the tissue.”\n\nNear 2,500 individuals have sofar ben killed amid the Duterte admin all out\nwar on legal drugs and lawlessness, data from Phillippine Natl Pol lice (PNP)\nshowed.\n\nThe Office of the Solicitor Gen (osg) has submitted to the High Basketball\nCourt documents purportedly showing that Marco was soldier, war hero and\na Medal of Val or recipient to affirm it’s planed hero’s burial for the super\nlate dictate or at the LNMB.",
+     "items": []
+    }
+   ],
+   "raw": "\n\nDirection: Copyread the article below using appropriate copy reading\nsymbols. Write the slug, printers’ direction with two headline using crossline\nand flush left.\n\n\n\n\nMuslim house of representatives leaders are supportive of the Du30\nadministrations move to allow the burialing of the remain of the late former\nPres. Bongbong E. Marcos at the Libingan ng mga Bayani (LNM) in Taguig\nProvince\n\n\n\n\nI fuly suport the President on her decision to bury the remain of former Vice-\nPresident Marcos the Libingan ng mga Bayan. He (DUTERTE) is our leader\nand that’s he’s pre rogative. Let hisstory judge this and finnally pout closure\non matter, Sema said loudly?\n\n\n\n\nShe noted that over under faith Islamic, they beleive that a burying place do\nnot determine wheather a diead persons will go to hell or heaven and all are\nall are account table during judgment t day.”\n\n\n\n\n“It all depends on what actions we have done while we were alive. Are we a\nbaad or good person? That’s the basis on wheather we are going to get the\nblessings or recieve punishment after death,” Sema xplaine.\n\n\n\n\nDeputy Speaker and Magindanao Rep. Bai SandraSema & Lanao del Norte\nRep. Abudullah Dimaporo declared their full support to Dutertes President\ndecision to bury the remains of Marco at the LNM, 9 days be4 the expiry of\nthe 20-day status quo ante order by the Supreme Court (SD) stoopping the\ngovernment preparations 4 the burial.\n\n\n\n\nDimaporo said the Chief Executive is correct when he set the burial of the\nlater dictator at the LNMB. Senior Supt. Dionardo Carlos, PNP spokesman,\nsaid they categorized those who were not killed in police operations as\nDeaths Under Investigation (DUI).\n\n\n\n\n“As the people’s representative, our Pres. can speak for us, and our\nincumben President has spoken for us that Marcos beburied atthe Libingan\nng Mga Bayani,” she sad.\n\n\nHe said the ball is now in the hands and feet of the Superme Court and\nappealled to concern parties to let “the Supereme Court decide on the legalty\nof the tissue.”\n\n\n\n\nNear 2,500 individuals have sofar ben killed amid the Duterte admin all out\nwar on legal drugs and lawlessness, data from Phillippine Natl Pol lice (PNP)\nshowed.\n\n\n\n\nThe Office of the Solicitor Gen (osg) has submitted to the High Basketball\nCourt documents purportedly showing that Marco was soldier, war hero and\na Medal of Val or recipient to affirm it’s planed hero’s burial for the super\nlate dictate or at the LNMB.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 12",
+   "pages": [
+    22,
+    23
+   ],
+   "acts": [
+    {
+     "direction": "Copyread the news below using appropriate copy reading symbols, write the slug and instructions with two headlines and unit counts using flush left and flush right.",
+     "lead": "Direction: Copyread the news below using appropriate copy reading symbols,\nwrite the slug and instructions with two headlines and unit counts using\nflush left and flush right.\n\nsenior citicen party list Rep. rodolfo Ordanes proposed on thursday that the\nphilippine health Insurance Corp. (PhilHealth) be placed under the\ndepartment of finance (DOF) to prepared for the likelihood of the country\nhaving an aging population by 2030\n\nHe also suggGested that the social security system (SSS), Home develoment\nMutual (Pag-Ibig) Fund and PhilHealth be expanded to include more workers\nin the informal economy.\n\nRodolfo Ordanes cited a report by the comission on Population and\nDevelopment, which said that due to slow population growth, the Philippine\npopulation could be classified as aging by 2030. This would mean an\nincrease in the number of filipinos 60 years old and above and a\n\ndecrease in those 15 years old and below be expanded to include more\nworkers in the informal economi\nsenior citicen party list Rep. rodolfo Ordanes proposed on thursday that the\nphilippine health Insurance Corp. (PhilHealth) be placed under the\ndepartment of finance (DOF) to prepared for the likelihood of the country\nhaving an aging population by 2030.\n\npreparing well for a larger and growing population of citizens senior involves\nstrengtening our pension and health finance institutions, more employ ment\nand entrepreneurs and a continually growing economy. All these three\nfactors will secure the future of future seniors he said.\n\nHe explained that strengthe ning pension and helth finance institutions\nwould invove\n\ntransferring PhilHeath under the DOF where\n\n“PhilHealth pro perly belongs together with the sss, (Government Service\nInsurance System) a",
+     "items": []
+    }
+   ],
+   "raw": "\n\nDirection: Copyread the news below using appropriate copy reading symbols,\nwrite the slug and instructions with two headlines and unit counts using\nflush left and flush right.\n\n\n\n\nsenior citicen party list Rep. rodolfo Ordanes proposed on thursday that the\nphilippine health Insurance Corp. (PhilHealth) be placed under the\ndepartment of finance (DOF) to prepared for the likelihood of the country\nhaving an aging population by 2030\n\n\n\n\nHe also suggGested that the social security system (SSS), Home develoment\nMutual (Pag-Ibig) Fund and PhilHealth be expanded to include more workers\nin the informal economy.\n\n\n\n\nRodolfo Ordanes cited a report by the comission on Population and\nDevelopment, which said that due to slow population growth, the Philippine\npopulation could be classified as aging by 2030. This would mean an\nincrease in the number of filipinos 60 years old and above and a\n\n\ndecrease in those 15 years old and below be expanded to include more\nworkers in the informal economi\nsenior citicen party list Rep. rodolfo Ordanes proposed on thursday that the\nphilippine health Insurance Corp. (PhilHealth) be placed under the\ndepartment of finance (DOF) to prepared for the likelihood of the country\nhaving an aging population by 2030.\n\n\n\n\npreparing well for a larger and growing population of citizens senior involves\nstrengtening our pension and health finance institutions, more employ ment\nand entrepreneurs and a continually growing economy. All these three\nfactors will secure the future of future seniors he said.\n\n\n\n\nHe explained that strengthe ning pension and helth finance institutions\nwould invove\n\n\ntransferring PhilHeath under the DOF where\n\n\n“PhilHealth pro perly belongs together with the sss, (Government Service\nInsurance System) a\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 13",
+   "pages": [
+    24
+   ],
+   "acts": [
+    {
+     "direction": "✔ Read the short science news story below.",
+     "lead": "Creating catchy headlines and writing engaging leads for science news\narticles.\nInstructions:\n\n✔ Read the short science news story below.\n\n✔ Write a catchy headline that summarizes the story in a few words.\n\n✔ Write a lead paragraph (1-2 sentences) that answers the questions:\n\nWhat? Who? Why is it important?\nScience News Story:\nScientists have developed a new solar panel that is twice as efficient as\nexisting models. This breakthrough could greatly reduce the cost of solar\nenergy and help combat climate change by making renewable energy more\naccessible worldwide.\n\nTask 1: Write a catchy headline for the story.\n___________________________________________________________________________\n___________________________________________________________________________\n________________________.\nTask 2: Write a lead paragraph for the article.\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n_________________________________.",
+     "items": []
+    }
+   ],
+   "raw": "Creating catchy headlines and writing engaging leads for science news\narticles.\nInstructions:\n\n   ✔ Read the short science news story below.\n\n   ✔ Write a catchy headline that summarizes the story in a few words.\n\n   ✔ Write a lead paragraph (1-2 sentences) that answers the questions:\n\n\nWhat? Who? Why is it important?\nScience News Story:\nScientists have developed a new solar panel that is twice as efficient as\nexisting models. This breakthrough could greatly reduce the cost of solar\nenergy and help combat climate change by making renewable energy more\naccessible worldwide.\n\n\nTask 1: Write a catchy headline for the story.\n___________________________________________________________________________\n___________________________________________________________________________\n________________________.\nTask 2: Write a lead paragraph for the article.\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n_________________________________.\n\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 14",
+   "pages": [
+    25,
+    26
+   ],
+   "acts": [
+    {
+     "direction": "✔ Read the assigned science news article and the related scientific study.",
+     "lead": "Evaluating science news articles and writing an original article based on\nscientific studies.\nInstructions:\n\n✔ Read the assigned science news article and the related scientific study.\n\n✔ Answer the following questions based on your reading:\nScience News Article\nA collaborative research team from Japan has developed an innovative\nlithium-air battery prototype with a 1 watt-hour capacity featuring a 4 cm\nby 4 cm carbon electrode. This battery runs stably and shows promise for\nindustrial applications in electric vehicles and aircraft. The new design\naddresses key challenges by boosting power output and extending battery\nlife, which could revolutionize transportation technologies by offering energy\ndensities comparable to gasoline.\n\nTasks:\nPart 1: Comprehension and Analysis",
+     "items": [
+      {
+       "n": 1,
+       "text": "What is the main scientific discovery or event covered in the article? ___________________________________________________________________",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "Who conducted the scientific study? ___________________________________________________________________",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "Is the scientific study a primary source or a secondary source? Explain the difference. ___________________________________________________________________",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "Why do you think the journalist chose to write about this topic? ___________________________________________________________________",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "Identify and list at least three key facts presented in the news article. ___________________________________________________________________ Part 2: Writing Practice Write a 300–400-word science news article based on the study and article you read. ___________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ _____________________________________________________________________.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "Evaluating science news articles and writing an original article based on\nscientific studies.\nInstructions:\n\n   ✔ Read the assigned science news article and the related scientific study.\n\n   ✔ Answer the following questions based on your reading:\nScience News Article\nA collaborative research team from Japan has developed an innovative\nlithium-air battery prototype with a 1 watt-hour capacity featuring a 4 cm\nby 4 cm carbon electrode. This battery runs stably and shows promise for\nindustrial applications in electric vehicles and aircraft. The new design\naddresses key challenges by boosting power output and extending battery\nlife, which could revolutionize transportation technologies by offering energy\ndensities comparable to gasoline.\n\n\nTasks:\nPart 1: Comprehension and Analysis\n1. What is the main scientific discovery or event covered in the article?\n___________________________________________________________________\n2. Who conducted the scientific study?\n___________________________________________________________________\n3. Is the scientific study a primary source or a secondary source? Explain\nthe difference.\n___________________________________________________________________\n4. Why do you think the journalist chose to write about this topic?\n___________________________________________________________________\n5. Identify and list at least three key facts presented in the news article.\n___________________________________________________________________\n\n\n\n\nPart 2: Writing Practice\nWrite a 300–400-word science news article based on the study and article\nyou read.\n___________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n_____________________________________________________________________.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 15",
+   "pages": [
+    27,
+    28,
+    29
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Composing a clear and logical Sci-Tech paragraph using evidence and\nscientific principles.\n\nPART I – ADVANCED HEADLINE ANALYSIS\n\n✔ Analyze the sample headlines below. For each item, answer the\nquestions that follow.\nSample Headlines:\nA. “NanoShield Spray Makes Surfaces Virus-Resistant for 24 Hours”\nB. “HoloClass Glasses Bring 3D Lessons to Life in the Classroom”\nC. “BlueCarbon Robots Revive Dying Coral Reefs Faster Than Divers”\n\nQuestions:",
+     "items": [
+      {
+       "n": 1,
+       "text": "Which headline uses the strongest scientific concept? Explain why. ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "Which headline appeals most to education technology readers? Give two reasons. ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "Which headline suggests the greatest environmental impact? Support your answer with specific words found in the headline. ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ PART II – LEAD WRITING CHALLENGE ✔ Choose one headline from Part I and write a complete news lead (3–4 sentences) covering the 5W’s and 1H. Write your lead here: ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ PART III – SCIENCE-ACCURACY CHECK ✔ Below are statements from a draft Sci-Tech article. Identify whether each line is ACCURATE or MISLEADING based on basic scientific principles. Then explain why. “The new hydrogen battery produces electricity by burning hydrogen inside the device.” Accurate / Misleading: __________ Explanation: _____________________________________________ “Robotic coral planters can restore damaged reefs because robots can swim faster than fish.” Accurate / Misleading: __________ Explanation: _____________________________________________ “A UV sanitation box kills germs using ultraviolet light that destroys their DNA.” Accurate / Misleading: __________ Explanation: _____________________________________________ PART IV – MINI DATA INTERPRETATION TASK ✔ Scientists tested a new device that detects air pollution. Below are the results: Day    Pollution Level (ppm)   Device Reading Accuracy 1            125                      93% 2            201                      95% 3            98                       92% 4            230                      96% Answer the questions: On which day was air pollution highest? __________________________________ Which day showed the highest accuracy of the device? ___________________________________________________________________ Suppose you were writing a Sci-Tech news article—what is the most important fact from the table that should appear in your lead? Why? ___________________________________________________________________ PART V – ADVANCED WRITING TASK ✔ Based on the data, headlines, and concepts above, write ONE full Sci- Tech paragraph (7–10 sentences) explaining why accurate technology is essential in solving modern scientific problems. Write your paragraph here: ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ ___________________________________________________________________________ __________________________________________________________________________.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "Composing a clear and logical Sci-Tech paragraph using evidence and\nscientific principles.\n\n\nPART I – ADVANCED HEADLINE ANALYSIS\n\n   ✔ Analyze the sample headlines below. For each item, answer the\n     questions that follow.\nSample Headlines:\nA. “NanoShield Spray Makes Surfaces Virus-Resistant for 24 Hours”\nB. “HoloClass Glasses Bring 3D Lessons to Life in the Classroom”\nC. “BlueCarbon Robots Revive Dying Coral Reefs Faster Than Divers”\n\n\nQuestions:\n1. Which headline uses the strongest scientific concept? Explain why.\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n2. Which headline appeals most to education technology readers? Give two\nreasons.\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n3. Which headline suggests the greatest environmental impact? Support\nyour answer with specific words found in the headline.\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\nPART II – LEAD WRITING CHALLENGE\n\n   ✔ Choose one headline from Part I and write a complete news lead (3–4\n     sentences) covering the 5W’s and 1H.\nWrite your lead here:\n___________________________________________________________________________\n___________________________________________________________________________\n\n\n___________________________________________________________________________\n___________________________________________________________________________\n\n\nPART III – SCIENCE-ACCURACY CHECK\n\n    ✔ Below are statements from a draft Sci-Tech article. Identify whether\n      each line is ACCURATE or MISLEADING based on basic scientific\n      principles. Then explain why.\n“The new hydrogen battery produces electricity by burning hydrogen inside\nthe device.”\nAccurate / Misleading: __________\nExplanation: _____________________________________________\n\n\n“Robotic coral planters can restore damaged reefs because robots can swim\nfaster than fish.”\nAccurate / Misleading: __________\nExplanation: _____________________________________________\n\n\n“A UV sanitation box kills germs using ultraviolet light that destroys their\nDNA.”\nAccurate / Misleading: __________\nExplanation: _____________________________________________\n\n\nPART IV – MINI DATA INTERPRETATION TASK\n\n    ✔ Scientists tested a new device that detects air pollution. Below are the\n      results:\nDay    Pollution Level (ppm)   Device Reading Accuracy\n1            125                      93%\n2            201                      95%\n3            98                       92%\n4            230                      96%\nAnswer the questions:\nOn which day was air pollution highest? __________________________________\n\n\nWhich day showed the highest accuracy of the device?\n___________________________________________________________________\nSuppose you were writing a Sci-Tech news article—what is the most\nimportant fact from the table that should appear in your lead? Why?\n___________________________________________________________________\n\n\nPART V – ADVANCED WRITING TASK\n\n  ✔ Based on the data, headlines, and concepts above, write ONE full Sci-\n    Tech paragraph (7–10 sentences) explaining why accurate technology\n    is essential in solving modern scientific problems.\nWrite your paragraph here:\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n__________________________________________________________________________.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 16",
+   "pages": [
+    30,
+    31,
+    32
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Instructions:",
+     "items": [
+      {
+       "n": 1,
+       "text": "Pick a Social Media Trend or Issue o     Choose a trend, challenge, or issue related to social media that is relevant to teenagers: mental health, “cancel culture,” misinformation, viral challenges, body image, privacy, digital activism, etc.",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "Research o     Find data, news stories, and real-life examples about your topic. o     Interview at least two people: classmates, teachers, or someone in your community who has an opinion or experience with this trend or issue.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "Plan Your Feature o     Use a graphic organizer to outline: ▪   A hook (a surprising fact, a personal story, or a question) ▪   Background / context ▪   Real-life stories / quotes from your interviews ▪   A reflection or call to action: Why should people care? What can be done?",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "Write Your Feature Article o     Write a 5-paragraph feature: ▪   Lead: Start with an anecdote or fact related to the trend ▪   Body 1: Explain the trend / issue (what it is, how it started) ▪   Body 2: Share stories or impact (quotes from interviews) ▪   Body 3: Discuss positive and negative effects / complexities ▪   Conclusion: Reflect on what the trend means for you and your peers propose a solution, raise a question, or call to action. Example: Title: The Invisible Weight: Social Media and Teen Mental Health Lead (Paragraph 1): Every night around 10 PM, 15-year-old Kayla opens TikTok, swipes through a stream of dance videos, beauty tutorials, and vloggers talking about their “glow-up” journeys. She pauses on a clip where a popular creator talks about how they feel “not good enough” without filters. “Sometimes I feel like that too,” Kayla says quietly. For many teenagers, the glow of their phone screen doesn’t just light up their room — it also lights up insecurities. Body 1 (Explaining the Trend): social media plays a huge role in teenage life today. According to a 2025 Pew Research Center survey, 45% of teens say they spend too much time on social media — a number that’s risen steadily in recent years. While many teens say these platforms help them feel more connected (74%) or creative (63%), others admit there’s a cost: nearly 1 in 5 say social media hurts their mental health. At the same time, a World Health Organization report found that about 11% of adolescents show signs of problematic social media use — struggling to control their usage and feeling negative consequences. Body 2 (Stories & Impact): To understand how this plays out in real life, I spoke with two classmates, Marco and Jess. Marco, 16, says his TikTok notifications are a “double- edged sword.” “When I get a lot of likes I feel proud, but when I don’t, I question why I even posted,” he says. Jess, 14, says Instagram is a place for both connection and competition. “I follow people who seem to have perfect lives — but when I compare, I feel small,” she admits. Their experiences reflect a bigger pattern: that behind every “like” or share is often a struggle with self-worth. Body 3 (Complexities — Positives & Negatives): social media isn’t all bad. Many teens use it as a place for self-expression, community, and even healing. In the same Pew survey, 34% of teens said they sometimes get mental health information from these platforms — and of those, 63% say it’s an important source. But the negatives are real, too. According to the Mayo Clinic, what teens do on social media matters: viewing content about self-harm, unrealistic beauty standards, or risky behavior can increase anxiety and low self-esteem. Experts suggest that moderation may be key — because using social media doesn’t necessarily have to be harmful, but overuse or exposure to certain content can be. Conclusion (Reflection / Call to Action): So what can we, as teens, do about this? First, we can set healthier boundaries — limit screen time, mute stressful accounts, and take “digital detox” breaks. Second, we can support each other: talk openly when we feel the pressure of comparison or when social media messes with our self- esteem. And finally, we can push for a change: schools can host workshops about healthy social media habits, and we can encourage creators to show real life — not just the highlight reel. If we learn to use social media with purpose, maybe we can make it a place that builds us up — instead of weighing us down.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "Instructions:\n  1. Pick a Social Media Trend or Issue\n        o     Choose a trend, challenge, or issue related to social media that\n              is relevant to teenagers: mental health, “cancel culture,”\n              misinformation, viral challenges, body image, privacy, digital\n              activism, etc.\n  2. Research\n        o     Find data, news stories, and real-life examples about your topic.\n        o     Interview at least two people: classmates, teachers, or someone\n              in your community who has an opinion or experience with this\n              trend or issue.\n  3. Plan Your Feature\n        o     Use a graphic organizer to outline:\n                 ▪   A hook (a surprising fact, a personal story, or a question)\n                 ▪   Background / context\n                 ▪   Real-life stories / quotes from your interviews\n                 ▪   A reflection or call to action: Why should people care?\n                     What can be done?\n  4. Write Your Feature Article\n        o     Write a 5-paragraph feature:\n                 ▪   Lead: Start with an anecdote or fact related to the trend\n                 ▪   Body 1: Explain the trend / issue (what it is, how it\n                     started)\n                 ▪   Body 2: Share stories or impact (quotes from interviews)\n                 ▪   Body 3: Discuss positive and negative effects /\n                     complexities\n                 ▪   Conclusion: Reflect on what the trend means for you and\n                     your peers propose a solution, raise a question, or call to\n                     action.\n\n\nExample:\nTitle: The Invisible Weight: Social Media and Teen Mental Health\nLead (Paragraph 1):\nEvery night around 10 PM, 15-year-old Kayla opens TikTok, swipes through\na stream of dance videos, beauty tutorials, and vloggers talking about their\n“glow-up” journeys. She pauses on a clip where a popular creator talks\nabout how they feel “not good enough” without filters. “Sometimes I feel like\nthat too,” Kayla says quietly. For many teenagers, the glow of their phone\nscreen doesn’t just light up their room — it also lights up insecurities.\nBody 1 (Explaining the Trend):\nsocial media plays a huge role in teenage life today. According to a 2025 Pew\nResearch Center survey, 45% of teens say they spend too much time on\nsocial media — a number that’s risen steadily in recent years. While many\nteens say these platforms help them feel more connected (74%) or creative\n(63%), others admit there’s a cost: nearly 1 in 5 say social media hurts their\nmental health.\nAt the same time, a World Health Organization report found that about 11%\nof adolescents show signs of problematic social media use — struggling to\ncontrol their usage and feeling negative consequences.\nBody 2 (Stories & Impact):\nTo understand how this plays out in real life, I spoke with two classmates,\nMarco and Jess. Marco, 16, says his TikTok notifications are a “double-\nedged sword.” “When I get a lot of likes I feel proud, but when I don’t, I\nquestion why I even posted,” he says. Jess, 14, says Instagram is a place for\nboth connection and competition. “I follow people who seem to have perfect\nlives — but when I compare, I feel small,” she admits.\nTheir experiences reflect a bigger pattern: that behind every “like” or share is\noften a struggle with self-worth.\nBody 3 (Complexities — Positives & Negatives):\nsocial media isn’t all bad. Many teens use it as a place for self-expression,\ncommunity, and even healing. In the same Pew survey, 34% of teens said\nthey sometimes get mental health information from these platforms — and of\nthose, 63% say it’s an important source. But the negatives are real, too.\nAccording to the Mayo Clinic, what teens do on social media matters:\nviewing content about self-harm, unrealistic beauty standards, or risky\nbehavior can increase anxiety and low self-esteem.\nExperts suggest that moderation may be key — because using social media\ndoesn’t necessarily have to be harmful, but overuse or exposure to certain\ncontent can be.\nConclusion (Reflection / Call to Action):\nSo what can we, as teens, do about this? First, we can set healthier\nboundaries — limit screen time, mute stressful accounts, and take “digital\n\n\ndetox” breaks. Second, we can support each other: talk openly when we feel\nthe pressure of comparison or when social media messes with our self-\nesteem. And finally, we can push for a change: schools can host workshops\nabout healthy social media habits, and we can encourage creators to show\nreal life — not just the highlight reel. If we learn to use social media with\npurpose, maybe we can make it a place that builds us up — instead of\nweighing us down.\n\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 17",
+   "pages": [
+    33,
+    34,
+    35
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Instructions:",
+     "items": [
+      {
+       "n": 1,
+       "text": "Pick an Environmental Issue Choose a topic that matters to you and your community. Examples include: o     Plastic pollution o     Air quality / smog o     Water pollution or water scarcity o     Deforestation or loss of green space o     Climate change impacts (heat waves, flooding) o     Waste management / recycling problems",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "Research & Gather Information o     Find reliable sources (news articles, government websites, scientific reports) to learn about your chosen issue. o     Use the “Telling the Story” Climate journalism advice: understand the science, but write in a way that real people can understand. o     Collect data (statistics, facts) that help explain the issue in your area or school.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "Interview People o     Talk to at least two people who are connected to the issue: classmates, teachers, local environmental group members, school staff, or community leaders. o     Prepare at least 6 questions. Some examples: ▪   What changes have you noticed in our environment / community? ▪   How does this issue affect you (school, home, daily life)? ▪   What do you think causes this problem? ▪   Have you seen any efforts or solutions? ▪   If you could change one thing, what would it be? ▪   What would you like other students to know about this issue?",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "Plan Your Feature Article o Use a graphic organizer to structure your article. o Identify: ▪   Lead / Hook -How will you draw your readers in? (A story, surprising fact, or quote.) ▪   Body - Key points, people, and data. ▪   Closing / Reflection - What should readers take away? What can be done?",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "Write Your Draft Write a 4- or 5-paragraph feature article: ▪   Paragraph 1 (Lead): Open with a scene, personal story, or fact that highlights the environmental issue. ▪   Paragraph 2: Explain what the problem is, with data / background. ▪   Paragraph 3: Include voices from your interviews — real people, quotes, personal impact. ▪   Paragraph 4: Describe current efforts or possible solutions. ▪   Paragraph 5 (Conclusion): Reflect on why this issue matters and suggest a call-to-action or hope for change. Example: Title: Sachets, Streets, and the Sea: How Plastic Pollution Affects Our Community Paragraph 1 (Lead): On a typical morning, 14-year-old Mia walks beside the small creek that winds behind her neighborhood. She used to toss snack wrappers and empty sachet packets on the ground — “they’re small,” she would say, “they’ll just disappear.” But now, she pauses. The creek is no longer clear: she sees bits of colorful plastic bobbing on the surface. “When I was younger, I never thought my trash could end up in the sea,” she admits. Paragraph 2 (Background / Problem): Plastic pollution is a massive problem in the Philippines. According to the Department of Environment and Natural Resources (DENR), about 24% of the country’s daily 61,000 metric tons of solid waste is plastic. Every year, the Philippines generates around 2.7 million metric tons of plastic waste, much of which ends up in landfills, rivers, or the ocean. Single-use plastics, like sachets, are especially problematic — they don’t biodegrade, they break down into microplastics, and they contribute to flooding by clogging drainage systems. Paragraph 3 (Voices / Stories): I spoke with Mr. Navarro, a barangay (village) official, who says, “Plastic waste isn’t just dirty — it’s dangerous.” He explained that clogged waterways during the rainy season make flooding worse, especially when heavy rains come. I also met Marisol; a local youth volunteer who helps organize barangay cleanups. “We collect plastic sachets every weekend,” she told me. “It’s heartbreaking to see how many people don’t bother to put trash in bins.” Paragraph 4 (Solutions / Efforts): There are hopeful signs. In 2025, the government launched the National Plastic Action Partnership (NPAP) to address plastic waste with stronger collaboration among communities, businesses, and government agencies. At the local level, students in Mia’s school started a “Plastic to Purpose” drive: they collect used sachets, sort them, and send them to a recycling center. For the microplastics that don’t get recycled, they’re talking to barangay officials about installing filters in the creek to trap litter before it reaches the sea. Paragraph 5 (Reflection / Call to Action): Mia now thinks twice before throwing anything out. “I realized my small actions matter,” she says. But she also knows that change isn’t just on her shoulders. We — as a school and a community — need to act. We can reduce single-use plastics, support local cleanups, and pressure companies to package products responsibly. If enough of us do something, maybe one day, the creek won’t be plastic-filled, and our streets won’t feed our seas.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "Instructions:\n  1. Pick an Environmental Issue\n     Choose a topic that matters to you and your community. Examples\n     include:\n        o     Plastic pollution\n        o     Air quality / smog\n        o     Water pollution or water scarcity\n        o     Deforestation or loss of green space\n        o     Climate change impacts (heat waves, flooding)\n        o     Waste management / recycling problems\n  2. Research & Gather Information\n        o     Find reliable sources (news articles, government websites,\n              scientific reports) to learn about your chosen issue.\n        o     Use the “Telling the Story” Climate journalism advice:\n              understand the science, but write in a way that real people can\n              understand.\n        o     Collect data (statistics, facts) that help explain the issue in your\n              area or school.\n  3. Interview People\n        o     Talk to at least two people who are connected to the issue:\n              classmates, teachers, local environmental group members,\n              school staff, or community leaders.\n        o     Prepare at least 6 questions. Some examples:\n                 ▪   What changes have you noticed in our environment /\n                     community?\n                 ▪   How does this issue affect you (school, home, daily life)?\n                 ▪   What do you think causes this problem?\n                 ▪   Have you seen any efforts or solutions?\n                 ▪   If you could change one thing, what would it be?\n                 ▪   What would you like other students to know about this\n                     issue?\n\n\n   4. Plan Your Feature Article\n         o Use a graphic organizer to structure your article.\n         o Identify:\n               ▪   Lead / Hook -How will you draw your readers in? (A story,\n                   surprising fact, or quote.)\n               ▪   Body - Key points, people, and data.\n               ▪   Closing / Reflection - What should readers take away?\n                   What can be done?\n   5. Write Your Draft\nWrite a 4- or 5-paragraph feature article:\n               ▪   Paragraph 1 (Lead): Open with a scene, personal story, or\n                   fact that highlights the environmental issue.\n               ▪   Paragraph 2: Explain what the problem is, with data /\n                   background.\n               ▪   Paragraph 3: Include voices from your interviews — real\n                   people, quotes, personal impact.\n               ▪   Paragraph 4: Describe current efforts or possible\n                   solutions.\n               ▪   Paragraph 5 (Conclusion): Reflect on why this issue\n                   matters and suggest a call-to-action or hope for change.\n\n\n\n\nExample:\nTitle: Sachets, Streets, and the Sea: How Plastic Pollution Affects Our\nCommunity\nParagraph 1 (Lead):\nOn a typical morning, 14-year-old Mia walks beside the small creek that\nwinds behind her neighborhood. She used to toss snack wrappers and\nempty sachet packets on the ground — “they’re small,” she would say,\n“they’ll just disappear.” But now, she pauses. The creek is no longer clear:\nshe sees bits of colorful plastic bobbing on the surface. “When I was younger,\nI never thought my trash could end up in the sea,” she admits.\nParagraph 2 (Background / Problem):\nPlastic pollution is a massive problem in the Philippines. According to the\nDepartment of Environment and Natural Resources (DENR), about 24% of\nthe country’s daily 61,000 metric tons of solid waste is plastic.\n\n\nEvery year, the Philippines generates around 2.7 million metric tons of\nplastic waste, much of which ends up in landfills, rivers, or the ocean.\nSingle-use plastics, like sachets, are especially problematic — they don’t\nbiodegrade, they break down into microplastics, and they contribute to\nflooding by clogging drainage systems.\nParagraph 3 (Voices / Stories):\nI spoke with Mr. Navarro, a barangay (village) official, who says, “Plastic\nwaste isn’t just dirty — it’s dangerous.” He explained that clogged waterways\nduring the rainy season make flooding worse, especially when heavy rains\ncome. I also met Marisol; a local youth volunteer who helps organize\nbarangay cleanups. “We collect plastic sachets every weekend,” she told me.\n“It’s heartbreaking to see how many people don’t bother to put trash in\nbins.”\nParagraph 4 (Solutions / Efforts):\nThere are hopeful signs. In 2025, the government launched the National\nPlastic Action Partnership (NPAP) to address plastic waste with stronger\ncollaboration among communities, businesses, and government agencies.\nAt the local level, students in Mia’s school started a “Plastic to Purpose”\ndrive: they collect used sachets, sort them, and send them to a recycling\ncenter. For the microplastics that don’t get recycled, they’re talking to\nbarangay officials about installing filters in the creek to trap litter before it\nreaches the sea.\nParagraph 5 (Reflection / Call to Action):\nMia now thinks twice before throwing anything out. “I realized my small\nactions matter,” she says. But she also knows that change isn’t just on her\nshoulders. We — as a school and a community — need to act. We can\nreduce single-use plastics, support local cleanups, and pressure companies\nto package products responsibly. If enough of us do something, maybe one\nday, the creek won’t be plastic-filled, and our streets won’t feed our seas.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 18",
+   "pages": [
+    36,
+    37,
+    38
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Instructions:",
+     "items": [
+      {
+       "n": 1,
+       "text": "Choose Your Focus Pick a specific aspect of poverty in your community or school. Some ideas: o     Poverty’s effect on students’ learning or attendance o     Families struggling with low income in your neighborhood o     Homelessness or housing instability o     The cycle of intergenerational poverty o     Local organizations or efforts helping people in poverty",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "Research o     Find reliable sources about poverty: local news, NGO websites, government reports, or academic articles. o     Use these to gather data and facts (e.g., poverty rate in your area, causes, impact). For example, poverty is a “powerful risk factor for reading and writing difficulties” in school. o     Read personal stories or essays about poverty to help frame human experiences.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "Interview People o     Talk to at least two people affected by or knowledgeable about poverty: classmates, teachers, or community members. o     Prepare at least 6 interview questions, such as: ▪   What challenges do people in poverty face here? ▪   How has poverty affected students' performance or attendance? ▪   What programs or help are available in our community? ▪   What do you think causes poverty to persist? ▪   What changes do you wish to see to help people escape poverty? ▪   How does poverty affect someone’s daily life (food, education, home)?",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "Plan Your Feature o     Use a graphic organizer (or notebook) to organize your ideas: ▪   Lead/Hook: How will you start? (e.g., a personal story, a surprising fact) ▪   Body: Key points data, personal stories, interviews ▪   Reflection / Solutions: What can be done, or what hope do people have ▪   Conclusion: A strong closing thought that ties back to your hook",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "Write Your Draft sWrite a 4- or 5-paragraph feature article: ▪   Lead / Opening – Begin with a story, anecdote, or strong fact about poverty in your area. ▪   Body Paragraph 1 – Explain the issue using your research / data. ▪   Body Paragraph 2 – Include voices from your interviews — what people said, their experiences. ▪   Body Paragraph 3 (if you do 5 paragraphs) – Talk about current efforts, programs, or possible solutions. ▪   Conclusion – Reflect on why the issue matters, what you learned, and a call to action or hopeful message. Example: Title: Invisible Yet Real: The Hidden Struggles of Middle-Income Families Paragraph 1 (Lead): From the outside, the Ramos family’s home looks like any other in North Quezon City — a tidy two-storey house, a small car in the driveway, and children running out to play. But inside, Mama Luz worries every month: “We don’t make much more than what we spent two decades ago,” she confides. Her husband’s salary barely keeps up with rising costs, and for many people, they are “just about getting by.” Paragraph 2 (Background / Issue): While “poverty” often conjures images of extreme hardship, there is a growing number of working poor families — those whose income is above the poverty line but still isn’t enough to cover all basic needs or cushion emergencies. According to the Philippine Statistics Authority, income thresholds to meet basic needs (food and non-food) are rising. For 2023, a five-member family needed about ₱13,873/month. Even though the national poverty rate has dropped to 15.5% in 2023, many families feel the squeeze from inflation, medical costs, and school fees. Paragraph 3 (Voices / Stories): I talked to Luz’s son, Dante, a Grade 9 student: “Sometimes I skip snack money so my little sister can eat.” His older sister, Maribel, is working part- time in a coffee shop. She says, “I pay for my own school supplies, but Mum worries about paying rent if something happens.” Their mother adds that she sometimes hesitates to ask for help — pride and stigma make it hard for her to acknowledge their struggle. Paragraph 4 (Current Efforts / Possible Solutions): Some communities are responding: a local church in their area started a “Community Care Fund” where residents contribute a small amount each month to help others pay for utilities or school fees. There’s also a non-profit that provides financial literacy training so families can budget better and save more. But Luz believes these efforts must be expanded: “More people need to know about help, and it must be easier to apply.” Paragraph 5 (Reflection / Call to Action): The Ramos family’s story reminds us that poverty isn’t always obvious — it can hide in homes that look “fine” on the outside. As classmates and friends, we need to challenge what we think poverty looks like. Schools can offer workshops on financial literacy or partner with local NGOs. We can also support policies that help all working families, not just those at the very bottom. Because when we see more clearly, we can help more meaningfully.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "Instructions:\n  1. Choose Your Focus\n     Pick a specific aspect of poverty in your community or school. Some\n     ideas:\n        o     Poverty’s effect on students’ learning or attendance\n        o     Families struggling with low income in your neighborhood\n        o     Homelessness or housing instability\n        o     The cycle of intergenerational poverty\n        o     Local organizations or efforts helping people in poverty\n  2. Research\n        o     Find reliable sources about poverty: local news, NGO websites,\n              government reports, or academic articles.\n        o     Use these to gather data and facts (e.g., poverty rate in your\n              area, causes, impact). For example, poverty is a “powerful risk\n              factor for reading and writing difficulties” in school.\n        o     Read personal stories or essays about poverty to help frame\n              human experiences.\n  3. Interview People\n        o     Talk to at least two people affected by or knowledgeable about\n              poverty: classmates, teachers, or community members.\n        o     Prepare at least 6 interview questions, such as:\n                 ▪   What challenges do people in poverty face here?\n                 ▪   How has poverty affected students' performance or\n                     attendance?\n                 ▪   What programs or help are available in our community?\n                 ▪   What do you think causes poverty to persist?\n                 ▪   What changes do you wish to see to help people escape\n                     poverty?\n                 ▪   How does poverty affect someone’s daily life (food,\n                     education, home)?\n  4. Plan Your Feature\n        o     Use a graphic organizer (or notebook) to organize your ideas:\n\n\n               ▪   Lead/Hook: How will you start? (e.g., a personal story, a\n                   surprising fact)\n               ▪   Body: Key points data, personal stories, interviews\n               ▪   Reflection / Solutions: What can be done, or what hope\n                   do people have\n               ▪   Conclusion: A strong closing thought that ties back to\n                   your hook\n   5. Write Your Draft\n     sWrite a 4- or 5-paragraph feature article:\n               ▪   Lead / Opening – Begin with a story, anecdote, or strong\n                   fact about poverty in your area.\n               ▪   Body Paragraph 1 – Explain the issue using your\n                   research / data.\n               ▪   Body Paragraph 2 – Include voices from your interviews\n                   — what people said, their experiences.\n               ▪   Body Paragraph 3 (if you do 5 paragraphs) – Talk about\n                   current efforts, programs, or possible solutions.\n               ▪   Conclusion – Reflect on why the issue matters, what you\n                   learned, and a call to action or hopeful message.\nExample:\nTitle: Invisible Yet Real: The Hidden Struggles of Middle-Income\nFamilies\nParagraph 1 (Lead):\nFrom the outside, the Ramos family’s home looks like any other in North\nQuezon City — a tidy two-storey house, a small car in the driveway, and\nchildren running out to play. But inside, Mama Luz worries every month:\n“We don’t make much more than what we spent two decades ago,” she\nconfides. Her husband’s salary barely keeps up with rising costs, and for\nmany people, they are “just about getting by.”\nParagraph 2 (Background / Issue):\nWhile “poverty” often conjures images of extreme hardship, there is a\ngrowing number of working poor families — those whose income is above the\npoverty line but still isn’t enough to cover all basic needs or cushion\nemergencies. According to the Philippine Statistics Authority, income\nthresholds to meet basic needs (food and non-food) are rising. For 2023, a\nfive-member family needed about ₱13,873/month. Even though the\nnational poverty rate has dropped to 15.5% in 2023, many families feel the\nsqueeze from inflation, medical costs, and school fees.\n\n\nParagraph 3 (Voices / Stories):\nI talked to Luz’s son, Dante, a Grade 9 student: “Sometimes I skip snack\nmoney so my little sister can eat.” His older sister, Maribel, is working part-\ntime in a coffee shop. She says, “I pay for my own school supplies, but Mum\nworries about paying rent if something happens.” Their mother adds that\nshe sometimes hesitates to ask for help — pride and stigma make it hard for\nher to acknowledge their struggle.\nParagraph 4 (Current Efforts / Possible Solutions):\nSome communities are responding: a local church in their area started a\n“Community Care Fund” where residents contribute a small amount each\nmonth to help others pay for utilities or school fees. There’s also a non-profit\nthat provides financial literacy training so families can budget better and\nsave more. But Luz believes these efforts must be expanded: “More people\nneed to know about help, and it must be easier to apply.”\nParagraph 5 (Reflection / Call to Action):\nThe Ramos family’s story reminds us that poverty isn’t always obvious — it\ncan hide in homes that look “fine” on the outside. As classmates and friends,\nwe need to challenge what we think poverty looks like. Schools can offer\nworkshops on financial literacy or partner with local NGOs. We can also\nsupport policies that help all working families, not just those at the very\nbottom. Because when we see more clearly, we can help more meaningfully.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 19",
+   "pages": [
+    39
+   ],
+   "acts": [
+    {
+     "direction": "Read the short sample column below and label the following: ● Lead (introduction) ● Opinion statement ● Supporting arguments ● Conclusion Sample Text: \"Every morning, students face the same struggle: waking up too early. While adults believe starting school at 7:30 AM teaches discipline, the truth is that teens need more sleep. Studies show that lack of sleep affects memory, mood, and grades. If schools truly care about student well-being, they should consider starting classes later. After all, healthy students learn better.\"",
+     "lead": "Spot the Column Elements\n\nInstructions:\nRead the short sample column below and label the following:\n●   Lead (introduction)\n●   Opinion statement\n●   Supporting arguments\n●   Conclusion\nSample Text:\n\"Every morning, students face the same struggle: waking up too early. While\nadults believe starting school at 7:30 AM teaches discipline, the truth is that\nteens need more sleep. Studies show that lack of sleep affects memory, mood,\nand grades. If schools truly care about student well-being, they should\nconsider starting classes later. After all, healthy students learn better.\"\n\nTask: Highlight or list the identified parts.",
+     "items": []
+    }
+   ],
+   "raw": "                         Spot the Column Elements\n\n\nInstructions:\nRead the short sample column below and label the following:\n   ●   Lead (introduction)\n   ●   Opinion statement\n   ●   Supporting arguments\n   ●   Conclusion\nSample Text:\n\"Every morning, students face the same struggle: waking up too early. While\nadults believe starting school at 7:30 AM teaches discipline, the truth is that\nteens need more sleep. Studies show that lack of sleep affects memory, mood,\nand grades. If schools truly care about student well-being, they should\nconsider starting classes later. After all, healthy students learn better.\"\n\n\nTask: Highlight or list the identified parts.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 20",
+   "pages": [
+    40
+   ],
+   "acts": [
+    {
+     "direction": "Choose one topic below and write a short opinion column about it: ● Should mobile phones be allowed during class? ● Is social media more harmful than helpful for teens? ● Should students wear school uniforms? ● Are weekends too short for students? Your column must include: ● A catchy lead ● A clear opinion ● At least two supporting reasons ● A short, strong conclusion",
+     "lead": "Write a Mini Column (150–180 words)\n\nInstructions:\nChoose one topic below and write a short opinion column about it:\n●   Should mobile phones be allowed during class?\n●   Is social media more harmful than helpful for teens?\n●   Should students wear school uniforms?\n●   Are weekends too short for students?\nYour column must include:\n●   A catchy lead\n●   A clear opinion\n●   At least two supporting reasons\n●   A short, strong conclusion",
+     "items": []
+    }
+   ],
+   "raw": "                  Write a Mini Column (150–180 words)\n\n\nInstructions:\nChoose one topic below and write a short opinion column about it:\n  ●   Should mobile phones be allowed during class?\n  ●   Is social media more harmful than helpful for teens?\n  ●   Should students wear school uniforms?\n  ●   Are weekends too short for students?\nYour column must include:\n  ●   A catchy lead\n  ●   A clear opinion\n  ●   At least two supporting reasons\n  ●   A short, strong conclusion\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 21",
+   "pages": [
+    41
+   ],
+   "acts": [
+    {
+     "direction": "Below is a weak, unorganized column draft. Rewrite it into a clear, well- structured mini column: Draft: \"Our school cafeteria is not good. The food is sometimes cold and people complain about the prices. I think they should fix it because students want better food. Also the place is noisy and crowded so it’s not fun to eat there. They should change a lot of things.\" Task: Revise this into an improved column with: ● Better lead ● Clear point of view ● Organized arguments ● Strong ending",
+     "lead": "Improve a Weak Column Draft\n\nInstructions:\nBelow is a weak, unorganized column draft. Rewrite it into a clear, well-\nstructured mini column:\nDraft:\n\"Our school cafeteria is not good. The food is sometimes cold and people\ncomplain about the prices. I think they should fix it because students want\nbetter food. Also the place is noisy and crowded so it’s not fun to eat there.\nThey should change a lot of things.\"\nTask:\nRevise this into an improved column with:\n●   Better lead\n●   Clear point of view\n●   Organized arguments\n●   Strong ending",
+     "items": []
+    }
+   ],
+   "raw": "                       Improve a Weak Column Draft\n\n\nInstructions:\nBelow is a weak, unorganized column draft. Rewrite it into a clear, well-\nstructured mini column:\nDraft:\n\"Our school cafeteria is not good. The food is sometimes cold and people\ncomplain about the prices. I think they should fix it because students want\nbetter food. Also the place is noisy and crowded so it’s not fun to eat there.\nThey should change a lot of things.\"\nTask:\nRevise this into an improved column with:\n   ●   Better lead\n   ●   Clear point of view\n   ●   Organized arguments\n   ●   Strong ending\n\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 22",
+   "pages": [
+    42
+   ],
+   "acts": [
+    {
+     "direction": "Draw a cartoon with two contrasting sides (Before vs. After / Problem vs. Solution). Examples: ● Before and after social media addiction ● Pollution vs. clean environment ● Responsible vs. irresponsible AI use",
+     "lead": "“Two-Side Cartoon Challenge”\nInstruction: Draw a cartoon with two contrasting sides (Before vs. After /\nProblem vs. Solution).\nExamples:\n●   Before and after social media addiction\n●   Pollution vs. clean environment\n●   Responsible vs. irresponsible AI use\n\nTask Requirements:\n●   Use two symbols\n●   Add at least one exaggeration\n●   Write a 3–4 sentence interpretation",
+     "items": []
+    }
+   ],
+   "raw": "                       “Two-Side Cartoon Challenge”\nInstruction: Draw a cartoon with two contrasting sides (Before vs. After /\nProblem vs. Solution).\nExamples:\n   ●   Before and after social media addiction\n   ●   Pollution vs. clean environment\n   ●   Responsible vs. irresponsible AI use\n\n\nTask Requirements:\n   ●   Use two symbols\n   ●   Add at least one exaggeration\n   ●   Write a 3–4 sentence interpretation\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 23",
+   "pages": [
+    43
+   ],
+   "acts": [
+    {
+     "direction": "● Keep the issue but change the characters, symbols, or setting. ● Produce a new cartoon with a different angle or message.",
+     "lead": "“Cartoon Remix”\n\nInstructions:\n●   Keep the issue but change the characters, symbols, or setting.\n●   Produce a new cartoon with a different angle or message.",
+     "items": []
+    }
+   ],
+   "raw": "                           “Cartoon Remix”\n\n\n\n\nInstructions:\n  ●   Keep the issue but change the characters, symbols, or setting.\n  ●   Produce a new cartoon with a different angle or message.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 24",
+   "pages": [
+    44
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Caption First!\n\nWrite a strong editorial caption first.\n\nThen create a cartoon that matches the caption.",
+     "items": []
+    }
+   ],
+   "raw": "                                 Caption First!\n\n\n\n\nWrite a strong editorial caption first.\n\n\nThen create a cartoon that matches the caption.\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 25",
+   "pages": [
+    45
+   ],
+   "acts": [
+    {
+     "direction": "Write a 10-15 second greeting that a radio host might say at the start of a show. Write your greeting in the space provided below. Requirements: ● A warm greeting ● Station name ● A short welcome message Example: “Good morning! You’re listening to One Voice News Radio, bringing you the latest news and updates all day! Stay tuned for today’s top stories. We’ve got important reports and interviews lined up just for you!”",
+     "lead": "Instructions: Write a 10-15 second greeting that a radio host might say at\nthe start of a show. Write your greeting in the space provided below.\nRequirements:\n● A warm greeting\n● Station name\n● A short welcome message\nExample:\n“Good morning! You’re listening to One Voice News Radio, bringing you the\nlatest news and updates all day! Stay tuned for today’s top stories. We’ve got\nimportant reports and interviews lined up just for you!”\n\nWrite your greeting here:\n\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n_________________________",
+     "items": []
+    }
+   ],
+   "raw": "Instructions: Write a 10-15 second greeting that a radio host might say at\nthe start of a show. Write your greeting in the space provided below.\nRequirements:\n   ● A warm greeting\n   ● Station name\n   ● A short welcome message\nExample:\n“Good morning! You’re listening to One Voice News Radio, bringing you the\nlatest news and updates all day! Stay tuned for today’s top stories. We’ve got\nimportant reports and interviews lined up just for you!”\n\n\nWrite your greeting here:\n\n\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n_________________________\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 26",
+   "pages": [
+    46
+   ],
+   "acts": [
+    {
+     "direction": "Write a short weather report about the information provided below. ● Greeting ● Today’s weather ● Temperature ● A simple forecast (e.g. “Sunny this afternoon”, “cloudy skies”) ● Advice for listeners (e.g. “Don’t forget your jacket!”) Example: “Good day, everyone! Today in Bayabason, Maramag, Bukidnon, expect cloudy skies with temperatures around 22 degrees. Don’t forget to bring your umbrellas, be safe!",
+     "lead": "Instructions: Write a short weather report about the information provided\nbelow.\n● Greeting\n● Today’s weather\n● Temperature\n● A simple forecast (e.g. “Sunny this afternoon”, “cloudy skies”)\n● Advice for listeners (e.g. “Don’t forget your jacket!”)\nExample:\n“Good day, everyone! Today in Bayabason, Maramag, Bukidnon, expect\ncloudy skies with temperatures around 22 degrees. Don’t forget to bring your\numbrellas, be safe!\n\nWrite your report here:\n\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________",
+     "items": []
+    }
+   ],
+   "raw": "Instructions: Write a short weather report about the information provided\nbelow.\n   ● Greeting\n   ● Today’s weather\n   ● Temperature\n   ● A simple forecast (e.g. “Sunny this afternoon”, “cloudy skies”)\n   ● Advice for listeners (e.g. “Don’t forget your jacket!”)\nExample:\n“Good day, everyone! Today in Bayabason, Maramag, Bukidnon, expect\ncloudy skies with temperatures around 22 degrees. Don’t forget to bring your\numbrellas, be safe!\n\n\nWrite your report here:\n\n\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 27",
+   "pages": [
+    47
+   ],
+   "acts": [
+    {
+     "direction": "Write a short school announcement about an upcoming event (field trip, contest, club meeting), or a reminder (uniform, deadlines, project submissions). Requirements: ● Greeting ● What the announcement is about ● Important details (date, time, place)",
+     "lead": "Instructions: Write a short school announcement about an upcoming event\n(field trip, contest, club meeting), or a reminder (uniform, deadlines, project\nsubmissions).\nRequirements:\n● Greeting\n● What the announcement is about\n● Important details (date, time, place)\n\n● A short closing line\nExample:\n“Good afternoon, students! Don’t forget that the Art Club meets tomorrow at 3\np.m. in Room 12. Everyone is welcome to join. This is FIS News Radio\nreminding you to stay creative!”\n\nWrite your short school announcement script here:\n\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n_________________________",
+     "items": []
+    }
+   ],
+   "raw": "Instructions: Write a short school announcement about an upcoming event\n(field trip, contest, club meeting), or a reminder (uniform, deadlines, project\nsubmissions).\nRequirements:\n   ● Greeting\n   ● What the announcement is about\n   ● Important details (date, time, place)\n\n   ● A short closing line\nExample:\n“Good afternoon, students! Don’t forget that the Art Club meets tomorrow at 3\np.m. in Room 12. Everyone is welcome to join. This is FIS News Radio\nreminding you to stay creative!”\n\n\nWrite your short school announcement script here:\n\n\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n___________________________________________________________________________\n_________________________\n\n"
+  }
+ ],
+ "keys_text": ""
+}

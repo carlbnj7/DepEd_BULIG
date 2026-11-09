@@ -1,0 +1,1905 @@
+{
+ "id": "l6-g7",
+ "level": 7,
+ "grades": [
+  7
+ ],
+ "pdf": "level6-g7.pdf",
+ "lessons": [
+  {
+   "phase": "pre",
+   "label": "Pre-Assessment",
+   "pages": [
+    4
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "INTERVENTION MATERIALS      Reading        5\nComprehension\nSkills\n\nActivity 1        MOST DESTRUCTIVE            Literal      6\nCREATURES ON EARTH      Comprehension\nActivity 2      COCONUT, THE TREE OF          Literal      8\nLIFE            Comprehension\nActivity 3      PRISON WITHOUT WALLS       Interpretive   10\nComprehension\nActivity 4         A MOTHER’S WISDOM       Interpretive   13\nComprehension\nActivity 5          MIRACLES OF FIRE         Critical     16\nComprehension\nActivity 6      LIGHTNING AND THUNDER        Critical     19\nComprehension\nActivity 7         THE GREAT CHINESE         Critical     22\nTEACHER          Comprehension\nActivity 8          MOHAMMEDANISM            Creative     25\nComprehension\nActivity 9            THE IFUGAOS            Creative     28\nComprehension\nActivity 10          PLANT THIEVES           Creative     31\nComprehension",
+     "items": []
+    }
+   ],
+   "raw": "                 INTERVENTION MATERIALS      Reading        5\n                                          Comprehension\n                                              Skills\n\n Activity 1        MOST DESTRUCTIVE            Literal      6\n                  CREATURES ON EARTH      Comprehension\n Activity 2      COCONUT, THE TREE OF          Literal      8\n                          LIFE            Comprehension\n Activity 3      PRISON WITHOUT WALLS       Interpretive   10\n                                          Comprehension\n Activity 4         A MOTHER’S WISDOM       Interpretive   13\n                                          Comprehension\n Activity 5          MIRACLES OF FIRE         Critical     16\n                                          Comprehension\n Activity 6      LIGHTNING AND THUNDER        Critical     19\n                                          Comprehension\n Activity 7         THE GREAT CHINESE         Critical     22\n                         TEACHER          Comprehension\n Activity 8          MOHAMMEDANISM            Creative     25\n                                          Comprehension\n Activity 9            THE IFUGAOS            Creative     28\n                                          Comprehension\n Activity 10          PLANT THIEVES           Creative     31\n                                          Comprehension"
+  },
+  {
+   "phase": "pre",
+   "label": "Pre-test",
+   "pages": [
+    6,
+    7,
+    8
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nHOW A DOG’S LIFE WAS SAVED\n\nBernie, a police dog, loves Boy\nScouts and he really has a very good\nreason for doing so. He would have died\nwere it not for the training of two Boy\nScouts who knew how to make a\ntourniquet. These two boys who were twins\nwere members of the Narra Troop Number\n64.\n\nThe two boys were on their way home from school. They were busy\ntalking about the Boy Scout Jamboree to be held in Japan. They were lucky\nto be among the Boy Scouts to represent the Philippines in the jamboree.\n\n“Look!” cried Nick, one of the twins. “See the blood trail on the\nsidewalk.”\n\nBecause Boy Scouts are trained to be of help in time of trouble, they\nfollowed the trail. It led them to the backyard of a certain Mr. Gana. They\nheard a feeble whine. Behind the pile of boxes they found Mr. Gana’s dog, Bernie.\nHe seemed very weak due to loss of blood and looked completely exhausted as\nhe lay.\n\nBernie greeted the two boys with a feeble wag of his tail. The two boys\nhad hopes of saving his life. If only they could stop the bleeding of his wounded\nfoot.\n\n“I will get my handkerchief,” said Pete reaching into his pocket. “Do you\nhave something to bind it with, Nick?”\n\nThe boys did not waste any time. Nick pulled a lead pencil out of his\npocket. Pete tore a strip about two or three inches wide from the handkerchief.\nHe folded it over and over three or four times making a strong narrow band.\nPete tied the two ends together while Nick held Bernie. Then Pete skipped the\nband over the dog’s injured foot. Bernie bore the pain without wincing as the\ntwo boys tightened the tourniquet.\n\nWhen the bleeding stopped, the boys went to Mr. Gana and told him\nwhat had happened to Bernie. Mr. Gana returned home as soon as possible\nand found Bernie’s wound well taken care of.\n\nThe boys then tried to find out how it all happened. They followed the\ntrail back to where Bernie met the accident. Apparently, Bernie had\naccidentally stepped on a broken bottle.\n\nBernie would have bled to death had it not been for the two boys and\ntheir tourniquet. This is why Bernie has an excellent reason for loving the Boy\nScouts. He never fails to lick Pete’s and Nick’s hands whenever they pass by\ntheir home. The twins had a special place in Bernie’s heart.\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\nLiteral Reading Skill\nThese questions focus on facts explicitly stated in the text.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Where was the Boy Scout Jamboree that Nick and Pete were selected to attend?",
+       "opts": [
+        [
+         "a",
+         "The Philippines"
+        ],
+        [
+         "b",
+         "Japan"
+        ],
+        [
+         "c",
+         "The United States"
+        ],
+        [
+         "d",
+         "Mr. Gana’s backyard"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What two specific items did the twins use to stop Bernie’s bleeding?",
+       "opts": [
+        [
+         "a",
+         "A bandage and a stick"
+        ],
+        [
+         "b",
+         "A handkerchief and a lead pencil"
+        ],
+        [
+         "c",
+         "A piece of string and a ruler"
+        ],
+        [
+         "d",
+         "A shoelace and a pen These questions require you to \"read between the lines\" and draw inferences."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Why did the boys choose to follow the blood trail instead of going straight home?",
+       "opts": [
+        [
+         "a",
+         "They were curious to see if there was a crime"
+        ],
+        [
+         "b",
+         "They wanted to find a lost pet for a reward"
+        ],
+        [
+         "c",
+         "Their training taught them to provide help during trouble"
+        ],
+        [
+         "d",
+         "They were looking for a broken bottle"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What does the \"feeble wag\" of Bernie’s tail suggest about his condition when the boys found him?",
+       "opts": [
+        [
+         "a",
+         "He was energetic and ready to play"
+        ],
+        [
+         "b",
+         "He was extremely weak but still friendly or hopeful"
+        ],
+        [
+         "c",
+         "He was angry that the boys entered the yard"
+        ],
+        [
+         "d",
+         "He was trying to lead them to the broken bottle These questions involve evaluating the text, the characters' decisions, and the author’s purpose."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "How would you evaluate the twins’ decision to use a lead pencil in their medical intervention?",
+       "opts": [
+        [
+         "a",
+         "It was a mistake because pencils are too fragile for medical use"
+        ],
+        [
+         "b",
+         "It was unnecessary because the bleeding would have stopped on its own"
+        ],
+        [
+         "c",
+         "It was a resourceful use of available tools to create a functional tourniquet"
+        ],
+        [
+         "d",
+         "It was a lucky guess that didn't actually help stop the blood"
+        ]
+       ]
+      },
+      {
+       "n": 6,
+       "text": "What is the author’s primary purpose in mentioning that Bernie is a \"police dog\"?",
+       "opts": [
+        [
+         "a",
+         "To explain why Bernie was so aggressive toward the twins"
+        ],
+        [
+         "b",
+         "To show that the Boy Scouts were breaking the law"
+        ],
+        [
+         "c",
+         "To highlight the irony that a dog trained to help others needed to be helped himself"
+        ],
+        [
+         "d",
+         "To suggest that Bernie was injured while catching a criminal"
+        ]
+       ]
+      },
+      {
+       "n": 7,
+       "text": "Which statement best analyzes the reliability of the boys' scout training as presented in the story?",
+       "opts": [
+        [
+         "a",
+         "The training was outdated because they didn't have a real medical kit"
+        ],
+        [
+         "b",
+         "The training was highly effective as it provided life-saving skills for emergency situations"
+        ],
+        [
+         "c",
+         "The training was only useful because the boys were twins"
+        ],
+        [
+         "d",
+         "The training was focused more on travel than on first aid These questions ask you to think beyond the text and apply the information to new scenarios."
+        ]
+       ]
+      },
+      {
+       "n": 8,
+       "text": "If Nick and Pete had not found a pencil in their pockets, which of these items from a student's bag would be the best substitute to tighten the tourniquet?",
+       "opts": [
+        [
+         "a",
+         "A single sheet of notebook paper"
+        ],
+        [
+         "b",
+         "A sturdy wooden ruler"
+        ],
+        [
+         "c",
+         "A soft rubber eraser"
+        ],
+        [
+         "d",
+         "A small piece of scotch tape"
+        ]
+       ]
+      },
+      {
+       "n": 9,
+       "text": "Based on the ending of the story, what is the most likely way Bernie would react if he saw Nick and Pete in a large crowd of people?",
+       "opts": [
+        [
+         "a",
+         "He would likely seek them out specifically to show affection"
+        ],
+        [
+         "b",
+         "He would ignore them because there are too many people"
+        ],
+        [
+         "c",
+         "He would bark at them to warn them of more broken glass"
+        ],
+        [
+         "d",
+         "He would hide because he associates them with the pain of the tourniquet"
+        ]
+       ]
+      },
+      {
+       "n": 10,
+       "text": "Imagine the \"Narra Troop 64\" wanted to create a commemorative badge for the twins. What symbol would most accurately represent this specific rescue?",
+       "opts": [
+        [
+         "a",
+         "A picture of a school building"
+        ],
+        [
+         "b",
+         "A map of Japan"
+        ],
+        [
+         "c",
+         "A handkerchief tied around a pencil"
+        ],
+        [
+         "d",
+         "A broken bottle on a sidewalk"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n             HOW A DOG’S LIFE WAS SAVED\n\n\n                                          Bernie, a police dog, loves Boy\n                                    Scouts and he really has a very good\n                                    reason for doing so. He would have died\n                                    were it not for the training of two Boy\n                                    Scouts who knew how to make a\n                                    tourniquet. These two boys who were twins\n                                    were members of the Narra Troop Number\n                                    64.\n\n       The two boys were on their way home from school. They were busy\ntalking about the Boy Scout Jamboree to be held in Japan. They were lucky\nto be among the Boy Scouts to represent the Philippines in the jamboree.\n\n     “Look!” cried Nick, one of the twins. “See the blood trail on the\nsidewalk.”\n\n       Because Boy Scouts are trained to be of help in time of trouble, they\nfollowed the trail. It led them to the backyard of a certain Mr. Gana. They\nheard a feeble whine. Behind the pile of boxes they found Mr. Gana’s dog, Bernie.\nHe seemed very weak due to loss of blood and looked completely exhausted as\nhe lay.\n\n      Bernie greeted the two boys with a feeble wag of his tail. The two boys\nhad hopes of saving his life. If only they could stop the bleeding of his wounded\nfoot.\n\n      “I will get my handkerchief,” said Pete reaching into his pocket. “Do you\nhave something to bind it with, Nick?”\n\n       The boys did not waste any time. Nick pulled a lead pencil out of his\npocket. Pete tore a strip about two or three inches wide from the handkerchief.\nHe folded it over and over three or four times making a strong narrow band.\nPete tied the two ends together while Nick held Bernie. Then Pete skipped the\nband over the dog’s injured foot. Bernie bore the pain without wincing as the\ntwo boys tightened the tourniquet.\n\n      When the bleeding stopped, the boys went to Mr. Gana and told him\nwhat had happened to Bernie. Mr. Gana returned home as soon as possible\nand found Bernie’s wound well taken care of.\n\n\n\n      The boys then tried to find out how it all happened. They followed the\ntrail back to where Bernie met the accident. Apparently, Bernie had\naccidentally stepped on a broken bottle.\n\n       Bernie would have bled to death had it not been for the two boys and\ntheir tourniquet. This is why Bernie has an excellent reason for loving the Boy\nScouts. He never fails to lick Pete’s and Nick’s hands whenever they pass by\ntheir home. The twins had a special place in Bernie’s heart.\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\nLiteral Reading Skill\nThese questions focus on facts explicitly stated in the text.\n\n1. Where was the Boy Scout Jamboree that Nick and Pete were selected to attend?\n      A) The Philippines\n      B) Japan\n      C) The United States\n      D) Mr. Gana’s backyard\n\n2. What two specific items did the twins use to stop Bernie’s bleeding?\n      A) A bandage and a stick\n      B) A handkerchief and a lead pencil\n      C) A piece of string and a ruler\n      D) A shoelace and a pen\n\nInterpretive Reading Skill\nThese questions require you to \"read between the lines\" and draw inferences.\n\n3. Why did the boys choose to follow the blood trail instead of going straight home?\n      A) They were curious to see if there was a crime\n      B) They wanted to find a lost pet for a reward\n      C) Their training taught them to provide help during trouble\n      D) They were looking for a broken bottle\n\n4. What does the \"feeble wag\" of Bernie’s tail suggest about his condition when the\nboys found him?\n       A) He was energetic and ready to play\n       B) He was extremely weak but still friendly or hopeful\n       C) He was angry that the boys entered the yard\n       D) He was trying to lead them to the broken bottle\n\nCritical Reading Skill\nThese questions involve evaluating the text, the characters' decisions, and the\nauthor’s purpose.\n\n5. How would you evaluate the twins’ decision to use a lead pencil in their medical\nintervention?\n       A) It was a mistake because pencils are too fragile for medical use\n       B) It was unnecessary because the bleeding would have stopped on its own\n       C) It was a resourceful use of available tools to create a functional tourniquet\n       D) It was a lucky guess that didn't actually help stop the blood\n\n\n\n6. What is the author’s primary purpose in mentioning that Bernie is a \"police\ndog\"?\n      A) To explain why Bernie was so aggressive toward the twins\n      B) To show that the Boy Scouts were breaking the law\n      C) To highlight the irony that a dog trained to help others needed to be\n      helped himself\n      D) To suggest that Bernie was injured while catching a criminal\n\n7. Which statement best analyzes the reliability of the boys' scout training as\npresented in the story?\n      A) The training was outdated because they didn't have a real medical kit\n      B) The training was highly effective as it provided life-saving skills for\n      emergency situations\n      C) The training was only useful because the boys were twins\n      D) The training was focused more on travel than on first aid\n\nCreative Reading Skill\nThese questions ask you to think beyond the text and apply the information to new\nscenarios.\n\n8. If Nick and Pete had not found a pencil in their pockets, which of these items\nfrom a student's bag would be the best substitute to tighten the tourniquet?\n        A) A single sheet of notebook paper\n        B) A sturdy wooden ruler\n        C) A soft rubber eraser\n        D) A small piece of scotch tape\n\n9. Based on the ending of the story, what is the most likely way Bernie would react\nif he saw Nick and Pete in a large crowd of people?\n       A) He would likely seek them out specifically to show affection\n       B) He would ignore them because there are too many people\n       C) He would bark at them to warn them of more broken glass\n       D) He would hide because he associates them with the pain of the tourniquet\n\n10. Imagine the \"Narra Troop 64\" wanted to create a commemorative badge for the\ntwins. What symbol would most accurately represent this specific rescue?\n       A) A picture of a school building\n       B) A map of Japan\n       C) A handkerchief tied around a pencil\n       D) A broken bottle on a sidewalk\n\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 1",
+   "pages": [
+    10,
+    11
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nTHE MOST DESTRUCTIVE CREATURES\nON EARTH\nRats are probably the cleverest\nand the most destructive animals on\nearth. These animals can survive\nanywhere. They have also threatened\nman's life; rat-borne diseases have\nkilled more people than all the wars in\nhistory.\n\nMost of the 650 species of rats live\nin forests, fields, and jungles. But a species tries to link their destinies with men.\nThey go where men go, live where they live, eat what they eat, and learn their\nways.\n\nThere are two species of common house rats - the brown rat and the\nblack rat. The brown rat has small ears and thick tail that is shorter than its\nbody. It may weigh as much as one-half kilogram and measure nine inches in\nlength, minus its tail. The brown rat is a burrower. It can squeeze through\nthe sewers for miles and enter a man's home through the plumbing.\n\nThe black rat is very much smaller than the brown rat. It has an average\nweight of one-fourth kilogram. It has large eyes and a tail longer than its body.\nThe black rat, clambers up walls, ropes, and wires.\n\nRats are social animals and live in colonies. They wage wars against\nothers and an \"outsider\" is killed by torture known only to rats.\n\nThe average life of a rat is nine months, although some may live up to\ntwo years. They are very prolific. It has been estimated that a pair of rats, if\nallowed to multiply unmolested, could produce up to 350 million descendants\nin three years.\n\nEverywhere the rats go, they spread contamination. which is a\ncontinuing health menace. They carry as many as 35 different diseases. Their\nfleas spread bubonic plague and typhus. These two diseases have killed more\nthan 200 million people in for countries.\n\nThe rat's habits take them from sewer to warehouse to home, spreading\ndisease germs every step of the way. They leave droppings everywhere they go\nand contaminate everything because in their blood and intestines are\norganisms that cause dysentery, tularemia, rabies, and many other\ncontagious killer diseases.\nNature has endowed rats with special characteristics to help them\nsurvive. They avoid poison but after one or two members had felt its effects.\nThey leave their urine on everything that poison-tainted as a \"keep-off\" sign\nto other\nrats.\n\nBut there is one way rats become useful to man; Man makes use of rats\nin his studies of drugs, medicine, and the treatment of disease.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "According to the text, which physical feature belongs specifically to the black rat?",
+       "opts": [
+        [
+         "a",
+         "A thick tail that is shorter than its body"
+        ],
+        [
+         "b",
+         "Small ears and a weight of one-half kilogram"
+        ],
+        [
+         "c",
+         "Large eyes and a tail that is longer than its body"
+        ],
+        [
+         "d",
+         "A body length of nine inches minus the tail"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What is the average lifespan of a rat as mentioned in the passage?",
+       "opts": [
+        [
+         "a",
+         "Three years"
+        ],
+        [
+         "b",
+         "Nine months"
+        ],
+        [
+         "c",
+         "Two years"
+        ],
+        [
+         "d",
+         "Twelve months"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "If left alone to multiply, how many descendants can a single pair of rats produce in three years?",
+       "opts": [
+        [
+         "a",
+         "650 million"
+        ],
+        [
+         "b",
+         "200 million"
+        ],
+        [
+         "c",
+         "350 million"
+        ],
+        [
+         "d",
+         "35 million"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "How many different diseases are rats known to carry?",
+       "opts": [
+        [
+         "a",
+         "200 different diseases"
+        ],
+        [
+         "b",
+         "650 different diseases"
+        ],
+        [
+         "c",
+         "As many as 35 different diseases"
+        ],
+        [
+         "d",
+         "Exactly two: bubonic plague and typhus"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "According to the final section of the text, how are rats useful to humans?",
+       "opts": [
+        [
+         "a",
+         "They help clean sewers and plumbing"
+        ],
+        [
+         "b",
+         "They protect forests and jungles from other animals"
+        ],
+        [
+         "c",
+         "They are used in the study of drugs and medicine"
+        ],
+        [
+         "d",
+         "They help humans track contaminated food"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n\n       THE MOST DESTRUCTIVE CREATURES\n                  ON EARTH\n                                                Rats are probably the cleverest\n                                          and the most destructive animals on\n                                          earth. These animals can survive\n                                          anywhere. They have also threatened\n                                          man's life; rat-borne diseases have\n                                          killed more people than all the wars in\n                                          history.\n\n                                                 Most of the 650 species of rats live\nin forests, fields, and jungles. But a species tries to link their destinies with men.\nThey go where men go, live where they live, eat what they eat, and learn their\nways.\n\n      There are two species of common house rats - the brown rat and the\nblack rat. The brown rat has small ears and thick tail that is shorter than its\nbody. It may weigh as much as one-half kilogram and measure nine inches in\nlength, minus its tail. The brown rat is a burrower. It can squeeze through\nthe sewers for miles and enter a man's home through the plumbing.\n\n      The black rat is very much smaller than the brown rat. It has an average\nweight of one-fourth kilogram. It has large eyes and a tail longer than its body.\nThe black rat, clambers up walls, ropes, and wires.\n\n      Rats are social animals and live in colonies. They wage wars against\nothers and an \"outsider\" is killed by torture known only to rats.\n\n       The average life of a rat is nine months, although some may live up to\ntwo years. They are very prolific. It has been estimated that a pair of rats, if\nallowed to multiply unmolested, could produce up to 350 million descendants\nin three years.\n\n       Everywhere the rats go, they spread contamination. which is a\ncontinuing health menace. They carry as many as 35 different diseases. Their\nfleas spread bubonic plague and typhus. These two diseases have killed more\nthan 200 million people in for countries.\n\n\n\n      The rat's habits take them from sewer to warehouse to home, spreading\ndisease germs every step of the way. They leave droppings everywhere they go\nand contaminate everything because in their blood and intestines are\norganisms that cause dysentery, tularemia, rabies, and many other\ncontagious killer diseases.\n      Nature has endowed rats with special characteristics to help them\nsurvive. They avoid poison but after one or two members had felt its effects.\nThey leave their urine on everything that poison-tainted as a \"keep-off\" sign\nto other\nrats.\n\n       But there is one way rats become useful to man; Man makes use of rats\nin his studies of drugs, medicine, and the treatment of disease.\n\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. According to the text, which physical feature belongs specifically to the\nblack rat?\n   A) A thick tail that is shorter than its body\n   B) Small ears and a weight of one-half kilogram\n   C) Large eyes and a tail that is longer than its body\n   D) A body length of nine inches minus the tail\n\n2. What is the average lifespan of a rat as mentioned in the passage?\n   A) Three years\n   B) Nine months\n   C) Two years\n   D) Twelve months\n\n3. If left alone to multiply, how many descendants can a single pair of rats\nproduce in three years?\n    A) 650 million\n    B) 200 million\n    C) 350 million\n    D) 35 million\n\n4. How many different diseases are rats known to carry?\n   A) 200 different diseases\n   B) 650 different diseases\n   C) As many as 35 different diseases\n   D) Exactly two: bubonic plague and typhus\n\n5. According to the final section of the text, how are rats useful to humans?\n   A) They help clean sewers and plumbing\n   B) They protect forests and jungles from other animals\n   C) They are used in the study of drugs and medicine\n   D) They help humans track contaminated food\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 2",
+   "pages": [
+    12,
+    13
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nCOCONUT, THE TREE OF LIFE\nThe coconut is a tropical\npalm. It provides man with\nalmost     everything;   food,\nclothing,     shelter,  home\nfurnishings, fuel, and many\nothers. On the products of the\ncoconut tree, one can subsist\nalmost fully.\n\nThe coconut grows palm\nleaf every month. Each leaf bears a cluster of flowers which mature into\nclusters of fruits. High at the top of the crown of leaves is the coconut heart\nor bud. If the heart or the bud is removed, the tree dies. The heart itself makes\na tasty treat, a \"millionaire's salad.\"\n\nThe unopened flowers are protected by a tough sheath that looks like\nburlap. From this sheath may be fashioned our shoes, caps, and even a kind\nof helmet.\n\nSugar may be obtained from the sap of the unopened flowers. A gallon\nof sap may be gathered and boiled to a good syrup which can be crystallized\ninto rich, dark sugar. Or if left standing, the sap ferments quickly into a robust\nbeer-like drink called \"tuba\" in the Philippines, \"toddy\" in India, \"tuwak\" in\nIndonesia. If left alone for a few weeks; the sap becomes fine vinegar.\n\nThe nut itself is covered by a thick, packed mass of fibers called \"coir\"\nwhich can be woven into strong twine or rope. Coir is also used in padding\nupholstery. The shell of the coconut is hard, fine-grained substance which\ncan be carved into all kinds of objects; cups, ashtrays, button, buckles, and\nmany others. The charcoal from shells is used as air filters in gas masks,\nsubmarines, and cigarette tips.\n\nCoconut water contains sugar, minerals, and vitamins, The nut meat is\neaten raw or made into salad; coconut milk is used in cooking food. Heated,\nit yields oil for cooking, lamp fuel, lotions, pomades, and soaps.\n\nGrated nut meats are made into candies, cakes, and pies. Dried coconut\nmeat or \"copra\" is processed for oil and the residue is made into animal food.\n\nThere are many uses of the coconut oil. It is used in shampoos, soaps,\ntoothpaste, lotion, lubricants, hydraulic fluid, paints, synthetic rubber, ice\ncream, plastics, and others. It is also found in breakfast tables - \"margarine\"\nas a substitute for butter with all the needed nutrients and vitamins.\n\nThere are plenty of uses for the rest of the tree. The fronds are woven\ninto mats and house furnishings, the midribs made into brooms and brushes.\nEven the roots can be made into dyes.\n\nNo other tree on earth is as useful and as the coconut!\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "According to the text, what will happen to a coconut tree if its heart or bud is removed?",
+       "opts": [
+        [
+         "a",
+         "It will produce more fruit."
+        ],
+        [
+         "b",
+         "It will grow a new leaf every month."
+        ],
+        [
+         "c",
+         "The tree will die."
+        ],
+        [
+         "d",
+         "It will grow a tougher sheath."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What is the name of the beer-like drink made from fermented sap in the Philippines?",
+       "opts": [
+        [
+         "a",
+         "Toddy."
+        ],
+        [
+         "b",
+         "Tuwak."
+        ],
+        [
+         "c",
+         "Tuba."
+        ],
+        [
+         "d",
+         "Copra."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Which part of the coconut tree can be used to create charcoal for air filters in gas masks?",
+       "opts": [
+        [
+         "a",
+         "The roots."
+        ],
+        [
+         "b",
+         "The midribs."
+        ],
+        [
+         "c",
+         "The coir fibers."
+        ],
+        [
+         "d",
+         "The shells."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What is \"coir\" specifically defined as in the passage?",
+       "opts": [
+        [
+         "a",
+         "A thick, packed mass of fibers covering the nut."
+        ],
+        [
+         "b",
+         "The dried meat of the coconut used for oil."
+        ],
+        [
+         "c",
+         "The tough sheath that protects unopened flowers."
+        ],
+        [
+         "d",
+         "The residue left over after processing oil."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "Which specific part of the coconut tree is used to make brooms and brushes?",
+       "opts": [
+        [
+         "a",
+         "The roots."
+        ],
+        [
+         "b",
+         "The shells."
+        ],
+        [
+         "c",
+         "The midribs."
+        ],
+        [
+         "d",
+         "The fronds."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n               COCONUT, THE TREE OF LIFE\n                                                    The coconut is a tropical\n                                                 palm. It provides man with\n                                                 almost     everything;   food,\n                                                 clothing,     shelter,  home\n                                                 furnishings, fuel, and many\n                                                 others. On the products of the\n                                                 coconut tree, one can subsist\n                                                 almost fully.\n\n                                                    The coconut grows palm\nleaf every month. Each leaf bears a cluster of flowers which mature into\nclusters of fruits. High at the top of the crown of leaves is the coconut heart\nor bud. If the heart or the bud is removed, the tree dies. The heart itself makes\na tasty treat, a \"millionaire's salad.\"\n\n      The unopened flowers are protected by a tough sheath that looks like\nburlap. From this sheath may be fashioned our shoes, caps, and even a kind\nof helmet.\n\n       Sugar may be obtained from the sap of the unopened flowers. A gallon\nof sap may be gathered and boiled to a good syrup which can be crystallized\ninto rich, dark sugar. Or if left standing, the sap ferments quickly into a robust\nbeer-like drink called \"tuba\" in the Philippines, \"toddy\" in India, \"tuwak\" in\nIndonesia. If left alone for a few weeks; the sap becomes fine vinegar.\n\n      The nut itself is covered by a thick, packed mass of fibers called \"coir\"\nwhich can be woven into strong twine or rope. Coir is also used in padding\nupholstery. The shell of the coconut is hard, fine-grained substance which\ncan be carved into all kinds of objects; cups, ashtrays, button, buckles, and\nmany others. The charcoal from shells is used as air filters in gas masks,\nsubmarines, and cigarette tips.\n\n       Coconut water contains sugar, minerals, and vitamins, The nut meat is\neaten raw or made into salad; coconut milk is used in cooking food. Heated,\nit yields oil for cooking, lamp fuel, lotions, pomades, and soaps.\n\n      Grated nut meats are made into candies, cakes, and pies. Dried coconut\nmeat or \"copra\" is processed for oil and the residue is made into animal food.\n\n\n\n       There are many uses of the coconut oil. It is used in shampoos, soaps,\ntoothpaste, lotion, lubricants, hydraulic fluid, paints, synthetic rubber, ice\ncream, plastics, and others. It is also found in breakfast tables - \"margarine\"\nas a substitute for butter with all the needed nutrients and vitamins.\n\n      There are plenty of uses for the rest of the tree. The fronds are woven\ninto mats and house furnishings, the midribs made into brooms and brushes.\nEven the roots can be made into dyes.\n\n      No other tree on earth is as useful and as the coconut!\n\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n\n1. According to the text, what will happen to a coconut tree if its heart or\nbud is removed?\n   A) It will produce more fruit.\n   B) It will grow a new leaf every month.\n   C) The tree will die.\n   D) It will grow a tougher sheath.\n\n2. What is the name of the beer-like drink made from fermented sap in the\nPhilippines?\n    A) Toddy.\n    B) Tuwak.\n    C) Tuba.\n    D) Copra.\n3. Which part of the coconut tree can be used to create charcoal for air\nfilters in gas masks?\n    A) The roots.\n    B) The midribs.\n    C) The coir fibers.\n    D) The shells.\n\n4. What is \"coir\" specifically defined as in the passage?\n   A) A thick, packed mass of fibers covering the nut.\n   B) The dried meat of the coconut used for oil.\n   C) The tough sheath that protects unopened flowers.\n   D) The residue left over after processing oil.\n\n5. Which specific part of the coconut tree is used to make brooms and\nbrushes?\n   A) The roots.\n   B) The shells.\n   C) The midribs.\n   D) The fronds.\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 3",
+   "pages": [
+    14,
+    15,
+    16
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nPRISON WITHOUT WALLS\nIn 1904, the Iwahig Penal\nColony was built. It was a kind of\nprison where- in long term\nprisoners, most of them life. The\ncolony was originally, designed to\nhouse an overflow of termers,\nserve    their  sentences     with\ncomparative freedom. convicts\nfrom Manila's old Bilibid Prison.\nIts basic purpose was to reform\nand rehabilitate criminals rather than punish them. It is under the\nsupervision of the superintendent of prisons.\n\nThe settlement site was once a 34- square mile of virgin jungle. The first\nprisoners hacked out roads, prepared the fields and slanted coconuts and\nother fruit-bearing trees. Through the years, the colony has expanded to cover\n160square miles of cultivated land.\n\nOnly prisoners with comparatively long sentences are assigned at the\nIwahig Penal Colony. Newly arrived inmates are quartered in disciplinary\nbarracks for at least six months. They do not have the same privileges as the\nold-time colonial. Later, when they are fully indoctrinated with the rules and\nregulations of the colony as well as their duties and obligations, they are\nassigned to various projects where they can put their special skills to good\nuse.\n\nIlliterate inmates attend adult education classes handled by teachers\nwho are fellow convicts. The children of inmates are educated in schools and\nreading centers in the settlement. Medical treatment is available at the\nprison's hospital.\n\nThe inmates sleep in spacious barrack-rooms with no barred windows\nto prevent them from breaking out. They are free to marry, but must have\npermission of the Director of Prisons to do so. If married, arrangements could\nbe made from their families to live in the settlement. They are free to go about\nwithin the 160-square mile limits of the penal colony.\n\nLike their free compatriots, the inmates work for a living from P500 to\nP1,000 a month by farming, fishing, forestry, animal husbandry,\n\nconstruction, jobs in the coconut and coffee industries, and handicrafts. The\ncolony's extensive forests provide them with wood which they can sell. They\ncan fish in the coastal waters or raise poultry and meat animals for their\nconsumption. But as inmates, they have to work for the prison industries,\ntoo, for certain hours and days of the week.\n\nThe atmosphere in the colony is quiet good such that some convicts\nprefer to stay there permanently even when their sentences expired. Deserving\nEx-convicts who choose to stay in the colony permanently are granted small\nplots of land for their use. Thus, social derelicts are turned useful citizens.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Why does the author refer to the Iwahig Penal Colony as a \"prison without walls\"?",
+       "opts": [
+        [
+         "a",
+         "Because the jungle was too thick to build actual stone walls."
+        ],
+        [
+         "b",
+         "Because the prisoners had to destroy the walls to plant coconut trees."
+        ],
+        [
+         "c",
+         "Because the prisoners live with \"comparative freedom\" and sleep in rooms without barred windows."
+        ],
+        [
+         "d",
+         "Because the colony is so large that walls would be too expensive to build."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What is the primary reason new inmates are kept in disciplinary barracks for their first six months?",
+       "opts": [
+        [
+         "a",
+         "To punish them for their crimes before they are allowed to see their families."
+        ],
+        [
+         "b",
+         "To ensure they understand the colony’s rules and are prepared for the responsibilities of their new roles."
+        ],
+        [
+         "c",
+         "To wait for an opening in the adult education classes handled by other convicts."
+        ],
+        [
+         "d",
+         "To determine if they have the special skills needed for the coffee industry."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "What can you infer about the colony's attitude toward the families of the inmates?",
+       "opts": [
+        [
+         "a",
+         "The colony believes that keeping families together helps in the rehabilitation and reform of the prisoners."
+        ],
+        [
+         "b",
+         "The colony uses families as a way to make sure prisoners work harder in the fields."
+        ],
+        [
+         "c",
+         "The colony only allows families to stay if the prisoners pay a high monthly fee."
+        ],
+        [
+         "d",
+         "The colony views families as a distraction from the adult education classes."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Based on the description of the colony’s activities (farming, fishing, and handicrafts), what is the most likely way the colony prepares inmates for life after prison?",
+       "opts": [
+        [
+         "a",
+         "By teaching them practical job skills and a sense of responsibility so they can support themselves."
+        ],
+        [
+         "b",
+         "By making sure they stay within the 160-square mile limit at all times."
+        ],
+        [
+         "c",
+         "By forcing them to work for the prison industries without any pay."
+        ],
+        [
+         "d",
+         "By encouraging them to stay in the jungle forever instead of returning to the city."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "Why do some convicts choose to stay in the colony permanently even after their sentences have expired?  A) They are afraid they will be sent back to Manila’s old Bilibid Prison.  B) They have found a peaceful, productive life there and have been granted land to call their own.  C) They are not allowed to leave the 160-square mile limits of the penal colony.  D) They are required to stay until they finish their adult education classes.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n                  PRISON WITHOUT WALLS\n                                                In 1904, the Iwahig Penal\n                                           Colony was built. It was a kind of\n                                           prison where- in long term\n                                           prisoners, most of them life. The\n                                           colony was originally, designed to\n                                           house an overflow of termers,\n                                           serve    their  sentences     with\n                                           comparative freedom. convicts\n                                           from Manila's old Bilibid Prison.\n                                           Its basic purpose was to reform\nand rehabilitate criminals rather than punish them. It is under the\nsupervision of the superintendent of prisons.\n\n      The settlement site was once a 34- square mile of virgin jungle. The first\nprisoners hacked out roads, prepared the fields and slanted coconuts and\nother fruit-bearing trees. Through the years, the colony has expanded to cover\n160square miles of cultivated land.\n\n       Only prisoners with comparatively long sentences are assigned at the\nIwahig Penal Colony. Newly arrived inmates are quartered in disciplinary\nbarracks for at least six months. They do not have the same privileges as the\nold-time colonial. Later, when they are fully indoctrinated with the rules and\nregulations of the colony as well as their duties and obligations, they are\nassigned to various projects where they can put their special skills to good\nuse.\n\n      Illiterate inmates attend adult education classes handled by teachers\nwho are fellow convicts. The children of inmates are educated in schools and\nreading centers in the settlement. Medical treatment is available at the\nprison's hospital.\n\n      The inmates sleep in spacious barrack-rooms with no barred windows\nto prevent them from breaking out. They are free to marry, but must have\npermission of the Director of Prisons to do so. If married, arrangements could\nbe made from their families to live in the settlement. They are free to go about\nwithin the 160-square mile limits of the penal colony.\n\n     Like their free compatriots, the inmates work for a living from P500 to\nP1,000 a month by farming, fishing, forestry, animal husbandry,\n\n\n\nconstruction, jobs in the coconut and coffee industries, and handicrafts. The\ncolony's extensive forests provide them with wood which they can sell. They\ncan fish in the coastal waters or raise poultry and meat animals for their\nconsumption. But as inmates, they have to work for the prison industries,\ntoo, for certain hours and days of the week.\n\n      The atmosphere in the colony is quiet good such that some convicts\nprefer to stay there permanently even when their sentences expired. Deserving\nEx-convicts who choose to stay in the colony permanently are granted small\nplots of land for their use. Thus, social derelicts are turned useful citizens.\n\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. Why does the author refer to the Iwahig Penal Colony as a \"prison without\nwalls\"?\n   A) Because the jungle was too thick to build actual stone walls.\n   B) Because the prisoners had to destroy the walls to plant coconut trees.\n   C) Because the prisoners live with \"comparative freedom\" and sleep in\n   rooms without barred windows.\n   D) Because the colony is so large that walls would be too expensive to\n   build.\n\n2. What is the primary reason new inmates are kept in disciplinary barracks\nfor their first six months?\n    A) To punish them for their crimes before they are allowed to see their\n    families.\n    B) To ensure they understand the colony’s rules and are prepared for the\n    responsibilities of their new roles.\n    C) To wait for an opening in the adult education classes handled by other\n    convicts.\n    D) To determine if they have the special skills needed for the coffee\n    industry.\n\n3. What can you infer about the colony's attitude toward the families of the\ninmates?\n   A) The colony believes that keeping families together helps in the\n   rehabilitation and reform of the prisoners.\n   B) The colony uses families as a way to make sure prisoners work harder\n   in the fields.\n   C) The colony only allows families to stay if the prisoners pay a high\n   monthly fee.\n   D) The colony views families as a distraction from the adult education\n   classes.\n\n\n\n4. Based on the description of the colony’s activities (farming, fishing, and\nhandicrafts), what is the most likely way the colony prepares inmates for life\nafter prison?\n   A) By teaching them practical job skills and a sense of responsibility so\n   they can support themselves.\n   B) By making sure they stay within the 160-square mile limit at all times.\n   C) By forcing them to work for the prison industries without any pay.\n   D) By encouraging them to stay in the jungle forever instead of returning\n   to the city.\n\n5. Why do some convicts choose to stay in the colony permanently even after\ntheir sentences have expired?\n    A) They are afraid they will be sent back to Manila’s old Bilibid Prison.\n    B) They have found a peaceful, productive life there and have been\n       granted land to call their own.\n    C) They are not allowed to leave the 160-square mile limits of the\n       penal colony.\n    D) They are required to stay until they finish their adult education\n       classes.\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 4",
+   "pages": [
+    17,
+    18,
+    19
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nA MOTHER'S WISDOM\nBarbara was 10 when she was\nfound her first real \"pal\" among the\ngirls in school. Their friendship\nbecame all-important to Barbara,\nand being of a possessive nature,\nshe found herself violently jealous\nof her friend's interests which did\nnot include Barbara. She couldn't\nconceal this attitude until her friend\nbecame annoyed with her possessiveness.\n\nBarbara's mother understood what was happening. She waited for an\noccasion to talk to Barbara about it without hurting her.\n\nOne day, Barbara and her mother were admiring some baby chicks.\nBarbara picked up one and held it so tightly that it almost smothered. It\nstruggled to escape from Barbara's hold. Casually her mother said, \"If you\nhold a chick too tightly, it wants only to get away. Try holding one gently.\"\n\nThe next chick nestled quietly in Barbara's open palm. Her mother said,\n\"You know, dear, people are the same as chicks. If we hold those whom we\nlove too closely to us, they'll struggle for freedom. Hold them with open hands\nand they won't feel smothered.\"\n\nBarbara understood the message in her mother's words. Whenever she\nfelt jealous of her friend's attention to others, she always pictures the\ncontented chick nestled in her open palm.\n\nJoseph, Barbara's brother was eight. Being young and mischievous, he\nused to get into jams and then run to his mother for help to get him out of\ntrouble. But Mother never interfered. She would let him untangle his troubles\nby himself. Joseph never understood why Mother always declined to help him\nwith his problems.\n\nOne day, Joseph saw a cocoon of a moth throbbing and heaving.\nSquealing with anticipation, Joseph began to open the cocoon with his pocket\nknife to allow the moth to emerge more easily. To his disappointment, the\n\nmoth did not fly; it fell off from the twig on which the cocoon hung, then died\nthat very same moment.\n\nJoseph's mother shook him on the shoulders and said, \"Son, the\nstruggle of the moth inside the cocoon was for a purpose, to enable it to gain\nstrength to rise above its surroundings. You did not allow it to mature fully,\nand when you forcibly opened the cocoon, it can neither walk nor fly. It's the\nsame with children. When a boy like you always has somebody to solve his\nproblems for him, he has no chance to develop, Each of the struggles that we\ngo through on our own builds up our strength to meet the next.\"\n\nBarbara and Joseph never forget the lessons they learned from their\nmother.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "What did the mother mean when she told Barbara to hold those she loved with \"open hands\"?",
+       "opts": [
+        [
+         "a",
+         "Barbara should literally keep her hands open whenever she is around her friends."
+        ],
+        [
+         "b",
+         "Barbara should give her friends expensive gifts to keep them happy."
+        ],
+        [
+         "c",
+         "Barbara should give her friends the freedom to have other interests instead of being possessive."
+        ],
+        [
+         "d",
+         "Barbara should stop being friends with people who make her feel jealous."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "In the story of the moth, what does the \"struggle\" inside the cocoon represent for a person's life?",
+       "opts": [
+        [
+         "a",
+         "The physical pain someone feels when they get into trouble."
+        ],
+        [
+         "b",
+         "The difficult challenges people face that help them grow stronger and more independent."
+        ],
+        [
+         "c",
+         "The time a person spends waiting for someone else to help them solve a problem."
+        ],
+        [
+         "d",
+         "The act of hiding away from the world when things get too hard."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Why did the mother refuse to \"interfere\" or help Joseph when he got into trouble?",
+       "opts": [
+        [
+         "a",
+         "She was too busy watching the baby chicks with Barbara."
+        ],
+        [
+         "b",
+         "She wanted to punish him for being mischievous and getting into \"jams\"."
+        ],
+        [
+         "c",
+         "She knew that solving his problems for him would prevent him from developing his own strength."
+        ],
+        [
+         "d",
+         "She did not believe that an eight-year-old was old enough to have real problems."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What can we infer about the moth's death after Joseph opened the cocoon?",
+       "opts": [
+        [
+         "a",
+         "The moth died because it missed the necessary process of gaining strength through its own efforts."
+        ],
+        [
+         "b",
+         "The moth died because Joseph used a pocket knife that was too sharp."
+        ],
+        [
+         "c",
+         "The moth died because it was not mature enough to see the sunlight."
+        ],
+        [
+         "d",
+         "The moth died because it fell off the twig before it could learn how to walk."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "How did the mother’s teaching style most likely affect Barbara and Joseph’s future?",
+       "opts": [
+        [
+         "a",
+         "It made them fear their mother because she wouldn't help them."
+        ],
+        [
+         "b",
+         "It provided them with mental \"pictures\" and lessons that helped them handle their own emotions and problems."
+        ],
+        [
+         "c",
+         "It encouraged them to spend more time outside with nature instead of going to school."
+        ],
+        [
+         "d",
+         "It taught them that they should never ask for help, even in an emergency."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n\n                     A MOTHER'S WISDOM\n                                               Barbara was 10 when she was\n                                          found her first real \"pal\" among the\n                                          girls in school. Their friendship\n                                          became all-important to Barbara,\n                                          and being of a possessive nature,\n                                          she found herself violently jealous\n                                          of her friend's interests which did\n                                          not include Barbara. She couldn't\n                                          conceal this attitude until her friend\nbecame annoyed with her possessiveness.\n\n      Barbara's mother understood what was happening. She waited for an\noccasion to talk to Barbara about it without hurting her.\n\n      One day, Barbara and her mother were admiring some baby chicks.\nBarbara picked up one and held it so tightly that it almost smothered. It\nstruggled to escape from Barbara's hold. Casually her mother said, \"If you\nhold a chick too tightly, it wants only to get away. Try holding one gently.\"\n\n       The next chick nestled quietly in Barbara's open palm. Her mother said,\n\"You know, dear, people are the same as chicks. If we hold those whom we\nlove too closely to us, they'll struggle for freedom. Hold them with open hands\nand they won't feel smothered.\"\n\n       Barbara understood the message in her mother's words. Whenever she\nfelt jealous of her friend's attention to others, she always pictures the\ncontented chick nestled in her open palm.\n\n      Joseph, Barbara's brother was eight. Being young and mischievous, he\nused to get into jams and then run to his mother for help to get him out of\ntrouble. But Mother never interfered. She would let him untangle his troubles\nby himself. Joseph never understood why Mother always declined to help him\nwith his problems.\n\n      One day, Joseph saw a cocoon of a moth throbbing and heaving.\nSquealing with anticipation, Joseph began to open the cocoon with his pocket\nknife to allow the moth to emerge more easily. To his disappointment, the\n\n\n\nmoth did not fly; it fell off from the twig on which the cocoon hung, then died\nthat very same moment.\n\n      Joseph's mother shook him on the shoulders and said, \"Son, the\nstruggle of the moth inside the cocoon was for a purpose, to enable it to gain\nstrength to rise above its surroundings. You did not allow it to mature fully,\nand when you forcibly opened the cocoon, it can neither walk nor fly. It's the\nsame with children. When a boy like you always has somebody to solve his\nproblems for him, he has no chance to develop, Each of the struggles that we\ngo through on our own builds up our strength to meet the next.\"\n\n     Barbara and Joseph never forget the lessons they learned from their\nmother.\n\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. What did the mother mean when she told Barbara to hold those she loved\nwith \"open hands\"?\n   A) Barbara should literally keep her hands open whenever she is around\n   her friends.\n   B) Barbara should give her friends expensive gifts to keep them happy.\n   C) Barbara should give her friends the freedom to have other interests\n   instead of being possessive.\n   D) Barbara should stop being friends with people who make her feel\n   jealous.\n\n2. In the story of the moth, what does the \"struggle\" inside the cocoon\nrepresent for a person's life?\n    A) The physical pain someone feels when they get into trouble.\n    B) The difficult challenges people face that help them grow stronger and\n    more independent.\n    C) The time a person spends waiting for someone else to help them solve\n    a problem.\n    D) The act of hiding away from the world when things get too hard.\n\n3. Why did the mother refuse to \"interfere\" or help Joseph when he got into\ntrouble?\n   A) She was too busy watching the baby chicks with Barbara.\n   B) She wanted to punish him for being mischievous and getting into\n   \"jams\".\n   C) She knew that solving his problems for him would prevent him from\n   developing his own strength.\n   D) She did not believe that an eight-year-old was old enough to have real\n   problems.\n\n\n\n4. What can we infer about the moth's death after Joseph opened the\ncocoon?\n   A) The moth died because it missed the necessary process of gaining\n   strength through its own efforts.\n   B) The moth died because Joseph used a pocket knife that was too\n   sharp.\n   C) The moth died because it was not mature enough to see the sunlight.\n   D) The moth died because it fell off the twig before it could learn how to\n   walk.\n\n5. How did the mother’s teaching style most likely affect Barbara and\nJoseph’s future?\n   A) It made them fear their mother because she wouldn't help them.\n   B) It provided them with mental \"pictures\" and lessons that helped them\n   handle their own emotions and problems.\n   C) It encouraged them to spend more time outside with nature instead of\n   going to school.\n   D) It taught them that they should never ask for help, even in an\n   emergency.\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 5",
+   "pages": [
+    20,
+    21,
+    22
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nTHE MIRACLES OF THE FIRE\nDuring the time of Elias, many of\nthe children of Israel honored false\ngods and false prophets.\n\nOne day, Elias said to the Jews,\n\"Call together all the people of Israel\nto Mount Carmel. Bring also the\nprophets of Baal\" (Baal was the god\nof the pagans.\n\nWhen all the people gathered together, Elias said, \"If the Lord is God,\nfollow Him. If Baal is God, follow him.\"\n\nThe people did not say a word. Elias continued, \"I am the only prophet\nof the Lord. Baal has four hundred and fifty prophets. Now, let us see who is\nGod. Let the prophets of Baal prepare a sacrifice. We shall dress the animals\nand put unlighted wood under them. Let the prophets of Baal call upon their\ngod. I shall call on my Lord. God shall answer by fire.\"\n\nThe people all agreed.\n\n\"O, Baal, hear us!\" This was the prayer of the prophets of Baal. But their\nprayers were not answered.\n\nThen Elias prayed to the one true God. Fire came down from heaven.\nThe people fell on their faces. They said, \"The Lord is God!\"\n\nThe Lord was always with Elias. Elias talked to the children of Israel.\nHe wanted them to remember the Lord, their God.\n\nOne day the Lord said to Elias. \"You shall make Eliseus a prophet.\"\n\nElias found Eliseus in the field. Eliseus left his father and mother and\nfollowed Elias. Eliseus was very kind to Elias. He served him and helped him.\nElias and Eliseus went from place to place reminding the people of the one\ntrue God.\n\nOne day, Eliseus and Elias were talking together. A fiery chariot drawn\nby a fiery horse came between them. A strong wind carried Elias up to heaven.\nEliseus watch until he could see Elias no more.\n\nAfter Elias was brought to heaven in a chariot of fire, his spirit rested\nupon Eliseus.\n\nThe sons of the prophet at Jericho came to meet Eliseus and bowed\ndown before him. Nevertheless, they organized a searching party of fifty men\nto look for Elias' body on the valleys and mountains but failed to find him.\nThey returned to Jericho to see Eliseus and they decided to remain there to\nheal the soil and purify the waters for drinking.\n\nEliseus performed a miracle by using water for healing.\n\nOne day, Eliseus was leaving Jericho for Bethel, a group of children\ncame out of the city and mocked him. Eliseus turned back and cursed the in\nthe name of the Lord. Suddenly, two bears came out of the wilderness and\nfore the forty-two boys apart.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Why did Elias propose the specific contest of calling down fire from heaven to the prophets of Baal?",
+       "opts": [
+        [
+         "a",
+         "Because he wanted to show off his magical powers to the people of Israel."
+        ],
+        [
+         "b",
+         "Because it was a tradition for prophets to play with fire on Mount Carmel."
+        ],
+        [
+         "c",
+         "To provide undeniable proof of who the one true God was through a physical demonstration."
+        ],
+        [
+         "d",
+         "To see if the four hundred and fifty prophets were faster at preparing animals than he was."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Which statement best evaluates the behavior of the people of Israel when Elias first asked them to choose between God and Baal?",
+       "opts": [
+        [
+         "a",
+         "Their silence suggests they were indecisive or afraid to take a side until they saw a miracle."
+        ],
+        [
+         "b",
+         "Their silence shows they were very respectful of Elias and didn't want to interrupt."
+        ],
+        [
+         "c",
+         "Their silence proves that they did not understand the language Elias was speaking."
+        ],
+        [
+         "d",
+         "Their silence indicates they had already decided to follow Baal."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "What is the author’s primary purpose for including the detail about the \"fiery chariot\" taking Elias to heaven?",
+       "opts": [
+        [
+         "a",
+         "To explain how ancient people traveled long distances."
+        ],
+        [
+         "b",
+         "To describe a new type of weather phenomenon involving wind and fire."
+        ],
+        [
+         "c",
+         "To emphasize Elias’s special status as a prophet who was directly honored by God."
+        ],
+        [
+         "d",
+         "To show why Eliseus was left alone in the field."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "How does the story justify the harsh punishment of the children who mocked Eliseus at the end of the text?",
+       "opts": [
+        [
+         "a",
+         "It suggests that bears are naturally aggressive animals that live near Bethel."
+        ],
+        [
+         "b",
+         "It implies that Eliseus was a very angry man who did not like children."
+        ],
+        [
+         "c",
+         "It reinforces the theme that disrespecting a prophet—and by extension, God—is a grave offense with serious consequences."
+        ],
+        [
+         "d",
+         "It shows that the children were trying to steal the prophet’s spirit."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "What can we conclude about Eliseus's character based on his decision to heal the soil and purify the water at Jericho?",
+       "opts": [
+        [
+         "a",
+         "He was more interested in being a farmer than being a prophet."
+        ],
+        [
+         "b",
+         "He used the power given to him to perform miracles that benefited the community and improved their lives."
+        ],
+        [
+         "c",
+         "He wanted to show the fifty men in the searching party that they should have stayed home."
+        ],
+        [
+         "d",
+         "He was trying to prove that water is more powerful than the fire Elias used."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n               THE MIRACLES OF THE FIRE\n                                            During the time of Elias, many of\n                                          the children of Israel honored false\n                                          gods and false prophets.\n\n                                            One day, Elias said to the Jews,\n                                          \"Call together all the people of Israel\n                                          to Mount Carmel. Bring also the\n                                          prophets of Baal\" (Baal was the god\n                                          of the pagans.\n\n      When all the people gathered together, Elias said, \"If the Lord is God,\nfollow Him. If Baal is God, follow him.\"\n\n       The people did not say a word. Elias continued, \"I am the only prophet\nof the Lord. Baal has four hundred and fifty prophets. Now, let us see who is\nGod. Let the prophets of Baal prepare a sacrifice. We shall dress the animals\nand put unlighted wood under them. Let the prophets of Baal call upon their\ngod. I shall call on my Lord. God shall answer by fire.\"\n\n      The people all agreed.\n\n      \"O, Baal, hear us!\" This was the prayer of the prophets of Baal. But their\nprayers were not answered.\n\n      Then Elias prayed to the one true God. Fire came down from heaven.\nThe people fell on their faces. They said, \"The Lord is God!\"\n\n     The Lord was always with Elias. Elias talked to the children of Israel.\nHe wanted them to remember the Lord, their God.\n\n      One day the Lord said to Elias. \"You shall make Eliseus a prophet.\"\n\n       Elias found Eliseus in the field. Eliseus left his father and mother and\nfollowed Elias. Eliseus was very kind to Elias. He served him and helped him.\nElias and Eliseus went from place to place reminding the people of the one\ntrue God.\n\n\n\n       One day, Eliseus and Elias were talking together. A fiery chariot drawn\nby a fiery horse came between them. A strong wind carried Elias up to heaven.\nEliseus watch until he could see Elias no more.\n\n     After Elias was brought to heaven in a chariot of fire, his spirit rested\nupon Eliseus.\n\n      The sons of the prophet at Jericho came to meet Eliseus and bowed\ndown before him. Nevertheless, they organized a searching party of fifty men\nto look for Elias' body on the valleys and mountains but failed to find him.\nThey returned to Jericho to see Eliseus and they decided to remain there to\nheal the soil and purify the waters for drinking.\n\n      Eliseus performed a miracle by using water for healing.\n\n       One day, Eliseus was leaving Jericho for Bethel, a group of children\ncame out of the city and mocked him. Eliseus turned back and cursed the in\nthe name of the Lord. Suddenly, two bears came out of the wilderness and\nfore the forty-two boys apart.\n\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. Why did Elias propose the specific contest of calling down fire from\nheaven to the prophets of Baal?\n   A) Because he wanted to show off his magical powers to the people of\n   Israel.\n   B) Because it was a tradition for prophets to play with fire on Mount\n   Carmel.\n   C) To provide undeniable proof of who the one true God was through a\n   physical demonstration.\n   D) To see if the four hundred and fifty prophets were faster at preparing\n   animals than he was.\n\n2. Which statement best evaluates the behavior of the people of Israel when\nElias first asked them to choose between God and Baal?\n   A) Their silence suggests they were indecisive or afraid to take a side\n   until they saw a miracle.\n   B) Their silence shows they were very respectful of Elias and didn't want\n   to interrupt.\n   C) Their silence proves that they did not understand the language Elias\n   was speaking.\n   D) Their silence indicates they had already decided to follow Baal.\n\n\n\n3. What is the author’s primary purpose for including the detail about the\n\"fiery chariot\" taking Elias to heaven?\n    A) To explain how ancient people traveled long distances.\n    B) To describe a new type of weather phenomenon involving wind and\n    fire.\n    C) To emphasize Elias’s special status as a prophet who was directly\n    honored by God.\n    D) To show why Eliseus was left alone in the field.\n\n4. How does the story justify the harsh punishment of the children who\nmocked Eliseus at the end of the text?\n   A) It suggests that bears are naturally aggressive animals that live near\n   Bethel.\n   B) It implies that Eliseus was a very angry man who did not like children.\n   C) It reinforces the theme that disrespecting a prophet—and by\n   extension, God—is a grave offense with serious consequences.\n   D) It shows that the children were trying to steal the prophet’s spirit.\n\n5. What can we conclude about Eliseus's character based on his decision to\nheal the soil and purify the water at Jericho?\n   A) He was more interested in being a farmer than being a prophet.\n   B) He used the power given to him to perform miracles that benefited the\n   community and improved their lives.\n   C) He wanted to show the fifty men in the searching party that they\n   should have stayed home.\n   D) He was trying to prove that water is more powerful than the fire Elias\n   used.\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 6",
+   "pages": [
+    23,
+    24,
+    25
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nLIGHTNING AND THUNDER\nLightning is the same thing as\nlight in an electric bulb. It is\nelectricity. A flash of lightning has\ntwenty times as much electricity as\nthe world uses in 24 hours.\n\nElectricity is always present in the\nair. When moisture in the air\ncondenses on a tiny grain of dust, the\nlittle drop becomes charged with\nelectricity. Then, when the air gets cold and the drops go together to make\nraindrops, some of the electricity cannot stay on the drops and has to get off.\nWhen millions of drops of water are pushing off little bits of electricity, they\nall go together and make one big flash of lightning.\n\nFlashes of lightning usually go from one cloud to another, they\nsometimes hit the ground. Lightning is hot. When it hits a house, the later\ngets burned. When it strikes a tree, the heat turns the tree's sap into steam\nwhich must escape quickly, and thus the tree splits open. It may hit a wire\nfence and lightning travels along the wire just as electricity travels along a\nwrite to a lamp.\n\nTo protect tall buildings from lightning, lightning rods are put into the\nground at the side of the building. People used to think that the rod attracts\nthe lightning and when it strikes the rod, the rod carries the lightning through\nthe wire into the ground. Actually, the rod helps to make the lightning strike\nsomewhere else. The rod allows the ground electricity to come up slowly\nthrough the rod and into the air. Lightning does not strike in a place where\nother electricity comes out slowly.\n\nThe safest place during a thunderstorm is in the house. Open windows\ndo not attract lightning as people used to think.\n\nOut of doors, it is not safe to stay under a tree for trees are often struck\nby lightning. In open fields, the safest thing to do during a thunderstorm is to\nlie flat on the ground.\n\nLightning does not make any sound. It makes a big flash like a million\nlamps put together. Along the flash comes a long roll of noise which we call\n\nthunder. It is sometimes so far off that it is just faint mutter; at other times it\nis so close overhead that it sounds like cannons firing.\n\nThunder sometimes frighten people although it cannot do any harm.\nWhen lightning strikes, air becomes heated so quickly that it explodes into\nthunder.\n\nLightning and thunder seldom do any damage. There is no reason for\npeople to be afraid of them.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "What is the author’s primary goal in the section discussing lightning rods?",
+       "opts": [
+        [
+         "a",
+         "To convince readers that lightning rods are the only way to save a building."
+        ],
+        [
+         "b",
+         "To explain the history of how electricity was discovered in the ground."
+        ],
+        [
+         "c",
+         "To correct a common misconception about how the rods actually function."
+        ],
+        [
+         "d",
+         "To warn people that lightning rods are dangerous because they attract lightning."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Which of the following statements from the text is a scientific fact used to disprove a popular \"myth\" or fear?",
+       "opts": [
+        [
+         "a",
+         "\"Thunder sometimes frighten people although it cannot do any harm.\""
+        ],
+        [
+         "b",
+         "\"Lightning and thunder seldom do any damage.\""
+        ],
+        [
+         "c",
+         "\"Open windows do not attract lightning as people used to think.\""
+        ],
+        [
+         "d",
+         "\"Lightning does not strike in a place where other electricity comes out slowly.\""
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "How does the author support the claim that \"there is no reason for people to be afraid\" of lightning and thunder?",
+       "opts": [
+        [
+         "a",
+         "By explaining the scientific causes of these events and noting that they rarely cause damage."
+        ],
+        [
+         "b",
+         "By stating that thunder is just a \"faint mutter\" and can never be loud."
+        ],
+        [
+         "c",
+         "By proving that lightning always stays in the clouds and never hits the ground."
+        ],
+        [
+         "d",
+         "By telling readers that they are 100% safe as long as they stay near a wire fence."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Based on the text's explanation of why trees split open, what is the logical cause-and-effect relationship described?",
+       "opts": [
+        [
+         "a",
+         "The weight of the electricity is too heavy for the branches to hold."
+        ],
+        [
+         "b",
+         "The wind from the thunder pushes the tree over."
+        ],
+        [
+         "c",
+         "The extreme heat of the lightning turns the tree's sap into steam, causing it to expand and burst."
+        ],
+        [
+         "d",
+         "The tree tries to escape the lightning by opening its trunk."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "What is the author’s purpose in comparing a flash of lightning to \"a million lamps put together\"?",
+       "opts": [
+        [
+         "a",
+         "To suggest that lightning could be used to power city streetlights."
+        ],
+        [
+         "b",
+         "To explain that lightning is made of glass and wire."
+        ],
+        [
+         "c",
+         "To use a familiar object to help the reader visualize the incredible brightness and power of a flash."
+        ],
+        [
+         "d",
+         "To argue that people should turn off their lamps during a thunderstorm."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n                  LIGHTNING AND THUNDER\n                                              Lightning is the same thing as\n                                          light in an electric bulb. It is\n                                          electricity. A flash of lightning has\n                                          twenty times as much electricity as\n                                          the world uses in 24 hours.\n\n                                             Electricity is always present in the\n                                        air. When moisture in the air\n                                        condenses on a tiny grain of dust, the\n                                        little drop becomes charged with\nelectricity. Then, when the air gets cold and the drops go together to make\nraindrops, some of the electricity cannot stay on the drops and has to get off.\nWhen millions of drops of water are pushing off little bits of electricity, they\nall go together and make one big flash of lightning.\n\n       Flashes of lightning usually go from one cloud to another, they\nsometimes hit the ground. Lightning is hot. When it hits a house, the later\ngets burned. When it strikes a tree, the heat turns the tree's sap into steam\nwhich must escape quickly, and thus the tree splits open. It may hit a wire\nfence and lightning travels along the wire just as electricity travels along a\nwrite to a lamp.\n\n       To protect tall buildings from lightning, lightning rods are put into the\nground at the side of the building. People used to think that the rod attracts\nthe lightning and when it strikes the rod, the rod carries the lightning through\nthe wire into the ground. Actually, the rod helps to make the lightning strike\nsomewhere else. The rod allows the ground electricity to come up slowly\nthrough the rod and into the air. Lightning does not strike in a place where\nother electricity comes out slowly.\n\n      The safest place during a thunderstorm is in the house. Open windows\ndo not attract lightning as people used to think.\n\n        Out of doors, it is not safe to stay under a tree for trees are often struck\nby lightning. In open fields, the safest thing to do during a thunderstorm is to\nlie flat on the ground.\n\n     Lightning does not make any sound. It makes a big flash like a million\nlamps put together. Along the flash comes a long roll of noise which we call\n\n\n\nthunder. It is sometimes so far off that it is just faint mutter; at other times it\nis so close overhead that it sounds like cannons firing.\n\n     Thunder sometimes frighten people although it cannot do any harm.\nWhen lightning strikes, air becomes heated so quickly that it explodes into\nthunder.\n\n      Lightning and thunder seldom do any damage. There is no reason for\npeople to be afraid of them.\n\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. What is the author’s primary goal in the section discussing lightning\nrods?\n   A) To convince readers that lightning rods are the only way to save a\n   building.\n   B) To explain the history of how electricity was discovered in the ground.\n   C) To correct a common misconception about how the rods actually\n   function.\n   D) To warn people that lightning rods are dangerous because they attract\n   lightning.\n\n2. Which of the following statements from the text is a scientific fact used to\ndisprove a popular \"myth\" or fear?\n   A) \"Thunder sometimes frighten people although it cannot do any harm.\"\n   B) \"Lightning and thunder seldom do any damage.\"\n   C) \"Open windows do not attract lightning as people used to think.\"\n   D) \"Lightning does not strike in a place where other electricity comes out\n   slowly.\"\n\n3. How does the author support the claim that \"there is no reason for people\nto be afraid\" of lightning and thunder?\n   A) By explaining the scientific causes of these events and noting that they\n   rarely cause damage.\n   B) By stating that thunder is just a \"faint mutter\" and can never be loud.\n   C) By proving that lightning always stays in the clouds and never hits the\n   ground.\n   D) By telling readers that they are 100% safe as long as they stay near a\n   wire fence.\n\n4. Based on the text's explanation of why trees split open, what is the logical\ncause-and-effect relationship described?\n   A) The weight of the electricity is too heavy for the branches to hold.\n   B) The wind from the thunder pushes the tree over.\n   C) The extreme heat of the lightning turns the tree's sap into steam,\n   causing it to expand and burst.\n   D) The tree tries to escape the lightning by opening its trunk.\n\n\n\n5. What is the author’s purpose in comparing a flash of lightning to \"a\nmillion lamps put together\"?\n   A) To suggest that lightning could be used to power city streetlights.\n   B) To explain that lightning is made of glass and wire.\n   C) To use a familiar object to help the reader visualize the incredible\n   brightness and power of a flash.\n   D) To argue that people should turn off their lamps during a\n   thunderstorm.\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 7",
+   "pages": [
+    26,
+    27,
+    28
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nTHE GREAT CHINESE TEACHER\nConfucius' teachings had left an indelible mark in\nthe lives of millions of Chinese.\n\nThousands of years ago in a flowery kingdom in\nthe state of Lu lived a soldier Known as Kung, the\nTall. He was so-called because he was seven feet tall.\nWhen he reached his seventieth birthday he reflected\nsorrowfully over his life. He had nine children and all\nof them were girls. He had no son to carry on his\nfamily name and to perform the rites and ceremonies\nof ancestors worship. This was practiced by the\nChinese throughout the centuries to show their\nreverence to their forefathers. Kung, the Tall came from a noble lineage and\nhe would not want to break this tradition.\n\nTwo years before his death, a son was born to him. His son, named\nConfucius, became known as a \"Great Sage\" and philosopher to China and\nthe world beyond China. His words and wisdom have such a vast influence\non the thoughts and on the ways of life of the Chinese throughout five\ncenturies. He was called Master King.\n\nThe Chinese already lived in beautiful houses with fine furniture, grew\ncrops, used agricultural implements and spun silk for their clothing. They\nused coins, marked time by the moon and had developed cooking to a fine\ntaste. They already had law courts and schools where history, music and\nliterature were taught. They wrote books by hand on bamboo and they bound\nthe pages together with thongs.\n\nMaster Kung was a scholar in school. He had two special interests: first,\nhow people should live and conduct themselves; and second, how the state\nshould be governed. When he grew up to manhood he traveled all over the\ncivilized world with a band of disciples. Two or three times, he was given\npositions of importance in the government but he never stayed long in these\npositions. The officers in the government resented Master Kung's honesty.\nConfucius continued teaching not knowing that his ideas were to be passed\non from generation to generation, that thousands of books were to be written\nabout him and his sayings, that he was to become one of the most beloved\nand revered men in history.\n\nHe preached the importance the importance of courtesy, orderliness,\nloyalty, justice, and devotion to one's parents. He emphasized that the\ngovernment should be governed by men who possessed these virtues. He\nstressed the importance of happiness in family life and of endurance and\nconsideration for one's neighbors.\n\nThese beautiful thoughts had become part of the national character of\nthe Chinese people. They were taught that happiness can be found in\ncultivating the art of living and in calm and settled existence.\n\nConfucius' greatest influence in Chinese life was family reverence and\nbonds of family life. He always believed that reverence for one's ancestors was\nimportant and desirable.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Based on the passage, what was the most likely reason the government officers \"resented Master Kung's honesty\"?",
+       "opts": [
+        [
+         "a",
+         "They were jealous that he was the son of a famous seven-foot-tall soldier."
+        ],
+        [
+         "b",
+         "They did not believe that a teacher should be allowed to hold a position of importance."
+        ],
+        [
+         "c",
+         "His honest nature and high moral standards likely exposed or interfered with their own less-virtuous ways of governing."
+        ],
+        [
+         "d",
+         "They felt that his focus on music and literature was a waste of the government's time."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Which of the following statements from the text is an expression of Confucius’s philosophy (opinion/belief) rather than a historical fact?",
+       "opts": [
+        [
+         "a",
+         "\"They wrote books by hand on bamboo and they bound the pages together with thongs.\""
+        ],
+        [
+         "b",
+         "\"Two or three times, he was given positions of importance in the government.\""
+        ],
+        [
+         "c",
+         "\"Happiness can be found in cultivating the art of living and in calm and settled existence.\""
+        ],
+        [
+         "d",
+         "\"He had nine children and all of them were girls.\""
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Why does the author include the detail about Kung, the Tall having nine daughters before finally having a son?",
+       "opts": [
+        [
+         "a",
+         "To show that Kung, the Tall was a very successful and wealthy man."
+        ],
+        [
+         "b",
+         "To explain the cultural importance of carrying on a family name and tradition, which sets the stage for Confucius’s own teachings on family."
+        ],
+        [
+         "c",
+         "To suggest that Confucius had a difficult childhood growing up with nine sisters."
+        ],
+        [
+         "d",
+         "To prove that soldiers in ancient China were required to have large families."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What is the author’s primary purpose in mentioning that the Chinese already lived in beautiful houses and used coins before Confucius began teaching?",
+       "opts": [
+        [
+         "a",
+         "To establish that Confucius lived in a highly developed and civilized society, making his intellectual influence even more impressive."
+        ],
+        [
+         "b",
+         "To argue that the Chinese people did not actually need a teacher because they were already successful."
+        ],
+        [
+         "c",
+         "To explain why Confucius decided to travel the world instead of staying at home."
+        ],
+        [
+         "d",
+         "To show that Confucius was born into a very poor family compared to his neighbors."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "How does the author evaluate the long-term impact of Confucius’s life?",
+       "opts": [
+        [
+         "a",
+         "By focusing on the fact that he failed to stay in government positions for a long time."
+        ],
+        [
+         "b",
+         "By describing the specific way he bound bamboo pages together."
+        ],
+        [
+         "c",
+         "By highlighting how his \"beautiful thoughts\" became an \"indelible mark\" on the national character of millions of people."
+        ],
+        [
+         "d",
+         "By proving that he was the only person in the state of Lu who knew how to write."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n             THE GREAT CHINESE TEACHER\n                           Confucius' teachings had left an indelible mark in\n                        the lives of millions of Chinese.\n\n                            Thousands of years ago in a flowery kingdom in\n                         the state of Lu lived a soldier Known as Kung, the\n                         Tall. He was so-called because he was seven feet tall.\n                         When he reached his seventieth birthday he reflected\n                         sorrowfully over his life. He had nine children and all\n                         of them were girls. He had no son to carry on his\n                         family name and to perform the rites and ceremonies\n                         of ancestors worship. This was practiced by the\n                         Chinese throughout the centuries to show their\nreverence to their forefathers. Kung, the Tall came from a noble lineage and\nhe would not want to break this tradition.\n\n      Two years before his death, a son was born to him. His son, named\nConfucius, became known as a \"Great Sage\" and philosopher to China and\nthe world beyond China. His words and wisdom have such a vast influence\non the thoughts and on the ways of life of the Chinese throughout five\ncenturies. He was called Master King.\n\n       The Chinese already lived in beautiful houses with fine furniture, grew\ncrops, used agricultural implements and spun silk for their clothing. They\nused coins, marked time by the moon and had developed cooking to a fine\ntaste. They already had law courts and schools where history, music and\nliterature were taught. They wrote books by hand on bamboo and they bound\nthe pages together with thongs.\n\n       Master Kung was a scholar in school. He had two special interests: first,\nhow people should live and conduct themselves; and second, how the state\nshould be governed. When he grew up to manhood he traveled all over the\ncivilized world with a band of disciples. Two or three times, he was given\npositions of importance in the government but he never stayed long in these\npositions. The officers in the government resented Master Kung's honesty.\nConfucius continued teaching not knowing that his ideas were to be passed\non from generation to generation, that thousands of books were to be written\nabout him and his sayings, that he was to become one of the most beloved\nand revered men in history.\n\n\n\n       He preached the importance the importance of courtesy, orderliness,\nloyalty, justice, and devotion to one's parents. He emphasized that the\ngovernment should be governed by men who possessed these virtues. He\nstressed the importance of happiness in family life and of endurance and\nconsideration for one's neighbors.\n\n      These beautiful thoughts had become part of the national character of\nthe Chinese people. They were taught that happiness can be found in\ncultivating the art of living and in calm and settled existence.\n\n     Confucius' greatest influence in Chinese life was family reverence and\nbonds of family life. He always believed that reverence for one's ancestors was\nimportant and desirable.\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. Based on the passage, what was the most likely reason the government\nofficers \"resented Master Kung's honesty\"?\n    A) They were jealous that he was the son of a famous seven-foot-tall\n    soldier.\n    B) They did not believe that a teacher should be allowed to hold a\n    position of importance.\n    C) His honest nature and high moral standards likely exposed or\n    interfered with their own less-virtuous ways of governing.\n    D) They felt that his focus on music and literature was a waste of the\n    government's time.\n\n2. Which of the following statements from the text is an expression of\nConfucius’s philosophy (opinion/belief) rather than a historical fact?\n   A) \"They wrote books by hand on bamboo and they bound the pages\n   together with thongs.\"\n   B) \"Two or three times, he was given positions of importance in the\n   government.\"\n   C) \"Happiness can be found in cultivating the art of living and in calm\n   and settled existence.\"\n   D) \"He had nine children and all of them were girls.\"\n\n3. Why does the author include the detail about Kung, the Tall having nine\ndaughters before finally having a son?\n   A) To show that Kung, the Tall was a very successful and wealthy man.\n   B) To explain the cultural importance of carrying on a family name and\n   tradition, which sets the stage for Confucius’s own teachings on family.\n   C) To suggest that Confucius had a difficult childhood growing up with\n   nine sisters.\n   D) To prove that soldiers in ancient China were required to have large\n   families.\n\n\n\n\n4. What is the author’s primary purpose in mentioning that the Chinese\nalready lived in beautiful houses and used coins before Confucius began\nteaching?\n   A) To establish that Confucius lived in a highly developed and civilized\n   society, making his intellectual influence even more impressive.\n   B) To argue that the Chinese people did not actually need a teacher\n   because they were already successful.\n   C) To explain why Confucius decided to travel the world instead of\n   staying at home.\n   D) To show that Confucius was born into a very poor family compared to\n   his neighbors.\n\n5. How does the author evaluate the long-term impact of Confucius’s life?\n   A) By focusing on the fact that he failed to stay in government positions\n   for a long time.\n   B) By describing the specific way he bound bamboo pages together.\n   C) By highlighting how his \"beautiful thoughts\" became an \"indelible\n   mark\" on the national character of millions of people.\n   D) By proving that he was the only person in the state of Lu who knew\n   how to write.\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 8",
+   "pages": [
+    29,
+    30,
+    31
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nMOHAMMEDANISM, THE ISLAM FAITH\nHave you ever wondered why our\nMuslim brothers in Mindanao have a\ndifferent religion than ours? For a time,\nMohammedanism, or the Muslim\nreligion, threatened all Asia and even a\ngreat part of Europe. Here's how\nMohammedanism came about.\n\nThe Mohammedan religion was founded by Mohammed and for a lime\nwas considered the most powerful religion in the world. There are still two\nhundred thirty million believers of Mohammedan faith in Asia, Africa, and a\ngroup in the Philippines, in Mindanao.\n\nMohammed, the founder of this religion, was born in Mecca in the years\n570 A.D. His parents were poor and he received very little education. While\nstill a young boy he worked as a shepherd. At the age of 25, he married a rich\nwidow older than himself.\n\nWhen he was about 40 years old, the Angel Gabriel appeared to him in\none of his prayers. The angel declared him as the prophet of God and told him\nto preach the true religion.\n\nMohammed began to preach. His work was slow. He had only 40\nfollowers after four years of preaching but he continued his work. He wrote\nverses telling about the divinity of God and how mercy could be gained\nthrough prayers, fasting, and alms- giving. These verses could be found at the\nbeginning of the Koran, the sacred book of the Mohammedans.\n\nMohammed was ever patient and never grew tired of preaching his\nreligion, He saw to it that his followers did not eat certain food. Later, he\nprohibited them from drinking wine, gambling, and indulging is usury, His\nfollowers lived by raiding caravans in the deserts and very often they were\nSuccessful. Many people of Mecca joined the band of Mohammed.\n\nThen came the years of misunderstanding and strife, War broke out\nbetween the followers of Mohammed and the people of Mecca who did not\nbelieve in him, Mohammed and his followers attacked Mecca and captured\nthe city in 630 A.D. The people rejoiced and honored him after his victory.\n\nThey considered him a prince and God's prophet on earth. He made many\nconquests after this. His followers swept towards Asia and Africa, and for a\ntime, it was feared that Mohammedanism will succeed to engulf the whole\nworld.\n\nHowever, Christianity triumphed in many places, and only some\ncountries remained Mohammedans — including the Muslims in Mindanao.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "If you were an advisor to Mohammed during his first four years of preaching when he only had 40 followers, what creative strategy based on his character might you suggest to help his message reach more people?",
+       "opts": [
+        [
+         "a",
+         "Suggest he give up preaching and return to being a shepherd."
+        ],
+        [
+         "b",
+         "Suggest he continue writing his verses to share with other caravan travelers, using his patience to slowly build trust."
+        ],
+        [
+         "c",
+         "Advise him to use his wife’s wealth to buy a larger army immediately."
+        ],
+        [
+         "d",
+         "Tell him to stop writing verses and only focus on raiding caravans for food."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Imagine a new city is being built today based strictly on the rules Mohammed established for his followers. Which of these businesses would likely be missing from that city?",
+       "opts": [
+        [
+         "a",
+         "A public library filled with sacred books."
+        ],
+        [
+         "b",
+         "A school for teaching young children how to pray."
+        ],
+        [
+         "c",
+         "A casino that offers wine and gambling games."
+        ],
+        [
+         "d",
+         "A marketplace for trading silk and spices."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "If the Angel Gabriel had not appeared to Mohammed when he was 40, how might his life have most likely continued based on his background before that event?",
+       "opts": [
+        [
+         "a",
+         "He would have become a famous general in the Roman army."
+        ],
+        [
+         "b",
+         "He would have likely continued his life as a member of the merchant class or managed his family's interests in Mecca."
+        ],
+        [
+         "c",
+         "He would have moved to Mindanao to start a new colony."
+        ],
+        [
+         "d",
+         "He would have traveled to Europe to study at a university."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Based on the \"Five Pillars\" logic often associated with the Koran (prayers, fasting, and alms-giving), how would a follower most likely respond to seeing a person in the desert who has no food or water?",
+       "opts": [
+        [
+         "a",
+         "By ignoring them and continuing on their journey to Mecca."
+        ],
+        [
+         "b",
+         "By challenging them to a race for the remaining supplies."
+        ],
+        [
+         "c",
+         "By practicing \"alms-giving\" and sharing their own food and water as an act of mercy."
+        ],
+        [
+         "d",
+         "By telling the person they should have prayed harder before they left."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "If you were tasked with creating a modern \"Peace Treaty\" between the people of Mecca and Mohammed’s followers in 630 A.D., which of Mohammed's personal traits mentioned in the text would be most helpful in making the treaty last?",
+       "opts": [
+        [
+         "a",
+         "His ability to lead successful raids on caravans."
+        ],
+        [
+         "b",
+         "His lack of formal education as a young boy."
+        ],
+        [
+         "c",
+         "His \"ever patient\" nature and his focus on mercy and divinity."
+        ],
+        [
+         "d",
+         "His victory in capturing the city by force."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n\n       MOHAMMEDANISM, THE ISLAM FAITH\n                                            Have you ever wondered why our\n                                      Muslim brothers in Mindanao have a\n                                      different religion than ours? For a time,\n                                      Mohammedanism, or the Muslim\n                                      religion, threatened all Asia and even a\n                                      great part of Europe. Here's how\n                                      Mohammedanism came about.\n\n     The Mohammedan religion was founded by Mohammed and for a lime\nwas considered the most powerful religion in the world. There are still two\nhundred thirty million believers of Mohammedan faith in Asia, Africa, and a\ngroup in the Philippines, in Mindanao.\n\n        Mohammed, the founder of this religion, was born in Mecca in the years\n570 A.D. His parents were poor and he received very little education. While\nstill a young boy he worked as a shepherd. At the age of 25, he married a rich\nwidow older than himself.\n\n      When he was about 40 years old, the Angel Gabriel appeared to him in\none of his prayers. The angel declared him as the prophet of God and told him\nto preach the true religion.\n\n      Mohammed began to preach. His work was slow. He had only 40\nfollowers after four years of preaching but he continued his work. He wrote\nverses telling about the divinity of God and how mercy could be gained\nthrough prayers, fasting, and alms- giving. These verses could be found at the\nbeginning of the Koran, the sacred book of the Mohammedans.\n\n       Mohammed was ever patient and never grew tired of preaching his\nreligion, He saw to it that his followers did not eat certain food. Later, he\nprohibited them from drinking wine, gambling, and indulging is usury, His\nfollowers lived by raiding caravans in the deserts and very often they were\nSuccessful. Many people of Mecca joined the band of Mohammed.\n\n       Then came the years of misunderstanding and strife, War broke out\nbetween the followers of Mohammed and the people of Mecca who did not\nbelieve in him, Mohammed and his followers attacked Mecca and captured\nthe city in 630 A.D. The people rejoiced and honored him after his victory.\n\n\n\nThey considered him a prince and God's prophet on earth. He made many\nconquests after this. His followers swept towards Asia and Africa, and for a\ntime, it was feared that Mohammedanism will succeed to engulf the whole\nworld.\n\n     However, Christianity triumphed in many places, and only some\ncountries remained Mohammedans — including the Muslims in Mindanao.\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. If you were an advisor to Mohammed during his first four years of\npreaching when he only had 40 followers, what creative strategy based on\nhis character might you suggest to help his message reach more people?\n    A) Suggest he give up preaching and return to being a shepherd.\n    B) Suggest he continue writing his verses to share with other caravan\n    travelers, using his patience to slowly build trust.\n    C) Advise him to use his wife’s wealth to buy a larger army immediately.\n    D) Tell him to stop writing verses and only focus on raiding caravans for\n    food.\n\n2. Imagine a new city is being built today based strictly on the rules\nMohammed established for his followers. Which of these businesses would\nlikely be missing from that city?\n    A) A public library filled with sacred books.\n    B) A school for teaching young children how to pray.\n    C) A casino that offers wine and gambling games.\n    D) A marketplace for trading silk and spices.\n\n3. If the Angel Gabriel had not appeared to Mohammed when he was 40,\nhow might his life have most likely continued based on his background\nbefore that event?\n    A) He would have become a famous general in the Roman army.\n    B) He would have likely continued his life as a member of the merchant\n    class or managed his family's interests in Mecca.\n    C) He would have moved to Mindanao to start a new colony.\n    D) He would have traveled to Europe to study at a university.\n\n4. Based on the \"Five Pillars\" logic often associated with the Koran (prayers,\nfasting, and alms-giving), how would a follower most likely respond to seeing\na person in the desert who has no food or water?\n   A) By ignoring them and continuing on their journey to Mecca.\n   B) By challenging them to a race for the remaining supplies.\n   C) By practicing \"alms-giving\" and sharing their own food and water as\n   an act of mercy.\n   D) By telling the person they should have prayed harder before they left.\n\n\n\n\n\n5. If you were tasked with creating a modern \"Peace Treaty\" between the\npeople of Mecca and Mohammed’s followers in 630 A.D., which of\nMohammed's personal traits mentioned in the text would be most helpful in\nmaking the treaty last?\n    A) His ability to lead successful raids on caravans.\n    B) His lack of formal education as a young boy.\n    C) His \"ever patient\" nature and his focus on mercy and divinity.\n    D) His victory in capturing the city by force.\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 9",
+   "pages": [
+    32,
+    33,
+    34
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nTHE IFUGAOS\nThe Ifugaos inhabiting the Mountain\nProvince of Northern Luzon are among\nthe most interesting people in the Far\nEast. They are direct descendants of the\nearliest Malay invaders of the Philippines.\nThey have constructed one of the worlds\nwonders.\n\nIfugao men wear clothes or G-strings;\nthe women wear short skirts reaching from waist to the knees, Men and\nwomen alike wear ornaments of gold, beads, brass armlets and legless. They\nbuild small but strong thatched houses.\n\nThe Ifugaos have many interesting customs. Once a girl reaches the\nage of puberty, she is allowed to send the nights with other girls in the house\nof some spinster or widow called” (ulog in Bontoc). Young men come to the\nayamang at night to express their love, The suitors are rejected or admitted\nto the ayamang depending upon the reactions of the young maidens.\n\nTrial marriage is practiced in the ayamang, A girl can live with the man\nshe prefers. When she is about to become a mother, arrangements are made\nbetween their parents for their marriage.\n\nDivorce may be had any time by either party on the Condition that the\ndissatisfied party pays a fine to the family of the other. All the property of the\ndivorced spouses go to their children.\n\nIfugao customs and traditions abound in taboos, It is taboo for a\npregnant woman to wear ornaments forming a circle. It is believed that such\nornaments will make child delivery difficult,\n\nPeople from one village cannot pass through another village during rice\nharvest time. A stranger is not allowed to enter a village during its rest- day\ncelebration. Anyone is prohibited to enter an Ifugao house when the owner is\nabsent. A person doing so is considered a thief even if he has not taken\nanything from the house.\n\nThe Ifugaos are lovers of law and order. Trial by ordeal by hot water or\nthe hot bolo test -----is practiced in trials for criminal offenses. The trial is a\npunishment in itself. As a result, there are few crimes in Ifugao land.\n\nFines are assessed in accordance with the wealth of the offending party.\nIn this manner, a poor man Would not be required to pay a fine he cannot\nafford.\n\nWe have always thought of the Ifugaos as Uncivilized. In the light of\ntheir practices, could we still consider them as a society that achieved extraordinary\narchitectural and social milestones independently.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "If you were a modern engineer visiting the Ifugao mountains, which aspect of their ancient \"world wonder\" would you study most to help build sustainable farms in other steep mountain regions?",
+       "opts": [
+        [
+         "a",
+         "The specific types of G-strings and skirts worn by the workers."
+        ],
+        [
+         "b",
+         "Their system of stone-walled terraces and irrigation that prevents soil erosion on steep slopes."
+        ],
+        [
+         "c",
+         "The trial by ordeal methods used to settle disputes between villages."
+        ],
+        [
+         "d",
+         "The ornaments of gold and beads worn by the men and women."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Imagine you are a traveler approaching an Ifugao village during their \"rest-day\" celebration. Based on their taboos, what would be the most respectful and \"creative\" way to handle the situation?",
+       "opts": [
+        [
+         "a",
+         "Enter the village anyway and offer gold beads as a peace offering."
+        ],
+        [
+         "b",
+         "Set up a camp outside the village limits and wait until the rest-day is over before attempting to enter."
+        ],
+        [
+         "c",
+         "Try to find a house where the owner is absent so you can rest quietly inside."
+        ],
+        [
+         "d",
+         "Walk through the village quickly while the people are busy with their harvest."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "If an Ifugao leader wanted to modernize their \"trial by ordeal\" (hot water or hot bolo test) while still keeping their traditional focus on \"law and order,\" what new method might they create?",
+       "opts": [
+        [
+         "a",
+         "A race to the top of the highest mountain to see who is faster."
+        ],
+        [
+         "b",
+         "A system where the person who pays the most gold is found innocent."
+        ],
+        [
+         "c",
+         "A communal \"Peace Council\" where both parties must perform a community service task together to prove their sincerity."
+        ],
+        [
+         "d",
+         "Eliminating all trials and allowing people to take whatever they want from absent owners."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "A pregnant Ifugao woman wants to follow the tradition of avoiding circular ornaments but still wants to look beautiful for a ceremony. Based on your creative understanding of the text, what could she wear instead?",
+       "opts": [
+        [
+         "a",
+         "A heavy circular brass belt that covers her waist."
+        ],
+        [
+         "b",
+         "A necklace made of perfectly round gold beads."
+        ],
+        [
+         "c",
+         "Straight-lined brass armlets or rectangular woven patterns that do not form a complete circle."
+        ],
+        [
+         "d",
+         "A large circular hat made of thatched palm."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "If the Ifugao \"trial marriage\" system in the ayamang was adapted into a modern school project about \"responsibility,\" what would be the main lesson students would learn?",
+       "opts": [
+        [
+         "a",
+         "That you should never listen to your parents' advice about marriage."
+        ],
+        [
+         "b",
+         "That big life decisions require a period of testing and mutual agreement between families before they become permanent."
+        ],
+        [
+         "c",
+         "That girls should live alone in the mountains until they become mothers."
+        ],
+        [
+         "d",
+         "That paying a fine is the best way to solve any problem in school."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n                             THE IFUGAOS\n                                       The Ifugaos inhabiting the Mountain\n                                      Province of Northern Luzon are among\n                                      the most interesting people in the Far\n                                      East. They are direct descendants of the\n                                      earliest Malay invaders of the Philippines.\n                                      They have constructed one of the worlds\n                                      wonders.\n\n                                    Ifugao men wear clothes or G-strings;\nthe women wear short skirts reaching from waist to the knees, Men and\nwomen alike wear ornaments of gold, beads, brass armlets and legless. They\nbuild small but strong thatched houses.\n\n       The Ifugaos have many interesting customs. Once a girl reaches the\nage of puberty, she is allowed to send the nights with other girls in the house\nof some spinster or widow called” (ulog in Bontoc). Young men come to the\nayamang at night to express their love, The suitors are rejected or admitted\nto the ayamang depending upon the reactions of the young maidens.\n\n      Trial marriage is practiced in the ayamang, A girl can live with the man\nshe prefers. When she is about to become a mother, arrangements are made\nbetween their parents for their marriage.\n\n       Divorce may be had any time by either party on the Condition that the\ndissatisfied party pays a fine to the family of the other. All the property of the\ndivorced spouses go to their children.\n\n     Ifugao customs and traditions abound in taboos, It is taboo for a\npregnant woman to wear ornaments forming a circle. It is believed that such\nornaments will make child delivery difficult,\n\n      People from one village cannot pass through another village during rice\nharvest time. A stranger is not allowed to enter a village during its rest- day\ncelebration. Anyone is prohibited to enter an Ifugao house when the owner is\nabsent. A person doing so is considered a thief even if he has not taken\nanything from the house.\n\n\n\n      The Ifugaos are lovers of law and order. Trial by ordeal by hot water or\nthe hot bolo test -----is practiced in trials for criminal offenses. The trial is a\npunishment in itself. As a result, there are few crimes in Ifugao land.\n\n       Fines are assessed in accordance with the wealth of the offending party.\nIn this manner, a poor man Would not be required to pay a fine he cannot\nafford.\n\n       We have always thought of the Ifugaos as Uncivilized. In the light of\ntheir practices, could we still consider them as a society that achieved extraordinary\narchitectural and social milestones independently.\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. If you were a modern engineer visiting the Ifugao mountains, which\naspect of their ancient \"world wonder\" would you study most to help build\nsustainable farms in other steep mountain regions?\n    A) The specific types of G-strings and skirts worn by the workers.\n    B) Their system of stone-walled terraces and irrigation that prevents soil\n    erosion on steep slopes.\n    C) The trial by ordeal methods used to settle disputes between villages.\n    D) The ornaments of gold and beads worn by the men and women.\n\n2. Imagine you are a traveler approaching an Ifugao village during their\n\"rest-day\" celebration. Based on their taboos, what would be the most\nrespectful and \"creative\" way to handle the situation?\n    A) Enter the village anyway and offer gold beads as a peace offering.\n    B) Set up a camp outside the village limits and wait until the rest-day is\n    over before attempting to enter.\n    C) Try to find a house where the owner is absent so you can rest quietly\n    inside.\n    D) Walk through the village quickly while the people are busy with their\n    harvest.\n\n3. If an Ifugao leader wanted to modernize their \"trial by ordeal\" (hot water\nor hot bolo test) while still keeping their traditional focus on \"law and order,\"\nwhat new method might they create?\n    A) A race to the top of the highest mountain to see who is faster.\n    B) A system where the person who pays the most gold is found innocent.\n    C) A communal \"Peace Council\" where both parties must perform a\n    community service task together to prove their sincerity.\n    D) Eliminating all trials and allowing people to take whatever they want\n    from absent owners.\n\n\n\n4. A pregnant Ifugao woman wants to follow the tradition of avoiding circular\nornaments but still wants to look beautiful for a ceremony. Based on your\ncreative understanding of the text, what could she wear instead?\n   A) A heavy circular brass belt that covers her waist.\n   B) A necklace made of perfectly round gold beads.\n   C) Straight-lined brass armlets or rectangular woven patterns that do not\n   form a complete circle.\n   D) A large circular hat made of thatched palm.\n\n5. If the Ifugao \"trial marriage\" system in the ayamang was adapted into a\nmodern school project about \"responsibility,\" what would be the main lesson\nstudents would learn?\n    A) That you should never listen to your parents' advice about marriage.\n    B) That big life decisions require a period of testing and mutual\n    agreement between families before they become permanent.\n    C) That girls should live alone in the mountains until they become\n    mothers.\n    D) That paying a fine is the best way to solve any problem in school.\n\n\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 10",
+   "pages": [
+    35,
+    36
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nPLANT THIEVES\nMost plants with green leaves\nearn their own living. They do not\nneed help from other plants\ninasmuch as they gather from the\nsoil and air the materials on which\nthey live. Their roots extend deep\ninto the soil seeking out water and\nthe substances the soil supplies.\nMoreover, their leaves get carbon\ndioxide from the air. With the help of\nsunshine, they are able to manufacture their food. These plants do not destroy\nother plants or animals or steal from them to obtain their food. These self-\nsupporting plants live and let other plants live.\n\nBut some plants are dependent on other plants. They also try to obtain\nall the food they could by robbing their innocent victims. These plants have\nno green-leaf substances and could not make for themselves. Such plants\nare supplied entirely by their victims or hosts as they are usually called.\n\nThere are plant thieves that steal from their hosts as much as they can,\nbut because they have green leaves, they manufacture little food for\nthemselves, like all thieves, plant robbers have sneaking ways. They have\ndifferent ways of attacking their victims, The dodder is a plant that has a\ntangle of yellow threads. In season, these yellow threads are vine- like sterna\ntwining about the branches of the host plant. The dodder has a bad\nreputation as a plant thief in the plant world It has no roots nor leaves.\nInstead, there are minute scales. With no roots nor leaves, the dodder grows\nvery well and bears flowers and seeds.\n\nThe secret of its food supply is the slender vines. These thin thread-like\nstems are firmly fastened by rows of little suckers to the stems and branched\nof the host plant. The suckers adhere to the host. The dodder sends minute\nbranches right through the bark of its victim into the part where the sap flows.\nThis way, it robs the host of its hard- earned riches supply itself with food for\nits vigorous growth and for the formation of its cluster of flowers which it\nshamelessly unfolds over the branches of its victim. The flowers, of course,\nform abundant seeds to start a new crop of robbers for the next season.\n\nRead each question thoroughly. Choose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "If you were an artist creating a \"villain\" character for a comic book based on the dodder plant, which physical feature from the text would be the most accurate \"weapon\" for your character?",
+       "opts": [
+        [
+         "a",
+         "Large green leaves that block the sunlight from others."
+        ],
+        [
+         "b",
+         "Deep, powerful roots that pull all the water out of the ground."
+        ],
+        [
+         "c",
+         "Slender, yellow thread-like arms with rows of \"suckers\" used to rob energy from victims."
+        ],
+        [
+         "d",
+         "Bright, colorful flowers that trick people into coming closer."
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Imagine you have a garden where a \"plant thief\" has started to grow on your favorite rosebush. Based on how the dodder grows, what would be the most effective way to save your rosebush for the next season?",
+       "opts": [
+        [
+         "a",
+         "Watering the dodder plant more so it doesn't have to steal from the rose."
+        ],
+        [
+         "b",
+         "Covering the rosebush with a blanket to hide it from the thief."
+        ],
+        [
+         "c",
+         "Carefully removing the dodder before it forms its \"abundant seeds\" to prevent a new crop of robbers from growing later."
+        ],
+        [
+         "d",
+         "Planting more green-leafed plants nearby to teach the dodder how to make its own food."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "If the \"self-supporting plants\" and the \"plant thieves\" were human characters in a story about a community, which of these scenarios best represents the behavior of the \"Plant Thieves\"?",
+       "opts": [
+        [
+         "a",
+         "A group of friends who share their snacks and help each other with homework."
+        ],
+        [
+         "b",
+         "A person who never brings their own tools to work and always secretly uses their neighbor's expensive equipment without asking."
+        ],
+        [
+         "c",
+         "A hard-working farmer who grows enough vegetables to feed the entire village."
+        ],
+        [
+         "d",
+         "A scientist who invents a new way to turn sunshine into electricity for everyone."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "A scientist discovers a way to give \"green-leaf substances\" (chlorophyll) to a dodder plant through a special injection. Based on the logic of the text, how would the dodder's life most likely change?",
+       "opts": [
+        [
+         "a",
+         "It might become less dependent on its host because it could finally manufacture some of its own food using sunshine."
+        ],
+        [
+         "b",
+         "It would grow even more suckers and kill the host plant twice as fast."
+        ],
+        [
+         "c",
+         "It would lose its yellow color and turn into a tree with deep roots."
+        ],
+        [
+         "d",
+         "It would immediately stop bearing flowers and seeds."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "If you were writing a \"Safety Guide for Plants,\" what would be the best advice for a \"host\" plant to avoid being attacked by a \"thief\" like the dodder?",
+       "opts": [
+        [
+         "a",
+         "\"Grow as many green leaves as possible to hide your stem.\""
+        ],
+        [
+         "b",
+         "\"Deepen your roots so the thief cannot reach your water supply.\""
+        ],
+        [
+         "c",
+         "\"Watch out for yellow, vine-like stems twining around your branches, as they want to send suckers through your bark.\""
+        ],
+        [
+         "d",
+         "\"Try to grow only in the shade where the thief cannot find you.\""
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n\n                           PLANT THIEVES\n                                                Most plants with green leaves\n                                          earn their own living. They do not\n                                          need help from other plants\n                                          inasmuch as they gather from the\n                                          soil and air the materials on which\n                                          they live. Their roots extend deep\n                                          into the soil seeking out water and\n                                          the substances the soil supplies.\n                                          Moreover, their leaves get carbon\n                                          dioxide from the air. With the help of\nsunshine, they are able to manufacture their food. These plants do not destroy\nother plants or animals or steal from them to obtain their food. These self-\nsupporting plants live and let other plants live.\n\n       But some plants are dependent on other plants. They also try to obtain\nall the food they could by robbing their innocent victims. These plants have\nno green-leaf substances and could not make for themselves. Such plants\nare supplied entirely by their victims or hosts as they are usually called.\n\n       There are plant thieves that steal from their hosts as much as they can,\nbut because they have green leaves, they manufacture little food for\nthemselves, like all thieves, plant robbers have sneaking ways. They have\ndifferent ways of attacking their victims, The dodder is a plant that has a\ntangle of yellow threads. In season, these yellow threads are vine- like sterna\ntwining about the branches of the host plant. The dodder has a bad\nreputation as a plant thief in the plant world It has no roots nor leaves.\nInstead, there are minute scales. With no roots nor leaves, the dodder grows\nvery well and bears flowers and seeds.\n\n       The secret of its food supply is the slender vines. These thin thread-like\nstems are firmly fastened by rows of little suckers to the stems and branched\nof the host plant. The suckers adhere to the host. The dodder sends minute\nbranches right through the bark of its victim into the part where the sap flows.\nThis way, it robs the host of its hard- earned riches supply itself with food for\nits vigorous growth and for the formation of its cluster of flowers which it\nshamelessly unfolds over the branches of its victim. The flowers, of course,\nform abundant seeds to start a new crop of robbers for the next season.\n\n\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\n1. If you were an artist creating a \"villain\" character for a comic book based on the\ndodder plant, which physical feature from the text would be the most accurate\n\"weapon\" for your character?\n    A) Large green leaves that block the sunlight from others.\n    B) Deep, powerful roots that pull all the water out of the ground.\n    C) Slender, yellow thread-like arms with rows of \"suckers\" used to rob energy\n    from victims.\n    D) Bright, colorful flowers that trick people into coming closer.\n\n2. Imagine you have a garden where a \"plant thief\" has started to grow on your\nfavorite rosebush. Based on how the dodder grows, what would be the most\neffective way to save your rosebush for the next season?\n    A) Watering the dodder plant more so it doesn't have to steal from the rose.\n    B) Covering the rosebush with a blanket to hide it from the thief.\n    C) Carefully removing the dodder before it forms its \"abundant seeds\" to prevent\n    a new crop of robbers from growing later.\n    D) Planting more green-leafed plants nearby to teach the dodder how to make\n    its own food.\n\n3. If the \"self-supporting plants\" and the \"plant thieves\" were human characters in\na story about a community, which of these scenarios best represents the behavior\nof the \"Plant Thieves\"?\n    A) A group of friends who share their snacks and help each other with\n    homework.\n    B) A person who never brings their own tools to work and always secretly uses\n    their neighbor's expensive equipment without asking.\n    C) A hard-working farmer who grows enough vegetables to feed the entire\n    village.\n    D) A scientist who invents a new way to turn sunshine into electricity for\n    everyone.\n\n4. A scientist discovers a way to give \"green-leaf substances\" (chlorophyll) to a\ndodder plant through a special injection. Based on the logic of the text, how would\nthe dodder's life most likely change?\n    A) It might become less dependent on its host because it could finally\n    manufacture some of its own food using sunshine.\n    B) It would grow even more suckers and kill the host plant twice as fast.\n    C) It would lose its yellow color and turn into a tree with deep roots.\n    D) It would immediately stop bearing flowers and seeds.\n\n5. If you were writing a \"Safety Guide for Plants,\" what would be the best advice for\na \"host\" plant to avoid being attacked by a \"thief\" like the dodder?\n    A) \"Grow as many green leaves as possible to hide your stem.\"\n    B) \"Deepen your roots so the thief cannot reach your water supply.\"\n    C) \"Watch out for yellow, vine-like stems twining around your branches, as they\n    want to send suckers through your bark.\"\n    D) \"Try to grow only in the shade where the thief cannot find you.\"\n\n\n\n"
+  },
+  {
+   "phase": "post",
+   "label": "Post-test",
+   "pages": [
+    38,
+    39,
+    40,
+    41,
+    42
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nPOPE JOHN PAUL II\nPope John Paul II is Karol Wojtyla who\nwas born on May 18, 1920 to Karol and\nEmilia Kaszrowska. His mother died when\nhe was nine years old. At the age of 21 his\nfather left him, too.\n\nHe graduated at the top of his class\nwhen he was 18; began his college studies\nat the City of Cracow; shifted to Theology in\nsecret during the German occupation, and\nwas ordained priest on November 1, 1946.\nHe was consecrated Bishop on September\n28, 1958 and was made an Archbishop on\nDecember 30, 1963. Four years later, on\nMay 29, 1967, he became a Cardinal. He\nthen became the Supreme Pontiff a position\nnaming him as the head of the Roman\nCatholic religion.\n\nMost notable about the Pope is his genuine and sterling love for\nhumanity, his great gearing for peace and love for all men, his keen\nunderstanding of human frailties, and most of all, his concern for freedom\nand human rights.\n\nPope John Paul II is completely averse to the luxury of pomp and\ngrandeur. He is at home in simple surroundings. Named the Head of the\nchurch in Poland, he chose a room of Sparta surroundings. When he became\na Pope, he reprimanded the personnel staff who removed his belongings to a\nmore comfortable room during his absence. Briefly, he wanted a simple life,\nsans the trimmings of a luxurious and kingly life.\n\nOn his first day as Supreme Pontiff, Pope John Paul II showed signs of\nnon- confinement within the walls of the Vatican. He disregarded the tradition\nof seclusion. In less than 24 hours after assumption of office, he was up and\nabout and left the Vatican, much to the concern of the cautious officials, and\nwent to a Roman hospital to pay a visit to an old friend, Polish Bishop Andrzej\nMaria Deskur. Once more he broke an age-long tradition of talking to a group\nof hospital officials. As he is desirous to communicate with everyone, he\n\nignores protocol and goes as a politician would, shaking hands and kissing\nbabies.\n\nWhen he came to the Philippines, he was not a stranger in our minds,\nbut a humble brother seeking to find old and new friends, a shepherd tending\na flock of sheep. He came as a leader to the only-Christian nation in the Far\nEast back then, the Philippines.\n\nHis message was one of brotherhood, peace, and loving sympathy for\nthe oppressed, the downtrodden, the. unjustly jailed, but most of all intended\nto families who have a special place in his heart.\n\nHis death on April 2, 2005 was deeply mourned by all people, Catholic\nand non-Catholic as well.\n\nHe left the legacy of \"Service to others.\"\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\nLiteral Reading Skill\nThese questions test your ability to recall specific facts directly stated in the text.",
+     "items": [
+      {
+       "n": 1,
+       "text": "On what date was Karol Wojtyla ordained as a priest?",
+       "opts": [
+        [
+         "a",
+         "May 18, 1920"
+        ],
+        [
+         "b",
+         "September 28, 1958"
+        ],
+        [
+         "c",
+         "November 1, 1946"
+        ],
+        [
+         "d",
+         "May 29, 1967"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Whom did the Pope visit in a Roman hospital less than 24 hours after assuming office?",
+       "opts": [
+        [
+         "a",
+         "His father, Karol"
+        ],
+        [
+         "b",
+         "A group of Polish students"
+        ],
+        [
+         "c",
+         "Bishop Andrzej Maria Deskur"
+        ],
+        [
+         "d",
+         "The President of Poland These questions require you to \"read between the lines\" and understand the deeper meaning of the information."
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "The text mentions that the Pope \"reprimanded the personnel staff\" for moving his belongings to a more comfortable room. What does this action reveal about his character?",
+       "opts": [
+        [
+         "a",
+         "He was a difficult person to please."
+        ],
+        [
+         "b",
+         "He was deeply committed to living a simple life and avoided luxury."
+        ],
+        [
+         "c",
+         "He did not trust the officials working at the Vatican."
+        ],
+        [
+         "d",
+         "He preferred the furniture he had back in Poland."
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Why does the author describe the Pope as acting \"as a politician would\" when he visited people?",
+       "opts": [
+        [
+         "a",
+         "To illustrate his desire to connect directly with common people through physical gestures like shaking hands."
+        ],
+        [
+         "b",
+         "To suggest that he was planning to run for a government office in Italy."
+        ],
+        [
+         "c",
+         "To show that he followed the strict protocols of the Vatican."
+        ],
+        [
+         "d",
+         "To explain why he was constantly surrounded by cautious officials. These questions ask you to evaluate the author’s purpose, distinguish fact from opinion, and analyze arguments."
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "What is the author's primary purpose for mentioning that Karol Wojtyla studied Theology \"in secret\" during the German occupation?",
+       "opts": [
+        [
+         "a",
+         "To show that he was a student who enjoyed playing games."
+        ],
+        [
+         "b",
+         "To highlight his courage and dedication to his faith even during dangerous times."
+        ],
+        [
+         "c",
+         "To explain why it took him so long to graduate from college."
+        ],
+        [
+         "d",
+         "To criticize the German educational system of that era."
+        ]
+       ]
+      },
+      {
+       "n": 6,
+       "text": "Which of the following statements from the text represents an opinion or a metaphor used by the author rather than a historical fact?",
+       "opts": [
+        [
+         "a",
+         "\"His mother died when he was nine years old.\""
+        ],
+        [
+         "b",
+         "\"He left the Vatican... and went to a Roman hospital.\""
+        ],
+        [
+         "c",
+         "He was \"a humble brother seeking to find old and new friends, a shepherd tending a flock of sheep.\""
+        ],
+        [
+         "d",
+         "\"His death on April 2, 2005 was deeply mourned by all people.\""
+        ]
+       ]
+      },
+      {
+       "n": 7,
+       "text": "How does the author support the claim that Pope John Paul II showed signs of \"non-confinement within the walls of the Vatican\"?",
+       "opts": [
+        [
+         "a",
+         "By listing his various titles such as Bishop, Cardinal, and Pope."
+        ],
+        [
+         "b",
+         "By providing a specific example of him breaking tradition to leave the Vatican and visit a friend."
+        ],
+        [
+         "c",
+         "By stating that he was born in Poland instead of Italy."
+        ],
+        [
+         "d",
+         "By explaining that he graduated at the top of his class when he was 18. These questions ask you to apply the lessons from the text to new situations or imagine alternative outcomes"
+        ]
+       ]
+      },
+      {
+       "n": 8,
+       "text": "If Pope John Paul II were to visit a modern school today, which of his core values mentioned in the text would he most likely encourage students to practice?",
+       "opts": [
+        [
+         "a",
+         "The importance of moving to comfortable rooms."
+        ],
+        [
+         "b",
+         "The need to follow strict protocols and traditions."
+        ],
+        [
+         "c",
+         "The legacy of \"Service to others\" and love for humanity."
+        ],
+        [
+         "d",
+         "The pursuit of luxury and kingly trimmings."
+        ]
+       ]
+      },
+      {
+       "n": 9,
+       "text": "Imagine you are a Vatican official responsible for the Pope's safety. Based on the text, what would be your biggest challenge in protecting him?",
+       "opts": [
+        [
+         "a",
+         "His refusal to travel to other countries like the Philippines."
+        ],
+        [
+         "b",
+         "His tendency to ignore protocol and wander into crowds to interact with people."
+        ],
+        [
+         "c",
+         "His preference for secret studies in Cracow."
+        ],
+        [
+         "d",
+         "His insistence on keeping his room in Poland exactly as it was."
+        ]
+       ]
+      },
+      {
+       "n": 10,
+       "text": "Based on the Pope's \"simple life\" philosophy, how would he most likely choose to spend a large donation given to him personally?",
+       "opts": [
+        [
+         "a",
+         "Buying expensive furniture for the Vatican staff."
+        ],
+        [
+         "b",
+         "Using it to help the oppressed, the downtrodden, and families in need."
+        ],
+        [
+         "c",
+         "Building a luxurious summer palace in Poland."
+        ],
+        [
+         "d",
+         "Investing it in a private collection of kingly ornaments."
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n      Read the selection below and answer the questions that follow.\n\n\n\n                       POPE JOHN PAUL II\n                                     Pope John Paul II is Karol Wojtyla who\n                                  was born on May 18, 1920 to Karol and\n                                  Emilia Kaszrowska. His mother died when\n                                  he was nine years old. At the age of 21 his\n                                  father left him, too.\n\n                                      He graduated at the top of his class\n                                  when he was 18; began his college studies\n                                  at the City of Cracow; shifted to Theology in\n                                  secret during the German occupation, and\n                                  was ordained priest on November 1, 1946.\n                                  He was consecrated Bishop on September\n                                  28, 1958 and was made an Archbishop on\n                                  December 30, 1963. Four years later, on\n                                  May 29, 1967, he became a Cardinal. He\n                                  then became the Supreme Pontiff a position\n                                  naming him as the head of the Roman\n                                  Catholic religion.\n\n     Most notable about the Pope is his genuine and sterling love for\nhumanity, his great gearing for peace and love for all men, his keen\nunderstanding of human frailties, and most of all, his concern for freedom\nand human rights.\n\n      Pope John Paul II is completely averse to the luxury of pomp and\ngrandeur. He is at home in simple surroundings. Named the Head of the\nchurch in Poland, he chose a room of Sparta surroundings. When he became\na Pope, he reprimanded the personnel staff who removed his belongings to a\nmore comfortable room during his absence. Briefly, he wanted a simple life,\nsans the trimmings of a luxurious and kingly life.\n\n       On his first day as Supreme Pontiff, Pope John Paul II showed signs of\nnon- confinement within the walls of the Vatican. He disregarded the tradition\nof seclusion. In less than 24 hours after assumption of office, he was up and\nabout and left the Vatican, much to the concern of the cautious officials, and\nwent to a Roman hospital to pay a visit to an old friend, Polish Bishop Andrzej\nMaria Deskur. Once more he broke an age-long tradition of talking to a group\nof hospital officials. As he is desirous to communicate with everyone, he\n\n\n\nignores protocol and goes as a politician would, shaking hands and kissing\nbabies.\n\n       When he came to the Philippines, he was not a stranger in our minds,\nbut a humble brother seeking to find old and new friends, a shepherd tending\na flock of sheep. He came as a leader to the only-Christian nation in the Far\nEast back then, the Philippines.\n\n      His message was one of brotherhood, peace, and loving sympathy for\nthe oppressed, the downtrodden, the. unjustly jailed, but most of all intended\nto families who have a special place in his heart.\n\n     His death on April 2, 2005 was deeply mourned by all people, Catholic\nand non-Catholic as well.\n\n       He left the legacy of \"Service to others.\"\n\n\nRead each question thoroughly. Choose the letter of the correct answer.\n\nLiteral Reading Skill\nThese questions test your ability to recall specific facts directly stated in the text.\n\n   1. On what date was Karol Wojtyla ordained as a priest?\n        A) May 18, 1920\n        B) September 28, 1958\n        C) November 1, 1946\n        D) May 29, 1967\n\n   2. Whom did the Pope visit in a Roman hospital less than 24 hours after\n      assuming office?\n         A) His father, Karol\n         B) A group of Polish students\n         C) Bishop Andrzej Maria Deskur\n         D) The President of Poland\n\nInterpretive Reading Skill\nThese questions require you to \"read between the lines\" and understand the deeper\nmeaning of the information.\n\n   3. The text mentions that the Pope \"reprimanded the personnel staff\" for\n      moving his belongings to a more comfortable room. What does this\n      action reveal about his character?\n         A) He was a difficult person to please.\n         B) He was deeply committed to living a simple life and avoided\n         luxury.\n         C) He did not trust the officials working at the Vatican.\n         D) He preferred the furniture he had back in Poland.\n\n\n\n   4. Why does the author describe the Pope as acting \"as a politician\n      would\" when he visited people?\n        A) To illustrate his desire to connect directly with common people\n        through physical gestures like shaking hands.\n        B) To suggest that he was planning to run for a government office\n        in Italy.\n        C) To show that he followed the strict protocols of the Vatican.\n        D) To explain why he was constantly surrounded by cautious\n        officials.\n\nCritical Reading Skill\nThese questions ask you to evaluate the author’s purpose, distinguish fact from\nopinion, and analyze arguments.\n\n   5. What is the author's primary purpose for mentioning that Karol\n      Wojtyla studied Theology \"in secret\" during the German occupation?\n        A) To show that he was a student who enjoyed playing games.\n        B) To highlight his courage and dedication to his faith even during\n        dangerous times.\n        C) To explain why it took him so long to graduate from college.\n        D) To criticize the German educational system of that era.\n\n   6. Which of the following statements from the text represents an opinion\n      or a metaphor used by the author rather than a historical fact?\n         A) \"His mother died when he was nine years old.\"\n         B) \"He left the Vatican... and went to a Roman hospital.\"\n         C) He was \"a humble brother seeking to find old and new friends, a\n         shepherd tending a flock of sheep.\"\n         D) \"His death on April 2, 2005 was deeply mourned by all people.\"\n\n   7. How does the author support the claim that Pope John Paul II showed\n      signs of \"non-confinement within the walls of the Vatican\"?\n         A) By listing his various titles such as Bishop, Cardinal, and Pope.\n         B) By providing a specific example of him breaking tradition to\n         leave the Vatican and visit a friend.\n         C) By stating that he was born in Poland instead of Italy.\n         D) By explaining that he graduated at the top of his class when he\n         was 18.\n\nCreative Reading Skill\nThese questions ask you to apply the lessons from the text to new situations or\nimagine alternative outcomes\n   8. If Pope John Paul II were to visit a modern school today, which of his\n      core values mentioned in the text would he most likely encourage\n      students to practice?\n          A) The importance of moving to comfortable rooms.\n          B) The need to follow strict protocols and traditions.\n          C) The legacy of \"Service to others\" and love for humanity.\n          D) The pursuit of luxury and kingly trimmings.\n\n\n\n9. Imagine you are a Vatican official responsible for the Pope's safety.\n   Based on the text, what would be your biggest challenge in protecting\n   him?\n      A) His refusal to travel to other countries like the Philippines.\n      B) His tendency to ignore protocol and wander into crowds to\n      interact with people.\n      C) His preference for secret studies in Cracow.\n      D) His insistence on keeping his room in Poland exactly as it was.\n\n\n\n10.       Based on the Pope's \"simple life\" philosophy, how would he most\n   likely choose to spend a large donation given to him personally?\n       A) Buying expensive furniture for the Vatican staff.\n       B) Using it to help the oppressed, the downtrodden, and families in\n       need.\n       C) Building a luxurious summer palace in Poland.\n       D) Investing it in a private collection of kingly ornaments.\n\n\n\nKey to Correction\n"
+  },
+  {
+   "phase": "pre",
+   "label": "Pre-test                   Post-test",
+   "pages": [
+    42
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "",
+     "items": [
+      {
+       "n": 1,
+       "text": "B                         1. C",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "B                         2. C",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "C                         3. B",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "B                         4. A",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "C                         5. B",
+       "opts": []
+      },
+      {
+       "n": 6,
+       "text": "C                         6. C",
+       "opts": []
+      },
+      {
+       "n": 7,
+       "text": "B                         7. B",
+       "opts": []
+      },
+      {
+       "n": 8,
+       "text": "B                         8. C",
+       "opts": []
+      },
+      {
+       "n": 9,
+       "text": "B                         9. B",
+       "opts": []
+      },
+      {
+       "n": 10,
+       "text": "C                         10. B Intervention Materials Activity 1        Activity 2        Activity 3",
+       "opts": []
+      },
+      {
+       "n": 1,
+       "text": "C              1. C              1. C",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "B              2. C              2. B",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "C             3. D               3. A",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "C              4. A              4. A",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "C              5. C              5. B Activity 4        Activity 5        Activity 6",
+       "opts": []
+      },
+      {
+       "n": 1,
+       "text": "C              1. C              1. C",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "B              2. A              2. C",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "C              3. C              3. A",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "A              4. C              4. C",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "B              5. B              5. C Activity 7        Activity 8        Activity 9",
+       "opts": []
+      },
+      {
+       "n": 1,
+       "text": "C              1. C              1. B",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "C              2. B              2. C",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "B              3. A              3. B",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "A              4. C              4. C",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "C              5. C              5. C",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n     1. B                         1. C\n     2. B                         2. C\n     3. C                         3. B\n     4. B                         4. A\n     5. C                         5. B\n     6. C                         6. C\n     7. B                         7. B\n     8. B                         8. C\n     9. B                         9. B\n     10.C                         10. B\n\n\nIntervention Materials\n\n       Activity 1        Activity 2        Activity 3\n          1. C              1. C              1. C\n          2. B              2. C              2. B\n          3. C             3. D               3. A\n          4. C              4. A              4. A\n          5. C              5. C              5. B\n\n       Activity 4        Activity 5        Activity 6\n          1. C              1. C              1. C\n          2. B              2. A              2. C\n          3. C              3. C              3. A\n          4. A              4. C              4. C\n          5. B              5. B              5. C\n\n       Activity 7        Activity 8        Activity 9\n          1. C              1. C              1. B\n          2. C              2. B              2. C\n          3. B              3. A              3. B\n          4. A              4. C              4. C\n          5. C              5. C              5. C\n"
+  }
+ ],
+ "keys_text": ""
+}

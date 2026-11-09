@@ -62,6 +62,7 @@
   lessons:[
    [['.pg-gate'],'Post-test result','You need 80% on the post-test to open the next level. Tap Try again to answer the parts you missed.'],
    [['.jy-card'],'Your journey with Jeepy','Every level is a stop on this road. You ride in Jeepy the Jeepney! The pin shows where you are. Tap Continue to go on.'],
+   [['.jy-more','.jy-card'],'More levels are coming','Past Level 8 the road goes on: Levels 9 to 14 are on the way. Tap them to hear from Bob.'],
    [['.level-catalog .section-heading'],'Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
    [['.jy-now','.jy-card'],'Your level','Your level is under the road map. Tap Continue learning to open its road map and play your next lesson.'],
    [['a.off-pagelink[href="?page=board"]'],'My reading board','See all your levels as a ladder, with a ribbon for every level you finish or start above.'],
@@ -217,6 +218,7 @@
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
+   [['.bb'],'Bulletin Board','Announcements from the administrator are pinned here as notes, newest first.'],
    [['.ah-hero','.hm-head'],'Teacher Home','Your class at a glance: your pupils, who learned this week and lessons finished. Tap your photo to change it.'],
    ['#tf-todo','Needs you today','Pupils who need a check-in, reading checks, help requests and readings to verify. Only what needs you shows big; the rest is a green check.'],
    [['#rs-readers'],'Readers who need help','Pupils whose Word Coach scores stay under 60% in 3 or more readings, with the words they miss. BULIG suggests a reread together, or a small group when several pupils on one level find the same reading hard.'],
@@ -250,7 +252,7 @@
    ['.cm-tools a.cm-ico','Print','Print the whole story, one page per sheet.']],
   class_demo:[
    ['.pageheading','Class Demo','Present lessons to the whole class on a TV or projector. Nothing is saved for pupils here.'],
-   [['.demo-catalog .level-card.available'],'Choose a level','Tap "Start class demo". Levels 4 to 7 ask you to choose a grade first.'],
+   [['.demo-catalog .level-card.available'],'Choose a level','Tap "Start class demo". Levels 4 to 7 ask you to choose a grade first: Grade 1 to 6, or Grade 7 to 10 for Junior High.'],
    [['.dm-off'],'Class Demo without internet','Save the levels you teach on this device. In class they open even with no internet. "Mark as done" waits on the device and is sent when you are back online.']],
   'l1-demo':[
    ['.l1d-ln','The lesson','The lesson and the part you are on.'],
@@ -298,7 +300,7 @@
    [['.pg-table'],'The grid','Green is done, light green is started, yellow means no work for 7+ days. Tap a name to open that pupil.'],
    [['a[href*="page=certificates"]'],'Certificates','Print certificates for every pupil who finished this level.']],
   sections:[
-   ['.section-add','Add a section','Choose the grade, then type the section name. BULIG shows how it will look, and warns you if the section is already taken.'],
+   ['.section-add','Add a section','Choose Elementary or Junior High School, then the grade (Grade 1 to 10), then type the section name. BULIG shows how it will look, and warns you if the section is already taken.'],
    [['.sx-card','.section-add'],'One card for each section','Add pupils straight into this section, see its pupils, print its report cards or rename it. Remove works only for an empty section.'],
    [['.sx-act a.sx-go','.section-add'],'Add pupils','Opens Add pupils with this section already chosen.']],
   review:[
@@ -384,6 +386,7 @@
  };
  const A={
   role_dash:[
+   [['.bb'],'Bulletin Board','Announcements for your area are pinned here as notes, newest first.'],
    [['.mon-head'],'Your dashboard','Your role and your area: the whole division, a municipality, a district or one school.'],
    [['.mon-manage'],'Accounts you manage','How many accounts you made for the level below you. Create an account or give a role to someone who already has one.'],
    [['.mon-manage .btn.primary'],'Create an account','Opens the Organization page. Choose the role and the place, then a new person or an existing account.'],
@@ -408,13 +411,14 @@
    [['.org-ph .btn'],'Print passes','Print an ID card for each person you manage.']],
   admin_passes:[
    [['.lc-tools'],'Print ID cards','Choose what to show, then press Print. Each ID card has the ID, the starting password and a QR code.'],
-   [['.idc'],'One ID card','The QR code fills in the ID on the sign-in page. The password is always typed.']],
+   [['.idc'],'One ID card','The QR code signs the person in, even after they change their password. A new password makes a new QR code.']],
   credits:[
    ['.cr-hero','Credits','BULIG is made from the official DepEd modules of the Schools Division of Bukidnon.'],
    [['.cr-cols .cr-card'],'The BULIG module','The writers, designers and checkers who made the Reading Toolkit.'],
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
+   [['.bb'],'Bulletin Board','Announcements from the administrator are pinned here as notes, newest first.'],
    [['.ah-hero','.pageheading'],'Admin Home','The whole school at a glance: pupils, teachers, sections and activities this week.'],
    [['.ah-b-today','.hm-checkup'],'Needs you today','Only what needs you shows big. Everything that is fine is a green check.'],
    [['.sc-pick','.sc-filter'],'Choose a school','See one school’s numbers, or all schools.'],
@@ -459,7 +463,8 @@
   schools:[
    ['.ws-kpis','Your schools','How many schools, teachers, pupils and sections BULIG has.'],
    [['.sc-card'],'One card per school','Its code, name and the IDs it gives: pupils like PCES260001, teachers like PCEST0001. Open Edit to change the name, code or logo.'],
-   ['#add-school','Add a school','Type the name and a short code (3 to 10 letters). New teachers of that school get its code in their IDs.']],
+   [['.sc-types','.sc-gh'],'Elementary and Junior High','Schools are grouped as Elementary, Junior High or Integrated. Tap a group to see only those schools.'],
+   ['#add-school','Add a school','Type the name and the School ID. BULIG finds the type by itself (1xxxxx Elementary, 3xxxxx Junior High, 5xxxxx Integrated); you can change it under School type.']],
   checkup:[
    ['.ws-kpis','At a glance','Red needs action now. Yellow is worth a look. Green is all good.'],
    [['.ck-card'],'Things to fix','Each problem has its fix next to it: unlock, compare, place in a section or tell the teacher.'],

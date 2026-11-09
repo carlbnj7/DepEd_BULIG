@@ -1,0 +1,3111 @@
+{
+ "6": {
+  "7": {
+   "page_count": 57,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "Pre-test \u00b7 Days 1-10",
+     "pages": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+     ]
+    },
+    {
+     "position": 2,
+     "phase": "pre",
+     "title": "Pre-test \u00b7 Days 11-20",
+     "pages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+     ]
+    },
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Day 1",
+     "pages": [
+      22,
+      23
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Day 2",
+     "pages": [
+      23,
+      24
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Day 3",
+     "pages": [
+      24,
+      25
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Day 4",
+     "pages": [
+      25,
+      26
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Day 5",
+     "pages": [
+      26,
+      27
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Day 6",
+     "pages": [
+      27,
+      28
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Day 7",
+     "pages": [
+      28,
+      29
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Day 8",
+     "pages": [
+      29,
+      30
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Day 9",
+     "pages": [
+      30,
+      31
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Day 10",
+     "pages": [
+      31,
+      32
+     ]
+    },
+    {
+     "position": 111,
+     "phase": "learn",
+     "title": "Day 11",
+     "pages": [
+      32,
+      33
+     ]
+    },
+    {
+     "position": 112,
+     "phase": "learn",
+     "title": "Day 12",
+     "pages": [
+      33,
+      34
+     ]
+    },
+    {
+     "position": 113,
+     "phase": "learn",
+     "title": "Day 13",
+     "pages": [
+      34,
+      35
+     ]
+    },
+    {
+     "position": 114,
+     "phase": "learn",
+     "title": "Day 14",
+     "pages": [
+      35,
+      36
+     ]
+    },
+    {
+     "position": 115,
+     "phase": "learn",
+     "title": "Day 15",
+     "pages": [
+      36,
+      37
+     ]
+    },
+    {
+     "position": 116,
+     "phase": "learn",
+     "title": "Day 16",
+     "pages": [
+      37,
+      38
+     ]
+    },
+    {
+     "position": 117,
+     "phase": "learn",
+     "title": "Day 17",
+     "pages": [
+      38,
+      39
+     ]
+    },
+    {
+     "position": 118,
+     "phase": "learn",
+     "title": "Day 18",
+     "pages": [
+      39,
+      40
+     ]
+    },
+    {
+     "position": 119,
+     "phase": "learn",
+     "title": "Day 19",
+     "pages": [
+      40,
+      41,
+      42
+     ]
+    },
+    {
+     "position": 120,
+     "phase": "learn",
+     "title": "Day 20",
+     "pages": [
+      42,
+      43,
+      44
+     ]
+    },
+    {
+     "position": 901,
+     "phase": "post",
+     "title": "Post-test \u00b7 Days 1-10",
+     "pages": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+     ]
+    },
+    {
+     "position": 902,
+     "phase": "post",
+     "title": "Post-test \u00b7 Days 11-20",
+     "pages": [
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+     ]
+    }
+   ],
+   "folder": "jhs/l5-g78",
+   "pdf": "jhs/level5-g7-8.pdf"
+  },
+  "8": {
+   "page_count": 57,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "Pre-test \u00b7 Days 1-10",
+     "pages": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+     ]
+    },
+    {
+     "position": 2,
+     "phase": "pre",
+     "title": "Pre-test \u00b7 Days 11-20",
+     "pages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+     ]
+    },
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Day 1",
+     "pages": [
+      22,
+      23
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Day 2",
+     "pages": [
+      23,
+      24
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Day 3",
+     "pages": [
+      24,
+      25
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Day 4",
+     "pages": [
+      25,
+      26
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Day 5",
+     "pages": [
+      26,
+      27
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Day 6",
+     "pages": [
+      27,
+      28
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Day 7",
+     "pages": [
+      28,
+      29
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Day 8",
+     "pages": [
+      29,
+      30
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Day 9",
+     "pages": [
+      30,
+      31
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Day 10",
+     "pages": [
+      31,
+      32
+     ]
+    },
+    {
+     "position": 111,
+     "phase": "learn",
+     "title": "Day 11",
+     "pages": [
+      32,
+      33
+     ]
+    },
+    {
+     "position": 112,
+     "phase": "learn",
+     "title": "Day 12",
+     "pages": [
+      33,
+      34
+     ]
+    },
+    {
+     "position": 113,
+     "phase": "learn",
+     "title": "Day 13",
+     "pages": [
+      34,
+      35
+     ]
+    },
+    {
+     "position": 114,
+     "phase": "learn",
+     "title": "Day 14",
+     "pages": [
+      35,
+      36
+     ]
+    },
+    {
+     "position": 115,
+     "phase": "learn",
+     "title": "Day 15",
+     "pages": [
+      36,
+      37
+     ]
+    },
+    {
+     "position": 116,
+     "phase": "learn",
+     "title": "Day 16",
+     "pages": [
+      37,
+      38
+     ]
+    },
+    {
+     "position": 117,
+     "phase": "learn",
+     "title": "Day 17",
+     "pages": [
+      38,
+      39
+     ]
+    },
+    {
+     "position": 118,
+     "phase": "learn",
+     "title": "Day 18",
+     "pages": [
+      39,
+      40
+     ]
+    },
+    {
+     "position": 119,
+     "phase": "learn",
+     "title": "Day 19",
+     "pages": [
+      40,
+      41,
+      42
+     ]
+    },
+    {
+     "position": 120,
+     "phase": "learn",
+     "title": "Day 20",
+     "pages": [
+      42,
+      43,
+      44
+     ]
+    },
+    {
+     "position": 901,
+     "phase": "post",
+     "title": "Post-test \u00b7 Days 1-10",
+     "pages": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+     ]
+    },
+    {
+     "position": 902,
+     "phase": "post",
+     "title": "Post-test \u00b7 Days 11-20",
+     "pages": [
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+     ]
+    }
+   ],
+   "folder": "jhs/l5-g78",
+   "pdf": "jhs/level5-g7-8.pdf"
+  },
+  "9": {
+   "page_count": 89,
+   "pupil_pages": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "Pre-test \u00b7 Days 1-10",
+     "pages": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+     ]
+    },
+    {
+     "position": 2,
+     "phase": "pre",
+     "title": "Pre-test \u00b7 Days 11-20",
+     "pages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+     ]
+    },
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Day 1",
+     "pages": [
+      21,
+      22,
+      23
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Day 2",
+     "pages": [
+      24,
+      25,
+      26
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Day 3",
+     "pages": [
+      27,
+      28,
+      29
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Day 4",
+     "pages": [
+      29,
+      30,
+      31
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Day 5",
+     "pages": [
+      32,
+      33,
+      34
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Day 6",
+     "pages": [
+      35,
+      36,
+      37
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Day 7",
+     "pages": [
+      38,
+      39,
+      40
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Day 8",
+     "pages": [
+      41,
+      42,
+      43
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Day 9",
+     "pages": [
+      43,
+      44,
+      45
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Day 10",
+     "pages": [
+      46,
+      47,
+      48
+     ]
+    },
+    {
+     "position": 111,
+     "phase": "learn",
+     "title": "Day 11",
+     "pages": [
+      49,
+      50,
+      51,
+      52
+     ]
+    },
+    {
+     "position": 112,
+     "phase": "learn",
+     "title": "Day 12",
+     "pages": [
+      52,
+      53,
+      54
+     ]
+    },
+    {
+     "position": 113,
+     "phase": "learn",
+     "title": "Day 13",
+     "pages": [
+      54,
+      55,
+      56
+     ]
+    },
+    {
+     "position": 114,
+     "phase": "learn",
+     "title": "Day 14",
+     "pages": [
+      57,
+      58,
+      59,
+      60
+     ]
+    },
+    {
+     "position": 115,
+     "phase": "learn",
+     "title": "Day 15",
+     "pages": [
+      60,
+      61,
+      62
+     ]
+    },
+    {
+     "position": 116,
+     "phase": "learn",
+     "title": "Day 16",
+     "pages": [
+      62,
+      63,
+      64
+     ]
+    },
+    {
+     "position": 117,
+     "phase": "learn",
+     "title": "Day 17",
+     "pages": [
+      64,
+      65,
+      66
+     ]
+    },
+    {
+     "position": 118,
+     "phase": "learn",
+     "title": "Day 18",
+     "pages": [
+      66,
+      67,
+      68
+     ]
+    },
+    {
+     "position": 119,
+     "phase": "learn",
+     "title": "Day 19",
+     "pages": [
+      68,
+      69,
+      70
+     ]
+    },
+    {
+     "position": 120,
+     "phase": "learn",
+     "title": "Day 20",
+     "pages": [
+      70,
+      71,
+      72,
+      73
+     ]
+    },
+    {
+     "position": 901,
+     "phase": "post",
+     "title": "Post-test \u00b7 Days 1-10",
+     "pages": [
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82
+     ]
+    },
+    {
+     "position": 902,
+     "phase": "post",
+     "title": "Post-test \u00b7 Days 11-20",
+     "pages": [
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89
+     ]
+    }
+   ],
+   "folder": "jhs/l5-g9",
+   "pdf": "jhs/level5-g9.pdf"
+  },
+  "10": {
+   "page_count": 94,
+   "pupil_pages": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "Pre-test \u00b7 Days 1-10",
+     "pages": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+     ]
+    },
+    {
+     "position": 2,
+     "phase": "pre",
+     "title": "Pre-test \u00b7 Days 11-20",
+     "pages": [
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+     ]
+    },
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Day 1",
+     "pages": [
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Day 2",
+     "pages": [
+      25,
+      26,
+      27
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Day 3",
+     "pages": [
+      28,
+      29,
+      30
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Day 4",
+     "pages": [
+      31,
+      32,
+      33
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Day 5",
+     "pages": [
+      34,
+      35,
+      36
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Day 6",
+     "pages": [
+      37,
+      38,
+      39
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Day 7",
+     "pages": [
+      40,
+      41,
+      42
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Day 8",
+     "pages": [
+      43,
+      44,
+      45
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Day 9",
+     "pages": [
+      46,
+      47,
+      48
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Day 10",
+     "pages": [
+      49,
+      50,
+      51
+     ]
+    },
+    {
+     "position": 111,
+     "phase": "learn",
+     "title": "Day 11",
+     "pages": [
+      52,
+      53,
+      54,
+      55
+     ]
+    },
+    {
+     "position": 112,
+     "phase": "learn",
+     "title": "Day 12",
+     "pages": [
+      56,
+      57
+     ]
+    },
+    {
+     "position": 113,
+     "phase": "learn",
+     "title": "Day 13",
+     "pages": [
+      58,
+      59
+     ]
+    },
+    {
+     "position": 114,
+     "phase": "learn",
+     "title": "Day 14",
+     "pages": [
+      60,
+      61,
+      62,
+      63
+     ]
+    },
+    {
+     "position": 115,
+     "phase": "learn",
+     "title": "Day 15",
+     "pages": [
+      64,
+      65
+     ]
+    },
+    {
+     "position": 116,
+     "phase": "learn",
+     "title": "Day 16",
+     "pages": [
+      66,
+      67
+     ]
+    },
+    {
+     "position": 117,
+     "phase": "learn",
+     "title": "Day 17",
+     "pages": [
+      68,
+      69
+     ]
+    },
+    {
+     "position": 118,
+     "phase": "learn",
+     "title": "Day 18",
+     "pages": [
+      70,
+      71
+     ]
+    },
+    {
+     "position": 119,
+     "phase": "learn",
+     "title": "Day 19",
+     "pages": [
+      72,
+      73
+     ]
+    },
+    {
+     "position": 120,
+     "phase": "learn",
+     "title": "Day 20",
+     "pages": [
+      74,
+      75,
+      76,
+      77
+     ]
+    },
+    {
+     "position": 901,
+     "phase": "post",
+     "title": "Post-test \u00b7 Days 1-10",
+     "pages": [
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86
+     ]
+    },
+    {
+     "position": 902,
+     "phase": "post",
+     "title": "Post-test \u00b7 Days 11-20",
+     "pages": [
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93
+     ]
+    }
+   ],
+   "folder": "jhs/l5-g10",
+   "pdf": "jhs/level5-g10.pdf"
+  }
+ },
+ "7": {
+  "7": {
+   "page_count": 42,
+   "pupil_pages": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "Pre-test",
+     "pages": [
+      4,
+      5
+     ]
+    },
+    {
+     "position": 2,
+     "phase": "pre",
+     "title": "Pre-test",
+     "pages": [
+      6,
+      7,
+      8,
+      9
+     ]
+    },
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Activity 1",
+     "pages": [
+      10,
+      11
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Activity 2",
+     "pages": [
+      12,
+      13
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Activity 3",
+     "pages": [
+      14,
+      15,
+      16
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Activity 4",
+     "pages": [
+      17,
+      18,
+      19
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Activity 5",
+     "pages": [
+      20,
+      21,
+      22
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Activity 6",
+     "pages": [
+      23,
+      24,
+      25
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Activity 7",
+     "pages": [
+      26,
+      27,
+      28
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Activity 8",
+     "pages": [
+      29,
+      30,
+      31
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Activity 9",
+     "pages": [
+      32,
+      33,
+      34
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Activity 10",
+     "pages": [
+      35,
+      36,
+      37
+     ]
+    },
+    {
+     "position": 901,
+     "phase": "post",
+     "title": "Post-test",
+     "pages": [
+      38,
+      39,
+      40,
+      41,
+      42
+     ]
+    }
+   ],
+   "folder": "jhs/l6-g7",
+   "pdf": "jhs/level6-g7.pdf"
+  },
+  "8": {
+   "page_count": 44,
+   "pupil_pages": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "Pre-test",
+     "pages": [
+      7,
+      8,
+      9,
+      10
+     ]
+    },
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Activity 1",
+     "pages": [
+      11,
+      12,
+      13
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Activity 2",
+     "pages": [
+      14,
+      15,
+      16
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Activity 3",
+     "pages": [
+      17,
+      18,
+      19
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Activity 4",
+     "pages": [
+      20,
+      21,
+      22
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Activity 5",
+     "pages": [
+      23,
+      24,
+      25
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Activity 6",
+     "pages": [
+      26,
+      27,
+      28
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Activity 7",
+     "pages": [
+      29,
+      30,
+      31
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Activity 8",
+     "pages": [
+      32,
+      33,
+      34
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Activity 9",
+     "pages": [
+      35,
+      36,
+      37
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Activity 10",
+     "pages": [
+      38,
+      39,
+      40,
+      41
+     ]
+    },
+    {
+     "position": 901,
+     "phase": "post",
+     "title": "Post-test",
+     "pages": [
+      42,
+      43,
+      44
+     ]
+    }
+   ],
+   "folder": "jhs/l6-g8",
+   "pdf": "jhs/level6-g8.pdf"
+  },
+  "9": {
+   "page_count": 48,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "Pre-test",
+     "pages": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+     ]
+    },
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Activity 1",
+     "pages": [
+      13,
+      14,
+      15
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Activity 2",
+     "pages": [
+      16,
+      17,
+      18
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Activity 3",
+     "pages": [
+      19,
+      20,
+      21
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Activity 4",
+     "pages": [
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Activity 5",
+     "pages": [
+      25,
+      26,
+      27
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Activity 6",
+     "pages": [
+      28,
+      29,
+      30
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Activity 7",
+     "pages": [
+      31,
+      32,
+      33
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Activity 8",
+     "pages": [
+      34,
+      35,
+      36
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Activity 9",
+     "pages": [
+      37,
+      38,
+      39
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Activity 10",
+     "pages": [
+      40,
+      41,
+      42,
+      43
+     ]
+    },
+    {
+     "position": 901,
+     "phase": "post",
+     "title": "Post-test",
+     "pages": [
+      44,
+      45,
+      46,
+      47,
+      48
+     ]
+    }
+   ],
+   "folder": "jhs/l6-g9",
+   "pdf": "jhs/level6-g9.pdf"
+  },
+  "10": {
+   "page_count": 46,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "Pre-test",
+     "pages": [
+      6,
+      7,
+      8,
+      9,
+      10
+     ]
+    },
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Activity 1",
+     "pages": [
+      11,
+      12,
+      13
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Activity 2",
+     "pages": [
+      14,
+      15,
+      16
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Activity 3",
+     "pages": [
+      17,
+      18,
+      19
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Activity 4",
+     "pages": [
+      20,
+      21,
+      22
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Activity 5",
+     "pages": [
+      23,
+      24,
+      25
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Activity 6",
+     "pages": [
+      26,
+      27,
+      28
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Activity 7",
+     "pages": [
+      29,
+      30,
+      31
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Activity 8",
+     "pages": [
+      32,
+      33,
+      34
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Activity 9",
+     "pages": [
+      35,
+      36,
+      37
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Activity 10",
+     "pages": [
+      38,
+      39,
+      40,
+      41,
+      42
+     ]
+    },
+    {
+     "position": 901,
+     "phase": "post",
+     "title": "Post-test",
+     "pages": [
+      43,
+      44,
+      45,
+      46
+     ]
+    }
+   ],
+   "folder": "jhs/l6-g10",
+   "pdf": "jhs/level6-g10.pdf"
+  }
+ },
+ "8": {
+  "7": {
+   "page_count": 39,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+   ],
+   "lessons": [
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Activity 1",
+     "pages": [
+      6,
+      7
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Activity 2",
+     "pages": [
+      8
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Activity 3",
+     "pages": [
+      9
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Activity 4",
+     "pages": [
+      10
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Activity 5",
+     "pages": [
+      11
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Activity 6",
+     "pages": [
+      12
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Activity 7",
+     "pages": [
+      13
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Activity 8",
+     "pages": [
+      14
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Activity 9",
+     "pages": [
+      15
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Activity 10",
+     "pages": [
+      16
+     ]
+    },
+    {
+     "position": 111,
+     "phase": "learn",
+     "title": "Activity 11",
+     "pages": [
+      17,
+      18
+     ]
+    },
+    {
+     "position": 112,
+     "phase": "learn",
+     "title": "Activity 12",
+     "pages": [
+      19,
+      20
+     ]
+    },
+    {
+     "position": 113,
+     "phase": "learn",
+     "title": "Activity 13",
+     "pages": [
+      21,
+      22
+     ]
+    },
+    {
+     "position": 114,
+     "phase": "learn",
+     "title": "Activity 14",
+     "pages": [
+      23,
+      24
+     ]
+    },
+    {
+     "position": 115,
+     "phase": "learn",
+     "title": "Activity 15",
+     "pages": [
+      25,
+      26
+     ]
+    },
+    {
+     "position": 116,
+     "phase": "learn",
+     "title": "Activity 16",
+     "pages": [
+      27
+     ]
+    },
+    {
+     "position": 117,
+     "phase": "learn",
+     "title": "Activity 17",
+     "pages": [
+      28
+     ]
+    },
+    {
+     "position": 118,
+     "phase": "learn",
+     "title": "Activity 18",
+     "pages": [
+      29
+     ]
+    },
+    {
+     "position": 119,
+     "phase": "learn",
+     "title": "Activity 19",
+     "pages": [
+      30
+     ]
+    },
+    {
+     "position": 120,
+     "phase": "learn",
+     "title": "Activity 20",
+     "pages": [
+      31
+     ]
+    },
+    {
+     "position": 121,
+     "phase": "learn",
+     "title": "Activity 21",
+     "pages": [
+      32
+     ]
+    },
+    {
+     "position": 122,
+     "phase": "learn",
+     "title": "Activity 22",
+     "pages": [
+      33
+     ]
+    },
+    {
+     "position": 123,
+     "phase": "learn",
+     "title": "Activity 23",
+     "pages": [
+      34,
+      35
+     ]
+    },
+    {
+     "position": 124,
+     "phase": "learn",
+     "title": "Activity 24",
+     "pages": [
+      36
+     ]
+    },
+    {
+     "position": 125,
+     "phase": "learn",
+     "title": "Activity 25",
+     "pages": [
+      37
+     ]
+    },
+    {
+     "position": 126,
+     "phase": "learn",
+     "title": "Activity 26",
+     "pages": [
+      38
+     ]
+    },
+    {
+     "position": 127,
+     "phase": "learn",
+     "title": "Activity 27",
+     "pages": [
+      39
+     ]
+    }
+   ],
+   "folder": "jhs/l7-g7",
+   "pdf": "jhs/level7-g7.pdf"
+  },
+  "8": {
+   "page_count": 43,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42
+   ],
+   "lessons": [
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Activity 1",
+     "pages": [
+      6,
+      7
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Activity 2",
+     "pages": [
+      8,
+      9
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Activity 3",
+     "pages": [
+      10,
+      11
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Activity 4",
+     "pages": [
+      12,
+      13
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Activity 5",
+     "pages": [
+      13
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Activity 6",
+     "pages": [
+      14
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Activity 7",
+     "pages": [
+      15
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Activity 8",
+     "pages": [
+      16
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Activity 9",
+     "pages": [
+      17
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Activity 10",
+     "pages": [
+      18,
+      19
+     ]
+    },
+    {
+     "position": 111,
+     "phase": "learn",
+     "title": "Activity 11",
+     "pages": [
+      20,
+      21
+     ]
+    },
+    {
+     "position": 112,
+     "phase": "learn",
+     "title": "Activity 12",
+     "pages": [
+      22,
+      23
+     ]
+    },
+    {
+     "position": 113,
+     "phase": "learn",
+     "title": "Activity 13",
+     "pages": [
+      24
+     ]
+    },
+    {
+     "position": 114,
+     "phase": "learn",
+     "title": "Activity 14",
+     "pages": [
+      25,
+      26
+     ]
+    },
+    {
+     "position": 115,
+     "phase": "learn",
+     "title": "Activity 15",
+     "pages": [
+      27
+     ]
+    },
+    {
+     "position": 116,
+     "phase": "learn",
+     "title": "Activity 16",
+     "pages": [
+      28,
+      29
+     ]
+    },
+    {
+     "position": 117,
+     "phase": "learn",
+     "title": "Activity 17",
+     "pages": [
+      30,
+      31
+     ]
+    },
+    {
+     "position": 118,
+     "phase": "learn",
+     "title": "Activity 18",
+     "pages": [
+      32,
+      33
+     ]
+    },
+    {
+     "position": 119,
+     "phase": "learn",
+     "title": "Activity 19",
+     "pages": [
+      34
+     ]
+    },
+    {
+     "position": 120,
+     "phase": "learn",
+     "title": "Activity 20",
+     "pages": [
+      35
+     ]
+    },
+    {
+     "position": 121,
+     "phase": "learn",
+     "title": "Activity 21",
+     "pages": [
+      36
+     ]
+    },
+    {
+     "position": 122,
+     "phase": "learn",
+     "title": "Activity 22",
+     "pages": [
+      37
+     ]
+    },
+    {
+     "position": 123,
+     "phase": "learn",
+     "title": "Activity 23",
+     "pages": [
+      38
+     ]
+    },
+    {
+     "position": 124,
+     "phase": "learn",
+     "title": "Activity 24",
+     "pages": [
+      39
+     ]
+    },
+    {
+     "position": 125,
+     "phase": "learn",
+     "title": "Activity 25",
+     "pages": [
+      40
+     ]
+    },
+    {
+     "position": 126,
+     "phase": "learn",
+     "title": "Activity 26",
+     "pages": [
+      41
+     ]
+    },
+    {
+     "position": 127,
+     "phase": "learn",
+     "title": "Activity 27",
+     "pages": [
+      42
+     ]
+    }
+   ],
+   "folder": "jhs/l7-g8",
+   "pdf": "jhs/level7-g8.pdf"
+  },
+  "9": {
+   "page_count": 47,
+   "pupil_pages": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+   ],
+   "lessons": [
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Activity 1",
+     "pages": [
+      7
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Activity 2",
+     "pages": [
+      8
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Activity 3",
+     "pages": [
+      9
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Activity 4",
+     "pages": [
+      10,
+      11
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Activity 5",
+     "pages": [
+      12,
+      13
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Activity 6",
+     "pages": [
+      14
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Activity 7",
+     "pages": [
+      15
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Activity 8",
+     "pages": [
+      16
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Activity 9",
+     "pages": [
+      17
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Activity 10",
+     "pages": [
+      18,
+      19
+     ]
+    },
+    {
+     "position": 111,
+     "phase": "learn",
+     "title": "Activity 11",
+     "pages": [
+      20,
+      21
+     ]
+    },
+    {
+     "position": 112,
+     "phase": "learn",
+     "title": "Activity 12",
+     "pages": [
+      22,
+      23
+     ]
+    },
+    {
+     "position": 113,
+     "phase": "learn",
+     "title": "Activity 13",
+     "pages": [
+      24
+     ]
+    },
+    {
+     "position": 114,
+     "phase": "learn",
+     "title": "Activity 14",
+     "pages": [
+      25,
+      26
+     ]
+    },
+    {
+     "position": 115,
+     "phase": "learn",
+     "title": "Activity 15",
+     "pages": [
+      27,
+      28,
+      29
+     ]
+    },
+    {
+     "position": 116,
+     "phase": "learn",
+     "title": "Activity 16",
+     "pages": [
+      30,
+      31,
+      32
+     ]
+    },
+    {
+     "position": 117,
+     "phase": "learn",
+     "title": "Activity 17",
+     "pages": [
+      33,
+      34,
+      35
+     ]
+    },
+    {
+     "position": 118,
+     "phase": "learn",
+     "title": "Activity 18",
+     "pages": [
+      36,
+      37,
+      38
+     ]
+    },
+    {
+     "position": 119,
+     "phase": "learn",
+     "title": "Activity 19",
+     "pages": [
+      39
+     ]
+    },
+    {
+     "position": 120,
+     "phase": "learn",
+     "title": "Activity 20",
+     "pages": [
+      40
+     ]
+    },
+    {
+     "position": 121,
+     "phase": "learn",
+     "title": "Activity 21",
+     "pages": [
+      41
+     ]
+    },
+    {
+     "position": 122,
+     "phase": "learn",
+     "title": "Activity 22",
+     "pages": [
+      42
+     ]
+    },
+    {
+     "position": 123,
+     "phase": "learn",
+     "title": "Activity 23",
+     "pages": [
+      43
+     ]
+    },
+    {
+     "position": 124,
+     "phase": "learn",
+     "title": "Activity 24",
+     "pages": [
+      44
+     ]
+    },
+    {
+     "position": 125,
+     "phase": "learn",
+     "title": "Activity 25",
+     "pages": [
+      45
+     ]
+    },
+    {
+     "position": 126,
+     "phase": "learn",
+     "title": "Activity 26",
+     "pages": [
+      46
+     ]
+    },
+    {
+     "position": 127,
+     "phase": "learn",
+     "title": "Activity 27",
+     "pages": [
+      47
+     ]
+    }
+   ],
+   "folder": "jhs/l7-g9",
+   "pdf": "jhs/level7-g9.pdf"
+  },
+  "10": {
+   "page_count": 43,
+   "pupil_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43
+   ],
+   "lessons": [
+    {
+     "position": 101,
+     "phase": "learn",
+     "title": "Activity 1",
+     "pages": [
+      6
+     ]
+    },
+    {
+     "position": 102,
+     "phase": "learn",
+     "title": "Activity 2",
+     "pages": [
+      7
+     ]
+    },
+    {
+     "position": 103,
+     "phase": "learn",
+     "title": "Activity 3",
+     "pages": [
+      8
+     ]
+    },
+    {
+     "position": 104,
+     "phase": "learn",
+     "title": "Activity 4",
+     "pages": [
+      9,
+      10
+     ]
+    },
+    {
+     "position": 105,
+     "phase": "learn",
+     "title": "Activity 5",
+     "pages": [
+      11
+     ]
+    },
+    {
+     "position": 106,
+     "phase": "learn",
+     "title": "Activity 6",
+     "pages": [
+      12
+     ]
+    },
+    {
+     "position": 107,
+     "phase": "learn",
+     "title": "Activity 7",
+     "pages": [
+      13
+     ]
+    },
+    {
+     "position": 108,
+     "phase": "learn",
+     "title": "Activity 8",
+     "pages": [
+      14
+     ]
+    },
+    {
+     "position": 109,
+     "phase": "learn",
+     "title": "Activity 9",
+     "pages": [
+      15
+     ]
+    },
+    {
+     "position": 110,
+     "phase": "learn",
+     "title": "Activity 10",
+     "pages": [
+      16,
+      17,
+      18
+     ]
+    },
+    {
+     "position": 111,
+     "phase": "learn",
+     "title": "Activity 11",
+     "pages": [
+      19,
+      20
+     ]
+    },
+    {
+     "position": 112,
+     "phase": "learn",
+     "title": "Activity 12",
+     "pages": [
+      21,
+      22,
+      23
+     ]
+    },
+    {
+     "position": 113,
+     "phase": "learn",
+     "title": "Activity 13",
+     "pages": [
+      24
+     ]
+    },
+    {
+     "position": 114,
+     "phase": "learn",
+     "title": "Activity 14",
+     "pages": [
+      25
+     ]
+    },
+    {
+     "position": 115,
+     "phase": "learn",
+     "title": "Activity 15",
+     "pages": [
+      26,
+      27,
+      28
+     ]
+    },
+    {
+     "position": 116,
+     "phase": "learn",
+     "title": "Activity 16",
+     "pages": [
+      29,
+      30
+     ]
+    },
+    {
+     "position": 117,
+     "phase": "learn",
+     "title": "Activity 17",
+     "pages": [
+      31,
+      32
+     ]
+    },
+    {
+     "position": 118,
+     "phase": "learn",
+     "title": "Activity 18",
+     "pages": [
+      33,
+      34
+     ]
+    },
+    {
+     "position": 119,
+     "phase": "learn",
+     "title": "Activity 19",
+     "pages": [
+      35
+     ]
+    },
+    {
+     "position": 120,
+     "phase": "learn",
+     "title": "Activity 20",
+     "pages": [
+      36
+     ]
+    },
+    {
+     "position": 121,
+     "phase": "learn",
+     "title": "Activity 21",
+     "pages": [
+      37
+     ]
+    },
+    {
+     "position": 122,
+     "phase": "learn",
+     "title": "Activity 22",
+     "pages": [
+      38
+     ]
+    },
+    {
+     "position": 123,
+     "phase": "learn",
+     "title": "Activity 23",
+     "pages": [
+      39
+     ]
+    },
+    {
+     "position": 124,
+     "phase": "learn",
+     "title": "Activity 24",
+     "pages": [
+      40
+     ]
+    },
+    {
+     "position": 125,
+     "phase": "learn",
+     "title": "Activity 25",
+     "pages": [
+      41
+     ]
+    },
+    {
+     "position": 126,
+     "phase": "learn",
+     "title": "Activity 26",
+     "pages": [
+      42
+     ]
+    },
+    {
+     "position": 127,
+     "phase": "learn",
+     "title": "Activity 27",
+     "pages": [
+      43
+     ]
+    }
+   ],
+   "folder": "jhs/l7-g10",
+   "pdf": "jhs/level7-g10.pdf"
+  }
+ }
+}

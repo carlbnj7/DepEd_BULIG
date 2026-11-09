@@ -478,6 +478,18 @@ def test_content_keys():
     r = php_cli('probe.php', 'key_audit', 0)
     check('Every keyed multiple-choice answer is one of its choices', r.get('checked', 0) > 100 and r.get('bad') == [], r)
     check('Level 5 Grade 3 pre-test and post-test keep module order, so their keys check the right item', r.get('g3', 0) > 15 and r.get('g3_order') is True, r)
+    # v212 Junior High School Levels 5-7 (tools/jhs/build.py): every tap card has a key, and each key is one of its choices
+    jc = json.load(open(os.path.join(ROOT, 'database/jhs-cards.json'), encoding='utf8'))['cards']
+    jk = json.load(open(os.path.join(ROOT, 'database/answer-keys-jhs.json'), encoding='utf8'))['keys']
+    keyed, bad = set(), []
+    for kid, kk in jk.items():
+        lv, g, pos, ph, ap = kid.split(':'); cs = jc.get(f'{lv}:{g}:{pos}:{ap}', {}).get('cards', [])
+        for n, k in kk.items():
+            c = cs[int(n) - 1] if int(n) <= len(cs) else {}
+            keyed.add((f'{lv}:{g}:{pos}:{ap}', int(n)))
+            if k['t'] == 'choice' and k['a'] not in c.get('choices', []): bad.append(kid + ' ' + n)
+    taps = [(cid, n) for cid, s_ in jc.items() for n, c in enumerate(s_['cards'], 1) if c.get('choices')]
+    check('Junior High Levels 5-7: every tap card has an answer key that is one of its choices', taps and all(t in keyed for t in taps) and not bad, (len(taps), bad[:5], [t for t in taps if t not in keyed][:5]))
     r = php_cli('probe.php', 'wc_module', 0)
     check('Word Coach only where the module asks pupils to read (not on the Level 7 sample editorial)', r.get('editorial') is False and r.get('read_story') is True, r)
     tour = open(os.path.join(ROOT, 'public/assets/tour.js'), encoding='utf8').read()
@@ -792,6 +804,10 @@ def test_roles(acc):
     if not m1b: m1b = m1
     check('A new password cannot be made for someone you do not manage', a.req('index.php', {'action': 'org_reset_pw', 'user': tid, 'csrf': a.token('?page=org')})[0] == 403)
     m1 = m1b
+    def qrkey(pid):
+        mm = re.search(r'data-qr="\?page=login&amp;key=([A-Za-z0-9_-]+)"', a.req(f'?page=admin_passes&id={pid}')[2]); return mm.group(1) if mm else ''
+    k1 = qrkey(m1.group(1)); kc = Client(); _, ku, kt = kc.req('index.php', {'action': 'key_login', 'key': k1, 'csrf': kc.token(f'?page=login&key={k1}')})
+    check('An admin ID card QR code signs the admin in', bool(k1) and 'page=dashboard' in ku, ku)
     mc = Client(); mc.login('admin', m1.group(1), m1.group(2))
     check('The Municipal Admin cannot create a School Admin (one level down only)', mc.req('index.php', {'action': 'org_create', 'name': 'Skip Level', 'role': 'school_admin', 'scope': f'school:{sid}', 'csrf': mc.token('?page=org')})[0] == 403)
     check('Bug reports are for the Division Admin only (not a Municipal Admin)', mc.req('?page=bugs')[0] == 403 and 'page=bugs' not in mc.req('?page=dashboard')[2] and mc.req('index.php', {'action': 'bug_fixed_all', 'csrf': mc.token('?page=dashboard')})[0] == 403)
@@ -813,6 +829,10 @@ def test_roles(acc):
     _, _, sw = t.req('index.php', {'action': 'role_switch', 'role': f'school_admin:{sid}', 'csrf': t.token('?page=role')})
     check('Switching role shows the welcome screen for the new role', 'data-hello' in sw and 'SCHOOL ADMIN' in sw)
     status, url, text = t.req('?page=dashboard')
+    q(f"INSERT INTO notifications(user_id,kind,title,body,url) VALUES({tid},'note','Teacher thing','x','?page=reading_reviews')"); nid = q('SELECT MAX(id) FROM notifications')
+    st, nu, _ = t.req(f'?page=notifications&open={nid}')
+    check('A teacher notification opened while using School Admin switches to the Teacher role (no error page)', st == 200 and 'page=reading_reviews' in nu, f'{st} {nu}')
+    t.req('index.php', {'action': 'role_switch', 'role': f'school_admin:{sid}', 'csrf': t.token('?page=role')})
     check('Switching to School Admin opens the admin pages without signing out', status == 200 and 'page=role' not in url and 'role-switch' in text)
     check('The School Admin cannot open Central-only pages or delete schools', t.req('?page=cleanup')[0] == 403 and t.req('index.php', {'action': 'school_delete', 'id': sid, 'confirm': 'X', 'csrf': t.token()})[0] == 403)
     if other:
@@ -858,14 +878,14 @@ def test_whats_new(p):
     q(f"DELETE FROM settings WHERE setting_key LIKE 'whatsnew_%\\_{uid}'")
     q(f"DELETE FROM notifications WHERE user_id={uid} AND kind='update'")
     _, _, text = p.req('?page=dashboard')
-    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'there’s a new update' in text.lower() and 'bob-blueprint' in text and 'chat with your teacher' in text.lower())
+    check('The first page after the update shows Bob the Worker’s popup with the new things', 'data-wn' in text and 'there’s a new update' in text.lower() and 'bob-blueprint' in text and 'junior high is here' in text.lower())
     _, _, text = p.req('?page=dashboard')
     check('The popup comes only once', 'data-wn' not in text)
     check('A copy of the update is on the bell', q(f"SELECT COUNT(*) FROM notifications WHERE user_id={uid} AND kind='update'") == '1')
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
     _, _, text = Client().req('?page=login&role=pupil')
-    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v211"' in text and 'bulig has a new update!' in text.lower() and ' hidden ' in text)
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v212"' in text and 'bulig has a new update!' in text.lower() and ' hidden ' in text)
 
 
 def test_notifications(p):

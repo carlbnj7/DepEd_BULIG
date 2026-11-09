@@ -759,6 +759,1138 @@
    ],
    "folder": "level4/g6",
    "pdf": "level4/grade-6.pdf"
+  },
+  "7": {
+   "page_count": 58,
+   "pupil_pages": [
+    8,
+    9,
+    11,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    50,
+    52
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "The Bridge to Tomorrow",
+     "pages": [
+      8
+     ],
+     "words": 181
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "The Voice Within",
+     "pages": [
+      9
+     ],
+     "words": 146
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "Tomorrow Begins Today",
+     "pages": [
+      11
+     ],
+     "words": 103
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "Beyond the Mountain",
+     "pages": [
+      13
+     ],
+     "words": 96
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "Digital Footprints",
+     "pages": [
+      14
+     ],
+     "words": 85
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "The Library Window",
+     "pages": [
+      15
+     ],
+     "words": 85
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "A Teacher's Gift",
+     "pages": [
+      16
+     ],
+     "words": 97
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "The Silent River",
+     "pages": [
+      17
+     ],
+     "words": 95
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "Hope in the Storm",
+     "pages": [
+      18
+     ],
+     "words": 85
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "Every Dream Matters",
+     "pages": [
+      19
+     ],
+     "words": 84
+    },
+    {
+     "position": 11,
+     "phase": "learn",
+     "title": "We Rise Together",
+     "pages": [
+      20
+     ],
+     "words": 85
+    },
+    {
+     "position": 12,
+     "phase": "learn",
+     "title": "The Last Seat in the Classroom",
+     "pages": [
+      21,
+      22
+     ],
+     "words": 260
+    },
+    {
+     "position": 13,
+     "phase": "learn",
+     "title": "The New Student",
+     "pages": [
+      23
+     ],
+     "words": 227
+    },
+    {
+     "position": 14,
+     "phase": "learn",
+     "title": "One Honest Decision",
+     "pages": [
+      25
+     ],
+     "words": 238
+    },
+    {
+     "position": 15,
+     "phase": "learn",
+     "title": "The Forgotten Library Card",
+     "pages": [
+      27
+     ],
+     "words": 198
+    },
+    {
+     "position": 16,
+     "phase": "learn",
+     "title": "The Science Fair Challenge",
+     "pages": [
+      29
+     ],
+     "words": 195
+    },
+    {
+     "position": 17,
+     "phase": "learn",
+     "title": "A Letter to My Future Self",
+     "pages": [
+      31
+     ],
+     "words": 194
+    },
+    {
+     "position": 18,
+     "phase": "learn",
+     "title": "The Volunteer",
+     "pages": [
+      33
+     ],
+     "words": 202
+    },
+    {
+     "position": 19,
+     "phase": "learn",
+     "title": "The Lost Wallet",
+     "pages": [
+      35
+     ],
+     "words": 246
+    },
+    {
+     "position": 20,
+     "phase": "learn",
+     "title": "Race Against Time",
+     "pages": [
+      37
+     ],
+     "words": 180
+    },
+    {
+     "position": 21,
+     "phase": "learn",
+     "title": "The School Garden",
+     "pages": [
+      39
+     ],
+     "words": 170
+    },
+    {
+     "position": 22,
+     "phase": "learn",
+     "title": "The Community Hero",
+     "pages": [
+      41
+     ],
+     "words": 180
+    },
+    {
+     "position": 23,
+     "phase": "learn",
+     "title": "Beyond the Screen",
+     "pages": [
+      43
+     ],
+     "words": 168
+    },
+    {
+     "position": 24,
+     "phase": "learn",
+     "title": "The Basketball Captain",
+     "pages": [
+      45
+     ],
+     "words": 170
+    },
+    {
+     "position": 25,
+     "phase": "learn",
+     "title": "The Secret of the Old Mango Tree",
+     "pages": [
+      47
+     ],
+     "words": 269
+    },
+    {
+     "position": 26,
+     "phase": "learn",
+     "title": "A New Beginning",
+     "pages": [
+      49,
+      50
+     ],
+     "words": 233
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "Finding My Voice",
+     "pages": [
+      52
+     ],
+     "words": 238
+    }
+   ],
+   "folder": "level4/jhs",
+   "pdf": "level4/jhs.pdf"
+  },
+  "8": {
+   "page_count": 58,
+   "pupil_pages": [
+    8,
+    9,
+    11,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    50,
+    52
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "The Bridge to Tomorrow",
+     "pages": [
+      8
+     ],
+     "words": 181
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "The Voice Within",
+     "pages": [
+      9
+     ],
+     "words": 146
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "Tomorrow Begins Today",
+     "pages": [
+      11
+     ],
+     "words": 103
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "Beyond the Mountain",
+     "pages": [
+      13
+     ],
+     "words": 96
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "Digital Footprints",
+     "pages": [
+      14
+     ],
+     "words": 85
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "The Library Window",
+     "pages": [
+      15
+     ],
+     "words": 85
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "A Teacher's Gift",
+     "pages": [
+      16
+     ],
+     "words": 97
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "The Silent River",
+     "pages": [
+      17
+     ],
+     "words": 95
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "Hope in the Storm",
+     "pages": [
+      18
+     ],
+     "words": 85
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "Every Dream Matters",
+     "pages": [
+      19
+     ],
+     "words": 84
+    },
+    {
+     "position": 11,
+     "phase": "learn",
+     "title": "We Rise Together",
+     "pages": [
+      20
+     ],
+     "words": 85
+    },
+    {
+     "position": 12,
+     "phase": "learn",
+     "title": "The Last Seat in the Classroom",
+     "pages": [
+      21,
+      22
+     ],
+     "words": 260
+    },
+    {
+     "position": 13,
+     "phase": "learn",
+     "title": "The New Student",
+     "pages": [
+      23
+     ],
+     "words": 227
+    },
+    {
+     "position": 14,
+     "phase": "learn",
+     "title": "One Honest Decision",
+     "pages": [
+      25
+     ],
+     "words": 238
+    },
+    {
+     "position": 15,
+     "phase": "learn",
+     "title": "The Forgotten Library Card",
+     "pages": [
+      27
+     ],
+     "words": 198
+    },
+    {
+     "position": 16,
+     "phase": "learn",
+     "title": "The Science Fair Challenge",
+     "pages": [
+      29
+     ],
+     "words": 195
+    },
+    {
+     "position": 17,
+     "phase": "learn",
+     "title": "A Letter to My Future Self",
+     "pages": [
+      31
+     ],
+     "words": 194
+    },
+    {
+     "position": 18,
+     "phase": "learn",
+     "title": "The Volunteer",
+     "pages": [
+      33
+     ],
+     "words": 202
+    },
+    {
+     "position": 19,
+     "phase": "learn",
+     "title": "The Lost Wallet",
+     "pages": [
+      35
+     ],
+     "words": 246
+    },
+    {
+     "position": 20,
+     "phase": "learn",
+     "title": "Race Against Time",
+     "pages": [
+      37
+     ],
+     "words": 180
+    },
+    {
+     "position": 21,
+     "phase": "learn",
+     "title": "The School Garden",
+     "pages": [
+      39
+     ],
+     "words": 170
+    },
+    {
+     "position": 22,
+     "phase": "learn",
+     "title": "The Community Hero",
+     "pages": [
+      41
+     ],
+     "words": 180
+    },
+    {
+     "position": 23,
+     "phase": "learn",
+     "title": "Beyond the Screen",
+     "pages": [
+      43
+     ],
+     "words": 168
+    },
+    {
+     "position": 24,
+     "phase": "learn",
+     "title": "The Basketball Captain",
+     "pages": [
+      45
+     ],
+     "words": 170
+    },
+    {
+     "position": 25,
+     "phase": "learn",
+     "title": "The Secret of the Old Mango Tree",
+     "pages": [
+      47
+     ],
+     "words": 269
+    },
+    {
+     "position": 26,
+     "phase": "learn",
+     "title": "A New Beginning",
+     "pages": [
+      49,
+      50
+     ],
+     "words": 233
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "Finding My Voice",
+     "pages": [
+      52
+     ],
+     "words": 238
+    }
+   ],
+   "folder": "level4/jhs",
+   "pdf": "level4/jhs.pdf"
+  },
+  "9": {
+   "page_count": 58,
+   "pupil_pages": [
+    8,
+    9,
+    11,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    50,
+    54
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "The Bridge to Tomorrow",
+     "pages": [
+      8
+     ],
+     "words": 181
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "The Voice Within",
+     "pages": [
+      9
+     ],
+     "words": 146
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "Tomorrow Begins Today",
+     "pages": [
+      11
+     ],
+     "words": 103
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "Beyond the Mountain",
+     "pages": [
+      13
+     ],
+     "words": 96
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "Digital Footprints",
+     "pages": [
+      14
+     ],
+     "words": 85
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "The Library Window",
+     "pages": [
+      15
+     ],
+     "words": 85
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "A Teacher's Gift",
+     "pages": [
+      16
+     ],
+     "words": 97
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "The Silent River",
+     "pages": [
+      17
+     ],
+     "words": 95
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "Hope in the Storm",
+     "pages": [
+      18
+     ],
+     "words": 85
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "Every Dream Matters",
+     "pages": [
+      19
+     ],
+     "words": 84
+    },
+    {
+     "position": 11,
+     "phase": "learn",
+     "title": "We Rise Together",
+     "pages": [
+      20
+     ],
+     "words": 85
+    },
+    {
+     "position": 12,
+     "phase": "learn",
+     "title": "The Last Seat in the Classroom",
+     "pages": [
+      21,
+      22
+     ],
+     "words": 260
+    },
+    {
+     "position": 13,
+     "phase": "learn",
+     "title": "The New Student",
+     "pages": [
+      23
+     ],
+     "words": 227
+    },
+    {
+     "position": 14,
+     "phase": "learn",
+     "title": "One Honest Decision",
+     "pages": [
+      25
+     ],
+     "words": 238
+    },
+    {
+     "position": 15,
+     "phase": "learn",
+     "title": "The Forgotten Library Card",
+     "pages": [
+      27
+     ],
+     "words": 198
+    },
+    {
+     "position": 16,
+     "phase": "learn",
+     "title": "The Science Fair Challenge",
+     "pages": [
+      29
+     ],
+     "words": 195
+    },
+    {
+     "position": 17,
+     "phase": "learn",
+     "title": "A Letter to My Future Self",
+     "pages": [
+      31
+     ],
+     "words": 194
+    },
+    {
+     "position": 18,
+     "phase": "learn",
+     "title": "The Volunteer",
+     "pages": [
+      33
+     ],
+     "words": 202
+    },
+    {
+     "position": 19,
+     "phase": "learn",
+     "title": "The Lost Wallet",
+     "pages": [
+      35
+     ],
+     "words": 246
+    },
+    {
+     "position": 20,
+     "phase": "learn",
+     "title": "Race Against Time",
+     "pages": [
+      37
+     ],
+     "words": 180
+    },
+    {
+     "position": 21,
+     "phase": "learn",
+     "title": "The School Garden",
+     "pages": [
+      39
+     ],
+     "words": 170
+    },
+    {
+     "position": 22,
+     "phase": "learn",
+     "title": "The Community Hero",
+     "pages": [
+      41
+     ],
+     "words": 180
+    },
+    {
+     "position": 23,
+     "phase": "learn",
+     "title": "Beyond the Screen",
+     "pages": [
+      43
+     ],
+     "words": 168
+    },
+    {
+     "position": 24,
+     "phase": "learn",
+     "title": "The Basketball Captain",
+     "pages": [
+      45
+     ],
+     "words": 170
+    },
+    {
+     "position": 25,
+     "phase": "learn",
+     "title": "The Secret of the Old Mango Tree",
+     "pages": [
+      47
+     ],
+     "words": 269
+    },
+    {
+     "position": 26,
+     "phase": "learn",
+     "title": "A New Beginning",
+     "pages": [
+      49,
+      50
+     ],
+     "words": 233
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "Beyond the Finish Line",
+     "pages": [
+      54
+     ],
+     "words": 230
+    }
+   ],
+   "folder": "level4/jhs",
+   "pdf": "level4/jhs.pdf"
+  },
+  "10": {
+   "page_count": 58,
+   "pupil_pages": [
+    8,
+    9,
+    11,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    50,
+    54
+   ],
+   "lessons": [
+    {
+     "position": 1,
+     "phase": "pre",
+     "title": "The Bridge to Tomorrow",
+     "pages": [
+      8
+     ],
+     "words": 181
+    },
+    {
+     "position": 2,
+     "phase": "learn",
+     "title": "The Voice Within",
+     "pages": [
+      9
+     ],
+     "words": 146
+    },
+    {
+     "position": 3,
+     "phase": "learn",
+     "title": "Tomorrow Begins Today",
+     "pages": [
+      11
+     ],
+     "words": 103
+    },
+    {
+     "position": 4,
+     "phase": "learn",
+     "title": "Beyond the Mountain",
+     "pages": [
+      13
+     ],
+     "words": 96
+    },
+    {
+     "position": 5,
+     "phase": "learn",
+     "title": "Digital Footprints",
+     "pages": [
+      14
+     ],
+     "words": 85
+    },
+    {
+     "position": 6,
+     "phase": "learn",
+     "title": "The Library Window",
+     "pages": [
+      15
+     ],
+     "words": 85
+    },
+    {
+     "position": 7,
+     "phase": "learn",
+     "title": "A Teacher's Gift",
+     "pages": [
+      16
+     ],
+     "words": 97
+    },
+    {
+     "position": 8,
+     "phase": "learn",
+     "title": "The Silent River",
+     "pages": [
+      17
+     ],
+     "words": 95
+    },
+    {
+     "position": 9,
+     "phase": "learn",
+     "title": "Hope in the Storm",
+     "pages": [
+      18
+     ],
+     "words": 85
+    },
+    {
+     "position": 10,
+     "phase": "learn",
+     "title": "Every Dream Matters",
+     "pages": [
+      19
+     ],
+     "words": 84
+    },
+    {
+     "position": 11,
+     "phase": "learn",
+     "title": "We Rise Together",
+     "pages": [
+      20
+     ],
+     "words": 85
+    },
+    {
+     "position": 12,
+     "phase": "learn",
+     "title": "The Last Seat in the Classroom",
+     "pages": [
+      21,
+      22
+     ],
+     "words": 260
+    },
+    {
+     "position": 13,
+     "phase": "learn",
+     "title": "The New Student",
+     "pages": [
+      23
+     ],
+     "words": 227
+    },
+    {
+     "position": 14,
+     "phase": "learn",
+     "title": "One Honest Decision",
+     "pages": [
+      25
+     ],
+     "words": 238
+    },
+    {
+     "position": 15,
+     "phase": "learn",
+     "title": "The Forgotten Library Card",
+     "pages": [
+      27
+     ],
+     "words": 198
+    },
+    {
+     "position": 16,
+     "phase": "learn",
+     "title": "The Science Fair Challenge",
+     "pages": [
+      29
+     ],
+     "words": 195
+    },
+    {
+     "position": 17,
+     "phase": "learn",
+     "title": "A Letter to My Future Self",
+     "pages": [
+      31
+     ],
+     "words": 194
+    },
+    {
+     "position": 18,
+     "phase": "learn",
+     "title": "The Volunteer",
+     "pages": [
+      33
+     ],
+     "words": 202
+    },
+    {
+     "position": 19,
+     "phase": "learn",
+     "title": "The Lost Wallet",
+     "pages": [
+      35
+     ],
+     "words": 246
+    },
+    {
+     "position": 20,
+     "phase": "learn",
+     "title": "Race Against Time",
+     "pages": [
+      37
+     ],
+     "words": 180
+    },
+    {
+     "position": 21,
+     "phase": "learn",
+     "title": "The School Garden",
+     "pages": [
+      39
+     ],
+     "words": 170
+    },
+    {
+     "position": 22,
+     "phase": "learn",
+     "title": "The Community Hero",
+     "pages": [
+      41
+     ],
+     "words": 180
+    },
+    {
+     "position": 23,
+     "phase": "learn",
+     "title": "Beyond the Screen",
+     "pages": [
+      43
+     ],
+     "words": 168
+    },
+    {
+     "position": 24,
+     "phase": "learn",
+     "title": "The Basketball Captain",
+     "pages": [
+      45
+     ],
+     "words": 170
+    },
+    {
+     "position": 25,
+     "phase": "learn",
+     "title": "The Secret of the Old Mango Tree",
+     "pages": [
+      47
+     ],
+     "words": 269
+    },
+    {
+     "position": 26,
+     "phase": "learn",
+     "title": "A New Beginning",
+     "pages": [
+      49,
+      50
+     ],
+     "words": 233
+    },
+    {
+     "position": 100,
+     "phase": "post",
+     "title": "Beyond the Finish Line",
+     "pages": [
+      54
+     ],
+     "words": 230
+    }
+   ],
+   "folder": "level4/jhs",
+   "pdf": "level4/jhs.pdf"
   }
  }
 }

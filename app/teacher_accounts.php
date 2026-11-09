@@ -10,7 +10,7 @@ function teacher_must_change(?array $u):bool{return $u!==null&&$u['role']==='tea
 /** The pupil or teacher a scanned sign-in key belongs to. */
 function card_user_any(string $key):?array{
  if(!cards_ready()||!preg_match('~^[A-Za-z0-9_-]{20,40}$~',$key))return null;
- return one("SELECT u.* FROM pupil_cards c JOIN users u ON u.id=c.user_id WHERE c.key_hash=? AND u.role IN ('pupil','teacher') AND u.active=1",[hash('sha256',$key)])?:null;
+ return one("SELECT u.* FROM pupil_cards c JOIN users u ON u.id=c.user_id WHERE c.key_hash=? AND u.role IN ('pupil','teacher','admin') AND u.active=1",[hash('sha256',$key)])?:null;   // v211 every ID card signs in
 }
 /** The teacher sign-in form with the Teacher ID filled in. */
 function teacher_login_url(array $t):string{return '?page=login&role=teacher&form=1&id='.rawurlencode((string)$t['public_id']);}
@@ -35,7 +35,7 @@ function teacher_create(string $name,string $sex):array{
 function teacher_ticket_html(array $t,?string $key,?string $pw,int $n):string{   // v211 an ID card (pupils keep tickets)
  $qr=$key?'?page=login&key='.rawurlencode($key):teacher_login_url($t);$sec=(string)($t['sections']??'');
  $sch=(int)val('SELECT COALESCE(school_id,0) FROM users WHERE id=?',[(int)$t['id']]);$sn=$sch?(string)(val("SELECT COALESCE(NULLIF(name,''),code) FROM schools WHERE id=?",[$sch])?:''):'';
- return staff_id_card(['school'=>$sch,'name'=>(string)$t['name'],'role'=>'Teacher','place'=>trim($sn.($sn!==''&&$sec!==''?' · ':'').$sec),'id'=>$t['public_id'],'pw'=>$pw,'qr'=>$qr,'pic'=>function_exists('staff_pic')?staff_pic((int)$t['id'],'teacher'):teacher_char((int)$t['id']),'scan'=>$key&&$pw!==null?'Scan to sign in':'Scan to open BULIG','n'=>$n]);
+ return staff_id_card(['school'=>$sch,'name'=>(string)$t['name'],'role'=>'Teacher','place'=>trim($sn.($sn!==''&&$sec!==''?' · ':'').$sec),'id'=>$t['public_id'],'pw'=>$pw,'qr'=>$qr,'pic'=>function_exists('staff_pic')?staff_pic((int)$t['id'],'teacher'):teacher_char((int)$t['id']),'scan'=>$key?'Scan to sign in':'Scan to open BULIG','n'=>$n]);
 }
 
 /** Admin Pass (v172): the administrator's own card. Its QR code only fills in the admin ID on the sign-in page; the
@@ -43,8 +43,8 @@ function teacher_ticket_html(array $t,?string $key,?string $pw,int $n):string{  
 function admin_pass_view(array $u):void{
  $n=0;echo '<div class="pageheading ws-head no-print"><div><span class="eyebrow">PRINT & DOWNLOAD</span><h1>Admin Pass</h1><p class="muted">Scan it on the sign-in page of a phone to fill in your administrator ID. You still type your password.</p></div><div class="ws-btns"><a class="btn secondary" href="?page=print">'.icon('arrow','flip').'Back</a></div></div>';
  echo '<div class="lc-tools no-print card"><button type="button" class="btn primary" data-lc-print>'.icon('download').'<span data-lc-print-label>Print pass</span></button></div><div class="lc-sheet tk-sheet idc-sheet" data-lc-sheet data-tk-word="pass">';
- foreach(rows("SELECT id,name,public_id FROM users WHERE role='admin' AND active=1 AND id=?",[(int)$u['id']]) as $a){$n++;$qr='?page=login&id='.rawurlencode((string)$a['public_id']);
-  echo '<div class="tk-wrap idc-wrap" data-tk>'.staff_id_card(['school'=>isset($u['active_role'])&&function_exists('role_place_ids')?role_place_ids($u['active_role'],(int)($u['scope_id']??0))[0]:0,'muni'=>isset($u['active_role'])&&function_exists('role_place_ids')?role_place_ids($u['active_role'],(int)($u['scope_id']??0))[1]:0,'name'=>(string)$a['name'],'role'=>function_exists('rbac_ready')&&isset($u['active_role'])&&isset(ROLES[$u['active_role']])?ROLES[$u['active_role']][0]:'Administrator','place'=>function_exists('rbac_scope_name')&&isset($u['active_role'])?rbac_scope_name($u['active_role'],(int)($u['scope_id']??0)):'','id'=>$a['public_id'],'pw'=>null,'qr'=>$qr,'pic'=>function_exists('staff_pic')?staff_pic((int)$a['id'],'admin'):char_src(tf_is_male((int)$a['id'])?'admin-male':'admin-female','hello'),'scan'=>'Scan to fill in my ID','n'=>$n]).'<div class="tk-bar no-print"><label class="tk-sel"><input type="checkbox" data-tk-pick checked> Print</label></div></div>';}
+ foreach(rows("SELECT id,name,public_id FROM users WHERE role='admin' AND active=1 AND id=?",[(int)$u['id']]) as $a){$n++;$qr=function_exists('staff_qr')?staff_qr((int)$a['id'],(string)$a['public_id']):'?page=login&id='.rawurlencode((string)$a['public_id']);
+  echo '<div class="tk-wrap idc-wrap" data-tk>'.staff_id_card(['school'=>isset($u['active_role'])&&function_exists('role_place_ids')?role_place_ids($u['active_role'],(int)($u['scope_id']??0))[0]:0,'muni'=>isset($u['active_role'])&&function_exists('role_place_ids')?role_place_ids($u['active_role'],(int)($u['scope_id']??0))[1]:0,'name'=>(string)$a['name'],'role'=>function_exists('rbac_ready')&&isset($u['active_role'])&&isset(ROLES[$u['active_role']])?ROLES[$u['active_role']][0]:'Administrator','place'=>function_exists('rbac_scope_name')&&isset($u['active_role'])?rbac_scope_name($u['active_role'],(int)($u['scope_id']??0)):'','id'=>$a['public_id'],'pw'=>null,'qr'=>$qr,'pic'=>function_exists('staff_pic')?staff_pic((int)$a['id'],'admin'):char_src(tf_is_male((int)$a['id'])?'admin-male':'admin-female','hello'),'scan'=>'Scan to sign in','n'=>$n]).'<div class="tk-bar no-print"><label class="tk-sel"><input type="checkbox" data-tk-pick checked> Print</label></div></div>';}
  echo '</div><script src="'.asset_url('qrcode.js').'" defer></script><script src="'.asset_url('cards.js').'" defer></script>';
 }
 
@@ -67,7 +67,7 @@ function teacher_needs_018():string{return '<section class="card"><div class="ws
 /** Printable Teacher Passes, and who still uses a starter password. */
 function teacher_cards_view():void{
  $one=(int)($_GET['t']??0);$show=(string)($_GET['show']??'all');$new=isset($_GET['new'])?array_map('intval',array_column($_SESSION['teacher_import_done']??[],'uid')):[];
- echo '<div class="pageheading ws-head no-print"><div><span class="eyebrow">TEACHERS</span><h1>Teacher Passes</h1><p class="muted">Print, cut along the dashed lines and give each teacher their pass. Up to 10 fit on one A4 sheet.</p></div><div class="ws-btns"><a class="btn secondary" href="?page=accounts">'.icon('arrow','flip').'Back to teachers</a></div></div>';
+ echo '<div class="pageheading ws-head no-print"><div><span class="eyebrow">TEACHERS</span><h1>Teacher Passes</h1><p class="muted">Print, cut along the dashed lines and give each teacher their pass. Up to '.idc_per()['s'].' fit on one A4 sheet.</p></div><div class="ws-btns"><a class="btn secondary" href="?page=accounts">'.icon('arrow','flip').'Back to teachers</a></div></div>';
  if(!cards_ready()){echo teacher_needs_018();return;}
  $starter=teacher_starter_ids();$logins=admin_last_logins();
  $all=rows("SELECT id,name,public_id FROM users u WHERE role='teacher' AND active=1".school_users_sql()." ORDER BY name");echo school_filter_bar('teacher_cards');
@@ -77,10 +77,10 @@ function teacher_cards_view():void{
  if(!$list){echo '<section class="empty no-print">'.icon('people').'<h2>No teachers here.</h2><p>'.($show==='starter'?'Every teacher has made their own password.':'Add teachers on the Teachers page, then come back to print their passes.').'</p></section>';}
  else{
   if(function_exists('id_design_picker'))echo id_design_picker('teacher_cards');
-  echo '<p class="lc-note no-print">The first scan signs the teacher in, and BULIG asks them to make their own password. After that, the QR code only fills in the Teacher ID. Lost a pass? Use “New starter password”: the old password and QR code stop working.</p>';
+  echo '<p class="lc-note no-print">The QR code signs the teacher in, even after they make their own password. Lost a card? Use “New starter password”: the old password and the old QR code stop working.</p>';
   echo '<div class="lc-pick no-print card"><span class="lc-count" data-tk-count>'.count($list).' of '.count($list).' passes selected</span><button type="button" class="btn secondary" data-tk-all>Select all</button><button type="button" class="btn secondary" data-tk-none>Select none</button>'
-   .'<span class="lc-size">Pass size<span class="st-seg" role="radiogroup" aria-label="Pass size"><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="s">Small<small>21 per page</small></button><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="m">Medium<small>10 per page</small></button><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="l">Large<small>8 per page</small></button></span></span>'.tk_save_button().'</div>';
-  echo '<div class="lc-sheet tk-sheet idc-sheet" data-lc-sheet data-tk-word="pass">';$n=0;
+   .'<span class="lc-size">Pass size<span class="st-seg" role="radiogroup" aria-label="Pass size"><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="s">Small<small>'.idc_per()['s'].' per page</small></button><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="m">Medium<small>'.idc_per()['m'].' per page</small></button><button type="button" class="st-seg-b" role="radio" aria-checked="false" data-tk-size="l">Large<small>'.idc_per()['l'].' per page</small></button></span></span>'.tk_save_button().'</div>';
+  echo '<div class="lc-sheet tk-sheet idc-sheet" data-lc-sheet data-tk-word="pass" data-tk-per="'.e(json_encode(idc_per())).'">';$n=0;
   foreach($list as $t){$n++;$tid=(int)$t['id'];$t['sections']=teacher_sections_label($tid);$info=card_info($tid);
    echo '<div class="tk-wrap idc-wrap" data-tk>'.teacher_ticket_html($t,$info['key'],$info['pw'],$n).'<div class="tk-bar no-print"><label class="tk-sel"><input type="checkbox" data-tk-pick checked> Print</label>'
     .'<form method="post" class="tk-new">'.csrf_field().'<input type="hidden" name="action" value="admin_teacher_starter"><input type="hidden" name="id" value="'.$tid.'"><input type="hidden" name="back" value="cards"><button class="btn quiet" data-confirm="Make a new starter password for '.e($t['name']).'? Their old password and QR code stop working, and they make a new password at the next sign-in.">'.icon('replay').'New starter password</button></form></div></div>';}
@@ -117,8 +117,8 @@ function teacher_import_check(array $rows):array{
   if(!$sex)$err($sexRaw===''?'Sex is missing (M or F).':'Sex must be M or F.');
   $grade=$get('grade');$grade=$grade!==''?(int)preg_replace('/\D/','',$grade):0;$sec=$get('section');
   if($sec!==''){
-   if($grade>=1&&$grade<=6){$row['grade']=$grade;$row['section']=mb_substr(import_name_case($sec),0,80);$k=mb_strtolower($row['section']).'|'.$grade;if(isset($taken[$k]))$row['notes'][]='Another teacher ('.$taken[$k].') already has Grade '.$grade.' – '.$row['section'].'.';}
-   else $err('Add a Grade from 1 to 6 for the section, or leave Section blank.');
+   if(grade_ok($grade)){$row['grade']=$grade;$row['section']=mb_substr(import_name_case($sec),0,80);$k=mb_strtolower($row['section']).'|'.$grade;if(isset($taken[$k]))$row['notes'][]='Another teacher ('.$taken[$k].') already has Grade '.$grade.' – '.$row['section'].'.';}
+   else $err('Add a Grade from 1 to 10 for the section, or leave Section blank.');
   }elseif($grade)$row['notes'][]='Grade without a Section is left out.';
   if($row['status']==='ok'){$k=ck_name_key($name);
    if(isset($have[$k])){$row['status']='skip';$row['notes']=['Already in BULIG ('.$have[$k].').'];}
@@ -177,7 +177,7 @@ function teacher_typed_row(int $i,array $r,string $note):string{
  $in=fn($k,$col,$lab,$extra='')=>'<td data-l="'.$lab.'"><input name="t['.$col.']['.$n.']" value="'.$v($k).'" maxlength="60" autocomplete="off" aria-label="'.$lab.', teacher '.($i<0?'':$i+1).'"'.$extra.'></td>';
  $o='<option value="">—</option>';foreach(NAME_EXTS as $x)$o.='<option value="'.$x.'"'.(name_ext_norm($ext)===$x?' selected':'').'>'.$x.'</option>';
  $mf='';foreach(['M'=>'Male','F'=>'Female'] as $k=>$t)$mf.='<label><input type="radio" name="t[sex]['.$n.']" value="'.$k.'"'.(in_array($sex,[$k,strtoupper($t)],true)?' checked':'').' aria-label="'.$t.'"><b>'.$k.'</b></label>';
- $g='<option value="">—</option>';for($x=1;$x<=6;$x++)$g.='<option value="'.$x.'"'.($gr===$x?' selected':'').'>Grade '.$x.'</option>';
+ $g='<option value="">—</option>'.grade_options((int)$gr,$GLOBALS['bulig_add_grades']??null);
  return '<tr data-bk-row'.($note!==''?' class="err"':'').'><td data-bk-n>'.($i<0?'':$i+1).'</td>'.$in(0,'last','Last name',$i===0?' placeholder="Type here…"':'').$in(1,'first','First name').$in(2,'middle','Middle name')
   .'<td class="c-ext" data-l="Ext."><select name="t[ext]['.$n.']" aria-label="Extension">'.$o.'</select></td><td class="c-sex" data-l="Sex"><span class="bk-sex">'.$mf.'</span></td>'
   .'<td class="c-gr" data-l="Grade (optional)"><select name="t[grade]['.$n.']" aria-label="Grade">'.$g.'</select></td>'.$in(6,'section','Section (optional)').'<td class="c-st" data-bk-st>'.($note!==''?'<span class="bad">'.e($note).'</span>':'').'</td></tr>';

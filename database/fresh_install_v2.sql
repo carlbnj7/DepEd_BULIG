@@ -3,7 +3,7 @@ CREATE TABLE users(id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, public_id VARC
 CREATE TABLE admins(user_id BIGINT UNSIGNED PRIMARY KEY, FOREIGN KEY(user_id) REFERENCES users(id));
 CREATE TABLE teachers(user_id BIGINT UNSIGNED PRIMARY KEY, FOREIGN KEY(user_id) REFERENCES users(id));
 CREATE TABLE grade_levels(id TINYINT UNSIGNED PRIMARY KEY, name VARCHAR(30) NOT NULL);
-INSERT INTO grade_levels VALUES (1,'Grade 1'),(2,'Grade 2'),(3,'Grade 3'),(4,'Grade 4'),(5,'Grade 5'),(6,'Grade 6');
+INSERT INTO grade_levels VALUES (1,'Grade 1'),(2,'Grade 2'),(3,'Grade 3'),(4,'Grade 4'),(5,'Grade 5'),(6,'Grade 6'),(7,'Grade 7'),(8,'Grade 8'),(9,'Grade 9'),(10,'Grade 10');
 CREATE TABLE pupils(user_id BIGINT UNSIGNED PRIMARY KEY, grade_level TINYINT UNSIGNED NOT NULL, section VARCHAR(80) NOT NULL, FOREIGN KEY(user_id) REFERENCES users(id), FOREIGN KEY(grade_level) REFERENCES grade_levels(id));
 CREATE TABLE teacher_pupils(teacher_id BIGINT UNSIGNED NOT NULL, pupil_id BIGINT UNSIGNED PRIMARY KEY, FOREIGN KEY(teacher_id) REFERENCES teachers(user_id), FOREIGN KEY(pupil_id) REFERENCES pupils(user_id));
 CREATE TABLE id_sequences(kind VARCHAR(20) PRIMARY KEY, next_value BIGINT UNSIGNED NOT NULL);

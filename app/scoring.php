@@ -13,7 +13,7 @@
      (app/level4.php: l4_auto), or by the teacher when the device could not listen. */
 
 function answer_keys():array{static $k;if($k===null){$k=['keys'=>[],'notes'=>[]];
- foreach(['answer-keys.json','answer-keys-2.json'] as $f){$f=__DIR__.'/../database/'.$f;$j=is_file($f)?(json_decode((string)file_get_contents($f),true)??[]):[];
+ foreach(['answer-keys.json','answer-keys-2.json','answer-keys-jhs.json'] as $f){$f=__DIR__.'/../database/'.$f;$j=is_file($f)?(json_decode((string)file_get_contents($f),true)??[]):[];
   foreach($j['keys']??[] as $id=>$cards)foreach($cards as $n=>$c)$k['keys'][$id][$n]=$c;foreach($j['notes']??[] as $id=>$x)$k['notes'][$id]=array_merge($k['notes'][$id]??[],$x);}
  /* v206: the drawing cards became picture cards (database/draw-picks.json): their right pictures */
  if(function_exists('draw_picks'))foreach(draw_picks() as $ref=>$c){if(empty($c['key']))continue;[$id,$n]=explode('|',$ref);$kk=$c['key'];

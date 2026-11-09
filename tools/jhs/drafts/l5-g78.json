@@ -1,0 +1,5595 @@
+{
+ "id": "l5-g78",
+ "level": 6,
+ "grades": [
+  7,
+  8
+ ],
+ "pdf": "level5-g7-8.pdf",
+ "lessons": [
+  {
+   "phase": "pre",
+   "label": "PRE-TEST Day 1-10 grade 7-8",
+   "pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "acts": [
+    {
+     "direction": "Read each question carefully and circle the letter of the best answer.",
+     "lead": "Vocabulary Mastery Pre-Test\n\nDirections: Read each question carefully and circle the letter of the best\nanswer.\n\nSynonyms & Antonyms",
+     "items": [
+      {
+       "n": 1,
+       "text": "What is a synonym for \"happy\"?",
+       "opts": [
+        [
+         "a",
+         "Sad"
+        ],
+        [
+         "b",
+         "Joyful"
+        ],
+        [
+         "c",
+         "Angry"
+        ],
+        [
+         "d",
+         "Tired"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What is an antonym for \"hot\"?",
+       "opts": [
+        [
+         "a",
+         "Warm"
+        ],
+        [
+         "b",
+         "Cold"
+        ],
+        [
+         "c",
+         "Spicy"
+        ],
+        [
+         "d",
+         "Boiling"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "The word \"miniscule\" means:",
+       "opts": [
+        [
+         "a",
+         "Very large"
+        ],
+        [
+         "b",
+         "Very small"
+        ],
+        [
+         "c",
+         "Very loud"
+        ],
+        [
+         "d",
+         "Very colorful"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "If you feel \"mortification,\" you feel:",
+       "opts": [
+        [
+         "a",
+         "Proud"
+        ],
+        [
+         "b",
+         "Excited"
+        ],
+        [
+         "c",
+         "Ashamed"
+        ],
+        [
+         "d",
+         "Brave"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "A word that means the opposite of \"brilliant\" is:",
+       "opts": [
+        [
+         "a",
+         "Smart"
+        ],
+        [
+         "b",
+         "Dull"
+        ],
+        [
+         "c",
+         "Shiny"
+        ],
+        [
+         "d",
+         "Bright"
+        ]
+       ]
+      },
+      {
+       "n": 6,
+       "text": "Which word means \"permitted\"?",
+       "opts": [
+        [
+         "a",
+         "Aloud"
+        ],
+        [
+         "b",
+         "Allowed"
+        ],
+        [
+         "c",
+         "A loud"
+        ],
+        [
+         "d",
+         "Allow"
+        ]
+       ]
+      },
+      {
+       "n": 7,
+       "text": "Choose the correct word: \"I tied a _____ in my shoelace.\"",
+       "opts": [
+        [
+         "a",
+         "Not"
+        ],
+        [
+         "b",
+         "Knot"
+        ],
+        [
+         "c",
+         "Nat"
+        ],
+        [
+         "d",
+         "Note"
+        ]
+       ]
+      },
+      {
+       "n": 8,
+       "text": "Which word describes a period of seven days?",
+       "opts": [
+        [
+         "a",
+         "Weak"
+        ],
+        [
+         "b",
+         "Week"
+        ],
+        [
+         "c",
+         "Wek"
+        ],
+        [
+         "d",
+         "Leak"
+        ]
+       ]
+      },
+      {
+       "n": 9,
+       "text": "In the sentence, \"The box was immense; it couldn't fit through the door,\" what does \"immense\" mean?",
+       "opts": [
+        [
+         "a",
+         "Tiny"
+        ],
+        [
+         "b",
+         "Heavy"
+        ],
+        [
+         "c",
+         "Huge"
+        ],
+        [
+         "d",
+         "Light"
+        ]
+       ]
+      },
+      {
+       "n": 10,
+       "text": "\"The amiable shopkeeper always had a smile for his customers.\" What does \"amiable\" mean?",
+       "opts": [
+        [
+         "a",
+         "Grumpy"
+        ],
+        [
+         "b",
+         "Friendly"
+        ],
+        [
+         "c",
+         "Rich"
+        ],
+        [
+         "d",
+         "Busy"
+        ]
+       ]
+      },
+      {
+       "n": 11,
+       "text": "Based on the sentence, \"The conundrum was so difficult it took him a week to solve,\" a conundrum is a:",
+       "opts": [
+        [
+         "a",
+         "Song"
+        ],
+        [
+         "b",
+         "Puzzle"
+        ],
+        [
+         "c",
+         "Book"
+        ],
+        [
+         "d",
+         "Meal"
+        ]
+       ]
+      },
+      {
+       "n": 12,
+       "text": "\"Her rancor for her neighbor was obvious from her angry glare.\" Rancour means:",
+       "opts": [
+        [
+         "a",
+         "Love"
+        ],
+        [
+         "b",
+         "Fear"
+        ],
+        [
+         "c",
+         "Hatred"
+        ],
+        [
+         "d",
+         "Respect"
+        ]
+       ]
+      },
+      {
+       "n": 13,
+       "text": "A penitentiary is another word for a:",
+       "opts": [
+        [
+         "a",
+         "School"
+        ],
+        [
+         "b",
+         "Hospital"
+        ],
+        [
+         "c",
+         "Prison"
+        ],
+        [
+         "d",
+         "Mall"
+        ]
+       ]
+      },
+      {
+       "n": 14,
+       "text": "When there is \"pandemonium,\" there is:",
+       "opts": [
+        [
+         "a",
+         "Silence"
+        ],
+        [
+         "b",
+         "Chaos"
+        ],
+        [
+         "c",
+         "Music"
+        ],
+        [
+         "d",
+         "Order"
+        ]
+       ]
+      },
+      {
+       "n": 15,
+       "text": "To \"wager\" means to:",
+       "opts": [
+        [
+         "a",
+         "Sing"
+        ],
+        [
+         "b",
+         "Bet"
+        ],
+        [
+         "c",
+         "Eat"
+        ],
+        [
+         "d",
+         "Run"
+        ]
+       ]
+      },
+      {
+       "n": 16,
+       "text": "If you do something \"mischievously,\" you do it:",
+       "opts": [
+        [
+         "a",
+         "Sadly"
+        ],
+        [
+         "b",
+         "Kindly"
+        ],
+        [
+         "c",
+         "Naughtily"
+        ],
+        [
+         "d",
+         "Quickly"
+        ]
+       ]
+      },
+      {
+       "n": 17,
+       "text": "To \"vitiate\" something means to:",
+       "opts": [
+        [
+         "a",
+         "Improve it"
+        ],
+        [
+         "b",
+         "Clean it"
+        ],
+        [
+         "c",
+         "Make it impure"
+        ],
+        [
+         "d",
+         "Praise it"
+        ]
+       ]
+      },
+      {
+       "n": 18,
+       "text": "An \"indolent\" person is:",
+       "opts": [
+        [
+         "a",
+         "Hard-working"
+        ],
+        [
+         "b",
+         "Lazy"
+        ],
+        [
+         "c",
+         "Smart"
+        ],
+        [
+         "d",
+         "Funny"
+        ]
+       ]
+      },
+      {
+       "n": 19,
+       "text": "A \"supercilious\" person acts:",
+       "opts": [
+        [
+         "a",
+         "Shy"
+        ],
+        [
+         "b",
+         "Haughty"
+        ],
+        [
+         "c",
+         "Friendly"
+        ],
+        [
+         "d",
+         "Scared"
+        ]
+       ]
+      },
+      {
+       "n": 20,
+       "text": "To \"engender\" means to:",
+       "opts": [
+        [
+         "a",
+         "Destroy"
+        ],
+        [
+         "b",
+         "Cause to exist"
+        ],
+        [
+         "c",
+         "Prevent"
+        ],
+        [
+         "d",
+         "Follow"
+        ]
+       ]
+      },
+      {
+       "n": 21,
+       "text": "To \"pacify\" someone means to:",
+       "opts": [
+        [
+         "a",
+         "Make them angry"
+        ],
+        [
+         "b",
+         "Calm them down"
+        ],
+        [
+         "c",
+         "Ignore them"
+        ],
+        [
+         "d",
+         "Follow them"
+        ]
+       ]
+      },
+      {
+       "n": 22,
+       "text": "\"Cursory\" attention is:",
+       "opts": [
+        [
+         "a",
+         "Close and careful"
+        ],
+        [
+         "b",
+         "Hasty and not thorough"
+        ],
+        [
+         "c",
+         "Kind and loving"
+        ],
+        [
+         "d",
+         "Angry and harsh"
+        ]
+       ]
+      },
+      {
+       "n": 23,
+       "text": "A \"lucid\" explanation is:",
+       "opts": [
+        [
+         "a",
+         "Confusing"
+        ],
+        [
+         "b",
+         "Easy to understand"
+        ],
+        [
+         "c",
+         "Boring"
+        ],
+        [
+         "d",
+         "Long"
+        ]
+       ]
+      },
+      {
+       "n": 24,
+       "text": "\"Indigenous\" people are:",
+       "opts": [
+        [
+         "a",
+         "From another country"
+        ],
+        [
+         "b",
+         "Very poor"
+        ],
+        [
+         "c",
+         "Native to a land"
+        ],
+        [
+         "d",
+         "New to an area"
+        ]
+       ]
+      },
+      {
+       "n": 25,
+       "text": "\"Charisma\" is a type of:",
+       "opts": [
+        [
+         "a",
+         "Magical attractiveness"
+        ],
+        [
+         "b",
+         "Sadness"
+        ],
+        [
+         "c",
+         "Anger"
+        ],
+        [
+         "d",
+         "Disease"
+        ]
+       ]
+      },
+      {
+       "n": 26,
+       "text": "What is a \"rucksack\"?",
+       "opts": [
+        [
+         "a",
+         "A type of food"
+        ],
+        [
+         "b",
+         "A backpack"
+        ],
+        [
+         "c",
+         "A clock"
+        ],
+        [
+         "d",
+         "A vehicle"
+        ]
+       ]
+      },
+      {
+       "n": 27,
+       "text": "A \"timetable\" tells you:",
+       "opts": [
+        [
+         "a",
+         "How to cook"
+        ],
+        [
+         "b",
+         "Schedules and times"
+        ],
+        [
+         "c",
+         "Stories"
+        ],
+        [
+         "d",
+         "Jokes"
+        ]
+       ]
+      },
+      {
+       "n": 28,
+       "text": "A \"dictionary\" tells you:",
+       "opts": [
+        [
+         "a",
+         "How to fix a car"
+        ],
+        [
+         "b",
+         "The meaning of words"
+        ],
+        [
+         "c",
+         "Stories about kings"
+        ],
+        [
+         "d",
+         "Where to find animals"
+        ]
+       ]
+      },
+      {
+       "n": 29,
+       "text": "A \"student\" is a person who:",
+       "opts": [
+        [
+         "a",
+         "Teaches"
+        ],
+        [
+         "b",
+         "Studies"
+        ],
+        [
+         "c",
+         "Drives"
+        ],
+        [
+         "d",
+         "Cooks"
+        ]
+       ]
+      },
+      {
+       "n": 30,
+       "text": "A \"blackboard\" is used for:",
+       "opts": [
+        [
+         "a",
+         "Eating"
+        ],
+        [
+         "b",
+         "Sleeping"
+        ],
+        [
+         "c",
+         "Writing and drawing"
+        ],
+        [
+         "d",
+         "Playing sports"
+        ]
+       ]
+      },
+      {
+       "n": 31,
+       "text": "To \"participate\" means to:",
+       "opts": [
+        [
+         "a",
+         "Watch"
+        ],
+        [
+         "b",
+         "Listen"
+        ],
+        [
+         "c",
+         "Take part"
+        ],
+        [
+         "d",
+         "Leave"
+        ]
+       ]
+      },
+      {
+       "n": 32,
+       "text": "To \"cheat\" means to:",
+       "opts": [
+        [
+         "a",
+         "Act honestly"
+        ],
+        [
+         "b",
+         "Play fair"
+        ],
+        [
+         "c",
+         "Break rules to gain an advantage"
+        ],
+        [
+         "d",
+         "Help others"
+        ]
+       ]
+      },
+      {
+       "n": 33,
+       "text": "An \"edifice\" is a(n):",
+       "opts": [
+        [
+         "a",
+         "Small toy"
+        ],
+        [
+         "b",
+         "Impressive building"
+        ],
+        [
+         "c",
+         "Type of animal"
+        ],
+        [
+         "d",
+         "Feeling"
+        ]
+       ]
+      },
+      {
+       "n": 34,
+       "text": "A \"portal\" is a(n):",
+       "opts": [
+        [
+         "a",
+         "Small window"
+        ],
+        [
+         "b",
+         "Impressive door or gateway"
+        ],
+        [
+         "c",
+         "Book"
+        ],
+        [
+         "d",
+         "Piece of furniture"
+        ]
+       ]
+      },
+      {
+       "n": 35,
+       "text": "An \"era\" is a:",
+       "opts": [
+        [
+         "a",
+         "Historical period"
+        ],
+        [
+         "b",
+         "Type of food"
+        ],
+        [
+         "c",
+         "Musical instrument"
+        ],
+        [
+         "d",
+         "Country"
+        ]
+       ]
+      },
+      {
+       "n": 36,
+       "text": "A \"version\" is:",
+       "opts": [
+        [
+         "a",
+         "A mathematical formula"
+        ],
+        [
+         "b",
+         "An account from one viewpoint"
+        ],
+        [
+         "c",
+         "A kind of vehicle"
+        ],
+        [
+         "d",
+         "A rule"
+        ]
+       ]
+      },
+      {
+       "n": 37,
+       "text": "A \"cache\" is a:",
+       "opts": [
+        [
+         "a",
+         "Hiding place"
+        ],
+        [
+         "b",
+         "Noisy argument"
+        ],
+        [
+         "c",
+         "Type of dance"
+        ],
+        [
+         "d",
+         "Fast car"
+        ]
+       ]
+      },
+      {
+       "n": 38,
+       "text": "A \"dialogue\" is a:",
+       "opts": [
+        [
+         "a",
+         "long speech by one person"
+        ],
+        [
+         "b",
+         "conversation between people"
+        ],
+        [
+         "c",
+         "type of book"
+        ],
+        [
+         "d",
+         "song"
+        ]
+       ]
+      },
+      {
+       "n": 39,
+       "text": "A \"refugee\" is someone who:",
+       "opts": [
+        [
+         "a",
+         "Loves their country"
+        ],
+        [
+         "b",
+         "Fights in a war"
+        ],
+        [
+         "c",
+         "Leaves their home due to danger"
+        ],
+        [
+         "d",
+         "Is very rich"
+        ]
+       ]
+      },
+      {
+       "n": 40,
+       "text": "If you are \"furious,\" you are:",
+       "opts": [
+        [
+         "a",
+         "Very happy"
+        ],
+        [
+         "b",
+         "Very sleepy"
+        ],
+        [
+         "c",
+         "Very angry"
+        ],
+        [
+         "d",
+         "Very hungry"
+        ]
+       ]
+      },
+      {
+       "n": 41,
+       "text": "To \"discover\" means to:",
+       "opts": [
+        [
+         "a",
+         "Hide something"
+        ],
+        [
+         "b",
+         "Find or learn something new"
+        ],
+        [
+         "c",
+         "Forget something"
+        ],
+        [
+         "d",
+         "Break something"
+        ]
+       ]
+      },
+      {
+       "n": 42,
+       "text": "To \"comfort\" someone is to:",
+       "opts": [
+        [
+         "a",
+         "Make them cry"
+        ],
+        [
+         "b",
+         "Try to make them feel better"
+        ],
+        [
+         "c",
+         "Ignore them"
+        ],
+        [
+         "d",
+         "Laugh at them"
+        ]
+       ]
+      },
+      {
+       "n": 43,
+       "text": "\"Recently\" means:",
+       "opts": [
+        [
+         "a",
+         "A long time ago"
+        ],
+        [
+         "b",
+         "In the future"
+        ],
+        [
+         "c",
+         "Not long ago"
+        ],
+        [
+         "d",
+         "Never"
+        ]
+       ]
+      },
+      {
+       "n": 44,
+       "text": "What is a \"calf\"?",
+       "opts": [
+        [
+         "a",
+         "A young dog"
+        ],
+        [
+         "b",
+         "A young cat"
+        ],
+        [
+         "c",
+         "A young cow"
+        ],
+        [
+         "d",
+         "A young horse"
+        ]
+       ]
+      },
+      {
+       "n": 45,
+       "text": "A \"pond\" is a:",
+       "opts": [
+        [
+         "a",
+         "Large ocean"
+        ],
+        [
+         "b",
+         "Small area of still water"
+        ],
+        [
+         "c",
+         "Flowing river"
+        ],
+        [
+         "d",
+         "Mountain"
+        ]
+       ]
+      },
+      {
+       "n": 46,
+       "text": "A \"shed\" is a:",
+       "opts": [
+        [
+         "a",
+         "Small, rough building for storage"
+        ],
+        [
+         "b",
+         "Large, fancy house"
+        ],
+        [
+         "c",
+         "Type of vehicle"
+        ],
+        [
+         "d",
+         "Piece of clothing"
+        ]
+       ]
+      },
+      {
+       "n": 47,
+       "text": "A \"hose\" is a:",
+       "opts": [
+        [
+         "a",
+         "Type of sock"
+        ],
+        [
+         "b",
+         "Flexible pipe for liquid"
+        ],
+        [
+         "c",
+         "Garden tool for digging"
+        ],
+        [
+         "d",
+         "Kind of hat"
+        ]
+       ]
+      },
+      {
+       "n": 48,
+       "text": "A \"swing\" is a:",
+       "opts": [
+        [
+         "a",
+         "A type of slide"
+        ],
+        [
+         "b",
+         "A suspended seat for moving back and forth"
+        ],
+        [
+         "c",
+         "A jumping rope"
+        ],
+        [
+         "d",
+         "A sandbox"
+        ]
+       ]
+      },
+      {
+       "n": 49,
+       "text": "The main purpose of \"communication\" is to:",
+       "opts": [
+        [
+         "a",
+         "Hide information"
+        ],
+        [
+         "b",
+         "Share information"
+        ],
+        [
+         "c",
+         "Sleep"
+        ],
+        [
+         "d",
+         "Run fast"
+        ]
+       ]
+      },
+      {
+       "n": 50,
+       "text": "To \"calculate\" means to:",
+       "opts": [
+        [
+         "a",
+         "Sing a song"
+        ],
+        [
+         "b",
+         "Draw a picture"
+        ],
+        [
+         "c",
+         "Use math to find an answer"
+        ],
+        [
+         "d",
+         "Write a story"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "                             Vocabulary Mastery Pre-Test\n\n\n   Directions: Read each question carefully and circle the letter of the best\n   answer.\n\n   Synonyms & Antonyms\n\n1. What is a synonym for \"happy\"?\n   a. Sad\n   b. Joyful\n   c. Angry\n   d. Tired\n2. What is an antonym for \"hot\"?\n   a. Warm\n   b. Cold\n   c. Spicy\n   d. Boiling\n3. The word \"miniscule\" means:\n   a. Very large\n   b. Very small\n   c. Very loud\n   d. Very colorful\n4. If you feel \"mortification,\" you feel:\n   a. Proud\n   b. Excited\n   c. Ashamed\n   d. Brave\n5. A word that means the opposite of \"brilliant\" is:\n   a. Smart\n   b. Dull\n   c. Shiny\n   d. Bright\n\n   Homophones\n   6. Which word means \"permitted\"?\n   a. Aloud\n   b. Allowed\n   c. A loud\n   d. Allow\n\n\n\n7. Choose the correct word: \"I tied a _____ in my shoelace.\"\n   a. Not\n\n\n   b. Knot\n   c. Nat\n   d. Note\n8. Which word describes a period of seven days?\n   a. Weak\n   b. Week\n   c. Wek\n   d. Leak\n\n   Context Clues\n   9. In the sentence, \"The box was immense; it couldn't fit through the door,\"\n   what does \"immense\" mean?\n   a. Tiny\n   b. Heavy\n   c. Huge\n   d. Light\n\n10. \"The amiable shopkeeper always had a smile for his customers.\" What does\n    \"amiable\" mean?\n    a. Grumpy\n    b. Friendly\n    c. Rich\n    d. Busy\n11. Based on the sentence, \"The conundrum was so difficult it took him a week to\n    solve,\" a conundrum is a:\n    a. Song\n    b. Puzzle\n    c. Book\n    d. Meal\n12. \"Her rancor for her neighbor was obvious from her angry glare.\" Rancour\n    means:\n    a. Love\n    b. Fear\n    c. Hatred\n    d. Respect\n\n   Vocabulary in Context\n\n\n   13. A penitentiary is another word for a:\n   a. School\n   b. Hospital\n   c. Prison\n   d. Mall\n\n14. When there is \"pandemonium,\" there is:\n    a. Silence\n    b. Chaos\n\n\n    c. Music\n    d. Order\n15. To \"wager\" means to:\n    a. Sing\n    b. Bet\n    c. Eat\n    d. Run\n16. If you do something \"mischievously,\" you do it:\n    a. Sadly\n    b. Kindly\n    c. Naughtily\n    d. Quickly\n\n   Advanced Vocabulary\n\n\n   17. To \"vitiate\" something means to:\n   a. Improve it\n   b. Clean it\n   c. Make it impure\n   d. Praise it\n\n18. An \"indolent\" person is:\n    a. Hard-working\n    b. Lazy\n    c. Smart\n    d. Funny\n19. A \"supercilious\" person acts:\n    a. Shy\n    b. Haughty\n    c. Friendly\n    d. Scared\n20. To \"engender\" means to:\n    a. Destroy\n    b. Cause to exist\n    c. Prevent\n    d. Follow\n21. To \"pacify\" someone means to:\n    a. Make them angry\n    b. Calm them down\n    c. Ignore them\n    d. Follow them\n22. \"Cursory\" attention is:\n    a. Close and careful\n    b. Hasty and not thorough\n    c. Kind and loving\n    d. Angry and harsh\n\n\n23. A \"lucid\" explanation is:\n    a. Confusing\n    b. Easy to understand\n    c. Boring\n    d. Long\n24. \"Indigenous\" people are:\n    a. From another country\n    b. Very poor\n    c. Native to a land\n    d. New to an area\n25. \"Charisma\" is a type of:\n    a. Magical attractiveness\n    b. Sadness\n    c. Anger\n    d. Disease\n\n   Word Definitions\n\n\n   26. What is a \"rucksack\"?\n   a. A type of food\n   b. A backpack\n   c. A clock\n   d. A vehicle\n\n27. A \"timetable\" tells you:\n    a. How to cook\n    b. Schedules and times\n    c. Stories\n    d. Jokes\n28. A \"dictionary\" tells you:\n    a. How to fix a car\n    b. The meaning of words\n    c. Stories about kings\n    d. Where to find animals\n29. A \"student\" is a person who:\n    a. Teaches\n    b. Studies\n    c. Drives\n    d. Cooks\n\n\n\n30. A \"blackboard\" is used for:\n    a. Eating\n    b. Sleeping\n\n\n\n\n    c. Writing and drawing\n    d. Playing sports\n31. To \"participate\" means to:\n    a. Watch\n    b. Listen\n    c. Take part\n    d. Leave\n32. To \"cheat\" means to:\n    a. Act honestly\n    b. Play fair\n    c. Break rules to gain an advantage\n    d. Help others\n33. An \"edifice\" is a(n):\n    a. Small toy\n    b. Impressive building\n    c. Type of animal\n    d. Feeling\n34. A \"portal\" is a(n):\n    a. Small window\n    b. Impressive door or gateway\n    c. Book\n    d. Piece of furniture\n35. An \"era\" is a:\n    a. Historical period\n    b. Type of food\n    c. Musical instrument\n    d. Country\n36. A \"version\" is:\n    a. A mathematical formula\n    b. An account from one viewpoint\n    c. A kind of vehicle\n    d. A rule\n37. A \"cache\" is a:\n    a. Hiding place\n    b. Noisy argument\n    c. Type of dance\n    d. Fast car\n38. A \"dialogue\" is a:\n    a. long speech by one person\n    b. conversation between people\n    c. type of book\n    d. song\n\n\n\n39. A \"refugee\" is someone who:\n    a. Loves their country\n\n\n    b. Fights in a war\n    c. Leaves their home due to danger\n    d. Is very rich\n40. If you are \"furious,\" you are:\n    a. Very happy\n    b. Very sleepy\n    c. Very angry\n    d. Very hungry\n41. To \"discover\" means to:\n    a. Hide something\n    b. Find or learn something new\n    c. Forget something\n    d. Break something\n42. To \"comfort\" someone is to:\n    a. Make them cry\n    b. Try to make them feel better\n    c. Ignore them\n    d. Laugh at them\n43. \"Recently\" means:\n    a. A long time ago\n    b. In the future\n    c. Not long ago\n    d. Never\n44. What is a \"calf\"?\n    a. A young dog\n    b. A young cat\n    c. A young cow\n    d. A young horse\n45. A \"pond\" is a:\n    a. Large ocean\n    b. Small area of still water\n    c. Flowing river\n    d. Mountain\n46. A \"shed\" is a:\n    a. Small, rough building for storage\n    b. Large, fancy house\n    c. Type of vehicle\n    d. Piece of clothing\n47. A \"hose\" is a:\n    a. Type of sock\n    b. Flexible pipe for liquid\n    c. Garden tool for digging\n    d. Kind of hat\n\n\n\n\n\n48. A \"swing\" is a:\n    a. A type of slide\n    b. A suspended seat for moving back and forth\n    c. A jumping rope\n    d. A sandbox\n49. The main purpose of \"communication\" is to:\n    a. Hide information\n    b. Share information\n    c. Sleep\n    d. Run fast\n50. To \"calculate\" means to:\n    a. Sing a song\n    b. Draw a picture\n    c. Use math to find an answer\n    d. Write a story\n\n\n"
+  },
+  {
+   "phase": "pre",
+   "label": "Pre-Test Answer Key:",
+   "pages": [
+    12,
+    13
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "",
+     "items": [
+      {
+       "n": 1,
+       "text": "b, 2. b, 3. b, 4. c, 5. b, 6. b, 7. b, 8. b, 9. c, 10. b, 11. b, 12. c, 13. c, 14. b, 15. b, 16. c, 17. c, 18. b, 19. b, 20. b, 21. b, 22. b, 23. b, 24. c, 25. a, 26. b, 27. b, 28. b, 29. b, 30. c, 31. c, 32. c, 33. b, 34. b, 35. a, 36. b, 37. a, 38. b, 39. c, 40. c, 41. b, 42. b, 43. c, 44. c, 45. b, 46. a, 47. b, 48. b, 49. b, 50. c SET B",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n     1. b, 2. b, 3. b, 4. c, 5. b, 6. b, 7. b, 8. b, 9. c, 10. b, 11. b, 12. c, 13. c, 14. b, 15. b, 16.\n        c, 17. c, 18. b, 19. b, 20. b, 21. b, 22. b, 23. b, 24. c, 25. a, 26. b, 27. b, 28. b, 29. b,\n        30. c, 31. c, 32. c, 33. b, 34. b, 35. a, 36. b, 37. a, 38. b, 39. c, 40. c, 41. b, 42. b, 43.\n        c, 44. c, 45. b, 46. a, 47. b, 48. b, 49. b, 50. c\n\n\n\n\n\n                                     SET B"
+  },
+  {
+   "phase": "pre",
+   "label": "PRE-TEST Day 11-20 Grade 7-8",
+   "pages": [
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ],
+   "acts": [
+    {
+     "direction": "Read each question carefully and circle the letter of the best answer.",
+     "lead": "Vocabulary Mastery Pre-Test\n\nDirections: Read each question carefully and circle the letter of the best\nanswer.\n\nSYNONYMS & ANTONYMS",
+     "items": [
+      {
+       "n": 1,
+       "text": "What is a synonym for \"puzzle\"?",
+       "opts": [
+        [
+         "a",
+         "answer"
+        ],
+        [
+         "b",
+         "conundrum"
+        ],
+        [
+         "c",
+         "picture"
+        ],
+        [
+         "d",
+         "story"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What is an antonym for \"shame\"?",
+       "opts": [
+        [
+         "a",
+         "mortification"
+        ],
+        [
+         "b",
+         "pride"
+        ],
+        [
+         "c",
+         "hatred"
+        ],
+        [
+         "d",
+         "rancor"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "The word \"immense\" means:",
+       "opts": [
+        [
+         "a",
+         "tiny"
+        ],
+        [
+         "b",
+         "huge"
+        ],
+        [
+         "c",
+         "small"
+        ],
+        [
+         "d",
+         "miniscule"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "If you are \"adept\" at something, you are:",
+       "opts": [
+        [
+         "a",
+         "terrible at it"
+        ],
+        [
+         "b",
+         "skilled at it"
+        ],
+        [
+         "c",
+         "bored with it"
+        ],
+        [
+         "d",
+         "scared of it"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "A word that means the opposite of \"trite\" is:",
+       "opts": [
+        [
+         "a",
+         "common"
+        ],
+        [
+         "b",
+         "boring"
+        ],
+        [
+         "c",
+         "brilliant"
+        ],
+        [
+         "d",
+         "loud"
+        ]
+       ]
+      },
+      {
+       "n": 6,
+       "text": "Which word means \"to be given permission\"?",
+       "opts": [
+        [
+         "a",
+         "aloud"
+        ],
+        [
+         "b",
+         "allowed"
+        ],
+        [
+         "c",
+         "a loud"
+        ],
+        [
+         "d",
+         "allow"
+        ]
+       ]
+      },
+      {
+       "n": 7,
+       "text": "Choose the correct word: \"She has _____ hair.\"",
+       "opts": [
+        [
+         "a",
+         "read"
+        ],
+        [
+         "b",
+         "red"
+        ],
+        [
+         "c",
+         "reed"
+        ],
+        [
+         "d",
+         "rad"
+        ]
+       ]
+      },
+      {
+       "n": 8,
+       "text": "Which word describes a lack of strength?",
+       "opts": [
+        [
+         "a",
+         "week"
+        ],
+        [
+         "b",
+         "weak"
+        ],
+        [
+         "c",
+         "wek"
+        ],
+        [
+         "d",
+         "leak"
+        ]
+       ]
+      },
+      {
+       "n": 9,
+       "text": "In the sentence, \"The speck of dust was miniscule,\" what does \"miniscule\" mean?",
+       "opts": [
+        [
+         "a",
+         "very large"
+        ],
+        [
+         "b",
+         "very small"
+        ],
+        [
+         "c",
+         "very dirty"
+        ],
+        [
+         "d",
+         "very shiny"
+        ]
+       ]
+      },
+      {
+       "n": 10,
+       "text": "\"The mischievous child hid his sister's toys.\" What does \"mischievous\" mean?",
+       "opts": [
+        [
+         "a",
+         "well-behaved"
+        ],
+        [
+         "b",
+         "naughty"
+        ],
+        [
+         "c",
+         "sad"
+        ],
+        [
+         "d",
+         "quiet"
+        ]
+       ]
+      },
+      {
+       "n": 11,
+       "text": "Based on the sentence, \"He was sent to the penitentiary for his crime,\" a penitentiary is a:",
+       "opts": [
+        [
+         "a",
+         "school"
+        ],
+        [
+         "b",
+         "library"
+        ],
+        [
+         "c",
+         "prison"
+        ],
+        [
+         "d",
+         "restaurant"
+        ]
+       ]
+      },
+      {
+       "n": 12,
+       "text": "\"There was pandemonium in the streets after the championship win.\" Pandemonium means:",
+       "opts": [
+        [
+         "a",
+         "silence"
+        ],
+        [
+         "b",
+         "order"
+        ],
+        [
+         "c",
+         "celebration"
+        ],
+        [
+         "d",
+         "chaos"
+        ]
+       ]
+      },
+      {
+       "n": 13,
+       "text": "A \"wager\" is another word for a:",
+       "opts": [
+        [
+         "a",
+         "smile"
+        ],
+        [
+         "b",
+         "bet"
+        ],
+        [
+         "c",
+         "vote"
+        ],
+        [
+         "d",
+         "choice"
+        ]
+       ]
+      },
+      {
+       "n": 14,
+       "text": "When someone is \"amiable,\" they are:",
+       "opts": [
+        [
+         "a",
+         "grumpy"
+        ],
+        [
+         "b",
+         "shy"
+        ],
+        [
+         "c",
+         "kind"
+        ],
+        [
+         "d",
+         "smart"
+        ]
+       ]
+      },
+      {
+       "n": 15,
+       "text": "To have \"rancour\" towards someone is to feel:",
+       "opts": [
+        [
+         "a",
+         "love"
+        ],
+        [
+         "b",
+         "hatred"
+        ],
+        [
+         "c",
+         "pity"
+        ],
+        [
+         "d",
+         "respect"
+        ]
+       ]
+      },
+      {
+       "n": 16,
+       "text": "If you look at something \"cursory,\" you look at it:",
+       "opts": [
+        [
+         "a",
+         "carefully"
+        ],
+        [
+         "b",
+         "hastily"
+        ],
+        [
+         "c",
+         "angrily"
+        ],
+        [
+         "d",
+         "happily"
+        ]
+       ]
+      },
+      {
+       "n": 17,
+       "text": "To \"engender\" hope means to:",
+       "opts": [
+        [
+         "a",
+         "destroy hope"
+        ],
+        [
+         "b",
+         "cause hope to exist"
+        ],
+        [
+         "c",
+         "ignore hope"
+        ],
+        [
+         "d",
+         "fear hope"
+        ]
+       ]
+      },
+      {
+       "n": 18,
+       "text": "An \"indolent\" student is:",
+       "opts": [
+        [
+         "a",
+         "hard-working"
+        ],
+        [
+         "b",
+         "lazy"
+        ],
+        [
+         "c",
+         "smart"
+        ],
+        [
+         "d",
+         "popular"
+        ]
+       ]
+      },
+      {
+       "n": 19,
+       "text": "A \"supercilious\" look is:",
+       "opts": [
+        [
+         "a",
+         "haughty"
+        ],
+        [
+         "b",
+         "kind"
+        ],
+        [
+         "c",
+         "shy"
+        ],
+        [
+         "d",
+         "scared"
+        ]
+       ]
+      },
+      {
+       "n": 20,
+       "text": "To \"vitiate\" water means to:",
+       "opts": [
+        [
+         "a",
+         "drink it"
+        ],
+        [
+         "b",
+         "make it impure"
+        ],
+        [
+         "c",
+         "boil it"
+        ],
+        [
+         "d",
+         "freeze it"
+        ]
+       ]
+      },
+      {
+       "n": 21,
+       "text": "To \"pacify\" a crying baby means to:",
+       "opts": [
+        [
+         "a",
+         "make it cry more"
+        ],
+        [
+         "b",
+         "calm it down"
+        ],
+        [
+         "c",
+         "ignore it"
+        ],
+        [
+         "d",
+         "feed it"
+        ]
+       ]
+      },
+      {
+       "n": 22,
+       "text": "A \"lucid\" dream is:",
+       "opts": [
+        [
+         "a",
+         "confusing"
+        ],
+        [
+         "b",
+         "easy to understand"
+        ],
+        [
+         "c",
+         "frightening"
+        ],
+        [
+         "d",
+         "funny"
+        ]
+       ]
+      },
+      {
+       "n": 23,
+       "text": "\"Indigenous\" plants are:",
+       "opts": [
+        [
+         "a",
+         "from another country"
+        ],
+        [
+         "b",
+         "native to the area"
+        ],
+        [
+         "c",
+         "artificial"
+        ],
+        [
+         "d",
+         "dangerous"
+        ]
+       ]
+      },
+      {
+       "n": 24,
+       "text": "A person with \"charisma\" often has:",
+       "opts": [
+        [
+         "a",
+         "magical attractiveness"
+        ],
+        [
+         "b",
+         "a lot of money"
+        ],
+        [
+         "c",
+         "a loud voice"
+        ],
+        [
+         "d",
+         "bad manners"
+        ]
+       ]
+      },
+      {
+       "n": 25,
+       "text": "To \"placate\" an angry person means to:",
+       "opts": [
+        [
+         "a",
+         "make them angrier"
+        ],
+        [
+         "b",
+         "agree with them"
+        ],
+        [
+         "c",
+         "pacify them"
+        ],
+        [
+         "d",
+         "ignore them"
+        ]
+       ]
+      },
+      {
+       "n": 26,
+       "text": "What is a \"timetable\" used for?",
+       "opts": [
+        [
+         "a",
+         "carrying books"
+        ],
+        [
+         "b",
+         "telling time and schedules"
+        ],
+        [
+         "c",
+         "writing stories"
+        ],
+        [
+         "d",
+         "playing games"
+        ]
+       ]
+      },
+      {
+       "n": 27,
+       "text": "A \"dictionary\" is a book that contains:",
+       "opts": [
+        [
+         "a",
+         "word meanings"
+        ],
+        [
+         "b",
+         "maps"
+        ],
+        [
+         "c",
+         "recipes"
+        ],
+        [
+         "d",
+         "jokes"
+        ]
+       ]
+      },
+      {
+       "n": 28,
+       "text": "A \"student\" is primarily known for:",
+       "opts": [
+        [
+         "a",
+         "teaching"
+        ],
+        [
+         "b",
+         "studying"
+        ],
+        [
+         "c",
+         "driving"
+        ],
+        [
+         "d",
+         "cooking"
+        ]
+       ]
+      },
+      {
+       "n": 29,
+       "text": "A \"blackboard\" is typically found in a:",
+       "opts": [
+        [
+         "a",
+         "kitchen"
+        ],
+        [
+         "b",
+         "classroom"
+        ],
+        [
+         "c",
+         "garage"
+        ],
+        [
+         "d",
+         "playground"
+        ]
+       ]
+      },
+      {
+       "n": 30,
+       "text": "To \"participate\" in a game is to:",
+       "opts": [
+        [
+         "a",
+         "watch the game"
+        ],
+        [
+         "b",
+         "coach the game"
+        ],
+        [
+         "c",
+         "take part in the game"
+        ],
+        [
+         "d",
+         "referee the game"
+        ]
+       ]
+      },
+      {
+       "n": 31,
+       "text": "To \"cheat\" on a test is to:",
+       "opts": [
+        [
+         "a",
+         "study hard for it"
+        ],
+        [
+         "b",
+         "break the rules to get a better score"
+        ],
+        [
+         "c",
+         "fail it honestly"
+        ],
+        [
+         "d",
+         "help a friend with it"
+        ]
+       ]
+      },
+      {
+       "n": 32,
+       "text": "An \"edifice\" is most likely a:",
+       "opts": [
+        [
+         "a",
+         "small cottage"
+        ],
+        [
+         "b",
+         "large, impressive building"
+        ],
+        [
+         "c",
+         "park bench"
+        ],
+        [
+         "d",
+         "flower pot"
+        ]
+       ]
+      },
+      {
+       "n": 33,
+       "text": "A \"portal\" could be described as a:",
+       "opts": [
+        [
+         "a",
+         "small key"
+        ],
+        [
+         "b",
+         "grand, impressive doorway"
+        ],
+        [
+         "c",
+         "window pane"
+        ],
+        [
+         "d",
+         "roof tile"
+        ]
+       ]
+      },
+      {
+       "n": 34,
+       "text": "An \"era\" in history is a:",
+       "opts": [
+        [
+         "a",
+         "specific battle"
+        ],
+        [
+         "b",
+         "particular person"
+        ],
+        [
+         "c",
+         "distinct period of time"
+        ],
+        [
+         "d",
+         "type of government"
+        ]
+       ]
+      },
+      {
+       "n": 35,
+       "text": "His \"version\" of the story is his:",
+       "opts": [
+        [
+         "a",
+         "favorite part"
+        ],
+        [
+         "b",
+         "personal account"
+        ],
+        [
+         "c",
+         "drawing"
+        ],
+        [
+         "d",
+         "question"
+        ]
+       ]
+      },
+      {
+       "n": 36,
+       "text": "A \"cache\" of food is a:",
+       "opts": [
+        [
+         "a",
+         "hiding place for food"
+        ],
+        [
+         "b",
+         "type of food"
+        ],
+        [
+         "c",
+         "recipe for food"
+        ],
+        [
+         "d",
+         "store that sells food"
+        ]
+       ]
+      },
+      {
+       "n": 37,
+       "text": "A \"dialogue\" in a play is the:",
+       "opts": [
+        [
+         "a",
+         "setting"
+        ],
+        [
+         "b",
+         "costume list"
+        ],
+        [
+         "c",
+         "conversation between characters"
+        ],
+        [
+         "d",
+         "stage direction"
+        ]
+       ]
+      },
+      {
+       "n": 38,
+       "text": "A \"refugee\" often leaves their home because of:",
+       "opts": [
+        [
+         "a",
+         "boredom"
+        ],
+        [
+         "b",
+         "danger"
+        ],
+        [
+         "c",
+         "a vacation"
+        ],
+        [
+         "d",
+         "a new job"
+        ]
+       ]
+      },
+      {
+       "n": 39,
+       "text": "If you are \"furious,\" you are feeling:",
+       "opts": [
+        [
+         "a",
+         "very happy"
+        ],
+        [
+         "b",
+         "very angry"
+        ],
+        [
+         "c",
+         "very tired"
+        ],
+        [
+         "d",
+         "very calm"
+        ]
+       ]
+      },
+      {
+       "n": 40,
+       "text": "To \"discover\" a new island is to:",
+       "opts": [
+        [
+         "a",
+         "draw a map of it"
+        ],
+        [
+         "b",
+         "find it for the first time"
+        ],
+        [
+         "c",
+         "buy it"
+        ],
+        [
+         "d",
+         "destroy it"
+        ]
+       ]
+      },
+      {
+       "n": 41,
+       "text": "To \"comfort\" a friend who is sad is to:",
+       "opts": [
+        [
+         "a",
+         "make them laugh"
+        ],
+        [
+         "b",
+         "try to make them feel better"
+        ],
+        [
+         "c",
+         "tell them to be quiet"
+        ],
+        [
+         "d",
+         "ignore them"
+        ]
+       ]
+      },
+      {
+       "n": 42,
+       "text": "If something happened \"recently,\" it happened:",
+       "opts": [
+        [
+         "a",
+         "a long time ago"
+        ],
+        [
+         "b",
+         "in the future"
+        ],
+        [
+         "c",
+         "not long ago"
+        ],
+        [
+         "d",
+         "last century"
+        ]
+       ]
+      },
+      {
+       "n": 43,
+       "text": "What is a \"shed\" commonly used for?",
+       "opts": [
+        [
+         "a",
+         "living"
+        ],
+        [
+         "b",
+         "sleeping"
+        ],
+        [
+         "c",
+         "storage"
+        ],
+        [
+         "d",
+         "cooking"
+        ]
+       ]
+      },
+      {
+       "n": 44,
+       "text": "A \"pond\" is a body of water that is:",
+       "opts": [
+        [
+         "a",
+         "part of the ocean"
+        ],
+        [
+         "b",
+         "flowing like a river"
+        ],
+        [
+         "c",
+         "small and still"
+        ],
+        [
+         "d",
+         "found inside a cave"
+        ]
+       ]
+      },
+      {
+       "n": 45,
+       "text": "A \"calf\" is a young:",
+       "opts": [
+        [
+         "a",
+         "pig"
+        ],
+        [
+         "b",
+         "chicken"
+        ],
+        [
+         "c",
+         "cow"
+        ],
+        [
+         "d",
+         "horse"
+        ]
+       ]
+      },
+      {
+       "n": 46,
+       "text": "A \"hose\" is typically used to:",
+       "opts": [
+        [
+         "a",
+         "dig holes"
+        ],
+        [
+         "b",
+         "carry water"
+        ],
+        [
+         "c",
+         "cut grass"
+        ],
+        [
+         "d",
+         "hammer nails"
+        ]
+       ]
+      },
+      {
+       "n": 47,
+       "text": "A \"swing\" is found on a:",
+       "opts": [
+        [
+         "a",
+         "playground"
+        ],
+        [
+         "b",
+         "road"
+        ],
+        [
+         "c",
+         "roof"
+        ],
+        [
+         "d",
+         "bed"
+        ]
+       ]
+      },
+      {
+       "n": 48,
+       "text": "The word \"calculate\" is most related to:",
+       "opts": [
+        [
+         "a",
+         "art"
+        ],
+        [
+         "b",
+         "music"
+        ],
+        [
+         "c",
+         "math"
+        ],
+        [
+         "d",
+         "history"
+        ]
+       ]
+      },
+      {
+       "n": 49,
+       "text": "The primary goal of \"communication\" is to:",
+       "opts": [
+        [
+         "a",
+         "win an argument"
+        ],
+        [
+         "b",
+         "share and understand information"
+        ],
+        [
+         "c",
+         "talk as much as possible"
+        ],
+        [
+         "d",
+         "be quiet"
+        ]
+       ]
+      },
+      {
+       "n": 50,
+       "text": "If you \"trudge\" through snow, you walk:",
+       "opts": [
+        [
+         "a",
+         "quickly and happily"
+        ],
+        [
+         "b",
+         "slowly and with effort"
+        ],
+        [
+         "c",
+         "backwards"
+        ],
+        [
+         "d",
+         "on your tiptoes"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "                         Vocabulary Mastery Pre-Test\n\n\n   Directions: Read each question carefully and circle the letter of the best\n   answer.\n\n   SYNONYMS & ANTONYMS\n\n1. What is a synonym for \"puzzle\"?\n   a. answer\n   b. conundrum\n   c. picture\n   d. story\n2. What is an antonym for \"shame\"?\n   a. mortification\n   b. pride\n   c. hatred\n   d. rancor\n3. The word \"immense\" means:\n   a. tiny\n   b. huge\n   c. small\n   d. miniscule\n4. If you are \"adept\" at something, you are:\n   a. terrible at it\n   b. skilled at it\n   c. bored with it\n   d. scared of it\n5. A word that means the opposite of \"trite\" is:\n   a. common\n   b. boring\n   c. brilliant\n   d. loud\n\n\n\n   HOMOPHONES\n   6. Which word means \"to be given permission\"?\n   a. aloud\n   b. allowed\n   c. a loud\n   d. allow\n\n\n\n7. Choose the correct word: \"She has _____ hair.\"\n   a. read\n   b. red\n   c. reed\n   d. rad\n8. Which word describes a lack of strength?\n   a. week\n   b. weak\n   c. wek\n   d. leak\n\n   CONTEXT CLUES\n   9. In the sentence, \"The speck of dust was miniscule,\" what does \"miniscule\"\n   mean?\n   a. very large\n   b. very small\n   c. very dirty\n   d. very shiny\n\n10. \"The mischievous child hid his sister's toys.\" What does \"mischievous\" mean?\n    a. well-behaved\n    b. naughty\n    c. sad\n    d. quiet\n\n   VOCABULARY IN CONTEXT\n\n\n   11. Based on the sentence, \"He was sent to the penitentiary for his crime,\" a\n   penitentiary is a:\n   a. school\n   b. library\n   c. prison\n   d. restaurant\n\n12. \"There was pandemonium in the streets after the championship win.\"\n    Pandemonium means:\n    a. silence\n    b. order\n\n\n    c. celebration\n    d. chaos\n13. A \"wager\" is another word for a:\n    a. smile\n    b. bet\n    c. vote\n    d. choice\n\n\n\n14. When someone is \"amiable,\" they are:\n    a. grumpy\n    b. shy\n    c. kind\n    d. smart\n15. To have \"rancour\" towards someone is to feel:\n    a. love\n    b. hatred\n    c. pity\n    d. respect\n\n   ADVANCED VOCABULARY\n\n\n   16. If you look at something \"cursory,\" you look at it:\n   a. carefully\n   b. hastily\n   c. angrily\n   d. happily\n\n17. To \"engender\" hope means to:\n    a. destroy hope\n    b. cause hope to exist\n    c. ignore hope\n    d. fear hope\n18. An \"indolent\" student is:\n    a. hard-working\n    b. lazy\n    c. smart\n    d. popular\n19. A \"supercilious\" look is:\n    a. haughty\n    b. kind\n    c. shy\n    d. scared\n20. To \"vitiate\" water means to:\n    a. drink it\n\n\n\n    b. make it impure\n    c. boil it\n    d. freeze it\n21. To \"pacify\" a crying baby means to:\n    a. make it cry more\n    b. calm it down\n    c. ignore it\n    d. feed it\n\n\n\n22. A \"lucid\" dream is:\n    a. confusing\n    b. easy to understand\n    c. frightening\n    d. funny\n23. \"Indigenous\" plants are:\n    a. from another country\n    b. native to the area\n    c. artificial\n    d. dangerous\n24. A person with \"charisma\" often has:\n    a. magical attractiveness\n    b. a lot of money\n    c. a loud voice\n    d. bad manners\n25. To \"placate\" an angry person means to:\n    a. make them angrier\n    b. agree with them\n    c. pacify them\n    d. ignore them\n\n   WORD DEFINITIONS\n\n\n   26. What is a \"timetable\" used for?\n   a. carrying books\n   b. telling time and schedules\n   c. writing stories\n   d. playing games\n\n27. A \"dictionary\" is a book that contains:\n    a. word meanings\n    b. maps\n    c. recipes\n    d. jokes\n\n\n\n\n28. A \"student\" is primarily known for:\n    a. teaching\n    b. studying\n    c. driving\n    d. cooking\n29. A \"blackboard\" is typically found in a:\n    a. kitchen\n    b. classroom\n    c. garage\n    d. playground\n\n\n\n30. To \"participate\" in a game is to:\n    a. watch the game\n    b. coach the game\n    c. take part in the game\n    d. referee the game\n31. To \"cheat\" on a test is to:\n    a. study hard for it\n    b. break the rules to get a better score\n    c. fail it honestly\n    d. help a friend with it\n\n   LITERARY TERMS\n\n\n   32. An \"edifice\" is most likely a:\n   a. small cottage\n   b. large, impressive building\n   c. park bench\n   d. flower pot\n\n33. A \"portal\" could be described as a:\n    a. small key\n    b. grand, impressive doorway\n    c. window pane\n    d. roof tile\n34. An \"era\" in history is a:\n    a. specific battle\n    b. particular person\n    c. distinct period of time\n    d. type of government\n35. His \"version\" of the story is his:\n    a. favorite part\n    b. personal account\n\n\n\n\n    c. drawing\n    d. question\n36. A \"cache\" of food is a:\n    a. hiding place for food\n    b. type of food\n    c. recipe for food\n    d. store that sells food\n37. A \"dialogue\" in a play is the:\n    a. setting\n    b. costume list\n    c. conversation between characters\n    d. stage direction\n\n\n\n38. A \"refugee\" often leaves their home because of:\n    a. boredom\n    b. danger\n    c. a vacation\n    d. a new job\n\n   EVERYDAY VOCABULARY\n\n\n   39. If you are \"furious,\" you are feeling:\n   a. very happy\n   b. very angry\n   c. very tired\n   d. very calm\n\n40. To \"discover\" a new island is to:\n    a. draw a map of it\n    b. find it for the first time\n    c. buy it\n    d. destroy it\n41. To \"comfort\" a friend who is sad is to:\n    a. make them laugh\n    b. try to make them feel better\n    c. tell them to be quiet\n    d. ignore them\n42. If something happened \"recently,\" it happened:\n    a. a long time ago\n    b. in the future\n    c. not long ago\n    d. last century\n43. What is a \"shed\" commonly used for?\n    a. living\n\n\n\n    b. sleeping\n    c. storage\n    d. cooking\n44. A \"pond\" is a body of water that is:\n    a. part of the ocean\n    b. flowing like a river\n    c. small and still\n    d. found inside a cave\n45. A \"calf\" is a young:\n    a. pig\n    b. chicken\n    c. cow\n    d. horse\n\n\n\n46. A \"hose\" is typically used to:\n    a. dig holes\n    b. carry water\n    c. cut grass\n    d. hammer nails\n47. A \"swing\" is found on a:\n    a. playground\n    b. road\n    c. roof\n    d. bed\n48. The word \"calculate\" is most related to:\n    a. art\n    b. music\n    c. math\n    d. history\n49. The primary goal of \"communication\" is to:\n    a. win an argument\n    b. share and understand information\n    c. talk as much as possible\n    d. be quiet\n50. If you \"trudge\" through snow, you walk:\n    a. quickly and happily\n    b. slowly and with effort\n    c. backwards\n    d. on your tiptoes\n\n\n\n\n"
+  },
+  {
+   "phase": "pre",
+   "label": "Pre-Test Answer Key:",
+   "pages": [
+    20,
+    22
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "",
+     "items": [
+      {
+       "n": 1,
+       "text": "1. b, 2. b, 3. b, 4. b, 5. c, 6. b, 7. b, 8. b, 9. b, 10. b, 11. c, 12. d, 13. b, 14. c, 15. b, 16. b, 17. b, 18. b, 19. a, 20. b, 21. b, 22. b, 23. b, 24. a, 25. c, 26. b, 27. a, 28. b, 29. b, 30. c, 31. b, 32. b, 33. b, 34. c, 35. b, 36. a, 37. c, 38. b, 39. b, 40. b, 41. b, 42. c, 43. c, 44. c, 45. c, 46. b, 47. a, 48. c, 49. b, 50. b",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n1. 1. b, 2. b, 3. b, 4. b, 5. c, 6. b, 7. b, 8. b, 9. b, 10. b, 11. c, 12. d, 13. b, 14. c, 15. b, 16. b, 17.\n   b, 18. b, 19. a, 20. b, 21. b, 22. b, 23. b, 24. a, 25. c, 26. b, 27. a, 28. b, 29. b, 30. c, 31. b, 32.\n   b, 33. b, 34. c, 35. b, 36. a, 37. c, 38. b, 39. b, 40. b, 41. b, 42. c, 43. c, 44. c, 45. c, 46. b, 47.\n   a, 48. c, 49. b, 50. b\n\n\n\n\n\n\n                               Worksheet # 1"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 1",
+   "pages": [
+    22,
+    23
+   ],
+   "acts": [
+    {
+     "direction": "Identify the synonym of the italicized word in the sentence given. Circle the letter of the correct answer.",
+     "lead": "IMPORTANT: Please read the short story \" A Day with Friends \" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: The Logic Champion\nMaria loved a good challenge. She opened a book filled with\ndifficult conundrums, or mind-exercising puzzles. After solving the last one, she\nfelt a surge of pride, the exact opposite of mortification. She had no rancour for\nanyone, only kindness in her heart. She knew that causing pandemonium was\nnot the way to celebrate, so she quietly enjoyed her victory, feeling far away\nfrom any penitentiary.\nApply What You Have Learned About Synonyms\nSynonyms are words that have the same or similar meaning.\n\nDirection: Identify the synonym of the italicized word in the sentence given.\nCircle the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "The book of logic contained many conundrums –mind exercising puzzle. Using the synonym clue the word conundrums in this sentence means",
+       "opts": [
+        [
+         "a",
+         "pictures"
+        ],
+        [
+         "b",
+         "stories"
+        ],
+        [
+         "c",
+         "answers"
+        ],
+        [
+         "d",
+         "puzzles"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Jackie was filled with mortification or shame, because of her careless remark. Using the synonym clue, the word mortification in this sentence means",
+       "opts": [
+        [
+         "a",
+         "proud"
+        ],
+        [
+         "b",
+         "shame"
+        ],
+        [
+         "c",
+         "confident"
+        ],
+        [
+         "d",
+         "happy"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "His rancour, or hatred of his brother has caused him to live his life as a lonely person. Using the synonym clue, the word rancour in this sentence means",
+       "opts": [
+        [
+         "a",
+         "Love"
+        ],
+        [
+         "b",
+         "Generous"
+        ],
+        [
+         "c",
+         "tolerance"
+        ],
+        [
+         "d",
+         "hatred"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "The man was sent to the penitentiary or prison for stealing cars. Using the synonym clue, the word penitentiary in this sentence means",
+       "opts": [
+        [
+         "a",
+         "paradise"
+        ],
+        [
+         "b",
+         "hotel"
+        ],
+        [
+         "c",
+         "prison"
+        ],
+        [
+         "d",
+         "heaven"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "There was crazy pandemonium as people were trying to leave the rock concert. Using the synonym clue, the word pandomenium in this sentence means",
+       "opts": [
+        [
+         "a",
+         "silence"
+        ],
+        [
+         "b",
+         "chaos"
+        ],
+        [
+         "c",
+         "order"
+        ],
+        [
+         "d",
+         "quiet"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\nIMPORTANT: Please read the short story \" A Day with Friends \" BEFORE you\nanswer the questions below. It will help you!\n\n                            Passage: The Logic Champion\n            Maria loved a good challenge. She opened a book filled with\n  difficult conundrums, or mind-exercising puzzles. After solving the last one, she\n felt a surge of pride, the exact opposite of mortification. She had no rancour for\n  anyone, only kindness in her heart. She knew that causing pandemonium was\n  not the way to celebrate, so she quietly enjoyed her victory, feeling far away\n                                from any penitentiary.\nApply What You Have Learned About Synonyms\n             Synonyms are words that have the same or similar meaning.\n\n\nDirection: Identify the synonym of the italicized word in the sentence given.\nCircle the letter of the correct answer.\n   1. The book of logic contained many conundrums –mind exercising\n      puzzle.\n      Using the synonym clue the word conundrums in this sentence means\n      a. pictures             c. answers\n      b. stories               d. puzzles\n   2. Jackie was filled with mortification or shame, because of her careless\n      remark.\n          Using the synonym clue, the word mortification in this sentence\n          means\n          a. proud                   c. confident\n          b. shame                    d. happy\n   3. His rancour, or hatred of his brother has caused him to live his life as a\n      lonely person.\n      Using the synonym clue, the word rancour in this sentence means\n      a. Love              c. tolerance\n      b. Generous            d. hatred\n   4. The man was sent to the penitentiary or prison for stealing cars.\n      Using the synonym clue, the word penitentiary in this sentence means\n      a. paradise                c. prison\n      b. hotel                    d. heaven\n   5. There was crazy pandemonium as people were trying to leave the rock\n      concert.\n      Using the synonym clue, the word pandomenium in this sentence\n      means\n\n      a. silence              c. order\n      b. chaos                 d. quiet\n\n                               Worksheet # 2"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 2",
+   "pages": [
+    23,
+    24
+   ],
+   "acts": [
+    {
+     "direction": "Identify the meaning of the underlined word using context clues. Circle the letter of the best meaning of the underlined word.",
+     "lead": "IMPORTANT: Please read the short story \" A Day with Friends \" BEFORE you\nanswer the questions below. It will help you!\nPassage: A Day with Friends\nLooking through his microscope, Leo saw a miniscule insect.\nHis amiable friend, Lance, made a wager that he couldn't draw it. Lance\nhad an immense collection of art supplies. Suddenly,\nSam mischievously snuck in and tickled them, almost ruining the drawing.\n\nApply What You Have Learned About Context Clues\nContext Clues are words in sentences that help you figure out the meaning\nof a difficult word that you do not know.\nDirection: Identify the meaning of the underlined word using context clues.\nCircle the letter of the best meaning of the underlined word.",
+     "items": [
+      {
+       "n": 1,
+       "text": "The dirt in the paper was miniscule I could not even see it.",
+       "opts": [
+        [
+         "a",
+         "big"
+        ],
+        [
+         "b",
+         "long"
+        ],
+        [
+         "c",
+         "small"
+        ],
+        [
+         "d",
+         "followed"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "My Lolo put up a wager that Manny Pacquiao will win the fight. He will treat all of us to dinner if Paquiao wins.",
+       "opts": [
+        [
+         "a",
+         "smile"
+        ],
+        [
+         "b",
+         "bet"
+        ],
+        [
+         "c",
+         "vote"
+        ],
+        [
+         "d",
+         "choice"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Michael Jackson has an immense fan base. The whole world adores him.",
+       "opts": [
+        [
+         "a",
+         "huge"
+        ],
+        [
+         "b",
+         "cool"
+        ],
+        [
+         "c",
+         "loving"
+        ],
+        [
+         "d",
+         "respects"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Lance is an amiable boy. He has lots of friends and outside school.",
+       "opts": [
+        [
+         "a",
+         "smart"
+        ],
+        [
+         "b",
+         "generous"
+        ],
+        [
+         "c",
+         "athletic"
+        ],
+        [
+         "d",
+         "kind"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "Sam mischievously placed the fart pillow on Mom’s chair.",
+       "opts": [
+        [
+         "a",
+         "quietly"
+        ],
+        [
+         "b",
+         "naughtily"
+        ],
+        [
+         "c",
+         "happily"
+        ],
+        [
+         "d",
+         "softly"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\nIMPORTANT: Please read the short story \" A Day with Friends \" BEFORE you\nanswer the questions below. It will help you!\n                          Passage: A Day with Friends\n         Looking through his microscope, Leo saw a miniscule insect.\n   His amiable friend, Lance, made a wager that he couldn't draw it. Lance\n             had an immense collection of art supplies. Suddenly,\n   Sam mischievously snuck in and tickled them, almost ruining the drawing.\n\n\n\n\nApply What You Have Learned About Context Clues\n   Context Clues are words in sentences that help you figure out the meaning\nof a difficult word that you do not know.\nDirection: Identify the meaning of the underlined word using context clues.\nCircle the letter of the best meaning of the underlined word.\n   1. The dirt in the paper was miniscule I could not even see it.\n      a. big              c. small\n      b. long             d. followed\n   2. My Lolo put up a wager that Manny Pacquiao will win the fight. He will\n      treat all of us to dinner if Paquiao wins.\n      a. smile                 c. vote\n      b. bet                     d. choice\n   3. Michael Jackson has an immense fan base. The whole world adores\n      him.\n      a. huge                         c. loving\n      b. cool                          d. respects\n   4. Lance is an amiable boy. He has lots of friends and outside school.\n      a. smart                    c. athletic\n      b. generous                   d. kind\n\n   5. Sam mischievously placed the fart pillow on Mom’s chair.\n      a. quietly                 c. happily\n      b. naughtily                d. softly\n\n\n                                 Worksheet # 3"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 3",
+   "pages": [
+    24,
+    25
+   ],
+   "acts": [
+    {
+     "direction": "Select the word that most closely matches the underlined word in the sentence. Use the antonym in red as clue to the correct meaning.",
+     "lead": "IMPORTANT: Please read the short story \" Family Contrasts \" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: Family Contrasts\n\nAt the family talent show, my naïve little brother thought everyone would win a\nprize. My aunt, an adept and agile dancer, performed beautifully. My uncle,\nhowever, didn't scowl at his own clumsy attempt; he laughed. We all agreed\nhis idea for a comedy act was far from trite.\n\nApply What You Have Learned About Antonym\nAntonym context clues are words around a difficult word that mean\nthe opposite or nearly the opposite as the word.\nDirections: Select the word that most closely matches the underlined word in\nthe sentence. Use the antonym in red as clue to the correct meaning.",
+     "items": [
+      {
+       "n": 1,
+       "text": "We thought it was a brilliant idea, but our teacher thought it was trite.",
+       "opts": [
+        [
+         "a",
+         "special"
+        ],
+        [
+         "b",
+         "loud"
+        ],
+        [
+         "c",
+         "common"
+        ],
+        [
+         "d",
+         "happy"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Mr. Lim is adept with crossword puzzles, while his wife is terrible at solving.",
+       "opts": [
+        [
+         "a",
+         "awful"
+        ],
+        [
+         "b",
+         "lazy"
+        ],
+        [
+         "c",
+         "skilled"
+        ],
+        [
+         "d",
+         "bored"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Mother was suspicious when Danny handed her the bag, but my naïve little sister opened it anyway.",
+       "opts": [
+        [
+         "a",
+         "Sad"
+        ],
+        [
+         "b",
+         "careful"
+        ],
+        [
+         "c",
+         "trusting"
+        ],
+        [
+         "d",
+         "demanding"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Rather than scowl, dad had a huge smile on his face.",
+       "opts": [
+        [
+         "a",
+         "frown"
+        ],
+        [
+         "b",
+         "mask"
+        ],
+        [
+         "c",
+         "grin"
+        ],
+        [
+         "d",
+         "hat"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "Aunt Claire is an agile dancer; however, my cousin is quite clumsy.",
+       "opts": [
+        [
+         "a",
+         "Shy"
+        ],
+        [
+         "b",
+         "humble"
+        ],
+        [
+         "c",
+         "inept"
+        ],
+        [
+         "d",
+         "nimble"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\nIMPORTANT: Please read the short story \" Family Contrasts \" BEFORE you\nanswer the questions below. It will help you!\n\n                           Passage: Family Contrasts\n\n At the family talent show, my naïve little brother thought everyone would win a\n  prize. My aunt, an adept and agile dancer, performed beautifully. My uncle,\n  however, didn't scowl at his own clumsy attempt; he laughed. We all agreed\n                   his idea for a comedy act was far from trite.\n\n\n\nApply What You Have Learned About Antonym\n      Antonym context clues are words around a difficult word that mean\n      the opposite or nearly the opposite as the word.\nDirections: Select the word that most closely matches the underlined word in\nthe sentence. Use the antonym in red as clue to the correct meaning.\n\n\n   1. We thought it was a brilliant idea, but our teacher thought it was trite.\n             a. special b. loud            c. common           d. happy\n   2. Mr. Lim is adept with crossword puzzles, while his wife is terrible at\n      solving.\n      a. awful         b. lazy      c. skilled      d. bored\n   3. Mother was suspicious when Danny handed her the bag, but my naïve\n      little sister opened it anyway.\n      a. Sad             b. careful           c. trusting         d. demanding\n   4. Rather than scowl, dad had a huge smile on his face.\n      a. frown              b. mask          c. grin        d. hat\n   5. Aunt Claire is an agile dancer; however, my cousin is quite clumsy.\n      a. Shy             b. humble      c. inept        d. nimble\n\n                                Worksheet # 4"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 4",
+   "pages": [
+    25,
+    26
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "IMPORTANT: Please read the short story \" The Busy Week \" BEFORE you answer\nthe questions below. It will help you!\n\nPassage: The Busy Week\nMy parents allowed me to go shopping, but I felt too weak from a long\nweek. I had to tie a knot in my lace before we left. At the store, we saw my\nfriend with red hair, who told us about a great sale on shoes.\n\nApply What You Have Learned About Homophones\n\nA homophone is a word that is pronounced the same as another word but\nhas a different meaning.\nCircle the homophones that best fits the sentence.",
+     "items": [
+      {
+       "n": 1,
+       "text": "My parents (allowed/ aloud) me to watch a movie with my friend.",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "I kept getting a (not/knot) in my shoe after my basket.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "I felt (weak/ week) after I worked the whole day.",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "My mom waited for the (sale/sail) at the store before she went shopping.",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "My friend Sarah has (red/read) hair.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\nIMPORTANT: Please read the short story \" The Busy Week \" BEFORE you answer\nthe questions below. It will help you!\n\n                          Passage: The Busy Week\n My parents allowed me to go shopping, but I felt too weak from a long\nweek. I had to tie a knot in my lace before we left. At the store, we saw my\n       friend with red hair, who told us about a great sale on shoes.\n\nApply What You Have Learned About Homophones\n\n\n A homophone is a word that is pronounced the same as another word but\n                       has a different meaning.\nCircle the homophones that best fits the sentence.\n1.My parents (allowed/ aloud) me to watch a movie with my friend.\n2. I kept getting a (not/knot) in my shoe after my basket.\n3. I felt (weak/ week) after I worked the whole day.\n4. My mom waited for the (sale/sail) at the store before she went shopping.\n5. My friend Sarah has (red/read) hair.\n\n                                  Worksheet # 5"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 5",
+   "pages": [
+    26,
+    27
+   ],
+   "acts": [
+    {
+     "direction": "Circle the answer that best defines the word.",
+     "lead": "IMPORTANT: Please read the short story \" The Arrogant Leader \" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: The Arrogant Leader\nThe supercilious king was known for his indolent ways. His bad policies\nwould vitiate the clean water supply, which would engender anger\namong the people. It took a wise advisor to pacify the crowds and\nApply What You Have Learned About Vocabulary\nrestore peace.\n\nFirst, Second, Third?\nDirection: Circle the answer that best defines the word.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Vitiate        pity       speak ill of               make impure",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "indolent       rude            sweet                 lazy",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "supercilious    not trusting      unsure         haughty",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "engender        prevent      allow             cause to exist",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "pacify           regret         follow     calm someone down",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "IMPORTANT: Please read the short story \" The Arrogant Leader \" BEFORE you\nanswer the questions below. It will help you!\n\n                       Passage: The Arrogant Leader\n  The supercilious king was known for his indolent ways. His bad policies\n   would vitiate the clean water supply, which would engender anger\n   among the people. It took a wise advisor to pacify the crowds and\nApply What You Have Learned About Vocabulary\n                              restore peace.\n\n\n                             First, Second, Third?\nDirection: Circle the answer that best defines the word.\n   1. Vitiate        pity       speak ill of               make impure\n\n   2. indolent       rude            sweet                 lazy\n\n   3. supercilious    not trusting      unsure         haughty\n\n   4. engender        prevent      allow             cause to exist\n\n   5. pacify           regret         follow     calm someone down\n\n\n\n                                   Worksheet #6"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 6",
+   "pages": [
+    27,
+    28
+   ],
+   "acts": [
+    {
+     "direction": "Read each sentence. Choose the correct meaning of each underlined word.",
+     "lead": "IMPORTANT: Please read the short story \" The Inspiring Speaker \" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: The Inspiring Speaker\n\nThe speaker had a remarkable charisma that captivated everyone. She gave a\nlucid explanation of the history of the indigenous people. She warned that a\ncursory study of history was not enough. Her powerful words could placate\neven the most critical listeners.\n\nApply What You Have Learned About Context Clues\nWhat Does It Mean?\nDIRECTIONS: Read each sentence. Choose the correct meaning of each\nunderlined word.",
+     "items": [
+      {
+       "n": 1,
+       "text": "She paid only cursory attention to her parents’ final instructions.",
+       "opts": [
+        [
+         "a",
+         "close"
+        ],
+        [
+         "b",
+         "hasty"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Her explanation of the situation was astonishing lucid.",
+       "opts": [
+        [
+         "a",
+         "easy to understand"
+        ],
+        [
+         "b",
+         "entertaining"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "This country’s indigenous people were hunter-gatherers. . A. native           B. poorest",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "The woman had a strange charisma, and we couldn’t stop looking at her.",
+       "opts": [
+        [
+         "a",
+         "magical attractiveness"
+        ],
+        [
+         "b",
+         "personality"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "After our argument, it took over an hour to placate her.",
+       "opts": [
+        [
+         "a",
+         "punish"
+        ],
+        [
+         "b",
+         "pacify"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\nIMPORTANT: Please read the short story \" The Inspiring Speaker \" BEFORE you\nanswer the questions below. It will help you!\n\n                        Passage: The Inspiring Speaker\n\nThe speaker had a remarkable charisma that captivated everyone. She gave a\n  lucid explanation of the history of the indigenous people. She warned that a\n   cursory study of history was not enough. Her powerful words could placate\n                           even the most critical listeners.\n\n\n\nApply What You Have Learned About Context Clues\n                               What Does It Mean?\nDIRECTIONS: Read each sentence. Choose the correct meaning of each\nunderlined word.\n1. She paid only cursory attention to her parents’ final instructions.\n        A. close                  B. hasty\n2. Her explanation of the situation was astonishing lucid.\n     A. easy to understand                B. entertaining\n3. This country’s indigenous people were hunter-gatherers.\n      . A. native           B. poorest\n4. The woman had a strange charisma, and we couldn’t stop looking at her.\n        A. magical attractiveness            B. personality\n5. After our argument, it took over an hour to placate her.\n       A. punish                 B. pacify\n\n                                     Worksheet # 7"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 7",
+   "pages": [
+    28,
+    29
+   ],
+   "acts": [
+    {
+     "direction": "Read the following situations below. Choose the correct words found in the Word Bank that answer the following situations.",
+     "lead": "IMPORTANT: Please read the short story \" A Student's Tools \" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: A Student's Tools\n\nEvery student needs to be organized. First, check your timetable to see your first\nlesson. Pack your rucksack with all your books, including a dictionary. Don't\nforget you have a film to watch on the big screen in science class!\n\nApply What You Have Learned\nDirections: Read the following situations below. Choose the correct words\nfound in the Word Bank that answer the following situations.\n\nSituation",
+     "items": [
+      {
+       "n": 1,
+       "text": "You can carry your school books in this.           _________________________",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "Your class can watch a film or a DVD on this.          _______________________",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "This interesting book tells you what words mean.          ____________________",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "A person who studies.                                   ______________________",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "This will tell you the times of your lessons.          ______________________ Word Bank              rucksack             timetable screen dictionary             student",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\nIMPORTANT: Please read the short story \" A Student's Tools \" BEFORE you\nanswer the questions below. It will help you!\n\n                             Passage: A Student's Tools\n\n Every student needs to be organized. First, check your timetable to see your first\n   lesson. Pack your rucksack with all your books, including a dictionary. Don't\n        forget you have a film to watch on the big screen in science class!\n\n\n\n\nApply What You Have Learned\nDirections: Read the following situations below. Choose the correct words\nfound in the Word Bank that answer the following situations.\n\n\nSituation\n1. You can carry your school books in this.           _________________________\n2. Your class can watch a film or a DVD on this.          _______________________\n3. This interesting book tells you what words mean.          ____________________\n4. A person who studies.                                   ______________________\n5. This will tell you the times of your lessons.          ______________________\n\n Word Bank              rucksack             timetable\n                                                 screen\n                        dictionary             student\n\n                                 Worksheet # 8"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 8",
+   "pages": [
+    29,
+    30
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "IMPORTANT: Please read the short story \" School Rules \" BEFORE you answer\nthe questions below. It will help you!\n\nPassage: School Rules\nIn the gym, the coach wrote the rules on a small blackboard. The main\ninstruction was clear: never cheat during a game. She was happy to see\nso many students participate with honesty and energy.\nApply What You Have Learned About Vocabulary\nComplete the sentences with the words from the box\n\nblackboard      gym          participate\ninstruction        cheat",
+     "items": [
+      {
+       "n": 1,
+       "text": "The teacher wrote something on the _________________________, but we couldn’t read it.",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "You are not allowed to _________________________ at your final exams.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "Before you start with the test, please read the ______________.",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "For physical education we have to go to the ______________.",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "Many students _________________________ in activities after school, for example drama clubs or sports.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\nIMPORTANT: Please read the short story \" School Rules \" BEFORE you answer\nthe questions below. It will help you!\n\n\n                          Passage: School Rules\n In the gym, the coach wrote the rules on a small blackboard. The main\ninstruction was clear: never cheat during a game. She was happy to see\n          so many students participate with honesty and energy.\nApply What You Have Learned About Vocabulary\nComplete the sentences with the words from the box\n\n\n        blackboard      gym          participate\n        instruction        cheat\n\n\n   1. The teacher wrote something on the _________________________, but we\n      couldn’t read it.\n   2. You are not allowed to _________________________ at your final exams.\n   3. Before you start with the test, please read the ______________.\n   4. For physical education we have to go to the ______________.\n   5. Many students _________________________ in activities after school, for\n   example drama clubs or sports.\n\n                                 Worksheet # 9"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 9",
+   "pages": [
+    30,
+    31
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "IMPORTANT: Please read the short story \" The Field Trip\" BEFORE you answer\nthe questions below. It will help you!\n\nThe Field Trip\nThe class took a trip to a huge new science museum. \"This is terrific!\"\nMaria exclaimed. She saw a strange insect she had never seen before.\n\"You can depend on this museum to have cool exhibits,\" said the\nteacher. \"It's much better than the terrible one we visited last year.\"\nApply What You Have Learned About Synonyms\nReplace the italicized word with synonyms from the list below. Write your\nanswer in the box.\n\ndepend on             huge            terrible    investigate\nterrific         strange            similar     increase\n\nThe pizza was awful.\nhuge",
+     "items": [
+      {
+       "n": 1,
+       "text": "What a fantastic idea!",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "You can trust her . She’s very responsible.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "The new sport center is enormous.",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "I’ve never seen an animal like that before. It looks weird!",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\nIMPORTANT: Please read the short story \" The Field Trip\" BEFORE you answer\nthe questions below. It will help you!\n\n                               The Field Trip\n  The class took a trip to a huge new science museum. \"This is terrific!\"\n Maria exclaimed. She saw a strange insect she had never seen before.\n   \"You can depend on this museum to have cool exhibits,\" said the\n  teacher. \"It's much better than the terrible one we visited last year.\"\nApply What You Have Learned About Synonyms\nReplace the italicized word with synonyms from the list below. Write your\nanswer in the box.\n\n          depend on             huge            terrible    investigate\n              terrific         strange            similar     increase\n\n\nThe pizza was awful.\n                    huge\n\n\n   1. What a fantastic idea!\n\n\n\n\n   2. You can trust her . She’s very responsible.\n\n\n\n\n   3. The new sport center is enormous.\n\n\n\n\n   4. I’ve never seen an animal like that before. It looks weird!\n\n\n\n\n\n                                 Worksheet # 10"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 10",
+   "pages": [
+    31,
+    32
+   ],
+   "acts": [
+    {
+     "direction": "Match the word from column A to its definition in column B. A B",
+     "lead": "IMPORTANT: Please read the short story \" A New Friend \" BEFORE you answer\nthe questions below. It will help you!\n\nPassage: A New Friend\n\nRecently, our class met a refugee named Amir. At first, he was sad, and we\ntried to comfort him. We helped him discover the fun parts of our city. One day,\na bully was furious and yelled at Amir, but we stood up for our new friend.\n\nApply What You Have About Learned Vocabulary\nDirection: Match the word from column A to its definition in column B.\nA                                        B",
+     "items": [
+      {
+       "n": 1,
+       "text": "Comfort                              find or learn something new",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "Refugee                                not long time ago",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "Discover                              try to help someone feel",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "Furious                               very angry",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "recently                              someone leaves their because they are in danger",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\nIMPORTANT: Please read the short story \" A New Friend \" BEFORE you answer\nthe questions below. It will help you!\n\n                             Passage: A New Friend\n\n    Recently, our class met a refugee named Amir. At first, he was sad, and we\n tried to comfort him. We helped him discover the fun parts of our city. One day,\n     a bully was furious and yelled at Amir, but we stood up for our new friend.\n\n\nApply What You Have About Learned Vocabulary\nDirection: Match the word from column A to its definition in column B.\n      A                                        B\n   1. Comfort                              find or learn something new\n\n   2. Refugee                                not long time ago\n\n   3. Discover                              try to help someone feel\n\n   4. Furious                               very angry\n\n\n   5. recently                              someone leaves their\n                                            because they are in danger\n\n                                Worksheet #11"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 11",
+   "pages": [
+    32,
+    33
+   ],
+   "acts": [
+    {
+     "direction": "In the space before each expression in column I, write the letter of its equivalent from column II.",
+     "lead": "IMPORTANT: Please read the short story \" The Historian's Discovery\" BEFORE you\nanswer the questions below. It will help you!\n\nThe Historian's Discovery\nThe historian stood before the massive portal of the ancient edifice. She\nwas studying a new era of history. In an old journal, she found\none version of events that differed from all others. Following a clue, she\ndiscovered a secret cache of artifacts hidden behind a stone wall.\n\nApply What You Have Learned About Vocabulary\nDirections: In the space before each expression in column I, write the letter of\nits equivalent from column II.\n\nCOLUMN I                            COLUMN II\n\nWorksheet #12",
+     "items": [
+      {
+       "n": 0,
+       "text": "",
+       "opts": [],
+       "match": {
+        "left": [
+         [
+          1,
+          "impressive door"
+         ],
+         [
+          2,
+          "impressive building"
+         ],
+         [
+          3,
+          "historical period"
+         ],
+         [
+          4,
+          "account from a particular viewpoint"
+         ],
+         [
+          5,
+          "hiding place"
+         ]
+        ],
+        "right": [
+         [
+          "a",
+          "edifice"
+         ],
+         [
+          "b",
+          "portal"
+         ],
+         [
+          "c",
+          "era"
+         ],
+         [
+          "d",
+          "version"
+         ],
+         [
+          "e",
+          "cache"
+         ]
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "raw": "\n\nIMPORTANT: Please read the short story \" The Historian's Discovery\" BEFORE you\nanswer the questions below. It will help you!\n\n                         The Historian's Discovery\n The historian stood before the massive portal of the ancient edifice. She\n      was studying a new era of history. In an old journal, she found\n one version of events that differed from all others. Following a clue, she\n   discovered a secret cache of artifacts hidden behind a stone wall.\n\n\n\nApply What You Have Learned About Vocabulary\nDirections: In the space before each expression in column I, write the letter of\nits equivalent from column II.\n\n\n         COLUMN I                            COLUMN II\n______ 1. impressive door                       A. edifice\n\n\n_______2. impressive building                    B. portal\n\n\n_______3. historical period                       C. era\n\n\n_______4. account from a particular viewpoint        D. version\n\n\n________5. hiding place                             E. cache\n\n                                     Worksheet #12"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 12",
+   "pages": [
+    33,
+    34
+   ],
+   "acts": [
+    {
+     "direction": "Find the word being described horizontally, diagonally and vertically. Supply the correct answer in the blank.",
+     "lead": "IMPORTANT: Please read the short story \" The Writer's Room\" BEFORE you\nanswer the questions below. It will help you!\n\nThe Writer's Room\nThe writer was crafting a drama. He knew the denouement had to be\nsatisfying for the audience. He included a funny anecdote from his own\nlife and wrote sharp dialogue between the characters. The story wasn't a\nlong fable, but it had a powerful message.\nApply What You Have Learned\nCrossword Puzzle: Word Search Game\nDirection: Find the word being described horizontally, diagonally and\nvertically. Supply the correct answer in the blank.\n\nd     i    a       l      o     g      u   e   b     a\n\na     y    h       f      o     a      b   s   a     l\n\na     b    h       h      g     v      h   s   c     l\n\nc     m     x      h      q     u      o   a   e     e\n\nr    h     f     q        i    g      n   w   e     g\n\nb     c     x     a       a     v      x   b     s   o\n\ne     v    m       t      q     n      m   x   d     r\n\nn     a    n       e      c     d      o   t   e     y\n\nr    u    m      a       d     z      u   a     l   c\n\nd     e    n       o      u    m       e   n     t   t\n\n•   a play for theatre, radio, or television______\n•   the point in the story is resolved_______\n•    a short moral story ____________\n•   a short amusing or interesting story about a real incident or person\n_____________\n•   conversation between two or more people as a feature of a book,\nplay or movie _______________\n\nWorksheet #13",
+     "items": []
+    }
+   ],
+   "raw": "   IMPORTANT: Please read the short story \" The Writer's Room\" BEFORE you\n               answer the questions below. It will help you!\n\n                               The Writer's Room\n   The writer was crafting a drama. He knew the denouement had to be\n  satisfying for the audience. He included a funny anecdote from his own\nlife and wrote sharp dialogue between the characters. The story wasn't a\n                   long fable, but it had a powerful message.\nApply What You Have Learned\nCrossword Puzzle: Word Search Game\nDirection: Find the word being described horizontally, diagonally and\nvertically. Supply the correct answer in the blank.\n\n              d     i    a       l      o     g      u   e   b     a\n\n              a     y    h       f      o     a      b   s   a     l\n\n              a     b    h       h      g     v      h   s   c     l\n\n              c     m     x      h      q     u      o   a   e     e\n\n               r    h     f     q        i    g      n   w   e     g\n\n              b     c     x     a       a     v      x   b     s   o\n\n              e     v    m       t      q     n      m   x   d     r\n\n              n     a    n       e      c     d      o   t   e     y\n\n               r    u    m      a       d     z      u   a     l   c\n\n              d     e    n       o      u    m       e   n     t   t\n\n\n\n   •   a play for theatre, radio, or television______\n   •   the point in the story is resolved_______\n   •    a short moral story ____________\n   •   a short amusing or interesting story about a real incident or person\n       _____________\n   •   conversation between two or more people as a feature of a book,\n       play or movie _______________\n\n                                Worksheet #13"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 13",
+   "pages": [
+    34,
+    35
+   ],
+   "acts": [
+    {
+     "direction": "Read each sentence below. Fill in the blank with a vocabulary word from the word box",
+     "lead": "IMPORTANT: Please read the short story \" A Big Day \" BEFORE you answer the\nquestions below. It will help you!\n\nPassage: A Big Day\nToday was so exciting! My sister is going to marry her best friend. After the\nceremony, a live band will play music. I had to use the telephone to call\nall my friends to tell them the news. I even skipped soccer practice to be\nthere!\n\nApply What You Have Learned About Vocabulary\nDirections: Read each sentence below. Fill in the blank with a vocabulary\nword from the word box\n\nband                    practice\nexciting              telephone       marry",
+     "items": [
+      {
+       "n": 1,
+       "text": "The game was very ________ at the end.",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "I watched my older sister _________ her childhood sweetheart.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "The _______ play a good song.",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "We had a basketball ______________ after school.",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "I used my _______________ to call my parents.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\n IMPORTANT: Please read the short story \" A Big Day \" BEFORE you answer the\n                     questions below. It will help you!\n\n                            Passage: A Big Day\nToday was so exciting! My sister is going to marry her best friend. After the\n ceremony, a live band will play music. I had to use the telephone to call\nall my friends to tell them the news. I even skipped soccer practice to be\n                                    there!\n\n\nApply What You Have Learned About Vocabulary\nDirections: Read each sentence below. Fill in the blank with a vocabulary\nword from the word box\n\n\n      band                    practice\n        exciting              telephone       marry\n\n\n   1. The game was very ________ at the end.\n\n   2. I watched my older sister _________ her childhood sweetheart.\n\n\n   3. The _______ play a good song.\n\n   4. We had a basketball ______________ after school.\n\n\n   5. I used my _______________ to call my parents.\n\n                                   Worksheet #14"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 14",
+   "pages": [
+    35,
+    36
+   ],
+   "acts": [
+    {
+     "direction": "Fill in the blank with a correct word inside the box to complete the sentence",
+     "lead": "IMPORTANT: Please read the short story \" The Soldier's Story \" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: The Soldier's Story\n\nThe soldier searched beneath his bunk for his favorite magazine. He had grown\na lot in height since joining the army. It took great courage to face his fears. He\nsaw his mission not as a danger, but as an opportunity to prove himself.\n\nDirections: Fill in the blank with a correct word inside the box to complete the\nsentence\n\nMagazine                         courage                beneath\nopportunity                     height",
+     "items": [
+      {
+       "n": 1,
+       "text": "I had to look _______________ by bed for my shoes.",
+       "opts": []
+      },
+      {
+       "n": 2,
+       "text": "I increased in ______________ as I got older.",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "love to read_______________ for recreation",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "The soldiers have a lot of __________.",
+       "opts": []
+      },
+      {
+       "n": 5,
+       "text": "I don’t often get this kind of _____________.",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\n   IMPORTANT: Please read the short story \" The Soldier's Story \" BEFORE you\n               answer the questions below. It will help you!\n\n\n                           Passage: The Soldier's Story\n\nThe soldier searched beneath his bunk for his favorite magazine. He had grown\na lot in height since joining the army. It took great courage to face his fears. He\n    saw his mission not as a danger, but as an opportunity to prove himself.\n\n\n\nDirections: Fill in the blank with a correct word inside the box to complete the\nsentence\n\n\n  Magazine                         courage                beneath\n  opportunity                     height\n\n\n1. I had to look _______________ by bed for my shoes.\n\n\n2.I increased in ______________ as I got older.\n\n\n\n3. love to read_______________ for recreation\n\n\n4. The soldiers have a lot of __________.\n\n\n5.I don’t often get this kind of _____________.\n\n\n\n\n\n                                     Worksheet #15"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 15",
+   "pages": [
+    36,
+    37
+   ],
+   "acts": [
+    {
+     "direction": "Fill in the box with its correct information.",
+     "lead": "IMPORTANT: Please read the short story \" The Determined Explorer \" BEFORE\nyou answer the questions below. It will help you!\nPassage: The Determined Explorer\n\nThe path up the mountain was steep, but Leo had to persevere. He would not\nquit. He knew that to succeed, he had to persist through the challenge.\n\nApply What You Have Learned About Vocabulary\nFrayer Model\nDirection: Fill in the box with its correct information.\n\nDefinition        Synonym                        Definition     Synonym\n\nvibrant                                    gorgeous\nAntonym              Sentence                    Antonym     Sentence\n\nSynonym                                Synonym\nDefinition                                 Definition\n\nfabulous                                   splendid\n\nAntonym                       Sentence                           Sentence\nAntonym\n\nDefinitionn                   Synonym\n\namiable\n\nAntonym                         Sentence\n\nWorksheet # 16",
+     "items": []
+    }
+   ],
+   "raw": "\n\n\n\n IMPORTANT: Please read the short story \" The Determined Explorer \" BEFORE\n             you answer the questions below. It will help you!\n                           Passage: The Determined Explorer\n\n  The path up the mountain was steep, but Leo had to persevere. He would not\n     quit. He knew that to succeed, he had to persist through the challenge.\n\nApply What You Have Learned About Vocabulary\nFrayer Model\nDirection: Fill in the box with its correct information.\n\n\n   Definition        Synonym                        Definition     Synonym\n\n\n                 vibrant                                    gorgeous\n     Antonym              Sentence                    Antonym     Sentence\n\n\n\n                          Synonym                                Synonym\n   Definition                                 Definition\n\n\n                fabulous                                   splendid\n\nAntonym                       Sentence                           Sentence\n                                              Antonym\n\n\n            Definitionn                   Synonym\n\n\n                                    amiable\n\n           Antonym                         Sentence\n\n                                 Worksheet # 16"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 16",
+   "pages": [
+    37,
+    38
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "IMPORTANT: Please read the short story \" A Long Day for the Scientist \" BEFORE\nyou answer the questions below. It will help you!\n\nPassage: A Long Day for the Scientist\n\nAfter the police arrest the suspect, the detective had to calculate the exact\ntimeline of the crime. Meanwhile, in the lab, a scientist began a new experiment.\nShe had to trudge through deep snow to get to her lab early. She heard a knock\non her door just as she started.\n\nApply What You Have Learned\nDraw a vocabulary sketch note\n\nknock\n\nexperiment\n\ntrudge                            arrest                     calculate\n\nWorksheet #17",
+     "items": []
+    }
+   ],
+   "raw": "\n\nIMPORTANT: Please read the short story \" A Long Day for the Scientist \" BEFORE\n             you answer the questions below. It will help you!\n\n                      Passage: A Long Day for the Scientist\n\n    After the police arrest the suspect, the detective had to calculate the exact\n timeline of the crime. Meanwhile, in the lab, a scientist began a new experiment.\n She had to trudge through deep snow to get to her lab early. She heard a knock\n                           on her door just as she started.\n\n\n\nApply What You Have Learned\nDraw a vocabulary sketch note\n\n\n     knock\n\n\n\n\n    experiment\n\n\n\n\n    trudge                            arrest                     calculate\n\n\n\n\n\n                                     Worksheet #17"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 17",
+   "pages": [
+    38,
+    39
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "IMPORTANT: Please read the short story \" A Change of Heart\" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: A Change of Heart\nThe big diamond was far from trashy; it was classy and beautiful. The owner\nwas thankful, not ungrateful, for such a treasure. When asked if she loved it, her\nanswer was \"yes,\" not \"no.\" Suddenly, a loud noise caused chaos, destroying\nthe calmness in the room.\n\nApply What You Have Learned\nDirections; Complete this crossword puzzle . Write the antonym of the words\nprovided in the clues.\n\n1                         2\n\n3                                          5\n\nAcross                                     Down",
+     "items": [
+      {
+       "n": 1,
+       "text": "antonym of little               2. antonym of ungrateful 3.antonym of trashy                 5. antonym of no",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "antonym of calmness",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\n  IMPORTANT: Please read the short story \" A Change of Heart\" BEFORE you\n               answer the questions below. It will help you!\n\n                            Passage: A Change of Heart\n     The big diamond was far from trashy; it was classy and beautiful. The owner\n   was thankful, not ungrateful, for such a treasure. When asked if she loved it, her\n     answer was \"yes,\" not \"no.\" Suddenly, a loud noise caused chaos, destroying\n                             the calmness in the room.\n\n\n\nApply What You Have Learned\nDirections; Complete this crossword puzzle . Write the antonym of the words\nprovided in the clues.\n\n\n       1                         2\n\n\n\n\n                3                                          5\n\n\n\n\n\nAcross                                     Down\n   1. antonym of little               2. antonym of ungrateful\n   3.antonym of trashy                 5. antonym of no\n   4. antonym of calmness\n\n\n                                  Worksheet #18                                17\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 18",
+   "pages": [
+    39,
+    40
+   ],
+   "acts": [
+    {
+     "direction": "Complete this crossword puzzle, Write the synonym of the words provided in the clues. 1 2",
+     "lead": "IMPORTANT: Please read the short story \" The Lucky Day\" BEFORE you answer\nthe questions below. It will help you!\nPassage: The Lucky Day\nShe carried a small talisman, her lucky charm, in her pocket. The chill in\nthe air, the coldness of the morning, didn't bother her. She had\nthe abilities and skills to win the contest. When she did, she couldn't\njust giggle; she let out a huge laugh!\n\nApply What You Have Learned\nDirections: Complete this crossword puzzle, Write the synonym of the words\nprovided in the clues.\n1                    2\n\n3                                     5\n\nAcross                                     Down",
+     "items": [
+      {
+       "n": 1,
+       "text": "synonym of little                 2. synonym of giggle",
+       "opts": []
+      },
+      {
+       "n": 3,
+       "text": "synonym of lucky charm            5. synonym of skills",
+       "opts": []
+      },
+      {
+       "n": 4,
+       "text": "synonym of coldness",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "IMPORTANT: Please read the short story \" The Lucky Day\" BEFORE you answer\n                  the questions below. It will help you!\n                              Passage: The Lucky Day\n  She carried a small talisman, her lucky charm, in her pocket. The chill in\n      the air, the coldness of the morning, didn't bother her. She had\n    the abilities and skills to win the contest. When she did, she couldn't\n                     just giggle; she let out a huge laugh!\n\nApply What You Have Learned\nDirections: Complete this crossword puzzle, Write the synonym of the words\nprovided in the clues.\n         1                    2\n\n\n\n\n              3                                     5\n\n\n\n\n\nAcross                                     Down\n   1. synonym of little                 2. synonym of giggle\n   3. synonym of lucky charm            5. synonym of skills\n   4. synonym of coldness\n\n\n\n\n                      Worksheet # 19                                              18"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 19",
+   "pages": [
+    40,
+    41,
+    42
+   ],
+   "acts": [
+    {
+     "direction": "Write the picture name to complete the puzzle.",
+     "lead": "IMPORTANT: Please read the short story \" A Day at the Farm \" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: A Day at the Farm\nThe children played on the old swing hanging from the tree. Nearby,\na calf drank from a small pond. The farmer used a hose to water the\nplants and then put the tools away in the dusty shed.\nDire\nInstruction: Write the picture name to complete the puzzle.\n\n1.\n\nAcross\n\na seat suspended by ropes or chains, on\nwhich someone may sit and swing\nback and forth.\n\na flexible pipe for conveying a liquid or\ngas.\n\nthe young of the domestic cow or other\nbovine animal.\n\nDown\n\na small, rough building or lean-on, used\n2     for shelter\n\na small area of still water, typically one\nformed naturally\n\nWorksheet # 20",
+     "items": []
+    }
+   ],
+   "raw": "\n\n  IMPORTANT: Please read the short story \" A Day at the Farm \" BEFORE you\n               answer the questions below. It will help you!\n\n                        Passage: A Day at the Farm\n   The children played on the old swing hanging from the tree. Nearby,\n   a calf drank from a small pond. The farmer used a hose to water the\n           plants and then put the tools away in the dusty shed.\nDire\nInstruction: Write the picture name to complete the puzzle.\n\n\n                          1.\n\n\n\n\n\n\n  Across\n\n                                        a seat suspended by ropes or chains, on\n                                        which someone may sit and swing\n                                        back and forth.\n\n\n\n\n       a flexible pipe for conveying a liquid or\n       gas.\n\n\n\n       the young of the domestic cow or other\n       bovine animal.\n\n\n\n\nDown\n\n       a small, rough building or lean-on, used\n 2     for shelter\n\n       a small area of still water, typically one\n       formed naturally\n\n\n\n\n\n                                  Worksheet # 20"
+  },
+  {
+   "phase": "learn",
+   "label": "Day 20",
+   "pages": [
+    42,
+    44
+   ],
+   "acts": [
+    {
+     "direction": "Fill in the box a word that associates with the word given in the circle and use it in a sentence.",
+     "lead": "IMPORTANT: Please read the short story \" The Network of Life \" BEFORE you\nanswer the questions below. It will help you!\n\nPassage: The Network of Life\nGood communication is more than just talk. It involves using a phone to call,\nwriting an email, or sending a message. Most importantly, it requires us\nto listen carefully to what others are saying.\n\nApply What You Have Learned\nWord Association:\nDirections: Fill in the box a word that associates with the word given in the\ncircle and use it in a sentence.\n\ncommunication\n\nSentence\n1.______________________________________________________\n2._______________________________________________________\n3.______________________________________________________\n4.______________________________________________________\n5.______________________________________________________\n\nSET A",
+     "items": []
+    }
+   ],
+   "raw": "  IMPORTANT: Please read the short story \" The Network of Life \" BEFORE you\n               answer the questions below. It will help you!\n\n                           Passage: The Network of Life\n   Good communication is more than just talk. It involves using a phone to call,\n     writing an email, or sending a message. Most importantly, it requires us\n                  to listen carefully to what others are saying.\n\n\n\nApply What You Have Learned\nWord Association:\nDirections: Fill in the box a word that associates with the word given in the\ncircle and use it in a sentence.\n\n\n\n\n                              communication\n\n\n\n\nSentence\n1.______________________________________________________\n2._______________________________________________________\n3.______________________________________________________\n4.______________________________________________________\n5.______________________________________________________\n\n\n                                        SET A"
+  },
+  {
+   "phase": "post",
+   "label": "POST-TEST (Based on Days 1-10)",
+   "pages": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+   ],
+   "acts": [
+    {
+     "direction": "Read each question carefully and circle the letter of the best answer.",
+     "lead": "Vocabulary Mastery Post-Test\n\nDirections: Read each question carefully and circle the letter of the best\nanswer.\n\nSynonyms & Antonyms",
+     "items": [
+      {
+       "n": 1,
+       "text": "What is a synonym for \"puzzle\"?",
+       "opts": [
+        [
+         "a",
+         "Answer"
+        ],
+        [
+         "b",
+         "Conundrum"
+        ],
+        [
+         "c",
+         "Picture"
+        ],
+        [
+         "d",
+         "Story"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What is an antonym for \"shame\"?",
+       "opts": [
+        [
+         "a",
+         "Mortification"
+        ],
+        [
+         "b",
+         "Pride"
+        ],
+        [
+         "c",
+         "Hatred"
+        ],
+        [
+         "d",
+         "Rancour"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "The word \"immense\" means:",
+       "opts": [
+        [
+         "a",
+         "Tiny"
+        ],
+        [
+         "b",
+         "Huge"
+        ],
+        [
+         "c",
+         "Small"
+        ],
+        [
+         "d",
+         "Miniscule"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "If you are \"adept\" at something, you are:",
+       "opts": [
+        [
+         "a",
+         "Terrible at it"
+        ],
+        [
+         "b",
+         "Skilled at it"
+        ],
+        [
+         "c",
+         "Bored with it"
+        ],
+        [
+         "d",
+         "Scared of it"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "A word that means the opposite of \"trite\" is:",
+       "opts": [
+        [
+         "a",
+         "Common"
+        ],
+        [
+         "b",
+         "Boring"
+        ],
+        [
+         "c",
+         "Brilliant"
+        ],
+        [
+         "d",
+         "Loud"
+        ]
+       ]
+      },
+      {
+       "n": 6,
+       "text": "Which word means \"to be given permission\"?",
+       "opts": [
+        [
+         "a",
+         "Aloud"
+        ],
+        [
+         "b",
+         "Allowed"
+        ],
+        [
+         "c",
+         "A loud"
+        ],
+        [
+         "d",
+         "Allow"
+        ]
+       ]
+      },
+      {
+       "n": 7,
+       "text": "Choose the correct word: \"She has _____ hair.\"",
+       "opts": [
+        [
+         "a",
+         "Read"
+        ],
+        [
+         "b",
+         "Red"
+        ],
+        [
+         "c",
+         "Reed"
+        ],
+        [
+         "d",
+         "Rad"
+        ]
+       ]
+      },
+      {
+       "n": 8,
+       "text": "Which word describes a lack of strength?",
+       "opts": [
+        [
+         "a",
+         "Week"
+        ],
+        [
+         "b",
+         "Weak"
+        ],
+        [
+         "c",
+         "Wek"
+        ],
+        [
+         "d",
+         "Leak"
+        ]
+       ]
+      },
+      {
+       "n": 9,
+       "text": "In the sentence, \"The speck of dust was miniscule, so we needed a microscope to see it,\" what does \"miniscule\" mean?",
+       "opts": [
+        [
+         "a",
+         "Very large"
+        ],
+        [
+         "b",
+         "Very small"
+        ],
+        [
+         "c",
+         "Very dirty"
+        ],
+        [
+         "d",
+         "Very shiny"
+        ]
+       ]
+      },
+      {
+       "n": 10,
+       "text": "\"The mischievous child hid his sister's toys.\" What does \"mischievous\" mean?",
+       "opts": [
+        [
+         "a",
+         "Well-behaved"
+        ],
+        [
+         "b",
+         "Naughty"
+        ],
+        [
+         "c",
+         "Sad"
+        ],
+        [
+         "d",
+         "Quiet"
+        ]
+       ]
+      },
+      {
+       "n": 11,
+       "text": "Based on the sentence, \"He was sent to the penitentiary for his crime,\" a penitentiary is a:",
+       "opts": [
+        [
+         "a",
+         "School"
+        ],
+        [
+         "b",
+         "Library"
+        ],
+        [
+         "c",
+         "Prison"
+        ],
+        [
+         "d",
+         "Restaurant"
+        ]
+       ]
+      },
+      {
+       "n": 12,
+       "text": "\"There was pandemonium in the streets after the championship win.\" Pandemonium means:",
+       "opts": [
+        [
+         "a",
+         "Silence"
+        ],
+        [
+         "b",
+         "Order"
+        ],
+        [
+         "c",
+         "Celebration"
+        ],
+        [
+         "d",
+         "Chaos"
+        ]
+       ]
+      },
+      {
+       "n": 13,
+       "text": "A \"wager\" is another word for a:",
+       "opts": [
+        [
+         "a",
+         "Smile"
+        ],
+        [
+         "b",
+         "Bet"
+        ],
+        [
+         "c",
+         "Vote"
+        ],
+        [
+         "d",
+         "Choice"
+        ]
+       ]
+      },
+      {
+       "n": 14,
+       "text": "When someone is \"amiable,\" they are:",
+       "opts": [
+        [
+         "a",
+         "Grumpy"
+        ],
+        [
+         "b",
+         "Shy"
+        ],
+        [
+         "c",
+         "Kind"
+        ],
+        [
+         "d",
+         "Smart"
+        ]
+       ]
+      },
+      {
+       "n": 15,
+       "text": "To have \"rancour\" towards someone is to feel:",
+       "opts": [
+        [
+         "a",
+         "Love"
+        ],
+        [
+         "b",
+         "Hatred"
+        ],
+        [
+         "c",
+         "Pity"
+        ],
+        [
+         "d",
+         "Respect"
+        ]
+       ]
+      },
+      {
+       "n": 16,
+       "text": "If you look at something \"cursory,\" you look at it:",
+       "opts": [
+        [
+         "a",
+         "Carefully"
+        ],
+        [
+         "b",
+         "Hastily"
+        ],
+        [
+         "c",
+         "Angrily"
+        ],
+        [
+         "d",
+         "Happily"
+        ]
+       ]
+      },
+      {
+       "n": 17,
+       "text": "To \"engender\" hope means to:",
+       "opts": [
+        [
+         "a",
+         "Destroy hope"
+        ],
+        [
+         "b",
+         "Cause hope to exist"
+        ],
+        [
+         "c",
+         "Ignore hope"
+        ],
+        [
+         "d",
+         "Fear hope"
+        ]
+       ]
+      },
+      {
+       "n": 18,
+       "text": "An \"indolent\" student is:",
+       "opts": [
+        [
+         "a",
+         "Hard-working"
+        ],
+        [
+         "b",
+         "Lazy"
+        ],
+        [
+         "c",
+         "Smart"
+        ],
+        [
+         "d",
+         "Popular"
+        ]
+       ]
+      },
+      {
+       "n": 19,
+       "text": "A \"supercilious\" look is:",
+       "opts": [
+        [
+         "a",
+         "Haughty"
+        ],
+        [
+         "b",
+         "Kind"
+        ],
+        [
+         "c",
+         "Shy"
+        ],
+        [
+         "d",
+         "Scared"
+        ]
+       ]
+      },
+      {
+       "n": 20,
+       "text": "To \"vitiate\" water means to:",
+       "opts": [
+        [
+         "a",
+         "Drink it"
+        ],
+        [
+         "b",
+         "Make it impure"
+        ],
+        [
+         "c",
+         "Boil it"
+        ],
+        [
+         "d",
+         "Freeze it"
+        ]
+       ]
+      },
+      {
+       "n": 21,
+       "text": "To \"pacify\" a crying baby means to:",
+       "opts": [
+        [
+         "a",
+         "Make it cry more"
+        ],
+        [
+         "b",
+         "Calm it down"
+        ],
+        [
+         "c",
+         "Feed it"
+        ],
+        [
+         "d",
+         "Ignore it"
+        ]
+       ]
+      },
+      {
+       "n": 22,
+       "text": "A \"lucid\" dream is:",
+       "opts": [
+        [
+         "a",
+         "Confusing"
+        ],
+        [
+         "b",
+         "Easy to understand"
+        ],
+        [
+         "c",
+         "Frightening"
+        ],
+        [
+         "d",
+         "Funny"
+        ]
+       ]
+      },
+      {
+       "n": 23,
+       "text": "\"Indigenous\" plants are:",
+       "opts": [
+        [
+         "a",
+         "From another country"
+        ],
+        [
+         "b",
+         "Native to the area"
+        ],
+        [
+         "c",
+         "Artificial"
+        ],
+        [
+         "d",
+         "Dangerous"
+        ]
+       ]
+      },
+      {
+       "n": 24,
+       "text": "A person with \"charisma\" often has:",
+       "opts": [
+        [
+         "a",
+         "Magical attractiveness"
+        ],
+        [
+         "b",
+         "A lot of money"
+        ],
+        [
+         "c",
+         "A loud voice"
+        ],
+        [
+         "d",
+         "Bad manners"
+        ]
+       ]
+      },
+      {
+       "n": 25,
+       "text": "To \"placate\" an angry person means to:",
+       "opts": [
+        [
+         "a",
+         "Make them angrier"
+        ],
+        [
+         "b",
+         "Agree with them"
+        ],
+        [
+         "c",
+         "Pacify them"
+        ],
+        [
+         "d",
+         "Ignore them"
+        ]
+       ]
+      },
+      {
+       "n": 26,
+       "text": "What is a \"timetable\" used for?",
+       "opts": [
+        [
+         "a",
+         "Carrying books"
+        ],
+        [
+         "b",
+         "Telling time and schedules"
+        ],
+        [
+         "c",
+         "Writing stories"
+        ],
+        [
+         "d",
+         "Playing games"
+        ]
+       ]
+      },
+      {
+       "n": 27,
+       "text": "A \"dictionary\" is a book that contains:",
+       "opts": [
+        [
+         "a",
+         "Word meanings"
+        ],
+        [
+         "b",
+         "Maps"
+        ],
+        [
+         "c",
+         "Recipes"
+        ],
+        [
+         "d",
+         "Jokes"
+        ]
+       ]
+      },
+      {
+       "n": 28,
+       "text": "A \"student\" is primarily known for:",
+       "opts": [
+        [
+         "a",
+         "Teaching"
+        ],
+        [
+         "b",
+         "Studying"
+        ],
+        [
+         "c",
+         "Driving"
+        ],
+        [
+         "d",
+         "Cooking"
+        ]
+       ]
+      },
+      {
+       "n": 29,
+       "text": "A \"blackboard\" is typically found in a:",
+       "opts": [
+        [
+         "a",
+         "Kitchen"
+        ],
+        [
+         "b",
+         "Classroom"
+        ],
+        [
+         "c",
+         "Garage"
+        ],
+        [
+         "d",
+         "Playground"
+        ]
+       ]
+      },
+      {
+       "n": 30,
+       "text": "To \"participate\" in a game is to:",
+       "opts": [
+        [
+         "a",
+         "Watch the game"
+        ],
+        [
+         "b",
+         "Coach the game"
+        ],
+        [
+         "c",
+         "Take part in the game"
+        ],
+        [
+         "d",
+         "Referee the game"
+        ]
+       ]
+      },
+      {
+       "n": 31,
+       "text": "To \"cheat\" on a test is to:",
+       "opts": [
+        [
+         "a",
+         "Study hard for it"
+        ],
+        [
+         "b",
+         "Break the rules to get a better score"
+        ],
+        [
+         "c",
+         "Fail it honestly"
+        ],
+        [
+         "d",
+         "Help a friend with it"
+        ]
+       ]
+      },
+      {
+       "n": 32,
+       "text": "An \"edifice\" is most likely a:",
+       "opts": [
+        [
+         "a",
+         "Small cottage"
+        ],
+        [
+         "b",
+         "Large, impressive building"
+        ],
+        [
+         "c",
+         "Park bench"
+        ],
+        [
+         "d",
+         "Flower pot"
+        ]
+       ]
+      },
+      {
+       "n": 33,
+       "text": "A \"portal\" could be described as a:",
+       "opts": [
+        [
+         "a",
+         "Small key"
+        ],
+        [
+         "b",
+         "Grand, impressive doorway"
+        ],
+        [
+         "c",
+         "Window pane"
+        ],
+        [
+         "d",
+         "Roof tile"
+        ]
+       ]
+      },
+      {
+       "n": 34,
+       "text": "An \"era\" in history is a:",
+       "opts": [
+        [
+         "a",
+         "Specific battle"
+        ],
+        [
+         "b",
+         "Particular person"
+        ],
+        [
+         "c",
+         "Distinct period of time"
+        ],
+        [
+         "d",
+         "Type of government"
+        ]
+       ]
+      },
+      {
+       "n": 35,
+       "text": "His \"version\" of the story is his:",
+       "opts": [
+        [
+         "a",
+         "Favorite part"
+        ],
+        [
+         "b",
+         "Personal account"
+        ],
+        [
+         "c",
+         "Drawing"
+        ],
+        [
+         "d",
+         "Question"
+        ]
+       ]
+      },
+      {
+       "n": 36,
+       "text": "A \"cache\" of food is a:",
+       "opts": [
+        [
+         "a",
+         "Hiding place for food"
+        ],
+        [
+         "b",
+         "Type of food"
+        ],
+        [
+         "c",
+         "Recipe for food"
+        ],
+        [
+         "d",
+         "Store that sells food"
+        ]
+       ]
+      },
+      {
+       "n": 37,
+       "text": "A \"dialogue\" in a play is the:",
+       "opts": [
+        [
+         "a",
+         "Setting"
+        ],
+        [
+         "b",
+         "Costume list"
+        ],
+        [
+         "c",
+         "Conversation between characters"
+        ],
+        [
+         "d",
+         "Stage direction"
+        ]
+       ]
+      },
+      {
+       "n": 38,
+       "text": "A \"refugee\" often leaves their home because of:",
+       "opts": [
+        [
+         "a",
+         "Boredom"
+        ],
+        [
+         "b",
+         "Danger"
+        ],
+        [
+         "c",
+         "A vacation"
+        ],
+        [
+         "d",
+         "A new job"
+        ]
+       ]
+      },
+      {
+       "n": 39,
+       "text": "If you are \"furious,\" you are feeling:",
+       "opts": [
+        [
+         "a",
+         "Very happy"
+        ],
+        [
+         "b",
+         "Very angry"
+        ],
+        [
+         "c",
+         "Very tired"
+        ],
+        [
+         "d",
+         "Very calm"
+        ]
+       ]
+      },
+      {
+       "n": 40,
+       "text": "To \"discover\" a new island is to:",
+       "opts": [
+        [
+         "a",
+         "Draw a map of it"
+        ],
+        [
+         "b",
+         "Find it for the first time"
+        ],
+        [
+         "c",
+         "Buy it"
+        ],
+        [
+         "d",
+         "Destroy it"
+        ]
+       ]
+      },
+      {
+       "n": 41,
+       "text": "To \"comfort\" a friend who is sad is to:",
+       "opts": [
+        [
+         "a",
+         "Make them laugh"
+        ],
+        [
+         "b",
+         "Try to make them feel better"
+        ],
+        [
+         "c",
+         "Tell them to be quiet"
+        ],
+        [
+         "d",
+         "Ignore them"
+        ]
+       ]
+      },
+      {
+       "n": 42,
+       "text": "If something happened \"recently,\" it happened:",
+       "opts": [
+        [
+         "a",
+         "A long time ago"
+        ],
+        [
+         "b",
+         "In the future"
+        ],
+        [
+         "c",
+         "Not long ago"
+        ],
+        [
+         "d",
+         "Last century"
+        ]
+       ]
+      },
+      {
+       "n": 43,
+       "text": "What is a \"shed\" commonly used for?",
+       "opts": [
+        [
+         "a",
+         "Living"
+        ],
+        [
+         "b",
+         "Sleeping"
+        ],
+        [
+         "c",
+         "Storage"
+        ],
+        [
+         "d",
+         "Cooking"
+        ]
+       ]
+      },
+      {
+       "n": 44,
+       "text": "A \"pond\" is a body of water that is:",
+       "opts": [
+        [
+         "a",
+         "Part of the ocean"
+        ],
+        [
+         "b",
+         "Flowing like a river"
+        ],
+        [
+         "c",
+         "Small and still"
+        ],
+        [
+         "d",
+         "Found inside a cave"
+        ]
+       ]
+      },
+      {
+       "n": 45,
+       "text": "A \"calf\" is a young:",
+       "opts": [
+        [
+         "a",
+         "Pig"
+        ],
+        [
+         "b",
+         "Chicken"
+        ],
+        [
+         "c",
+         "Cow"
+        ],
+        [
+         "d",
+         "Horse"
+        ]
+       ]
+      },
+      {
+       "n": 46,
+       "text": "A \"hose\" is typically used to:",
+       "opts": [
+        [
+         "a",
+         "Dig holes"
+        ],
+        [
+         "b",
+         "Carry water"
+        ],
+        [
+         "c",
+         "Cut grass"
+        ],
+        [
+         "d",
+         "Hammer nails"
+        ]
+       ]
+      },
+      {
+       "n": 47,
+       "text": "A \"swing\" is found on a:",
+       "opts": [
+        [
+         "a",
+         "Playground"
+        ],
+        [
+         "b",
+         "Road"
+        ],
+        [
+         "c",
+         "Roof"
+        ],
+        [
+         "d",
+         "Bed"
+        ]
+       ]
+      },
+      {
+       "n": 48,
+       "text": "The word \"calculate\" is most related to:",
+       "opts": [
+        [
+         "a",
+         "Art"
+        ],
+        [
+         "b",
+         "Music"
+        ],
+        [
+         "c",
+         "Math"
+        ],
+        [
+         "d",
+         "History"
+        ]
+       ]
+      },
+      {
+       "n": 49,
+       "text": "The primary goal of \"communication\" is to:",
+       "opts": [
+        [
+         "a",
+         "Win an argument"
+        ],
+        [
+         "b",
+         "Share and understand information"
+        ],
+        [
+         "c",
+         "Talk as much as possible"
+        ],
+        [
+         "d",
+         "Be quiet"
+        ]
+       ]
+      },
+      {
+       "n": 50,
+       "text": "If you \"trudge\" through snow, you walk:",
+       "opts": [
+        [
+         "a",
+         "Quickly and happily"
+        ],
+        [
+         "b",
+         "Slowly and with effort"
+        ],
+        [
+         "c",
+         "Backwards"
+        ],
+        [
+         "d",
+         "On your tiptoes"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n   Vocabulary Mastery Post-Test\n\n\n   Directions: Read each question carefully and circle the letter of the best\n   answer.\n\n   Synonyms & Antonyms\n\n1. What is a synonym for \"puzzle\"?\n   a. Answer\n   b. Conundrum\n   c. Picture\n   d. Story\n2. What is an antonym for \"shame\"?\n   a. Mortification\n   b. Pride\n   c. Hatred\n   d. Rancour\n3. The word \"immense\" means:\n   a. Tiny\n   b. Huge\n   c. Small\n   d. Miniscule\n4. If you are \"adept\" at something, you are:\n   a. Terrible at it\n   b. Skilled at it\n   c. Bored with it\n   d. Scared of it\n5. A word that means the opposite of \"trite\" is:\n   a. Common\n   b. Boring\n   c. Brilliant\n   d. Loud\n\n   Homophones\n   6. Which word means \"to be given permission\"?\n   a. Aloud\n   b. Allowed\n   c. A loud\n   d. Allow\n\n7. Choose the correct word: \"She has _____ hair.\"\n   a. Read\n   b. Red\n   c. Reed\n   d. Rad\n8. Which word describes a lack of strength?\n   a. Week\n   b. Weak\n   c. Wek\n   d. Leak\n\n   Context Clues\n   9. In the sentence, \"The speck of dust was miniscule, so we needed a\n   microscope to see it,\" what does \"miniscule\" mean?\n   a. Very large\n   b. Very small\n   c. Very dirty\n   d. Very shiny\n\n10. \"The mischievous child hid his sister's toys.\" What does \"mischievous\" mean?\n    a. Well-behaved\n    b. Naughty\n    c. Sad\n    d. Quiet\n11. Based on the sentence, \"He was sent to the penitentiary for his crime,\" a\n    penitentiary is a:\n    a. School\n    b. Library\n    c. Prison\n    d. Restaurant\n12. \"There was pandemonium in the streets after the championship win.\"\n    Pandemonium means:\n    a. Silence\n    b. Order\n    c. Celebration\n    d. Chaos\n\n   Vocabulary in Context\n   13. A \"wager\" is another word for a:\n   a. Smile\n   b. Bet\n   c. Vote\n   d. Choice\n\n14. When someone is \"amiable,\" they are:\n    a. Grumpy\n    b. Shy\n\n    c. Kind\n    d. Smart\n15. To have \"rancour\" towards someone is to feel:\n    a. Love\n    b. Hatred\n    c. Pity\n    d. Respect\n16. If you look at something \"cursory,\" you look at it:\n    a. Carefully\n    b. Hastily\n    c. Angrily\n    d. Happily\n\n   Advanced Vocabulary\n   17. To \"engender\" hope means to:\n   a. Destroy hope\n   b. Cause hope to exist\n   c. Ignore hope\n   d. Fear hope\n\n18. An \"indolent\" student is:\n    a. Hard-working\n    b. Lazy\n    c. Smart\n    d. Popular\n19. A \"supercilious\" look is:\n    a. Haughty\n    b. Kind\n    c. Shy\n    d. Scared\n20. To \"vitiate\" water means to:\n    a. Drink it\n    b. Make it impure\n    c. Boil it\n    d. Freeze it\n21. To \"pacify\" a crying baby means to:\n    a. Make it cry more\n    b. Calm it down\n    c. Feed it\n    d. Ignore it\n22. A \"lucid\" dream is:\n    a. Confusing\n    b. Easy to understand\n    c. Frightening\n    d. Funny\n\n23. \"Indigenous\" plants are:\n    a. From another country\n    b. Native to the area\n    c. Artificial\n    d. Dangerous\n24. A person with \"charisma\" often has:\n    a. Magical attractiveness\n    b. A lot of money\n    c. A loud voice\n    d. Bad manners\n25. To \"placate\" an angry person means to:\n    a. Make them angrier\n    b. Agree with them\n    c. Pacify them\n    d. Ignore them\n\n   Word Definitions\n   26. What is a \"timetable\" used for?\n   a. Carrying books\n   b. Telling time and schedules\n   c. Writing stories\n   d. Playing games\n\n27. A \"dictionary\" is a book that contains:\n    a. Word meanings\n    b. Maps\n    c. Recipes\n    d. Jokes\n28. A \"student\" is primarily known for:\n    a. Teaching\n    b. Studying\n    c. Driving\n    d. Cooking\n29. A \"blackboard\" is typically found in a:\n    a. Kitchen\n    b. Classroom\n    c. Garage\n    d. Playground\n30. To \"participate\" in a game is to:\n    a. Watch the game\n    b. Coach the game\n    c. Take part in the game\n    d. Referee the game\n31. To \"cheat\" on a test is to:\n    a. Study hard for it\n    b. Break the rules to get a better score\n\n    c. Fail it honestly\n    d. Help a friend with it\n32. An \"edifice\" is most likely a:\n    a. Small cottage\n    b. Large, impressive building\n    c. Park bench\n    d. Flower pot\n33. A \"portal\" could be described as a:\n    a. Small key\n    b. Grand, impressive doorway\n    c. Window pane\n    d. Roof tile\n34. An \"era\" in history is a:\n    a. Specific battle\n    b. Particular person\n    c. Distinct period of time\n    d. Type of government\n35. His \"version\" of the story is his:\n    a. Favorite part\n    b. Personal account\n    c. Drawing\n    d. Question\n36. A \"cache\" of food is a:\n    a. Hiding place for food\n    b. Type of food\n    c. Recipe for food\n    d. Store that sells food\n37. A \"dialogue\" in a play is the:\n    a. Setting\n    b. Costume list\n    c. Conversation between characters\n    d. Stage direction\n38. A \"refugee\" often leaves their home because of:\n    a. Boredom\n    b. Danger\n    c. A vacation\n    d. A new job\n39. If you are \"furious,\" you are feeling:\n    a. Very happy\n    b. Very angry\n    c. Very tired\n    d. Very calm\n40. To \"discover\" a new island is to:\n    a. Draw a map of it\n    b. Find it for the first time\n    c. Buy it\n    d. Destroy it\n\n41. To \"comfort\" a friend who is sad is to:\n    a. Make them laugh\n    b. Try to make them feel better\n    c. Tell them to be quiet\n    d. Ignore them\n42. If something happened \"recently,\" it happened:\n    a. A long time ago\n    b. In the future\n    c. Not long ago\n    d. Last century\n43. What is a \"shed\" commonly used for?\n    a. Living\n    b. Sleeping\n    c. Storage\n    d. Cooking\n44. A \"pond\" is a body of water that is:\n    a. Part of the ocean\n    b. Flowing like a river\n    c. Small and still\n    d. Found inside a cave\n45. A \"calf\" is a young:\n    a. Pig\n    b. Chicken\n    c. Cow\n    d. Horse\n46. A \"hose\" is typically used to:\n    a. Dig holes\n    b. Carry water\n    c. Cut grass\n    d. Hammer nails\n47. A \"swing\" is found on a:\n    a. Playground\n    b. Road\n    c. Roof\n    d. Bed\n48. The word \"calculate\" is most related to:\n    a. Art\n    b. Music\n    c. Math\n    d. History\n49. The primary goal of \"communication\" is to:\n    a. Win an argument\n    b. Share and understand information\n    c. Talk as much as possible\n    d. Be quiet\n50. If you \"trudge\" through snow, you walk:\n    a. Quickly and happily\n\nb. Slowly and with effort\nc. Backwards\nd. On your tiptoes\n\n\n\n"
+  },
+  {
+   "phase": "post",
+   "label": "Post-Test Answer Key:",
+   "pages": [
+    50,
+    51
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "1.b, 2. b, 3. b, 4. b, 5. c, 6. b, 7. b, 8. b, 9. b, 10. b, 11. c, 12. d, 13. b, 14. c, 15. b, 16. b, 17. b, 18. b,",
+     "items": [
+      {
+       "n": 19,
+       "text": "a, 20. b, 21. b, 22. b, 23. b, 24. a, 25. c, 26. b, 27. a, 28. b, 29. b, 30. c, 31. b, 32. b, 33. b, 34. c,",
+       "opts": []
+      },
+      {
+       "n": 35,
+       "text": "b, 36. a, 37. c, 38. b, 39. b, 40. b, 41. b, 42. c, 43. c, 44. c, 45. c, 46. b, 47. a, 48. c, 49. b, 50. b SET B",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n 1.b, 2. b, 3. b, 4. b, 5. c, 6. b, 7. b, 8. b, 9. b, 10. b, 11. c, 12. d, 13. b, 14. c, 15. b, 16. b, 17. b, 18. b,\n 19. a, 20. b, 21. b, 22. b, 23. b, 24. a, 25. c, 26. b, 27. a, 28. b, 29. b, 30. c, 31. b, 32. b, 33. b, 34. c,\n 35. b, 36. a, 37. c, 38. b, 39. b, 40. b, 41. b, 42. c, 43. c, 44. c, 45. c, 46. b, 47. a, 48. c, 49. b, 50. b\n\n                                                SET B"
+  },
+  {
+   "phase": "post",
+   "label": "POST-TEST (Based on Days 11-20)",
+   "pages": [
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+   ],
+   "acts": [
+    {
+     "direction": "Read each question carefully and circle the letter of the best answer.",
+     "lead": "Vocabulary Mastery Post-Test\n\nDirections: Read each question carefully and circle the letter of the best\nanswer.\n\nSYNONYMS & ANTONYMS",
+     "items": [
+      {
+       "n": 1,
+       "text": "What is a synonym for \"conundrum\"?",
+       "opts": [
+        [
+         "a",
+         "answer"
+        ],
+        [
+         "b",
+         "puzzle"
+        ],
+        [
+         "c",
+         "picture"
+        ],
+        [
+         "d",
+         "story"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What is an antonym for \"mortification\"?",
+       "opts": [
+        [
+         "a",
+         "shame"
+        ],
+        [
+         "b",
+         "pride"
+        ],
+        [
+         "c",
+         "hatred"
+        ],
+        [
+         "d",
+         "anger"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "The word \"miniscule\" means:",
+       "opts": [
+        [
+         "a",
+         "very large"
+        ],
+        [
+         "b",
+         "very small"
+        ],
+        [
+         "c",
+         "very loud"
+        ],
+        [
+         "d",
+         "very colorful"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "If an idea is \"trite,\" it is:",
+       "opts": [
+        [
+         "a",
+         "original"
+        ],
+        [
+         "b",
+         "common"
+        ],
+        [
+         "c",
+         "brilliant"
+        ],
+        [
+         "d",
+         "complicated"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "A word that means the opposite of \"adept\" is:",
+       "opts": [
+        [
+         "a",
+         "skilled"
+        ],
+        [
+         "b",
+         "clumsy"
+        ],
+        [
+         "c",
+         "smart"
+        ],
+        [
+         "d",
+         "quick"
+        ]
+       ]
+      },
+      {
+       "n": 6,
+       "text": "Which word means \"to be able to be heard\"?",
+       "opts": [
+        [
+         "a",
+         "allowed"
+        ],
+        [
+         "b",
+         "aloud"
+        ],
+        [
+         "c",
+         "a loud"
+        ],
+        [
+         "d",
+         "allow"
+        ]
+       ]
+      },
+      {
+       "n": 7,
+       "text": "Choose the correct word: \"I will _____ the book tomorrow.\"",
+       "opts": [
+        [
+         "a",
+         "red"
+        ],
+        [
+         "b",
+         "read"
+        ],
+        [
+         "c",
+         "reed"
+        ],
+        [
+         "d",
+         "rad"
+        ]
+       ]
+      },
+      {
+       "n": 8,
+       "text": "Which word describes a period of seven days?",
+       "opts": [
+        [
+         "a",
+         "weak"
+        ],
+        [
+         "b",
+         "week"
+        ],
+        [
+         "c",
+         "wek"
+        ],
+        [
+         "d",
+         "leek"
+        ]
+       ]
+      },
+      {
+       "n": 9,
+       "text": "In the sentence, \"The amiable shopkeeper always helped customers,\" what does \"amiable\" mean?",
+       "opts": [
+        [
+         "a",
+         "grumpy"
+        ],
+        [
+         "b",
+         "friendly"
+        ],
+        [
+         "c",
+         "rich"
+        ],
+        [
+         "d",
+         "busy"
+        ]
+       ]
+      },
+      {
+       "n": 10,
+       "text": "\"She looked at the document with cursory attention.\" This means she looked at it:",
+       "opts": [
+        [
+         "a",
+         "carefully"
+        ],
+        [
+         "b",
+         "hastily"
+        ],
+        [
+         "c",
+         "angrily"
+        ],
+        [
+         "d",
+         "happily"
+        ]
+       ]
+      },
+      {
+       "n": 11,
+       "text": "\"His rancour for his former friend was obvious.\" Rancour means:",
+       "opts": [
+        [
+         "a",
+         "love"
+        ],
+        [
+         "b",
+         "hatred"
+        ],
+        [
+         "c",
+         "respect"
+        ],
+        [
+         "d",
+         "fear"
+        ]
+       ]
+      },
+      {
+       "n": 12,
+       "text": "When there is \"pandemonium\" in a classroom, there is:",
+       "opts": [
+        [
+         "a",
+         "silence"
+        ],
+        [
+         "b",
+         "chaos"
+        ],
+        [
+         "c",
+         "learning"
+        ],
+        [
+         "d",
+         "order"
+        ]
+       ]
+      },
+      {
+       "n": 13,
+       "text": "To \"wager\" money on a game means to:",
+       "opts": [
+        [
+         "a",
+         "save it"
+        ],
+        [
+         "b",
+         "bet it"
+        ],
+        [
+         "c",
+         "spend it"
+        ],
+        [
+         "d",
+         "lose it"
+        ]
+       ]
+      },
+      {
+       "n": 14,
+       "text": "A \"penitentiary\" is another word for a:",
+       "opts": [
+        [
+         "a",
+         "school"
+        ],
+        [
+         "b",
+         "prison"
+        ],
+        [
+         "c",
+         "hospital"
+        ],
+        [
+         "d",
+         "church"
+        ]
+       ]
+      },
+      {
+       "n": 15,
+       "text": "If you do something \"mischievously,\" you do it:",
+       "opts": [
+        [
+         "a",
+         "kindly"
+        ],
+        [
+         "b",
+         "naughtily"
+        ],
+        [
+         "c",
+         "sadly"
+        ],
+        [
+         "d",
+         "quickly"
+        ]
+       ]
+      },
+      {
+       "n": 16,
+       "text": "To \"engender\" discussion means to:",
+       "opts": [
+        [
+         "a",
+         "stop discussion"
+        ],
+        [
+         "b",
+         "cause discussion to happen"
+        ],
+        [
+         "c",
+         "ignore discussion"
+        ],
+        [
+         "d",
+         "fear discussion"
+        ]
+       ]
+      },
+      {
+       "n": 17,
+       "text": "An \"indolent\" worker is:",
+       "opts": [
+        [
+         "a",
+         "hard-working"
+        ],
+        [
+         "b",
+         "lazy"
+        ],
+        [
+         "c",
+         "efficient"
+        ],
+        [
+         "d",
+         "skilled"
+        ]
+       ]
+      },
+      {
+       "n": 18,
+       "text": "A \"supercilious\" person acts:",
+       "opts": [
+        [
+         "a",
+         "humble"
+        ],
+        [
+         "b",
+         "haughty"
+        ],
+        [
+         "c",
+         "shy"
+        ],
+        [
+         "d",
+         "friendly"
+        ]
+       ]
+      },
+      {
+       "n": 19,
+       "text": "To \"vitiate\" the evidence means to:",
+       "opts": [
+        [
+         "a",
+         "strengthen it"
+        ],
+        [
+         "b",
+         "make it impure or invalid"
+        ],
+        [
+         "c",
+         "hide it"
+        ],
+        [
+         "d",
+         "find it"
+        ]
+       ]
+      },
+      {
+       "n": 20,
+       "text": "To \"pacify\" a crowd means to:",
+       "opts": [
+        [
+         "a",
+         "make them angry"
+        ],
+        [
+         "b",
+         "calm them down"
+        ],
+        [
+         "c",
+         "ignore them"
+        ],
+        [
+         "d",
+         "join them"
+        ]
+       ]
+      },
+      {
+       "n": 21,
+       "text": "A \"lucid\" explanation is:",
+       "opts": [
+        [
+         "a",
+         "confusing"
+        ],
+        [
+         "b",
+         "clear and easy to understand"
+        ],
+        [
+         "c",
+         "boring"
+        ],
+        [
+         "d",
+         "long"
+        ]
+       ]
+      },
+      {
+       "n": 22,
+       "text": "\"Indigenous\" animals are:",
+       "opts": [
+        [
+         "a",
+         "from other countries"
+        ],
+        [
+         "b",
+         "native to the area"
+        ],
+        [
+         "c",
+         "kept as pets"
+        ],
+        [
+         "d",
+         "dangerous"
+        ]
+       ]
+      },
+      {
+       "n": 23,
+       "text": "A person with \"charisma\" has:",
+       "opts": [
+        [
+         "a",
+         "magical attractiveness that draws people"
+        ],
+        [
+         "b",
+         "a lot of money"
+        ],
+        [
+         "c",
+         "a loud voice"
+        ],
+        [
+         "d",
+         "bad manners"
+        ]
+       ]
+      },
+      {
+       "n": 24,
+       "text": "To \"placate\" someone means to:",
+       "opts": [
+        [
+         "a",
+         "make them angrier"
+        ],
+        [
+         "b",
+         "pacify them"
+        ],
+        [
+         "c",
+         "agree with them"
+        ],
+        [
+         "d",
+         "ignore them"
+        ]
+       ]
+      },
+      {
+       "n": 25,
+       "text": "If you give something \"cursory\" attention, you give it:",
+       "opts": [
+        [
+         "a",
+         "careful attention"
+        ],
+        [
+         "b",
+         "hasty attention"
+        ],
+        [
+         "c",
+         "no attention"
+        ],
+        [
+         "d",
+         "continuous attention"
+        ]
+       ]
+      },
+      {
+       "n": 26,
+       "text": "A \"rucksack\" is used for:",
+       "opts": [
+        [
+         "a",
+         "telling time"
+        ],
+        [
+         "b",
+         "carrying things"
+        ],
+        [
+         "c",
+         "writing"
+        ],
+        [
+         "d",
+         "reading"
+        ]
+       ]
+      },
+      {
+       "n": 27,
+       "text": "A \"dictionary\" helps you find:",
+       "opts": [
+        [
+         "a",
+         "word meanings"
+        ],
+        [
+         "b",
+         "stories"
+        ],
+        [
+         "c",
+         "maps"
+        ],
+        [
+         "d",
+         "numbers"
+        ]
+       ]
+      },
+      {
+       "n": 28,
+       "text": "A \"student\" is someone who:",
+       "opts": [
+        [
+         "a",
+         "teaches"
+        ],
+        [
+         "b",
+         "studies"
+        ],
+        [
+         "c",
+         "works"
+        ],
+        [
+         "d",
+         "plays"
+        ]
+       ]
+      },
+      {
+       "n": 29,
+       "text": "A \"blackboard\" is used for:",
+       "opts": [
+        [
+         "a",
+         "eating"
+        ],
+        [
+         "b",
+         "writing"
+        ],
+        [
+         "c",
+         "sleeping"
+        ],
+        [
+         "d",
+         "playing"
+        ]
+       ]
+      },
+      {
+       "n": 30,
+       "text": "To \"participate\" means to:",
+       "opts": [
+        [
+         "a",
+         "watch"
+        ],
+        [
+         "b",
+         "listen"
+        ],
+        [
+         "c",
+         "take part"
+        ],
+        [
+         "d",
+         "leave"
+        ]
+       ]
+      },
+      {
+       "n": 31,
+       "text": "An \"edifice\" is a(n):",
+       "opts": [
+        [
+         "a",
+         "small tool"
+        ],
+        [
+         "b",
+         "impressive building"
+        ],
+        [
+         "c",
+         "type of animal"
+        ],
+        [
+         "d",
+         "feeling"
+        ]
+       ]
+      },
+      {
+       "n": 32,
+       "text": "A \"portal\" is a(n):",
+       "opts": [
+        [
+         "a",
+         "small window"
+        ],
+        [
+         "b",
+         "impressive door or gateway"
+        ],
+        [
+         "c",
+         "book"
+        ],
+        [
+         "d",
+         "piece of furniture"
+        ]
+       ]
+      },
+      {
+       "n": 33,
+       "text": "An \"era\" is a:",
+       "opts": [
+        [
+         "a",
+         "historical period"
+        ],
+        [
+         "b",
+         "type of food"
+        ],
+        [
+         "c",
+         "musical instrument"
+        ],
+        [
+         "d",
+         "country"
+        ]
+       ]
+      },
+      {
+       "n": 34,
+       "text": "A \"version\" is:",
+       "opts": [
+        [
+         "a",
+         "a mathematical formula"
+        ],
+        [
+         "b",
+         "an account from one viewpoint"
+        ],
+        [
+         "c",
+         "a kind of vehicle"
+        ],
+        [
+         "d",
+         "a rule"
+        ]
+       ]
+      },
+      {
+       "n": 35,
+       "text": "A \"cache\" is a:",
+       "opts": [
+        [
+         "a",
+         "hiding place"
+        ],
+        [
+         "b",
+         "noisy argument"
+        ],
+        [
+         "c",
+         "type of dance"
+        ],
+        [
+         "d",
+         "fast car"
+        ]
+       ]
+      },
+      {
+       "n": 36,
+       "text": "A \"dialogue\" is a:",
+       "opts": [
+        [
+         "a",
+         "long speech by one person"
+        ],
+        [
+         "b",
+         "conversation between people"
+        ],
+        [
+         "c",
+         "type of book"
+        ],
+        [
+         "d",
+         "song"
+        ]
+       ]
+      },
+      {
+       "n": 37,
+       "text": "A \"refugee\" is someone who:",
+       "opts": [
+        [
+         "a",
+         "loves their country"
+        ],
+        [
+         "b",
+         "fights in a war"
+        ],
+        [
+         "c",
+         "leaves their home due to danger"
+        ],
+        [
+         "d",
+         "is very rich"
+        ]
+       ]
+      },
+      {
+       "n": 38,
+       "text": "If you are \"furious,\" you are:",
+       "opts": [
+        [
+         "a",
+         "very happy"
+        ],
+        [
+         "b",
+         "very angry"
+        ],
+        [
+         "c",
+         "very sleepy"
+        ],
+        [
+         "d",
+         "very hungry"
+        ]
+       ]
+      },
+      {
+       "n": 39,
+       "text": "To \"discover\" means to:",
+       "opts": [
+        [
+         "a",
+         "hide something"
+        ],
+        [
+         "b",
+         "find or learn something new"
+        ],
+        [
+         "c",
+         "forget something"
+        ],
+        [
+         "d",
+         "break something"
+        ]
+       ]
+      },
+      {
+       "n": 40,
+       "text": "To \"comfort\" someone is to:",
+       "opts": [
+        [
+         "a",
+         "make them cry"
+        ],
+        [
+         "b",
+         "try to make them feel better"
+        ],
+        [
+         "c",
+         "ignore them"
+        ],
+        [
+         "d",
+         "laugh at them"
+        ]
+       ]
+      },
+      {
+       "n": 41,
+       "text": "\"Recently\" means:",
+       "opts": [
+        [
+         "a",
+         "a long time ago"
+        ],
+        [
+         "b",
+         "in the future"
+        ],
+        [
+         "c",
+         "not long ago"
+        ],
+        [
+         "d",
+         "never"
+        ]
+       ]
+      },
+      {
+       "n": 42,
+       "text": "What is a \"calf\"?",
+       "opts": [
+        [
+         "a",
+         "a young dog"
+        ],
+        [
+         "b",
+         "a young cat"
+        ],
+        [
+         "c",
+         "a young cow"
+        ],
+        [
+         "d",
+         "a young horse"
+        ]
+       ]
+      },
+      {
+       "n": 43,
+       "text": "A \"pond\" is a:",
+       "opts": [
+        [
+         "a",
+         "large ocean"
+        ],
+        [
+         "b",
+         "small area of still water"
+        ],
+        [
+         "c",
+         "flowing river"
+        ],
+        [
+         "d",
+         "mountain"
+        ]
+       ]
+      },
+      {
+       "n": 44,
+       "text": "A \"shed\" is a:",
+       "opts": [
+        [
+         "a",
+         "small, rough building for storage"
+        ],
+        [
+         "b",
+         "large, fancy house"
+        ],
+        [
+         "c",
+         "type of vehicle"
+        ],
+        [
+         "d",
+         "piece of clothing"
+        ]
+       ]
+      },
+      {
+       "n": 45,
+       "text": "A \"hose\" is a:",
+       "opts": [
+        [
+         "a",
+         "type of sock"
+        ],
+        [
+         "b",
+         "flexible pipe for liquid"
+        ],
+        [
+         "c",
+         "garden tool for digging"
+        ],
+        [
+         "d",
+         "kind of hat"
+        ]
+       ]
+      },
+      {
+       "n": 46,
+       "text": "A \"swing\" is a:",
+       "opts": [
+        [
+         "a",
+         "a type of slide"
+        ],
+        [
+         "b",
+         "a suspended seat for moving back and forth"
+        ],
+        [
+         "c",
+         "a jumping rope"
+        ],
+        [
+         "d",
+         "a sandbox"
+        ]
+       ]
+      },
+      {
+       "n": 47,
+       "text": "The main purpose of \"communication\" is to:",
+       "opts": [
+        [
+         "a",
+         "hide information"
+        ],
+        [
+         "b",
+         "share information"
+        ],
+        [
+         "c",
+         "sleep"
+        ],
+        [
+         "d",
+         "run fast"
+        ]
+       ]
+      },
+      {
+       "n": 48,
+       "text": "To \"calculate\" means to:",
+       "opts": [
+        [
+         "a",
+         "sing a song"
+        ],
+        [
+         "b",
+         "draw a picture"
+        ],
+        [
+         "c",
+         "use math to find an answer"
+        ],
+        [
+         "d",
+         "write a story"
+        ]
+       ]
+      },
+      {
+       "n": 49,
+       "text": "To \"knock\" on a door means to:",
+       "opts": [
+        [
+         "a",
+         "open it"
+        ],
+        [
+         "b",
+         "close it"
+        ],
+        [
+         "c",
+         "hit it to make noise"
+        ],
+        [
+         "d",
+         "lock it"
+        ]
+       ]
+      },
+      {
+       "n": 50,
+       "text": "To \"trudge\" means to walk:",
+       "opts": [
+        [
+         "a",
+         "quickly and happily"
+        ],
+        [
+         "b",
+         "slowly and with effort"
+        ],
+        [
+         "c",
+         "backwards"
+        ],
+        [
+         "d",
+         "on your tiptoes"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n    Vocabulary Mastery Post-Test\n\n    Directions: Read each question carefully and circle the letter of the best\n    answer.\n\n    SYNONYMS & ANTONYMS\n\n1. What is a synonym for \"conundrum\"?\n   a. answer\n   b. puzzle\n   c. picture\n   d. story\n2. What is an antonym for \"mortification\"?\n   a. shame\n   b. pride\n   c. hatred\n   d. anger\n3. The word \"miniscule\" means:\n   a. very large\n   b. very small\n   c. very loud\n   d. very colorful\n4. If an idea is \"trite,\" it is:\n   a. original\n   b. common\n   c. brilliant\n   d. complicated\n5. A word that means the opposite of \"adept\" is:\n   a. skilled\n   b. clumsy\n   c. smart\n   d. quick\n\n    HOMOPHONES\n    6. Which word means \"to be able to be heard\"?\n    a. allowed\n    b. aloud\n    c. a loud\n    d. allow\n\n7. Choose the correct word: \"I will _____ the book tomorrow.\"\n   a. red\n   b. read\n   c. reed\n   d. rad\n8. Which word describes a period of seven days?\n   a. weak\n   b. week\n   c. wek\n   d. leek\n\n   CONTEXT CLUES\n   9. In the sentence, \"The amiable shopkeeper always helped customers,\" what\n   does \"amiable\" mean?\n   a. grumpy\n   b. friendly\n   c. rich\n   d. busy\n\n10. \"She looked at the document with cursory attention.\" This means she looked\n    at it:\n    a. carefully\n    b. hastily\n    c. angrily\n    d. happily\n\n   VOCABULARY IN CONTEXT\n   11. \"His rancour for his former friend was obvious.\" Rancour means:\n   a. love\n   b. hatred\n   c. respect\n   d. fear\n\n12. When there is \"pandemonium\" in a classroom, there is:\n    a. silence\n    b. chaos\n    c. learning\n    d. order\n13. To \"wager\" money on a game means to:\n    a. save it\n    b. bet it\n    c. spend it\n    d. lose it\n14. A \"penitentiary\" is another word for a:\n    a. school\n    b. prison\n\n   c. hospital\n   d. church\n15. If you do something \"mischievously,\" you do it:\n    a. kindly\n    b. naughtily\n    c. sadly\n    d. quickly\n\n   ADVANCED VOCABULARY\n   16. To \"engender\" discussion means to:\n   a. stop discussion\n   b. cause discussion to happen\n   c. ignore discussion\n   d. fear discussion\n\n17. An \"indolent\" worker is:\n    a. hard-working\n    b. lazy\n    c. efficient\n    d. skilled\n18. A \"supercilious\" person acts:\n    a. humble\n    b. haughty\n    c. shy\n    d. friendly\n19. To \"vitiate\" the evidence means to:\n    a. strengthen it\n    b. make it impure or invalid\n    c. hide it\n    d. find it\n20. To \"pacify\" a crowd means to:\n    a. make them angry\n    b. calm them down\n    c. ignore them\n    d. join them\n21. A \"lucid\" explanation is:\n    a. confusing\n    b. clear and easy to understand\n    c. boring\n    d. long\n22. \"Indigenous\" animals are:\n    a. from other countries\n    b. native to the area\n    c. kept as pets\n    d. dangerous\n\n23. A person with \"charisma\" has:\n    a. magical attractiveness that draws people\n    b. a lot of money\n    c. a loud voice\n    d. bad manners\n24. To \"placate\" someone means to:\n    a. make them angrier\n    b. pacify them\n    c. agree with them\n    d. ignore them\n25. If you give something \"cursory\" attention, you give it:\n    a. careful attention\n    b. hasty attention\n    c. no attention\n    d. continuous attention\n\n   WORD DEFINITIONS\n   26. A \"rucksack\" is used for:\n   a. telling time\n   b. carrying things\n   c. writing\n   d. reading\n\n27. A \"dictionary\" helps you find:\n    a. word meanings\n    b. stories\n    c. maps\n    d. numbers\n28. A \"student\" is someone who:\n    a. teaches\n    b. studies\n    c. works\n    d. plays\n29. A \"blackboard\" is used for:\n    a. eating\n    b. writing\n    c. sleeping\n    d. playing\n30. To \"participate\" means to:\n    a. watch\n    b. listen\n    c. take part\n    d. leave\n\n   LITERARY TERMS\n   31. An \"edifice\" is a(n):\n\n   a. small tool\n   b. impressive building\n   c. type of animal\n   d. feeling\n\n32. A \"portal\" is a(n):\n    a. small window\n    b. impressive door or gateway\n    c. book\n    d. piece of furniture\n33. An \"era\" is a:\n    a. historical period\n    b. type of food\n    c. musical instrument\n    d. country\n34. A \"version\" is:\n    a. a mathematical formula\n    b. an account from one viewpoint\n    c. a kind of vehicle\n    d. a rule\n35. A \"cache\" is a:\n    a. hiding place\n    b. noisy argument\n    c. type of dance\n    d. fast car\n36. A \"dialogue\" is a:\n    a. long speech by one person\n    b. conversation between people\n    c. type of book\n    d. song\n37. A \"refugee\" is someone who:\n    a. loves their country\n    b. fights in a war\n    c. leaves their home due to danger\n    d. is very rich\n\n   EVERYDAY VOCABULARY\n38. If you are \"furious,\" you are:\n   a. very happy\n   b. very angry\n   c. very sleepy\n   d. very hungry\n39. To \"discover\" means to:\n    a. hide something\n    b. find or learn something new\n\n   c. forget something\n   d. break something\n40. To \"comfort\" someone is to:\n    a. make them cry\n    b. try to make them feel better\n    c. ignore them\n    d. laugh at them\n41. \"Recently\" means:\n    a. a long time ago\n    b. in the future\n    c. not long ago\n    d. never\n42. What is a \"calf\"?\n    a. a young dog\n    b. a young cat\n    c. a young cow\n    d. a young horse\n43. A \"pond\" is a:\n    a. large ocean\n    b. small area of still water\n    c. flowing river\n    d. mountain\n44. A \"shed\" is a:\n    a. small, rough building for storage\n    b. large, fancy house\n    c. type of vehicle\n    d. piece of clothing\n45. A \"hose\" is a:\n    a. type of sock\n    b. flexible pipe for liquid\n    c. garden tool for digging\n    d. kind of hat\n46. A \"swing\" is a:\n    a. a type of slide\n    b. a suspended seat for moving back and forth\n    c. a jumping rope\n    d. a sandbox\n47. The main purpose of \"communication\" is to:\n    a. hide information\n    b. share information\n    c. sleep\n    d. run fast\n48. To \"calculate\" means to:\n    a. sing a song\n\n   b. draw a picture\n   c. use math to find an answer\n   d. write a story\n49. To \"knock\" on a door means to:\n    a. open it\n    b. close it\n    c. hit it to make noise\n    d. lock it\n50. To \"trudge\" means to walk:\n    a. quickly and happily\n    b. slowly and with effort\n    c. backwards\n    d. on your tiptoes\n\n\n\n"
+  },
+  {
+   "phase": "post",
+   "label": "Post-Test Answer Key:",
+   "pages": [
+    57
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "b, 2. b, 3. b, 4. b, 5. b, 6. b, 7. b, 8. b, 9. b, 10. b, 11. b, 12. b, 13. b, 14. b, 15. b, 16. b, 17. b, 18. b,",
+     "items": [
+      {
+       "n": 19,
+       "text": "b, 20. b, 21. b, 22. b, 23. a, 24. b, 25. b, 26. b, 27. a, 28. b, 29. b, 30. c, 31. b, 32. b, 33. a, 34. b,",
+       "opts": []
+      },
+      {
+       "n": 35,
+       "text": "a, 36. b, 37. c, 38. b, 39. b, 40. b, 41. c, 42. c, 43. b, 44. a, 45. b, 46. b, 47. b, 48. c, 49. c, 50. b",
+       "opts": []
+      }
+     ]
+    }
+   ],
+   "raw": "\n    b, 2. b, 3. b, 4. b, 5. b, 6. b, 7. b, 8. b, 9. b, 10. b, 11. b, 12. b, 13. b, 14. b, 15. b, 16. b, 17. b, 18. b,\n    19. b, 20. b, 21. b, 22. b, 23. a, 24. b, 25. b, 26. b, 27. a, 28. b, 29. b, 30. c, 31. b, 32. b, 33. a, 34. b,\n    35. a, 36. b, 37. c, 38. b, 39. b, 40. b, 41. c, 42. c, 43. b, 44. a, 45. b, 46. b, 47. b, 48. c, 49. c, 50. b\n\n"
+  }
+ ],
+ "keys_text": "         Pre-Test Answer Key:\n    Pre-Test Answer Key:\n Post-Test Answer Key:\n    Post-Test Answer Key:"
+}

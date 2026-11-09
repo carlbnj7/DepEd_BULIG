@@ -47,7 +47,7 @@ try:
    if mode=='late-mute':page.evaluate("() => {const stop=MediaRecorder.prototype.stop;MediaRecorder.prototype.stop=function(){stop.call(this);testTracks.forEach(t=>t.dispatchEvent(new Event('mute')));};}")
    page.evaluate("ua=>Object.defineProperty(navigator,'userAgent',{value:ua,configurable:true})",'iPhone Safari/605.1' if apple else 'Chrome/130.0')
    page.add_script_tag(url=t.BASE+'assets/coach.js')
-   page.locator('.wc-go').click();page.locator('.wc-skip').click()
+   page.locator('.wc-go').click();page.locator('.wc-guide-go:not([disabled])').click();page.locator('.wc-skip').click()
    if apple and mode!='missing':
     page.locator('.wc-start-reading').wait_for(state='visible')
     if mode=='paused-mute':page.evaluate("testTracks.forEach(t=>t.dispatchEvent(new Event('mute')))")

@@ -12,6 +12,8 @@ function level2_activity_context(array $a):?array{
 }
 function level2_card_set(array $a):?array{
  $l=level2_activity_context($a);if(!$l)return null;
+ /* v212 Junior High School Levels 5-7 (Grades 7-10): database/jhs-cards.json (tools/jhs/build.py) */
+ if(in_array((int)$l['level_id'],[6,7,8],true)&&($jg=(int)lesson_grade((int)$a['lesson_id']))>=7){$d=jhs_cards()[(int)$l['level_id'].':'.$jg.':'.(int)$l['position'].':'.(int)$a['position']]??null;return $d?['title'=>$a['title'],'instruction'=>$d['instruction']?:$a['instructions']]+$d:null;}
  // Level 5 story pages (nothing to answer) are shown as cards too: the pictures one by one, the text as text
  if(($a['response_mode']??'none')==='none'&&(int)$l['level_id']!==6)return null;
  if(level_family((int)$l['level_id'])===4)return level3_manifest()['cards'][(int)$l['position'].':'.$a['phase'].':'.(int)$a['position']]??null;
@@ -112,4 +114,6 @@ function level7_cards():array{static $m;if($m===null){$f=__DIR__.'/../database/l
 /** Level 6: a story card, then one card per question (tools/level6/build.py). */
 function level6_cards():array{static $m;if($m===null){$f=__DIR__.'/../database/level6-cards.json';$m=is_file($f)?(json_decode(file_get_contents($f),true)['cards']??[]):[];}return $m;}
 /** Level 5: one card per numbered item of each module page (tools/level5/build_cards.py). */
+function jhs_cards():array{static $m;if($m===null){$f=__DIR__.'/../database/jhs-cards.json';$m=is_file($f)?(json_decode(file_get_contents($f),true)['cards']??[]):[];}return $m;}
+function jhs_meta():array{static $m;if($m===null){$f=__DIR__.'/../database/jhs-meta.json';$m=is_file($f)?(json_decode(file_get_contents($f),true)??[]):[];}return $m;}
 function level5_cards():array{static $m;if($m===null){$f=__DIR__.'/../database/level5-cards.json';$m=is_file($f)?(json_decode(file_get_contents($f),true)['cards']??[]):[];}return $m;}

@@ -16,7 +16,7 @@ function section_known(int $tid):array{
 }
 /** Grade + Section name boxes, "Shows as …" and the warning (assets/names.js fills them in while typing). */
 function section_fields(int $tid,string $grade='grade_level',string $name='name',string $after=''):string{
- $g='';for($i=1;$i<=6;$i++)$g.='<option value="'.$i.'">Grade '.$i.'</option>';
+ $g=grade_options(0,teacher_grades($tid));
  return '<label>Grade<select name="'.$grade.'" data-sx-grade>'.$g.'</select></label><label>Section name<input name="'.$name.'" maxlength="80" autocomplete="off" autocapitalize="words" placeholder="e.g. Sampaguita" data-sx-name></label>'.$after
   .'<p class="sx-prev" data-sx-prev hidden>Shows as <b data-sx-out></b><span data-sx-tail></span></p>'
   .'<p class="sx-warn" data-sx-warn hidden>'.icon('alert').'<span data-sx-msg></span></p>';
@@ -39,7 +39,7 @@ function section_from_post(int $tid):array{
 }
 function section_new_input():array{
  $grade=(int)($_POST['new_grade']??0);$name=import_name_case(mb_substr((string)($_POST['new_section']??''),0,80));
- if($name===''||$grade<1||$grade>6)fail('Type the name of the new section and choose its grade.');
+ if($name===''||!grade_ok($grade))fail('Type the name of the new section and choose its grade.');
  return [$grade,$name];
 }
 function section_make(int $tid,int $grade,string $name):array{
@@ -59,7 +59,7 @@ function sections_view(array $u):void{
  echo '<section class="card section-board">';
  foreach($per as $g=>$list){
   echo '<div class="sx-grade"><h2>Grade '.$g.' <span>'.count($list).' '.(count($list)===1?'section':'sections').'</span></h2><div class="sx-cards">';
-  foreach($list as $s){$id=(int)$s['id'];$n=(int)($counts[$id]??0);$o='';for($i=1;$i<=6;$i++)$o.='<option value="'.$i.'"'.($i===$g?' selected':'').'>Grade '.$i.'</option>';
+  foreach($list as $s){$id=(int)$s['id'];$n=(int)($counts[$id]??0);$o=grade_options((int)$g,teacher_grades($tid));
    echo '<article class="sx-card" id="section-'.$id.'"><div class="sx-top"><span class="sx-badge">'.$g.'</span><div><strong>'.e(section_label($s)).'</strong><small>'.$n.' '.($n===1?'pupil':'pupils').'</small></div></div>'
     .'<div class="sx-act"><a class="sx-go" href="?page=accounts&amp;section='.$id.'">'.icon('useredit').'Add pupils</a><a href="?page=dashboard&amp;section_id='.$id.'">'.icon('people').'View pupils</a>'
     .act_menu('More','<a href="?page=report_card&amp;section='.$id.'">'.icon('flag').'Report cards</a>'

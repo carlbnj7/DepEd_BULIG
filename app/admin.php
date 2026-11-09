@@ -31,9 +31,18 @@ function admin_announcements(bool $activeOnly=false):array{
  if($activeOnly)$list=array_values(array_filter($list,fn($a)=>($a['until']??'')===''||$a['until']>=date('Y-m-d')));
  return $list;
 }
-/** Banner shown to teachers on their Overview. */
+/** v212 The bulletin board: each announcement is a note pinned on a cork board (teachers' Overview, the admin home, Settings). */
+function announcements_board(array $list,string $edit=''):string{
+ $h='<section class="bb" aria-label="Bulletin board"><header class="bb-head"><span class="bb-ic">'.icon('mega').'</span><h2>Bulletin Board</h2>'.($edit!==''?'<a class="bb-edit" href="'.e($edit).'">'.icon('edit').'Post or edit</a>':'').'</header><div class="bb-cork">';
+ if(!$list)$h.='<p class="bb-empty">No announcements right now.</p>';
+ foreach(array_values($list) as $i=>$a){$at=(string)($a['at']??'');
+  $h.='<article class="bb-note c'.($i%4).'"><span class="bb-pin" aria-hidden="true"></span><h3>'.e($a['title']).'</h3>'.(($a['message']??'')!==''?'<p>'.nl2br(e($a['message'])).'</p>':'')
+   .'<footer>'.(($a['by']??'')!==''?'<span>'.e($a['by']).'</span>':'').($at!==''?'<time>'.e(date('M j, Y',strtotime($at))).'</time>':'').(($a['until']??'')!==''?'<small>Until '.e(date('M j',strtotime($a['until']))).'</small>':'').'</footer></article>';}
+ return $h.'</div></section>';
+}
+/** The bulletin board on the teachers' Overview (only when there is an announcement). */
 function teacher_announcements():void{
- foreach(admin_announcements(true) as $a)echo '<div class="ws-ann ws-ann-teacher" role="status">'.icon('mega').'<div><b>'.e($a['title']).'</b>'.($a['message']!==''?'<span>'.e($a['message']).'</span>':'').'</div></div>';
+ $l=admin_announcements(true);if($l)echo announcements_board($l);
 }
 
 /* ---------------------------------------------------------------- Overview */
@@ -48,7 +57,7 @@ function admin_teachers_view(array $u):void{
  admin_heading('TEACHERS','Your teaching team.','Add teachers, print their Teacher Pass, give a new starter password, and move pupils when a teacher transfers.','<a class="btn secondary" href="?page=teacher_cards">'.icon('key').'Teacher Passes</a>');
  echo teachers_tabs('list');
  echo school_filter_bar('accounts');
- echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="accounts"><input name="q" value="'.e($q).'" placeholder="Search name or ID"><select name="grade"><option value="0">All grades</option>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';
+ echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="accounts"><input name="q" value="'.e($q).'" placeholder="Search name or ID"><select name="grade">'.grade_options((int)$grade,null,'All grades');
  echo '</select><select name="status">';foreach(['all'=>'All statuses','active'=>'Active','idle'=>'Inactive 14+ days','off'=>'Turned off'] as $k=>$v)echo '<option value="'.$k.'" '.($status===$k?'selected':'').'>'.$v.'</option>';echo '</select><button class="btn secondary">Filter</button>';
  $shown=array_values(array_filter($list,function($t)use($q,$status,$grade,$logins,$secs){
   if($q!==''&&stripos($t['name'].' '.$t['public_id'],$q)===false)return false;
@@ -97,7 +106,7 @@ function admin_same_school(array $a,array $b):bool{$x=(int)($a['school_id']??0);
 /** Admin › Teachers (v183): change the grade and name of a teacher's sections, add a section, remove an empty one.
     A grade change also moves the section's pupils to that grade (their grade-specific lessons follow). */
 function admin_section_editor(array $t,array $sl):string{
- $opt=fn($g)=>implode('',array_map(fn($i)=>'<option value="'.$i.'"'.($i===$g?' selected':'').'>Grade '.$i.'</option>',range(1,6)));$tid=(int)$t['id'];
+ $tid=(int)$t['id'];$tg=teacher_grades($tid);$opt=fn($g)=>grade_options((int)$g,$tg);
  $h='<details class="ws-more as-sec"><summary>'.icon('edit').'Edit grade &amp; sections</summary><div class="as-box">';
  if(!$sl)$h.='<p class="muted as-none">'.e($t['name']).' has no section yet.</p>';
  foreach($sl as $s){$n=(int)($s['n']??0);$sid=(int)$s['id'];
@@ -170,7 +179,7 @@ function admin_reports_view():void{
  echo '';admin_heading('SCHOOL REPORTS',school_filter_id()?'See '.admin_setting('school_code','the school').' at a glance.':'See the whole school at a glance.','Progress by grade and section · '.$plabel.' · ready to print for the principal or the division.','<a class="btn secondary" href="?page=report_csv&amp;'.$qs.'">'.icon('download').'Download Excel (CSV)</a><button type="button" class="btn primary" data-print>'.icon('book').'Print / Save as PDF</button>');
  $school=admin_setting('school_name','');echo '<div class="ws-print-head"><strong>'.e($school?:'BULIG reading program').'</strong><span>'.e(trim(admin_setting('school_district','').' · School year '.admin_school_year(),' ·')).' · '.e($plabel).' · Printed '.date('M j, Y').'</span></div>';
  echo school_filter_bar('reports');echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="reports"><select name="period">';foreach(['month'=>'This month','quarter'=>'Last 3 months','year'=>'This school year','all'=>'All time'] as $k=>$v)echo '<option value="'.$k.'" '.($period===$k?'selected':'').'>'.$v.'</option>';
- echo '</select><select name="grade"><option value="0">All grades</option>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';echo '</select><select name="section"><option value="0">All sections</option>';
+ echo '</select><select name="grade">'.grade_options((int)$grade,null,'All grades');echo '</select><select name="section"><option value="0">All sections</option>';
  foreach(rows('SELECT s.* FROM sections s WHERE 1'.admin_live_sections_sql().($grade?' AND s.grade_level='.$grade:'').' ORDER BY s.grade_level,s.name') as $s)echo '<option value="'.$s['id'].'" '.($section===(int)$s['id']?'selected':'').'>Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';
  echo '</select><button class="btn secondary">Show</button></form>';
  $pupils=array_sum(array_column($rows,'pupils'));$avgs=array_filter(array_column($rows,'avg'),fn($v)=>$v!==null&&$v!==false);
@@ -280,7 +289,8 @@ function admin_settings_view(array $u):void{
   echo '<section class="card"><div class="ws-hd"><h2>'.icon('book').' School info</h2><small class="muted">Printed at the top of reports</small></div><form method="post" class="ws-formrow">'.csrf_field().'<input type="hidden" name="action" value="admin_school_info">';
   foreach(['school_name'=>['School name','e.g. Malaybalay Central Elementary School'],'school_id'=>['School ID','e.g. 128001'],'school_district'=>['District / Division','e.g. Malaybalay City Division'],'school_head'=>['School head','Name of the principal'],'school_year'=>['School year',admin_school_year()]] as $k=>[$l,$ph])echo '<label>'.$l.'<input name="'.$k.'" maxlength="150" value="'.e(admin_setting($k,'')).'" placeholder="'.e($ph).'"></label>';
   echo '<button class="btn primary">Save school info</button></form></section>'.(function_exists('rc_logo_settings')?rc_logo_settings():'');}
- if($tab==='announcements'){echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('mega').' Announcements</h2><small class="muted">Shown on every teacher’s Overview</small></div>';
+ if($tab==='announcements'){echo announcements_board(admin_announcements(true)).'<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('mega').' Announcements</h2><small class="muted">Shown on every teacher’s Overview</small></div>';
+  echo '<p class="muted">Every announcement is pinned on the Bulletin Board: teachers see it on their Overview.</p>';
   $list=admin_announcements();if(!$list)echo '<p class="muted">No announcements yet.</p>';
   foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
   echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
@@ -290,10 +300,10 @@ function admin_settings_view(array $u):void{
   $counts=[];foreach(rows("SELECT pu.grade_level g,COUNT(*) n FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 GROUP BY pu.grade_level") as $r)$counts[(int)$r['g']]=(int)$r['n'];
   echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('cal').' End of school year</h2><small class="muted">Current: '.e(admin_school_year()).'</small></div><div class="ws-steps">';
   echo '<div class="ws-step '.($fresh?'done':'').'"><b class="n">1</b><span><b>Download a backup</b><small>'.($fresh?'Done · '.e(admin_backup_note()):'Required first. Keep this year’s records safe.').'</small></span>'.(!$fresh?'<a class="btn secondary small" href="?page=backup_csv">Download</a>':'').'</div>';
-  echo '<div class="ws-step"><b class="n">2</b><span><b>Move pupils up one grade</b><small>Grades 1–5 move up ('.array_sum(array_intersect_key($counts,array_flip([1,2,3,4,5]))).' pupils). Grade 6 pupils ('.($counts[6]??0).') finish BULIG: their accounts are turned off, their records are kept.</small></span></div>';
+  echo '<div class="ws-step"><b class="n">2</b><span><b>Move pupils up one grade</b><small>Grades 1–5 and 7–9 move up ('.array_sum(array_intersect_key($counts,array_flip([1,2,3,4,5,7,8,9]))).' pupils). Grade 6 and Grade 10 pupils ('.(($counts[6]??0)+($counts[10]??0)).') finish BULIG: their accounts are turned off, their records are kept.</small></span></div>';
   echo '<div class="ws-step"><b class="n">3</b><span><b>Archive this year’s sections</b><small>Pupils keep their teacher, progress, XP and badges. Teachers make new sections and place their pupils.</small></span></div></div>';
   echo '<form method="post" class="ws-year">'.csrf_field().'<input type="hidden" name="action" value="admin_school_year"><label>New school year<input name="new_year" required maxlength="20" value="'.e(admin_next_year()).'"></label><label>Type NEW SCHOOL YEAR to confirm<input name="confirm" required autocomplete="off"></label><button class="btn primary" '.($fresh?'':'disabled').'>'.icon('cal').'Start the new school year</button>'.(!$fresh?'<small class="muted">Download a backup first (step 1).</small>':'').'</form></section>';
-  echo '<section class="card"><div class="ws-hd"><h2>Pupils by grade now</h2></div><div class="ws-bars">';$mx=max([1]+$counts);for($g=1;$g<=6;$g++){$n=$counts[$g]??0;echo '<div class="ws-bar"><span>Grade '.$g.'</span><u><i class="w-'.(int)(round($n/$mx*20)*5).'"></i></u><b>'.$n.'</b></div>';}echo '</div></section></div>';}
+  echo '<section class="card"><div class="ws-hd"><h2>Pupils by grade now</h2></div><div class="ws-bars">';$mx=max([1]+$counts);for($g=1;$g<=GRADE_MAX;$g++){$n=$counts[$g]??0;if($g>6&&!$n&&!array_filter(array_slice($counts,6,null,true)))continue;echo '<div class="ws-bar"><span>Grade '.$g.'</span><u><i class="w-'.(int)(round($n/$mx*20)*5).'"></i></u><b>'.$n.'</b></div>';}echo '</div></section></div>';}
 }
 function admin_next_year():string{$cur=admin_school_year();if(preg_match('/(\d{4})\D+(\d{4})/',$cur,$m))return ($m[1]+1).'–'.($m[2]+1);$y=(int)date('Y');return $y.'–'.($y+1);}
 
@@ -307,7 +317,7 @@ function admin_actions(string $action):void{
  if($action==='admin_toggle_teacher'){$t=admin_teacher((int)($_POST['id']??0));q('UPDATE users SET active=1-active WHERE id=?',[$t['id']]);audit('admin_toggle_teacher',(string)$t['id']);flash($t['name'].' is now '.($t['active']?'turned off. They cannot sign in.':'turned on.'));go('?page=accounts');}
  if($action==='admin_section_save'||$action==='admin_section_add'){
   $name=import_name_case(mb_substr(trim((string)($_POST['name']??'')),0,80));$grade=(int)($_POST['grade_level']??0);
-  if($name===''||$grade<1||$grade>6)fail('Type the section name and choose a grade from 1 to 6.');
+  if($name===''||!grade_ok($grade))fail('Type the section name and choose a grade from 1 to 10.');
   if($action==='admin_section_save'){$s=admin_section((int)($_POST['id']??0));$tid=(int)$s['teacher_id'];$sid=(int)$s['id'];}else{$tid=(int)admin_teacher((int)($_POST['teacher']??0))['id'];$sid=0;}
   $t=admin_teacher($tid);
   if(val('SELECT id FROM sections WHERE teacher_id=? AND grade_level=? AND LOWER(name)=LOWER(?) AND id<>?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$tid,$grade,$name,$sid]))fail($t['name'].' already has Grade '.$grade.' · '.$name.'.');
@@ -337,7 +347,7 @@ function admin_actions(string $action):void{
  if($action==='admin_logo'||$action==='admin_logo_remove'){rc_logo_action($action);}
  if($action==='admin_school_info'){foreach(['school_name','school_id','school_district','school_head','school_year'] as $k)admin_set($k,mb_substr(trim((string)($_POST[$k]??'')),0,150));audit('school_info','saved');flash('School info saved.');go('?page=settings&tab=school');}
  if($action==='admin_announcement_add'){$title=trim((string)($_POST['title']??''));if($title===''||mb_strlen($title)>120)fail('Enter a title of up to 120 characters.');$until=(string)($_POST['until']??'');if($until!==''&&!preg_match('/^\d{4}-\d{2}-\d{2}$/',$until))$until='';
-  $list=admin_announcements();array_unshift($list,['id'=>bin2hex(random_bytes(6)),'title'=>$title,'message'=>mb_substr(trim((string)($_POST['message']??'')),0,400),'until'=>$until,'by'=>$u['name'],'at'=>date('Y-m-d H:i')]);admin_set('announcements',json_encode(array_slice($list,0,20),JSON_UNESCAPED_UNICODE));audit('announcement',$title);flash('Announcement posted. Teachers see it on their Overview.');go('?page=settings&tab=announcements');}
+  $list=admin_announcements();array_unshift($list,['id'=>bin2hex(random_bytes(6)),'title'=>$title,'message'=>mb_substr(trim((string)($_POST['message']??'')),0,400),'until'=>$until,'by'=>$u['name'],'at'=>date('Y-m-d H:i')]);admin_set('announcements',json_encode(array_slice($list,0,20),JSON_UNESCAPED_UNICODE));audit('announcement',$title);flash('Announcement pinned on the Bulletin Board. Teachers see it on their Overview.');go('?page=settings&tab=announcements');}
  if($action==='admin_announcement_delete'){$id=(string)($_POST['id']??'');admin_set('announcements',json_encode(array_values(array_filter(admin_announcements(),fn($a)=>$a['id']!==$id)),JSON_UNESCAPED_UNICODE));flash('Announcement removed.');go('?page=settings&tab=announcements');}
  if($action==='admin_school_year'){
   if(trim((string)($_POST['confirm']??''))!=='NEW SCHOOL YEAR')fail('Type NEW SCHOOL YEAR (in capital letters) to confirm.');
@@ -345,13 +355,13 @@ function admin_actions(string $action):void{
   if(!sections_archive_supported())fail('Import 015_admin_tools.sql first.');
   $year=mb_substr(trim((string)($_POST['new_year']??'')),0,20)?:admin_next_year();
   db()->beginTransaction();try{
-   $done=(int)val("SELECT COUNT(*) FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 WHERE pu.grade_level=6");
-   q("UPDATE users u JOIN pupils pu ON pu.user_id=u.id SET u.active=0 WHERE pu.grade_level=6 AND u.role='pupil'");
-   $up=(int)val("SELECT COUNT(*) FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 WHERE pu.grade_level<6");
-   q("UPDATE pupils pu JOIN users u ON u.id=pu.user_id SET pu.grade_level=pu.grade_level+1,pu.section='Not placed yet' WHERE pu.grade_level<6 AND u.active=1");
+   $done=(int)val("SELECT COUNT(*) FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 WHERE pu.grade_level IN (6,10)");
+   q("UPDATE users u JOIN pupils pu ON pu.user_id=u.id SET u.active=0 WHERE pu.grade_level IN (6,10) AND u.role='pupil'");
+   $up=(int)val("SELECT COUNT(*) FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 WHERE pu.grade_level<10 AND pu.grade_level<>6");
+   q("UPDATE pupils pu JOIN users u ON u.id=pu.user_id SET pu.grade_level=pu.grade_level+1,pu.section='Not placed yet' WHERE pu.grade_level<10 AND pu.grade_level<>6 AND u.active=1");
    q('DELETE ps FROM pupil_sections ps JOIN sections s ON s.id=ps.section_id WHERE s.archived_at IS NULL');q('UPDATE sections SET archived_at=NOW() WHERE archived_at IS NULL');
    admin_set('school_year',$year);audit('school_year_rollover',$year.' · '.$up.' moved up · '.$done.' finished');db()->commit();
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
-  flash('School year '.$year.' started. '.$up.' pupils moved up a grade and '.$done.' Grade 6 pupils finished BULIG. Teachers can now make new sections.');go('?page=settings&tab=year');}
+  flash('School year '.$year.' started. '.$up.' pupils moved up a grade and '.$done.' Grade 6 and Grade 10 pupils finished BULIG. Teachers can now make new sections.');go('?page=settings&tab=year');}
 }
 const ADMIN_ACTIONS=['admin_logo','admin_logo_remove','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule','admin_lesson_cycles','admin_section_save','admin_section_add','admin_section_delete'];

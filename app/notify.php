@@ -114,8 +114,17 @@ function notif_action(string $action):void{
  go($back);
 }
 /** Open one notification: mark it as read, then go where it points. */
+/** v211 A person with several roles opens a notification that belongs to another role (for example a teacher note while
+    using School Admin): BULIG switches to the role that can open it, so the link never ends on "not allowed". */
+function notif_role_for(array $u,string $url):void{
+ if(count($u['roles']??[])<2||!function_exists('rbac_key'))return;parse_str(ltrim($url,'?'),$q);$pg=(string)($q['page']??'');$need=$GLOBALS['bulig_perm'][$pg]??null;
+ $ok=$need===null||in_array($u['role'],$need,true);
+ if($ok&&$pg==='messages'&&!empty($q['id'])&&$u['role']==='admin'&&!(int)val('SELECT 1 FROM admin_messages WHERE id=? AND sender_id=?',[(int)$q['id'],(int)$u['id']]))$ok=false;   // a message received as a teacher
+ if($ok)return;
+ foreach($u['roles'] as $r){$fam=ROLES[$r['role']][2]??'';if(($need===null||in_array($fam,$need,true))&&$fam!==$u['role']){$_SESSION['active_role']=rbac_key($r);unset($_SESSION['school_filter']);return;}}
+}
 function notif_open(array $u):void{
  $id=(int)($_GET['open']??0);if(!$id||!notif_ready())return;$r=one('SELECT * FROM notifications WHERE id=? AND user_id=?',[$id,(int)$u['id']]);if(!$r)return;
  q('UPDATE notifications SET read_at=COALESCE(read_at,NOW()) WHERE id=?',[$id]);$url=(string)$r['url'];
- if($url!==''&&str_starts_with($url,'?page='))go($url);
+ if($url!==''&&str_starts_with($url,'?page=')){notif_role_for($u,$url);go($url);}
 }

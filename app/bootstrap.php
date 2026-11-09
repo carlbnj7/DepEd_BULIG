@@ -143,7 +143,7 @@ function progress_stats_many(array $ids):array{
  progress_stats_store($out);return $out;
 }
 function checked_image(string $path):string{
- if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
+ if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/|images/jhs/l[5-7]-g[0-9]{1,3}/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
 }
 function save_uploaded_image(string $field):string{
  if(empty($_FILES[$field])||$_FILES[$field]['error']!==UPLOAD_ERR_OK)fail('Choose an image smaller than 4 MB.');$f=$_FILES[$field];if($f['size']>4*1024*1024)fail('Image must be smaller than 4 MB.');
@@ -167,7 +167,7 @@ function visual_manifest():array{
  static $m=null;if($m===null){$f=__DIR__.'/../database/visual-manifest.json';$m=is_file($f)?json_decode(file_get_contents($f),true):[];}return $m?:[];
 }
 function local_image_file(string $path):?string{
- if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
+ if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/|images/jhs/l[5-7]-g[0-9]{1,3}/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
  $root=realpath(__DIR__.'/../public');$f=realpath($root.'/'.$path);
  return $f&&str_starts_with($f,$root.DIRECTORY_SEPARATOR)&&is_file($f)&&is_readable($f)?$f:null;
 }
@@ -251,6 +251,7 @@ function level2_manifest():array{static $m;return $m??=json_decode(file_get_cont
 function level3_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level3-cards.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['cards'=>[],'lessons'=>[],'pupil_pages'=>[],'page_count'=>0];}return $m;}
 /** Source-module metadata for Levels 2A, 2B, 3 and (per grade) 4; null for Level 1. */
 function module_source_meta(int $level,?int $grade=null):?array{
+ if($grade>=7&&in_array($level,[6,7,8],true)&&function_exists('jhs_meta'))return jhs_meta()[(string)$level][(string)$grade]??null;   // v212 Junior High
  if($level===5)return $grade?(level4_manifest()['grades'][(string)$grade]??null):null;
  if($level===6)return $grade?(level5_manifest()['grades'][(string)$grade]??null):null;
  if($level===7)return $grade?(level6_manifest()['grades'][(string)$grade]??null):null;
@@ -273,7 +274,7 @@ function next_learning_lesson_check(int $pid):?array{
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['coach','whats_new','privacy','chat','rbac','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support'];
+const BULIG_PARTS=['school_levels','coach','whats_new','privacy','chat','rbac','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
  if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}

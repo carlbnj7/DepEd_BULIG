@@ -209,8 +209,8 @@ function org_view(array $u):void{
  $rows=array_values(array_filter($rows,fn($x)=>org_in_my_scope($u,$x['role'],(int)$x['scope_id'])));
  echo '<section class="card org-people" id="org-people"><div class="ws-hd"><h2>'.icon('useredit').'Add a person to a role</h2></div>';
  if(!empty($_SESSION['org_new'])){$n=$_SESSION['org_new'];   // v211 stays until "I saved them" (a reload does not lose it)
-  $card='';if(!empty($n['uid'])&&($n['rk']??'')!==''&&($n['rk']==='teacher'||isset(ROLES[$n['rk']]))){[$cs,$cm]=$n['rk']==='teacher'?[(int)$n['scope'],0]:role_place_ids($n['rk'],(int)$n['scope']);
-   $card='<div class="org-newcard">'.staff_id_card(['school'=>$cs,'muni'=>$cm,'name'=>(string)$n['name'],'role'=>ROLES[$n['rk']][0]??'Teacher','place'=>rbac_scope_name($n['rk']==='teacher'?'school_admin':$n['rk'],(int)$n['scope']),'id'=>$n['id'],'pw'=>$n['pw'],'qr'=>'?page=login&id='.rawurlencode((string)$n['id']),'pic'=>staff_pic((int)$n['uid'],$n['rk']==='teacher'?'teacher':'admin'),'scan'=>'Scan to fill in my ID','n'=>1]).'</div><script src="'.asset_url('qrcode.js').'" defer></script><script src="'.asset_url('cards.js').'" defer></script>';}
+  $card='';if(!empty($n['uid'])&&($n['rk']??'')!==''&&($n['rk']==='teacher'||isset(ROLES[$n['rk']]))){$pl=$n['rk']==='teacher'?[(int)$n['scope'],0]:role_place_ids($n['rk'],(int)$n['scope']);[$cs,$cm]=$pl;$cd=(int)($pl[2]??0);
+   $card='<div class="org-newcard">'.staff_id_card(['school'=>$cs,'muni'=>$cm,'district'=>$cd,'name'=>(string)$n['name'],'role'=>ROLES[$n['rk']][0]??'Teacher','place'=>rbac_scope_name($n['rk']==='teacher'?'school_admin':$n['rk'],(int)$n['scope']),'id'=>$n['id'],'pw'=>$n['pw'],'qr'=>$n['rk']==='teacher'&&function_exists('card_info')?(($ci=card_info((int)$n['uid']))['key']?'?page=login&key='.rawurlencode($ci['key']):'?page=login&id='.rawurlencode((string)$n['id'])):staff_qr((int)$n['uid'],(string)$n['id']),'pic'=>staff_pic((int)$n['uid'],$n['rk']==='teacher'?'teacher':'admin'),'scan'=>'Scan to sign in','n'=>1]).'</div><script src="'.asset_url('qrcode.js').'" defer></script><script src="'.asset_url('cards.js').'" defer></script>';}
   echo '<div class="role-pop org-newpop" role="dialog" aria-modal="true" aria-labelledby="on-t"><div class="role-pop-box card org-new'.($card!==''?' has-card':'').'">'.$card.'<div class="org-newtx">'.icon('check').'<h2 id="on-t">'.e($n['title']??'Account created').'</h2><p><b>'.e($n['name']).'</b> · '.e($n['role']).'</p>'.($card!==''?'<p>Their ID and starting password are on the ID card. Print it, or write them down now.</p>':'<p>Give these to them. Write them down now.</p><dl><dt>ID</dt><dd>'.e($n['id']).'</dd><dt>Password</dt><dd>'.e($n['pw']).'</dd></dl>').'<p class="muted">They can change the password after signing in.</p><div class="org-newbtns">'.(isset(ROLES[$n['rk']??''])?'<a class="btn secondary" href="?page=admin_passes&amp;id='.e($n['id']).'">'.icon('print').'Print their ID card</a>':(($n['rk']??'')==='teacher'?'<a class="btn secondary" href="?page=teacher_cards&amp;t='.(int)$n['uid'].'">'.icon('print').'Print their ID card</a>':'')).'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_new_ok"><button class="btn primary">'.icon('check').'I saved them</button></form></div></div></div></div>';}
  $mk=array_merge($can,ROLE_CREATES[$r]??[]);
  if($mk&&!$view){$scopes=org_scope_options($u);if(isset(ROLE_CREATES[$r]))$scopes=['school'=>[(int)$u['scope_id']=>rbac_scope_name($r,(int)$u['scope_id'])]];
@@ -254,9 +254,10 @@ function org_chart(array $u,array $munis):string{
   $dh='';$ns=0;
   foreach($ds as $d){$did=(int)$d['id'];$ss=rows('SELECT id,code,name FROM schools WHERE district_id=? AND active=1'.($sch===null?'':($sch?' AND id IN ('.implode(',',$sch).')':' AND 0')).' ORDER BY name',[$did]);$ns+=count($ss);
    $short=trim(preg_replace('/^'.preg_quote($m['name'],'/').'\s*/u','',$d['name']))?:$d['name'];
-   $dh.='<article class="oc-d"><header><b>'.e($short).'</b><span>'.count($ss).' '.(count($ss)===1?'school':'schools').'</span></header><dl class="oc-ppl"><dt>District Admin</dt><dd>'.$names('district_admin:'.$did).'</dd><dt>Supervisor '.icon('eye').'</dt><dd>'.$names('district_supervisor:'.$did).'</dd></dl><ul class="oc-ss">';
+   $dh.='<article class="oc-d"><header><b>'.e($short).'</b><span>'.count($ss).' '.(count($ss)===1?'school':'schools').'</span></header><dl class="oc-ppl"><dt>District Admin</dt><dd>'.$names('district_admin:'.$did).'</dd><dt>Supervisor '.icon('eye').'</dt><dd>'.$names('district_supervisor:'.$did).'</dd></dl>'
+    .(!$view&&($central||($r==='municipal_admin'&&(int)$u['scope_id']===$mid)||($r==='district_admin'&&(int)$u['scope_id']===$did))?'<form method="post" enctype="multipart/form-data" class="oc-logo oc-dlogo">'.csrf_field().'<input type="hidden" name="action" value="org_district_logo"><input type="hidden" name="id" value="'.$did.'">'.(district_logo($did)!==''?'<img src="'.e(district_logo($did)).'" alt="">':'').'<label>District logo<input type="file" name="logo" accept="image/png,image/jpeg,image/webp" required></label><button class="btn secondary small">'.icon('image').'Upload</button></form>':'').'<ul class="oc-ss">';
    foreach($ss as $x){$sid=(int)$x['id'];$c=$cnt[$sid]??['t'=>0,'p'=>0];
-    $dh.='<li><a href="?page=school&amp;id='.$sid.'"><b>'.e($x['name']?:$x['code']).'</b><small>School Admin: '.$names('school_admin:'.$sid).'</small><small>Principal: '.$names('principal:'.$sid).'</small><span class="oc-n"><em>'.icon('people').(int)$c['t'].'</em><em>'.icon('user').number_format((int)$c['p']).'</em></span></a></li>';}
+    $dh.='<li><a href="?page=school&amp;id='.$sid.'"><b>'.e($x['name']?:$x['code']).'</b>'.(function_exists('school_type')?'<span class="sc-lv sc-lv-'.school_type($sid).'">'.e(school_type_label(school_type($sid))).'</span>':'').'<small>School Admin: '.$names('school_admin:'.$sid).'</small><small>Principal: '.$names('principal:'.$sid).'</small><span class="oc-n"><em>'.icon('people').(int)$c['t'].'</em><em>'.icon('user').number_format((int)$c['p']).'</em></span></a></li>';}
    if(!$ss)$dh.='<li class="oc-none">No schools yet</li>';
    $dh.='</ul></article>';}
   if(!$view&&($central||($r==='municipal_admin'&&(int)$u['scope_id']===$mid)))$dh.='<form method="post" class="oc-d oc-add">'.csrf_field().'<input type="hidden" name="action" value="org_district_add"><input type="hidden" name="municipality" value="'.$mid.'"><label>New district<input name="name" maxlength="120" required placeholder="'.e($m['name']).' District '.roman(count($ds)+1).'"></label><button class="btn secondary small">'.icon('check').'Add district</button></form>';
@@ -286,6 +287,10 @@ function org_scope_options(array $u):array{
 }
 function org_action(string $action):never{
  $u=current_user();if(!$u||($u['role']??'')!=='admin')fail('Not allowed.',403);$r=(string)($u['active_role']??'');
+ if($action==='org_district_logo'){$did=(int)($_POST['id']??0);$mid=(int)(val('SELECT municipality_id FROM districts WHERE id=?',[$did])?:0);if(!$mid)fail('District not found.',404);
+  if(!($r==='central_admin'||($r==='municipal_admin'&&(int)$u['scope_id']===$mid)||($r==='district_admin'&&(int)$u['scope_id']===$did)))fail('Not allowed.',403);
+  $f=save_uploaded_image('logo');$old=district_logo($did);admin_set('district_logo_'.$did,$f);if($old!==''&&str_starts_with($old,'assets/uploads/')&&$old!==$f)@unlink(__DIR__.'/../public/'.$old);
+  audit('org_district_logo',(string)$did);flash('District logo saved. It prints on the ID cards.');go('?page=org');}
  if($action==='org_muni_logo'){$mid=(int)($_POST['id']??0);if(!($r==='central_admin'||($r==='municipal_admin'&&(int)$u['scope_id']===$mid)))fail('Not allowed.',403);
   if(!val('SELECT 1 FROM municipalities WHERE id=?',[$mid]))fail('Municipality not found.',404);$f=save_uploaded_image('logo');$old=muni_logo($mid);
   admin_set('muni_logo_'.$mid,$f);if($old!==''&&str_starts_with($old,'assets/uploads/')&&$old!==$f)@unlink(__DIR__.'/../public/'.$old);audit('org_muni_logo',(string)$mid);flash('Municipality logo saved. It prints on the ID cards.');go('?page=org');}
@@ -362,6 +367,7 @@ function monitor_dashboard(array $u):void{
  $wait=rv_ready()?$n("SELECT COUNT(*) FROM reading_verifications r JOIN users u ON u.id=r.pupil_id WHERE u.school_id IN ($in) AND r.state IN ('pending','missing')"):0;
  $vo=!empty($u['view_only']);
  echo '<div class="mon-head"><div><span class="eyebrow">'.e(mb_strtoupper(ROLES[$r][0])).($vo?' · VIEW ONLY':' · DASHBOARD').'</span><h1>'.e($place!==''?$place:'My area').'</h1><p class="muted">'.($vo?'Reading progress in your area. You can look and compare; changes are made by the teachers and administrators.':'Create and manage the accounts under you, and follow reading progress in your area.').'</p></div>'.($vo?'<span class="mon-badge">'.icon('eye').'View only</span>':'').'</div>';
+ if(function_exists('announcements_board')&&($ann=admin_announcements(true)))echo announcements_board($ann,!$vo&&($u['active_role']??'')==='central_admin'?'?page=settings&tab=announcements':'');   // v212 bulletin board
  if(!$vo)echo role_manage_panel($u);
  echo admin_kpis([['school',count($S),count($S)===1?'School':'Schools','',false],['user',$teachers,'Teachers','',false],['people',number_format($pupils),'Pupils','',false],['fire',number_format($active),'Learned this week',$pupils?round($active/$pupils*100).'% of pupils':'',false],['book',number_format($lessons),'Lessons finished this week','',false],['mic',number_format($wait),'Readings waiting for teachers','',false]]);
  /* pupils by reading level */
@@ -403,8 +409,15 @@ function role_manage_panel(array $u):string{
 /** Keeps the starting password (encrypted, like Teacher Passes) so the pass can be printed later. */
 function rbac_keep_starter(int $uid,string $pw):void{
  if(!function_exists('cards_ready')||!cards_ready())return;$key=rtrim(strtr(base64_encode(random_bytes(18)),'+/','-_'),'=');
- q('INSERT INTO pupil_cards(user_id,key_hash,key_enc,starter_enc,issued_at) VALUES(?,?,?,?,NOW()) ON DUPLICATE KEY UPDATE starter_enc=VALUES(starter_enc),issued_at=NOW()',[$uid,hash('sha256',$key),cards_enc($key),cards_enc($pw)]);
+ q('INSERT INTO pupil_cards(user_id,key_hash,key_enc,starter_enc,issued_at) VALUES(?,?,?,?,NOW()) ON DUPLICATE KEY UPDATE key_hash=VALUES(key_hash),key_enc=VALUES(key_enc),starter_enc=VALUES(starter_enc),issued_at=NOW()',[$uid,hash('sha256',$key),cards_enc($key),cards_enc($pw)]);   // a new password also makes a new QR code: a lost card stops working
 }
+/** v211 The sign-in key in an administrator's QR code (made once, kept until a new password is made). */
+function staff_card_key(int $uid):?string{
+ if(!function_exists('cards_ready')||!cards_ready())return null;$enc=val('SELECT key_enc FROM pupil_cards WHERE user_id=?',[$uid]);
+ if($enc){try{$k=cards_dec((string)$enc);if($k)return $k;}catch(Throwable $e){}}
+ $k=rtrim(strtr(base64_encode(random_bytes(18)),'+/','-_'),'=');q('INSERT INTO pupil_cards(user_id,key_hash,key_enc,starter_enc,issued_at) VALUES(?,?,?,NULL,NOW()) ON DUPLICATE KEY UPDATE key_hash=VALUES(key_hash),key_enc=VALUES(key_enc)',[$uid,hash('sha256',$k),cards_enc($k)]);return $k;
+}
+function staff_qr(int $uid,string $pid):string{$k=staff_card_key($uid);return $k?'?page=login&key='.rawurlencode($k):'?page=login&id='.rawurlencode($pid);}
 /** The starting password, only while it still works (after the person changes it, the pass says so). */
 function rbac_starter(int $uid):?string{
  if(!function_exists('cards_ready')||!cards_ready())return null;$enc=val('SELECT starter_enc FROM pupil_cards WHERE user_id=?',[$uid]);if(!$enc)return null;
@@ -418,31 +431,36 @@ function admin_passes_view(array $u):void{
  $rows=array_values(array_filter($rows,fn($x)=>org_in_my_scope($u,$x['role'],(int)$x['scope_id'])&&(int)$x['id']!==(int)$u['id']&&($one===''||strtoupper((string)$x['public_id'])===$one)));
  if(!$rows){echo '<section class="empty no-print">'.icon('people').'<h2>No passes yet.</h2><p>Add a person to a role on the Organization page, then come back to print their pass.</p></section>';return;}
  echo '<div class="lc-tools no-print card"><label class="lc-opt"><input type="checkbox" data-lc-toggle="lc-hide-qr" checked> QR code</label><label class="lc-opt"><input type="checkbox" data-lc-toggle="lc-hide-pass" checked> Starting password</label><button type="button" class="btn primary" data-lc-print>'.icon('download').'<span data-lc-print-label>Print passes</span></button></div>';
- echo id_design_picker('admin_passes').'<p class="lc-note no-print">The QR code fills in the ID on the sign-in page; the password is always typed. Lost a pass? Use New password on the Organization page: the old password stops working.</p><div class="lc-sheet tk-sheet idc-sheet" data-lc-sheet data-tk-word="pass">';$n=0;
- foreach($rows as $a){$n++;$pw=rbac_starter((int)$a['id']);$qr='?page=login&id='.rawurlencode((string)$a['public_id']);$place=rbac_scope_name($a['role'],(int)$a['scope_id']);
-  echo '<div class="tk-wrap idc-wrap" data-tk>'.staff_id_card(['school'=>role_place_ids($a['role'],(int)$a['scope_id'])[0],'muni'=>role_place_ids($a['role'],(int)$a['scope_id'])[1],'name'=>name_case((string)$a['name']),'role'=>ROLES[$a['role']][0],'place'=>$place,'id'=>$a['public_id'],'pw'=>$pw,'qr'=>$qr,'pic'=>staff_pic((int)$a['id'],'admin'),'scan'=>'Scan to fill in my ID','n'=>$n]).'<div class="tk-bar no-print"><label class="tk-sel"><input type="checkbox" data-tk-pick checked> Print</label></div></div>';}
+ echo id_design_picker('admin_passes').'<p class="lc-note no-print">The QR code signs the person in, even after they change their password. Lost a card? Use New password on the Organization page: the old password and the old QR code stop working.</p><div class="lc-sheet tk-sheet idc-sheet" data-lc-sheet data-tk-word="pass">';$n=0;
+ foreach($rows as $a){$n++;$pw=rbac_starter((int)$a['id']);$qr=staff_qr((int)$a['id'],(string)$a['public_id']);$place=rbac_scope_name($a['role'],(int)$a['scope_id']);
+  echo '<div class="tk-wrap idc-wrap" data-tk>'.staff_id_card(['school'=>role_place_ids($a['role'],(int)$a['scope_id'])[0],'muni'=>role_place_ids($a['role'],(int)$a['scope_id'])[1],'district'=>role_place_ids($a['role'],(int)$a['scope_id'])[2]??0,'name'=>name_case((string)$a['name']),'role'=>ROLES[$a['role']][0],'place'=>$place,'id'=>$a['public_id'],'pw'=>$pw,'qr'=>$qr,'pic'=>staff_pic((int)$a['id'],'admin'),'scan'=>'Scan to sign in','n'=>$n]).'<div class="tk-bar no-print"><label class="tk-sel"><input type="checkbox" data-tk-pick checked> Print</label></div></div>';}
  echo '</div><script src="'.asset_url('qrcode.js').'" defer></script><script src="'.asset_url('cards.js').'" defer></script>';
 }
 
 /** v211 The staff ID card (portrait, like a school ID) for administrators and teachers. Pupils keep their tickets.
     $o: name, role, place, id, pw (null = their own password), qr, pic, scan, n */
 function staff_id_card(array $o):string{
- $d=id_design();$logos=id_logos((int)($o['school']??0),(int)($o['muni']??0));
- return '<article class="idc idc-'.$d.'"><header class="idc-top"><span class="idc-logos">'.$logos.'</span><span class="idc-org">Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon</span><img class="idc-bulig" src="assets/brand/bulig-gamified.webp" alt="BULIG"></header>'
+ $d=id_design();$logos=id_logos((int)($o['school']??0),(int)($o['muni']??0),(int)($o['district']??0));
+ return '<article class="idc idc-'.$d.(!empty($o['kid'])?' idc-kid':'').'"><header class="idc-top"><span class="idc-logos">'.$logos.'</span><span class="idc-org">Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon</span><img class="idc-bulig" src="assets/brand/bulig-gamified.webp" alt="BULIG"></header>'
   .'<div class="idc-photo"><img src="'.e($o['pic']).'" alt=""></div><strong class="idc-name'.(mb_strlen((string)$o['name'])>24?' sm':'').'">'.e($o['name']).'</strong>'
   .'<span class="idc-role">'.e(mb_strtoupper((string)$o['role'])).'</span>'.(($o['place']??'')!==''?'<span class="idc-place">'.e($o['place']).'</span>':'')
-  .'<div class="idc-row"><span class="lc-qr tk-qr idc-qr" data-qr="'.e($o['qr']).'" aria-hidden="true"></span><dl><dt>ID</dt><dd class="idc-id">'.e($o['id']).'</dd><span class="tk-pass"><dt>'.($o['pw']!==null?'Starting password':'Password').'</dt><dd class="idc-pw'.($o['pw']===null?' own':'').'">'.e($o['pw']??'Your own password').'</dd></span></dl></div>'
+  .'<div class="idc-row"><span class="lc-qr tk-qr idc-qr" data-qr="'.e($o['qr']).'" aria-hidden="true"></span><dl><dt>'.e($o['idlab']??'ID').'</dt><dd class="idc-id">'.e($o['id']).'</dd><span class="tk-pass"><dt>'.($o['pw']!==null?'Starting password':'Password').'</dt><dd class="idc-pw'.($o['pw']===null?' own':'').'">'.e($o['pw']??'Your own password').'</dd></span></dl></div>'
   .'<footer class="idc-foot"><span class="tk-scan">'.e($o['scan']).'</span><span>No. '.str_pad((string)$o['n'],3,'0',STR_PAD_LEFT).'</span></footer></article>';
 }
 
 /** v211 The municipality's logo (Organization page), kept in settings; no SQL needed. */
 function muni_logo(int $mid):string{if(!$mid||!function_exists('admin_setting'))return '';$f=(string)admin_setting('muni_logo_'.$mid,'');return $f!==''&&is_file(__DIR__.'/../public/'.$f)?$f:'';}
+function district_logo(int $did):string{if(!$did||!function_exists('admin_setting'))return '';$f=(string)admin_setting('district_logo_'.$did,'');return $f!==''&&is_file(__DIR__.'/../public/'.$f)?$f:'';}
+/** ID cards per A4 page for each size (Small, Medium, Large); the landscape design fits fewer. */
+function idc_per():array{return id_design()==='c'?['s'=>12,'m'=>8,'l'=>8]:['s'=>16,'m'=>9,'l'=>6];}
 function id_design():string{$d=function_exists('admin_setting')?(string)admin_setting('id_design','b'):'b';return in_array($d,['a','b','c'],true)?$d:'b';}
 /** The logos on an ID card: Division, municipality and school (a school with no logo shows its code). */
-function id_logos(int $school,int $muni):string{
+function id_logos(int $school,int $muni,int $district=0):string{
  $h='';$div=division_logo();if($div!=='')$h.='<img src="'.e($div).'" alt="Division logo">';
- if(!$muni&&$school&&rbac_ready())$muni=(int)(val('SELECT d.municipality_id FROM schools s JOIN districts d ON d.id=s.district_id WHERE s.id=?',[$school])?:0);
+ if(!$district&&$school&&rbac_ready())$district=(int)(val('SELECT district_id FROM schools WHERE id=?',[$school])?:0);
+ if(!$muni&&$district&&rbac_ready())$muni=(int)(val('SELECT municipality_id FROM districts WHERE id=?',[$district])?:0);
  $ml=muni_logo($muni);if($ml!=='')$h.='<img src="'.e($ml).'" alt="Municipality logo">';
+ $dl=district_logo($district);if($dl!=='')$h.='<img src="'.e($dl).'" alt="District logo">';   // v211
  if($school){$s=one('SELECT code,name,logo FROM schools WHERE id=?',[$school]);if($s)$h.=((string)$s['logo']!==''&&is_file(__DIR__.'/../public/'.$s['logo']))?'<img src="'.e($s['logo']).'" alt="'.e($s['code']).' logo">':'<span class="idc-code">'.e($s['code']).'</span>';}
  return $h;
 }
@@ -450,7 +468,7 @@ function id_logos(int $school,int $muni):string{
 function role_place_ids(string $role,int $scope):array{
  $lv=ROLES[$role][3]??'system';if(!rbac_ready()||!$scope)return [0,0];
  if($lv==='municipality')return [0,$scope];
- if($lv==='district')return [0,(int)(val('SELECT municipality_id FROM districts WHERE id=?',[$scope])?:0)];
+ if($lv==='district')return [0,(int)(val('SELECT municipality_id FROM districts WHERE id=?',[$scope])?:0),$scope];
  return [$scope,0];
 }
 /** The Division Admin chooses the ID card design (three designs). */

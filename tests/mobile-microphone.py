@@ -28,7 +28,7 @@ try:
     document.querySelector('[data-wc]').addEventListener('wc:done',e=>window.done=e.detail);
    }''',agent)
    page.add_script_tag(url=url+'/public/assets/coach.js?wcsend=tap')
-   page.locator('.wc-go').click();page.locator('.wc-skip').click()
+   page.locator('.wc-go').click();page.locator('.wc-guide-go:not([disabled])').click();page.locator('.wc-skip').click()
    assert page.evaluate('tracks.length===0')
    page.locator('.wc-start-reading').click()
    page.locator('.wc-read').click()

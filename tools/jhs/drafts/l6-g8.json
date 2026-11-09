@@ -1,0 +1,1767 @@
+{
+ "id": "l6-g8",
+ "level": 7,
+ "grades": [
+  8
+ ],
+ "pdf": "level6-g8.pdf",
+ "lessons": [
+  {
+   "phase": "pre",
+   "label": "Pre-test",
+   "pages": [
+    7,
+    8,
+    9
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "A GLASS OF MILK\n\nIn a small town, there lived a poor little boy who used to do odd jobs\nlike selling different objects from door to door. The money he earned from\nthose jobs was used to buy his daily food and pay his school expenses. It was\na usual day of selling items from house to house when he felt very hungry and\nsick. He was so famished that he couldn’t even walk any more steps. With\nenough strength, he decided to ask for food at a house in the neighborhood.\nWhen the poor boy knocked on the door of a house, a beautiful young girl\nopened the door to his surprise. With much hesitation, he requested the\nyoung girl for a glass of water. The boy said, “Can you please give me a glass\nof water?” The pretty girl was taken aback after seeing the poor boy’s condition\nand understood how hungry he was. She said, “Sure, wait a minute.” She\nwent into the kitchen, and instead of a glass of water as requested by the little\nboy, she brought him a glass of milk. “Here, little boy. Drink it!” said the young\ngirl. The boy was astonished to see the glass of milk in front of him. He drank\nthe milk and felt better than ever. After drinking the milk, the boy thanked\nthe kind-hearted girl and asked her, “How much do I owe you for this milk?”\n“Oh dear, I don’t want any money for this”, the girl replied softly. The\nboy thanked the compassionate girl from the bottom of his heart and then left\nthe place. Years passed by. The young girl grew up into a beautiful grown\nwoman. One day she fell severely ill and was taken to the hospital. There, she\nhad some tests, which unfortunately revealed that she had a rare neurological\ndisorder that required several treatments and great care for many months.\nShe was hospitalized at one of the city’s best hospitals as her health\ndeteriorated day by day. Dr Kevin, a well-known neuro specialist, was\nassigned the girl’s case by the hospital. Dr Kevin found the girl’s illness hard\nto cure despite his extraordinary expertise. However, he did not give up. The\ntreatment took months. With determination and much perseverance, Dr Kevin\nsuccessfully brought the girl’s ailment under control. The girl was finally\ncured of the disease after careful observation and medication. Everyone in the\nhospital complimented the doctor for his successful work. But the girl had\nher own worries about the hospital bills. She thought to herself, “How will I\npay for such an extensive treatment when I have only a little money of my\nown?” The girl’s family did not leave her enough money that could possibly\nclear her extensive treatment and therapy in that reputed hospital. Finally,\nthe bill arrived. With shaking hands, she opened it and was astonished to see\nthat the bill had been cancelled across. Beneath the amount, there was a note\nsigned by her treatment doctor, Dr Kevin. The note said, “Bill paid in full years\nago with a glass of milk!” The girl remembered the young boy she had helped\nyears ago and felt happy.\n\nLiteral Comprehension Questions",
+     "items": [
+      {
+       "n": 1,
+       "text": "What kind of work did the little boy do to earn money?",
+       "opts": [
+        [
+         "a",
+         "Farming"
+        ],
+        [
+         "b",
+         "Delivering milk"
+        ],
+        [
+         "c",
+         "Working in a hospital"
+        ],
+        [
+         "d",
+         "Selling items from door to door"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What did the young girl give the boy instead of water?",
+       "opts": [
+        [
+         "a",
+         "Juice"
+        ],
+        [
+         "b",
+         "Bread"
+        ],
+        [
+         "c",
+         "Soup"
+        ],
+        [
+         "d",
+         "A glass of milk"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Why did the girl give the boy milk instead of water?",
+       "opts": [
+        [
+         "a",
+         "She did not like giving water"
+        ],
+        [
+         "b",
+         "She had no water in the house"
+        ],
+        [
+         "c",
+         "She wanted to show off her kindness"
+        ],
+        [
+         "d",
+         "She understood that he needed nourishment"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What does the note “Bill paid in full years ago with a glass of milk” imply?",
+       "opts": [
+        [
+         "a",
+         "The hospital made a mistake"
+        ],
+        [
+         "b",
+         "The girl had already paid the bill before"
+        ],
+        [
+         "c",
+         "The doctor did not charge hospital fees"
+        ],
+        [
+         "d",
+         "The doctor remembered and repaid her kindness"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "Was it fair for the doctor to cancel the woman’s hospital bill?",
+       "opts": [
+        [
+         "a",
+         "No, because the girl did not ask for help"
+        ],
+        [
+         "b",
+         "Yes, because he was the doctor in charge"
+        ],
+        [
+         "c",
+         "No, because hospital services must always be paid"
+        ],
+        [
+         "d",
+         "Yes, because kindness should always be repaid"
+        ]
+       ]
+      },
+      {
+       "n": 6,
+       "text": "Which action best shows perseverance in the story?",
+       "opts": [
+        [
+         "a",
+         "The girl worrying about the bill"
+        ],
+        [
+         "b",
+         "The girl giving milk to the boy"
+        ],
+        [
+         "c",
+         "The boy selling items door to door"
+        ],
+        [
+         "d",
+         "The doctor continuing treatment despite difficulties"
+        ]
+       ]
+      },
+      {
+       "n": 7,
+       "text": "What could have happened if the girl had ignored the hungry boy?",
+       "opts": [
+        [
+         "a",
+         "Nothing important would change"
+        ],
+        [
+         "b",
+         "The girl would still be cured"
+        ],
+        [
+         "c",
+         "The boy would still become a doctor"
+        ],
+        [
+         "d",
+         "The story’s message about kindness would be lost"
+        ]
+       ]
+      },
+      {
+       "n": 8,
+       "text": "If the boy had never met the girl again, what message would the story still teach?",
+       "opts": [
+        [
+         "a",
+         "Doctors are always generous"
+        ],
+        [
+         "b",
+         "Success comes from wealth"
+        ],
+        [
+         "c",
+         "Kindness always brings immediate rewards"
+        ],
+        [
+         "d",
+         "Helping others is valuable even without reward"
+        ]
+       ]
+      },
+      {
+       "n": 9,
+       "text": "If the story were told from the girl’s point of view, what emotion would likely stand out at the end?",
+       "opts": [
+        [
+         "a",
+         "Fear"
+        ],
+        [
+         "b",
+         "Pride"
+        ],
+        [
+         "c",
+         "Gratitude"
+        ],
+        [
+         "d",
+         "Confusion"
+        ]
+       ]
+      },
+      {
+       "n": 10,
+       "text": "What modern situation best reflects the message of the story?",
+       "opts": [
+        [
+         "a",
+         "A doctor becoming famous"
+        ],
+        [
+         "b",
+         "A patient refusing treatment"
+        ],
+        [
+         "c",
+         "A person becoming rich overnight"
+        ],
+        [
+         "d",
+         "A student helping a classmate without expecting recognition"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n                          A GLASS OF MILK\n\n       In a small town, there lived a poor little boy who used to do odd jobs\nlike selling different objects from door to door. The money he earned from\nthose jobs was used to buy his daily food and pay his school expenses. It was\na usual day of selling items from house to house when he felt very hungry and\nsick. He was so famished that he couldn’t even walk any more steps. With\nenough strength, he decided to ask for food at a house in the neighborhood.\nWhen the poor boy knocked on the door of a house, a beautiful young girl\nopened the door to his surprise. With much hesitation, he requested the\nyoung girl for a glass of water. The boy said, “Can you please give me a glass\nof water?” The pretty girl was taken aback after seeing the poor boy’s condition\nand understood how hungry he was. She said, “Sure, wait a minute.” She\nwent into the kitchen, and instead of a glass of water as requested by the little\nboy, she brought him a glass of milk. “Here, little boy. Drink it!” said the young\ngirl. The boy was astonished to see the glass of milk in front of him. He drank\nthe milk and felt better than ever. After drinking the milk, the boy thanked\nthe kind-hearted girl and asked her, “How much do I owe you for this milk?”\n       “Oh dear, I don’t want any money for this”, the girl replied softly. The\nboy thanked the compassionate girl from the bottom of his heart and then left\nthe place. Years passed by. The young girl grew up into a beautiful grown\nwoman. One day she fell severely ill and was taken to the hospital. There, she\nhad some tests, which unfortunately revealed that she had a rare neurological\ndisorder that required several treatments and great care for many months.\nShe was hospitalized at one of the city’s best hospitals as her health\ndeteriorated day by day. Dr Kevin, a well-known neuro specialist, was\nassigned the girl’s case by the hospital. Dr Kevin found the girl’s illness hard\nto cure despite his extraordinary expertise. However, he did not give up. The\ntreatment took months. With determination and much perseverance, Dr Kevin\nsuccessfully brought the girl’s ailment under control. The girl was finally\ncured of the disease after careful observation and medication. Everyone in the\nhospital complimented the doctor for his successful work. But the girl had\nher own worries about the hospital bills. She thought to herself, “How will I\npay for such an extensive treatment when I have only a little money of my\nown?” The girl’s family did not leave her enough money that could possibly\nclear her extensive treatment and therapy in that reputed hospital. Finally,\nthe bill arrived. With shaking hands, she opened it and was astonished to see\nthat the bill had been cancelled across. Beneath the amount, there was a note\nsigned by her treatment doctor, Dr Kevin. The note said, “Bill paid in full years\nago with a glass of milk!” The girl remembered the young boy she had helped\nyears ago and felt happy.\n\n\n\nLiteral Comprehension Questions\n\n1. What kind of work did the little boy do to earn money?\n\n      A. Farming\n      B. Delivering milk\n      C. Working in a hospital\n      D. Selling items from door to door\n\n2. What did the young girl give the boy instead of water?\n\n      A. Juice\n      B. Bread\n      C. Soup\n      D. A glass of milk\n\nInterpretive Comprehension Questions\n\n3. Why did the girl give the boy milk instead of water?\n\n      A. She did not like giving water\n      B. She had no water in the house\n      C. She wanted to show off her kindness\n      D. She understood that he needed nourishment\n\n4. What does the note “Bill paid in full years ago with a glass of milk” imply?\n\n      A. The hospital made a mistake\n      B. The girl had already paid the bill before\n      C. The doctor did not charge hospital fees\n      D. The doctor remembered and repaid her kindness\n\nCritical Comprehension Questions\n\n5. Was it fair for the doctor to cancel the woman’s hospital bill?\n\n      A. No, because the girl did not ask for help\n      B. Yes, because he was the doctor in charge\n      C. No, because hospital services must always be paid\n      D. Yes, because kindness should always be repaid\n\n\n\n6. Which action best shows perseverance in the story?\n\n      A. The girl worrying about the bill\n      B. The girl giving milk to the boy\n      C. The boy selling items door to door\n      D. The doctor continuing treatment despite difficulties\n\n\n7. What could have happened if the girl had ignored the hungry boy?\n\n      A. Nothing important would change\n      B. The girl would still be cured\n      C. The boy would still become a doctor\n      D. The story’s message about kindness would be lost\n\nCreative Comprehension Questions\n\n8. If the boy had never met the girl again, what message would the story still\nteach?\n\n      A. Doctors are always generous\n      B. Success comes from wealth\n      C. Kindness always brings immediate rewards\n      D. Helping others is valuable even without reward\n\n9. If the story were told from the girl’s point of view, what emotion would likely\nstand out at the end?\n\n      A. Fear\n      B. Pride\n      C. Gratitude\n      D. Confusion\n\n10. What modern situation best reflects the message of the story?\n\n      A. A doctor becoming famous\n      B. A patient refusing treatment\n      C. A person becoming rich overnight\n      D. A student helping a classmate without expecting recognition\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 1",
+   "pages": [
+    11,
+    12,
+    13
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nA LOST CIVILIZATION\n\nA long, long time ago, thousands of years before there were cities in any\nplace in the world, wandering hunters from the Asia mainland crossed the\nnarrow channel to Alaska.\nThese people who were called Indians slowly spread over the two American\ncontinents. Some of them remained hunters, the others became farmers and\nbuilt great cities. From these Indians descended a distinctive group called the\nMayas.\n\nThe Mayas had cities long before any white man landed in the American\ncontinent. By the seventh century A.D. they had built many cities in Central\nAmerica. The ruins of these cities could still be found standing in the jungles\nof Central America. The most famous of these cities was called \"Chichen Itza\".\nIn its ruins were found many beautiful buildings, terraces, temples, and a\ngreat plaza with many courts. The palaces and monasteries were built for their\nnobles and priests. There was even an observatory for studying the stars and\ntheir movements and other meteorological researches:\n\nThe priests carefully watched the movements of the stars. They made a\ncalendar which was as accurate as the one we use today. It was more accurate\nthan the calendars used in Europe and Asia at that time.\n\nThe Mayas dressed in the fine locks. They wore gold ornaments. Most\nprecious among their ornaments were of jade. Jades and rich plume feathers\nwere worn only by the rich and the powerful nobles and priests.\nThey used a system of writing similar to the ancient Babylonians using\ncharacter symbols because they had no alphabet. They wrote books on their\nhistory, astronomy, and religion. Many of these books, however, have been\nlost. Only three are in existence today.\n\nThe Mayan engineers made fine roads similar to those built by the\nRomans at the height of their power. They used layers of limestone fill the\nroadway and gravel to fill in the crevices. They then covered the surface with\nfine limestone which acted as a sort of cement. A heavy road-roller hewn by\nhand out of hard stone was rolled over the road over and over again. The\nrollers were so heavy. It took 15 to 20 men to work them over the roads. The\nroads they made were very good. With little repairs, they have been used until\nrecent times.\nThe farmers among the Mayas lived in villages outside the cities. They\nraised crops and built roads, temples and palaces, had no wheeled vehicle nor\ntamed beasts of burden. They used their own muscles to carry heavy loads.\nHow amazing therefore that they did build magnificent roads and\ntemples and palaces with their own puny hands!\n\nChoose the letter of the correct answer.\n\nRead the selection carefully. Then answer the questions that follow by\nchoosing the correct answer from the given options.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Where did the wandering hunters originally come from before crossing to Alaska?",
+       "opts": [
+        [
+         "a",
+         "Europe"
+        ],
+        [
+         "b",
+         "Africa"
+        ],
+        [
+         "c",
+         "Asia mainland"
+        ],
+        [
+         "d",
+         "South America"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What group descended from the early Indians mentioned in the story?",
+       "opts": [
+        [
+         "a",
+         "Aztecs"
+        ],
+        [
+         "b",
+         "Incas"
+        ],
+        [
+         "c",
+         "Mayas"
+        ],
+        [
+         "d",
+         "Romans"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "What was the most famous Mayan city mentioned in the passage?",
+       "opts": [
+        [
+         "a",
+         "Tenochtitlan"
+        ],
+        [
+         "b",
+         "Machu Picchu"
+        ],
+        [
+         "c",
+         "Palenque"
+        ],
+        [
+         "d",
+         "Chichen Itza"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Who were allowed to wear jade and rich plume feathers according to the story?",
+       "opts": [
+        [
+         "a",
+         "Farmers"
+        ],
+        [
+         "b",
+         "Hunters"
+        ],
+        [
+         "c",
+         "All Mayas"
+        ],
+        [
+         "d",
+         "Rich and powerful nobles and priests"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "How did the Mayas carry heavy loads since they had no wheeled vehicles or beasts of burden?",
+       "opts": [
+        [
+         "a",
+         "Using carts"
+        ],
+        [
+         "b",
+         "Using animals"
+        ],
+        [
+         "c",
+         "Using boats"
+        ],
+        [
+         "d",
+         "Using their own muscles"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n\n                         A LOST CIVILIZATION\n\n      A long, long time ago, thousands of years before there were cities in any\nplace in the world, wandering hunters from the Asia mainland crossed the\nnarrow channel to Alaska.\nThese people who were called Indians slowly spread over the two American\ncontinents. Some of them remained hunters, the others became farmers and\nbuilt great cities. From these Indians descended a distinctive group called the\nMayas.\n\n\n       The Mayas had cities long before any white man landed in the American\ncontinent. By the seventh century A.D. they had built many cities in Central\nAmerica. The ruins of these cities could still be found standing in the jungles\nof Central America. The most famous of these cities was called \"Chichen Itza\".\nIn its ruins were found many beautiful buildings, terraces, temples, and a\ngreat plaza with many courts. The palaces and monasteries were built for their\nnobles and priests. There was even an observatory for studying the stars and\ntheir movements and other meteorological researches:\n\n\n      The priests carefully watched the movements of the stars. They made a\ncalendar which was as accurate as the one we use today. It was more accurate\nthan the calendars used in Europe and Asia at that time.\n\n\n      The Mayas dressed in the fine locks. They wore gold ornaments. Most\nprecious among their ornaments were of jade. Jades and rich plume feathers\nwere worn only by the rich and the powerful nobles and priests.\nThey used a system of writing similar to the ancient Babylonians using\ncharacter symbols because they had no alphabet. They wrote books on their\nhistory, astronomy, and religion. Many of these books, however, have been\nlost. Only three are in existence today.\n\n\n\n\n\n       The Mayan engineers made fine roads similar to those built by the\nRomans at the height of their power. They used layers of limestone fill the\nroadway and gravel to fill in the crevices. They then covered the surface with\nfine limestone which acted as a sort of cement. A heavy road-roller hewn by\nhand out of hard stone was rolled over the road over and over again. The\nrollers were so heavy. It took 15 to 20 men to work them over the roads. The\nroads they made were very good. With little repairs, they have been used until\nrecent times.\n      The farmers among the Mayas lived in villages outside the cities. They\nraised crops and built roads, temples and palaces, had no wheeled vehicle nor\ntamed beasts of burden. They used their own muscles to carry heavy loads.\n     How amazing therefore that they did build magnificent roads and\ntemples and palaces with their own puny hands!\n\n\n      Choose the letter of the correct answer.\n\nRead the selection carefully. Then answer the questions that follow by\nchoosing the correct answer from the given options.\n\n1. Where did the wandering hunters originally come from before crossing to\nAlaska?\n\n            A. Europe\n            B. Africa\n            C. Asia mainland\n            D. South America\n\n2. What group descended from the early Indians mentioned in the story?\n\n            A. Aztecs\n            B. Incas\n            C. Mayas\n            D. Romans\n\n3. What was the most famous Mayan city mentioned in the passage?\n\n            A. Tenochtitlan\n            B. Machu Picchu\n            C. Palenque\n            D. Chichen Itza\n\n\n\n\n4. Who were allowed to wear jade and rich plume feathers according to the\n          story?\n\n           A. Farmers\n           B. Hunters\n           C. All Mayas\n           D. Rich and powerful nobles and priests\n\n\n5. How did the Mayas carry heavy loads since they had no wheeled vehicles\nor beasts of burden?\n\n           A. Using carts\n           B. Using animals\n           C. Using boats\n           D. Using their own muscles\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 2",
+   "pages": [
+    14,
+    15,
+    16
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nI REFUSE\n\nThe life story of Dr. Jose Rizal has been told and retold many, many\ntimes that almost all the intimate details of his life are well known to us. But\nvery little has been written of Jose Rizal's mother, Doña Teodora Alonzo. Do\nmany of us know, for example, that she refused to accept pension offered to\nher by the Philippine government?\n\nDoña Teodora, the mother who gave our nation the neatest Malayan,\nis a heroine in her own right. She had suffered imprisonment for just being\nJose Rizal's mother. She suffered more than any other mother in Philippine\nhistory for raising and educating her son. Jose.\n\nThe Rizal family had been impoverished because of Dr. Rizal's\nstruggles against Spanish tyranny. Doña Teodora found herself in\nstraightened circumstances years after the death of our hero. Therefore, she\nrightfully deserved the pension offered her by our government.\n\nIn 1908, the Philippine Legislature, aware of Doña Teodora's need,\nunanimously agreed to grant her a life pension as a token of the gratitude of\nthe Filipino people. At that time, she was residing in the house of one of her\ndaughters in Manila. A delegation of lawmakers was appointed to advise her\nof the pension. The delegation thanked her for the patriotic service to her\ncountry and people and told her that the government was giving her a\nsubstantial pension which would make her comfortable and secure during\nher remaining years.\n\n\"A substantial pension is offered to you as a token of the nation's\ngratitude for your patriotism, Doña Teodora, \"the chairman of the delegation\nsaid.\n\nDoña Teodora firmly but politely refused to accept the pension. \"Our\nfamily is not patriotic because of mercenary motives,\" she told the group of\ndelegation. \"If the government has enough money to offer me a life pension, it\nshould give this money to the poor who deserve it more. I have my children\nand relatives to take care of me,\" Doña Teodora continued.\n\nThus, the mother of our greatest hero proved herself worthy as a\nmother of a heroic son. What a contrast to our present-day so-called \"heroes\"\nand \"patriots\" who not only clamor for pensions and backpays but also, to\nadd insult to injury, claim that they deserve them. Hear howl when action on\ntheir application is delayed. They could not wait until their services were given\njust rewards and recognition.\n\nDoña Teodora's self- abnegation should serve as a lesson to our\npension-·hungry and so- called \"heroes\" and patriots who mask their greed in\nthe guise of patriotism.\n\nChoose the letter of the best answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Who is the mother of Jose Rizal mentioned in the story?",
+       "opts": [
+        [
+         "a",
+         "Doña Aurora"
+        ],
+        [
+         "b",
+         "Doña Teodora Alonzo"
+        ],
+        [
+         "c",
+         "Doña Marcela"
+        ],
+        [
+         "d",
+         "Doña Trinidad"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What did the Philippine government offer Doña Teodora in 1908?",
+       "opts": [
+        [
+         "a",
+         "A house"
+        ],
+        [
+         "b",
+         "A medal"
+        ],
+        [
+         "c",
+         "A life pension"
+        ],
+        [
+         "d",
+         "A government position"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Why did Doña Teodora deserve the pension according to the passage?",
+       "opts": [
+        [
+         "a",
+         "She fought in wars"
+        ],
+        [
+         "b",
+         "She was wealthy"
+        ],
+        [
+         "c",
+         "She worked for the government"
+        ],
+        [
+         "d",
+         "Her family had been impoverished because of Rizal’s struggle"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Where was Doña Teodora living when the lawmakers visited her?",
+       "opts": [
+        [
+         "a",
+         "In Calamba"
+        ],
+        [
+         "b",
+         "In Spain"
+        ],
+        [
+         "c",
+         "In Malacañang Palace"
+        ],
+        [
+         "d",
+         "In the house of one of her daughters in Manila"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "Why did Doña Teodora refuse the pension?",
+       "opts": [
+        [
+         "a",
+         "She disliked the lawmakers"
+        ],
+        [
+         "b",
+         "She planned to leave the country"
+        ],
+        [
+         "c",
+         "She had already received another pension"
+        ],
+        [
+         "d",
+         "She believed the money should be given to the poor"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n\n\n                                I REFUSE\n\n        The life story of Dr. Jose Rizal has been told and retold many, many\ntimes that almost all the intimate details of his life are well known to us. But\nvery little has been written of Jose Rizal's mother, Doña Teodora Alonzo. Do\nmany of us know, for example, that she refused to accept pension offered to\nher by the Philippine government?\n\n        Doña Teodora, the mother who gave our nation the neatest Malayan,\nis a heroine in her own right. She had suffered imprisonment for just being\nJose Rizal's mother. She suffered more than any other mother in Philippine\nhistory for raising and educating her son. Jose.\n\n        The Rizal family had been impoverished because of Dr. Rizal's\nstruggles against Spanish tyranny. Doña Teodora found herself in\nstraightened circumstances years after the death of our hero. Therefore, she\nrightfully deserved the pension offered her by our government.\n\n        In 1908, the Philippine Legislature, aware of Doña Teodora's need,\nunanimously agreed to grant her a life pension as a token of the gratitude of\nthe Filipino people. At that time, she was residing in the house of one of her\ndaughters in Manila. A delegation of lawmakers was appointed to advise her\nof the pension. The delegation thanked her for the patriotic service to her\ncountry and people and told her that the government was giving her a\nsubstantial pension which would make her comfortable and secure during\nher remaining years.\n\n       \"A substantial pension is offered to you as a token of the nation's\ngratitude for your patriotism, Doña Teodora, \"the chairman of the delegation\nsaid.\n\n        Doña Teodora firmly but politely refused to accept the pension. \"Our\nfamily is not patriotic because of mercenary motives,\" she told the group of\ndelegation. \"If the government has enough money to offer me a life pension, it\nshould give this money to the poor who deserve it more. I have my children\nand relatives to take care of me,\" Doña Teodora continued.\n\n\n\n        Thus, the mother of our greatest hero proved herself worthy as a\nmother of a heroic son. What a contrast to our present-day so-called \"heroes\"\nand \"patriots\" who not only clamor for pensions and backpays but also, to\nadd insult to injury, claim that they deserve them. Hear howl when action on\ntheir application is delayed. They could not wait until their services were given\njust rewards and recognition.\n\n       Doña Teodora's self- abnegation should serve as a lesson to our\npension-·hungry and so- called \"heroes\" and patriots who mask their greed in\nthe guise of patriotism.\n\n\nChoose the letter of the best answer.\n\n1. Who is the mother of Jose Rizal mentioned in the story?\n\n      A. Doña Aurora\n      B. Doña Teodora Alonzo\n      C. Doña Marcela\n      D. Doña Trinidad\n\n2. What did the Philippine government offer Doña Teodora in 1908?\n\n      A. A house\n      B. A medal\n      C. A life pension\n      D. A government position\n\n3. Why did Doña Teodora deserve the pension according to the passage?\n\n      A. She fought in wars\n      B. She was wealthy\n      C. She worked for the government\n      D. Her family had been impoverished because of Rizal’s struggle\n\n4. Where was Doña Teodora living when the lawmakers visited her?\n\n      A. In Calamba\n      B. In Spain\n      C. In Malacañang Palace\n      D. In the house of one of her daughters in Manila\n\n\n\n5. Why did Doña Teodora refuse the pension?\n\n     A. She disliked the lawmakers\n     B. She planned to leave the country\n     C. She had already received another pension\n     D. She believed the money should be given to the poor\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 3",
+   "pages": [
+    17,
+    18,
+    19
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nTHE ENCHANTED TRUNK\n\nThere once lived a fairy in a big balete tree near the mouth of a cave.\nShe was known as Macaban. Unlike other fairies, she was visible most of the\ntime. She had brown eyes and curly hair. Her voice was sweet and was always\nkind. She was very generous. She was always ready to help the unfortunate,\nand she comforted them in their sorrows. She gave food and clothing to the poor.\nDuring wedding, she would lend the bridegroom his wedding attire, precious\nstones, gold tablewares, kitchen utensils, which she kept in storerooms inside\nan underground city. Anybody could utter his request at the keyhole; the\nstone door would open at once to let him in and select the things he needed.\n\nThe goodness of Macaban was everywhere. The borrowers came not\nonly from Inabangan but also from neighboring towns.\n\nOne day, a dishonest couple came to borrow some wedding attire,\njewels and tableware for their son's wedding. They were allowed to enter the\ncity storerooms to get the things they needed. Seeing that nobody kept watch,\nthey picked up several precious objects and put them in their bags and\npockets. When they went out of the door, they promised the door keeper to\nreturn everything after the wedding, but they did not tell him of the jewels\nthat bulged in their pockets thinking that Macaban would never know.\n\nAfter the wedding, the dishonest couple did not return the things they\nborrowed. Instead, they went around the town and urged the people to destroy\nthe home of Macaban and to drive the fairy away.\n\nMacaban was angry at what the dishonest couple did to her. So, she\nthought of teaching them a lesson. She called all the people to enter the city\nand select a gift for themselves. She gave them 20 minutes to select that they\nliked best on condition that they must not stay more than the given time.\n\nThe honest people obeyed the command of Macaban for they stayed in\nthe storeroom for only the time allowed. On the other hand, the dishonest\ncouple went into the heart of the city collecting jewels and precious stones.\nWhen the 20minutes were over, Macaban waved her hand. Deep water rushed\ndown the street separating the two high cliffs.\n\n\"Because you are dishonest, you must remain here forever,\" Macaban\ncried, \"You cannot cross the deep water and escape from the many crocodiles.\"\n\nUntil today, the keyhole, the mouth of the cave, and the stone door\ncan be seen by boat riders going up and down the Inabangan River in Bohol.\nPeople say these parts of the enhanced trunk of Macaban, a splendid city\nunderneath the mountain.\n\nCopy the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Why did Macaban allow anyone to borrow items from her underground city without strict supervision?",
+       "opts": [
+        [
+         "a",
+         "She was careless and forgetful"
+        ],
+        [
+         "b",
+         "She wanted people to steal from her"
+        ],
+        [
+         "c",
+         "She did not value her possessions"
+        ],
+        [
+         "d",
+         "She trusted people and believed in their goodness"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What does the dishonest couple’s behavior reveal about their character?",
+       "opts": [
+        [
+         "a",
+         "They were fearful of Macaban"
+        ],
+        [
+         "b",
+         "They were curious and adventurous"
+        ],
+        [
+         "c",
+         "They were greedy and ungrateful"
+        ],
+        [
+         "d",
+         "They were confused about the rules"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Why did Macaban give the people only 20 minutes to choose their gifts?",
+       "opts": [
+        [
+         "a",
+         "To punish everyone"
+        ],
+        [
+         "b",
+         "To protect her city from flooding"
+        ],
+        [
+         "c",
+         "To hurry the wedding celebration"
+        ],
+        [
+         "d",
+         "To test who would follow instructions"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What does the fate of the dishonest couple suggest about the story’s message?",
+       "opts": [
+        [
+         "a",
+         "Power should be feared"
+        ],
+        [
+         "b",
+         "Wealth brings happiness"
+        ],
+        [
+         "c",
+         "Clever people always succeed"
+        ],
+        [
+         "d",
+         "Dishonesty leads to serious consequences"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "What lesson does the story mainly teach readers?",
+       "opts": [
+        [
+         "a",
+         "Fairies should not trust humans"
+        ],
+        [
+         "b",
+         "Riches should be shared secretly"
+        ],
+        [
+         "c",
+         "Obedience and honesty are rewarded"
+        ],
+        [
+         "d",
+         "Fear is the best way to control people"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n\n                         THE ENCHANTED TRUNK\n\n        There once lived a fairy in a big balete tree near the mouth of a cave.\nShe was known as Macaban. Unlike other fairies, she was visible most of the\ntime. She had brown eyes and curly hair. Her voice was sweet and was always\nkind. She was very generous. She was always ready to help the unfortunate,\nand she comforted them in their sorrows. She gave food and clothing to the poor.\nDuring wedding, she would lend the bridegroom his wedding attire, precious\nstones, gold tablewares, kitchen utensils, which she kept in storerooms inside\nan underground city. Anybody could utter his request at the keyhole; the\nstone door would open at once to let him in and select the things he needed.\n\n        The goodness of Macaban was everywhere. The borrowers came not\nonly from Inabangan but also from neighboring towns.\n\n        One day, a dishonest couple came to borrow some wedding attire,\njewels and tableware for their son's wedding. They were allowed to enter the\ncity storerooms to get the things they needed. Seeing that nobody kept watch,\nthey picked up several precious objects and put them in their bags and\npockets. When they went out of the door, they promised the door keeper to\nreturn everything after the wedding, but they did not tell him of the jewels\nthat bulged in their pockets thinking that Macaban would never know.\n\n      After the wedding, the dishonest couple did not return the things they\nborrowed. Instead, they went around the town and urged the people to destroy\nthe home of Macaban and to drive the fairy away.\n\n       Macaban was angry at what the dishonest couple did to her. So, she\nthought of teaching them a lesson. She called all the people to enter the city\nand select a gift for themselves. She gave them 20 minutes to select that they\nliked best on condition that they must not stay more than the given time.\n\n       The honest people obeyed the command of Macaban for they stayed in\nthe storeroom for only the time allowed. On the other hand, the dishonest\ncouple went into the heart of the city collecting jewels and precious stones.\nWhen the 20minutes were over, Macaban waved her hand. Deep water rushed\ndown the street separating the two high cliffs.\n\n\n\n        \"Because you are dishonest, you must remain here forever,\" Macaban\ncried, \"You cannot cross the deep water and escape from the many crocodiles.\"\n\n       Until today, the keyhole, the mouth of the cave, and the stone door\ncan be seen by boat riders going up and down the Inabangan River in Bohol.\nPeople say these parts of the enhanced trunk of Macaban, a splendid city\nunderneath the mountain.\n\n\n\n\nCopy the letter of the correct answer.\n\n1. Why did Macaban allow anyone to borrow items from her underground\n     city without strict supervision?\n\n      A. She was careless and forgetful\n      B. She wanted people to steal from her\n      C. She did not value her possessions\n      D. She trusted people and believed in their goodness\n\n2. What does the dishonest couple’s behavior reveal about their character?\n\n      A. They were fearful of Macaban\n      B. They were curious and adventurous\n      C. They were greedy and ungrateful\n      D. They were confused about the rules\n\n3. Why did Macaban give the people only 20 minutes to choose their gifts?\n\n      A. To punish everyone\n      B. To protect her city from flooding\n      C. To hurry the wedding celebration\n      D. To test who would follow instructions\n\n4. What does the fate of the dishonest couple suggest about the story’s\nmessage?\n\n      A. Power should be feared\n      B. Wealth brings happiness\n      C. Clever people always succeed\n      D. Dishonesty leads to serious consequences\n\n\n\n5. What lesson does the story mainly teach readers?\n\n      A. Fairies should not trust humans\n      B. Riches should be shared secretly\n      C. Obedience and honesty are rewarded\n      D. Fear is the best way to control people\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 4",
+   "pages": [
+    20,
+    21,
+    22
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nMUTYA NG SAGING\n\nIt was night after supper. The children were gathered around Lolo Hugo\nwaiting for his nightly treat, a story. Lolo Hugo had a trunk load of stories.\nHe had never been at a loss for a story his grandchildren would love so much\nto hear; and very often, the children were left in wishful thinking after\nhearing his story.\n\n\"Tell us the story of Juan Tamad,\" said four-year-old Lito, sitting on his\ngrandfather's lap.\n\n\"We heard that last night,\" interrupted Imelda. \"Tell us about the\naswang or the tikbalang please,\" she continued. She always wanted to hear\nstories that were shivery and hair-raising. Imelda was Lolo Hugo's only\ngranddaughter.\n\n\"Tonight, I'm going to tell you about the \"Mutya ng Saging”. You must\nlisten very carefully because when you grow up, I would like you to look for\nit. If you find it, you will be very prosperous and happy all your life.\"\n\nThus goes Lolo Hugo's story:\n\n\"The mutya ng saging (magic charm from the banana plant) is\nconsidered the strongest and the most charming of all. Only the patient and\nthe stout-hearted could find it.\n\nThe charm cannot be found in all banana plants. This plant grows apart\nfrom other banana plants. It produces no young suckling around it; not even\nweeds would grow within the shadow of Its leaves.\n\nLook for that plant when it is about to bear flowers. You will notice that\nits purple heart is like that of any other banana plant. But it will open only\nat midnight when the moon is young. This banana tree will not bear fruit\nbecause the heart will fall off when the charm is gone.\n\nSo, you will watch, night after night under this banana tree. At some\ntime before midnight when the heart is about to open, the banana leaves will\nfly about as if tossed by strong winds, although there is not even the whisper\n\nof a wind animal shapes and shadows shall gather around the banana and\nfrighten you away.\n\nStay beneath the heart and be ready to catch the stone as it falls out. If\nit falls to the ground, it will sink immediately to the center of the earth. When\nyou catch the stone, swallow it fast because the weird creature will try to\nwrest it from you. They will bite your hands, tear your mouth. You must fight\nthese creatures until you have swallowed the stone. If you succeed, the\ncreatures, groaning and crying, will leave you alone and go back to where\nthey came from.\n\nHenceforth, love will be yours for the choosing. You will have many\nfriends, and life will come easy and pleasant for as long as you live.\"\n\nChoose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Why did Lolo Hugo tell the children to listen very carefully to the story of the Mutya ng Saging?",
+       "opts": [
+        [
+         "a",
+         "Because it was frightening"
+        ],
+        [
+         "b",
+         "Because it was only for adults"
+        ],
+        [
+         "c",
+         "Because the story was very short"
+        ],
+        [
+         "d",
+         "Because it carried an important lesson for their future"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "What does the difficulty of finding the Mutya ng Saging symbolize?",
+       "opts": [
+        [
+         "a",
+         "Wealth is inherited"
+        ],
+        [
+         "b",
+         "Fear should always be avoided"
+        ],
+        [
+         "c",
+         "Luck comes easily to everyone"
+        ],
+        [
+         "d",
+         "Success requires patience and courage"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Why do the frightening creatures appear when the banana heart is about to open?",
+       "opts": [
+        [
+         "a",
+         "To entertain the seeker"
+        ],
+        [
+         "b",
+         "To destroy the banana plant"
+        ],
+        [
+         "c",
+         "To punish people who are curious"
+        ],
+        [
+         "d",
+         "To guard the charm and test the seeker’s bravery"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What does swallowing the stone before the creatures take it suggest?",
+       "opts": [
+        [
+         "a",
+         "Magic works only at night"
+        ],
+        [
+         "b",
+         "Victory comes through strength alone"
+        ],
+        [
+         "c",
+         "Rewards must be hidden from others"
+        ],
+        [
+         "d",
+         "One must act quickly and decisively to succeed"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "What is the main message of the story about happiness and prosperity?",
+       "opts": [
+        [
+         "a",
+         "They are given freely to everyone"
+        ],
+        [
+         "b",
+         "They depend on magical objects alone"
+        ],
+        [
+         "c",
+         "They come only from supernatural beings"
+        ],
+        [
+         "d",
+         "They are achieved through courage, patience, and perseverance"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n                               MUTYA NG SAGING\n\n      It was night after supper. The children were gathered around Lolo Hugo\n waiting for his nightly treat, a story. Lolo Hugo had a trunk load of stories.\n He had never been at a loss for a story his grandchildren would love so much\n to hear; and very often, the children were left in wishful thinking after\n hearing his story.\n\n     \"Tell us the story of Juan Tamad,\" said four-year-old Lito, sitting on his\n grandfather's lap.\n\n      \"We heard that last night,\" interrupted Imelda. \"Tell us about the\n aswang or the tikbalang please,\" she continued. She always wanted to hear\n stories that were shivery and hair-raising. Imelda was Lolo Hugo's only\n granddaughter.\n\n        \"Tonight, I'm going to tell you about the \"Mutya ng Saging”. You must\n listen very carefully because when you grow up, I would like you to look for\n it. If you find it, you will be very prosperous and happy all your life.\"\n\n      Thus goes Lolo Hugo's story:\n\n       \"The mutya ng saging (magic charm from the banana plant) is\n considered the strongest and the most charming of all. Only the patient and\n the stout-hearted could find it.\n\n     The charm cannot be found in all banana plants. This plant grows apart\n from other banana plants. It produces no young suckling around it; not even\n weeds would grow within the shadow of Its leaves.\n\n      Look for that plant when it is about to bear flowers. You will notice that\n its purple heart is like that of any other banana plant. But it will open only\n at midnight when the moon is young. This banana tree will not bear fruit\n because the heart will fall off when the charm is gone.\n\n       So, you will watch, night after night under this banana tree. At some\n time before midnight when the heart is about to open, the banana leaves will\n fly about as if tossed by strong winds, although there is not even the whisper\n\n\n\n of a wind animal shapes and shadows shall gather around the banana and\n frighten you away.\n\n        Stay beneath the heart and be ready to catch the stone as it falls out. If\n it falls to the ground, it will sink immediately to the center of the earth. When\n you catch the stone, swallow it fast because the weird creature will try to\n wrest it from you. They will bite your hands, tear your mouth. You must fight\n these creatures until you have swallowed the stone. If you succeed, the\n creatures, groaning and crying, will leave you alone and go back to where\n they came from.\n\n      Henceforth, love will be yours for the choosing. You will have many\n friends, and life will come easy and pleasant for as long as you live.\"\n\nChoose the letter of the correct answer.\n\n1. Why did Lolo Hugo tell the children to listen very carefully to the story of\nthe Mutya ng Saging?\n\n      A. Because it was frightening\n      B. Because it was only for adults\n      C. Because the story was very short\n      D. Because it carried an important lesson for their future\n\n2. What does the difficulty of finding the Mutya ng Saging symbolize?\n\n      A. Wealth is inherited\n      B. Fear should always be avoided\n      C. Luck comes easily to everyone\n      D. Success requires patience and courage\n\n3. Why do the frightening creatures appear when the banana heart is about\nto open?\n\n      A. To entertain the seeker\n      B. To destroy the banana plant\n      C. To punish people who are curious\n      D. To guard the charm and test the seeker’s bravery\n\n4. What does swallowing the stone before the creatures take it suggest?\n\n      A. Magic works only at night\n      B. Victory comes through strength alone\n      C. Rewards must be hidden from others\n      D. One must act quickly and decisively to succeed\n\n\n\n\n5. What is the main message of the story about happiness and prosperity?\n\n     A. They are given freely to everyone\n     B. They depend on magical objects alone\n     C. They come only from supernatural beings\n     D. They are achieved through courage, patience, and perseverance\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 5",
+   "pages": [
+    23,
+    24,
+    25
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nTHE WINNING OF ATALANTA\n\nAtalanta, a beautiful and fearless maiden, was the daughter of\nScheneus, King of Boetia. What she was most famous for was the fact that\nshe had the fastest pair of feet in the whole world.\n\nBecause of her beauty she had many suitors, but proud Atalanta would\nnot look with favor on any of them.\n\nShe said, \"I will marry only the man who is a faster runner than l.\"\n\nShe told her suitors that whoever really wished to marry her would have\nto run a race against her. If they failed, they would be put to death. Strangely\nenough, many of her suitors tried. They lost the race and thus lost their lives.\n\nHippomenes, one of her suitors, watched every race and saw that he\ncould never win against Atalanta. Only a miracle would help him, so he went\nto Venus, goddess of love and lovers for help.\n\nVenus took pity on him and gave him three golden apples from her\ngarden in the island of Cyprus. She whispered to him the secret of how to use\nthe apples.\n\nHappily, Hippomenes sought Atalanta and asked her permission to run\na race with him. Atalanta looked at the young man and her heart filled with\npity for him. She tried to persuade him not to try because he might lose his\nlife.\n\n\"I shall gladly die, for without you; life will not be worth living,\n“Hippomenes said. Finally, with great reluctance, Atalanta agreed to run a\nrace with him.\n\n\"Venus, don't forsake me now,\" he whispered as they took their places\nfor the race.\n\nOff they went. Hippomenes was fast but she gained on him and was\nabout to overtake him when he threw one of the golden apples on her path.\nThe girl was attracted by the glitter, so she paused one moment in her flight,\nscooped up the apple from the ground and ran on.\n\nHippomenes was quite a distance away, but fleet-footed Atalanta easily\ncovered the gap between them. Soon he heard the swift patter of her feet close\nbehind.\n\n\"Venus, kind goddess, do not abandon me now, \"and he tossed the\nsecond apple at the feet of Atlanta. For the second time, Atalanta paused,\nscooped up the apple from the ground then ran on.\n\nHippomenes' lead did not do him much good for soon Atalanta was close\nagain at his heels and was about to pass him.\n\nThe goal was near His heart beating with joy, Hippomenes threw third\ngolden apple, and it rolled along Atalanta could not resist it. She paused only\na brief second and ran again. But before she could catch up with Hippomenes,\nthe young man, with one great bound, reached the goal and won the race.\n\nThey were married and lived happily and had many beautiful and brave\ndescendants.\n\nSelect and copy the letter of the best answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Was Atalanta’s condition for marriage (racing suitors to death) justified?",
+       "opts": [
+        [
+         "a",
+         "No, because running is unfair to men"
+        ],
+        [
+         "b",
+         "Yes, because the suitors chose to accept the risk"
+        ],
+        [
+         "c",
+         "Yes, because she had the right to choose any test she wanted"
+        ],
+        [
+         "d",
+         "No, because the punishment was too extreme for losing a race"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "How should Hippomenes’ use of the golden apples be judged?",
+       "opts": [
+        [
+         "a",
+         "Wrong because Venus forced him to cheat"
+        ],
+        [
+         "b",
+         "Fair because intelligence is also a form of strength"
+        ],
+        [
+         "c",
+         "Completely fair because Atalanta agreed to the race"
+        ],
+        [
+         "d",
+         "Unfair because it involved divine trickery rather than skill"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "What does Atalanta’s repeated stopping for the apples suggest about her character?",
+       "opts": [
+        [
+         "a",
+         "She was careless and foolish"
+        ],
+        [
+         "b",
+         "She wanted Hippomenes to win"
+        ],
+        [
+         "c",
+         "She was easily distracted and curious"
+        ],
+        [
+         "d",
+         "She valued beauty and desire over her own rule"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Who bears the greatest responsibility for the deaths of the earlier suitors?",
+       "opts": [
+        [
+         "a",
+         "Atalanta, for setting the rule"
+        ],
+        [
+         "b",
+         "The suitors, for agreeing to race"
+        ],
+        [
+         "c",
+         "Fate, which could not be avoided"
+        ],
+        [
+         "d",
+         "Venus, for interfering in human affairs"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "What critical lesson does the story suggest about power and pride?",
+       "opts": [
+        [
+         "a",
+         "Love excuses all actions"
+        ],
+        [
+         "b",
+         "Power should always be challenged"
+        ],
+        [
+         "c",
+         "Pride can lead to unfair or cruel decisions"
+        ],
+        [
+         "d",
+         "Strength is more important than wisdom"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n\n\n                         THE WINNING OF ATALANTA\n\n      Atalanta, a beautiful and fearless maiden, was the daughter of\nScheneus, King of Boetia. What she was most famous for was the fact that\nshe had the fastest pair of feet in the whole world.\n\n      Because of her beauty she had many suitors, but proud Atalanta would\nnot look with favor on any of them.\n\n      She said, \"I will marry only the man who is a faster runner than l.\"\n\n      She told her suitors that whoever really wished to marry her would have\nto run a race against her. If they failed, they would be put to death. Strangely\nenough, many of her suitors tried. They lost the race and thus lost their lives.\n\n      Hippomenes, one of her suitors, watched every race and saw that he\ncould never win against Atalanta. Only a miracle would help him, so he went\nto Venus, goddess of love and lovers for help.\n\n      Venus took pity on him and gave him three golden apples from her\ngarden in the island of Cyprus. She whispered to him the secret of how to use\nthe apples.\n\n       Happily, Hippomenes sought Atalanta and asked her permission to run\na race with him. Atalanta looked at the young man and her heart filled with\npity for him. She tried to persuade him not to try because he might lose his\nlife.\n\n      \"I shall gladly die, for without you; life will not be worth living,\n“Hippomenes said. Finally, with great reluctance, Atalanta agreed to run a\nrace with him.\n\n       \"Venus, don't forsake me now,\" he whispered as they took their places\nfor the race.\n\n\n\n      Off they went. Hippomenes was fast but she gained on him and was\nabout to overtake him when he threw one of the golden apples on her path.\nThe girl was attracted by the glitter, so she paused one moment in her flight,\nscooped up the apple from the ground and ran on.\n\n      Hippomenes was quite a distance away, but fleet-footed Atalanta easily\ncovered the gap between them. Soon he heard the swift patter of her feet close\nbehind.\n\n     \"Venus, kind goddess, do not abandon me now, \"and he tossed the\nsecond apple at the feet of Atlanta. For the second time, Atalanta paused,\nscooped up the apple from the ground then ran on.\n\n      Hippomenes' lead did not do him much good for soon Atalanta was close\nagain at his heels and was about to pass him.\n\n       The goal was near His heart beating with joy, Hippomenes threw third\ngolden apple, and it rolled along Atalanta could not resist it. She paused only\na brief second and ran again. But before she could catch up with Hippomenes,\nthe young man, with one great bound, reached the goal and won the race.\n\n     They were married and lived happily and had many beautiful and brave\ndescendants.\n\n\n\n\nSelect and copy the letter of the best answer.\n\n1. Was Atalanta’s condition for marriage (racing suitors to death) justified?\n\n      A. No, because running is unfair to men\n      B. Yes, because the suitors chose to accept the risk\n      C. Yes, because she had the right to choose any test she wanted\n      D. No, because the punishment was too extreme for losing a race\n\n2. How should Hippomenes’ use of the golden apples be judged?\n\n      A. Wrong because Venus forced him to cheat\n      B. Fair because intelligence is also a form of strength\n      C. Completely fair because Atalanta agreed to the race\n      D. Unfair because it involved divine trickery rather than skill\n\n\n\n3. What does Atalanta’s repeated stopping for the apples suggest about her\n     character?\n\n      A. She was careless and foolish\n      B. She wanted Hippomenes to win\n      C. She was easily distracted and curious\n      D. She valued beauty and desire over her own rule\n\n4. Who bears the greatest responsibility for the deaths of the earlier suitors?\n\n      A. Atalanta, for setting the rule\n      B. The suitors, for agreeing to race\n      C. Fate, which could not be avoided\n      D. Venus, for interfering in human affairs\n\n5. What critical lesson does the story suggest about power and pride?\n\n      A. Love excuses all actions\n      B. Power should always be challenged\n      C. Pride can lead to unfair or cruel decisions\n      D. Strength is more important than wisdom\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 6",
+   "pages": [
+    26,
+    27,
+    28
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nOUR NEIGHBOR,TAIWAN\n\nNorth of the Philippines lies our closest neighbor. It is commonly known\nas the Republic of China (R.O.C.), or in most international organizations, as\n\"Chinese Taipei.\" In area, it is about the size of Mindanao.\n\nTaiwan was once a poor, underdeveloped country---enjoy a high\nstandard of living and has a favorable balance of trade. have been put up so\nfast that new ones are housed under bamboo shelters while permanent\nbuildings are under construction. Farming has been made progressive and\nmodern. Peasants wading in water-filled rice paddies behind water buffaloes\nhave given way to prosperous farms with tractors and other machines.\nBamboo huts have disappeared, replaced by brick stone houses.\n\nTaiwan has succeeded because of its people. The average Taiwanese is\nindustrious and self-reliant and is a willing helper to his neighbor when\nsomeone needs help.\n\nTaiwan has realized that if it were to prosper, being basically\nagricultural country, agriculture must be given primary attention. Instead of\nfirst thinking of steelmills;factories,jet, airports, giant buildings and\nmagnificent homes as other underdeveloped countries do, Taiwan began with\na program beginning at the grassroots --- improvement of farming and\nsatisfying the people's hunger for land.\n\nTaiwan instituted a well-organized land reform program with the aim of\nproviding security and livelihood for the tenants of big landholders. It opened\nthe public land for purchase by tenant-farmers, payable from their crop yield.\nFinally, large private landholdings were brought by/the governments and sold\nto the tenants at reasonable rates. No landlord could hold more than seven\nacres of Riceland. The former owners of large tracts of land were encouraged\nto invest in industrial and business enterprises.\n\nAs a result, Taiwan is self-sufficient in the production of country's\nimmediate needs. They produce enough clothing materials. They have an\nexcess of cement production and export over one million tons a year. They\nhave medical and pharmaceutical plants, flour mills, motor cars, and truck\nfactories, chemical fertilizer plants and many other enterprises.\n\nEducational and cultural development in Taiwan is also at a high level.\nAbout 600 billion New Taiwan dollars is spent on education. Taiwan's literacy\nrate as of 2003 is a high 96.1percent of its population.\n\nChoose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Why did Taiwan choose to prioritize agriculture instead of heavy industries at the start of its development?",
+       "opts": [
+        [
+         "a",
+         "Because it lacked educated people"
+        ],
+        [
+         "b",
+         "Because it wanted to imitate other countries"
+        ],
+        [
+         "c",
+         "Because it had no interest in industrial progress"
+        ],
+        [
+         "d",
+         "Because addressing basic needs was essential for long-term growth"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "How did land reform contribute to Taiwan’s economic success?",
+       "opts": [
+        [
+         "a",
+         "It made landlords richer"
+        ],
+        [
+         "b",
+         "It reduced farming activities"
+        ],
+        [
+         "c",
+         "It discouraged private investment"
+        ],
+        [
+         "d",
+         "It gave farmers security and motivation to produce more"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "What does the passage suggest about the role of people in Taiwan’s development?",
+       "opts": [
+        [
+         "a",
+         "Natural resources guaranteed success"
+        ],
+        [
+         "b",
+         "Government action alone caused progress"
+        ],
+        [
+         "c",
+         "Development depended mainly on foreign aid"
+        ],
+        [
+         "d",
+         "People’s attitudes and work ethic were key factors"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Which development approach in the passage is implied to be less effective for poor countries?",
+       "opts": [
+        [
+         "a",
+         "Investing first in agriculture"
+        ],
+        [
+         "b",
+         "Improving education and literacy"
+        ],
+        [
+         "c",
+         "Helping tenant farmers own land"
+        ],
+        [
+         "d",
+         "Starting with large factories and grand projects"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "What lesson can other developing countries learn from the experience of Taiwan?",
+       "opts": [
+        [
+         "a",
+         "Focus only on exports"
+        ],
+        [
+         "b",
+         "Depend mainly on industrialization"
+        ],
+        [
+         "c",
+         "Ignore cultural and educational development"
+        ],
+        [
+         "d",
+         "Strengthen basic sectors and human development first"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n\n                  OUR NEIGHBOR,TAIWAN\n\n\n      North of the Philippines lies our closest neighbor. It is commonly known\nas the Republic of China (R.O.C.), or in most international organizations, as\n\"Chinese Taipei.\" In area, it is about the size of Mindanao.\n\n\n      Taiwan was once a poor, underdeveloped country---enjoy a high\nstandard of living and has a favorable balance of trade. have been put up so\nfast that new ones are housed under bamboo shelters while permanent\nbuildings are under construction. Farming has been made progressive and\nmodern. Peasants wading in water-filled rice paddies behind water buffaloes\nhave given way to prosperous farms with tractors and other machines.\nBamboo huts have disappeared, replaced by brick stone houses.\n\n\n      Taiwan has succeeded because of its people. The average Taiwanese is\nindustrious and self-reliant and is a willing helper to his neighbor when\nsomeone needs help.\n\n       Taiwan has realized that if it were to prosper, being basically\nagricultural country, agriculture must be given primary attention. Instead of\nfirst thinking of steelmills;factories,jet, airports, giant buildings and\nmagnificent homes as other underdeveloped countries do, Taiwan began with\na program beginning at the grassroots --- improvement of farming and\nsatisfying the people's hunger for land.\n\n       Taiwan instituted a well-organized land reform program with the aim of\nproviding security and livelihood for the tenants of big landholders. It opened\nthe public land for purchase by tenant-farmers, payable from their crop yield.\nFinally, large private landholdings were brought by/the governments and sold\nto the tenants at reasonable rates. No landlord could hold more than seven\nacres of Riceland. The former owners of large tracts of land were encouraged\nto invest in industrial and business enterprises.\n\n\n\n      As a result, Taiwan is self-sufficient in the production of country's\nimmediate needs. They produce enough clothing materials. They have an\nexcess of cement production and export over one million tons a year. They\nhave medical and pharmaceutical plants, flour mills, motor cars, and truck\nfactories, chemical fertilizer plants and many other enterprises.\n\n\n      Educational and cultural development in Taiwan is also at a high level.\nAbout 600 billion New Taiwan dollars is spent on education. Taiwan's literacy\nrate as of 2003 is a high 96.1percent of its population.\n\n\n\n\nChoose the letter of the correct answer.\n\n1. Why did Taiwan choose to prioritize agriculture instead of heavy\n     industries at the start of its development?\n\n      A. Because it lacked educated people\n      B. Because it wanted to imitate other countries\n      C. Because it had no interest in industrial progress\n      D. Because addressing basic needs was essential for long-term growth\n\n2. How did land reform contribute to Taiwan’s economic success?\n\n      A. It made landlords richer\n      B. It reduced farming activities\n      C. It discouraged private investment\n      D. It gave farmers security and motivation to produce more\n\n3. What does the passage suggest about the role of people in Taiwan’s\ndevelopment?\n\n      A. Natural resources guaranteed success\n      B. Government action alone caused progress\n      C. Development depended mainly on foreign aid\n      D. People’s attitudes and work ethic were key factors\n\n4. Which development approach in the passage is implied to be less effective\nfor poor countries?\n\n      A. Investing first in agriculture\n      B. Improving education and literacy\n      C. Helping tenant farmers own land\n      D. Starting with large factories and grand projects\n\n\n\n\n5. What lesson can other developing countries learn from the experience of\nTaiwan?\n\n      A. Focus only on exports\n      B. Depend mainly on industrialization\n      C. Ignore cultural and educational development\n      D. Strengthen basic sectors and human development first\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 7",
+   "pages": [
+    29,
+    30,
+    31
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nAFRICA, THE DARK CONTINENT\nWhenever we think of Africa, we seem to picture a large continent\ncovered with either huge desert, high plateau and mountains, and vast\nimpenetrable jungles inhabited by black uncivilized people. We oftentimes\noverlook the past that Egypt, which is part of Africa, was once cradle of the\nfirst great civilization. Egypt had built magnificent temples, palaces, and the\npyramids when most on Europe was still in a barbaric stage.\n\nAfrica has often been called the Dark Continent. The true Africa is a\ncontinent of vivid contrasts. There are many kinds of landforms and the\nclimate is variable. There are the hot desert Sahara Desert and the high\nplateau which covers the area south of the Sahara. There are dense jungles,\nbroad fertile plains and high snow-capped mountains. As a result of these\ndifferences, many ways of living have developed in Africa's varied kinds of\nlands.\n\nThe areas north of the Sahara have been part of the rich and colorful\nlife of the Mediterranean world. Sahara's great expanse is not entirely a waste\nof shifting sands. Only one-tenth of the desert is covered by sand. The rest\nare plains, hills, mountains, and thousands of oases where date palms and\nother palms thrive. Egypt and Ethiopia are regions which are productive,\nculturally and agriculturally. Theirs is a rich history.\nBoth the eastern and western coastal areas are fertile. Here are cites of\nthe cities and other centers of population. Southern Africa is a pleasant land\nand is one of the continent's most prosperous areas. Central Africa's rivers\nhave their source here.\n\nCentral Africa is covered with dense jungles. So much rain falls that\ntrees and plants grow very fast. Thick bushes and tough vines twinning from\ntrees make passage difficult, sometimes impossible. The jungles are inhabited\nby pygmies who never mingle with other people.\n\nThey depend on fruits, roots, and small animals which they kill with\npoisoned arrows. Elsewhere, the plateaus are grasslands with only a few trees.\nThe grasslands with all grass are the home of elephants, buffaloes, and\nrhinoceros. The areas where the grass is not very tall are the roving areas of\nall kinds of deer, giraffes, and zebras.\n\nThe African plateau is peopled by Negroes (Bantu)who have little\ncontact with civilization. They are very tall men; men seven feet in height are\ncommon sight. Many of them earn their living through primitive farming,\nhording, and hunting, they have a tribal form of government; each village has\na headman, usually related to the chief of the tribe. There are many war-like\ntribes in the heart of Central Africa.\n\nThe civilized people of Africa are mostly Muslims. The Muslim Arabs\nwere the first people to have commercial and cultural contact with Africa.\nChristian missionaries have made inroads in the establishment of\nChristianity in many parts of Africa.\n\nWith these innovations, could we say then that Africa is no longer the\nDark Continent?\n\nSelect the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "Is the term “Dark Continent” fair?",
+       "opts": [
+        [
+         "a",
+         "No"
+        ],
+        [
+         "b",
+         "Yes"
+        ],
+        [
+         "c",
+         "No, it is misleading"
+        ],
+        [
+         "d",
+         "No, it ignores Africa’s history and diversity"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Why does the author mention ancient Egypt early in the passage?",
+       "opts": [
+        [
+         "a",
+         "To praise Europe"
+        ],
+        [
+         "b",
+         "To describe geography"
+        ],
+        [
+         "c",
+         "To show Africa’s early greatness"
+        ],
+        [
+         "d",
+         "To challenge the idea that Africa lacked civilization"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "What weakness appears in the author’s descriptions of some African groups?",
+       "opts": [
+        [
+         "a",
+         "Vagueness"
+        ],
+        [
+         "b",
+         "Exaggeration"
+        ],
+        [
+         "c",
+         "Cultural bias"
+        ],
+        [
+         "d",
+         "Use of outdated and judgmental terms"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "How should modern readers react to words like “uncivilized” and “primitive”?",
+       "opts": [
+        [
+         "a",
+         "Accept them"
+        ],
+        [
+         "b",
+         "Ignore them"
+        ],
+        [
+         "c",
+         "Question the language"
+        ],
+        [
+         "d",
+         "Analyze them as products of their time"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "Based on the passage, what is the strongest reason Africa should no longer be called the “Dark Continent”?",
+       "opts": [
+        [
+         "a",
+         "It has deserts"
+        ],
+        [
+         "b",
+         "It has many tribes"
+        ],
+        [
+         "c",
+         "It has fertile lands"
+        ],
+        [
+         "d",
+         "It has diverse cultures, histories, and levels of development"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n\n                AFRICA, THE DARK CONTINENT\n       Whenever we think of Africa, we seem to picture a large continent\ncovered with either huge desert, high plateau and mountains, and vast\nimpenetrable jungles inhabited by black uncivilized people. We oftentimes\noverlook the past that Egypt, which is part of Africa, was once cradle of the\nfirst great civilization. Egypt had built magnificent temples, palaces, and the\npyramids when most on Europe was still in a barbaric stage.\n\n       Africa has often been called the Dark Continent. The true Africa is a\ncontinent of vivid contrasts. There are many kinds of landforms and the\nclimate is variable. There are the hot desert Sahara Desert and the high\nplateau which covers the area south of the Sahara. There are dense jungles,\nbroad fertile plains and high snow-capped mountains. As a result of these\ndifferences, many ways of living have developed in Africa's varied kinds of\nlands.\n\n        The areas north of the Sahara have been part of the rich and colorful\nlife of the Mediterranean world. Sahara's great expanse is not entirely a waste\nof shifting sands. Only one-tenth of the desert is covered by sand. The rest\nare plains, hills, mountains, and thousands of oases where date palms and\nother palms thrive. Egypt and Ethiopia are regions which are productive,\nculturally and agriculturally. Theirs is a rich history.\n        Both the eastern and western coastal areas are fertile. Here are cites of\nthe cities and other centers of population. Southern Africa is a pleasant land\nand is one of the continent's most prosperous areas. Central Africa's rivers\nhave their source here.\n\n      Central Africa is covered with dense jungles. So much rain falls that\ntrees and plants grow very fast. Thick bushes and tough vines twinning from\ntrees make passage difficult, sometimes impossible. The jungles are inhabited\nby pygmies who never mingle with other people.\n\n       They depend on fruits, roots, and small animals which they kill with\npoisoned arrows. Elsewhere, the plateaus are grasslands with only a few trees.\nThe grasslands with all grass are the home of elephants, buffaloes, and\nrhinoceros. The areas where the grass is not very tall are the roving areas of\nall kinds of deer, giraffes, and zebras.\n\n\n\n       The African plateau is peopled by Negroes (Bantu)who have little\ncontact with civilization. They are very tall men; men seven feet in height are\ncommon sight. Many of them earn their living through primitive farming,\nhording, and hunting, they have a tribal form of government; each village has\na headman, usually related to the chief of the tribe. There are many war-like\ntribes in the heart of Central Africa.\n\n      The civilized people of Africa are mostly Muslims. The Muslim Arabs\nwere the first people to have commercial and cultural contact with Africa.\nChristian missionaries have made inroads in the establishment of\nChristianity in many parts of Africa.\n\n      With these innovations, could we say then that Africa is no longer the\nDark Continent?\n\n\n\n\nSelect the letter of the correct answer.\n\n\n1. Is the term “Dark Continent” fair?\n\n      A. No\n      B. Yes\n      C. No, it is misleading\n      D. No, it ignores Africa’s history and diversity\n\n2. Why does the author mention ancient Egypt early in the passage?\n\n      A. To praise Europe\n      B. To describe geography\n      C. To show Africa’s early greatness\n      D. To challenge the idea that Africa lacked civilization\n\n3. What weakness appears in the author’s descriptions of some African\ngroups?\n\n      A. Vagueness\n      B. Exaggeration\n      C. Cultural bias\n      D. Use of outdated and judgmental terms\n\n\n\n4. How should modern readers react to words like “uncivilized” and\n     “primitive”?\n\n      A. Accept them\n      B. Ignore them\n      C. Question the language\n      D. Analyze them as products of their time\n\n5. Based on the passage, what is the strongest reason Africa should no longer\n      be called the “Dark Continent”?\n\n      A. It has deserts\n      B. It has many tribes\n      C. It has fertile lands\n      D. It has diverse cultures, histories, and levels of development\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 8",
+   "pages": [
+    32,
+    33,
+    34
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nJOSE RIZAL AND BENIGNO AQUINO, JR.\nby: Alberto G. Romulo\n\nIt is often said that it is difficult to make comparisons of two people,\neven twins, who may have different idiosyncrasies, mannerisms, qualities,\nprinciples, and so forth. The opposite to this could be easy.\n\nBenigno Aquino, or Ninoy for one, was likened to Jose Rizal in courage\nand service to the nation. Rizal had spent years in Europe studying and\nwriting and had incurred the wrath of the friars with his novels Noli Me\nTangere and El Filibusterismo.\n\nBenigno Aquino had incurred the intense hatred of Ferdinand Marcos\nfor his political activities including speeches on political platforms and in the\nSenate highly critical of the then Chief Executive.\n\nThe friars ran after Rizal, but they could not get their hands on him as\nlong as he stayed abroad. Obviously, when he announced that he was coming\nhome, his friends and relatives hastened to tell him to stay abroad.\n\nNinoy was one or only the reason why Marcos declared Martial Law. He\nwas immediately arrested by the military, tried before a military tribunal on\ncharges of murder, possession of prohibited firearms and communism and\nwas finally condemned to die before a firing squad.\n\nFrom the start, Ninoy refused to submit to trial, saying that the military\njudges' Commander- in- chief, who was Marcos, had already publicly\ncondemned him on the same charges. He also refused to be represented by\ncounsel.\n\n\"Sirs,\" he addressed the tribunal, \"I know you to be honorable men. You\nmay decide to preserve my life, but Marcos chooses to send me to death. Some\npeople suggest that I beg for mercy. But this, in conscience, I cannot do. l\nwould rather die on my feet with honor than live on bended knees with\nshame.\"\n\nOne day he suffered terrible chest pain and rushed to the Heart Center.\nThe doctors told him that he needed a coronary bypass of which the Center is\nincapable of performing. The facilities were inadequate.\n\nNinoy went to Houston, Texas, and received a triple bypass. Three years\nlater, he wanted to come back but Malacañang did everything to keep him\nout. Marcos and Imelda told him the Communists would assassinate him if\nhe came home. His family and friends also warned him of the danger.\n\nHowever, he managed to come home with a false passport, taking China\nAirlines. On arrival he was whisked out from his seat and assassinated while\ngoing down the stairs.\n\nRizal had likewise defied his family and friends and came home. He was\narrested and sentenced to die by firing squad at the Luneta.\n\nRizal and Aquino will live in history with parallel deeds for their\ncountries and similar claims to the gratitude of the Filipinos. Rizal's death\nincensed the revolution against Spain. Aquino's death sparked and ignited\nthe peaceful and bloodless revolution that ousted Marcos from power and sent\nhim out the country.\n\nSelect the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "If Jose Rizal and Benigno Aquino Jr. were alive today, how might they express their opposition to injustice?",
+       "opts": [
+        [
+         "a",
+         "By remaining silent to stay safe"
+        ],
+        [
+         "b",
+         "By avoiding politics completely"
+        ],
+        [
+         "c",
+         "By working only in foreign countries"
+        ],
+        [
+         "d",
+         "By using modern media and public platforms to speak out"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "If Rizal had chosen not to return to the Philippines, how might Philippine history have changed?",
+       "opts": [
+        [
+         "a",
+         "The Filipinos would have forgotten Rizal"
+        ],
+        [
+         "b",
+         "Nothing important would have changed"
+        ],
+        [
+         "c",
+         "Spain would have immediately granted independence"
+        ],
+        [
+         "d",
+         "The revolution might have been delayed or taken a different course"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Imagine Ninoy Aquino chose to stay abroad permanently. What effect might this have had on the Filipino people?",
+       "opts": [
+        [
+         "a",
+         "They would have become richer"
+        ],
+        [
+         "b",
+         "Martial Law would have ended sooner"
+        ],
+        [
+         "c",
+         "Marcos would have resigned immediately"
+        ],
+        [
+         "d",
+         "They might not have been inspired to rise against dictatorship"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What modern leader could be compared to Rizal and Ninoy based on the qualities shown in the text?",
+       "opts": [
+        [
+         "a",
+         "A leader who avoids criticism"
+        ],
+        [
+         "b",
+         "A leader who seeks power at all costs"
+        ],
+        [
+         "c",
+         "A leader who values wealth over principles"
+        ],
+        [
+         "d",
+         "A leader who risks personal safety to serve the people"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "If you were asked to write a new title for the essay, which would best capture its message?",
+       "opts": [
+        [
+         "a",
+         "Two Men Who Lost Their Lives"
+        ],
+        [
+         "b",
+         "The Power of Courage and Sacrifice"
+        ],
+        [
+         "c",
+         "Political Conflicts in the Philippines"
+        ],
+        [
+         "d",
+         "A Comparison of Two Leaders 6. Ninoy was tried in a military tribunal on charges of"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n          JOSE RIZAL AND BENIGNO AQUINO, JR.\n                            by: Alberto G. Romulo\n\n      It is often said that it is difficult to make comparisons of two people,\neven twins, who may have different idiosyncrasies, mannerisms, qualities,\nprinciples, and so forth. The opposite to this could be easy.\n\n      Benigno Aquino, or Ninoy for one, was likened to Jose Rizal in courage\nand service to the nation. Rizal had spent years in Europe studying and\nwriting and had incurred the wrath of the friars with his novels Noli Me\nTangere and El Filibusterismo.\n\n       Benigno Aquino had incurred the intense hatred of Ferdinand Marcos\nfor his political activities including speeches on political platforms and in the\nSenate highly critical of the then Chief Executive.\n\n      The friars ran after Rizal, but they could not get their hands on him as\nlong as he stayed abroad. Obviously, when he announced that he was coming\nhome, his friends and relatives hastened to tell him to stay abroad.\n\n      Ninoy was one or only the reason why Marcos declared Martial Law. He\nwas immediately arrested by the military, tried before a military tribunal on\ncharges of murder, possession of prohibited firearms and communism and\nwas finally condemned to die before a firing squad.\n\n      From the start, Ninoy refused to submit to trial, saying that the military\njudges' Commander- in- chief, who was Marcos, had already publicly\ncondemned him on the same charges. He also refused to be represented by\ncounsel.\n\n      \"Sirs,\" he addressed the tribunal, \"I know you to be honorable men. You\nmay decide to preserve my life, but Marcos chooses to send me to death. Some\npeople suggest that I beg for mercy. But this, in conscience, I cannot do. l\nwould rather die on my feet with honor than live on bended knees with\nshame.\"\n\n\n\n      One day he suffered terrible chest pain and rushed to the Heart Center.\nThe doctors told him that he needed a coronary bypass of which the Center is\nincapable of performing. The facilities were inadequate.\n\n       Ninoy went to Houston, Texas, and received a triple bypass. Three years\nlater, he wanted to come back but Malacañang did everything to keep him\nout. Marcos and Imelda told him the Communists would assassinate him if\nhe came home. His family and friends also warned him of the danger.\n\n      However, he managed to come home with a false passport, taking China\nAirlines. On arrival he was whisked out from his seat and assassinated while\ngoing down the stairs.\n\n      Rizal had likewise defied his family and friends and came home. He was\narrested and sentenced to die by firing squad at the Luneta.\n\n      Rizal and Aquino will live in history with parallel deeds for their\ncountries and similar claims to the gratitude of the Filipinos. Rizal's death\nincensed the revolution against Spain. Aquino's death sparked and ignited\nthe peaceful and bloodless revolution that ousted Marcos from power and sent\nhim out the country.\n\n\nSelect the letter of the correct answer.\n\n1. If Jose Rizal and Benigno Aquino Jr. were alive today, how might they\nexpress their opposition to injustice?\n\n      A. By remaining silent to stay safe\n      B. By avoiding politics completely\n      C. By working only in foreign countries\n      D. By using modern media and public platforms to speak out\n\n\n2. If Rizal had chosen not to return to the Philippines, how might Philippine\nhistory have changed?\n\n      A. The Filipinos would have forgotten Rizal\n      B. Nothing important would have changed\n      C. Spain would have immediately granted independence\n      D. The revolution might have been delayed or taken a different course\n\n\n\n3. Imagine Ninoy Aquino chose to stay abroad permanently. What effect might\nthis have had on the Filipino people?\n\n      A. They would have become richer\n      B. Martial Law would have ended sooner\n      C. Marcos would have resigned immediately\n      D. They might not have been inspired to rise against dictatorship\n\n4. What modern leader could be compared to Rizal and Ninoy based on the\nqualities shown in the text?\n\n      A. A leader who avoids criticism\n      B. A leader who seeks power at all costs\n      C. A leader who values wealth over principles\n      D. A leader who risks personal safety to serve the people\n\n5. If you were asked to write a new title for the essay, which would best\ncapture its message?\n\n      A. Two Men Who Lost Their Lives\n      B. The Power of Courage and Sacrifice\n      C. Political Conflicts in the Philippines\n      D. A Comparison of Two Leaders 6. Ninoy was tried in a military\n      tribunal on charges of\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 9",
+   "pages": [
+    35,
+    36,
+    37
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "Directions: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nTHE SEA HORSE\n\nNature has many strange creatures, some of them huge, some of them\nsmall. One of these strange creatures is the sea horse. This animal of the sea\nhas the arching neck of a wild stallion, the swelling bosom of a pigeon, the\ngrasping tail of a monkey, and the power to change its color that belongs to a\nchameleon. It has eyes that pivot independently of one another so that while\none looks up, the other can look down or around. To top this fantasy, the\nmale-is equipped with a kangaroo style pouch in its front, from which the little\nones are born.\n\nThere are more than 40 species, ranging in length from one inch to one\nfoot, and they can be found in the warm seas all over the world. The sea is a\nmaster of camouflaging. It can change color to go with its surroundings.\n\nThe sea horse's body is sheathed in a tough, Capiz-like armor of bony\nplates. Because of this rigid armor, it swims standing up by fluttering a tiny\nyellow, fanlike fin on its back, propelling itself in a stately manner. Straight\nas a rod, it moves forward or backward, up and down, by manipulating that\nfin so fast that movement is hardly visible. Two membrane- like fins at the\nsides of its head wave carelessly.\n\nThe worst thing that can happen to a swimming sea horse is a puncture\nin its armor. A single puncture in its armor could cause air to escape from its\nsealed armor and make the sea horse sink helplessly to the bottom. There it\nremains until he has manufactured enough gas to fill up his tank.\n\nThe courtship of sea horses is strange. The female produces from 500\nto 600 eggs and deposits them in the male's pouch. For the next 45 days, the\nfather sea horse nourishes the nestling in his swelling incubator pouch. At\nthe end of this period, a baby sea horse the size of a comma swims out,\nfollowed by another, then another. This continues until the whole brood is\nejected from the incubator. Each baby is an exact replica of its parents, except\nthat the body is transparent. Its tiny heart can be seen beating with aid of\nmagnifying glass.\n\nThe sea horse feeds on plankton and minute plant and animal life. It\nwould not feed on anything that is not alive and moving. The sea horse itself\nis not fit to be eaten either by man or by fish.\n\nWhat use is a sea horse? Studies made have not revealed any useful\npurpose in the sea horse. However, everything in nature has a need and a\npurpose. Perhaps, sea horses were made to keep the level of plankton down\nso that the latter would not overrun the sea.\n\nChoose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "If the sea horse could speak, what do you think it would complain a bout most?",
+       "opts": [
+        [
+         "a",
+         "Living only in warm seas"
+        ],
+        [
+         "b",
+         "Being too small to be noticed"
+        ],
+        [
+         "c",
+         "Being misunderstood by humans"
+        ],
+        [
+         "d",
+         "Having armor that makes swimming difficult"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "If the sea horse did not have the ability to change color, how might it survive?",
+       "opts": [
+        [
+         "a",
+         "By swimming faster"
+        ],
+        [
+         "b",
+         "By growing larger"
+        ],
+        [
+         "c",
+         "By attacking other sea animals"
+        ],
+        [
+         "d",
+         "By hiding among rocks and plants"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Which invention could be inspired by the sea horse’s body design?",
+       "opts": [
+        [
+         "a",
+         "A fast racing boat"
+        ],
+        [
+         "b",
+         "A flying machine"
+        ],
+        [
+         "c",
+         "A land vehicle"
+        ],
+        [
+         "d",
+         "A flexible underwater robot with armor"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "If humans were like sea horses, what part of society would change t he most?",
+       "opts": [
+        [
+         "a",
+         "Sports"
+        ],
+        [
+         "b",
+         "Education"
+        ],
+        [
+         "c",
+         "Transportation"
+        ],
+        [
+         "d",
+         "Family roles and parenting"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "If scientists discovered that sea horses suddenly disappeared, what might happen to the ocean?",
+       "opts": [
+        [
+         "a",
+         "The water would dry up"
+        ],
+        [
+         "b",
+         "Fish would become extinct"
+        ],
+        [
+         "c",
+         "Coral reefs would turn into sand"
+        ],
+        [
+         "d",
+         "Plankton might increase uncontrollably"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n                         THE SEA HORSE\n\n       Nature has many strange creatures, some of them huge, some of them\nsmall. One of these strange creatures is the sea horse. This animal of the sea\nhas the arching neck of a wild stallion, the swelling bosom of a pigeon, the\ngrasping tail of a monkey, and the power to change its color that belongs to a\nchameleon. It has eyes that pivot independently of one another so that while\none looks up, the other can look down or around. To top this fantasy, the\nmale-is equipped with a kangaroo style pouch in its front, from which the little\nones are born.\n\n       There are more than 40 species, ranging in length from one inch to one\nfoot, and they can be found in the warm seas all over the world. The sea is a\nmaster of camouflaging. It can change color to go with its surroundings.\n\n       The sea horse's body is sheathed in a tough, Capiz-like armor of bony\nplates. Because of this rigid armor, it swims standing up by fluttering a tiny\nyellow, fanlike fin on its back, propelling itself in a stately manner. Straight\nas a rod, it moves forward or backward, up and down, by manipulating that\nfin so fast that movement is hardly visible. Two membrane- like fins at the\nsides of its head wave carelessly.\n\n        The worst thing that can happen to a swimming sea horse is a puncture\nin its armor. A single puncture in its armor could cause air to escape from its\nsealed armor and make the sea horse sink helplessly to the bottom. There it\nremains until he has manufactured enough gas to fill up his tank.\n\n      The courtship of sea horses is strange. The female produces from 500\nto 600 eggs and deposits them in the male's pouch. For the next 45 days, the\nfather sea horse nourishes the nestling in his swelling incubator pouch. At\nthe end of this period, a baby sea horse the size of a comma swims out,\nfollowed by another, then another. This continues until the whole brood is\nejected from the incubator. Each baby is an exact replica of its parents, except\nthat the body is transparent. Its tiny heart can be seen beating with aid of\nmagnifying glass.\n\n\n\n       The sea horse feeds on plankton and minute plant and animal life. It\nwould not feed on anything that is not alive and moving. The sea horse itself\nis not fit to be eaten either by man or by fish.\n\n      What use is a sea horse? Studies made have not revealed any useful\npurpose in the sea horse. However, everything in nature has a need and a\npurpose. Perhaps, sea horses were made to keep the level of plankton down\nso that the latter would not overrun the sea.\n\n\n\n\nChoose the letter of the correct answer.\n\n     1. If the sea horse could speak, what do you think it would complain a\nbout most?\n\n      A. Living only in warm seas\n      B. Being too small to be noticed\n      C. Being misunderstood by humans\n      D. Having armor that makes swimming difficult\n\n      2. If the sea horse did not have the ability to change color, how might it\nsurvive?\n\n      A. By swimming faster\n      B. By growing larger\n      C. By attacking other sea animals\n      D. By hiding among rocks and plants\n\n3. Which invention could be inspired by the sea horse’s body design?\n\n      A. A fast racing boat\n      B. A flying machine\n      C. A land vehicle\n      D. A flexible underwater robot with armor\n\n     4. If humans were like sea horses, what part of society would change t\nhe most?\n     A. Sports\n     B. Education\n     C. Transportation\n     D. Family roles and parenting\n\n\n\n     5. If scientists discovered that sea horses suddenly disappeared, what\nmight happen to the ocean?\n     A. The water would dry up\n     B. Fish would become extinct\n     C. Coral reefs would turn into sand\n     D. Plankton might increase uncontrollably\n"
+  },
+  {
+   "phase": "learn",
+   "label": "Activity 10",
+   "pages": [
+    38,
+    39,
+    40
+   ],
+   "acts": [
+    {
+     "direction": "Read the passage and answer the questions that follow.",
+     "lead": "ACTIVITY 10 Creative thinking)\nDirections: Read the passage and answer the questions that follow.\n\nRead the selection below and answer the questions that follow.\n\nABRAHAM LINCOLN\n\nMany stories have been told of the boy who was born in a log cabin of\nvery poor parents; of how he learned to read by the light of the fireplace; and\nof how he walked long distances to borrow books. From humble beginnings,\nhe rose and, became the Great Emancipator.\n\nAs a young man, he tended store for a neighbor. On one occasion he\nunintentionally short-changed a customer. It was long after the customer had\ndeparted when he discovered his mistake. He walked miles and miles to the\ncustomer's house just to return the change. That was how he earned the name\n\"Honest Abe\".\n\nThen he became President of the United States. When he was troubled\nby affairs of state, he took long walk to clear his mind. On these walks he was\nusually dressed in his old clothes. With his long strides he often outdistanced\nthe men assigned to guard him.\n\nAt dusk of one winter, he went on one of these walks. Snow had covered\nthe roads making them slippery. He was walking along an almost deserted\nstreet, when a carriage driving fast overtook him. Suddenly, a dog ran across\nthe street frightening the horses. They shied, driving the carriage to a deep\nditch, its rear wheel stuck in the deep muddy ditch. The horses were unable\nto move the carriage no matter how they tired. The colored driver and the\nfootman kept urging the horses, but the carriage-wheel sank deeper.\n\nThe passenger, apparently a very wealthy and important man because\nof his elegant and rich garb, keep shouting at his men, waving his arms in\nanger and frustration. He had an appointment to keep at the White House.\n\nThe tall, bearded pedestrian came to the scene, and at a glance saw\nwhat had happened. He approached the carriage on the side stuck in the\nditch, put his shoulders to the wheel, and signaled the coachman to prod the\nhorses. At first, the carriage would not move. With another mighty heave of\nthe tall pedestrian, the carriage finally moved out of the ditch. The coachman\nleaped to his place, the passenger sank to his seat, and the carriage drove on\nto the White House.\n\nThe passenger was just on tome for his appointment. In the President's\nroom, he sat, a little impatient. In his country, he was an important man. In\nthis wild. country, he did not relish being kept waiting.\n\nAt last, a door opened. A tall, bearded man entered, his clothes\nsplattered with mud and snow. He gravely took the suddenly limp hand of the\ndumb- stricken visitor, then went around the desk and, mud and all, sat on\nthe chair of the President of the United States.\n\nEtched on an old-fashioned ink stand on which the tall man dipped a\nquill pen was the name: A. Lincoln!\n\nChoose the letter of the correct answer.",
+     "items": [
+      {
+       "n": 1,
+       "text": "If Abraham Lincoln lived in today’s world, which action would best show his honesty and humility?",
+       "opts": [
+        [
+         "a",
+         "Avoiding public attention completely"
+        ],
+        [
+         "b",
+         "Letting others take responsibility for his errors"
+        ],
+        [
+         "c",
+         "Quietly correcting a mistake even if no one noticed"
+        ],
+        [
+         "d",
+         "Posting his achievements on social media every day"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "How might the wealthy passenger’s view of leadership have changed after meeting Abraham Lincoln?",
+       "opts": [
+        [
+         "a",
+         "He would lose respect for government officials"
+        ],
+        [
+         "b",
+         "He would realize that true leaders serve others humbly"
+        ],
+        [
+         "c",
+         "He would believe leaders should appear powerful and rich"
+        ],
+        [
+         "d",
+         "He would think leaders should never help ordinary people"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "If Lincoln had chosen not to help the stranded carriage, what message would the story send instead?",
+       "opts": [
+        [
+         "a",
+         "Power excuses selfishness"
+        ],
+        [
+         "b",
+         "Leaders should protect their status"
+        ],
+        [
+         "c",
+         "Kindness depends on social rank"
+        ],
+        [
+         "d",
+         "Leadership has little to do with character"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "Imagine the story were told from the passenger’s point of view. What feeling would likely dominate the ending?",
+       "opts": [
+        [
+         "a",
+         "Anger"
+        ],
+        [
+         "b",
+         "Fear"
+        ],
+        [
+         "c",
+         "Indifference"
+        ],
+        [
+         "d",
+         "Embarrassment and respect"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "What modern-day situation best parallels Lincoln pushing the carriage out of the ditch?",
+       "opts": [
+        [
+         "a",
+         "A leader giving a formal speech"
+        ],
+        [
+         "b",
+         "A president avoiding public contact"
+        ],
+        [
+         "c",
+         "A leader delegating all responsibilities"
+        ],
+        [
+         "d",
+         "A leader personally helping during a disaster"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\nACTIVITY 10 Creative thinking)\nDirections: Read the passage and answer the questions that follow.\n\n      Read the selection below and answer the questions that follow.\n\n\n\n                               ABRAHAM LINCOLN\n\n      Many stories have been told of the boy who was born in a log cabin of\nvery poor parents; of how he learned to read by the light of the fireplace; and\nof how he walked long distances to borrow books. From humble beginnings,\nhe rose and, became the Great Emancipator.\n\n      As a young man, he tended store for a neighbor. On one occasion he\nunintentionally short-changed a customer. It was long after the customer had\ndeparted when he discovered his mistake. He walked miles and miles to the\ncustomer's house just to return the change. That was how he earned the name\n\"Honest Abe\".\n\n       Then he became President of the United States. When he was troubled\nby affairs of state, he took long walk to clear his mind. On these walks he was\nusually dressed in his old clothes. With his long strides he often outdistanced\nthe men assigned to guard him.\n\n       At dusk of one winter, he went on one of these walks. Snow had covered\nthe roads making them slippery. He was walking along an almost deserted\nstreet, when a carriage driving fast overtook him. Suddenly, a dog ran across\nthe street frightening the horses. They shied, driving the carriage to a deep\nditch, its rear wheel stuck in the deep muddy ditch. The horses were unable\nto move the carriage no matter how they tired. The colored driver and the\nfootman kept urging the horses, but the carriage-wheel sank deeper.\n\n       The passenger, apparently a very wealthy and important man because\nof his elegant and rich garb, keep shouting at his men, waving his arms in\nanger and frustration. He had an appointment to keep at the White House.\n\n\n       The tall, bearded pedestrian came to the scene, and at a glance saw\nwhat had happened. He approached the carriage on the side stuck in the\nditch, put his shoulders to the wheel, and signaled the coachman to prod the\nhorses. At first, the carriage would not move. With another mighty heave of\nthe tall pedestrian, the carriage finally moved out of the ditch. The coachman\nleaped to his place, the passenger sank to his seat, and the carriage drove on\nto the White House.\n\n\n\n\n      The passenger was just on tome for his appointment. In the President's\nroom, he sat, a little impatient. In his country, he was an important man. In\nthis wild. country, he did not relish being kept waiting.\n\n       At last, a door opened. A tall, bearded man entered, his clothes\nsplattered with mud and snow. He gravely took the suddenly limp hand of the\ndumb- stricken visitor, then went around the desk and, mud and all, sat on\nthe chair of the President of the United States.\n\n\n       Etched on an old-fashioned ink stand on which the tall man dipped a\nquill pen was the name: A. Lincoln!\n\n\n\n\nChoose the letter of the correct answer.\n\n1. If Abraham Lincoln lived in today’s world, which action would best show\nhis honesty and humility?\n\n      A. Avoiding public attention completely\n      B. Letting others take responsibility for his errors\n      C. Quietly correcting a mistake even if no one noticed\n      D. Posting his achievements on social media every day\n\n2. How might the wealthy passenger’s view of leadership have changed after\nmeeting Abraham Lincoln?\n\n      A. He would lose respect for government officials\n      B. He would realize that true leaders serve others humbly\n      C. He would believe leaders should appear powerful and rich\n      D. He would think leaders should never help ordinary people\n\n3. If Lincoln had chosen not to help the stranded carriage, what message\nwould the story send instead?\n\n      A. Power excuses selfishness\n      B. Leaders should protect their status\n      C. Kindness depends on social rank\n      D. Leadership has little to do with character\n\n\n\n4. Imagine the story were told from the passenger’s point of view. What feeling\nwould likely dominate the ending?\n\n      A. Anger\n      B. Fear\n      C. Indifference\n      D. Embarrassment and respect\n\n5. What modern-day situation best parallels Lincoln pushing the carriage out\nof the ditch?\n\n      A. A leader giving a formal speech\n      B. A president avoiding public contact\n      C. A leader delegating all responsibilities\n      D. A leader personally helping during a disaster\n"
+  },
+  {
+   "phase": "post",
+   "label": "Post-test",
+   "pages": [
+    42,
+    43,
+    44
+   ],
+   "acts": [
+    {
+     "direction": "",
+     "lead": "Read the selection below and answer the questions that follow.\n\nSTORY OF LOVE AND TIME\n\nA long time ago, there lived on an island different feelings such as\nhappiness, sadness, love, knowledge, etc.\nOne day, they got to know that the island is going to sink soon. All my\nfeelings got worried. The feelings living on the island decided to leave it with\ntheir pre-constructed boats. Love was the only one who decided not to leave\nthe island. The day came when the island began to sink. All the feelings were\nleaving on their boats. Love asked Richness to take him in his grand boat but\nhe said that he already filled his boat with gold and money so he could not\ntake him.\nLove requested Sadness to take him along but he said that he is very\nsad so he wants to be alone. Next, he called for help to Happiness but he was\nso happy and joyful that he did not listen to Love and passed in front of him\nwithout paying attention to him.\nLove became very sad when no one was taking him in their boat. He\nheard a voice, “Hey dear friend! Come along with me.” Love came to a safe\nplace in a boat. Love was so overjoyed that he forgot to ask who he was when\nhe asked Knowledge who brought him. He further asked Knowledge if he knew\nhim. Knowledge said, “It was Time who brought you here”. Love asked, “Why\ndid Time help me?” Knowledge replied with great wisdom, “Only Time knows\nthe value of Love.”\n\nLiteral Comprehension Questions",
+     "items": [
+      {
+       "n": 1,
+       "text": "Where did the feelings live?",
+       "opts": [
+        [
+         "a",
+         "Sea"
+        ],
+        [
+         "b",
+         "Town"
+        ],
+        [
+         "c",
+         "Island"
+        ],
+        [
+         "d",
+         "A sinking island"
+        ]
+       ]
+      },
+      {
+       "n": 2,
+       "text": "Who helped Love escape?",
+       "opts": [
+        [
+         "a",
+         "Time"
+        ],
+        [
+         "b",
+         "Knowledge"
+        ],
+        [
+         "c",
+         "Sadness"
+        ],
+        [
+         "d",
+         "Richness"
+        ]
+       ]
+      },
+      {
+       "n": 3,
+       "text": "Why did Richness refuse to take Love on his boat?",
+       "opts": [
+        [
+         "a",
+         "He disliked Love"
+        ],
+        [
+         "b",
+         "He wanted to be alone"
+        ],
+        [
+         "c",
+         "His boat was full"
+        ],
+        [
+         "d",
+         "His boat was full of gold and money"
+        ]
+       ]
+      },
+      {
+       "n": 4,
+       "text": "What does Happiness passing Love without noticing suggest?",
+       "opts": [
+        [
+         "a",
+         "Happiness is cruel"
+        ],
+        [
+         "b",
+         "Happiness ignores others"
+        ],
+        [
+         "c",
+         "Happiness can be self-absorbed"
+        ],
+        [
+         "d",
+         "Happiness may overlook others while enjoying itself"
+        ]
+       ]
+      },
+      {
+       "n": 5,
+       "text": "Was Love right to stay behind when the island was sinking?",
+       "opts": [
+        [
+         "a",
+         "No, it was foolish"
+        ],
+        [
+         "b",
+         "Yes, it showed bravery"
+        ],
+        [
+         "c",
+         "No, it showed carelessness"
+        ],
+        [
+         "d",
+         "Yes, it showed selfless devotion"
+        ]
+       ]
+      },
+      {
+       "n": 6,
+       "text": "Which feeling showed the least responsibility in the story?",
+       "opts": [
+        [
+         "a",
+         "Sadness"
+        ],
+        [
+         "b",
+         "Richness"
+        ],
+        [
+         "c",
+         "Happiness"
+        ],
+        [
+         "d",
+         "Happiness because he ignored someone in need"
+        ]
+       ]
+      },
+      {
+       "n": 7,
+       "text": "Why is Time the one who saves Love, according to the story?",
+       "opts": [
+        [
+         "a",
+         "Time is powerful"
+        ],
+        [
+         "b",
+         "Time is always present"
+        ],
+        [
+         "c",
+         "Time understands all feelings"
+        ],
+        [
+         "d",
+         "Time recognizes Love’s true importance"
+        ]
+       ]
+      },
+      {
+       "n": 8,
+       "text": "If Love had left early, how would the story’s message change?",
+       "opts": [
+        [
+         "a",
+         "Love is weak"
+        ],
+        [
+         "b",
+         "Time is unnecessary"
+        ],
+        [
+         "c",
+         "Feelings must act fast"
+        ],
+        [
+         "d",
+         "Love would lose its deeper meaning"
+        ]
+       ]
+      },
+      {
+       "n": 9,
+       "text": "If the story were retold today, who might represent “Time”?",
+       "opts": [
+        [
+         "a",
+         "A teacher"
+        ],
+        [
+         "b",
+         "A parent"
+        ],
+        [
+         "c",
+         "An experience"
+        ],
+        [
+         "d",
+         "Life experiences that teach value"
+        ]
+       ]
+      },
+      {
+       "n": 10,
+       "text": "Which modern situation best reflects the lesson of the story?",
+       "opts": [
+        [
+         "a",
+         "Ignoring friends"
+        ],
+        [
+         "b",
+         "Saving money"
+        ],
+        [
+         "c",
+         "Enjoying success"
+        ],
+        [
+         "d",
+         "Realizing someone’s value too late"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "raw": "\n\n\n\n\n      Read the selection below and answer the questions that follow.\n\n\n\n\n                   STORY OF LOVE AND TIME\n\n      A long time ago, there lived on an island different feelings such as\nhappiness, sadness, love, knowledge, etc.\n       One day, they got to know that the island is going to sink soon. All my\nfeelings got worried. The feelings living on the island decided to leave it with\ntheir pre-constructed boats. Love was the only one who decided not to leave\nthe island. The day came when the island began to sink. All the feelings were\nleaving on their boats. Love asked Richness to take him in his grand boat but\nhe said that he already filled his boat with gold and money so he could not\ntake him.\n      Love requested Sadness to take him along but he said that he is very\nsad so he wants to be alone. Next, he called for help to Happiness but he was\nso happy and joyful that he did not listen to Love and passed in front of him\nwithout paying attention to him.\n       Love became very sad when no one was taking him in their boat. He\nheard a voice, “Hey dear friend! Come along with me.” Love came to a safe\nplace in a boat. Love was so overjoyed that he forgot to ask who he was when\nhe asked Knowledge who brought him. He further asked Knowledge if he knew\nhim. Knowledge said, “It was Time who brought you here”. Love asked, “Why\ndid Time help me?” Knowledge replied with great wisdom, “Only Time knows\nthe value of Love.”\n\n\n\nLiteral Comprehension Questions\n\n1. Where did the feelings live?\n\n      A. Sea\n      B. Town\n      C. Island\n      D. A sinking island\n\n2. Who helped Love escape?\n\n      A. Time\n      B. Knowledge\n      C. Sadness\n      D. Richness\n\nInterpretive Comprehension Questions\n\n3. Why did Richness refuse to take Love on his boat?\n\n      A. He disliked Love\n      B. He wanted to be alone\n      C. His boat was full\n      D. His boat was full of gold and money\n\n4. What does Happiness passing Love without noticing suggest?\n\n      A. Happiness is cruel\n      B. Happiness ignores others\n      C. Happiness can be self-absorbed\n      D. Happiness may overlook others while enjoying itself\n\nCritical Comprehension Questions\n\n5. Was Love right to stay behind when the island was sinking?\n\n      A. No, it was foolish\n      B. Yes, it showed bravery\n      C. No, it showed carelessness\n      D. Yes, it showed selfless devotion\n\n\n\n6. Which feeling showed the least responsibility in the story?\n\n      A. Sadness\n      B. Richness\n      C. Happiness\n      D. Happiness because he ignored someone in need\n\n7. Why is Time the one who saves Love, according to the story?\n\n      A. Time is powerful\n      B. Time is always present\n      C. Time understands all feelings\n      D. Time recognizes Love’s true importance\n\n\nCreative Comprehension Questions\n\n8. If Love had left early, how would the story’s message change?\n\n      A. Love is weak\n      B. Time is unnecessary\n      C. Feelings must act fast\n      D. Love would lose its deeper meaning\n\n9. If the story were retold today, who might represent “Time”?\n\n      A. A teacher\n      B. A parent\n      C. An experience\n      D. Life experiences that teach value\n\n10. Which modern situation best reflects the lesson of the story?\n\n      A. Ignoring friends\n      B. Saving money\n      C. Enjoying success\n      D. Realizing someone’s value too late\n"
+  }
+ ],
+ "keys_text": ""
+}

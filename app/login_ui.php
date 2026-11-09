@@ -80,8 +80,8 @@ function login_fail_popup(?array $f,string $role):string{
 function key_peek(string $key):void{
  $p=card_user_any($key);header('Content-Type: application/json; charset=utf-8');header('Cache-Control: no-store');
  if(!$p){echo json_encode(['ok'=>false]);exit;}
- /* A teacher who already made their own password: the pass only fills in the Teacher ID. */
- if($p['role']==='teacher'){echo json_encode(['ok'=>true,'role'=>'teacher','first'=>explode(' ',trim((string)$p['name']))[0],'img'=>$p['avatar_path']?:teacher_char((int)$p['id'])]+(card_has_starter((int)$p['id'])?[]:['fill'=>$p['public_id']]));exit;}
+ /* v211 every QR code signs in (teachers and administrators too), even after the password is changed */
+ if($p['role']!=='pupil'){echo json_encode(['ok'=>true,'role'=>$p['role'],'first'=>explode(' ',trim((string)$p['name']))[0],'img'=>function_exists('staff_pic')?staff_pic((int)$p['id'],$p['role']==='teacher'?'teacher':'admin'):($p['avatar_path']?:teacher_char((int)$p['id']))]);exit;}
  $sex=(string)(val('SELECT sex FROM pupil_details WHERE pupil_id=?',[$p['id']])?:'');
  echo json_encode(['ok'=>true,'role'=>'pupil','first'=>explode(' ',trim((string)$p['name']))[0],'img'=>$p['avatar_path']?:char_src($sex==='female'?'girl':'boy','hello')]);exit;
 }

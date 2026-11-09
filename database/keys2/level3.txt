@@ -41,12 +41,12 @@
 4:0:12:post:3 | 1=br 2=bl 3=br 4=bl 5=bl 6=br 7=bl 8=br 9=br   # bread, blueberry, bridge, blocks, blackboard, branch, blender, broccoli, brick
 4:0:13:learn:4 | 1=crab 2=clock 3=cloud 4=crow 5=crown 6=crocodile 7=climb 8=crawl 9=clap 10=clown
 4:0:13:post:2 | 1=P2 2=P2 3=P2 4=P2 5=P2
-4:0:13:post:3 | 1=cr 2=cl 3=cr 4=cr 5=cl 7=cr 8=cl 9=cr      # cry, clock, crayon, cradle, clip, crane, clean, crown; card 6 (a girl with crayons and paper) left for the teacher
+4:0:13:post:3 | 1=cr 2=cl 3=cr 4=cr 5=cl 7=cr 8=cl 9=cr 6=cr   # cry, clock, crayon, cradle, clip, crane, clean, crown; card 6 (a girl with crayons and paper) left for the teacher   # v211: key added
 4:0:13:post:4 | 7=cr                                          # cradle (the module prints "_ _ radle")
 4:0:13:post:5 | 1=cr 2=cr 3=cl 4=cl 5=cr 6=cl 7=cr 8=cr 9=cl 10=cr 11=cr 12=cr
 4:0:14:learn:4 | 1=dragon 2=drum 3=dress 4=drink 5=drive 6=draw 7=drill 8=dribble 9=dry 10=drop
 4:0:14:post:2 | 1=dress 2=draw 3=drive 4=drum 5=drink 6=dragon
-4:0:14:post:3 | 1=not dr 2=dr 3=not dr 5=dr 6=not dr 7=dr 8=not dr     # banana, dragon, leaf, dresser, camel, dress, tiger; card 4 (a dog dreaming?) left for the teacher
+4:0:14:post:3 | 1=not dr 2=dr 3=not dr 5=dr 6=not dr 7=dr 8=not dr 4=dr   # banana, dragon, leaf, dresser, camel, dress, tiger; card 4 (a dog dreaming?) left for the teacher   # v211: key added
 4:0:15:learn:4 | 1=fl 2=fr 3=fr 4=fl 5=fr 6=fr 7=fl 8=fr 9=fr 10=fl 11=fl 12=fl
 4:0:15:post:2 | 4=fl 9=fr                                    # flame (fire picture), frame
 4:0:15:post:3 | 1=fl 2=fl 3=fr 4=fl 5=fr 6=fl                 # flag, fly, fruits, flower, frog, flashlight
@@ -55,10 +55,12 @@
 4:0:16:learn:3 | 5=glass 7=glow
 4:0:16:post:2 | 3=gr 11=gl
 4:0:16:post:3 | 1=glue 2=glass 3=globe 4=glad 5=gloves
-4:0:16:post:4 | 1=gl 2=gl 3=gr 4=gr 5=gl 7=gl 9=gl 10=gr 11=gr 12=gr   # glue, glass, grapes, grass, gloves, globe, glad, Greece, green, grave; cards 6 (fishing) and 8 (giving money) left for the teacher
+4:0:16:post:4 | 1=gl 2=gl 3=gr 4=gr 5=gl 7=gl 9=gl 10=gr 11=gr 12=gr 6=gr 8=gr   # glue, glass, grapes, grass, gloves, globe, glad, Greece, green, grave; cards 6 (fishing) and 8 (giving money) left for the teacher   # v211: key added
 4:0:17:learn:2 | 1=pl 2=pr 3=pl 4=pr 5=pl 6=pr 7=pr 8=pr 9=pl 10=pl    # play, prince, plate, print, plane, pray, present, price, plier, plus
 4:0:17:post:3 | 6=pl
 4:0:18:learn:3 | 1=stop 2=storm 3=strap 4=stone 5=street 6=string 7=steel 8=strawberry 9=stick 10=stripes
 4:0:19:learn:3 | 1=shine 2=slide 3=shower 4=shovel 5=shake 6=slug 7=shock 8=slice 9=slipped 10=slap
 4:0:19:post:3 | 1=P2 2=P3 3=P2 4=P1 5=P3
 4:0:20:learn:2 | 1=sp 2=spr 3=spl 4=sp 5=spr 6=sp 7=sp 8=spr 9=sp 10=spr 11=sp 12=spl
+
+4:0:9:learn:4 | 1=pack 2=peck 3=neck 4=hack 5=deck   # v211: the module had no key for this card; judged from the card, the story or the word box

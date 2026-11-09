@@ -39,10 +39,10 @@ function action():void{
  if($action==='key_login'){
   /* One scan of a sign-in ticket: the QR code opens a "Hi, NAME!" page, and this button signs the pupil in. */
   $u=card_user_any((string)($_POST['key']??''));if(!$u){audit('login_failed','ticket');fail('This sign-in ticket no longer works. Ask for a new one, or sign in with your ID and password.');}
-  if($u['role']==='teacher'&&!card_has_starter((int)$u['id'])){flash('Welcome back! Type your own password to sign in.');go(teacher_login_url($u));}   // after the first sign-in, a Teacher Pass only fills in the ID
+  /* v211 a QR code signs in every time, even after the password is changed (a new password from the administrator makes a new QR code) */
   session_regenerate_id(true);$_SESSION=[];$_SESSION['uid']=$u['id'];$_SESSION['csrf']=bin2hex(random_bytes(32));
   if($u['role']==='pupil')$_SESSION['pupil_welcome']=1;else $_SESSION['teacher_welcome']=1;   // pupils: no save / download pop-ups after signing in (v180); saving is offered when signing out
-  $_SESSION['hello']=1;audit('login',$u['role']==='pupil'?'pupil · ticket':'teacher · pass');go('?page=dashboard');
+  $_SESSION['hello']=1;audit('login',$u['role']==='pupil'?'pupil · ticket':($u['role']==='admin'?'admin · ID card':'teacher · pass'));go('?page=dashboard');
  }
  if($action==='card_new'||$action==='cards_starter'){
   $u=require_role('teacher');if(!cards_ready())fail('Ask the administrator to import 018_pupil_cards.sql first.');$sec=(int)($_POST['section']??0);$back='?page=cards'.($sec?'&section='.$sec:'');
@@ -74,7 +74,7 @@ function action():void{
  if($action==='delete_pupils'||$action==='delete_teachers')account_delete_many($action);
  if($action==='save_section'){
   $u=require_role('teacher');$sid=(int)($_POST['id']??0);$name=import_name_case(mb_substr((string)($_POST['name']??''),0,80));$grade=(int)($_POST['grade_level']??0);
-  if(!$name||strlen($name)>80||$grade<1||$grade>6)fail('Enter a section name and grade from 1 to 6.');
+  if(!$name||strlen($name)>80||!grade_ok($grade))fail('Enter a section name and grade from 1 to 10.');
   db()->beginTransaction();try{
    q('SELECT id FROM users WHERE id=? FOR UPDATE',[$u['id']]);if($sid){$old=owned_section($sid,(int)$u['id']);if($grade!=(int)$old['grade_level']&&val('SELECT COUNT(*) FROM pupil_sections WHERE section_id=?',[$sid]))fail('Move pupils to another section before changing this section’s grade.');}
    if(val('SELECT id FROM sections WHERE teacher_id=? AND grade_level=? AND LOWER(name)=LOWER(?) AND id<>?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$u['id'],$grade,$name,$sid]))fail('You already have Grade '.$grade.' · '.$name.'.');

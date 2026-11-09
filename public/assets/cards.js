@@ -35,7 +35,7 @@
   function all(on){wraps.forEach(function(w){var c=w.querySelector('[data-tk-pick]');if(c)c.checked=on;});sync();}
   var ba=document.querySelector('[data-tk-all]'),bn=document.querySelector('[data-tk-none]');if(ba)ba.addEventListener('click',function(){all(true);});if(bn)bn.addEventListener('click',function(){all(false);});
   /* Ticket size: Small 21 (3 columns), Medium 10, Large 8 per A4 page. Remembered on this device. */
-  var PER={s:21,m:10,l:8},size='m';try{size=localStorage.getItem('bulig-tk-size')||'m';}catch(e){}if(!PER[size])size='m';
+  var PER={s:21,m:10,l:8},size='m';try{var tp=sheet.getAttribute('data-tk-per');if(tp)PER=JSON.parse(tp);}catch(e){}try{size=localStorage.getItem('bulig-tk-size')||'m';}catch(e){}if(!PER[size])size='m';
   function setSize(z){size=z;sheet.classList.remove('sz-s','sz-m','sz-l');sheet.classList.add('sz-'+z);try{localStorage.setItem('bulig-tk-size',z);}catch(e){}
    document.querySelectorAll('[data-tk-size]').forEach(function(b){var on=b.getAttribute('data-tk-size')===z;b.classList.toggle('on',on);b.setAttribute('aria-checked',on?'true':'false');});}
   document.querySelectorAll('[data-tk-size]').forEach(function(b){b.addEventListener('click',function(){setSize(b.getAttribute('data-tk-size'));});});setSize(size);

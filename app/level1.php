@@ -343,6 +343,7 @@ function l1_demo_view(array $u,array $slides):void{
    echo '<template class="l1d-t demo-template" data-lesson="'.(int)$l['id'].'" data-id="'.(int)$by[(int)$l['id']][0]['id'].'" data-title="Lesson '.(int)$l['position'].' · '.e($l['subtitle']).'" data-part="Lesson start" data-say="'.e($l['title'].'. Today we will: '.implode('. ',$goals)).'"><span class="demo-slide-meta" hidden>Lesson '.(int)$l['position'].' · '.e($l['subtitle']).' · Lesson start</span><div class="l1d-two l1d-start"><img class="l1d-cover" data-src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(in_array(lesson_level((int)$l['id']),[7,8],true)||(int)$l['position']>=100?'':'LESSON '.(int)$l['position'].' · ').e(mb_strtoupper((string)$l['subtitle'])).'</span><h1>'.e($l['title']).'</h1>';
    if($goals){echo '<p class="l1-lab">TODAY WE WILL…</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul>';}
    echo '</div></div></template>';continue;}
+  echo demo_phase_slide($d['a'],'Lesson '.(int)$l['position'].' · '.(string)$l['subtitle']);
   $a=$d['a'];$kind=l1_kind($a);$pics=l1_pictures($a,true);$tag=l1_tag($a,$kind,true);$say=trim((string)($a['narration']?:$a['prompt']));
   if(($kind==='pair'||$kind==='group')&&in_array((int)$l['position'].':'.$a['phase'].':'.(int)$a['position'],['9:learn:4','9:learn:5'],true)){
    /* Lesson 9: the class reads a poem together, one picture and one line at a time. */

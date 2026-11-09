@@ -1,0 +1,1526 @@
+{
+ "l5-g9": {
+  "14.2": {
+   "items": [
+    {
+     "n": 0,
+     "text": "",
+     "opts": [],
+     "match": {
+      "left": [
+       [
+        1,
+        "aperture"
+       ],
+       [
+        2,
+        "peddler"
+       ],
+       [
+        3,
+        "gaze"
+       ],
+       [
+        4,
+        "saddle"
+       ],
+       [
+        5,
+        "silly"
+       ]
+      ],
+      "right": [
+       [
+        "a",
+        "having or showing a lack of thought, understanding, or good judgement"
+       ],
+       [
+        "b",
+        "a hole or small opening of something"
+       ],
+       [
+        "c",
+        "someone who sells things in small amounts, often by travelling to different places"
+       ],
+       [
+        "d",
+        "a leather-covered seat that is put on the back of a horse"
+       ],
+       [
+        "e",
+        "to look at someone in a steady way and usually for a long time"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  "15.2": {
+   "items": [
+    {
+     "n": 0,
+     "text": "",
+     "opts": [],
+     "match": {
+      "left": [
+       [
+        1,
+        "distrustful"
+       ],
+       [
+        2,
+        "coax"
+       ],
+       [
+        3,
+        "heifer"
+       ],
+       [
+        4,
+        "disgust"
+       ],
+       [
+        5,
+        "contempt"
+       ]
+      ],
+      "right": [
+       [
+        "a",
+        "a feeling that someone or something is not worthy of any respect or approval"
+       ],
+       [
+        "b",
+        "having or showing distrust; lack of trust or confidence"
+       ],
+       [
+        "c",
+        "a strong feeling of dislike for something that has a very unpleasant appearance, taste, smell, etc."
+       ],
+       [
+        "d",
+        "to influence or persuade (a person or animal) to do something in a gentle and friendly way"
+       ],
+       [
+        "e",
+        "a young female cow, especially one that has not had a calf"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  "18.2": {
+   "item_fix": {
+    "3": {
+     "text": "To keep coming back to the mind of (someone) in a way that makes a person sad or upset is called ______. (haunted, exhaustion, aquiver)"
+    }
+   }
+  },
+  "19.2": {
+   "item_fix": {
+    "2": {
+     "text": "e s i p s e d = ______ means to dislike someone or something very much."
+    }
+   }
+  }
+ },
+ "l5-g10": {
+  "14.2": {
+   "items": [
+    {
+     "n": 0,
+     "text": "",
+     "opts": [],
+     "match": {
+      "left": [
+       [
+        1,
+        "aperture"
+       ],
+       [
+        2,
+        "peddler"
+       ],
+       [
+        3,
+        "gaze"
+       ],
+       [
+        4,
+        "saddle"
+       ],
+       [
+        5,
+        "silly"
+       ]
+      ],
+      "right": [
+       [
+        "a",
+        "having or showing a lack of thought, understanding, or good judgement"
+       ],
+       [
+        "b",
+        "a hole or small opening of something"
+       ],
+       [
+        "c",
+        "someone who sells things in small amounts, often by travelling to different places"
+       ],
+       [
+        "d",
+        "a leather-covered seat that is put on the back of a horse"
+       ],
+       [
+        "e",
+        "to look at someone in a steady way and usually for a long time"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  "15.2": {
+   "items": [
+    {
+     "n": 0,
+     "text": "",
+     "opts": [],
+     "match": {
+      "left": [
+       [
+        1,
+        "distrustful"
+       ],
+       [
+        2,
+        "coax"
+       ],
+       [
+        3,
+        "heifer"
+       ],
+       [
+        4,
+        "disgust"
+       ],
+       [
+        5,
+        "contempt"
+       ]
+      ],
+      "right": [
+       [
+        "a",
+        "a feeling that someone or something is not worthy of any respect or approval"
+       ],
+       [
+        "b",
+        "having or showing distrust; lack of trust or confidence"
+       ],
+       [
+        "c",
+        "a strong feeling of dislike for something that has a very unpleasant appearance, taste, smell, etc."
+       ],
+       [
+        "d",
+        "to influence or persuade (a person or animal) to do something in a gentle and friendly way"
+       ],
+       [
+        "e",
+        "a young female cow, especially one that has not had a calf"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  "19.2": {
+   "item_fix": {
+    "2": {
+     "text": "e s i p s e d = ______ means to dislike someone or something very much."
+    }
+   }
+  },
+  "18.2": {
+   "item_fix": {
+    "3": {
+     "text": "To keep coming back to the mind of (someone) in a way that makes a person sad or upset is called ______. (haunted, exhaustion, aquiver)"
+    }
+   }
+  }
+ },
+ "l7-g7": {
+  "15.1": {
+   "item_fix": {
+    "2": {
+     "opts": []
+    }
+   }
+  }
+ },
+ "l5-g78": {
+  "8.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "My parents (allowed/aloud) me to watch a movie with my friend.",
+     "opts": [
+      [
+       "a",
+       "allowed"
+      ],
+      [
+       "b",
+       "aloud"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "I kept getting a (not/knot) in my shoe after my basketball game.",
+     "opts": [
+      [
+       "a",
+       "not"
+      ],
+      [
+       "b",
+       "knot"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "I felt (weak/week) after I worked the whole day.",
+     "opts": [
+      [
+       "a",
+       "weak"
+      ],
+      [
+       "b",
+       "week"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "My mom waited for the (sale/sail) at the store before she went shopping.",
+     "opts": [
+      [
+       "a",
+       "sale"
+      ],
+      [
+       "b",
+       "sail"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "text": "My friend Sarah has (red/read) hair.",
+     "opts": [
+      [
+       "a",
+       "red"
+      ],
+      [
+       "b",
+       "read"
+      ]
+     ]
+    }
+   ]
+  },
+  "9.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "vitiate",
+     "opts": [
+      [
+       "a",
+       "pity"
+      ],
+      [
+       "b",
+       "speak ill of"
+      ],
+      [
+       "c",
+       "make impure"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "indolent",
+     "opts": [
+      [
+       "a",
+       "rude"
+      ],
+      [
+       "b",
+       "sweet"
+      ],
+      [
+       "c",
+       "lazy"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "supercilious",
+     "opts": [
+      [
+       "a",
+       "not trusting"
+      ],
+      [
+       "b",
+       "unsure"
+      ],
+      [
+       "c",
+       "haughty"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "engender",
+     "opts": [
+      [
+       "a",
+       "prevent"
+      ],
+      [
+       "b",
+       "allow"
+      ],
+      [
+       "c",
+       "cause to exist"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "text": "pacify",
+     "opts": [
+      [
+       "a",
+       "regret"
+      ],
+      [
+       "b",
+       "follow"
+      ],
+      [
+       "c",
+       "calm someone down"
+      ]
+     ]
+    }
+   ]
+  },
+  "10.1": {
+   "item_fix": {
+    "3": {
+     "text": "This country’s indigenous people were hunter-gatherers.",
+     "opts": [
+      [
+       "a",
+       "native"
+      ],
+      [
+       "b",
+       "poorest"
+      ]
+     ]
+    }
+   }
+  },
+  "11.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "You can carry your school books in this.",
+     "opts": [
+      [
+       "a",
+       "rucksack"
+      ],
+      [
+       "b",
+       "timetable"
+      ],
+      [
+       "c",
+       "screen"
+      ],
+      [
+       "d",
+       "dictionary"
+      ],
+      [
+       "e",
+       "student"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "Your class can watch a film or a DVD on this.",
+     "opts": [
+      [
+       "a",
+       "rucksack"
+      ],
+      [
+       "b",
+       "timetable"
+      ],
+      [
+       "c",
+       "screen"
+      ],
+      [
+       "d",
+       "dictionary"
+      ],
+      [
+       "e",
+       "student"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "This interesting book tells you what words mean.",
+     "opts": [
+      [
+       "a",
+       "rucksack"
+      ],
+      [
+       "b",
+       "timetable"
+      ],
+      [
+       "c",
+       "screen"
+      ],
+      [
+       "d",
+       "dictionary"
+      ],
+      [
+       "e",
+       "student"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "A person who studies.",
+     "opts": [
+      [
+       "a",
+       "rucksack"
+      ],
+      [
+       "b",
+       "timetable"
+      ],
+      [
+       "c",
+       "screen"
+      ],
+      [
+       "d",
+       "dictionary"
+      ],
+      [
+       "e",
+       "student"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "text": "This will tell you the times of your lessons.",
+     "opts": [
+      [
+       "a",
+       "rucksack"
+      ],
+      [
+       "b",
+       "timetable"
+      ],
+      [
+       "c",
+       "screen"
+      ],
+      [
+       "d",
+       "dictionary"
+      ],
+      [
+       "e",
+       "student"
+      ]
+     ]
+    }
+   ]
+  },
+  "12.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "The teacher wrote something on the ______, but we couldn’t read it.",
+     "opts": [
+      [
+       "a",
+       "blackboard"
+      ],
+      [
+       "b",
+       "gym"
+      ],
+      [
+       "c",
+       "participate"
+      ],
+      [
+       "d",
+       "instruction"
+      ],
+      [
+       "e",
+       "cheat"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "You are not allowed to ______ at your final exams.",
+     "opts": [
+      [
+       "a",
+       "blackboard"
+      ],
+      [
+       "b",
+       "gym"
+      ],
+      [
+       "c",
+       "participate"
+      ],
+      [
+       "d",
+       "instruction"
+      ],
+      [
+       "e",
+       "cheat"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "Before you start with the test, please read the ______.",
+     "opts": [
+      [
+       "a",
+       "blackboard"
+      ],
+      [
+       "b",
+       "gym"
+      ],
+      [
+       "c",
+       "participate"
+      ],
+      [
+       "d",
+       "instruction"
+      ],
+      [
+       "e",
+       "cheat"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "For physical education we have to go to the ______.",
+     "opts": [
+      [
+       "a",
+       "blackboard"
+      ],
+      [
+       "b",
+       "gym"
+      ],
+      [
+       "c",
+       "participate"
+      ],
+      [
+       "d",
+       "instruction"
+      ],
+      [
+       "e",
+       "cheat"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "text": "Many students ______ in activities after school, for example drama clubs or sports.",
+     "opts": [
+      [
+       "a",
+       "blackboard"
+      ],
+      [
+       "b",
+       "gym"
+      ],
+      [
+       "c",
+       "participate"
+      ],
+      [
+       "d",
+       "instruction"
+      ],
+      [
+       "e",
+       "cheat"
+      ]
+     ]
+    }
+   ]
+  },
+  "13.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "What a fantastic idea! (fantastic)",
+     "opts": [
+      [
+       "a",
+       "depend on"
+      ],
+      [
+       "b",
+       "huge"
+      ],
+      [
+       "c",
+       "terrible"
+      ],
+      [
+       "d",
+       "investigate"
+      ],
+      [
+       "e",
+       "terrific"
+      ],
+      [
+       "f",
+       "strange"
+      ],
+      [
+       "g",
+       "similar"
+      ],
+      [
+       "h",
+       "increase"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "You can trust her. She’s very responsible. (trust)",
+     "opts": [
+      [
+       "a",
+       "depend on"
+      ],
+      [
+       "b",
+       "huge"
+      ],
+      [
+       "c",
+       "terrible"
+      ],
+      [
+       "d",
+       "investigate"
+      ],
+      [
+       "e",
+       "terrific"
+      ],
+      [
+       "f",
+       "strange"
+      ],
+      [
+       "g",
+       "similar"
+      ],
+      [
+       "h",
+       "increase"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "The new sport center is enormous. (enormous)",
+     "opts": [
+      [
+       "a",
+       "depend on"
+      ],
+      [
+       "b",
+       "huge"
+      ],
+      [
+       "c",
+       "terrible"
+      ],
+      [
+       "d",
+       "investigate"
+      ],
+      [
+       "e",
+       "terrific"
+      ],
+      [
+       "f",
+       "strange"
+      ],
+      [
+       "g",
+       "similar"
+      ],
+      [
+       "h",
+       "increase"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "I’ve never seen an animal like that before. It looks weird! (weird)",
+     "opts": [
+      [
+       "a",
+       "depend on"
+      ],
+      [
+       "b",
+       "huge"
+      ],
+      [
+       "c",
+       "terrible"
+      ],
+      [
+       "d",
+       "investigate"
+      ],
+      [
+       "e",
+       "terrific"
+      ],
+      [
+       "f",
+       "strange"
+      ],
+      [
+       "g",
+       "similar"
+      ],
+      [
+       "h",
+       "increase"
+      ]
+     ]
+    }
+   ]
+  },
+  "14.1": {
+   "items": [
+    {
+     "n": 0,
+     "text": "",
+     "opts": [],
+     "match": {
+      "left": [
+       [
+        1,
+        "comfort"
+       ],
+       [
+        2,
+        "refugee"
+       ],
+       [
+        3,
+        "discover"
+       ],
+       [
+        4,
+        "furious"
+       ],
+       [
+        5,
+        "recently"
+       ]
+      ],
+      "right": [
+       [
+        "a",
+        "find or learn something new"
+       ],
+       [
+        "b",
+        "not long ago"
+       ],
+       [
+        "c",
+        "try to help someone feel better"
+       ],
+       [
+        "d",
+        "very angry"
+       ],
+       [
+        "e",
+        "someone who leaves their home because they are in danger"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  "17.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "The game was very ______ at the end.",
+     "opts": [
+      [
+       "a",
+       "band"
+      ],
+      [
+       "b",
+       "practice"
+      ],
+      [
+       "c",
+       "exciting"
+      ],
+      [
+       "d",
+       "telephone"
+      ],
+      [
+       "e",
+       "marry"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "I watched my older sister ______ her childhood sweetheart.",
+     "opts": [
+      [
+       "a",
+       "band"
+      ],
+      [
+       "b",
+       "practice"
+      ],
+      [
+       "c",
+       "exciting"
+      ],
+      [
+       "d",
+       "telephone"
+      ],
+      [
+       "e",
+       "marry"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "The ______ played a good song.",
+     "opts": [
+      [
+       "a",
+       "band"
+      ],
+      [
+       "b",
+       "practice"
+      ],
+      [
+       "c",
+       "exciting"
+      ],
+      [
+       "d",
+       "telephone"
+      ],
+      [
+       "e",
+       "marry"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "We had a basketball ______ after school.",
+     "opts": [
+      [
+       "a",
+       "band"
+      ],
+      [
+       "b",
+       "practice"
+      ],
+      [
+       "c",
+       "exciting"
+      ],
+      [
+       "d",
+       "telephone"
+      ],
+      [
+       "e",
+       "marry"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "text": "I used my ______ to call my parents.",
+     "opts": [
+      [
+       "a",
+       "band"
+      ],
+      [
+       "b",
+       "practice"
+      ],
+      [
+       "c",
+       "exciting"
+      ],
+      [
+       "d",
+       "telephone"
+      ],
+      [
+       "e",
+       "marry"
+      ]
+     ]
+    }
+   ]
+  },
+  "18.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "I had to look ______ my bed for my shoes.",
+     "opts": [
+      [
+       "a",
+       "magazine"
+      ],
+      [
+       "b",
+       "courage"
+      ],
+      [
+       "c",
+       "beneath"
+      ],
+      [
+       "d",
+       "opportunity"
+      ],
+      [
+       "e",
+       "height"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "I increased in ______ as I got older.",
+     "opts": [
+      [
+       "a",
+       "magazine"
+      ],
+      [
+       "b",
+       "courage"
+      ],
+      [
+       "c",
+       "beneath"
+      ],
+      [
+       "d",
+       "opportunity"
+      ],
+      [
+       "e",
+       "height"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "I love to read a ______ for recreation.",
+     "opts": [
+      [
+       "a",
+       "magazine"
+      ],
+      [
+       "b",
+       "courage"
+      ],
+      [
+       "c",
+       "beneath"
+      ],
+      [
+       "d",
+       "opportunity"
+      ],
+      [
+       "e",
+       "height"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "The soldiers have a lot of ______.",
+     "opts": [
+      [
+       "a",
+       "magazine"
+      ],
+      [
+       "b",
+       "courage"
+      ],
+      [
+       "c",
+       "beneath"
+      ],
+      [
+       "d",
+       "opportunity"
+      ],
+      [
+       "e",
+       "height"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "text": "I don’t often get this kind of ______.",
+     "opts": [
+      [
+       "a",
+       "magazine"
+      ],
+      [
+       "b",
+       "courage"
+      ],
+      [
+       "c",
+       "beneath"
+      ],
+      [
+       "d",
+       "opportunity"
+      ],
+      [
+       "e",
+       "height"
+      ]
+     ]
+    }
+   ]
+  },
+  "21.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "Antonym of little",
+     "opts": [
+      [
+       "a",
+       "big"
+      ],
+      [
+       "b",
+       "thankful"
+      ],
+      [
+       "c",
+       "classy"
+      ],
+      [
+       "d",
+       "yes"
+      ],
+      [
+       "e",
+       "chaos"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "Antonym of ungrateful",
+     "opts": [
+      [
+       "a",
+       "big"
+      ],
+      [
+       "b",
+       "thankful"
+      ],
+      [
+       "c",
+       "classy"
+      ],
+      [
+       "d",
+       "yes"
+      ],
+      [
+       "e",
+       "chaos"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "Antonym of trashy",
+     "opts": [
+      [
+       "a",
+       "big"
+      ],
+      [
+       "b",
+       "thankful"
+      ],
+      [
+       "c",
+       "classy"
+      ],
+      [
+       "d",
+       "yes"
+      ],
+      [
+       "e",
+       "chaos"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "Antonym of calmness",
+     "opts": [
+      [
+       "a",
+       "big"
+      ],
+      [
+       "b",
+       "thankful"
+      ],
+      [
+       "c",
+       "classy"
+      ],
+      [
+       "d",
+       "yes"
+      ],
+      [
+       "e",
+       "chaos"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "text": "Antonym of no",
+     "opts": [
+      [
+       "a",
+       "big"
+      ],
+      [
+       "b",
+       "thankful"
+      ],
+      [
+       "c",
+       "classy"
+      ],
+      [
+       "d",
+       "yes"
+      ],
+      [
+       "e",
+       "chaos"
+      ]
+     ]
+    }
+   ]
+  },
+  "22.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "Synonym of little",
+     "opts": [
+      [
+       "a",
+       "small"
+      ],
+      [
+       "b",
+       "laugh"
+      ],
+      [
+       "c",
+       "talisman"
+      ],
+      [
+       "d",
+       "chill"
+      ],
+      [
+       "e",
+       "abilities"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "text": "Synonym of giggle",
+     "opts": [
+      [
+       "a",
+       "small"
+      ],
+      [
+       "b",
+       "laugh"
+      ],
+      [
+       "c",
+       "talisman"
+      ],
+      [
+       "d",
+       "chill"
+      ],
+      [
+       "e",
+       "abilities"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "text": "Synonym of lucky charm",
+     "opts": [
+      [
+       "a",
+       "small"
+      ],
+      [
+       "b",
+       "laugh"
+      ],
+      [
+       "c",
+       "talisman"
+      ],
+      [
+       "d",
+       "chill"
+      ],
+      [
+       "e",
+       "abilities"
+      ]
+     ]
+    },
+    {
+     "n": 4,
+     "text": "Synonym of coldness",
+     "opts": [
+      [
+       "a",
+       "small"
+      ],
+      [
+       "b",
+       "laugh"
+      ],
+      [
+       "c",
+       "talisman"
+      ],
+      [
+       "d",
+       "chill"
+      ],
+      [
+       "e",
+       "abilities"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "text": "Synonym of skills",
+     "opts": [
+      [
+       "a",
+       "small"
+      ],
+      [
+       "b",
+       "laugh"
+      ],
+      [
+       "c",
+       "talisman"
+      ],
+      [
+       "d",
+       "chill"
+      ],
+      [
+       "e",
+       "abilities"
+      ]
+     ]
+    }
+   ]
+  },
+  "23.1": {
+   "items": [
+    {
+     "n": 1,
+     "text": "Across: a seat hung by ropes or chains, on which someone may sit and swing back and forth. Write the picture name.",
+     "opts": [],
+     "img": "assets/images/jhs/l5-g78/l5-g78-p040-1.webp"
+    },
+    {
+     "n": 2,
+     "text": "Down: a small, rough building or lean-to, used for shelter. Write the picture name.",
+     "opts": [],
+     "img": "assets/images/jhs/l5-g78/l5-g78-p041-3.webp"
+    },
+    {
+     "n": 3,
+     "text": "Across: a flexible pipe for carrying a liquid or gas. Write the picture name.",
+     "opts": [],
+     "img": "assets/images/jhs/l5-g78/l5-g78-p041-1.webp"
+    },
+    {
+     "n": 4,
+     "text": "Down: a small area of still water, usually one formed naturally. Write the picture name.",
+     "opts": [],
+     "img": "assets/images/jhs/l5-g78/l5-g78-p041-4.webp"
+    },
+    {
+     "n": 5,
+     "text": "Across: the young of the domestic cow. Write the picture name.",
+     "opts": [],
+     "img": "assets/images/jhs/l5-g78/l5-g78-p041-2.webp"
+    }
+   ]
+  }
+ },
+ "l6-g7": {
+  "5.1": {
+   "item_fix": {
+    "5": {
+     "text": "Why do some convicts choose to stay in the colony permanently even after their sentences have expired?",
+     "opts": [
+      [
+       "a",
+       "They are afraid they will be sent back to Manila’s old Bilibid Prison."
+      ],
+      [
+       "b",
+       "They have found a peaceful, productive life there and have been granted land to call their own."
+      ],
+      [
+       "c",
+       "They are not allowed to leave the 160-square mile limits of the penal colony."
+      ],
+      [
+       "d",
+       "They are required to stay until they finish their adult education classes."
+      ]
+     ]
+    }
+   }
+  }
+ }
+}
