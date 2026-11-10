@@ -119,12 +119,12 @@ const TF_TOP_PERIODS=['all'=>'All time','month'=>'This month','week'=>'This week
 function tf_top_rows(array $ids,int $level=0,string $period='all'):array{
  if(!$ids)return [];$since=['month'=>date('Y-m-01 00:00:00'),'week'=>date('Y-m-d 00:00:00',strtotime('monday this week'))][$period]??null;
  $w=($level?' AND m.level_id='.$level:'').($since?' AND c.submitted_at>=?':'');
- return rows('SELECT u.id,u.name,u.avatar_path,u.role,pa.level_id,ROUND(100*SUM(c.score)/SUM(c.max_score)) pct,COUNT(*) done,
+ return rows('SELECT u.id,u.name,u.avatar_path,u.role,pa.level_id,ROUND(100*SUM(c.score)/SUM(c.max_score)) pct,COUNT(*) done,ROUND(100*SUM(c.score)/SUM(c.max_score)*COUNT(*)/(COUNT(*)+5)) rs,
    (SELECT COALESCE(SUM(x.amount),0) FROM xp_transactions x WHERE x.pupil_id=u.id) xp
   FROM activity_completion c JOIN users u ON u.id=c.pupil_id AND u.active=1 LEFT JOIN pupil_level_assignments pa ON pa.pupil_id=u.id
   JOIN activities ac ON ac.id=c.activity_id JOIN lessons l ON l.id=ac.lesson_id JOIN modules m ON m.id=l.module_id
   WHERE c.pupil_id IN('.tf_in($ids).") AND c.status IN ('completed','approved') AND c.max_score>0".$w."
-  GROUP BY u.id,u.name,u.avatar_path,u.role,pa.level_id ORDER BY pct DESC,done DESC,xp DESC,u.name LIMIT 10",$since?[$since]:[]);
+  GROUP BY u.id,u.name,u.avatar_path,u.role,pa.level_id ORDER BY rs DESC,pct DESC,done DESC,xp DESC,u.name LIMIT 10   /* v213 rank score: average x activities/(activities+5) */",$since?[$since]:[]);
 }
 /** The filter row: level and period, keeping the grade and section chosen above. */
 function tf_top_filter(int $level,string $period):string{
@@ -147,7 +147,7 @@ function tf_leaderboard_view(array $u):void{
 function tf_leaderboard(array $ids,string $label=''):string{
  $level=max(0,(int)($_GET['lb_level']??0));$period=isset(TF_TOP_PERIODS[$_GET['lb_period']??''])?(string)$_GET['lb_period']:'all';
  $rows=tf_top_rows($ids,$level,$period);$label=implode(' · ',array_filter([$label,$level?level_label($level):'All levels',$period!=='all'?TF_TOP_PERIODS[$period]:'']));
- $h='<section class="card tf-top" id="tf-top"><div class="section-heading"><h2>'.icon('star').'Top 10 pupils</h2><small>By BULIG’s average score</small></div>'.tf_top_filter($level,$period);
+ $h='<section class="card tf-top" id="tf-top"><div class="section-heading"><h2>'.icon('star').'Top 10 pupils</h2><small>By score and activities finished: the more you finish and the better you answer, the higher you go</small></div>'.tf_top_filter($level,$period);
  if(!$rows)return $h.'<p class="muted">'.($level||$period!=='all'?'No checked activities here yet. Choose another level or time.':'The board fills in when pupils finish activities that BULIG checks.').'</p></section>';
  $h.='<div class="lb-tools"><button type="button" class="btn secondary" data-lb-save>'.icon('download').'Save as picture</button><button type="button" class="btn secondary" data-lb-print>'.icon('print').'Print</button></div>';
  $h.='<div class="lb-art" id="lb-art">'.tf_leaderboard_svg($rows,$label).'</div><ol class="lb-list">';

@@ -81,6 +81,7 @@ if(form){
   try{
    let res;try{res=await fetch('index.php',{method:'POST',body:new FormData(form),credentials:'same-origin',headers:{Accept:'application/json'}});}catch(netError){if(window.buligOffline){await keepOffline();return;}throw netError;}
    const data=await res.json();if(!res.ok)throw new Error(data.error||'Your work could not be saved.');
+   if(data.vx)setTimeout(()=>showVx(data.vx,next&&!next.hidden?next.href:(next?next.href:'')),data.saved?350:150);   /* v213 Victory / Try again */
    feedback.replaceChildren();feedback.className='answer-feedback '+(data.saved?'success':'tryagain');
    const title=document.createElement('strong');title.textContent=data.message;feedback.append(title);
    if(data.saved){
@@ -1186,3 +1187,32 @@ document.querySelectorAll('[data-tab-more]').forEach(b=>b.addEventListener('clic
  if(document.readyState!=='loading')run();else document.addEventListener('DOMContentLoaded',function(){run();});
  new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1)run(n);});});}).observe(document.documentElement,{childList:true,subtree:true});
 })();
+
+/* v213 Victory / Try again: after a lesson activity, 2 or 3 stars (80%) is a victory; 0 or 1 star, try again. */
+function showVx(v,nextHref){
+ document.querySelectorAll('.vx').forEach(x=>x.remove());
+ const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;};
+ const STAR='M12 2l3 7 7 .6-5.3 4.7 1.6 7.2L12 17.8 5.7 21.5l1.6-7.2L2 9.6 9 9z';
+ const star=(on,i)=>{const ns='http://www.w3.org/2000/svg';const s=document.createElementNS(ns,'svg');s.setAttribute('viewBox','0 0 24 24');s.setAttribute('class','vx-star'+(on?' on':'')+(i===1?' mid':''));s.style.setProperty('--d',(0.25+i*0.28)+'s');const p=document.createElementNS(ns,'path');p.setAttribute('d',STAR);s.append(p);return s;};
+ const win=!!v.win,ov=el('div','vx '+(win?'vx-win':'vx-lose'));ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label',win?'Victory':'Try again');
+ ov.append(el('div','vx-bg'));if(win){ov.append(el('div','vx-rays'));const cf=el('div','vx-conf');for(let i=0;i<26;i++){const c=el('i');c.style.setProperty('--x',(Math.random()*100)+'%');c.style.setProperty('--d',(Math.random()*1.2)+'s');c.style.setProperty('--r',(Math.random()*360)+'deg');c.className='c'+(i%5);cf.append(c);}ov.append(cf);}
+ const card=el('div','vx-card');card.append(el('div','vx-banner',win?'VICTORY!':'TRY AGAIN!'));
+ const st=el('div','vx-stars');for(let i=0;i<3;i++)st.append(star(i<v.stars,i));card.append(st);
+ const kid=(src,cls)=>{const k=el('img','vx-kid '+cls);k.src='assets/images/characters/'+src;k.alt='';return k;};
+ if(win){card.append(kid('toby-cheer.webp?v=2','l'),kid('mia-hello.webp?v=2','r'));}else card.append(kid('bruno-tryagain.webp?v=2','l'));
+ const nm=v.name?', '+v.name:'';
+ card.append(el('h2','',win?(v.stars>=3?'Perfect'+nm+'!':'Great job'+nm+'!'):'So close'+nm+'!'));
+ const p=el('p');const b=el('b','vx-pct',v.pct+'%');
+ if(win){p.append('You got ',b,' and earned ',el('b','',v.stars+' stars'),'.');}
+ else{p.append('You got ',b,'. You need ',el('b','vx-need','2 stars ('+v.pass+'%)'),' to pass.');}
+ card.append(p);
+ if(win){const ch=el('div','vx-chips');if(v.xp)ch.append(el('span','vx-chip xp','+'+v.xp+' XP'));ch.append(el('span','vx-chip ok','Activity passed'));card.append(ch);}
+ else{const bar=el('div','vx-bar');const f=el('i');f.style.width=Math.max(4,Math.min(100,v.pct))+'%';const m=el('b');m.style.left=v.pass+'%';const sm=el('small','',v.pass+'% to pass');sm.style.left=v.pass+'%';bar.append(f,m,sm);card.append(bar);}
+ const btns=el('div','vx-btns');const close=()=>{ov.classList.add('out');setTimeout(()=>ov.remove(),250);document.removeEventListener('keydown',esc);};
+ const esc=e=>{if(e.key==='Escape')close();};document.addEventListener('keydown',esc);
+ if(win){const a=el('a','vx-btn go','Next activity →');a.href=nextHref||'?page=lessons';const s2=el('button','vx-btn ghost','Stay here');s2.type='button';s2.addEventListener('click',close);btns.append(a,s2);}
+ else{const a=el('a','vx-btn again','↻ Try again');a.href=v.retry;const s2=el('button','vx-btn ghost','Close');s2.type='button';s2.addEventListener('click',close);btns.append(a,s2);}
+ card.append(btns);ov.append(card);document.body.append(ov);
+ setTimeout(()=>{const f=btns.querySelector('.vx-btn');if(f)f.focus();},400);
+ if(win)setTimeout(()=>{try{window.buligSfx&&window.buligSfx.play('level');}catch(e){}},700);
+}

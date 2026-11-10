@@ -316,8 +316,15 @@ function action():void{
 
 function submission_reply(array $a,bool $ok,string $message,int $xp,string $check=''):never{
  $url='?page=lesson&id='.$a['lesson_id'].'&activity='.$a['id'].'&feedback=1';
- if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>$ok,'message'=>$message,'xp'=>$xp,'url'=>$url]+($check!==''?['check'=>$check]:[]));exit;}
+ if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>$ok,'message'=>$message,'xp'=>$xp,'url'=>$url]+($check!==''?['check'=>$check]:[])+(($v=vx_result($a,$xp))?['vx'=>$v]:[]));exit;}
  flash($message);go($url);
+}
+/** v213 Victory or Try again (the popup after a lesson activity): its stars (2 or 3 = victory, 80%), score, XP and first name. */
+function vx_result(array $a,int $xp):?array{
+ if(($a['phase']??'')!=='learn'||!function_exists('completion_frac'))return null;$u=current_user();if(!$u||($u['role']??'')!=='pupil')return null;
+ $fr=completion_frac(one('SELECT score,max_score FROM activity_completion WHERE pupil_id=? AND activity_id=?',[(int)$u['id'],(int)$a['id']]));if($fr===null)return null;
+ $st=star_count($fr,'learn');$name=explode(' ',trim((string)$u['name']))[0];
+ return ['stars'=>$st,'pct'=>(int)floor($fr*100+1e-9),'win'=>$st>=2,'xp'=>$xp,'name'=>$name,'pass'=>STAR_PASS,'retry'=>'?page=lesson&id='.(int)$a['lesson_id'].'&activity='.(int)$a['id']];
 }
 
 

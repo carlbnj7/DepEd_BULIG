@@ -423,6 +423,10 @@ def test_auto_check(p6, acc, act):
     j = jget(text)
     check('Right after "Done", BULIG shows the score, the right answers and "Try it again"',
           j.get('saved') and all(x in j.get('check', '') for x in ('ac-panel', 'LOOK AGAIN', 'Try it again')), text[:200])
+    phase = mysql('-N', '-e', f"SELECT phase FROM activities WHERE id={int(aid)}", db=DB['name']).stdout.strip()
+    vx = j.get('vx')
+    check('Victory / Try again popup data comes only after lesson activities (stars, score, 80% pass)',
+          (isinstance(vx, dict) and {'stars', 'pct', 'win', 'pass', 'retry'} <= set(vx) and vx['win'] == (vx['stars'] >= 2)) if phase == 'learn' else vx is None, f'{phase}: {vx}')
     xp = php_cli('probe.php', 'xp', acc['pupil6']['uid'])['xp']
     status, _, text = p6.req(page + '&again=1')
     check('"Try it again" opens a fresh copy for practice', 'name="again" value="1"' in text and 'ac-practice' in text, f'status {status}')
@@ -888,7 +892,7 @@ def test_whats_new(p):
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
     _, _, text = Client().req('?page=login&role=pupil')
-    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v213"' in text and 'bulig has a new update!' in text.lower() and ' hidden ' in text)
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v214"' in text and 'bulig has a new update!' in text.lower() and ' hidden ' in text)
 
 
 def test_notifications(p):
