@@ -20,7 +20,7 @@ function finished_levels(int $pid):array{
  $out=[];foreach(rows('SELECT m.level_id,COUNT(*) total,COUNT(p.completed_at) done,MAX(p.completed_at) last FROM lessons l JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.published=1'.GRADE_SQL.' GROUP BY m.level_id ORDER BY '.level_order_sql('m.level_id'),[$pid,pupil_grade($pid)]) as $r)if((int)$r['total']>0&&(int)$r['total']===(int)$r['done']&&(!function_exists('pt_passed')||pt_passed($pid,(int)$r['level_id'])))$out[(int)$r['level_id']]=(string)$r['last'];
  return $out;
 }
-function level_cover(int $level):string{$f='assets/images/covers/level-'.$level.'.webp';return is_file(__DIR__.'/../public/'.$f)?$f:'assets/bulig-logo.png';}
+function level_cover(int $level):string{$f='assets/images/covers/level-'.$level.'.webp';return is_file(__DIR__.'/../public/'.$f)?$f:'assets/bulig-quest-logo.png';}
 
 /* ---------- certificates ---------- */
 /** v209 A name as it should print: "JUAN DELA CRUZ" or "juan dela cruz" → "Juan Dela Cruz". A word already written in
@@ -78,8 +78,8 @@ function certificate_html(array $p,int $level,string $date,string $teacher):stri
  $grade='Grade '.e((string)$p['grade_level']).((string)($p['section']??'')!==''?' · '.e(name_case((string)$p['section'])):'');
  $sign=fn($n,$r)=>'<div class="cz-sg"><b>'.($n!==''?e($n):'&nbsp;').'</b><i></i><span>'.$r.'</span></div>';
  return '<article class="cert-page"><div class="cert cz">'
-  .'<aside class="cz-side">'.cert_band_art().'<img class="cz-bulig" src="assets/brand/bulig-gamified.webp" alt="BULIG"><div class="cz-lvl"><b>'.e($code).'</b><span>LEVEL COMPLETED</span><small>'.e($title).'</small></div><img class="cz-kid" src="'.e($kid).'" alt=""></aside>'
-  .'<div class="cz-main">'.cert_main_art().'<img class="cz-mark" src="assets/brand/bulig-gamified-mark.webp" alt="" aria-hidden="true">'
+  .'<aside class="cz-side">'.cert_band_art().'<img class="cz-bulig" src="assets/brand/bulig-quest.webp" alt="BULIG"><div class="cz-lvl"><b>'.e($code).'</b><span>LEVEL COMPLETED</span><small>'.e($title).'</small></div><img class="cz-kid" src="'.e($kid).'" alt=""></aside>'
+  .'<div class="cz-main">'.cert_main_art().'<img class="cz-mark" src="assets/brand/bulig-quest-mark.webp" alt="" aria-hidden="true">'
   .'<header class="cz-hd"><span class="cz-logos">'.$logo($dlogo,'Division logo').($slogo!==''?$logo($slogo,'School logo'):'').'</span><p>Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon'.($school!==''?'<br><strong>'.e($school).'</strong>':'').'</p></header>'
   .'<h2 class="cz-t">Certificate of Completion</h2><i class="cz-gold"></i>'
   .'<p class="cz-s">This certificate is proudly presented to</p><h3 class="cert-name cz-name">'.e(name_case((string)$p['name'])).'</h3>'

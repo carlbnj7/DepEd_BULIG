@@ -140,7 +140,7 @@ function rc_card(int $pid,string $teacher):string{
  $nowText=$now?'Now on <b>Level '.e(strtoupper($now['k'])?:(string)$now['n']).' · '.e($now['t']).'</b> ('.$now['pct'].'% of its lessons done).':($allDone?'<b>Finished every level of BULIG.</b>':'The starting level is not set yet.');
  $head=trim($set('school_head',''));
  return '<article class="rc-page"><div class="rc-band">'.rc_logo('division').'<div class="rc-mid">Republic of the Philippines<b>Department of Education · Region X</b>'.e($div).'</div>'.rc_logo('school').'</div>'.rc_tribal(14,'rct'.$k.'a')
-  .'<div class="rc-title"><img src="assets/bulig-logo.png" alt="BULIG"><h1>Reading Progress Report Card<small>BEGINNING READING · ENGLISH</small></h1></div>'
+  .'<div class="rc-title"><img src="assets/bulig-quest-logo.png" alt="BULIG"><h1>Reading Progress Report Card<small>BEGINNING READING · ENGLISH</small></h1></div>'
   .'<div class="rc-info"><div><label>Name</label><span>'.e($p['name']).'</span></div><div><label>LRN</label><span>'.e((string)($p['lrn']??'')).'</span></div><div><label>Grade &amp; Section</label><span>Grade '.(int)$p['grade_level'].' – '.e((string)$p['section']).'</span></div>'
   .'<div><label>School</label><span>'.e($set('school_name','')).'</span></div><div><label>School Year</label><span>'.e(function_exists('admin_school_year')?admin_school_year():'').'</span></div><div><label>Reading Teacher</label><span>'.e($teacher).'</span></div></div>'
   .'<div class="rc-grid"><div class="rc-ladder"><div class="rc-lh">THE READING LADDER</div><svg viewBox="0 0 200 '.($N*$RH).'" font-family="Poppins,sans-serif" aria-hidden="true">'.$svg.'</svg></div>'

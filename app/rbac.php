@@ -443,7 +443,7 @@ function admin_passes_view(array $u):void{
     $o: name, role, place, id, pw (null = their own password), qr, pic, scan, n */
 function staff_id_card(array $o):string{
  $d=id_design();$logos=id_logos((int)($o['school']??0),(int)($o['muni']??0),(int)($o['district']??0));
- return '<article class="idc idc-'.$d.(!empty($o['kid'])?' idc-kid':'').'"><header class="idc-top"><span class="idc-logos">'.$logos.'</span><span class="idc-org">Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon</span><img class="idc-bulig" src="assets/brand/bulig-gamified.webp" alt="BULIG"></header>'
+ return '<article class="idc idc-'.$d.(!empty($o['kid'])?' idc-kid':'').'"><header class="idc-top"><span class="idc-logos">'.$logos.'</span><span class="idc-org">Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon</span><img class="idc-bulig" src="assets/brand/bulig-quest.webp" alt="BULIG"></header>'
   .'<div class="idc-photo"><img src="'.e($o['pic']).'" alt=""></div><strong class="idc-name'.(mb_strlen((string)$o['name'])>24?' sm':'').'">'.e($o['name']).'</strong>'
   .'<span class="idc-role">'.e(mb_strtoupper((string)$o['role'])).'</span>'.(($o['place']??'')!==''?'<span class="idc-place">'.e($o['place']).'</span>':'')
   .'<div class="idc-row"><span class="lc-qr tk-qr idc-qr" data-qr="'.e($o['qr']).'" aria-hidden="true"></span><dl><dt>'.e($o['idlab']??'ID').'</dt><dd class="idc-id">'.e($o['id']).'</dd><span class="tk-pass"><dt>'.($o['pw']!==null?'Starting password':'Password').'</dt><dd class="idc-pw'.($o['pw']===null?' own':'').'">'.e($o['pw']??'Your own password').'</dd></span></dl></div>'
