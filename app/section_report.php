@@ -59,7 +59,7 @@ function sr_head(array $D,string $title,string $sub,string $teacher):string{
   .'<div class="sd-title"><img src="assets/brand/bulig-gamified.webp" alt="BULIG"><div><h2>'.e($title).'</h2><p>'.e($sub).'</p></div></div>'
   .'<div class="sd-info"><span><small>LEVEL</small><b>'.e(level_label($D['level'])).'</b></span><span><small>GRADE &amp; SECTION</small><b>Grade '.$D['grade'].' – '.e($D['sec']['name']).'</b></span><span><small>READING TEACHER</small><b>'.e($teacher).'</b></span><span><small>SCHOOL YEAR</small><b>'.e(function_exists('admin_school_year')?admin_school_year():'').'</b></span><span><small>PRINTED</small><b>'.date('F j, Y').'</b></span></div>';
 }
-function sr_page(string $inner,array $D,string $title,string $sub,string $teacher):string{return '<section class="sd-page">'.sr_head($D,$title,$sub,$teacher).$inner.'<div class="sd-foot"><span>BULIG · Building Up Literacy, Inspiring Growth</span><span class="sd-pn"></span></div></section>';}
+function sr_page(string $inner,array $D,string $title,string $sub,string $teacher):string{return '<section class="sd-page">'.sr_head($D,$title,$sub,$teacher).$inner.'<div class="sd-foot"><span>BULIG · Read, Play, Grow</span><span class="sd-pn"></span></div></section>';}
 function sr_pct($v):string{return $v===null?'—':rtrim(rtrim(number_format((float)$v,1),'0'),'.').'%';}
 function sr_avg(array $a):?float{$a=array_values(array_filter($a,fn($x)=>$x!==null));return $a?round(array_sum($a)/count($a),1):null;}
 function sr_lv(?string $l):string{return $l?'<span class="sd-lv '.l4_level_class($l).'">'.($l==='Independent'?'Ind':($l==='Instructional'?'Ins':'Frus')).'</span>':'<span class="sd-na">—</span>';}

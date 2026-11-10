@@ -251,6 +251,6 @@ function tf_leaderboard_svg(array $rows,string $label):string{
    .'<text x="1140" y="'.($y+36).'" text-anchor="end" font-size="24" font-weight="900" fill="#17633a">'.(int)$r['pct'].'%</text>';$y+=62;}
  /* Toby the Trailblazer with his flag, like on the ladder */
  $g.='<image href="'.$x(friend_img('toby','flag')).'" x="0" y="560" width="128" height="230" preserveAspectRatio="xMidYMax meet"/>'
-  .'<text x="600" y="812" text-anchor="middle" font-size="14" font-weight="700" fill="#17633a">BULIG · Building Up Literacy, Inspiring Growth</text>';
+  .'<text x="600" y="812" text-anchor="middle" font-size="14" font-weight="700" fill="#17633a">BULIG · Read, Play, Grow</text>';
  return $g.'</svg>';
 }

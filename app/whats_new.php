@@ -3,26 +3,30 @@
    BULIG is updated: a construction sign with Bob and the new things for their role. Closing it keeps a copy on the
    bell (Notifications), and ?whatsnew=1 opens it again. Seen is kept in settings (whatsnew_<update>_<id>), no SQL.
    For a new update: change WHATS_NEW_ID and the lists below. */
-const WHATS_NEW_ID='v212';
+const WHATS_NEW_ID='v213';
 const WHATS_NEW=[
  /* shown before signing in too (on the login page, after the opening screen), once on each device */
  'guest'=>[
+  ['star','A new look: BULIG Quest','BULIG has a new logo and a new tagline: Read, Play, Grow.'],
   ['school','BULIG is now in Junior High','Grades 7 to 10 can now use BULIG: Levels 4, 5, 6 and 7, each with its own Junior High module.'],
   ['book','New pictures, every answer checked','The Junior High stories have new pictures, and every question has an answer key.'],
   ['star','More levels are coming','Look at the road map: Levels 9 to 14 are on the way.'],
  ],
  'pupil'=>[
+  ['star','A new look: BULIG Quest','BULIG has a new logo and a new tagline: Read, Play, Grow.'],
   ['school','Junior High is here','Grades 7 to 10 now have their own lessons: fluency, listening and vocabulary, reading comprehension and love for reading.'],
   ['book','New pages before each test','A Pre-Assessment page before every pre-test, and a Post-Assessment page before every post-test.'],
   ['star','More levels are coming','Look past Level 8 on your road map: Levels 9 to 14 are on the way!'],
  ],
  'teacher'=>[
+  ['star','A new look: BULIG Quest','BULIG has a new logo and a new tagline: Read, Play, Grow.'],
   ['school','Junior High is here','Make Grade 7 to 10 sections: choose Elementary or Junior High School, then the grade.'],
   ['book','Levels 4 to 7 for Junior High','Each Junior High module is in BULIG with pictures, and every tap question is checked with an answer key.'],
   ['check','Class demo for every grade','The class demo shows each level’s lessons for the grade you choose, Grade 1 to Grade 10.'],
   ['comic','Announcements board','The administrator’s announcements are now pinned on a bulletin board.'],
  ],
  'admin'=>[
+  ['star','A new look: BULIG Quest','BULIG has a new logo and a new tagline: Read, Play, Grow.'],
   ['school','Elementary and Junior High','BULIG finds each school’s type from its School ID or name: Elementary, Junior High or Integrated. You can change it.'],
   ['book','Junior High modules','Levels 4, 5, 6 and 7 for Grades 7 to 10, with answer keys and pictures. Import the update SQL first.'],
   ['comic','Bulletin board','Your announcements are pinned on a bulletin board for everyone in your area: Division, town, district or school.'],

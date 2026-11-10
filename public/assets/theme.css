@@ -7732,3 +7732,9 @@ details.bb[open] .bb-cork{animation:bb-in .25s ease}
 @media(max-width:600px){.bb-peekpins{display:none}}
 .sc-lv-als,.sc-lv-als_elem,.sc-lv-als_jhs,.sc-lv-als_integrated{background:#f1e6ff;color:#5b2d91}
 .oc-als-h{grid-column:1/-1;display:flex;align-items:center;gap:8px;margin:14px 0 2px;font-size:1rem;color:#5b2d91}.oc-als-h small{font-weight:600;color:#7a6a92}.oc-als-h svg{width:18px;height:18px}
+
+/* v213 credits: Basa Manoleño + BULIG Quest logo */
+.cr-brand{display:flex;justify-content:center;margin:0 0 10px}.cr-brand img{width:min(300px,70%);height:auto}
+/* v213 login tagline */
+.eyebrow.lgn-tagline,.login-shell .eyebrow.lgn-tagline,body .lgn-tagline{font-size:clamp(20px,1.9vw,26px)!important;letter-spacing:.18em!important;font-weight:800!important;color:#ffd84d!important;text-shadow:0 2px 6px rgba(0,0,0,.45);opacity:1!important}
+.eyebrow.lgn-tagline::before{display:none}
