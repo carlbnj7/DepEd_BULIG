@@ -95,10 +95,10 @@ function update_learning(int $pid,int $aid):void{
   if($a['response_mode']!=='none')q('INSERT IGNORE INTO learning_days VALUES(?,?)',[$pid,$date]);
   if($rlb)rl_after_xp($pid,$rlb);
  }
- $days=rows('SELECT day FROM learning_days WHERE pupil_id=? ORDER BY day',[$pid]);$run=0;$long=0;$prev=null;
+ if(function_exists('streak_recount'))streak_recount($pid);else{$days=rows('SELECT day FROM learning_days WHERE pupil_id=? ORDER BY day',[$pid]);$run=0;$long=0;$prev=null;
  foreach($days as $day){$d=$day['day'];$run=$prev&&date('Y-m-d',strtotime($prev.' +1 day'))===$d?$run+1:1;$long=max($long,$run);$prev=$d;}
  if($prev&&$prev<date('Y-m-d',strtotime('-1 day')))$run=0;
- q('INSERT INTO pupil_streaks VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE current_streak=VALUES(current_streak),longest_streak=VALUES(longest_streak),last_activity_date=VALUES(last_activity_date)',[$pid,$run,$long,$prev]);
+ q('INSERT INTO pupil_streaks VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE current_streak=VALUES(current_streak),longest_streak=VALUES(longest_streak),last_activity_date=VALUES(last_activity_date)',[$pid,$run,$long,$prev]);}
  sync_assessments($pid,(int)$a['lesson_id']);award_badges($pid);
 }
 function sync_assessments(int $pid,int $lid):void{
@@ -273,7 +273,7 @@ function next_learning_lesson_check(int $pid):?array{
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['coach','whats_new','privacy','chat','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support'];
+const BULIG_PARTS=['coach','whats_new','privacy','chat','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support','streak'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
  if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}

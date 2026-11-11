@@ -1,7 +1,8 @@
 <?php
 /* The "I need help" button on every lesson screen. Table: database/migrations/025_help_requests.sql (without it the button stays hidden). */
 
-function help_ready():bool{static $r=null;if($r===null){try{$r=(bool)one("SHOW TABLES LIKE 'help_requests'");}catch(Throwable $e){$r=false;}}return $r;}
+/* Turned off for this version: no "I need help" button on lesson screens and no "Asked for help" on the teacher Home. */
+function help_ready():bool{return false;}
 const HELP_REASONS=['question'=>'I don’t understand the question','sound'=>'I can’t hear the sound','answer'=>'I don’t know how to answer'];
 /** The button and its sheet on every lesson screen (added by foot()). */
 function help_widget():string{

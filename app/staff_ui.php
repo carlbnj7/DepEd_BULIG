@@ -90,7 +90,6 @@ function teacher_home(array $u):void{
  /* v203 the same layout as the administrator Home: a green welcome banner with the class numbers, then a grid of cards */
  $todo=[[(bool)$need,'alert',count($need),'Need a check-in',$need?implode(', ',$names).(count($need)>3?' and '.(count($need)-3).' more':'').' · no learning in 7 days':'','#tf-class','Everyone learned this week'],
   [(bool)($rcTodo+$rcWait),'ladder',$rcTodo+$rcWait,'Reading checks',$rcTodo?$rcTodo.' to look at'.($rcWait?' · '.$rcWait.' not finished yet':''):($rcWait?$rcWait.' pupils not finished yet':''),'?page=rcheck','No reading checks waiting'],
-  [(bool)$help,'hand',$help,'Asked for help','Pupils tapped “I need help” this week',$helpWeek?'#tf-help':'?page=moved#help','No one asked for help'],
   [$rvOn&&$rvN>0,'mic',$rvN,'Reading verification',($rvN===1?'1 reading':$rvN.' readings').' to listen to','?page=reading_reviews','No readings to verify']];
  if(!$rvOn)array_pop($todo);
  /* v204 reading support: struggling readers and answers still on a pupil's phone */
@@ -277,7 +276,6 @@ function moved_view(array $u):void{
   .$r('Reports','School reports','Under REPORTS &amp; PRINT').$r('—','Print &amp; download','Every print and download in one place',true).$r('—','Search','Type what you need, for example “backup”',true)).'</section>';
  $p='<section class="card"><h2>'.icon('star').' Pupils</h2><p class="muted">Pupils keep the same pages and names. Their menu now has yellow group words: <b>Learn</b>, <b>My progress</b> and <b>About me</b>. On the phone, pupils keep their bottom bar. A new pupil with no starting level takes the <b>reading check</b> at first sign-in.</p></section>';
  echo '<div class="wm-cols">'.($u['role']==='admin'?$a.$t:$t.$a).'</div>'.$p;
- if($u['role']==='teacher')echo '<section class="card" id="help"><h2>'.HELP_HAND.' Asked for help</h2><p class="muted">When a pupil taps “I need help” in a lesson, at school or at home, it shows on Home under <b>Needs you today</b> and in the bell. Tap <b>See pupil</b>, help them, then <b>Mark as helped</b>.</p></section>';
 }
 
 /** One-time notes and small menu actions (closing the "new order" note). */

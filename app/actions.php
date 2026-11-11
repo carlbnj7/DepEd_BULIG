@@ -10,6 +10,7 @@ function action():void{
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
  if($action==='reading_decision'||$action==='reading_verify_batch')rv_action();
+ if($action==='streak_revive'||$action==='streak_lost_ok')streak_action($action);
  if($action==='offline_report')rs_offline_report(require_role('pupil'));
  if($action==='cleanup_merge'||$action==='cleanup_archive'||$action==='cleanup_clear')cleanup_action($action);
  if($action==='class_goal'){$t=require_role('teacher');rs_put('class_goal_'.(int)$t['id'],(string)max(50,min(20000,(int)($_POST['goal']??500))));flash('Weekly reading goal saved.');go('?page=dashboard#rs-challenge');}
