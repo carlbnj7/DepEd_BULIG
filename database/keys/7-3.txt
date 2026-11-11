@@ -1,0 +1,45 @@
+# Level 6 · Grade 3. Pre/post-test answers agree with the module key (pages 65-66). The module's keys for the daily
+# activities are numbered for a shorter question list, so those answers come from the stories.
+7:3:1100:pre:1 | 2=b 3=c 4=b 5=c 6=b
+7:3:1100:pre:2 | 2=a 3=b 4=b 5=b 6=a
+7:3:1100:pre:3 | 2=b 3=b 4=b 5=b 6=a
+7:3:1100:pre:4 | 2=b 3=c 4=b 5=b 6=a
+7:3:2201:learn:1 | 2=b 3=b 4=c 5=a 6=c 7=a 8=a 9=c
+7:3:3202:learn:1 | 2=b 3=c 4=b 5=a 6=b 7=a 8=a 9=a
+7:3:4203:learn:1 | 2=b 3=a 4=b 5=b 6=c 7=a 8=a 9=a
+7:3:5204:learn:1 | 2=a 3=c 4=b 5=c 6=a 7=b 8=c 9=a
+7:3:6205:learn:1 | 2=b 3=a 4=c 5=c 6=b 7=a 8=c 9=c
+7:3:7206:learn:1 | 2=c 3=a 4=b
+7:3:7206:learn:2 | 2=c 3=b 4=a
+7:3:8207:learn:1 | 2=c 3=b 4=b
+7:3:8207:learn:2 | 2=b 3=b 4=b
+7:3:9208:learn:1 | 2=a 3=a 4=a
+7:3:9208:learn:2 | 2=b 3=c 4=a
+7:3:10209:learn:1 | 2=a 3=a 4=b
+7:3:10209:learn:2 | 2=c 3=b 4=a
+7:3:11210:learn:1 | 2=b 3=a 4=a
+7:3:11210:learn:2 | 2=c 3=a 4=c
+7:3:12211:learn:1 | 2=c 3=b 4=a
+7:3:12211:learn:2 | 2=a 3=b 4=a
+7:3:13212:learn:1 | 2=c 3=b 4=b
+7:3:13212:learn:2 | 2=a 3=b 4=c
+7:3:14213:learn:1 | 2=c 3=c 4=c
+7:3:14213:learn:2 | 2=c 3=c 4=c
+7:3:15214:learn:1 | 2=b 3=c 4=a
+7:3:15214:learn:2 | 2=a 3=c 4=c
+7:3:16215:learn:1 | 2=c 3=b 4=b
+7:3:16215:learn:2 | 2=b 3=a 4=b
+7:3:17216:learn:1 | 2=b 3=b 4=c
+7:3:17216:learn:2 | 2=b 3=b 4=a
+7:3:18217:learn:1 | 2=b 3=b 4=a
+7:3:18217:learn:2 | 2=c 3=b 4=a
+7:3:19218:learn:1 | 2=a 3=c 4=a
+7:3:19218:learn:2 | 2=b 3=a 4=b
+7:3:20219:learn:1 | 2=c 3=b 4=a
+7:3:20219:learn:2 | 2=b 3=a 4=b
+7:3:21220:learn:1 | 2=a 3=b 4=a
+7:3:21220:learn:2 | 2=c 3=b 4=a
+7:3:22300:post:1 | 2=b 3=c 4=b 5=c 6=b
+7:3:22300:post:2 | 2=a 3=b 4=b 5=b 6=a
+7:3:22300:post:3 | 2=b 3=b 4=b 5=b 6=a
+7:3:22300:post:4 | 2=b 3=c 4=b 5=b 6=a

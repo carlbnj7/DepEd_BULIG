@@ -1,0 +1,33 @@
+# Level 6 · Grade 5 (checked against the module key, pages 58-61; it is a scanned page)
+7:5:1100:pre:1 | 2=b 3=a 4=a 5=a
+7:5:1100:pre:2 | 2=a 3=a 4=b
+7:5:1100:pre:3 | 2=a 3=b 4=a
+7:5:1100:pre:4 | 2=a! 3=c 4=a        # module key 11. C ("to improve people's eyesight"); the vaccine is to help people avoid tooth decay.
+7:5:1100:pre:5 | 2=b 3=a
+7:5:1100:pre:6 | 2=b 3=c 4=c
+7:5:2201:learn:1 | 2=c 3=a 4=c 5=b 6=b 7=a 8=d! 9=a 10=b 11=a/b      # module key 7. C ("poisonous"); the story says sweat is a waste product.
+7:5:3202:learn:1 | 2=c 3=c 4=a 5=b 6=b 7=a 8=c 9=c 10=c 11=a
+7:5:4203:learn:1 | 2=b 3=a 4=a 5=b 6=a 7=b 8=b 9=b 10=a 11=c
+7:5:5204:learn:1 | 2=c 3=b 4=a 5=b 6=b 7=b 8=a 9=c 10=a 11=b
+7:5:6205:learn:1 | 2=c 3=b 4=c
+7:5:7206:learn:1 | 2=a 3=b 4=a
+7:5:8207:learn:1 | 2=a 3=a 4=c
+7:5:9208:learn:1 | 2=b 3=a 4=c
+7:5:10209:learn:1 | 2=b/c 3=b/c 4=a/b     # the module key accepts "B or C" for 1 and 2.
+7:5:11210:learn:1 | 2=a 3=b 4=b!        # module key 3. A ("pig"); the pink bundle of joy is the new baby.
+7:5:12500:post:1 | 2=c 3=b 4=b 5=a 6=a 7=b 8=b 9=c 10=a 11=a
+7:5:12500:post:2 | 2=a 3=c! 4=b!        # module key 2. B, 3. A; Serafin sees a star (hope), so "Beauty is in the Eyes That See" and Serafin.
+7:5:12500:post:3 | 2=c 3=b 4=a
+7:5:12500:post:4 | 2=b
+7:5:12500:post:5 | 2=b 3=c 4=c 5=a 6=c 7=b 8=c 9=a 10=a 11=b!        # module key 10. C; the selection is all about ice cream.
+7:5:13211:learn:1 | 2=c 3=b 4=b
+7:5:14212:learn:1 | 2=a/c 3=b 4=b
+7:5:16214:learn:1 | 2=a 3=c 5=c!        # module key "11"; Mother brought two large baskets.
+7:5:19217:learn:1 | 2=b 3=a 4=b 5=c 6=c 7=b 8=c 9=b 10=b 11=b
+7:5:20218:learn:1 | 2=b 3=c 4=c 5=a 6=b 7=b 8=a 9=c! 10=c 11=c       # module key 8. A ("his mother"); the story says "Mariano's parents looked for him".
+7:5:21219:learn:1 | 2=b 3=c 4=b 5=c 6=b 7=c 8=b 9=a 10=b 11=a
+7:5:22220:learn:1 | 2=b 3=c 4=a 5=b 6=b 7=a 8=a! 9=b 10=c      # module key 7. B ("warm countries"); in warm countries clothes were made of grass and bark.
+7:5:23300:post:1 | 2=a 3=a 4=b 5=c 6=a 7=b 8=c 9=b 10=b 11=b
+7:5:23300:post:2 | 2=b 3=a 4=c
+7:5:23300:post:3 | 2=c 3=a 4=a
+7:5:23300:post:5 | 2=c 3=c 4=a 5=b 6=b

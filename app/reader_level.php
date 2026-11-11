@@ -1,0 +1,215 @@
+<?php
+/* Reader level: a game level from 1 to 100 that grows with the pupil's XP. Early levels come quickly; later levels need
+   more XP (Level 2 needs 20 XP, Level 100 needs 5,473 XP). Every grade can reach Level 100 by finishing BULIG.
+   Head start: a pupil whose teacher started them at a higher BULIG level gets the XP of every published activity in the
+   levels they skipped (for their grade). Activities they already did there are left out, so no XP is counted twice.
+   A quarter of it comes right away; the rest comes a little at a time as they finish the activities of their own levels,
+   all of it by the time they finish. (Giving it all at once put a Level 6 starter straight at reader Level 100.)
+   No new table: the head start is worked out from the starting level, and the level-up popups use the pupil's "seen"
+   record (settings key pupil_seen_<id>, see pupil_celebrations()). */
+
+const RL_MAX=100;
+/* Share of the head-start XP given right away. */
+const RL_HS_NOW=.25;
+/* Ranks: 10 ranks of 10 reader levels each (Levels 1-10 Beginner, 11-20 Learner, ... 91-100 Mythic). Every 2 reader levels
+   give a star, 5 stars in each rank; the level after the 5th star gives the next rank. XP never goes down, so stars and ranks
+   are never taken away. Emblems: public/assets/images/ranks/<key>.webp (small copies in ranks/sm/ for chips). */
+const RK_RANKS=[['beginner','Beginner'],['learner','Learner'],['explorer','Explorer'],['achiever','Achiever'],['champion','Champion'],['guardian','Guardian'],['elite','Elite'],['master','Master'],['legend','Legend'],['mythic','Mythic']];
+const RK_STARS=5;
+
+/** XP needed to go from level $n to level $n+1. */
+function rl_step(int $n):int{return 20+(int)round(.72*($n-1));}
+/** Total XP needed to reach level $l. */
+function rl_need(int $l):int{static $t=null;if($t===null){$t=[1=>0];for($n=1;$n<RL_MAX;$n++)$t[$n+1]=$t[$n]+rl_step($n);}return $t[max(1,min(RL_MAX,$l))];}
+/** Level, XP inside the level (cur) and XP the level needs (need) for an XP total. */
+function rl_from_xp(int $xp):array{$l=1;while($l<RL_MAX&&$xp>=rl_need($l+1))$l++;$max=$l>=RL_MAX;return ['level'=>$l,'xp'=>$xp,'cur'=>$max?0:$xp-rl_need($l),'need'=>$max?0:rl_step($l),'max'=>$max];}
+function rl_pct(array $r):int{return $r['max']?100:(int)floor(100*$r['cur']/max(1,$r['need']));}
+/** The rank of a reader level: i (0-9), k (emblem file), name, from / to (its levels) and stars (0-5). */
+function rk_of(int $level):array{$level=max(1,min(RL_MAX,$level));$i=min(count(RK_RANKS)-1,intdiv($level-1,10));$from=$i*10+1;return ['i'=>$i,'k'=>RK_RANKS[$i][0],'name'=>RK_RANKS[$i][1],'from'=>$from,'to'=>$from+9,'stars'=>min(RK_STARS,intdiv($level-$from+1,2))];}
+/** A rank emblem picture ($small: the light copy for chips). */
+function rk_img(int $i,string $cls,bool $small=false,string $alt=''):string{
+ $k=RK_RANKS[$i][0];$f='assets/images/ranks/'.($small?'sm/':'').$k.'.webp';if(!is_file(__DIR__.'/../public/'.$f))$f='assets/images/ranks/'.$k.'.webp';
+ return '<img class="'.$cls.'" src="'.e($f).'?v=2" alt="'.e($alt).'" decoding="async">';   // v2: the redrawn emblems (v166)
+}
+/** The 5 rank stars, $n of them filled. */
+function rk_stars(int $n,string $cls=''):string{
+ $s='';for($x=0;$x<RK_STARS;$x++)$s.='<svg viewBox="0 0 24 24" class="'.($x<$n?'on':'off').'"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z" stroke-width="1.3" stroke-linejoin="round"/></svg>';
+ return '<span class="rk-stars'.($cls?' '.$cls:'').'" role="img" aria-label="'.$n.' of '.RK_STARS.' stars">'.$s.'</span>';
+}
+/** Teacher lists: "Lv 39 [emblem] Achiever 4/5". */
+function rk_chip(int $pid):string{$r=rl_info($pid);$k=rk_of($r['level']);return '<span class="rk-inl" title="Reader level '.$r['level'].' · '.e($k['name']).', '.$k['stars'].' of '.RK_STARS.' stars"><span class="rk-lvn">Lv '.$r['level'].'</span>'.rk_img($k['i'],'',true).e($k['name']).'<span class="rk-n">'.$k['stars'].'/'.RK_STARS.' '.rk_star1().'</span></span>';}
+/** "an Achiever", "a Champion". */
+function rk_a(string $name):string{return (preg_match('~^[AEIOU]~',$name)?'an ':'a ').$name;}
+function rk_star1():string{return '<svg class="rk-s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg>';}
+
+/** Head-start XP for each BULIG level below the pupil's starting level: [level id => XP]. */
+function rl_headstart(int $pid,bool $fresh=false):array{
+ static $c=[];if(!$fresh&&isset($c[$pid]))return $c[$pid];$out=[];
+ $start=pupil_start_level($pid);
+ if($start>1)foreach(rows('SELECT m.level_id,COALESCE(SUM(a.xp_reward),0) xp FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN xp_transactions x ON x.activity_id=a.id AND x.pupil_id=? WHERE a.published=1 AND l.published=1 AND '.level_order_sql('m.level_id').'<'.level_order_sql('?').' AND x.activity_id IS NULL'.GRADE_SQL.' GROUP BY m.level_id ORDER BY '.level_order_sql('m.level_id'),[$pid,$start,pupil_grade($pid)]) as $r)if((int)$r['xp']>0)$out[(int)$r['level_id']]=(int)$r['xp'];
+ return $c[$pid]=$out;
+}
+/** How far the pupil is through their own levels (the starting level and up), from 0 to 1: the XP of the activities they
+    finished there, out of the XP of all of them. */
+function rl_path_share(int $pid,bool $fresh=false):float{
+ static $c=[];if(!$fresh&&isset($c[$pid]))return $c[$pid];
+ $start=max(1,pupil_start_level($pid));
+ $r=one('SELECT COALESCE(SUM(a.xp_reward),0) total,COALESCE(SUM(IF(x.activity_id IS NULL,0,a.xp_reward)),0) done FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id AND b.published=1 LEFT JOIN xp_transactions x ON x.activity_id=a.id AND x.pupil_id=? WHERE a.published=1 AND l.published=1 AND m.level_id>=?'.GRADE_SQL,[$pid,$start,pupil_grade($pid)]);
+ return $c[$pid]=(int)$r['total']>0?min(1.0,(int)$r['done']/(int)$r['total']):1.0;
+}
+/** Head-start XP the pupil has so far: a quarter right away, the rest bit by bit as they finish their own activities. */
+function rl_headstart_now(int $pid,bool $fresh=false):int{
+ $all=array_sum(rl_headstart($pid,$fresh));
+ return $all?(int)floor($all*(RL_HS_NOW+(1-RL_HS_NOW)*rl_path_share($pid,$fresh))):0;
+}
+/** All the pupil's XP for the reader level: earned XP plus the head-start XP they have so far. */
+function rl_xp(int $pid,bool $fresh=false):int{return (int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid])+rl_headstart_now($pid,$fresh);}
+function rl_info(int $pid,bool $fresh=false):array{return rl_from_xp(rl_xp($pid,$fresh));}
+
+/** After XP is added: tell the pupil (bell) when they reach a new reader level. */
+function rl_after_xp(int $pid,int $before):void{
+ if(!function_exists('notify'))return;$r=rl_info($pid,true);if($r['level']<=$before)return;
+ $k=rk_of($r['level']);$k0=rk_of($before);if($k['i']>$k0['i']&&function_exists('push_queue'))push_queue($pid,'rank','You are now '.rk_a($k['name']).'!','Zion has your new rank emblem. Come and see it!','?page=achievements');notify($pid,'rlevel',$k['i']>$k0['i']?'Rank up! You are now '.rk_a($k['name']).'!':'You reached Level '.$r['level'].'!',($k['i']>$k0['i']?'Level '.$r['level'].'. ':($k['stars']>$k0['stars']?'New star: '.$k['stars'].' of '.RK_STARS.'. ':'')).($r['max']?'This is the highest level!':($r['need']-$r['cur']).' XP to Level '.($r['level']+1).'.'),'?page=achievements#reader-level');
+}
+
+/** For the teacher's pupil page: "Reader level 93 · Mythic rank, 1 of 5 stars". */
+function rl_pupil_line(int $pid):string{$r=rl_info($pid);$k=rk_of($r['level']);return 'Reader level '.$r['level'].' · '.$k['name'].' rank, '.$k['stars'].' of '.RK_STARS.' stars';}
+
+/** Reader-level badges above the pupil's level are taken back (the old head start gave them all at once). Called by
+    award_badges(); rl_celebration() also forgets them in the "seen" record so each pops up again when really reached. */
+function rl_fix_badges(int $pid,int $level):void{q("DELETE pb FROM pupil_badges pb JOIN badges b ON b.id=pb.badge_id WHERE pb.pupil_id=? AND b.rule_type='rlevel' AND b.threshold_value>?",[$pid,$level]);}
+
+/* ---------- Pictures ---------- */
+function rl_icon(string $k):string{
+ $p=['sprout'=>'<path d="M12 21v-8"/><path d="M12 13c0-4-3-6-7-6 0 4 3 6 7 6z"/><path d="M12 11c0-4 3-6 7-6 0 4-3 6-7 6z"/>','find'=>'<circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/>','sound'=>'<path d="M4 10v4h4l5 4V6L8 10z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/>','map'=>'<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>','page'=>'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h7M9 17h5"/>','book'=>'<path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1z"/><path d="M12 6v14"/>','sun'=>'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>','star'=>'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/>','shield'=>'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>','trophy'=>'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 13v4M9 21h6"/>','crown'=>'<path d="M3 8l4 4 5-7 5 7 4-4-2 11H5z"/>','lock'=>'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>','up'=>'<path d="m6 11 6-6 6 6"/><path d="M12 5v14"/>','next'=>'<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>'];
+ return '<svg class="icon rl-ic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.($p[$k]??$p['star']).'</svg>';
+}
+/** The round level badge: a gold ring shows how far the pupil is into the level. Sizes: rl-ring (card), -md, -lg. */
+function rl_ring(int $level,int $pct,string $cls=''):string{
+ $pct=max(0,min(100,$pct));
+ return '<span class="rl-ring '.$cls.'" aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="rl-ring-bg" cx="22" cy="22" r="19.5" fill="none"/><circle class="rl-ring-fill" cx="22" cy="22" r="19.5" fill="none" pathLength="100" stroke-dasharray="'.$pct.' 100" transform="rotate(-90 22 22)"/></svg><b><small>LV</small>'.$level.'</b></span>';
+}
+
+/* ---------- Pupil home: "My reader level" card ---------- */
+function rl_card(int $pid):string{
+ $r=rl_info($pid);$k=rk_of($r['level']);$next=$r['level']+1;
+ $h='<a class="pupil-stat xp-stat rl-stat rk-card" href="?page=achievements#reader-level" aria-label="My level and rank: '.e($k['name']).', '.$k['stars'].' of '.RK_STARS.' stars, Level '.$r['level'].'. '.($r['max']?'The highest level.':$r['cur'].' of '.$r['need'].' XP to Level '.$next.'.').'"><span class="stat-label">'.icon('star').'My level and rank</span>'
+  .'<span class="rl-row">'.rk_img($k['i'],'rk-emr').'<span class="rk-rk"><b>'.e($k['name']).'</b>'.rk_stars($k['stars']).'<span class="rk-meta"><span class="rk-lvpill"><small>LV</small>'.$r['level'].'</span>'.$k['stars'].' of '.RK_STARS.' stars</span></span></span>';
+ if($r['max'])return $h.'<span class="stat-foot">You reached the highest level!</span></a>';
+ return $h.'<span class="pfx-xp" data-pfx-xp="'.$pid.'" data-xp="'.$r['xp'].'"><progress data-pf-fill value="'.$r['cur'].'" max="'.$r['need'].'"></progress><span class="pfx-shine" aria-hidden="true"></span></span><span class="stat-foot">'.$r['cur'].' / '.$r['need'].' XP to Level '.$next.'</span></a>';
+}
+
+/* ---------- My achievements: the level road from Level 1 to 100 ---------- */
+function rl_road(int $pid):string{
+ $r=rl_info($pid);$k=rk_of($r['level']);$hs=rl_headstart_now($pid);$later=array_sum(rl_headstart($pid))-$hs;$lv=$r['level'];
+ $h='<section class="card rl-road rk-road" id="reader-level" aria-label="My rank and reader level"><div class="rk-head">'.rk_img($k['i'],'rk-big',false,$k['name'].' rank').'<div class="rk-htext"><h2>My rank</h2><div class="rk-rline"><span class="rk-title">'.e($k['name']).'</span>'.rk_stars($k['stars']).'</div>'
+  .'<div class="rk-meta"><span class="rk-lvpill"><small>LEVEL</small>'.$lv.' of '.RL_MAX.'</span>'.number_format($r['xp']).' XP in all'.($hs?' (with '.number_format($hs).' head-start XP)':'').'</div>'.($later>0?'<p class="rl-hs-more">'.rl_icon('up').number_format($later).' more head-start XP comes as you finish your activities.</p>':'');
+ if($r['max'])$h.='<p class="rl-top">'.rl_icon('crown').'You reached Level 100, the highest level. You are a Mythic reader!</p>';
+ else{$tips=[$r['cur'].' / '.$r['need'].' XP to Level '.($lv+1)];
+  if($k['stars']<RK_STARS){$sl=$k['from']+2*($k['stars']+1)-1;$tips[]='Level '.$sl.' gives your '.rk_ord($k['stars']+1).' star';}
+  if($k['i']<count(RK_RANKS)-1)$tips[]='Level '.($k['to']+1).' makes you '.rk_a(RK_RANKS[$k['i']+1][1]).'!';
+  $h.='<progress class="rl-bar rk-bar" value="'.$r['cur'].'" max="'.$r['need'].'" aria-label="XP toward Level '.($lv+1).'"></progress><p class="rk-next">'.e(implode(' · ',$tips)).'</p>';}
+ $h.='</div></div><ol class="rk-ladder">';
+ foreach(RK_RANKS as $i=>$x){$st=$i<$k['i']?'done':($i===$k['i']?'now':'lock');
+  $h.='<li class="rk-step '.$st.'">'.($st==='now'?'<span class="rk-here">YOU ARE HERE</span>':'').($st==='lock'?'<span class="rk-lk">'.rl_icon('lock').'</span>':'').rk_img($i,'',false,$x[1].($st==='lock'?' (not yet)':'')).'<b>'.e($x[1]).'</b><small>Levels '.($i*10+1).'–'.($i*10+10).'</small></li>';}
+ return $h.'</ol><div class="rk-how"><span>'.icon('check').'Finish activities to earn XP</span><span>'.icon('star').'Every 2 reader levels = 1 star</span><span>'.rl_icon('up').'Fill 5 stars to rank up</span><span>'.rl_icon('shield').'Stars are never taken away</span></div></section>';
+}
+/** 1st, 2nd, 3rd, 4th, 5th. */
+function rk_ord(int $n):string{return $n.([1=>'st',2=>'nd',3=>'rd'][$n]??'th');}
+
+/* ---------- Popups: head start and level up (shown once each, from pupil_celebrations) ---------- */
+function rl_level_name(int $level,int $pid):string{
+ $title=[1=>'Oral Language',2=>'Sounds in Words',3=>'Sounds in Words',4=>'Word Recognition',5=>'Fluency',6=>'Listening & Vocabulary',7=>'Comprehension',8=>'Love for Reading'][$level]??'';
+ $graded=(bool)val('SELECT 1 FROM modules WHERE level_id=? AND grade_level IS NOT NULL LIMIT 1',[$level]);
+ return level_label($level).($title!==''?' · '.$title:'').($graded?' (Grade '.pupil_grade($pid).')':'');
+}
+function rl_celebration(array $u,array &$seen,int &$shown):string{
+ $pid=(int)$u['id'];$r=rl_info($pid);$hs=rl_headstart($pid);$sum=array_sum($hs);$now=rl_headstart_now($pid);
+ $h0=(int)($seen['h']??0);$r0=(int)($seen['r']??0);if($r0>$r['level'])$seen['b']=array_values(array_diff(array_map('intval',$seen['b']??[]),array_map('intval',array_column(rows("SELECT id FROM badges WHERE rule_type='rlevel' AND threshold_value>?",[$r['level']]),'id'))));$first=explode(' ',trim((string)$u['name']))[0];$out='';
+ $conf='<div class="lc-confetti" aria-hidden="true">'.str_repeat('<i></i>',18).'</div>';$close='<button type="button" class="pw-close" data-welcome-close aria-label="Close">'.icon('close').'</button>';
+ if($sum>$h0&&$shown<3){$shown++;
+  $from=rl_from_xp(max(0,$r['xp']-$now))['level'];$start=pupil_start_level($pid);$li='';
+  foreach($hs as $lv=>$xp)$li.='<li><span>'.e(rl_level_name($lv,$pid)).'</span><b>+'.number_format($xp).' XP</b></li>';
+  $out.='<div class="pw-overlay pf-cel rl-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rl-hs"><div class="pw-panel pf-cel-panel">'.$close.$conf.'<div class="rl-stage rl-stage-hs" aria-hidden="true"><img class="cel-george cel-george-solo" src="'.e(char_src('george','point')).'" alt=""></div>'.pf_ribbon('HEAD START!',200,'pf-green').'<h2 id="rl-hs">You skipped ahead, '.e($first).'!</h2><p class="pw-msg">Your teacher started you at '.e(level_label($start)).'. You still get the XP for the levels you skipped.</p>'
+   .'<ul class="rl-hs-list">'.$li.'<li class="rl-hs-total"><span>Head-start XP</span><b>+'.number_format($sum).' XP</b></li>'
+   .'<li class="rl-hs-now"><span>You get now</span><b>+'.number_format($now).' XP</b></li>'.($sum>$now?'<li class="rl-hs-later"><span>Comes as you finish your activities</span><b>+'.number_format($sum-$now).' XP</b></li>':'').'</ul>'
+   .'<div class="rl-jump">'.rl_ring($from,0).'<span class="rl-arrow">'.rl_icon('next').'</span>'.rl_ring($r['level'],rl_pct($r),'rl-ring-md').'</div><p class="rl-title-chip rk-chip-pop">'.rk_img(rk_of($r['level'])['i'],'',true).'Your rank: <b>'.e(rk_of($r['level'])['name']).'</b>'.rk_stars(rk_of($r['level'])['stars']).'</p>'
+   .'<div class="pw-actions"><button type="button" class="btn primary" data-welcome-close>Let’s go!</button><a class="btn secondary" href="?page=achievements#reader-level">See my level road</a></div></div></div>';
+ }elseif($r0>0&&$r['level']>$r0&&$shown<3){$shown++;
+  $k=rk_of($r['level']);$k0=rk_of($r0);
+  if($k['i']>$k0['i'])$out.='<div class="pw-overlay pf-cel rl-cel rk-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rk-up"><div class="pw-panel pf-cel-panel">'.$close.$conf.'<div class="rk-stage" aria-hidden="true"><div class="pf-burst"></div>'.rk_img($k['i'],'rk-em2').'<img class="cel-george" src="'.e(char_src('george','cheer')).'" alt="">'.'</div>'.pf_ribbon('RANK UP!',190,'pf-green')
+   .'<span class="rk-lvchip">Level '.$r['level'].'</span><h2 id="rk-up">You are now '.e(rk_a($k['name'])).', '.e($first).'!</h2>'.rk_stars($k['stars'])
+   .'<div class="rk-from"><span>'.rk_img($k0['i'],'',true).e($k0['name']).'</span>'.rl_icon('next').'<span>'.rk_img($k['i'],'',true).e($k['name']).'</span></div>'
+   .'<p class="pw-msg">'.($r['max']?'This is the highest level. You are a Mythic reader!':'You reached Level '.$r['level'].'. Keep reading to fill all '.RK_STARS.' stars!').'</p>'
+   .'<div class="pw-actions"><button type="button" class="btn primary" data-welcome-close>Yay!</button><a class="btn secondary" href="?page=achievements#reader-level">See my ranks</a></div></div></div>';
+  else $out.='<div class="pw-overlay pf-cel rl-cel" data-pf-overlay hidden role="dialog" aria-modal="true" aria-labelledby="rl-up"><div class="pw-panel pf-cel-panel">'.$close.$conf.'<div class="rl-stage" aria-hidden="true"><div class="pf-burst"></div>'.rl_ring($r['level'],100,'rl-ring-lg').'<img class="cel-george" src="'.e(char_src('george','cheer')).'" alt="">'.'</div>'.pf_ribbon('LEVEL UP!',190,'pf-green')
+   .'<h2 id="rl-up">You reached Level '.$r['level'].', '.e($first).'!</h2><p class="rl-title-chip rk-chip-pop">'.rk_img($k['i'],'',true).($k['stars']>$k0['stars']?'New star! ':'').'<b>'.e($k['name']).'</b>'.rk_stars($k['stars']).'</p>'
+   .'<p class="pw-msg">'.($r['max']?'This is the highest level. You are a Mythic reader!':($r['need']-$r['cur']).' XP to Level '.($r['level']+1).'. Keep reading!').'</p>'
+   .'<div class="pw-actions"><button type="button" class="btn primary" data-welcome-close>Yay!</button><a class="btn secondary" href="?page=achievements#reader-level">See my rank</a></div></div></div>';
+ }
+ $seen['h']=$sum;$seen['r']=$r['level'];return $out;
+}
+
+/* ---------- v205 rank frames: a frame round the pupil's picture in the style of their rank badge (gold metal, gems,
+   wings, laurels, crowns), like a game's avatar border. It grows with the rank. Colours follow the badges in
+   assets/images/ranks. ---------- */
+/* [rank colour, light rank colour, gem colour, ornament: leaves/wings colour, extras] */
+const RK_FRAME=['beginner'=>['#9a5a24','#d89a55','#ffcf3a','#4fae3a'],'learner'=>['#2f5fae','#7fb0ea','#3fb0ff','#c9d3de'],
+ 'explorer'=>['#b52a22','#e85b4a','#ff3b3b','#f2c13a'],'achiever'=>['#1f8a2e','#5fd06a','#2fe04a','#3fb83a'],
+ 'champion'=>['#2a7fd0','#8fd0ff','#53c3ff','#8fd0ff'],'guardian'=>['#6a33b8','#b37cf0','#c35cff','#a35ae8'],
+ 'elite'=>['#b8241d','#f0584c','#ff3a3a','#e8402f'],'master'=>['#c98a12','#ffe08a','#ffb31a','#f6d36b'],
+ 'legend'=>['#1d5fc9','#6fb2ff','#3d9bff','#3a8cf0'],'mythic'=>['#b8237f','#ff7fd0','#ff4fc8','#f04fb8']];
+function rank_frame_svg(string $k,int $tier,int $lv=0):string{
+ /* v205b: an ornate frame in the style of game avatar borders. viewBox 240; the photo fills the circle r=60 (no gap). */
+ [$c,$cl,$gem,$orn]=RK_FRAME[$k]??RK_FRAME['beginner'];$id='rf'.$k;$O='#4a2f04';
+ $d='<defs><linearGradient id="'.$id.'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c8"/><stop offset=".25" stop-color="#f6cf5a"/><stop offset=".55" stop-color="#c58b1c"/><stop offset=".8" stop-color="#f3d679"/><stop offset="1" stop-color="#8a5a10"/></linearGradient>'
+  .'<linearGradient id="'.$id.'h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffbe0"/><stop offset=".5" stop-color="#e8b23a"/><stop offset="1" stop-color="#7a4c08"/></linearGradient>'
+  .'<linearGradient id="'.$id.'c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'.$cl.'"/><stop offset="1" stop-color="'.$c.'"/></linearGradient>'
+  .'<linearGradient id="'.$id.'f" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="'.$c.'"/><stop offset=".6" stop-color="'.$orn.'"/><stop offset="1" stop-color="#ffffff" stop-opacity=".85"/></linearGradient>'
+  .'<radialGradient id="'.$id.'m" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="'.$gem.'"/><stop offset="1" stop-color="'.$c.'"/></radialGradient>'
+  .'<radialGradient id="'.$id.'a" cx="50%" cy="50%" r="50%"><stop offset=".45" stop-color="'.$gem.'" stop-opacity=".55"/><stop offset="1" stop-color="'.$gem.'" stop-opacity="0"/></radialGradient></defs>';
+ $G='url(#'.$id.'g)';$H='url(#'.$id.'h)';$M='url(#'.$id.'m)';$F='url(#'.$id.'f)';
+ $mir=fn(string $p)=>'<g>'.$p.'</g><g transform="translate(240 0) scale(-1 1)">'.$p.'</g>';
+ $gemD=fn(float $x,float $y,float $r)=>'<path d="M'.$x.' '.($y-$r*1.5).' L'.($x+$r).' '.$y.' L'.$x.' '.($y+$r*1.5).' L'.($x-$r).' '.$y.'Z" fill="'.$H.'" stroke="'.$O.'" stroke-width="1.4"/>'
+  .'<path d="M'.$x.' '.($y-$r*1.1).' L'.($x+$r*.7).' '.$y.' L'.$x.' '.($y+$r*1.1).' L'.($x-$r*.7).' '.$y.'Z" fill="'.$M.'"/><path d="M'.($x-$r*.3).' '.($y-$r*.5).' L'.$x.' '.($y-$r*.95).' L'.($x+$r*.15).' '.($y-$r*.4).'Z" fill="#fff" opacity=".9"/>';
+ $orb=fn(float $x,float $y,float $r)=>'<circle cx="'.$x.'" cy="'.$y.'" r="'.($r+3).'" fill="'.$H.'" stroke="'.$O.'" stroke-width="1.3"/><circle cx="'.$x.'" cy="'.$y.'" r="'.$r.'" fill="'.$M.'"/><circle cx="'.($x-$r*.35).'" cy="'.($y-$r*.4).'" r="'.($r*.32).'" fill="#fff" opacity=".85"/>';
+ $s=$d;
+ /* glow behind (higher ranks) */
+ if($tier>=3){$R=96+$tier*2;$s.='<path fill-rule="evenodd" d="M'.(120-$R).' 120a'.$R.' '.$R.' 0 1 0 '.(2*$R).' 0a'.$R.' '.$R.' 0 1 0 -'.(2*$R).' 0ZM50 120a70 70 0 1 0 140 0a70 70 0 1 0 -140 0Z" fill="url(#'.$id.'a)"/>';}
+ /* rank-colour flames / feathers behind everything */
+ if($tier>=4)$s.=$mir('<path d="M86 200 C40 190 12 142 22 92 C34 134 60 164 96 180Z" fill="'.$F.'" stroke="'.$O.'" stroke-opacity=".6" stroke-width="1.4"/>'.($tier>=6?'<path d="M64 172 C22 148 12 92 32 46 C38 92 52 132 76 166Z" fill="'.$F.'" stroke="'.$O.'" stroke-opacity=".6" stroke-width="1.4" opacity=".9"/>':''));
+ /* big outer blades sweeping up (Guardian and up) */
+ if($tier>=5)$s.=$mir('<path d="M58 176 C14 148 8 76 40 14 C34 70 40 118 72 160Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.8" stroke-linejoin="round"/><path d="M42 28 C30 76 38 120 66 158" fill="none" stroke="#fff6c8" stroke-opacity=".75" stroke-width="2"/>');
+ /* inner blades hugging the ring (Learner and up) */
+ if($tier>=1)$s.=$mir('<path d="M50 162 C24 128 26 82 52 48 C44 88 46 124 64 154Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.6" stroke-linejoin="round"/><path d="M50 58 C38 92 40 124 56 152" fill="none" stroke="#fff6c8" stroke-opacity=".7" stroke-width="1.6"/>');
+ /* laurels (Beginner) */
+ if($tier===0)$s.=$mir(implode('',array_map(fn($a)=>'<path transform="translate('.round(120+84*cos(deg2rad($a)),1).' '.round(120+84*sin(deg2rad($a)),1).') rotate('.($a+50).')" d="M0 0 Q9 -8 22 0 Q9 8 0 0Z" fill="'.$orn.'" stroke="'.$O.'" stroke-opacity=".6" stroke-width="1.1"/>',[110,124,138,152,166,180])));
+ /* the ring: dark base, thick bevelled gold, rank band, thin gold lip hugging the photo */
+ $s.='<circle cx="120" cy="122" r="69" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="18"/>'
+  .'<circle cx="120" cy="120" r="69" fill="none" stroke="'.$G.'" stroke-width="17"/>'
+  .'<circle cx="120" cy="120" r="77.5" fill="none" stroke="'.$O.'" stroke-width="1.6"/>'
+  .'<circle cx="120" cy="120" r="69" fill="none" stroke="url(#'.$id.'c)" stroke-width="6"/>'
+  .'<circle cx="120" cy="120" r="69" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1" stroke-dasharray="3 5"/>'
+  .'<circle cx="120" cy="120" r="61.6" fill="none" stroke="'.$H.'" stroke-width="3.4"/>'
+  .'<circle cx="120" cy="120" r="60.2" fill="none" stroke="'.$O.'" stroke-width="1"/>'
+  .'<path d="M62 92 A63 63 0 0 1 112 52" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2.6" stroke-linecap="round"/>';
+ /* studs on the ring */
+ foreach(($tier>=7?[20,55,125,160]:($tier>=2?[35,145]:[])) as $a){$r=deg2rad($a);$s.=$gemD(round(120+69*cos($r),1),round(120-69*sin($r),1),4.2);}
+ /* top crest: a gold spire with a big gem; side leaves; a crown from Master up */
+ $s.=$mir('<path d="M120 12 C108 26 104 40 106 52 L120 58Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.6" stroke-linejoin="round"/>'.($tier>=2?'<path d="M106 50 C92 46 82 36 80 22 C94 30 102 38 110 46Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.4"/>':''));
+ $s.=$gemD(120,40,($tier>=5?10:8));
+ if($tier>=7)$s.='<path d="M96 22 L100 2 L110 14 L120 -4 L130 14 L140 2 L144 22Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.6" stroke-linejoin="round"/>'.$orb(120,8,3).($tier>=9?$mir('<path d="M98 20 C84 8 82 -6 90 -14 C92 -2 98 8 106 14Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.4"/>'):'');
+ /* bottom: rank-colour fins, gem orbs and the level plaque */
+ if($tier>=3)$s.=$mir('<path d="M100 196 C80 206 60 204 46 192 C64 190 80 186 96 180Z" fill="'.$F.'" stroke="'.$O.'" stroke-width="1.3"/>');
+ $s.=$mir('<path d="M116 184 C102 186 92 192 88 204 L104 198 L116 202Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.5" stroke-linejoin="round"/>');
+ if($tier>=2)$s.=$orb(86,190,5.2).$orb(154,190,5.2);
+ $s.='<path d="M98 180 H142 L146 192 L120 214 L94 192Z" fill="'.$G.'" stroke="'.$O.'" stroke-width="1.8" stroke-linejoin="round"/>'
+  .'<rect x="99" y="181" width="42" height="20" rx="10" fill="#140d24" stroke="'.$H.'" stroke-width="1.6"/>'
+  .($lv?'<text x="120" y="196" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="800" font-size="13.5" fill="#fff">'.$lv.'</text>':'');
+ return '<svg class="rf-svg" viewBox="0 0 240 240" aria-hidden="true">'.$s.'</svg>';
+}
+/** The pupil's picture inside their rank frame. */
+function rank_framed_avatar(array $u,?int $pid=null,string $cls=''):string{
+ $pid=$pid??(int)$u['id'];try{$k=rk_of((int)rl_info($pid)['level']);}catch(Throwable $e){return avatar($u);}
+ return '<span class="rf rf-'.$k['k'].' rf-t'.$k['i'].($cls?' '.$cls:'').'" data-rf-tier="'.$k['i'].'" data-rf-name="'.e($k['name']).'" role="img" aria-label="'.e($u['name'].' · '.$k['name'].' frame').'"><span class="rf-ph">'.avatar($u).'</span>'.rank_frame_svg($k['k'],$k['i'],(int)rl_info($pid)['level']).($k['i']>0?'<template class="rf-prev">'.rank_frame_svg(RK_RANKS[$k['i']-1][0],$k['i']-1,$k['from']-1).'</template>':'').'</span>';
+}

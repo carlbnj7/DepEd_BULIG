@@ -1,0 +1,357 @@
+<?php
+/** Administrator workspace: Overview, Teachers, Reports, Activity log, Settings. Backups are in Print & download. */
+
+/* ---------------------------------------------------------------- small helpers */
+function admin_setting(string $key,string $default=''):string{
+ if(function_exists('school_setting')&&($sv=school_setting($key))!==null)return $sv!==''?$sv:$default;/* the school in use (v174) */
+ try{$v=val('SELECT setting_value FROM settings WHERE setting_key=?',[$key]);}catch(Throwable $e){return $default;}
+ return $v===null||$v===false?$default:(string)$v;
+}
+function admin_set(string $key,string $value):void{if(function_exists('school_setting_save')&&school_setting_save($key,$value))return;q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',[$key,$value]);}
+function admin_when(?string $dt):string{
+ if(!$dt)return 'Never';$t=strtotime($dt);$d=(int)floor((strtotime(date('Y-m-d'))-strtotime(date('Y-m-d',$t)))/86400);
+ if($d===0)return 'Today, '.date('g:i A',$t);if($d===1)return 'Yesterday, '.date('g:i A',$t);if($d<7)return date('D, g:i A',$t);return date('M j, Y',$t);
+}
+function admin_days_since(?string $dt):?int{return $dt?(int)floor((time()-strtotime($dt))/86400):null;}
+function admin_kpis(array $items):string{
+ $s='<div class="ws-kpis">';foreach($items as [$icon,$value,$label,$note,$bad]){$s.='<div class="ws-kpi">'.icon($icon).'<b>'.e((string)$value).'</b><span>'.e($label).'</span>'.($note!==''?'<em class="'.($bad?'bad':'').'">'.e($note).'</em>':'').'</div>';}
+ return $s.'</div>';
+}
+function admin_heading(string $eyebrow,string $title,string $sub,string $buttons=''):void{
+ echo '<div class="pageheading ws-head"><div><span class="eyebrow">'.e($eyebrow).'</span><h1>'.e($title).'</h1><p class="muted">'.e($sub).'</p></div>'.($buttons?'<div class="ws-btns">'.$buttons.'</div>':'').'</div>';
+}
+function admin_last_logins():array{static $m;if($m===null){$m=[];foreach(rows("SELECT actor_id,MAX(created_at) t FROM audit_log WHERE action='login' AND actor_id IS NOT NULL GROUP BY actor_id") as $r)$m[(int)$r['actor_id']]=$r['t'];}return $m;}
+function admin_live_sections_sql(bool $school=true):string{return (sections_archive_supported()?' AND s.archived_at IS NULL':'').($school&&function_exists('school_sections_sql')?school_sections_sql():'');}
+function admin_school_year():string{$y=(int)date('Y');if((int)date('n')<6)$y--;$s=trim(admin_setting('school_year',''));return $s!==''?$s:$y.'–'.($y+1);}
+function admin_inactive_pupils(int $days=7):int{
+ return (int)val("SELECT COUNT(*) FROM users u WHERE u.role='pupil' AND u.active=1".school_users_sql()." AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?)",[date('Y-m-d',strtotime('-'.($days-1).' days'))]);
+}
+function admin_announcements(bool $activeOnly=false):array{
+ $list=json_decode(admin_setting('announcements','[]'),true);$list=is_array($list)?$list:[];
+ if($activeOnly)$list=array_values(array_filter($list,fn($a)=>($a['until']??'')===''||$a['until']>=date('Y-m-d')));
+ return $list;
+}
+/** Banner shown to teachers on their Overview. */
+function teacher_announcements():void{
+ foreach(admin_announcements(true) as $a)echo '<div class="ws-ann ws-ann-teacher" role="status">'.icon('mega').'<div><b>'.e($a['title']).'</b>'.($a['message']!==''?'<span>'.e($a['message']).'</span>':'').'</div></div>';
+}
+
+/* ---------------------------------------------------------------- Overview */
+function admin_overview():void{admin_home(current_user());}
+
+/* ---------------------------------------------------------------- Teachers */
+function admin_teachers_view(array $u):void{
+ $logins=admin_last_logins();$q=trim((string)($_GET['q']??''));$status=(string)($_GET['status']??'all');$grade=(int)($_GET['grade']??0);
+ $list=rows("SELECT u.*,(SELECT COUNT(*) FROM teacher_pupils t JOIN users p ON p.id=t.pupil_id AND p.active=1 WHERE t.teacher_id=u.id) pupils FROM users u WHERE u.role='teacher'".school_users_sql()." ORDER BY u.name");$multi=count(school_rows())>1;
+ $secs=[];foreach(rows('SELECT s.*,(SELECT COUNT(*) FROM pupil_sections ps WHERE ps.section_id=s.id) n FROM sections s WHERE 1'.admin_live_sections_sql().' ORDER BY s.grade_level,s.name') as $s)$secs[(int)$s['teacher_id']][]=$s;
+ $cards=cards_ready();$starter=teacher_starter_ids();
+ admin_heading('TEACHERS','Your teaching team.','Add teachers, print their Teacher Pass, give a new starter password, and move pupils when a teacher transfers.','<a class="btn secondary" href="?page=teacher_cards">'.icon('key').'Teacher Passes</a>');
+ echo teachers_tabs('list');
+ echo school_filter_bar('accounts');
+ echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="accounts"><input name="q" value="'.e($q).'" placeholder="Search name or ID"><select name="grade"><option value="0">All grades</option>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';
+ echo '</select><select name="status">';foreach(['all'=>'All statuses','active'=>'Active','idle'=>'Inactive 14+ days','off'=>'Turned off'] as $k=>$v)echo '<option value="'.$k.'" '.($status===$k?'selected':'').'>'.$v.'</option>';echo '</select><button class="btn secondary">Filter</button>';
+ $shown=array_values(array_filter($list,function($t)use($q,$status,$grade,$logins,$secs){
+  if($q!==''&&stripos($t['name'].' '.$t['public_id'],$q)===false)return false;
+  $idle=(admin_days_since($logins[(int)$t['id']]??null)??999)>=14;
+  if($status==='active'&&(!$t['active']||$idle))return false;if($status==='idle'&&(!$t['active']||!$idle))return false;if($status==='off'&&$t['active'])return false;
+  if($grade&&!array_filter($secs[(int)$t['id']]??[],fn($s)=>(int)$s['grade_level']===$grade))return false;return true;}));
+ echo '<span class="ws-sp muted">'.count($shown).' of '.count($list).' teachers</span></form>';
+ echo '<form method="post" id="tbulk" class="tbulk">'.csrf_field().'<input type="hidden" name="action" value="delete_teachers"><span>With the ticked teachers:</span><button class="btn danger" data-confirm="Delete the ticked teachers for good? Their accounts and Teacher Passes are removed. Teachers who still have pupils or sections are skipped, unless Also delete their pupils is ticked." data-need-tick>'.icon('close').'Delete ticked teachers</button><label class="tbulk-all"><input type="checkbox" name="with_pupils" value="1"> Also delete their pupils and sections</label><small class="muted">Without this tick, teachers with pupils or sections are skipped. To keep their pupils, use Delete on their row and choose who gets them.</small></form>';
+ echo '<section class="card"><div class="tablewrap"><table class="ws-table tch-table"><thead><tr><th class="mp-c"><span class="sr-only">Tick</span></th><th>Teacher</th>'.($multi?'<th>School</th>':'').'<th>Sections</th><th>Pupils</th><th>Last sign-in</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+ foreach($shown as $t){$last=$logins[(int)$t['id']]??null;$days=admin_days_since($last);
+  [$cls,$label]=!$t['active']?['off','Turned off']:(($days??999)>=14?['warn',$last?'Inactive '.$days.' days':'Never signed in']:['ok','Active']);
+  $sl=$secs[(int)$t['id']]??[];
+  $free=!$t['pupils']&&!$sl;
+  echo '<tr><td class="mp-c"><input type="checkbox" name="teachers[]" value="'.(int)$t['id'].'" form="tbulk"'.($free?'':' data-busy="1"').' aria-label="Tick '.e($t['name']).'"></td><td><strong>'.e($t['name']).'</strong><small>'.e($t['public_id']).'</small></td>'.school_teacher_cell($t).'<td>'.($sl?e(implode(', ',array_map(fn($s)=>'Grade '.$s['grade_level'].' · '.$s['name'],$sl))):'—').'</td><td><b>'.(int)$t['pupils'].'</b></td><td>'.e(admin_when($last)).'</td><td><span class="ws-pill '.$cls.'">'.$label.'</span>'.(in_array((int)$t['id'],$starter,true)?'<span class="ws-pill warn tc-st">Starter password</span>':'').'</td><td class="tm-cell"><button type="button" class="btn secondary small tm-toggle" data-tm="'.(int)$t['id'].'" aria-expanded="false" aria-controls="tm-'.(int)$t['id'].'">'.icon('edit').'Manage<span class="tm-chev" aria-hidden="true">▾</span></button></td></tr>';
+  /* v188: every action of this teacher in one tidy panel under the row (quick actions, edits, then Delete apart) */
+  echo '<tr class="tm-panel" id="tm-'.(int)$t['id'].'" hidden><td colspan="'.($multi?8:7).'"><div class="tm-in"><div class="tm-group"><span class="tm-lab">Quick actions</span><div class="ws-acts tm-quick">';
+  if($cards)echo '<a href="?page=teacher_cards&amp;t='.(int)$t['id'].'">'.icon('key').'Teacher Pass</a><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_teacher_starter"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="Make a new starter password for '.e($t['name']).'? Their old password and QR code stop working, and they make a new password at the next sign-in.">'.icon('replay').'New starter password</button></form>';
+  else echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_reset_password"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="Make a new password for '.e($t['name']).'?">'.icon('key').'Reset password</button></form>';
+  echo '<a href="?page=accounts&amp;from=t'.$t['id'].'#move">'.icon('swap').'Move pupils</a>';
+  echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_toggle_teacher"><input type="hidden" name="id" value="'.$t['id'].'"><button type="submit" data-confirm="'.($t['active']?'Turn off '.e($t['name']).'? They will not be able to sign in.':'Turn on '.e($t['name']).'?').'">'.icon('lock').($t['active']?'Turn off':'Turn on').'</button></form>';
+  echo '</div></div><div class="tm-group"><span class="tm-lab">Edit</span><div class="ws-acts tm-edits">';
+  echo admin_section_editor($t,$sl);
+  echo '<details class="ws-more"><summary>'.icon('edit').'Edit name &amp; sex</summary><form method="post" class="ws-inline tn-edit">'.csrf_field().'<input type="hidden" name="action" value="admin_rename_teacher"><input type="hidden" name="id" value="'.$t['id'].'">'.name_fields(name_parts_of((int)$t['id'],$t['name'])).'<label>Sex<select name="teacher_sex">'.(function($m){return '<option value="female"'.(!$m?' selected':'').'>Female</option><option value="male"'.($m?' selected':'').'>Male</option>';})(tf_is_male((int)$t['id'])).'</select></label><button class="btn primary small">'.icon('check').'Save</button></form></details>'.school_teacher_move($t);
+  echo '</div></div><div class="tm-group tm-danger"><span class="tm-lab">Delete</span><div class="ws-acts">'.admin_teacher_delete($t,$list,!$free).'</div></div></div></td></tr>';}
+ if(!$shown)echo '<tr><td colspan="'.($multi?8:7).'">No teachers match this filter.</td></tr>';
+ echo '</tbody></table></div></section>'.names_script();
+ // move pupils
+ $from=(string)($_GET['from']??'');
+ echo '<section class="card" id="move"><div class="ws-hd"><h2>'.icon('swap').' Move pupils to another teacher</h2></div><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_move_pupils"><div class="ws-formrow"><label>From<select name="from" required><option value="">Choose a class</option>';
+ foreach($list as $t){$sl=$secs[(int)$t['id']]??[];if(!$t['pupils']&&!$sl)continue;echo '<optgroup label="'.e($t['name']).'"><option value="t'.$t['id'].'" '.($from==='t'.$t['id']?'selected':'').'>All of '.e($t['name']).'’s pupils ('.(int)$t['pupils'].')</option>';foreach($sl as $s)echo '<option value="s'.$s['id'].'" '.($from==='s'.$s['id']?'selected':'').'>Grade '.$s['grade_level'].' · '.e($s['name']).' ('.(int)$s['n'].' pupils)</option>';echo '</optgroup>';}
+ echo '</select></label><label>To<select name="to" required><option value="">Choose a teacher</option>';foreach($list as $t)if($t['active'])echo '<option value="'.$t['id'].'">'.e($t['name']).' · '.e($t['public_id']).'</option>';
+ echo '</select></label><button class="btn primary" data-confirm="Move these pupils to the chosen teacher?">'.icon('swap').'Move pupils</button></div><p class="muted">Pupils keep their progress, XP and badges. Their sections move with them.</p></form></section>';
+}
+function admin_new_password():string{$c='abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';$p='';for($i=0;$i<10;$i++)$p.=$c[random_int(0,strlen($c)-1)];return $p;}
+function admin_teacher(int $id):array{$t=one("SELECT * FROM users WHERE id=? AND role='teacher'",[$id]);if(!$t)fail('Teacher not found.',404);return $t;}
+/** Move all of a teacher's sections and pupils to another teacher; the number of pupils moved. */
+function admin_move_all(array $src,array $to):int{$n=0;
+ foreach(rows('SELECT * FROM sections WHERE teacher_id=?',[$src['id']]) as $s)$n+=admin_move_section($s,(int)$to['id']);
+ return $n+(int)db()->exec('UPDATE teacher_pupils SET teacher_id='.(int)$to['id'].' WHERE teacher_id='.(int)$src['id']);}
+/** The teacher who takes over a deleted teacher's pupils: active, someone else, and in the same school. */
+function admin_move_target(array $src,int $to):array{$t=admin_teacher($to);
+ if((int)$t['id']===(int)$src['id']||!$t['active'])fail('Choose another active teacher to take the pupils.');
+ if(!admin_same_school($t,$src))fail('Choose a teacher from the same school.');return $t;}
+/** Two teachers of one school (an account made before schools were kept fits any school). */
+function admin_same_school(array $a,array $b):bool{$x=(int)($a['school_id']??0);$y=(int)($b['school_id']??0);return !$x||!$y||$x===$y;}
+/** Admin › Teachers (v183): change the grade and name of a teacher's sections, add a section, remove an empty one.
+    A grade change also moves the section's pupils to that grade (their grade-specific lessons follow). */
+function admin_section_editor(array $t,array $sl):string{
+ $opt=fn($g)=>implode('',array_map(fn($i)=>'<option value="'.$i.'"'.($i===$g?' selected':'').'>Grade '.$i.'</option>',range(1,6)));$tid=(int)$t['id'];
+ $h='<details class="ws-more as-sec"><summary>'.icon('edit').'Edit grade &amp; sections</summary><div class="as-box">';
+ if(!$sl)$h.='<p class="muted as-none">'.e($t['name']).' has no section yet.</p>';
+ foreach($sl as $s){$n=(int)($s['n']??0);$sid=(int)$s['id'];
+  $h.='<form method="post" class="as-row">'.csrf_field().'<input type="hidden" name="action" value="admin_section_save"><input type="hidden" name="id" value="'.$sid.'">'
+   .'<label>Grade<select name="grade_level" data-as-grade data-was="'.(int)$s['grade_level'].'" data-n="'.$n.'">'.$opt((int)$s['grade_level']).'</select></label><label>Section<input name="name" value="'.e($s['name']).'" required maxlength="80"></label>'
+   .'<span class="as-n">'.$n.' '.($n===1?'pupil':'pupils').'</span><button class="btn primary small">'.icon('check').'Save</button></form>';
+  if(!$n)$h.='<form method="post" class="as-del">'.csrf_field().'<input type="hidden" name="action" value="admin_section_delete"><input type="hidden" name="id" value="'.$sid.'"><button class="linkbutton" data-confirm="Remove Grade '.(int)$s['grade_level'].' · '.e($s['name']).' from '.e($t['name']).'? It has no pupils.">'.icon('close').'Remove Grade '.(int)$s['grade_level'].' · '.e($s['name']).'</button></form>';}
+ $h.='<form method="post" class="as-row as-add">'.csrf_field().'<input type="hidden" name="action" value="admin_section_add"><input type="hidden" name="teacher" value="'.$tid.'">'
+  .'<label>Grade<select name="grade_level">'.$opt(1).'</select></label><label>New section<input name="name" placeholder="e.g. Rizal" required maxlength="80"></label><button class="btn secondary small">'.icon('check').'Add section</button></form>';
+ return $h.'<p class="muted as-note">Changing a grade also moves the pupils in that section to the new grade.</p></div></details>';
+}
+/** A teacher's section the admin may change (the teacher must be one the admin manages). */
+function admin_section(int $id):array{
+ $s=one('SELECT * FROM sections WHERE id=?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$id]);if(!$s)fail('Section not found.',404);
+ admin_teacher((int)$s['teacher_id']);return $s;
+}
+/** The delete box of a teacher: with pupils or sections it first asks who gets them. */
+function admin_teacher_delete(array $t,array $list,bool $busy):string{
+ if(!$busy)return delete_box('delete_teacher',(int)$t['id'],$t['name'],'teacher',true);
+ $o='';foreach($list as $x)if((int)$x['id']!==(int)$t['id']&&$x['active']&&admin_same_school($x,$t))$o.='<option value="'.(int)$x['id'].'">'.e($x['name']).' · '.e($x['public_id']).'</option>';
+ $n=(int)$t['pupils'];$what=$n?$n.' '.($n===1?'pupil':'pupils').' and sections':'sections';
+ /* v187: move them to another teacher, or delete them too */
+ $move=$o!==''?'<label class="del-pick"><input type="radio" name="pupils" value="move" checked> Give their '.$what.' to<select name="to"><option value="">Choose a teacher</option>'.$o.'</select></label>':'';
+ $kill='<label class="del-pick del-pick-all"><input type="radio" name="pupils" value="delete"'.($o===''?' checked':'').'> Delete their '.$what.' too <small>(their answers, stars and recordings are removed; a pupil who also has another teacher stays)</small></label>';
+ return delete_box('delete_teacher',(int)$t['id'],$t['name'],'teacher',true,'<div class="del-picks">'.$move.$kill.'</div>');
+}
+/** Move one section (and its pupils) to another teacher; merges into a same-named section if the teacher already has one. */
+function admin_move_section(array $s,int $to):int{
+ $pupils=array_map('intval',array_column(rows('SELECT pupil_id FROM pupil_sections WHERE section_id=?',[$s['id']]),'pupil_id'));
+ $same=one('SELECT id FROM sections WHERE teacher_id=? AND grade_level=? AND name=?',[$to,$s['grade_level'],$s['name']]);
+ if($same){q('UPDATE pupil_sections SET section_id=? WHERE section_id=?',[$same['id'],$s['id']]);q('DELETE FROM sections WHERE id=?',[$s['id']]);}
+ else q('UPDATE sections SET teacher_id=? WHERE id=?',[$to,$s['id']]);
+ foreach($pupils as $p)q('UPDATE teacher_pupils SET teacher_id=? WHERE pupil_id=?',[$to,$p]);
+ return count($pupils);
+}
+
+/* ---------------------------------------------------------------- Reports */
+function admin_period():array{
+ $p=(string)($_GET['period']??'year');$y=(int)date('Y');if((int)date('n')<6)$y--;
+ $map=['month'=>[date('Y-m-01'),'This month'],'quarter'=>[date('Y-m-d',strtotime('-3 months')),'Last 3 months'],'year'=>[$y.'-06-01','This school year'],'all'=>['2000-01-01','All time']];
+ if(!isset($map[$p]))$p='year';return [$p,$map[$p][0],$map[$p][1]];
+}
+/** Lesson ids of pre-tests and post-tests (by their display label). */
+function admin_test_lessons():array{
+ static $r;if($r!==null)return $r;$r=['pre'=>[],'post'=>[]];
+ foreach(rows('SELECT l.id,l.position,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id') as $l){$lab=lesson_display_label((int)$l['level_id'],(int)$l['position']);if(str_starts_with($lab,'Pre-'))$r['pre'][]=(int)$l['id'];elseif(str_starts_with($lab,'Post-'))$r['post'][]=(int)$l['id'];}
+ return $r;
+}
+function admin_report_rows(string $start,int $grade,int $section):array{
+ $tests=admin_test_lessons();$pre=$tests['pre']?implode(',',$tests['pre']):'0';$post=$tests['post']?implode(',',$tests['post']):'0';$week=date('Y-m-d',strtotime('-6 days'));
+ $where='1'.admin_live_sections_sql();$args=[];if($grade){$where.=' AND s.grade_level=?';$args[]=$grade;}if($section){$where.=' AND s.id=?';$args[]=$section;}
+ $out=[];
+ foreach(rows("SELECT s.*,u.name teacher FROM sections s JOIN users u ON u.id=s.teacher_id WHERE $where ORDER BY s.grade_level,s.name",$args) as $s){
+  $sid=(int)$s['id'];$base="FROM activity_completion c JOIN pupil_sections ps ON ps.pupil_id=c.pupil_id AND ps.section_id=$sid";
+  $out[]=['section'=>'Grade '.$s['grade_level'].' · '.$s['name'],'teacher'=>$s['teacher'],
+   'pupils'=>(int)val("SELECT COUNT(*) FROM pupil_sections ps JOIN users u ON u.id=ps.pupil_id AND u.active=1 WHERE ps.section_id=?",[$sid]),
+   'activities'=>(int)val("SELECT COUNT(*) $base WHERE c.submitted_at>=?",[$start]),
+   'avg'=>val("SELECT ROUND(AVG(c.score/c.max_score)*100) $base WHERE c.max_score>0 AND c.submitted_at>=?",[$start]),
+   'pre'=>val("SELECT ROUND(AVG(c.score/c.max_score)*100) $base JOIN activities a ON a.id=c.activity_id WHERE c.max_score>0 AND a.lesson_id IN ($pre)"),
+   'post'=>val("SELECT ROUND(AVG(c.score/c.max_score)*100) $base JOIN activities a ON a.id=c.activity_id WHERE c.max_score>0 AND a.lesson_id IN ($post)"),
+   'lessons'=>(int)val("SELECT COUNT(*) FROM pupil_progress p JOIN pupil_sections ps ON ps.pupil_id=p.pupil_id AND ps.section_id=$sid WHERE p.completed_at>=?",[$start]),
+   'inactive'=>(int)val("SELECT COUNT(*) FROM pupil_sections ps JOIN users u ON u.id=ps.pupil_id AND u.active=1 WHERE ps.section_id=$sid AND NOT EXISTS(SELECT 1 FROM learning_days d WHERE d.pupil_id=u.id AND d.day>=?)",[$week])];
+ }
+ return $out;
+}
+function admin_pct($v):string{return $v===null||$v===false?'—':(int)$v.'%';}
+function admin_reports_view():void{
+ [$period,$start,$plabel]=admin_period();$grade=(int)($_GET['grade']??0);$section=(int)($_GET['section']??0);$rows=admin_report_rows($start,$grade,$section);
+ $qs='period='.$period.'&amp;grade='.$grade.'&amp;section='.$section;
+ echo '';admin_heading('SCHOOL REPORTS',school_filter_id()?'See '.admin_setting('school_code','the school').' at a glance.':'See the whole school at a glance.','Progress by grade and section · '.$plabel.' · ready to print for the principal or the division.','<a class="btn secondary" href="?page=report_csv&amp;'.$qs.'">'.icon('download').'Download Excel (CSV)</a><button type="button" class="btn primary" data-print>'.icon('book').'Print / Save as PDF</button>');
+ $school=admin_setting('school_name','');echo '<div class="ws-print-head"><strong>'.e($school?:'BULIG reading program').'</strong><span>'.e(trim(admin_setting('school_district','').' · School year '.admin_school_year(),' ·')).' · '.e($plabel).' · Printed '.date('M j, Y').'</span></div>';
+ echo school_filter_bar('reports');echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="reports"><select name="period">';foreach(['month'=>'This month','quarter'=>'Last 3 months','year'=>'This school year','all'=>'All time'] as $k=>$v)echo '<option value="'.$k.'" '.($period===$k?'selected':'').'>'.$v.'</option>';
+ echo '</select><select name="grade"><option value="0">All grades</option>';for($g=1;$g<=6;$g++)echo '<option value="'.$g.'" '.($grade===$g?'selected':'').'>Grade '.$g.'</option>';echo '</select><select name="section"><option value="0">All sections</option>';
+ foreach(rows('SELECT s.* FROM sections s WHERE 1'.admin_live_sections_sql().($grade?' AND s.grade_level='.$grade:'').' ORDER BY s.grade_level,s.name') as $s)echo '<option value="'.$s['id'].'" '.($section===(int)$s['id']?'selected':'').'>Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';
+ echo '</select><button class="btn secondary">Show</button></form>';
+ $pupils=array_sum(array_column($rows,'pupils'));$avgs=array_filter(array_column($rows,'avg'),fn($v)=>$v!==null&&$v!==false);
+ echo admin_kpis([['people',number_format($pupils),'Pupils in report','',false],['check',$avgs?round(array_sum($avgs)/count($avgs)).'%':'—','Average score','',false],['book',number_format(array_sum(array_column($rows,'lessons'))),'Lessons completed',$plabel,false],['alert',array_sum(array_column($rows,'inactive')),'Need a check-in','no learning in 7 days',true]]);
+ echo '<section class="card"><div class="tablewrap"><table class="ws-table"><thead><tr><th>Grade · Section</th><th>Teacher</th><th>Pupils</th><th>Activities</th><th>Avg score</th><th>Pre → Post test</th><th>Lessons completed</th><th>Inactive 7+ days</th></tr></thead><tbody>';
+ foreach($rows as $r)echo '<tr><td><strong>'.e($r['section']).'</strong></td><td>'.e($r['teacher']).'</td><td>'.$r['pupils'].'</td><td>'.number_format($r['activities']).'</td><td>'.admin_pct($r['avg']).'</td><td>'.(($r['pre']===null||$r['pre']===false)&&($r['post']===null||$r['post']===false)?'—':admin_pct($r['pre']).' → '.admin_pct($r['post'])).'</td><td>'.$r['lessons'].'</td><td>'.($r['inactive']>5?'<span class="ws-pill warn">'.$r['inactive'].'</span>':$r['inactive']).'</td></tr>';
+ if(!$rows)echo '<tr><td colspan="8">No sections match this filter yet.</td></tr>';
+ echo '</tbody></table></div><p class="muted ws-note">Average score uses activities that have a score. Pre → Post compares each section’s pre-test and post-test results (Levels 2–6).</p></section>';
+}
+function admin_report_csv():never{
+ require_role('admin');[$period,$start,$plabel]=admin_period();$rows=admin_report_rows($start,(int)($_GET['grade']??0),(int)($_GET['section']??0));
+ header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-school-report-'.$period.'-'.date('Y-m-d').'.csv"');$h=fopen('php://output','w');fwrite($h,"\xEF\xBB\xBF");
+ fputcsv($h,[admin_setting('school_name','BULIG'),'School year '.admin_school_year(),$plabel],',','"','\\');fputcsv($h,[],',','"','\\');
+ fputcsv($h,['Grade · Section','Teacher','Pupils','Activities','Average score %','Pre-test %','Post-test %','Lessons completed','Inactive 7+ days'],',','"','\\');
+ foreach($rows as $r)fputcsv($h,[$r['section'],$r['teacher'],$r['pupils'],$r['activities'],$r['avg']??'',$r['pre']??'',$r['post']??'',$r['lessons'],$r['inactive']],',','"','\\');exit;
+}
+
+/* ---------------------------------------------------------------- Activity log */
+function admin_log_labels():array{
+ return ['login'=>['ok','Signed in'],'saved_login'=>['ok','Saved sign-in on a device'],'login_failed'=>['bad','Wrong password'],'login_locked'=>['bad','Sign-in locked'],'admin_pin_failed'=>['bad','Wrong admin PIN'],'admin_pin_created'=>['warn','Created admin PIN'],'admin_pin_changed'=>['warn','Changed admin PIN'],
+  'create_pupil'=>['ok','Added pupil'],'create_teacher'=>['ok','Added teacher'],'update_account'=>['warn','Changed account'],'import_pupils'=>['ok','Imported pupils'],'admin_reset_password'=>['warn','Reset password'],'admin_toggle_teacher'=>['warn','Turned account on/off'],'admin_rename_teacher'=>['warn','Renamed teacher'],'admin_move_pupils'=>['warn','Moved pupils'],
+  'save_section'=>['ok','Saved section'],'edit_activity'=>['warn','Edited activity'],'admin_toggle_activity'=>['warn','Showed/hid activity'],'upload_media'=>['ok','Uploaded picture'],'backup'=>['ok','Downloaded backup'],'school_info'=>['ok','Saved school info'],'announcement'=>['ok','Announcement'],'school_year_rollover'=>['warn','New school year'],'password_change'=>['warn','Changed own password']];
+}
+function admin_log_query():array{
+ $tab=(string)($_GET['tab']??'all');$days=(int)($_GET['days']??7);if(!in_array($days,[1,7,30,365],true))$days=7;$q=trim((string)($_GET['q']??''));
+ $groups=['signins'=>['login','login_failed','login_locked'],'security'=>['login_failed','login_locked','admin_pin_failed','admin_pin_created','admin_pin_changed','admin_reset_password','password_change'],'accounts'=>['create_pupil','create_teacher','update_account','import_pupils','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','save_section','school_year_rollover'],'content'=>['edit_activity','admin_toggle_activity','upload_media','save_assessment','announcement','school_info']];
+ if(!isset($groups[$tab]))$tab='all';
+ $where='a.created_at>=?';$args=[date('Y-m-d H:i:s',strtotime('-'.$days.' days'))];
+ if($tab!=='all'){$where.=' AND a.action IN ('.implode(',',array_fill(0,count($groups[$tab]),'?')).')';$args=array_merge($args,$groups[$tab]);}
+ if($q!==''){$where.=' AND (u.name LIKE ? OR u.public_id LIKE ? OR a.details LIKE ?)';$like='%'.$q.'%';array_push($args,$like,$like,$like);}
+ return [$tab,$days,$q,$where,$args];
+}
+function admin_log_view():void{
+ [$tab,$days,$q,$where,$args]=admin_log_query();$page=max(1,(int)($_GET['p']??1));$labels=admin_log_labels();
+ $total=(int)val("SELECT COUNT(*) FROM audit_log a LEFT JOIN users u ON u.id=a.actor_id WHERE $where",$args);
+ $list=rows("SELECT a.*,u.name,u.public_id,u.role FROM audit_log a LEFT JOIN users u ON u.id=a.actor_id WHERE $where ORDER BY a.id DESC LIMIT 50 OFFSET ".(($page-1)*50),$args);
+ $qs='tab='.$tab.'&amp;days='.$days.'&amp;q='.rawurlencode($q);
+ admin_heading('ACTIVITY LOG','Who did what, and when.','Sign-ins, wrong passwords and PINs, and account changes. Newest first.','<a class="btn secondary" href="?page=log_csv&amp;'.$qs.'">'.icon('download').'Download CSV</a>');
+ echo '<nav class="ws-tabs">';foreach(['all'=>'All','signins'=>'Sign-ins','security'=>'Wrong passwords / PINs','accounts'=>'Accounts','content'=>'Content'] as $k=>$v)echo '<a class="'.($tab===$k?'on':'').'" href="?page=activity_log&amp;tab='.$k.'&amp;days='.$days.'">'.$v.'</a>';echo '</nav>';
+ echo '<form class="ws-filters" method="get"><input type="hidden" name="page" value="activity_log"><input type="hidden" name="tab" value="'.e($tab).'"><input name="q" value="'.e($q).'" placeholder="Search name, ID or details"><select name="days">';foreach([1=>'Today',7=>'Last 7 days',30=>'Last 30 days',365=>'Last 12 months'] as $k=>$v)echo '<option value="'.$k.'" '.($days===$k?'selected':'').'>'.$v.'</option>';echo '</select><button class="btn secondary">Search</button><span class="ws-sp muted">'.number_format($total).' entries</span></form>';
+ echo '<section class="card"><div class="tablewrap"><table class="ws-table"><thead><tr><th>When</th><th>Who</th><th>What happened</th><th>Details</th></tr></thead><tbody>';
+ foreach($list as $r){[$cls,$lab]=$labels[$r['action']]??['off',ucfirst(str_replace('_',' ',$r['action']))];
+  $who=$r['name']?e($r['name']).' · '.e($r['public_id']):'<span class="muted">Not signed in</span>';
+  echo '<tr><td>'.e(admin_when($r['created_at'])).'</td><td><strong>'.$who.'</strong>'.($r['role']?'<small>'.e(ucfirst($r['role'])).'</small>':'').'</td><td><span class="ws-pill '.$cls.'">'.e($lab).'</span></td><td>'.e(admin_log_detail($r)).'</td></tr>';}
+ if(!$list)echo '<tr><td colspan="4">Nothing recorded for this filter.</td></tr>';
+ echo '</tbody></table></div>';
+ if($total>50){$last=(int)ceil($total/50);echo '<nav class="buttonrow ws-pager">'.($page>1?'<a class="btn quiet" href="?page=activity_log&amp;'.$qs.'&amp;p='.($page-1).'">Newer</a>':'').'<span>Page '.$page.' of '.$last.'</span>'.($page<$last?'<a class="btn quiet" href="?page=activity_log&amp;'.$qs.'&amp;p='.($page+1).'">Older</a>':'').'</nav>';}
+ echo '</section>';
+}
+function admin_log_detail(array $r):string{
+ $d=(string)$r['details'];
+ if($r['action']==='login')return $d==='admin'?'Administrator · password and PIN':ucfirst($d);
+ if($r['action']==='admin_pin_failed')return 'Wrong try number '.$d;
+ if(in_array($r['action'],['update_account','edit_activity','admin_toggle_activity','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','new_pictures'],true)&&ctype_digit($d)){
+  $u=one('SELECT name,public_id FROM users WHERE id=?',[(int)$d]);if($u&&$r['action']!=='edit_activity'&&$r['action']!=='admin_toggle_activity')return $u['name'].' · '.$u['public_id'];
+  $a=one('SELECT title FROM activities WHERE id=?',[(int)$d]);if($a)return 'Activity '.$d.' · '.$a['title'];}
+ return $d;
+}
+function admin_log_csv():never{
+ require_role('admin');[$tab,$days,$q,$where,$args]=admin_log_query();$labels=admin_log_labels();
+ header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-activity-log-'.date('Y-m-d').'.csv"');$h=fopen('php://output','w');fwrite($h,"\xEF\xBB\xBF");
+ fputcsv($h,['When','Name','ID','Role','What happened','Details'],',','"','\\');
+ foreach(rows("SELECT a.*,u.name,u.public_id,u.role FROM audit_log a LEFT JOIN users u ON u.id=a.actor_id WHERE $where ORDER BY a.id DESC LIMIT 20000",$args) as $r)fputcsv($h,[$r['created_at'],$r['name']??'',$r['public_id']??'',$r['role']??'',$labels[$r['action']][1]??$r['action'],admin_log_detail($r)],',','"','\\');exit;
+}
+
+/* ---------------------------------------------------------------- Backup (in Print & download) */
+function admin_backup_note():string{$b=admin_setting('last_backup_at','');if(!$b)return 'No backup downloaded yet';$d=admin_days_since($b);return 'Last backup '.($d===0?'today':($d===1?'yesterday':$d.' days ago'));}
+function admin_backup_csv():never{
+ $u=require_role('admin');@set_time_limit(300);
+ $sheets=[
+  'pupils.csv'=>[['Pupil ID','Name','LRN','Sex','Grade','Section','Teacher','Starting level','XP','Active','Created'],"SELECT p.public_id,p.name,d.lrn,d.sex,pu.grade_level,pu.section,t.name teacher,CASE a.level_id WHEN 1 THEN 'Level 1' WHEN 2 THEN 'Level 2A' WHEN 3 THEN 'Level 2B' ELSE CONCAT('Level ',a.level_id-1) END,COALESCE(x.total,0) xp,p.active,p.created_at FROM users p JOIN pupils pu ON pu.user_id=p.id LEFT JOIN pupil_details d ON d.pupil_id=p.id LEFT JOIN teacher_pupils tp ON tp.pupil_id=p.id LEFT JOIN users t ON t.id=tp.teacher_id LEFT JOIN pupil_level_assignments a ON a.pupil_id=p.id LEFT JOIN pupil_xp x ON x.pupil_id=p.id ORDER BY pu.grade_level,pu.section,p.name"],
+  'teachers.csv'=>[['Teacher ID','Name','Active','Created'],"SELECT public_id,name,active,created_at FROM users WHERE role='teacher' ORDER BY name"],
+  'sections.csv'=>[['Grade','Section','Teacher','Pupils'],"SELECT s.grade_level,s.name,t.name,(SELECT COUNT(*) FROM pupil_sections ps WHERE ps.section_id=s.id) FROM sections s JOIN users t ON t.id=s.teacher_id ORDER BY s.grade_level,s.name"],
+  'activity-results.csv'=>[['Pupil ID','Pupil','Level','Grade module','Lesson','Activity','Status','Score','Out of','Submitted'],"SELECT p.public_id,p.name,CASE m.level_id WHEN 1 THEN 'Level 1' WHEN 2 THEN 'Level 2A' WHEN 3 THEN 'Level 2B' ELSE CONCAT('Level ',m.level_id-1) END,m.grade_level,l.position,a.title,c.status,c.score,c.max_score,c.submitted_at FROM activity_completion c JOIN users p ON p.id=c.pupil_id JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id ORDER BY p.public_id,c.submitted_at"]];
+ $csv=function(array $head,string $sql):string{$h=fopen('php://temp','r+');fwrite($h,"\xEF\xBB\xBF");fputcsv($h,$head,',','"','\\');foreach(rows($sql) as $r){$r=array_values($r);foreach($r as $i=>$v)if(is_string($v)&&preg_match('/^\d{12}$/',$v))$r[$i]='="'.$v.'"';fputcsv($h,$r,',','"','\\');}rewind($h);return stream_get_contents($h);};
+ admin_set('last_backup_at',date('Y-m-d H:i:s'));audit('backup','excel');
+ $name='BULIG-backup-'.date('Y-m-d');
+ if(class_exists('ZipArchive')){$tmp=tempnam(sys_get_temp_dir(),'bulig');$z=new ZipArchive();$z->open($tmp,ZipArchive::OVERWRITE);foreach($sheets as $f=>[$head,$sql])$z->addFromString($f,$csv($head,$sql));$z->close();
+  header('Content-Type: application/zip');header('Content-Disposition: attachment; filename="'.$name.'.zip"');header('Content-Length: '.filesize($tmp));readfile($tmp);@unlink($tmp);exit;}
+ header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="'.$name.'-pupils.csv"');echo $csv(...$sheets['pupils.csv']);exit;
+}
+function admin_backup_sql():never{
+ require_role('admin');@set_time_limit(600);admin_set('last_backup_at',date('Y-m-d H:i:s'));audit('backup','sql');
+ header('Content-Type: application/sql; charset=utf-8');header('Content-Disposition: attachment; filename="BULIG-database-'.date('Y-m-d').'.sql"');
+ bulig_sql_dump(function(string $t){echo $t;flush();});exit;
+}
+/** The whole database as SQL (tables, then their rows), handed to $write piece by piece. Restore it in phpMyAdmin
+    into an EMPTY database. Used by the Backup download and by the copy saved before account IDs are switched. */
+function bulig_sql_dump(callable $write):void{
+ $write("-- BULIG full database backup · ".date('Y-m-d H:i:s')."\n-- Restore: phpMyAdmin → select an EMPTY database → Import this file.\nSET NAMES utf8mb4;\nSET FOREIGN_KEY_CHECKS=0;\n\n");
+ foreach(db()->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN) as $t){
+  $create=db()->query('SHOW CREATE TABLE `'.$t.'`')->fetch(PDO::FETCH_NUM)[1];$write("DROP TABLE IF EXISTS `$t`;\n$create;\n");
+  for($off=0;;$off+=500){$rs=db()->query('SELECT * FROM `'.$t.'` LIMIT 500 OFFSET '.$off)->fetchAll(PDO::FETCH_NUM);if(!$rs)break;
+   $parts=[];foreach($rs as $r)$parts[]='('.implode(',',array_map(fn($v)=>$v===null?'NULL':db()->quote((string)$v),$r)).')';$write('INSERT INTO `'.$t.'` VALUES '.implode(",\n",$parts).";\n");if(count($rs)<500)break;}
+  $write("\n");}
+ $write("SET FOREIGN_KEY_CHECKS=1;\n");
+}
+
+/* ---------------------------------------------------------------- Settings */
+function admin_settings_view(array $u):void{
+ $tab=(string)($_GET['tab']??'security');$tabs=['security'=>'Security','school'=>'School info','announcements'=>'Announcements','year'=>'School year','schedule'=>'Schedule & cycles','ids'=>'Account IDs'];if(!isset($tabs[$tab]))$tab='security';
+ admin_heading('SETTINGS','Your BULIG workspace.','Security, school details, announcements and the end of the school year.');
+ echo '<nav class="ws-tabs">';foreach($tabs as $k=>$v)echo '<a class="'.($tab===$k?'on':'').'" href="?page=settings&amp;tab='.$k.'">'.e($v).'</a>';echo '</nav>';
+ if($tab==='security'){echo '<div class="ws-g2">';admin_pin_settings($u);
+  echo '<section class="card"><div class="ws-hd"><h2>'.icon('lock').' Sign-in rules</h2></div><div class="ws-chk y">'.icon('check').'<span>Lock an ID after 8 wrong passwords</span><span class="ws-sp">15 minutes</span></div><div class="ws-chk y">'.icon('check').'<span>Lock admin sign-in after 3 wrong PINs</span><span class="ws-sp">15 minutes</span></div><div class="ws-chk y">'.icon('check').'<span>Sign out after no activity</span><span class="ws-sp">2 hours</span></div><div class="ws-chk y">'.icon('check').'<span>Pupil passwords</span><span class="ws-sp">'.(cards_ready()?'Own starter password + QR ticket':'12345678').'</span></div></section></div>';}
+ if($tab==='school'){if(count(school_rows())>1)echo school_filter_bar('settings','&amp;tab=school').'<p class="muted">'.icon('info').' These details are for <b>'.e(admin_setting('school_code','')).'</b>. Each school has its own: choose it above, or open <a href="?page=schools">Schools</a>.</p>';
+  echo '<section class="card"><div class="ws-hd"><h2>'.icon('book').' School info</h2><small class="muted">Printed at the top of reports</small></div><form method="post" class="ws-formrow">'.csrf_field().'<input type="hidden" name="action" value="admin_school_info">';
+  foreach(['school_name'=>['School name','e.g. Malaybalay Central Elementary School'],'school_id'=>['School ID','e.g. 128001'],'school_district'=>['District / Division','e.g. Malaybalay City Division'],'school_head'=>['School head','Name of the principal'],'school_year'=>['School year',admin_school_year()]] as $k=>[$l,$ph])echo '<label>'.$l.'<input name="'.$k.'" maxlength="150" value="'.e(admin_setting($k,'')).'" placeholder="'.e($ph).'"></label>';
+  echo '<button class="btn primary">Save school info</button></form></section>'.(function_exists('rc_logo_settings')?rc_logo_settings():'');}
+ if($tab==='announcements'){echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('mega').' Announcements</h2><small class="muted">Shown on every teacher’s Overview</small></div>';
+  $list=admin_announcements();if(!$list)echo '<p class="muted">No announcements yet.</p>';
+  foreach($list as $a){$live=($a['until']??'')===''||$a['until']>=date('Y-m-d');echo '<div class="ws-ann '.($live?'':'old').'"><b>'.e($a['title']).'</b>'.e($a['message']).'<small> · '.($live?($a['until']?'until '.e(date('M j, Y',strtotime($a['until']))):'no end date'):'ended').'</small><form method="post">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_delete"><input type="hidden" name="id" value="'.e($a['id']).'"><button class="ws-link" type="submit">Remove</button></form></div>';}
+  echo '</section><section class="card"><div class="ws-hd"><h2>Post an announcement</h2></div><form method="post" class="stack">'.csrf_field().'<input type="hidden" name="action" value="admin_announcement_add"><label>Title<input name="title" required maxlength="120" placeholder="e.g. Reading Month starts Monday"></label><label>Message<textarea name="message" rows="3" maxlength="400" placeholder="Short details for teachers"></textarea></label><label>Show until (optional)<input type="date" name="until" min="'.date('Y-m-d').'"></label><button class="btn primary">'.icon('mega').'Post announcement</button></form></section></div>';}
+ if($tab==='ids')account_ids_settings_view($u);
+ if($tab==='schedule'){schedule_admin_view();if(function_exists('cycle_admin_view'))cycle_admin_view();}
+ if($tab==='year'){$b=admin_setting('last_backup_at','');$fresh=$b!==''&&admin_days_since($b)<1;
+  $counts=[];foreach(rows("SELECT pu.grade_level g,COUNT(*) n FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 GROUP BY pu.grade_level") as $r)$counts[(int)$r['g']]=(int)$r['n'];
+  echo '<div class="ws-g2"><section class="card"><div class="ws-hd"><h2>'.icon('cal').' End of school year</h2><small class="muted">Current: '.e(admin_school_year()).'</small></div><div class="ws-steps">';
+  echo '<div class="ws-step '.($fresh?'done':'').'"><b class="n">1</b><span><b>Download a backup</b><small>'.($fresh?'Done · '.e(admin_backup_note()):'Required first. Keep this year’s records safe.').'</small></span>'.(!$fresh?'<a class="btn secondary small" href="?page=backup_csv">Download</a>':'').'</div>';
+  echo '<div class="ws-step"><b class="n">2</b><span><b>Move pupils up one grade</b><small>Grades 1–5 move up ('.array_sum(array_intersect_key($counts,array_flip([1,2,3,4,5]))).' pupils). Grade 6 pupils ('.($counts[6]??0).') finish BULIG: their accounts are turned off, their records are kept.</small></span></div>';
+  echo '<div class="ws-step"><b class="n">3</b><span><b>Archive this year’s sections</b><small>Pupils keep their teacher, progress, XP and badges. Teachers make new sections and place their pupils.</small></span></div></div>';
+  echo '<form method="post" class="ws-year">'.csrf_field().'<input type="hidden" name="action" value="admin_school_year"><label>New school year<input name="new_year" required maxlength="20" value="'.e(admin_next_year()).'"></label><label>Type NEW SCHOOL YEAR to confirm<input name="confirm" required autocomplete="off"></label><button class="btn primary" '.($fresh?'':'disabled').'>'.icon('cal').'Start the new school year</button>'.(!$fresh?'<small class="muted">Download a backup first (step 1).</small>':'').'</form></section>';
+  echo '<section class="card"><div class="ws-hd"><h2>Pupils by grade now</h2></div><div class="ws-bars">';$mx=max([1]+$counts);for($g=1;$g<=6;$g++){$n=$counts[$g]??0;echo '<div class="ws-bar"><span>Grade '.$g.'</span><u><i class="w-'.(int)(round($n/$mx*20)*5).'"></i></u><b>'.$n.'</b></div>';}echo '</div></section></div>';}
+}
+function admin_next_year():string{$cur=admin_school_year();if(preg_match('/(\d{4})\D+(\d{4})/',$cur,$m))return ($m[1]+1).'–'.($m[2]+1);$y=(int)date('Y');return $y.'–'.($y+1);}
+
+/* ---------------------------------------------------------------- actions */
+function admin_actions(string $action):void{
+ $u=require_role('admin');
+ if($action==='admin_level_schedule')schedule_admin_save();
+ if($action==='admin_lesson_cycles')cycle_admin_save();
+ if($action==='admin_reset_password'){$t=admin_teacher((int)($_POST['id']??0));$p=admin_new_password();q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($p,PASSWORD_DEFAULT),$t['id']]);saved_login_clear((int)$t['id']);try{q("DELETE FROM remember_tokens WHERE user_id=?",[$t['id']]);}catch(Throwable $e){}
+  audit('admin_reset_password',(string)$t['id']);flash('New password for '.$t['name'].' ('.$t['public_id'].'): '.$p.' — give it to the teacher privately. They can change it in My profile.');go('?page=accounts');}
+ if($action==='admin_toggle_teacher'){$t=admin_teacher((int)($_POST['id']??0));q('UPDATE users SET active=1-active WHERE id=?',[$t['id']]);audit('admin_toggle_teacher',(string)$t['id']);flash($t['name'].' is now '.($t['active']?'turned off. They cannot sign in.':'turned on.'));go('?page=accounts');}
+ if($action==='admin_section_save'||$action==='admin_section_add'){
+  $name=import_name_case(mb_substr(trim((string)($_POST['name']??'')),0,80));$grade=(int)($_POST['grade_level']??0);
+  if($name===''||$grade<1||$grade>6)fail('Type the section name and choose a grade from 1 to 6.');
+  if($action==='admin_section_save'){$s=admin_section((int)($_POST['id']??0));$tid=(int)$s['teacher_id'];$sid=(int)$s['id'];}else{$tid=(int)admin_teacher((int)($_POST['teacher']??0))['id'];$sid=0;}
+  $t=admin_teacher($tid);
+  if(val('SELECT id FROM sections WHERE teacher_id=? AND grade_level=? AND LOWER(name)=LOWER(?) AND id<>?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$tid,$grade,$name,$sid]))fail($t['name'].' already has Grade '.$grade.' · '.$name.'.');
+  db()->beginTransaction();try{
+   if($sid){q('UPDATE sections SET name=?,grade_level=? WHERE id=?',[$name,$grade,$sid]);
+    $moved=q('UPDATE pupils p JOIN pupil_sections ps ON ps.pupil_id=p.user_id SET p.section=?,p.grade_level=? WHERE ps.section_id=?',[$name,$grade,$sid])->rowCount();
+    $was='Grade '.(int)$s['grade_level'].' · '.$s['name'];audit('admin_section_save',$t['name'].': '.$was.' → Grade '.$grade.' · '.$name);
+    $msg=$t['name'].'’s section is now Grade '.$grade.' · '.$name.'.'.($grade!==(int)$s['grade_level']&&$moved?' Its pupils are now in Grade '.$grade.'.':'');}
+   else{q('INSERT INTO sections(teacher_id,grade_level,name) VALUES(?,?,?)',[$tid,$grade,$name]);audit('admin_section_add',$t['name'].': Grade '.$grade.' · '.$name);$msg='Grade '.$grade.' · '.$name.' was added for '.$t['name'].'.';}
+   db()->commit();
+  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  flash($msg);go('?page=accounts');}
+ if($action==='admin_section_delete'){$s=admin_section((int)($_POST['id']??0));$t=admin_teacher((int)$s['teacher_id']);
+  if(val('SELECT COUNT(*) FROM pupil_sections WHERE section_id=?',[$s['id']]))fail('This section still has pupils. Move them to another section first.');
+  q('DELETE FROM sections WHERE id=?',[$s['id']]);audit('admin_section_delete',$t['name'].': Grade '.$s['grade_level'].' · '.$s['name']);flash('Grade '.$s['grade_level'].' · '.$s['name'].' was removed from '.$t['name'].'.');go('?page=accounts');}
+ if($action==='admin_rename_teacher'){$t=admin_teacher((int)($_POST['id']??0));$nm=name_input();$name=$nm['name'];if(mb_strlen($name)<2||mb_strlen($name)>150)fail('Enter a name of 2–150 characters.');if($nm['parts'])name_parts_save((int)$t['id'],$nm['parts']);elseif($name!==$t['name'])name_parts_forget((int)$t['id']);q('UPDATE users SET name=? WHERE id=?',[$name,$t['id']]);tf_set_sex((int)$t['id'],(string)($_POST['teacher_sex']??''));audit('admin_rename_teacher',(string)$t['id']);flash('Teacher details saved.');go('?page=accounts');}
+ if($action==='admin_move_pupils'){
+  $to=admin_teacher((int)($_POST['to']??0));if(!$to['active'])fail('Choose an active teacher.');$from=(string)($_POST['from']??'');$moved=0;
+  db()->beginTransaction();try{
+   if(preg_match('/^s(\d+)$/',$from,$m)){$s=one('SELECT * FROM sections WHERE id=?',[(int)$m[1]]);if(!$s)fail('Section not found.',404);if((int)$s['teacher_id']===(int)$to['id'])fail('That section already belongs to '.$to['name'].'.');$moved=admin_move_section($s,(int)$to['id']);$label='Grade '.$s['grade_level'].' · '.$s['name'];}
+   elseif(preg_match('/^t(\d+)$/',$from,$m)){$src=admin_teacher((int)$m[1]);if((int)$src['id']===(int)$to['id'])fail('Choose a different teacher.');
+    $moved=admin_move_all($src,$to);$label='all of '.$src['name'].'’s pupils';}
+   else fail('Choose which pupils to move.');
+   audit('admin_move_pupils',$label.' → '.$to['name']);db()->commit();
+  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  flash('Moved '.$label.' to '.$to['name'].'.');go('?page=accounts');}
+ if($action==='admin_logo'||$action==='admin_logo_remove'){rc_logo_action($action);}
+ if($action==='admin_school_info'){foreach(['school_name','school_id','school_district','school_head','school_year'] as $k)admin_set($k,mb_substr(trim((string)($_POST[$k]??'')),0,150));audit('school_info','saved');flash('School info saved.');go('?page=settings&tab=school');}
+ if($action==='admin_announcement_add'){$title=trim((string)($_POST['title']??''));if($title===''||mb_strlen($title)>120)fail('Enter a title of up to 120 characters.');$until=(string)($_POST['until']??'');if($until!==''&&!preg_match('/^\d{4}-\d{2}-\d{2}$/',$until))$until='';
+  $list=admin_announcements();array_unshift($list,['id'=>bin2hex(random_bytes(6)),'title'=>$title,'message'=>mb_substr(trim((string)($_POST['message']??'')),0,400),'until'=>$until,'by'=>$u['name'],'at'=>date('Y-m-d H:i')]);admin_set('announcements',json_encode(array_slice($list,0,20),JSON_UNESCAPED_UNICODE));audit('announcement',$title);flash('Announcement posted. Teachers see it on their Overview.');go('?page=settings&tab=announcements');}
+ if($action==='admin_announcement_delete'){$id=(string)($_POST['id']??'');admin_set('announcements',json_encode(array_values(array_filter(admin_announcements(),fn($a)=>$a['id']!==$id)),JSON_UNESCAPED_UNICODE));flash('Announcement removed.');go('?page=settings&tab=announcements');}
+ if($action==='admin_school_year'){
+  if(trim((string)($_POST['confirm']??''))!=='NEW SCHOOL YEAR')fail('Type NEW SCHOOL YEAR (in capital letters) to confirm.');
+  $b=admin_setting('last_backup_at','');if($b===''||admin_days_since($b)>=1)fail('Download a backup first (step 1), then start the new school year.');
+  if(!sections_archive_supported())fail('Import 015_admin_tools.sql first.');
+  $year=mb_substr(trim((string)($_POST['new_year']??'')),0,20)?:admin_next_year();
+  db()->beginTransaction();try{
+   $done=(int)val("SELECT COUNT(*) FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 WHERE pu.grade_level=6");
+   q("UPDATE users u JOIN pupils pu ON pu.user_id=u.id SET u.active=0 WHERE pu.grade_level=6 AND u.role='pupil'");
+   $up=(int)val("SELECT COUNT(*) FROM pupils pu JOIN users u ON u.id=pu.user_id AND u.active=1 WHERE pu.grade_level<6");
+   q("UPDATE pupils pu JOIN users u ON u.id=pu.user_id SET pu.grade_level=pu.grade_level+1,pu.section='Not placed yet' WHERE pu.grade_level<6 AND u.active=1");
+   q('DELETE ps FROM pupil_sections ps JOIN sections s ON s.id=ps.section_id WHERE s.archived_at IS NULL');q('UPDATE sections SET archived_at=NOW() WHERE archived_at IS NULL');
+   admin_set('school_year',$year);audit('school_year_rollover',$year.' · '.$up.' moved up · '.$done.' finished');db()->commit();
+  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  flash('School year '.$year.' started. '.$up.' pupils moved up a grade and '.$done.' Grade 6 pupils finished BULIG. Teachers can now make new sections.');go('?page=settings&tab=year');}
+}
+const ADMIN_ACTIONS=['admin_logo','admin_logo_remove','admin_reset_password','admin_toggle_teacher','admin_rename_teacher','admin_move_pupils','admin_school_info','admin_announcement_add','admin_announcement_delete','admin_school_year','admin_level_schedule','admin_lesson_cycles','admin_section_save','admin_section_add','admin_section_delete'];

@@ -1,0 +1,64 @@
+# Level 3, worked out from the words themselves (odd vowel out, word families, blends that make a real word).
+4:0:2:learn:3 | 1=build 2=build 3=build 4=build 5=build 6=build 7=build 8=build 9=build 10=build
+4:0:2:learn:4 | 1=ten 2=hit 3=bed 4=hen 5=den 6=sit 7=pit 8=set 9=hip 10=men
+4:0:3:learn:3 | 1=build 2=build 3=build 4=build 5=build 6=build 7=build 8=build 9=build 10=build
+4:0:3:learn:4 | 1=fan 2=mat 3=mad 4=man 5=van 6=hit 7=dot 8=pin 9=cat 10=tap
+4:0:4:learn:3 | 1=build 2=build 3=build 4=build 5=build 6=build 7=build 8=build 9=build 10=build
+4:0:4:learn:4 | 1=hat 2=pan 3=hop 4=fog 5=sat 6=van 7=son 8=hat 9=fat 10=man
+4:0:5:learn:3 | 1=build 2=build 3=build 4=build 5=build 6=build 7=build 8=build 9=build 10=build
+4:0:5:learn:4 | 1=pig 2=hip 3=men 4=pin 5=lid 6=leg 7=pin 8=pit 9=hit 10=pig
+4:0:6:learn:3 | 1=build 2=build 3=build 4=build 5=build 6=build 7=build 8=build 9=build 10=build
+4:0:6:learn:4 | 1=beg 2=gem 3=fin 4=sit 5=fat 6=van 7=sin 8=jog 9=can 10=map
+4:0:7:learn:3 | 1=/ea/ 2=/ai/ 3=/ai/ 4=/ai/ 5=/ai/ 6=/ea/ 7=/ai/ 8=/ea/ 9=/ea/ 10=/ea/
+4:0:7:learn:5 | 1=pail 2=rain 3=hair 4=tail 5=nail 6=seat 7=hear 8=meal 9=meat 10=peak
+4:0:7:learn:6 | 1=ail~nail 2=ail~tail 3=air~hair 4=ail~pail 5=ain~rain 6=ear~hear 7=eal~meal 8=eat~meat 9=eak~peak 10=eat~seat
+4:0:8:learn:3 | 1=/oa/ 2=/oo/ 3=/oo/ 4=/oa/ 5=/oa/ 6=/oa/ 7=/oa/ 8=/oo/ 9=/oo/ 10=/oo/
+4:0:8:learn:5 | 1=boot 2=boat 3=goat 4=roof 5=foam 6=coat 7=moon 8=road 9=pool 10=food
+4:0:8:learn:6 | 1=oat~boat 2=oad~road 3=oat~coat 4=oat~goat 5=oam~foam 6=oot~boot 7=oof~roof 8=ood~food 9=oon~moon 10=ool~pool
+4:0:9:learn:3 | 1=/ack/ 2=/ack/ 3=/eck/ 4=/eck/ 5=/eck/ 6=/ack/ 7=/ack/ 8=/eck/ 9=/eck/ 10=/ack/
+4:0:9:learn:5 | 1=back 2=beck 3=hack 4=sack 5=neck 6=peck 7=black 8=heck 9=pack 10=deck
+4:0:9:learn:6 | 1=ack~lack 2=ack~rack 3=ack~jack 4=ack~track 5=ack~snack 6=eck~check 7=eck~wreck 8=eck~heck 9=eck~deck 10=eck~neck
+4:0:10:learn:3 | 1=/all/ 2=/ell/ 3=/all/ 4=/ell/ 5=/ell/ 6=/all/ 7=/ell/ 8=/all/ 9=/all/ 10=/ell/
+4:0:10:learn:5 | 1=ball 2=bell 3=call 4=smell 5=fall 6=tell 7=tall 8=sell 9=wall 10=shell
+4:0:10:learn:6 | 1=ell~well 2=ell~sell 3=all~ball 4=all~call 5=ell~smell 6=ell~shell 7=all~fall 8=all~tall 9=ell~tell 10=all~ball
+4:0:11:learn:3 | 1=-nk 2=-sk 3=-sk 4=-nk 5=-nk 6=-sk 7=-nk 8=-nk 9=-sk 10=-sk
+4:0:11:learn:5 | 1=pink 2=mask 3=flask 4=wink 5=task 6=plank 7=tank 8=desk 9=trunk 10=whisk
+4:0:11:learn:6 | 1=isk~whisk 2=unk~trunk 3=esk~desk 4=ank~tank 5=ank~plank 6=ask~task 7=ink~wink 8=ask~flask 9=ask~mask 10=ink~link
+4:0:12:post:2 | 1=bl 2=br 3=br 4=br 5=bl 6=br 7=bl 8=br 9=br 10=br 11=bl 12=bl
+4:0:13:post:4 | 1=cr 2=cl 3=cr 4=cl 5=cl 6=cr 8=cl 9=cl 10=cr 11=cr 12=cl
+4:0:15:learn:3 | 1=flag 2=frog+from 3=flute 4=free 5=flash 6=frame 7=flip 8=fresh+flesh 9=flower 10=frost
+4:0:15:post:2 | 1=fl 2=fr 3=fr 5=fr 6=fl 7=fl 8=fr 10=fl 11=fr 12=fl
+4:0:16:learn:3 | 1=globe 2=grapes 3=gloves 4=green 6=graph 8=grill 9=glad 10=graduate
+4:0:16:post:2 | 1=gl 2=gr 4=gl 5=gl 6=gl 7=gr 8=gr 9=gr 10=gr 12=gl
+4:0:17:post:3 | 1=pr 2=pl 3=pl 4=pr 5=pl 7=pr 8=pl 9=pr 10=pr 11=pl 12=pl
+4:0:21:learn:2 | 1=tractor 2=triangle 3=trumpet 4=traffic 5=trash 6=trophy 7=treasure 8=tripod 9=tree 10=trolley
+# Level 3, judged from the pictures (Listen & Match uses the module's numbered word list).
+4:0:7:learn:4 | 1=4 2=2 3=1 4=3 5=5 6=6 7=8 10=10      # pail, rain, nail, tail, hair, meal, seat, hear; cards 8 (leaf) and 9 (bear) are not on the word list: left for the teacher
+4:0:8:learn:4 | 1=4 2=3 3=5 4=1 5=6 6=10 7=7 8=2 9=9 10=8   # road, goat, pool, boat, roof, boot, moon, book, coat, soap
+4:0:10:learn:4 | 1=9 2=1 3=2 4=7 5=4 6=3 7=8 8=10 9=5 10=6     # shell, ball, call, well, tall, wall, sell, smell, small, bell
+4:0:11:learn:4 | 1=7 2=3 3=2 4=4 5=9 6=8 7=1 8=6 9=5 10=10     # drink, tank, pink, wink, bank, desk, mask, ask, flask, whisk
+4:0:12:learn:2 | 1=bl 2=br 3=bl 4=bl 5=bl 6=br 7=br 8=bl 9=bl 10=br   # blender, brick, black, blanket, blind, broken, broom, block, blood, brush
+4:0:12:post:3 | 1=br 2=bl 3=br 4=bl 5=bl 6=br 7=bl 8=br 9=br   # bread, blueberry, bridge, blocks, blackboard, branch, blender, broccoli, brick
+4:0:13:learn:4 | 1=crab 2=clock 3=cloud 4=crow 5=crown 6=crocodile 7=climb 8=crawl 9=clap 10=clown
+4:0:13:post:2 | 1=P2 2=P2 3=P2 4=P2 5=P2
+4:0:13:post:3 | 1=cr 2=cl 3=cr 4=cr 5=cl 7=cr 8=cl 9=cr      # cry, clock, crayon, cradle, clip, crane, clean, crown; card 6 (a girl with crayons and paper) left for the teacher
+4:0:13:post:4 | 7=cr                                          # cradle (the module prints "_ _ radle")
+4:0:13:post:5 | 1=cr 2=cr 3=cl 4=cl 5=cr 6=cl 7=cr 8=cr 9=cl 10=cr 11=cr 12=cr
+4:0:14:learn:4 | 1=dragon 2=drum 3=dress 4=drink 5=drive 6=draw 7=drill 8=dribble 9=dry 10=drop
+4:0:14:post:2 | 1=dress 2=draw 3=drive 4=drum 5=drink 6=dragon
+4:0:14:post:3 | 1=not dr 2=dr 3=not dr 5=dr 6=not dr 7=dr 8=not dr     # banana, dragon, leaf, dresser, camel, dress, tiger; card 4 (a dog dreaming?) left for the teacher
+4:0:15:learn:4 | 1=fl 2=fr 3=fr 4=fl 5=fr 6=fr 7=fl 8=fr 9=fr 10=fl 11=fl 12=fl
+4:0:15:post:2 | 4=fl 9=fr                                    # flame (fire picture), frame
+4:0:15:post:3 | 1=fl 2=fl 3=fr 4=fl 5=fr 6=fl                 # flag, fly, fruits, flower, frog, flashlight
+4:0:15:post:4 | 1=fruits 2=friends 3=frog 4=fridge 5=frost
+4:0:15:post:5 | 1=2 2=4 3=3 4=10 5=8 6=5 7=7 8=6 9=9 10=1    # flashlight, flag, flatbed, flash (lightning), flowers, floor lamp, flamingo, flat (tire), flood, flesh (thumb)
+4:0:16:learn:3 | 5=glass 7=glow
+4:0:16:post:2 | 3=gr 11=gl
+4:0:16:post:3 | 1=glue 2=glass 3=globe 4=glad 5=gloves
+4:0:16:post:4 | 1=gl 2=gl 3=gr 4=gr 5=gl 7=gl 9=gl 10=gr 11=gr 12=gr   # glue, glass, grapes, grass, gloves, globe, glad, Greece, green, grave; cards 6 (fishing) and 8 (giving money) left for the teacher
+4:0:17:learn:2 | 1=pl 2=pr 3=pl 4=pr 5=pl 6=pr 7=pr 8=pr 9=pl 10=pl    # play, prince, plate, print, plane, pray, present, price, plier, plus
+4:0:17:post:3 | 6=pl
+4:0:18:learn:3 | 1=stop 2=storm 3=strap 4=stone 5=street 6=string 7=steel 8=strawberry 9=stick 10=stripes
+4:0:19:learn:3 | 1=shine 2=slide 3=shower 4=shovel 5=shake 6=slug 7=shock 8=slice 9=slipped 10=slap
+4:0:19:post:3 | 1=P2 2=P3 3=P2 4=P1 5=P3
+4:0:20:learn:2 | 1=sp 2=spr 3=spl 4=sp 5=spr 6=sp 7=sp 8=spr 9=sp 10=spr 11=sp 12=spl

@@ -1,0 +1,288 @@
+<?php
+declare(strict_types=1);
+$config=require __DIR__.'/../config/database.php';
+date_default_timezone_set($config['timezone']);
+if(PHP_SAPI!=='cli'){
+ session_set_cookie_params(['httponly'=>true,'secure'=>!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=='off','samesite'=>'Lax','path'=>'/']);
+ ini_set('session.use_strict_mode','1'); session_start();
+ if(isset($_SESSION['uid'])&&isset($_SESSION['last_active'])&&time()-(int)$_SESSION['last_active']>7200){$_SESSION=[];session_regenerate_id(true);}
+ $_SESSION['last_active']=time();
+ header('X-Content-Type-Options: nosniff');header('X-Frame-Options: DENY');header('Referrer-Policy: same-origin');
+ header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'");
+ header('Cache-Control: no-store');
+}
+function db():PDO{global $config;static $pdo;if(!$pdo){$pdo=new PDO("mysql:host={$config['host']};port={$config['port']};dbname={$config['name']};charset=utf8mb4",$config['user'],$config['pass'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);$pdo->exec("SET time_zone = '".date('P')."'");}return $pdo;}
+function q(string $sql,array $p=[]):PDOStatement{$s=db()->prepare($sql);$s->execute($p);return $s;}
+function rows(string $sql,array $p=[]):array{$r=q($sql,$p)->fetchAll();if(!empty($GLOBALS['tc_collect']))foreach($r as $x)tc_keep($x);return $r;}
+function one(string $sql,array $p=[]):?array{$r=q($sql,$p)->fetch()?:null;if($r&&!empty($GLOBALS['tc_collect']))tc_keep($r);return $r;}
+function val(string $sql,array $p=[]){$v=q($sql,$p)->fetchColumn();if(is_string($v)&&!empty($GLOBALS['tc_collect'])&&preg_match('~^\s*SELECT\s+(?:\w+\.)?(name|title|subtitle|subject)\s+FROM~i',$sql))tc_keep(['name'=>$v]);return $v;}
+/** v208 Text from the database (names, message subjects, section and school names, module titles) is kept exactly as
+    written: Title Case is only for BULIG's own titles (app/views.php title_case_html). */
+function tc_keep($row):void{static $n=0;static $K=['name'=>1,'title'=>1,'subtitle'=>1,'subject'=>1,'section'=>1,'section_name'=>1,'school'=>1,'school_name'=>1,'teacher'=>1,'teacher_name'=>1,'pupil_name'=>1,'sender_name'=>1];if($n>4000||!is_array($row))return;foreach($row as $k=>$v){if(!is_string($k)||!isset($K[$k])||!is_string($v)||mb_strlen($v)<2||mb_strlen($v)>140)continue;$GLOBALS['tc_raw'][$v]=1;$n++;}}
+function e($s):string{return htmlspecialchars((string)$s,ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8');}
+function fail(string $message,int $code=400):never{throw new RuntimeException($message,$code);}
+function go(string $url):never{header('Location: '.$url);exit;}
+function flash(string $s):void{$_SESSION['flash']=$s;}
+function csrf():string{return $_SESSION['csrf']??=bin2hex(random_bytes(32));}
+function csrf_field():string{return '<input type="hidden" name="csrf" value="'.csrf().'">';}
+function check_csrf():void{if(!hash_equals(csrf(),(string)($_POST['csrf']??'')))fail('Your session changed. Reload the page and try again.',403);}
+/** The signed-in user. Read once per page (a page asks for it many times); every change to a user ends with a redirect, so it is never stale. */
+function current_user():?array{static $c=[];if(empty($_SESSION['uid']))return null;$id=(int)$_SESSION['uid'];if(!array_key_exists($id,$c))$c[$id]=one('SELECT * FROM users WHERE id=? AND active=1',[$id]);if(!$c[$id]){unset($_SESSION['uid']);return null;}return $c[$id];}
+function require_role(string ...$roles):array{$u=current_user();if(!$u)fail('Please sign in again.',401);if(!in_array($u['role'],$roles,true))fail('You do not have access to this page.',403);return $u;}
+function own_pupil(int $pid):void{$u=require_role('teacher');if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$u['id'],$pid]))fail('This pupil is not assigned to you.',403);}
+function audit(string $action,string $detail):void{q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[current_user()['id']??null,$action,$detail]);}
+function normalize_answer(string $s):string{$s=strtolower(trim($s));return preg_replace('/[^\pL\pN]+/u',' ',$s)??'';}
+function word_match(string $expected,string $heard):array{
+ $a=preg_split('/\s+/',trim(normalize_answer($expected)),-1,PREG_SPLIT_NO_EMPTY);$b=preg_split('/\s+/',trim(normalize_answer($heard)),-1,PREG_SPLIT_NO_EMPTY);
+ // Level 4 passages run up to 500 words; a longer reading is trimmed, never refused (the pupil's answer must save).
+ $a=array_slice($a,0,800);$b=array_slice($b,0,800);
+ // Word-level edit distance: insertions, substitutions and omissions count as errors.
+ $d=[];for($i=0;$i<=count($a);$i++)$d[$i]=[$i];for($j=0;$j<=count($b);$j++)$d[0][$j]=$j;
+ for($i=1;$i<=count($a);$i++)for($j=1;$j<=count($b);$j++)$d[$i][$j]=min($d[$i-1][$j]+1,$d[$i][$j-1]+1,$d[$i-1][$j-1]+($a[$i-1]===$b[$j-1]?0:1));
+ $i=count($a);$j=count($b);$detail=[];
+ while($i||$j){if($i&&$j&&$d[$i][$j]===$d[$i-1][$j-1]+($a[$i-1]===$b[$j-1]?0:1)){$detail[]=['expected'=>$a[$i-1],'heard'=>$b[$j-1],'match'=>$a[$i-1]===$b[$j-1]];$i--;$j--;}elseif($i&&$d[$i][$j]===$d[$i-1][$j]+1){$detail[]=['expected'=>$a[$i-1],'heard'=>'','match'=>false];$i--;}else{$detail[]=['expected'=>'','heard'=>$b[$j-1],'match'=>false];$j--;}}
+ return ['percent'=>count($a)?round(max(0,1-$d[count($a)][count($b)]/count($a))*100,2):0,'words'=>array_reverse($detail)];
+}
+function activities(int $lid,int $pid=0):array{return rows("SELECT a.*,c.status,c.response,c.feedback,c.drawing,c.id completion_id FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.published=1 ORDER BY FIELD(a.phase,'pre','learn','post'),a.position",[$pid,$lid]);}
+function lesson_available(int $pid,int $lid):bool{
+ if(isset($GLOBALS['bulig_map_availability'])&&($_SERVER['REQUEST_METHOD']??'GET')==='GET'){
+  $key=$pid.':'.$lid;
+  if(!array_key_exists($key,$GLOBALS['bulig_map_availability']))$GLOBALS['bulig_map_availability'][$key]=lesson_available_check($pid,$lid);
+  return $GLOBALS['bulig_map_availability'][$key];
+ }
+ return lesson_available_check($pid,$lid);
+}
+function lesson_available_check(int $pid,int $lid):bool{
+ $l=one('SELECT l.*,m.level_id,m.grade_level module_grade FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=? AND l.published=1',[$lid]);if(!$l)return false;
+ if($l['module_grade']!==null&&(int)$l['module_grade']!==pupil_grade($pid))return false;
+ if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$l['level_id']]))return false;
+ if(!level_available($pid,(int)$l['level_id']))return false;
+ if(level_rank((int)$l['level_id'])<level_rank(pupil_start_level($pid)))return true;
+ if(function_exists('lesson_cycle_opens')&&lesson_cycle_opens($lid)!==null)return false;   // a cycle that has not opened yet (app/cycles.php)
+ return !val('SELECT COUNT(*) FROM lessons l LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE l.module_id=? AND l.position<? AND l.published=1 AND p.completed_at IS NULL',[$pid,$l['module_id'],$l['position']]);
+}
+function completion_ok(?array $row):bool{return $row&&in_array($row['status'],['approved','completed'],true);}
+function phase_available(int $pid,int $lid,string $phase):bool{
+ $order=['pre'=>0,'learn'=>1,'post'=>2];if(!isset($order[$phase]))return false;
+ if(function_exists('lesson_is_skipped')&&lesson_is_skipped($pid,$lid))return true;
+ $earlier=array_slice(array_keys($order),0,$order[$phase]);
+ foreach($earlier as $stage)if(val("SELECT COUNT(*) FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.phase=? AND a.published=1 AND (c.status IS NULL OR c.status NOT IN ('approved','completed'))",[$pid,$lid,$stage]))return false;
+ return true;
+}
+function allowed_activity(int $pid,int $aid):array{
+ $a=one('SELECT * FROM activities WHERE id=? AND published=1',[$aid]);if(!$a)fail('Activity not found.',404);
+ if(!lesson_available($pid,(int)$a['lesson_id'])||!phase_available($pid,(int)$a['lesson_id'],$a['phase']))fail('Complete the earlier learning steps first.',403);
+ $before=val("SELECT COUNT(*) FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.phase=? AND a.position<? AND a.published=1 AND (c.status IS NULL OR c.status NOT IN ('approved','completed'))",[$pid,$a['lesson_id'],$a['phase'],$a['position']]);
+ if($before&&!(function_exists('lesson_is_skipped')&&lesson_is_skipped($pid,(int)$a['lesson_id'])))fail('Please finish the earlier activity first.',403);return $a;
+}
+function next_activity(int $pid,int $lid):?array{foreach(activities($lid,$pid) as $a)if(!completion_ok($a))return $a;return null;}
+/** Sections can be archived at the end of a school year (015_admin_tools.sql); older databases have no such column. */
+function sections_archive_supported():bool{static $s;if($s===null){try{$s=(bool)one("SHOW COLUMNS FROM sections LIKE 'archived_at'");}catch(Throwable $e){$s=false;}}return $s;}
+function owned_section(int $sid,int $teacher):array{$s=one('SELECT * FROM sections WHERE id=? AND teacher_id=?'.(sections_archive_supported()?' AND archived_at IS NULL':''),[$sid,$teacher]);if(!$s)fail('Choose a section that belongs to you.',403);return $s;}
+function teacher_sections(int $teacher):array{return rows('SELECT * FROM sections WHERE teacher_id=?'.(sections_archive_supported()?' AND archived_at IS NULL':'').' ORDER BY grade_level,name',[$teacher]);}
+function finish_lesson(int $pid,int $lid):void{
+ if(!lesson_available($pid,$lid))fail('Lesson not available.',403);
+ if(next_activity($pid,$lid))fail('Complete every activity before finishing this lesson.');
+ q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=COALESCE(completed_at,NOW())',[$pid,$lid]);award_badges($pid);if(function_exists('notify_level_done'))notify_level_done($pid,$lid);if(function_exists('schedule_after_finish'))schedule_after_finish($pid);
+}
+function update_learning(int $pid,int $aid):void{
+ $a=one('SELECT * FROM activities WHERE id=?',[$aid]);$rlb=function_exists('rl_info')?rl_info($pid,true)['level']:0;
+ $reward=(int)$a['xp_reward'];if(function_exists('rv_ready')&&rv_ready()){$last=one("SELECT xp_reversed FROM reading_verifications WHERE pupil_id=? AND activity_id=? AND state='rejected' ORDER BY id DESC LIMIT 1",[$pid,$aid]);if($last)$reward=min($reward,(int)$last['xp_reversed']);}
+ $insert=q('INSERT IGNORE INTO xp_transactions(pupil_id,activity_id,amount) VALUES(?,?,?)',[$pid,$aid,$reward]);
+ if($insert->rowCount()){
+  q('INSERT INTO pupil_xp(pupil_id,total) VALUES(?,?) ON DUPLICATE KEY UPDATE total=total+VALUES(total)',[$pid,$reward]);
+  $date=substr((string)val('SELECT submitted_at FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]),0,10);
+  if($a['response_mode']!=='none')q('INSERT IGNORE INTO learning_days VALUES(?,?)',[$pid,$date]);
+  if($rlb)rl_after_xp($pid,$rlb);
+ }
+ $days=rows('SELECT day FROM learning_days WHERE pupil_id=? ORDER BY day',[$pid]);$run=0;$long=0;$prev=null;
+ foreach($days as $day){$d=$day['day'];$run=$prev&&date('Y-m-d',strtotime($prev.' +1 day'))===$d?$run+1:1;$long=max($long,$run);$prev=$d;}
+ if($prev&&$prev<date('Y-m-d',strtotime('-1 day')))$run=0;
+ q('INSERT INTO pupil_streaks VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE current_streak=VALUES(current_streak),longest_streak=VALUES(longest_streak),last_activity_date=VALUES(last_activity_date)',[$pid,$run,$long,$prev]);
+ sync_assessments($pid,(int)$a['lesson_id']);award_badges($pid);
+}
+function sync_assessments(int $pid,int $lid):void{
+ foreach(rows('SELECT id FROM assessments WHERE lesson_id=?',[$lid]) as $assessment){
+  $id=(int)$assessment['id'];$items=rows('SELECT c.status,c.score,c.max_score FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.assessment_id=? AND a.published=1',[$pid,$id]);
+  if(!$items)continue;$complete=true;$graded=true;$score=0;$max=0;
+  foreach($items as $item){if(!completion_ok($item))$complete=false;if($item['score']===null)$graded=false;else{$score+=(float)$item['score'];$max+=(float)$item['max_score'];}}
+  if($complete)q("INSERT INTO assessment_attempts(pupil_id,assessment_id,status,score,max_score,completed_at) VALUES(?,?,'submitted',?,?,NOW()) ON DUPLICATE KEY UPDATE status=IF(status='reviewed',status,VALUES(status)),score=IF(reviewed_by IS NULL,VALUES(score),score),max_score=IF(reviewed_by IS NULL,VALUES(max_score),max_score),completed_at=COALESCE(completed_at,NOW())",[$pid,$id,$graded?$score:null,$graded?$max:null]);
+ }
+}
+function refresh_progress(int $pid,int $lid):void{sync_assessments($pid,$lid);}
+function award_badges(int $pid):void{
+ $v=['activity'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'lesson'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'streak'=>(int)val('SELECT longest_streak FROM pupil_streaks WHERE pupil_id=?',[$pid]),'reading'=>(int)val("SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.status IN ('approved','completed') AND a.type='reading'",[$pid]),'perfect'=>(int)val("SELECT COUNT(*) FROM assessment_attempts WHERE pupil_id=? AND status IN ('reviewed','submitted') AND score=max_score AND max_score>0",[$pid])];$v['level']=(int)val('SELECT COUNT(*) FROM pupil_progress p JOIN lessons l ON l.id=p.lesson_id JOIN modules m ON m.id=l.module_id WHERE p.pupil_id=? AND p.completed_at IS NOT NULL AND m.level_id=1',[$pid]);
+ $v['drawing']=(int)val("SELECT COUNT(*) FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.status IN ('submitted','approved','completed') AND (a.type='drawing' OR COALESCE(c.drawing,'')<>'')",[$pid]);
+ $v['voice']=(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('submitted','approved','completed') AND (COALESCE(audio_path,'')<>'' OR COALESCE(audio_paths,'') NOT IN ('','[]','null'))",[$pid]);
+ $v['weekend']=(int)val('SELECT COUNT(*) FROM learning_days WHERE pupil_id=? AND DAYOFWEEK(day) IN (1,7)',[$pid]);
+ if(function_exists('finished_levels'))$v['levels']=count(finished_levels($pid));
+ if(function_exists('rl_info')){$v['rlevel']=rl_info($pid,true)['level'];$v['headstart']=rl_headstart($pid)?1:0;rl_fix_badges($pid,$v['rlevel']);}
+ foreach(rows('SELECT * FROM badges WHERE active=1') as $b)if(($v[$b['rule_type']]??0)>=$b['threshold_value']&&q('INSERT IGNORE INTO pupil_badges(pupil_id,badge_id) VALUES(?,?)',[$pid,$b['id']])->rowCount()&&function_exists('notify'))notify($pid,'badge','New badge: '.$b['title'],(string)$b['description'],'?page=achievements');
+ q('INSERT IGNORE INTO pupil_rewards(pupil_id,reward_id) SELECT ?,id FROM rewards WHERE active=1 AND required_xp<=?',[$pid,$v['xp']]);
+}
+function progress_stats(int $pid):array{
+ $pre=progress_stats_store();if(isset($pre[$pid]))return $pre[$pid];
+ $s=one('SELECT * FROM pupil_streaks WHERE pupil_id=?',[$pid])??['current_streak'=>0,'longest_streak'=>0,'last_activity_date'=>null];
+ if(($s['last_activity_date']??'')<date('Y-m-d',strtotime('-1 day')))$s['current_streak']=0;
+ return $s+['xp'=>(int)val('SELECT total FROM pupil_xp WHERE pupil_id=?',[$pid]),'completed'=>(int)val('SELECT COUNT(*) FROM pupil_progress WHERE pupil_id=? AND completed_at IS NOT NULL',[$pid]),'approved'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status IN ('approved','completed')",[$pid]),'pending'=>(int)val("SELECT COUNT(*) FROM activity_completion WHERE pupil_id=? AND status='submitted'",[$pid])];
+}
+/** Stats read ahead for a whole class by progress_stats_many(); kept for the rest of the page. */
+function progress_stats_store(?array $add=null):array{static $c=[];if($add!==null)$c=$add+$c;return $c;}
+/** The same numbers as progress_stats() for many pupils at once (teacher pages): 5 queries for the class instead of 5 per pupil. */
+function progress_stats_many(array $ids):array{
+ $ids=array_values(array_unique(array_map('intval',$ids)));if(!$ids)return [];$in=implode(',',$ids);$out=[];
+ foreach($ids as $id)$out[$id]=['current_streak'=>0,'longest_streak'=>0,'last_activity_date'=>null];
+ foreach(rows("SELECT * FROM pupil_streaks WHERE pupil_id IN($in)") as $r)$out[(int)$r['pupil_id']]=$r;
+ $yest=date('Y-m-d',strtotime('-1 day'));foreach($out as $id=>$r)if(($r['last_activity_date']??'')<$yest)$out[$id]['current_streak']=0;
+ $col=function(string $sql)use($in):array{return array_map('intval',array_column(rows(str_replace('{IN}',$in,$sql)),'n','pupil_id'));};
+ $xp=$col('SELECT pupil_id,total n FROM pupil_xp WHERE pupil_id IN({IN})');
+ $done=$col('SELECT pupil_id,COUNT(*) n FROM pupil_progress WHERE pupil_id IN({IN}) AND completed_at IS NOT NULL GROUP BY pupil_id');
+ $ok=$col("SELECT pupil_id,COUNT(*) n FROM activity_completion WHERE pupil_id IN({IN}) AND status IN ('approved','completed') GROUP BY pupil_id");
+ $wait=$col("SELECT pupil_id,COUNT(*) n FROM activity_completion WHERE pupil_id IN({IN}) AND status='submitted' GROUP BY pupil_id");
+ foreach($out as $id=>$r)$out[$id]=$r+['xp'=>$xp[$id]??0,'completed'=>$done[$id]??0,'approved'=>$ok[$id]??0,'pending'=>$wait[$id]??0];
+ progress_stats_store($out);return $out;
+}
+function checked_image(string $path):string{
+ if(!preg_match('~^assets/(module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/)?[a-zA-Z0-9_.-]+\.(png|jpe?g|webp)$~',$path)||!is_file(__DIR__.'/../public/'.$path))fail('Choose an existing image from the media library.');return $path;
+}
+function save_uploaded_image(string $field):string{
+ if(empty($_FILES[$field])||$_FILES[$field]['error']!==UPLOAD_ERR_OK)fail('Choose an image smaller than 4 MB.');$f=$_FILES[$field];if($f['size']>4*1024*1024)fail('Image must be smaller than 4 MB.');
+ $mime=(new finfo(FILEINFO_MIME_TYPE))->file($f['tmp_name']);$ext=['image/png'=>'png','image/jpeg'=>'jpg','image/webp'=>'webp'][$mime]??null;
+ if(!$ext||!getimagesize($f['tmp_name']))fail('Upload a PNG, JPEG, or WebP image.');
+ $dir=__DIR__.'/../public/assets/uploads';if(!is_dir($dir))mkdir($dir,0755,true);
+ $name=bin2hex(random_bytes(16)).'.'.$ext;if(!move_uploaded_file($f['tmp_name'],$dir.'/'.$name))fail('Upload could not be saved.');return 'assets/uploads/'.$name;
+}
+
+// Keep the gallery and single-image fields compatible with existing imports.
+function activity_images(array $a):array{
+ $reviewed=level1_visual_override($a);if($reviewed!==null)return array_column($reviewed['images'],'src');
+ $native=level2_native_images($a);if($native!==null)return $native;
+ $paths=json_decode($a['image_paths']??'[]',true);
+ if(!is_array($paths))$paths=[];
+ $paths=array_values(array_filter($paths,fn($v)=>is_string($v)&&trim($v)!==''));
+ if(!$paths&&!empty($a['image_path']))$paths=[(string)$a['image_path']];
+ return array_values(array_unique($paths));
+}
+function visual_manifest():array{
+ static $m=null;if($m===null){$f=__DIR__.'/../database/visual-manifest.json';$m=is_file($f)?json_decode(file_get_contents($f),true):[];}return $m?:[];
+}
+function local_image_file(string $path):?string{
+ if(!preg_match('~^assets/(?:module/|uploads/|avatars/|images/level1/lesson[0-9]{2}/|images/level2[ab]/|images/level3/|images/level4/|images/level5/g[1-6]/|images/level6/g[1-6]/|images/level7/g[1-6]/)?[a-zA-Z0-9_.-]+\.(?:png|jpe?g|webp)$~D',$path))return null;
+ $root=realpath(__DIR__.'/../public');$f=realpath($root.'/'.$path);
+ return $f&&str_starts_with($f,$root.DIRECTORY_SEPARATOR)&&is_file($f)&&is_readable($f)?$f:null;
+}
+function resolved_image_path(string $path):?string{
+ if(local_image_file($path))return $path;
+ // Original module copies have byte-identical filenames. Never substitute custom uploads.
+ if(preg_match('~^assets/images/level1/lesson[0-9]{2}/((?:image-[0-9]+|page-[0-9]+)\.(?:jpeg|jpg|png))$~D',$path,$m)){
+  $old='assets/module/'.$m[1];if(local_image_file($old))return $old;
+ }
+ return null;
+}
+function level_label(int $id):string{return [1=>'Level 1',2=>'Level 2A',3=>'Level 2B',4=>'Level 3A',9=>'Level 3B',5=>'Level 4',6=>'Level 5',7=>'Level 6',8=>'Level 7'][$id]??'Level '.$id;}
+/* v177: Level 3 is two levels, as in the module: 3A (id 4: short vowels and word families) and 3B (id 9: consonant blends and sight words).
+   Level ids stay as they were, so progress, answers and keys keep working; LEVEL_ORDER is the order pupils climb them. */
+const LEVEL_ORDER=[1,2,3,4,9,5,6,7,8];
+function level_rank(int $id):int{$i=array_search($id,LEVEL_ORDER,true);return $i===false?($id<=0?-1:100+$id):$i;}
+/** The level whose screens and content a level uses: 3B is built like Level 3 (3A). */
+function level_family(int $id):int{return $id===9?4:$id;}
+function level_order_sql(string $col):string{return 'FIELD('.$col.','.implode(',',LEVEL_ORDER).')';}
+function level_next(int $id):?int{return LEVEL_ORDER[level_rank($id)+1]??null;}
+function selected_start_level(int $fallback=1,bool $check=false):int{
+ $id=(int)($_POST['level_id']??$fallback);
+ if($id===0&&$check&&function_exists('rc_ready')&&rc_ready())return 0;/* 0: no level yet, the pupil takes the reading check */
+ if(!val('SELECT id FROM bulig_levels WHERE id=?',[$id]))fail('Choose a valid starting level.');
+ return $id;
+}
+
+function pupil_details_input(int $pupilId=0):array{
+ $old=$pupilId?one('SELECT sex,lrn FROM pupil_details WHERE pupil_id=?',[$pupilId]):null;
+ $sex=trim((string)($_POST['sex']??($old['sex']??'')));
+ $lrn=trim((string)($_POST['lrn']??($old['lrn']??'')));
+ if(!in_array($sex,['male','female'],true)&&!($pupilId&&$sex===''))fail('Choose Male or Female for the pupil.');
+ if($lrn!==''&&!preg_match('/^[0-9]{12}$/D',$lrn))fail('Enter a 12-digit LRN, or leave it blank if it is not available yet.');
+ if($lrn!==''&&val('SELECT pupil_id FROM pupil_details WHERE lrn=? AND pupil_id<>?',[$lrn,$pupilId]))fail('This LRN is already assigned to a pupil.');
+ return [$sex?:null,$lrn?:null];
+}
+function save_pupil_details(int $id,array $details):void{
+ try{if(val('SELECT pupil_id FROM pupil_details WHERE pupil_id=?',[$id]))q('UPDATE pupil_details SET sex=?,lrn=? WHERE pupil_id=?',[$details[0],$details[1],$id]);else q('INSERT INTO pupil_details(pupil_id,sex,lrn) VALUES(?,?,?)',[$id,$details[0],$details[1]]);}
+ catch(PDOException $e){if(($e->errorInfo[1]??0)===1062)fail('This LRN is already assigned to a pupil.');throw $e;}
+}
+function profile_avatar_choices():array{
+ /* v169: 19 pupil avatars in the school uniform (boy-1 to boy-10, girl-1 to girl-10; 20 in all) */
+ $all=['boy-1'=>['Boy 1 · Side-part hair','male'],'boy-2'=>['Boy 2 · Curly hair','male'],'boy-3'=>['Boy 3 · Glasses','male'],'boy-4'=>['Boy 4 · Spiky hair','male'],'boy-5'=>['Boy 5 · Bangs','male'],'boy-6'=>['Boy 6 · Short hair','male'],'boy-7'=>['Boy 7 · Glasses and middle part','male'],'boy-8'=>['Boy 8 · Wavy hair','male'],'boy-9'=>['Boy 9 · Messy hair','male'],'boy-10'=>['Boy 10 · Glasses and short sides','male'],
+  'girl-1'=>['Girl 1 · Bob haircut','female'],'girl-2'=>['Girl 2 · Braids','female'],'girl-3'=>['Girl 3 · Ponytail and glasses','female'],'girl-4'=>['Girl 4 · Space buns','female'],'girl-5'=>['Girl 5 · Wavy hair and headband','female'],'girl-6'=>['Girl 6 · Curly pigtails','female'],'girl-7'=>['Girl 7 · Long hair and clip','female'],'girl-8'=>['Girl 8 · Braid and glasses','female'],'girl-9'=>['Girl 9 · Short hair and bow tie','female'],'girl-10'=>['Girl 10 · Top bun and ribbon','female']];
+ return array_filter($all,fn($k)=>is_file(__DIR__.'/../public/assets/avatars/'.$k.'.png'),ARRAY_FILTER_USE_KEY);
+}
+
+/** Remembered for the rest of the page (pages ask many times; every change to these ends with a redirect). */
+function pupil_start_level(int $pid):int{static $c=[];return $c[$pid]??=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);}
+function level_published(int $id):bool{static $c=null;$c??=array_map('intval',array_column(rows('SELECT id,published FROM bulig_levels'),'published','id'));return !empty($c[$id]);}
+function level_available(int $pid,int $level):bool{return level_progress_ready($pid,$level)&&!(function_exists('level_date_locked')&&level_date_locked($pid,$level));}
+/** Open by progress: every earlier level from the starting level is finished (the level schedule is checked separately). */
+function level_progress_ready(int $pid,int $level):bool{
+ static $c=[];return $c[$pid.':'.$level]??=level_progress_check($pid,$level);
+}
+function level_progress_check(int $pid,int $level):bool{
+ if(!level_published($level))return false;
+ $start=pupil_start_level($pid);
+ if(!$start)return false;
+ if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$level,pupil_grade($pid)]))return false;
+ foreach(rows('SELECT id,published FROM bulig_levels WHERE '.level_order_sql('id').'>='.level_order_sql('?').' AND '.level_order_sql('id').'<'.level_order_sql('?').' ORDER BY '.level_order_sql('id'),[$start,$level]) as $prior){
+  if(!$prior['published'])return false;
+  $counts=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$prior['id'],pupil_grade($pid)]);
+  if(!$counts['total']||$counts['total']!=$counts['done'])return false;
+  if(function_exists('pt_passed')&&!pt_passed($pid,(int)$prior['id']))return false;
+ }
+ return true;
+}
+/** Level 4 onward has a separate module for each grade; earlier levels share one module (grade_level NULL). */
+const GRADE_SQL=' AND (m.grade_level IS NULL OR m.grade_level=?)';
+function pupil_grade(int $pid):int{static $c=[];return $c[$pid]??=(int)val('SELECT grade_level FROM pupils WHERE user_id=?',[$pid]);}
+function lesson_grade(int $lid):?int{$g=val('SELECT m.grade_level FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);return $g===null||$g===false?null:(int)$g;}
+function level4_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level4-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
+function level5_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level5-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
+/** Levels whose content is a separate module for each grade (Level 4 = id 5, Level 5 = id 6). */
+function level6_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level6-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
+function level7_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level7-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
+function per_grade_level(int $level):bool{return in_array($level,[5,6,7,8],true);}
+function lesson_level(int $lid):int{static $c=[];return $c[$lid]??=(int)val('SELECT m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);}
+function level2_manifest():array{static $m;return $m??=json_decode(file_get_contents(__DIR__.'/../database/level2-manifest.json'),true);}
+function level3_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level3-cards.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['cards'=>[],'lessons'=>[],'pupil_pages'=>[],'page_count'=>0];}return $m;}
+/** Source-module metadata for Levels 2A, 2B, 3 and (per grade) 4; null for Level 1. */
+function module_source_meta(int $level,?int $grade=null):?array{
+ if($level===5)return $grade?(level4_manifest()['grades'][(string)$grade]??null):null;
+ if($level===6)return $grade?(level5_manifest()['grades'][(string)$grade]??null):null;
+ if($level===7)return $grade?(level6_manifest()['grades'][(string)$grade]??null):null;
+ if($level===8)return $grade?(level7_manifest()['grades'][(string)$grade]??null):null;
+ if(in_array($level,[2,3],true))return level2_manifest()['levels'][(string)$level]+['folder'=>$level===2?'2a':'2b'];
+ if(level_family($level)===4)return level3_manifest()+['folder'=>'3'];
+ return null;
+}
+function next_learning_lesson(int $pid):?array{
+ if(isset($GLOBALS['bulig_map_availability'])&&($_SERVER['REQUEST_METHOD']??'GET')==='GET'){
+  if(!array_key_exists($pid,$GLOBALS['bulig_map_next']??[]))$GLOBALS['bulig_map_next'][$pid]=next_learning_lesson_check($pid);
+  return $GLOBALS['bulig_map_next'][$pid];
+ }
+ return next_learning_lesson_check($pid);
+}
+function next_learning_lesson_check(int $pid):?array{
+ foreach(rows('SELECT l.*,m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id JOIN pupil_level_assignments assigned ON assigned.pupil_id=? LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=assigned.pupil_id WHERE '.level_order_sql('m.level_id').'>='.level_order_sql('assigned.level_id').' AND l.published=1 AND p.completed_at IS NULL'.GRADE_SQL.' ORDER BY '.level_order_sql('m.level_id').',l.position',[$pid,pupil_grade($pid)]) as $l)if(lesson_available($pid,(int)$l['id']))return $l;
+ return null;
+}
+
+/* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
+   (status 503) instead of a blank "HTTP 500" page. */
+const BULIG_PARTS=['coach','whats_new','privacy','chat','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support'];
+function bulig_missing_files(array $missing):never{
+ $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
+ if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}
+ http_response_code(503);header('Retry-After: 600');header('Content-Type: text/html; charset=utf-8');
+ echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BULIG is being updated</title></head><body><main><h1>BULIG is being updated</h1><p>Please try again in a few minutes.</p><p>For the administrator: these files are missing on the server: <b>'.htmlspecialchars($list,ENT_QUOTES,'UTF-8').'</b>. Upload the complete update ZIP again, then open <a href="bulig-check.php">bulig-check.php</a> to confirm.</p></main></body></html>';
+ exit;
+}
+if($__missing=array_values(array_filter(BULIG_PARTS,fn($f)=>!is_file(__DIR__.'/'.$f.'.php'))))bulig_missing_files($__missing);
+foreach(BULIG_PARTS as $__part)require_once __DIR__.'/'.$__part.'.php';
+unset($__part,$__missing);
+/* v208 page views: remember text from the database so Title Case keeps it as written */
+if(($_SERVER['REQUEST_METHOD']??'GET')==='GET'&&PHP_SAPI!=='cli')$GLOBALS['tc_collect']=true;

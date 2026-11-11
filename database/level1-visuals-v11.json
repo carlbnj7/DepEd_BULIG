@@ -1,0 +1,2363 @@
+{
+  "version": 11,
+  "activities": {
+    "31": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-red-apple.webp",
+          "alt": "A red apple"
+        }
+      ],
+      "reason": "Provide the red apple named in the question.",
+      "lesson_id": 4,
+      "prompt_sha256": "51d5b3cd9e713fb3501c73cb0755f84548710a3e34bc258ab52fcdc69294174d",
+      "baseline_images": []
+    },
+    "32": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-blue-box.webp",
+          "alt": "A large blue box beside a much smaller brown box"
+        }
+      ],
+      "reason": "Provide an unambiguous big box.",
+      "lesson_id": 4,
+      "prompt_sha256": "26574447b7e0dfee4149a4d2907b7f3bd5818b3ce33b1184269455a80df054a4",
+      "baseline_images": []
+    },
+    "33": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-toy-set.webp",
+          "alt": "A toy car, teddy bear, doll and round red ball"
+        }
+      ],
+      "reason": "Provide the round ball named in the question.",
+      "lesson_id": 4,
+      "prompt_sha256": "76502bafbfddc91c4308a4fa99cf00e1c08b5cba22ed59afa6dee011391b4cf2",
+      "baseline_images": []
+    },
+    "34": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-295.webp",
+          "alt": "A tall green tree"
+        }
+      ],
+      "reason": "Provide the tall tree named in the question.",
+      "lesson_id": 4,
+      "prompt_sha256": "d5b2bfa9d185246614283b0bcd35e6bc2e7d4a4cf020f897d483598f93dd78c4",
+      "baseline_images": []
+    },
+    "35": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-short-pencil.webp",
+          "alt": "A short yellow pencil beside a long wooden pencil"
+        }
+      ],
+      "reason": "Provide a clear length comparison.",
+      "lesson_id": 4,
+      "prompt_sha256": "fd76f86668f48495cb7287a2c2818130f823a026e9b46944a2883416c41360ea",
+      "baseline_images": []
+    },
+    "36": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-toy-set.webp",
+          "alt": "A brown teddy bear with a toy car, doll and ball"
+        }
+      ],
+      "reason": "Provide a visible teddy bear to describe.",
+      "lesson_id": 4,
+      "prompt_sha256": "7e0afd69f8dbc6d6401e0179a007555d4dff14a0b7a67e275f66c97badab0dfd",
+      "baseline_images": []
+    },
+    "37": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-square-book.webp",
+          "alt": "A thick green book with a square cover"
+        }
+      ],
+      "reason": "Provide the square book named in the question.",
+      "lesson_id": 4,
+      "prompt_sha256": "6a7d446cee108bfd2671bb49874794a841a55d9a3994f213cb7446ef583f1832",
+      "baseline_images": []
+    },
+    "38": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-toy-set.webp",
+          "alt": "A small blue toy car beside a teddy bear, doll and ball"
+        }
+      ],
+      "reason": "Provide the small blue car named in the question.",
+      "lesson_id": 4,
+      "prompt_sha256": "cfd813443af7c7b46e099412714c922af21c921c0815fd52d256755a7b3d1472",
+      "baseline_images": []
+    },
+    "39": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-measuring-tape.webp",
+          "alt": "A long yellow measuring tape stretched out from its green case"
+        }
+      ],
+      "reason": "Provide the long measuring tape named in the question.",
+      "lesson_id": 4,
+      "prompt_sha256": "0e7d350ae96a25f2c8ffde24bb5b2227df4fba03d214c9380c4809ed1a7b587c",
+      "baseline_images": []
+    },
+    "45": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson05/v11-ice-cream.webp",
+          "alt": "An ice cream cone with vanilla and strawberry scoops"
+        }
+      ],
+      "reason": "Replace unrelated picnic picture with ice cream.",
+      "lesson_id": 5,
+      "prompt_sha256": "93e1eb4d304e2668d5f5b6f3aa444d6599a5642a42a398531560ae39ec7b9be4",
+      "baseline_images": [
+        "assets/images/level1/lesson05/image-235.jpeg"
+      ]
+    },
+    "48": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson05/v11-rainbow-lake.webp",
+          "alt": "A rainbow above a blue lake"
+        }
+      ],
+      "reason": "Supply the missing rainbow scene.",
+      "lesson_id": 5,
+      "prompt_sha256": "ded1f667c8f7d23c53b2817622599652c155aa711dc460b0eb227b99475d66dd",
+      "baseline_images": []
+    },
+    "60": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-rainbow-lake.webp",
+          "alt": "A rainbow above a blue lake"
+        }
+      ],
+      "reason": "Supply the missing rainbow scene.",
+      "lesson_id": 6,
+      "prompt_sha256": "62ab73e473fccb14fa4998b29f08091dd8dc81ff3a6a12734bcaef9499499754",
+      "baseline_images": []
+    },
+    "50": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson05/v11-forest.webp",
+          "alt": "A green forest with a path, stream and tall trees"
+        }
+      ],
+      "reason": "Replace festival scene with a forest.",
+      "lesson_id": 5,
+      "prompt_sha256": "d36d44317913a7db82ea37edb706235502eddcea85cfe6413252b85ce3fe7286",
+      "baseline_images": [
+        "assets/images/level1/lesson05/image-204.jpeg"
+      ]
+    },
+    "54": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-bird-flower.webp",
+          "alt": "A five-petalled yellow flower beside a red bird"
+        }
+      ],
+      "reason": "Use a clear flower with countable petals.",
+      "lesson_id": 6,
+      "prompt_sha256": "f82302a909583521c2ffeb9f1b7b357b1a4f0675ca2930cb329c86c40e09b051",
+      "baseline_images": [
+        "assets/images/level1/lesson06/image-193.jpeg"
+      ]
+    },
+    "55": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-toy-set.webp",
+          "alt": "A blue toy car, teddy bear, doll and ball"
+        }
+      ],
+      "reason": "Replace ambiguous van-and-picnic illustration with a clear car.",
+      "lesson_id": 6,
+      "prompt_sha256": "d53bfc165b4ebd7ef14636929b6e6a5da3396c23f3c8e4d139b9b031fce622cb",
+      "baseline_images": [
+        "assets/images/level1/lesson06/image-432.jpeg"
+      ]
+    },
+    "57": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-apple-tree.webp",
+          "alt": "A green apple tree with six red apples"
+        }
+      ],
+      "reason": "Supply the missing apple tree.",
+      "lesson_id": 6,
+      "prompt_sha256": "2e7edab8dcc8d8735fabfcf2921bfad5b98d5d3af9d96e8d734917e00522f23d",
+      "baseline_images": []
+    },
+    "58": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-boy-ball.webp",
+          "alt": "A boy in a green shirt and blue shorts kicking a red ball"
+        }
+      ],
+      "reason": "Supply the missing boy-and-ball picture.",
+      "lesson_id": 6,
+      "prompt_sha256": "56f5f7a90f5df6dbdc39b33fc6023a5afd93680a00d07da6b8233636a1fadeb0",
+      "baseline_images": []
+    },
+    "59": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-book-table.webp",
+          "alt": "A blue book on top of a rectangular brown table"
+        }
+      ],
+      "reason": "Supply the missing book-on-table scene.",
+      "lesson_id": 6,
+      "prompt_sha256": "a14060de1d4105a3e54c513427a153cc0d829d6f968ecedf00208b30ccce76ec",
+      "baseline_images": []
+    },
+    "109": {
+      "images": [],
+      "reason": "Personal name and age prompts do not use an unrelated family photograph.",
+      "lesson_id": 1,
+      "prompt_sha256": "dbf17c3a4c8d025196dd9ee5e1a2428c719065d4ed5fedababc8e6053363ddf7",
+      "baseline_images": [
+        "assets/images/level1/lesson01/image-97.jpeg"
+      ]
+    },
+    "110": {
+      "images": [],
+      "reason": "Personal name and age prompts do not use an unrelated family photograph.",
+      "lesson_id": 1,
+      "prompt_sha256": "ed562ae6057d827b31432813de4214f1eb8be9783353785b8460c1bb8a0a3296",
+      "baseline_images": [
+        "assets/images/level1/lesson01/image-97.jpeg"
+      ]
+    },
+    "115": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson02/v11-105.webp",
+          "alt": "A child walking towards a chair"
+        }
+      ],
+      "reason": "Match going to the chair.",
+      "lesson_id": 2,
+      "prompt_sha256": "77d189328cb75d0f9b3c42da421bcc41122f891298639109c4317f0b97fc45c0",
+      "baseline_images": [
+        "assets/images/level1/lesson02/image-104.jpeg",
+        "assets/images/level1/lesson02/image-105.jpeg",
+        "assets/images/level1/lesson02/image-106.jpeg",
+        "assets/images/level1/lesson02/image-108.jpeg",
+        "assets/images/level1/lesson02/image-109.jpeg",
+        "assets/images/level1/lesson02/image-107.jpeg"
+      ]
+    },
+    "116": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson02/v11-106.webp",
+          "alt": "A child at the door"
+        }
+      ],
+      "reason": "Match the door direction.",
+      "lesson_id": 2,
+      "prompt_sha256": "22e7ea14cc7850be267093ca1fae2d0da034914bf2d0cf1a1de9ce7df372c359",
+      "baseline_images": [
+        "assets/images/level1/lesson02/image-104.jpeg",
+        "assets/images/level1/lesson02/image-105.jpeg",
+        "assets/images/level1/lesson02/image-106.jpeg",
+        "assets/images/level1/lesson02/image-108.jpeg",
+        "assets/images/level1/lesson02/image-109.jpeg",
+        "assets/images/level1/lesson02/image-107.jpeg"
+      ]
+    },
+    "118": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson02/v11-106.webp",
+          "alt": "A child at the door"
+        }
+      ],
+      "reason": "Match the door direction.",
+      "lesson_id": 2,
+      "prompt_sha256": "0ba0e5ffb1f0a8bceebae19bb787df722a38390b246925fadb606c64289fbbf6",
+      "baseline_images": [
+        "assets/images/level1/lesson02/image-104.jpeg",
+        "assets/images/level1/lesson02/image-105.jpeg",
+        "assets/images/level1/lesson02/image-106.jpeg",
+        "assets/images/level1/lesson02/image-108.jpeg",
+        "assets/images/level1/lesson02/image-109.jpeg",
+        "assets/images/level1/lesson02/image-107.jpeg"
+      ]
+    },
+    "123": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson02/v11-106.webp",
+          "alt": "A child at the door"
+        }
+      ],
+      "reason": "Match the door direction.",
+      "lesson_id": 2,
+      "prompt_sha256": "702faa3dbd26dedc129e7eb1304e71483423bf5c95b7e1941295e6fadd4f9784",
+      "baseline_images": []
+    },
+    "117": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson02/v11-104.webp",
+          "alt": "A child picking up a book"
+        },
+        {
+          "src": "assets/images/level1/lesson02/v11-109.webp",
+          "alt": "A child holding the book out"
+        }
+      ],
+      "reason": "Show picking up then giving the book in order.",
+      "lesson_id": 2,
+      "prompt_sha256": "cfd8da3c9b5e2eeae32af94865f9ea83a2542a8af422bb26686c03c9016bc75b",
+      "baseline_images": [
+        "assets/images/level1/lesson02/image-104.jpeg",
+        "assets/images/level1/lesson02/image-105.jpeg",
+        "assets/images/level1/lesson02/image-106.jpeg",
+        "assets/images/level1/lesson02/image-108.jpeg",
+        "assets/images/level1/lesson02/image-109.jpeg",
+        "assets/images/level1/lesson02/image-107.jpeg"
+      ]
+    },
+    "125": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson02/v11-104.webp",
+          "alt": "A child picking up a book"
+        },
+        {
+          "src": "assets/images/level1/lesson02/v11-109.webp",
+          "alt": "A child holding the book out"
+        }
+      ],
+      "reason": "Show picking up then giving the book in order.",
+      "lesson_id": 2,
+      "prompt_sha256": "fdcb7cac2d7fe57e99a40e0e007149ebfc37e26d91f4c95562caae0b39c83c5c",
+      "baseline_images": []
+    },
+    "119": {
+      "images": [],
+      "reason": "This is an in-person direction; remove unrelated chair/book images.",
+      "lesson_id": 2,
+      "prompt_sha256": "1aa1cf75736b8ee79022b1a23a8b268c4748a42f83a6cbe33989a6b67375ca6f",
+      "baseline_images": [
+        "assets/images/level1/lesson02/image-104.jpeg",
+        "assets/images/level1/lesson02/image-105.jpeg",
+        "assets/images/level1/lesson02/image-106.jpeg",
+        "assets/images/level1/lesson02/image-108.jpeg",
+        "assets/images/level1/lesson02/image-109.jpeg",
+        "assets/images/level1/lesson02/image-107.jpeg"
+      ]
+    },
+    "120": {
+      "images": [],
+      "reason": "This is an in-person direction; remove unrelated chair/book images.",
+      "lesson_id": 2,
+      "prompt_sha256": "a1163773ff28e5d6fee49f6f6e729fd1374e416fcd8a6c1c61299e195e1afa22",
+      "baseline_images": [
+        "assets/images/level1/lesson02/image-104.jpeg",
+        "assets/images/level1/lesson02/image-105.jpeg",
+        "assets/images/level1/lesson02/image-106.jpeg",
+        "assets/images/level1/lesson02/image-108.jpeg",
+        "assets/images/level1/lesson02/image-109.jpeg",
+        "assets/images/level1/lesson02/image-107.jpeg"
+      ]
+    },
+    "121": {
+      "images": [],
+      "reason": "This is an in-person direction; remove unrelated chair/book images.",
+      "lesson_id": 2,
+      "prompt_sha256": "3b379cb7e696bb908487218b109fb0ef468e99495e4b4753b6cfe101e0f6eaaa",
+      "baseline_images": [
+        "assets/images/level1/lesson02/image-104.jpeg",
+        "assets/images/level1/lesson02/image-105.jpeg",
+        "assets/images/level1/lesson02/image-106.jpeg",
+        "assets/images/level1/lesson02/image-108.jpeg",
+        "assets/images/level1/lesson02/image-109.jpeg",
+        "assets/images/level1/lesson02/image-107.jpeg"
+      ]
+    },
+    "122": {
+      "images": [],
+      "reason": "This is an in-person direction; remove unrelated chair/book images.",
+      "lesson_id": 2,
+      "prompt_sha256": "3924642e49bbd7b6fddb8242ad77d27d48d28a393263e8ea63f34da6da85cd49",
+      "baseline_images": [
+        "assets/images/level1/lesson02/image-104.jpeg",
+        "assets/images/level1/lesson02/image-105.jpeg",
+        "assets/images/level1/lesson02/image-106.jpeg",
+        "assets/images/level1/lesson02/image-108.jpeg",
+        "assets/images/level1/lesson02/image-109.jpeg",
+        "assets/images/level1/lesson02/image-107.jpeg"
+      ]
+    },
+    "124": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson02/v11-105.webp",
+          "alt": "A child going to a chair"
+        },
+        {
+          "src": "assets/images/level1/lesson02/v11-108.webp",
+          "alt": "A child sitting on the chair"
+        }
+      ],
+      "reason": "Show going to the chair then sitting.",
+      "lesson_id": 2,
+      "prompt_sha256": "24c25f9bed1571d5fcaa14839916e2a9d8ce880411c1e369d78e620cb1cbeb42",
+      "baseline_images": []
+    },
+    "126": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson02/v11-108.webp",
+          "alt": "A child sitting quietly on a chair"
+        }
+      ],
+      "reason": "Match sit down.",
+      "lesson_id": 2,
+      "prompt_sha256": "618e3b718ca7be053b92d3fadd1a301ec387426818783a91d3a4d09b2c9dabc4",
+      "baseline_images": []
+    },
+    "130": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson03/v11-102.webp",
+          "alt": "Toy cars and other toys scattered in a room"
+        }
+      ],
+      "reason": "Use the messy room containing cars, without an unrelated tidying scene.",
+      "lesson_id": 3,
+      "prompt_sha256": "40d8288a87130edd7bc54afa482c0d094ed7142cd6bf4eed4500a05d0b5baaf2",
+      "baseline_images": [
+        "assets/images/level1/lesson03/image-102.jpeg",
+        "assets/images/level1/lesson03/image-103.jpeg"
+      ]
+    },
+    "134": {
+      "images": [],
+      "reason": "Spoken role-play scenario: remove unrelated photographs that do not depict the dolls-on-bed or litter scenario.",
+      "lesson_id": 3,
+      "prompt_sha256": "3ee0435df6a7f06b81c075180e162a19f59c8fbd50d2cabf6addf1cbfd9e5196",
+      "baseline_images": [
+        "assets/images/level1/lesson03/image-102.jpeg",
+        "assets/images/level1/lesson03/image-103.jpeg"
+      ]
+    },
+    "135": {
+      "images": [],
+      "reason": "Spoken role-play scenario: remove unrelated photographs that do not depict the dolls-on-bed or litter scenario.",
+      "lesson_id": 3,
+      "prompt_sha256": "3ff85579256bbfb98c19fcfc9984737a8c38846e349712c4f1b46f3ee40bbdfe",
+      "baseline_images": [
+        "assets/images/level1/lesson03/image-102.jpeg",
+        "assets/images/level1/lesson03/image-103.jpeg"
+      ]
+    },
+    "138": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-116.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-119.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-120.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-121.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-122.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-123.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-124.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-128.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-131.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-125.webp",
+          "alt": "Original vocabulary or picture card from module page 18"
+        }
+      ],
+      "reason": "Display the individual source cards instead of the entire worksheet.",
+      "lesson_id": 4,
+      "prompt_sha256": "fe4e92fd8684762f873bc1b95cc073a114834d491dd741d12a31c641cdc106e0",
+      "baseline_images": [
+        "assets/images/level1/lesson04/page-018.jpg"
+      ]
+    },
+    "139": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-145.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-144.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-135.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-136.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-134.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-143.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-137.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-138.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-141.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-142.webp",
+          "alt": "Original vocabulary or picture card from module page 19"
+        }
+      ],
+      "reason": "Display the individual source cards instead of the entire worksheet.",
+      "lesson_id": 4,
+      "prompt_sha256": "fe4e92fd8684762f873bc1b95cc073a114834d491dd741d12a31c641cdc106e0",
+      "baseline_images": [
+        "assets/images/level1/lesson04/page-019.jpg"
+      ]
+    },
+    "140": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-157.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-156.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-153.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-155.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-154.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-150.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-151.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-152.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-149.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-148.webp",
+          "alt": "Original vocabulary or picture card from module page 20"
+        }
+      ],
+      "reason": "Display the individual source cards instead of the entire worksheet.",
+      "lesson_id": 4,
+      "prompt_sha256": "fe4e92fd8684762f873bc1b95cc073a114834d491dd741d12a31c641cdc106e0",
+      "baseline_images": [
+        "assets/images/level1/lesson04/page-020.jpg"
+      ]
+    },
+    "141": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-163.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-165.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-164.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-168.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-169.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-166.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-160.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-167.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-170.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-161.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-162.webp",
+          "alt": "Original vocabulary or picture card from module page 21"
+        }
+      ],
+      "reason": "Display the individual source cards instead of the entire worksheet.",
+      "lesson_id": 4,
+      "prompt_sha256": "fe4e92fd8684762f873bc1b95cc073a114834d491dd741d12a31c641cdc106e0",
+      "baseline_images": [
+        "assets/images/level1/lesson04/page-021.jpg"
+      ]
+    },
+    "142": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-179.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-174.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-175.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-176.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-180.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-181.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-173.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-182.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-177.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        },
+        {
+          "src": "assets/images/level1/lesson04/v11-178.webp",
+          "alt": "Original vocabulary or picture card from module page 22"
+        }
+      ],
+      "reason": "Display the individual source cards instead of the entire worksheet.",
+      "lesson_id": 4,
+      "prompt_sha256": "fe4e92fd8684762f873bc1b95cc073a114834d491dd741d12a31c641cdc106e0",
+      "baseline_images": [
+        "assets/images/level1/lesson04/page-022.jpg"
+      ]
+    },
+    "154": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson05/v11-186.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-187.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-188.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-189.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-190.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-191.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-192.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-195.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-196.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-193.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-194.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-185.webp",
+          "alt": "Original vocabulary or picture card from module page 23"
+        }
+      ],
+      "reason": "Display the individual source cards instead of the entire worksheet.",
+      "lesson_id": 5,
+      "prompt_sha256": "7f4ab0c272e2f27039bc454cb188d3dabb2e9ec7adeea55d78320044eb022387",
+      "baseline_images": [
+        "assets/images/level1/lesson05/page-023.jpg"
+      ]
+    },
+    "155": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson05/v11-199.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-200.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-201.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-205.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-206.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-207.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-208.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-209.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-210.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-204.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-202.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-203.webp",
+          "alt": "Original vocabulary or picture card from module page 24"
+        }
+      ],
+      "reason": "Display the individual source cards instead of the entire worksheet.",
+      "lesson_id": 5,
+      "prompt_sha256": "7f4ab0c272e2f27039bc454cb188d3dabb2e9ec7adeea55d78320044eb022387",
+      "baseline_images": [
+        "assets/images/level1/lesson05/page-024.jpg"
+      ]
+    },
+    "156": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson05/v11-214.webp",
+          "alt": "Original vocabulary or picture card from module page 25"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-213.webp",
+          "alt": "Original vocabulary or picture card from module page 25"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-216.webp",
+          "alt": "Original vocabulary or picture card from module page 25"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-217.webp",
+          "alt": "Original vocabulary or picture card from module page 25"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-218.webp",
+          "alt": "Original vocabulary or picture card from module page 25"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-219.webp",
+          "alt": "Original vocabulary or picture card from module page 25"
+        },
+        {
+          "src": "assets/images/level1/lesson05/v11-215.webp",
+          "alt": "Original vocabulary or picture card from module page 25"
+        }
+      ],
+      "reason": "Display the individual source cards instead of the entire worksheet.",
+      "lesson_id": 5,
+      "prompt_sha256": "7f4ab0c272e2f27039bc454cb188d3dabb2e9ec7adeea55d78320044eb022387",
+      "baseline_images": [
+        "assets/images/level1/lesson05/page-025.jpg"
+      ]
+    },
+    "143": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-red-apple.webp",
+          "alt": "A red apple to describe"
+        }
+      ],
+      "reason": "Provide the object referenced by this.",
+      "lesson_id": 4,
+      "prompt_sha256": "98f778ce795b446d2cb903e4af1ec300c12b4c6d280a802405fa3804cf19eeb6",
+      "baseline_images": []
+    },
+    "145": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-blue-box.webp",
+          "alt": "A blue box with a square front"
+        }
+      ],
+      "reason": "Match both blue and square in the sentence.",
+      "lesson_id": 4,
+      "prompt_sha256": "35745189bdaccbe6f1dbab7a7bf44420ffb6fbaf83babc7b6073ff466e7b779c",
+      "baseline_images": []
+    },
+    "146": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson04/v11-298.webp",
+          "alt": "A green park with paths and flower beds"
+        }
+      ],
+      "reason": "Match the park example.",
+      "lesson_id": 4,
+      "prompt_sha256": "195a38868bff65cf59a7822cff360d3e1197feba99451496a2c3f4e7e8f226af",
+      "baseline_images": []
+    },
+    "159": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-bird-flower.webp",
+          "alt": "A small red bird with a yellow beak on a green branch, next to a yellow flower with five petals against a light blue sky"
+        }
+      ],
+      "reason": "Match every stated drawing detail; shown after the listen-and-draw task.",
+      "lesson_id": 6,
+      "prompt_sha256": "318716f58d425e27676a044ee80af6d7a72af693fcf74038833dc9daee38808b",
+      "baseline_images": [
+        "assets/images/level1/lesson06/image-215.jpeg"
+      ]
+    },
+    "160": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-bird-flower.webp",
+          "alt": "A small red bird with a yellow beak on a green branch, next to a yellow flower with five petals against a light blue sky"
+        }
+      ],
+      "reason": "Match every stated drawing detail; shown after the listen-and-draw task.",
+      "lesson_id": 6,
+      "prompt_sha256": "9deb43d07b73bbaedadb2b03bac13f0100574edc18e29c6eb85fb2d3325e046e",
+      "baseline_images": [
+        "assets/images/level1/lesson06/image-215.jpeg"
+      ]
+    },
+    "161": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson06/v11-bird-flower.webp",
+          "alt": "A small red bird with a yellow beak on a green branch, next to a yellow flower with five petals against a light blue sky"
+        }
+      ],
+      "reason": "Match every stated drawing detail; shown after the listen-and-draw task.",
+      "lesson_id": 6,
+      "prompt_sha256": "8c5fc82e398d74062bd5156662e3e311579df8ea996de5cd11993542d64aaa5f",
+      "baseline_images": [
+        "assets/images/level1/lesson06/image-215.jpeg"
+      ]
+    },
+    "165": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson07/v11-413.webp",
+          "alt": "Story sequence picture 1"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-412.webp",
+          "alt": "Story sequence picture 2"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-411.webp",
+          "alt": "Story sequence picture 3"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-417.webp",
+          "alt": "Story sequence picture 4"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-418.webp",
+          "alt": "Story sequence picture 5"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-415.webp",
+          "alt": "Story sequence picture 6"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-414.webp",
+          "alt": "Story sequence picture 7"
+        }
+      ],
+      "reason": "Preserve the source reading order of both story groups.",
+      "lesson_id": 7,
+      "prompt_sha256": "835dfafb842dd30cfd1240efc1c0600b0e27ce4b7eb347ef08cb2f149ba7b03a",
+      "baseline_images": [
+        "assets/images/level1/lesson07/page-068.jpg"
+      ]
+    },
+    "166": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson07/v11-421.webp",
+          "alt": "Story sequence picture 1"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-423.webp",
+          "alt": "Story sequence picture 2"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-422.webp",
+          "alt": "Story sequence picture 3"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-428.webp",
+          "alt": "Story sequence picture 4"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-429.webp",
+          "alt": "Story sequence picture 5"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-424.webp",
+          "alt": "Story sequence picture 6"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-425.webp",
+          "alt": "Story sequence picture 7"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-426.webp",
+          "alt": "Story sequence picture 8"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-427.webp",
+          "alt": "Story sequence picture 9"
+        }
+      ],
+      "reason": "Use only the original ordered story illustrations, not the printed directions.",
+      "lesson_id": 7,
+      "prompt_sha256": "835dfafb842dd30cfd1240efc1c0600b0e27ce4b7eb347ef08cb2f149ba7b03a",
+      "baseline_images": [
+        "assets/images/level1/lesson07/page-069.jpg"
+      ]
+    },
+    "167": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson07/v11-432.webp",
+          "alt": "Story sequence picture 1"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-433.webp",
+          "alt": "Story sequence picture 2"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-434.webp",
+          "alt": "Story sequence picture 3"
+        },
+        {
+          "src": "assets/images/level1/lesson07/v11-435.webp",
+          "alt": "Story sequence picture 4"
+        }
+      ],
+      "reason": "Use only the original ordered story illustrations, not the printed directions.",
+      "lesson_id": 7,
+      "prompt_sha256": "835dfafb842dd30cfd1240efc1c0600b0e27ce4b7eb347ef08cb2f149ba7b03a",
+      "baseline_images": [
+        "assets/images/level1/lesson07/page-070.jpg"
+      ]
+    },
+    "169": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "73495679a517fbf48efc7ed0bc2abf7e2f47df120316e2266ed972fcb16b251f",
+      "baseline_images": [
+        "assets/images/level1/lesson08/image-235.jpeg"
+      ]
+    },
+    "170": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "ce196fae6e612a2ffc99f1c149f5d934de54479b174218032c33f75926affb53",
+      "baseline_images": [
+        "assets/images/level1/lesson08/image-235.jpeg",
+        "assets/images/level1/lesson08/image-236.jpeg"
+      ]
+    },
+    "171": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "33dc3d80d09b2f3d1c4df1850f1b3cab886c4e7d2d16b241ee38ef5cf44d23bc",
+      "baseline_images": [
+        "assets/images/level1/lesson08/image-235.jpeg",
+        "assets/images/level1/lesson08/image-236.jpeg"
+      ]
+    },
+    "172": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "4b9de7e96fc73be5ea01eef46a3962d895c1b544982d56908b2030ad810b10eb",
+      "baseline_images": [
+        "assets/images/level1/lesson08/image-235.jpeg",
+        "assets/images/level1/lesson08/image-236.jpeg"
+      ]
+    },
+    "173": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "ad9f000be694d1d2c95f603ac3c4a1da1761c98d6a53d1c3898138125a9279ad",
+      "baseline_images": [
+        "assets/images/level1/lesson08/image-235.jpeg",
+        "assets/images/level1/lesson08/image-236.jpeg"
+      ]
+    },
+    "174": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "b94c939c70849567fba5230e3671064a2a0133b75ef0af8928fda6a4aa2aa17c",
+      "baseline_images": [
+        "assets/images/level1/lesson08/image-235.jpeg",
+        "assets/images/level1/lesson08/image-236.jpeg"
+      ]
+    },
+    "175": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "96e08deb704f0bea134dde34f515954fd56a9b4588aac6df93fe0c99254ec657",
+      "baseline_images": [
+        "assets/images/level1/lesson08/image-235.jpeg",
+        "assets/images/level1/lesson08/image-236.jpeg"
+      ]
+    },
+    "176": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "daf100f14f5e1c230657f37bb81766a3e169663fabcf70ec6a208c3a8a00c1ca",
+      "baseline_images": [
+        "assets/images/level1/lesson08/image-235.jpeg",
+        "assets/images/level1/lesson08/image-236.jpeg"
+      ]
+    },
+    "177": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson08/v11-236.webp",
+          "alt": "Children playing on a slide and swings in a sunny green park"
+        }
+      ],
+      "reason": "Keep the same playground scene for all Picture Talk questions.",
+      "lesson_id": 8,
+      "prompt_sha256": "4fbeb613a47fd11b0292ff60447108787422c45b94f718a9d0d8baaf18ea0f2b",
+      "baseline_images": []
+    },
+    "186": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson10/v11-toy-set.webp",
+          "alt": "A toy car, teddy bear, doll and ball"
+        }
+      ],
+      "reason": "Replace weather scenes with the toys discussed in the sentences.",
+      "lesson_id": 10,
+      "prompt_sha256": "66903183e62bbc8c4843a71a3bebb188d2ad143e69c18fa315802a087560c98a",
+      "baseline_images": [
+        "assets/images/level1/lesson10/image-285.jpeg",
+        "assets/images/level1/lesson10/image-286.jpeg"
+      ]
+    },
+    "187": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson10/v11-toy-set.webp",
+          "alt": "A toy car, teddy bear, doll and ball"
+        }
+      ],
+      "reason": "Replace weather scenes with the toys discussed in the sentences.",
+      "lesson_id": 10,
+      "prompt_sha256": "4eb6526a9a7244053b0b50862ca8fd82c9c67c1b6165ee8e1087d927a36684ff",
+      "baseline_images": [
+        "assets/images/level1/lesson10/image-285.jpeg",
+        "assets/images/level1/lesson10/image-286.jpeg"
+      ]
+    },
+    "188": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson10/v11-toy-set.webp",
+          "alt": "A toy car, teddy bear, doll and ball"
+        }
+      ],
+      "reason": "Replace weather scenes with the toys discussed in the sentences.",
+      "lesson_id": 10,
+      "prompt_sha256": "dc4e18e4a74c606d6abdd3701cb6f6165bf9e939a6acc4185c69f20c22897f2c",
+      "baseline_images": [
+        "assets/images/level1/lesson10/image-285.jpeg",
+        "assets/images/level1/lesson10/image-286.jpeg"
+      ]
+    },
+    "189": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson10/v11-toy-set.webp",
+          "alt": "A toy car, teddy bear, doll and ball"
+        }
+      ],
+      "reason": "Replace weather scenes with the toys discussed in the sentences.",
+      "lesson_id": 10,
+      "prompt_sha256": "f4d1230e8d25e507298ecbae9468279814cd2a4ad301eff6281655b98a7edbd7",
+      "baseline_images": [
+        "assets/images/level1/lesson10/image-285.jpeg",
+        "assets/images/level1/lesson10/image-286.jpeg"
+      ]
+    },
+    "192": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson11/v11-296.webp",
+          "alt": "A cat sitting beside a window"
+        }
+      ],
+      "reason": "Match the cat word-association prompt instead of showing nine unrelated objects.",
+      "lesson_id": 11,
+      "prompt_sha256": "ce4d17f8665973fc7cc74422944c4c1f8d316b3ab3efecb472cc089f1b46a02c",
+      "baseline_images": [
+        "assets/images/level1/lesson11/image-292.jpeg",
+        "assets/images/level1/lesson11/image-293.jpeg",
+        "assets/images/level1/lesson11/image-294.jpeg",
+        "assets/images/level1/lesson11/image-295.jpeg",
+        "assets/images/level1/lesson11/image-296.jpeg",
+        "assets/images/level1/lesson11/image-297.jpeg",
+        "assets/images/level1/lesson11/image-298.jpeg",
+        "assets/images/level1/lesson11/image-299.jpeg",
+        "assets/images/level1/lesson11/image-300.jpeg"
+      ]
+    },
+    "193": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson11/v11-296.webp",
+          "alt": "A cat sitting beside a window"
+        }
+      ],
+      "reason": "Match the cat word-association prompt instead of showing nine unrelated objects.",
+      "lesson_id": 11,
+      "prompt_sha256": "c242d625640ab2fd533f381b13e4c1fc4c012a11007a071b6273a6411b562285",
+      "baseline_images": []
+    },
+    "196": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson11/v11-296.webp",
+          "alt": "A cat sitting beside a window"
+        }
+      ],
+      "reason": "Match the cat word-association prompt instead of showing nine unrelated objects.",
+      "lesson_id": 11,
+      "prompt_sha256": "77e9bd3e7e4eeb419f0c16453124281030ebe71f81cdee1f4b966d87d77f73f3",
+      "baseline_images": []
+    },
+    "201": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson12/v11-six-snails.webp",
+          "alt": "Exactly six snails sliding along a green leaf"
+        }
+      ],
+      "reason": "Replace seven-snail source picture to match Six snails.",
+      "lesson_id": 12,
+      "prompt_sha256": "a8cf868b2df8156c2951ead4426f1d956a04542852fbbb1d4b15f53ab8dc4226",
+      "baseline_images": [
+        "assets/images/level1/lesson12/image-290.jpeg"
+      ]
+    },
+    "204": {
+      "images": [
+        {
+          "src": "assets/images/level1/lesson12/v11-289.webp",
+          "alt": "Betty holding a bowl of butter"
+        },
+        {
+          "src": "assets/images/level1/lesson12/v11-six-snails.webp",
+          "alt": "Six snails on a leaf"
+        },
+        {
+          "src": "assets/images/level1/lesson12/v11-291.webp",
+          "alt": "Peter holding a red pepper"
+        }
+      ],
+      "reason": "Offer the three matching tongue-twister illustrations.",
+      "lesson_id": 12,
+      "prompt_sha256": "92b62d8f5bfe872e679200a3c5012b519b3bb1f27fd4ded5d9d325c7d27fd7cf",
+      "baseline_images": [
+        "assets/images/level1/lesson12/image-289.jpeg",
+        "assets/images/level1/lesson12/image-290.jpeg",
+        "assets/images/level1/lesson12/image-291.jpeg"
+      ]
+    }
+  },
+  "provenance": {
+    "assets/images/level1/lesson04/v11-red-apple.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "One landscape 4:3 children's educational illustration, polished gentle storybook painting. One beautiful ripe RED apple with a small green leaf and brown stem, centered on a quiet cream background, subtle ground shadow, no other objects. Clear forms, no text, no labels, no logo or watermark.",
+      "alt": "A red apple"
+    },
+    "assets/images/level1/lesson04/v11-blue-box.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 polished children's reading illustration. One large BLUE cardboard box, a cube with visibly square front and side faces, standing next to a much smaller plain brown box for size comparison. Blue box dominant and clearly BIG. Pale cream background and subtle ground shadow. No labels. Friendly storybook painted style, clean edges, clear simple composition, gentle colors, no text, no watermark or border.",
+      "alt": "A large blue box beside a much smaller brown box"
+    },
+    "assets/images/level1/lesson04/v11-toy-set.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 polished children's reading illustration. A neat set of exactly four children's toys on a cream floor: a small BLUE toy car, a soft BROWN teddy bear, a doll with a green dress, and a RED round ball. All fully separated and visible. No real children or animals. Soft mint background. Friendly storybook painted style, clean edges, clear simple composition, gentle colors, no text, no watermark or border.",
+      "alt": "A toy car, teddy bear, doll and round red ball"
+    },
+    "assets/images/level1/lesson04/v11-295.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 295,
+      "pdf_pages": [
+        33
+      ],
+      "alt": "A tall green tree"
+    },
+    "assets/images/level1/lesson04/v11-short-pencil.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 polished children's reading illustration. One very SHORT yellow wooden pencil with a graphite point and a pink eraser, alongside a much longer unsharpened plain wooden pencil to show length. The short yellow pencil is the foreground subject, unmistakably short. Pale mint background. No writing or labels. Friendly storybook painted style, clean edges, clear simple composition, gentle colors, no text, no watermark or border.",
+      "alt": "A short yellow pencil beside a long wooden pencil"
+    },
+    "assets/images/level1/lesson04/v11-square-book.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 polished children's reading illustration. One thick closed GREEN hardcover book with a SQUARE cover, not rectangular, shown at a slight angle so the square cover and thick cream page block are visible. Soft simple cream background. No writing on the cover or pages. Friendly storybook painted style, clean edges, clear simple composition, gentle colors, no text, no watermark or border.",
+      "alt": "A thick green book with a square cover"
+    },
+    "assets/images/level1/lesson04/v11-measuring-tape.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "One landscape 4:3 children's educational illustration, polished gentle storybook painting. One long yellow measuring tape unrolled almost straight across a plain mint table, with its round green retractable case at one end. Show its full length clearly, use simple measurement tick marks without numbers. No other objects. Clear forms, no text, no labels, no logo or watermark.",
+      "alt": "A long yellow measuring tape stretched out from its green case"
+    },
+    "assets/images/level1/lesson05/v11-ice-cream.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Ice cream cone in child's hand on pale mint background; vanilla and strawberry scoops; no text.",
+      "alt": "An ice cream cone with vanilla and strawberry scoops"
+    },
+    "assets/images/level1/lesson05/v11-rainbow-lake.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 children's reading activity image. A beautiful clear rainbow arching ABOVE a calm blue lake, green grassy banks and soft distant trees, blue sky after rain. The rainbow and lake dominate the picture, colors easily identified. Polished warm storybook digital painting, crisp clean forms, friendly elementary school aesthetic, gentle colors, clean composition. No text, no labels, no watermark, no border. Make the named objects unmistakable.",
+      "alt": "A rainbow above a blue lake"
+    },
+    "assets/images/level1/lesson06/v11-rainbow-lake.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 children's reading activity image. A beautiful clear rainbow arching ABOVE a calm blue lake, green grassy banks and soft distant trees, blue sky after rain. The rainbow and lake dominate the picture, colors easily identified. Polished warm storybook digital painting, crisp clean forms, friendly elementary school aesthetic, gentle colors, clean composition. No text, no labels, no watermark, no border. Make the named objects unmistakable.",
+      "alt": "A rainbow above a blue lake"
+    },
+    "assets/images/level1/lesson05/v11-forest.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 children's reading activity image. A peaceful forest with tall leafy green trees, ferns, a winding walking path and dappled sunlight. No houses, no festival, no crowd. The picture must clearly depict a forest to explore. Polished warm storybook digital painting, crisp clean forms, friendly elementary school aesthetic, gentle colors, clean composition. No text, no labels, no watermark, no border. Make the named objects unmistakable.",
+      "alt": "A green forest with a path, stream and tall trees"
+    },
+    "assets/images/level1/lesson06/v11-bird-flower.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Change only the horizontal main tree branch from brown to a clearly GREEN branch, like a thick fresh green stem with soft green bark. Keep the red bird, yellow beak, exactly five yellow flower petals, blue sky, leaves, composition and style unchanged. The branch must look unmistakably green across its entire visible length. No text.",
+      "alt": "A five-petalled yellow flower beside a red bird"
+    },
+    "assets/images/level1/lesson06/v11-toy-set.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 polished children's reading illustration. A neat set of exactly four children's toys on a cream floor: a small BLUE toy car, a soft BROWN teddy bear, a doll with a green dress, and a RED round ball. All fully separated and visible. No real children or animals. Soft mint background. Friendly storybook painted style, clean edges, clear simple composition, gentle colors, no text, no watermark or border.",
+      "alt": "A blue toy car, teddy bear, doll and ball"
+    },
+    "assets/images/level1/lesson06/v11-apple-tree.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 children's reading activity image. One entire leafy green apple tree with a brown trunk and exactly SIX large clearly separated red apples hanging in its crown. All six apples visible and easy for a child to count. Simple grassy ground, pale blue sky. No other fruit or people. Polished warm storybook digital painting, crisp clean forms, friendly elementary school aesthetic, gentle colors, clean composition. No text, no labels, no watermark, no border. Make the named objects unmistakable.",
+      "alt": "A green apple tree with six red apples"
+    },
+    "assets/images/level1/lesson06/v11-boy-ball.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 children's reading activity illustration. One Filipino elementary-age boy in a green T-shirt, blue shorts and white sneakers happily kicking one bright RED ball on a grassy field. Show full boy and ball clearly, a single leg gently kicking, light blue sky. No other people or balls. His clothing and the ball's color must be easy to describe. Polished cheerful storybook digital painting, soft colors and crisp clean forms, elementary-school friendly. No text, no captions, no watermark, no border.",
+      "alt": "A boy in a green shirt and blue shorts kicking a red ball"
+    },
+    "assets/images/level1/lesson06/v11-book-table.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 children's reading activity illustration. One closed BLUE hardcover book resting flat ON TOP OF a simple BROWN RECTANGULAR wooden table. Show the whole table with four legs, book clearly visible centered on its top. Quiet warm cream and pale green room, minimal background. No writing on book, no other objects. Polished cheerful storybook digital painting, soft colors and crisp clean forms, elementary-school friendly. No text, no captions, no watermark, no border.",
+      "alt": "A blue book on top of a rectangular brown table"
+    },
+    "assets/images/level1/lesson02/v11-105.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 105,
+      "pdf_pages": [
+        17
+      ],
+      "alt": "A child walking towards a chair"
+    },
+    "assets/images/level1/lesson02/v11-106.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 106,
+      "pdf_pages": [
+        17
+      ],
+      "alt": "A child at the door"
+    },
+    "assets/images/level1/lesson02/v11-104.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 104,
+      "pdf_pages": [
+        17
+      ],
+      "alt": "A child picking up a book"
+    },
+    "assets/images/level1/lesson02/v11-109.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 109,
+      "pdf_pages": [
+        17
+      ],
+      "alt": "A child holding the book out"
+    },
+    "assets/images/level1/lesson02/v11-108.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 108,
+      "pdf_pages": [
+        17
+      ],
+      "alt": "A child sitting on the chair"
+    },
+    "assets/images/level1/lesson03/v11-102.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 102,
+      "pdf_pages": [
+        17,
+        53
+      ],
+      "alt": "Toy cars and other toys scattered in a room"
+    },
+    "assets/images/level1/lesson04/v11-116.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 116,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-119.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 119,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-120.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 120,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-121.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 121,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-122.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 122,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-123.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 123,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-124.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 124,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-128.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 128,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-131.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 131,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-125.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 125,
+      "pdf_pages": [
+        18
+      ],
+      "alt": "Original vocabulary or picture card from module page 18"
+    },
+    "assets/images/level1/lesson04/v11-145.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 145,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-144.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 144,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-135.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 135,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-136.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 136,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-134.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 134,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-143.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 143,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-137.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 137,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-138.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 138,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-141.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 141,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-142.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 142,
+      "pdf_pages": [
+        19
+      ],
+      "alt": "Original vocabulary or picture card from module page 19"
+    },
+    "assets/images/level1/lesson04/v11-157.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 157,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-156.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 156,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-153.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 153,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-155.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 155,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-154.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 154,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-150.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 150,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-151.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 151,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-152.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 152,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-149.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 149,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-148.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 148,
+      "pdf_pages": [
+        20
+      ],
+      "alt": "Original vocabulary or picture card from module page 20"
+    },
+    "assets/images/level1/lesson04/v11-163.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 163,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-165.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 165,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-164.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 164,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-168.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 168,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-169.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 169,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-166.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 166,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-160.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 160,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-167.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 167,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-170.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 170,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-161.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 161,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-162.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 162,
+      "pdf_pages": [
+        21
+      ],
+      "alt": "Original vocabulary or picture card from module page 21"
+    },
+    "assets/images/level1/lesson04/v11-179.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 179,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-174.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 174,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-175.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 175,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-176.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 176,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-180.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 180,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-181.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 181,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-173.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 173,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-182.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 182,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-177.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 177,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson04/v11-178.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 178,
+      "pdf_pages": [
+        22
+      ],
+      "alt": "Original vocabulary or picture card from module page 22"
+    },
+    "assets/images/level1/lesson05/v11-186.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 186,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-187.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 187,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-188.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 188,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-189.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 189,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-190.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 190,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-191.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 191,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-192.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 192,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-195.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 195,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-196.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 196,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-193.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 193,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-194.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 194,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-185.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 185,
+      "pdf_pages": [
+        23
+      ],
+      "alt": "Original vocabulary or picture card from module page 23"
+    },
+    "assets/images/level1/lesson05/v11-199.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 199,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-200.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 200,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-201.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 201,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-205.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 205,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-206.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 206,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-207.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 207,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-208.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 208,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-209.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 209,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-210.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 210,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-204.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 204,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-202.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 202,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-203.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 203,
+      "pdf_pages": [
+        24
+      ],
+      "alt": "Original vocabulary or picture card from module page 24"
+    },
+    "assets/images/level1/lesson05/v11-214.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 214,
+      "pdf_pages": [
+        25
+      ],
+      "alt": "Original vocabulary or picture card from module page 25"
+    },
+    "assets/images/level1/lesson05/v11-213.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 213,
+      "pdf_pages": [
+        25
+      ],
+      "alt": "Original vocabulary or picture card from module page 25"
+    },
+    "assets/images/level1/lesson05/v11-216.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 216,
+      "pdf_pages": [
+        25
+      ],
+      "alt": "Original vocabulary or picture card from module page 25"
+    },
+    "assets/images/level1/lesson05/v11-217.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 217,
+      "pdf_pages": [
+        25
+      ],
+      "alt": "Original vocabulary or picture card from module page 25"
+    },
+    "assets/images/level1/lesson05/v11-218.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 218,
+      "pdf_pages": [
+        25
+      ],
+      "alt": "Original vocabulary or picture card from module page 25"
+    },
+    "assets/images/level1/lesson05/v11-219.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 219,
+      "pdf_pages": [
+        25,
+        57
+      ],
+      "alt": "Original vocabulary or picture card from module page 25"
+    },
+    "assets/images/level1/lesson05/v11-215.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 215,
+      "pdf_pages": [
+        25
+      ],
+      "alt": "Original vocabulary or picture card from module page 25"
+    },
+    "assets/images/level1/lesson04/v11-298.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 298,
+      "pdf_pages": [
+        33
+      ],
+      "alt": "A green park with paths and flower beds"
+    },
+    "assets/images/level1/lesson07/v11-412.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 412,
+      "pdf_pages": [
+        68
+      ],
+      "alt": "Story sequence picture 1"
+    },
+    "assets/images/level1/lesson07/v11-413.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 413,
+      "pdf_pages": [
+        68
+      ],
+      "alt": "Story sequence picture 2"
+    },
+    "assets/images/level1/lesson07/v11-411.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 411,
+      "pdf_pages": [
+        68
+      ],
+      "alt": "Story sequence picture 3"
+    },
+    "assets/images/level1/lesson07/v11-417.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 417,
+      "pdf_pages": [
+        68
+      ],
+      "alt": "Story sequence picture 4"
+    },
+    "assets/images/level1/lesson07/v11-418.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 418,
+      "pdf_pages": [
+        68
+      ],
+      "alt": "Story sequence picture 5"
+    },
+    "assets/images/level1/lesson07/v11-415.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 415,
+      "pdf_pages": [
+        68
+      ],
+      "alt": "Story sequence picture 6"
+    },
+    "assets/images/level1/lesson07/v11-414.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 414,
+      "pdf_pages": [
+        68
+      ],
+      "alt": "Story sequence picture 7"
+    },
+    "assets/images/level1/lesson07/v11-421.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 421,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 1"
+    },
+    "assets/images/level1/lesson07/v11-423.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 423,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 2"
+    },
+    "assets/images/level1/lesson07/v11-422.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 422,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 3"
+    },
+    "assets/images/level1/lesson07/v11-428.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 428,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 4"
+    },
+    "assets/images/level1/lesson07/v11-429.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 429,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 5"
+    },
+    "assets/images/level1/lesson07/v11-424.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 424,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 6"
+    },
+    "assets/images/level1/lesson07/v11-425.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 425,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 7"
+    },
+    "assets/images/level1/lesson07/v11-426.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 426,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 8"
+    },
+    "assets/images/level1/lesson07/v11-427.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 427,
+      "pdf_pages": [
+        69
+      ],
+      "alt": "Story sequence picture 9"
+    },
+    "assets/images/level1/lesson07/v11-432.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 432,
+      "pdf_pages": [
+        70
+      ],
+      "alt": "Story sequence picture 1"
+    },
+    "assets/images/level1/lesson07/v11-433.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 433,
+      "pdf_pages": [
+        70
+      ],
+      "alt": "Story sequence picture 2"
+    },
+    "assets/images/level1/lesson07/v11-434.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 434,
+      "pdf_pages": [
+        70
+      ],
+      "alt": "Story sequence picture 3"
+    },
+    "assets/images/level1/lesson07/v11-435.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 435,
+      "pdf_pages": [
+        70
+      ],
+      "alt": "Story sequence picture 4"
+    },
+    "assets/images/level1/lesson08/v11-236.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 236,
+      "pdf_pages": [
+        27
+      ],
+      "alt": "Children playing on a slide and swings in a sunny green park"
+    },
+    "assets/images/level1/lesson10/v11-toy-set.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 polished children's reading illustration. A neat set of exactly four children's toys on a cream floor: a small BLUE toy car, a soft BROWN teddy bear, a doll with a green dress, and a RED round ball. All fully separated and visible. No real children or animals. Soft mint background. Friendly storybook painted style, clean edges, clear simple composition, gentle colors, no text, no watermark or border.",
+      "alt": "A toy car, teddy bear, doll and ball"
+    },
+    "assets/images/level1/lesson11/v11-296.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 296,
+      "pdf_pages": [
+        33
+      ],
+      "alt": "A cat sitting beside a window"
+    },
+    "assets/images/level1/lesson12/v11-six-snails.webp": {
+      "kind": "supplemental-illustration",
+      "method": "built-in image generation",
+      "prompt": "Use case: illustration-story. One landscape 4:3 polished children's reading illustration. Exactly SIX snails, no more and no fewer, slowly sliding in a clearly spaced single row along one green leaf. All six complete bodies and shells are distinct and countable. Gentle garden backdrop. Friendly storybook painted style, clean edges, clear simple composition, gentle colors, no text, no watermark or border.",
+      "alt": "Exactly six snails sliding along a green leaf"
+    },
+    "assets/images/level1/lesson12/v11-289.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 289,
+      "pdf_pages": [
+        33
+      ],
+      "alt": "Betty holding a bowl of butter"
+    },
+    "assets/images/level1/lesson12/v11-291.webp": {
+      "kind": "original-module-illustration",
+      "image_object": 291,
+      "pdf_pages": [
+        33
+      ],
+      "alt": "Peter holding a red pepper"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Level 7 · Grades 3-6 (journalism). The module has no answer key; answers follow the lesson text in each module.
+8:3:2202:learn:1 | 1=True 2=True 3=False 4=True 5=True 6=False 7=False 8=True 9=True 10=True
+8:3:3203:learn:1 | 1=#1 2=#2 3=#1 5=#2      # card 4 ("Encourages and stimulates worthwhile activities") fits both groups, so the teacher marks it.
+8:3:7207:learn:1 | 1=FACT 2=BLUFF 3=FACT 4=FACT 5=FACT 6=BLUFF 7=FACT 8=FACT 9=FACT 10=FACT
+8:3:10210:learn:1 | 1=b 2=c 3=b 4=a 5=a
+8:3:14214:learn:1 | 1=1d,2e,3f,4g,5c,6b,7a
+8:4:11211:learn:1 | 1=Lead 2=Byline 3=Conclusion 4=Body 5=Headline
+8:4:14214:learn:1 | 1=1d,2l,3a,4h,5p,6w,7r,8s
+8:5:2202:learn:1 | 1=Feature 2=News 3=Sports 4=Opinion 5=Sports
+8:5:3203:learn:1 | 1=1c,2d,3a,4b
+8:6:1201:learn:1 | 1=Lead 2=Byline 3=Conclusion 4=Body 5=Headline
+8:6:20220:learn:1 | 3=1d,2l,3a,4h,5p,6w,7r,8s 6=ALWAYS 7=NEVER 8=ALWAYS 9=NEVER 10=ALWAYS 11=ALWAYS 12=NEVER 13=NEVER
+# Not keyed: Grade 4 "Arranging Facts" (the module gives no order for the four facts) and Grade 5 "Do What Is Asked" (a free choice of topic).

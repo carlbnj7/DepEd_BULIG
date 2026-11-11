@@ -1,0 +1,139 @@
+<?php
+/* "Done in class": a teacher marks activities, lessons or a whole level as finished
+   for pupils who did the work together in class (for example during Class Demo). */
+const CLASS_DONE_MARK='[Done in class]';
+
+/** Published activity ids covered by a scope, limited to the pupil's grade module. */
+function class_done_activities(int $pid,string $scope,int $id):array{
+ $g=pupil_grade($pid);
+ if($scope==='activity')$sql='a.id=?';elseif($scope==='lesson')$sql='l.id=?';elseif($scope==='level')$sql='m.level_id=?';else return [];
+ return array_map('intval',array_column(rows('SELECT a.id FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE '.$sql.' AND a.published=1 AND l.published=1'.GRADE_SQL,[$id,$g]),'id'));
+}
+
+/** Marks the activities as done for one pupil. Work the pupil already finished is kept. Returns how many were newly marked. */
+function class_done_apply(int $tid,int $pid,array $aids):int{
+ if(!$aids)return 0;$n=0;$lessons=[];$rlb=function_exists('rl_info')?rl_info($pid,true)['level']:0;
+ foreach(array_unique($aids) as $aid){
+  $a=one('SELECT id,lesson_id,revision,xp_reward FROM activities WHERE id=? AND published=1',[$aid]);if(!$a)continue;$lessons[(int)$a['lesson_id']]=true;
+  $row=one('SELECT id,status FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
+  if($row&&completion_ok($row))continue;
+  if($row)q("UPDATE activity_completion SET status='approved',reviewed_by=?,reviewed_at=NOW(),feedback=COALESCE(NULLIF(feedback,''),'Done in class with your teacher.') WHERE id=?",[$tid,$row['id']]);
+  else q("INSERT INTO activity_completion(pupil_id,activity_id,response,prompt_snapshot,activity_revision,status,feedback,reviewed_by,submitted_at,reviewed_at) VALUES(?,?,?,?,?,'completed',?,?,NOW(),NOW())",[$pid,$aid,'Done in class with your teacher.',CLASS_DONE_MARK,(int)$a['revision'],'Done in class with your teacher.',$tid]);
+  if(q('INSERT IGNORE INTO xp_transactions(pupil_id,activity_id,amount) VALUES(?,?,?)',[$pid,$aid,(int)$a['xp_reward']])->rowCount())q('INSERT INTO pupil_xp(pupil_id,total) VALUES(?,?) ON DUPLICATE KEY UPDATE total=total+VALUES(total)',[$pid,(int)$a['xp_reward']]);
+  $n++;
+ }
+ foreach(array_keys($lessons) as $lid){
+  if(!val("SELECT COUNT(*) FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.published=1 AND (c.status IS NULL OR c.status NOT IN ('approved','completed'))",[$pid,$lid]))
+   q('INSERT INTO pupil_progress(pupil_id,lesson_id,completed_at) VALUES(?,?,NOW()) ON DUPLICATE KEY UPDATE completed_at=COALESCE(completed_at,NOW())',[$pid,$lid]);
+  sync_assessments($pid,$lid);
+ }
+ award_badges($pid);if($rlb&&$n)rl_after_xp($pid,$rlb);return $n;
+}
+
+/** Removes "Done in class" marks from one lesson (answers the pupil gave themselves stay). */
+function class_done_undo(int $pid,int $lid):int{
+ $marks=rows('SELECT c.id,c.activity_id FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND a.lesson_id=? AND c.prompt_snapshot=?',[$pid,$lid,CLASS_DONE_MARK]);
+ foreach($marks as $m){
+  $xp=(int)val('SELECT amount FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$m['activity_id']]);
+  q('DELETE FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$m['activity_id']]);
+  if($xp)q('UPDATE pupil_xp SET total=GREATEST(0,CAST(total AS SIGNED)-?) WHERE pupil_id=?',[$xp,$pid]);
+  q('DELETE FROM response_history WHERE completion_id=?',[$m['id']]);q('DELETE FROM activity_completion WHERE id=?',[$m['id']]);
+ }
+ if($marks)q('UPDATE pupil_progress SET completed_at=NULL WHERE pupil_id=? AND lesson_id=?',[$pid,$lid]);
+ return count($marks);
+}
+
+/** A one-time note for the pupil after their teacher marks work as done in class. */
+function class_done_note_set(int $pid,string $text):void{q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['class_done_note_'.$pid,$text]);}
+function class_done_note(int $pid):string{
+ if(($_GET['off']??'')==='1')return '';
+ try{$t=val('SELECT setting_value FROM settings WHERE setting_key=?',['class_done_note_'.$pid]);}catch(Throwable $e){return '';}
+ if(!$t)return '';q('DELETE FROM settings WHERE setting_key=?',['class_done_note_'.$pid]);
+ return '<div class="class-done-note" role="status"><span class="cdn-icon">'.icon('check').'</span><div><strong>Great job in class!</strong><span>'.e((string)$t).'</span></div></div>';
+}
+
+/** The teacher's pupils, grouped by grade and section, for the Class Demo "Mark as done" panel. */
+function class_done_pupils(int $tid,int $level,int $grade):array{
+ $args=[$level,$tid];$where='';if($grade){$where=' AND p.grade_level=?';$args[]=$grade;}
+ $list=rows('SELECT u.id,u.name,u.avatar_path,p.grade_level,p.section,(SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id JOIN pupil_progress pp ON pp.lesson_id=l.id AND pp.pupil_id=u.id AND pp.completed_at IS NOT NULL WHERE m.level_id=? AND l.published=1 AND (m.grade_level IS NULL OR m.grade_level=p.grade_level)) done FROM teacher_pupils tp JOIN users u ON u.id=tp.pupil_id JOIN pupils p ON p.user_id=u.id WHERE tp.teacher_id=?'.$where.' ORDER BY p.grade_level,p.section,u.name',$args);
+ $groups=[];foreach($list as $p)$groups['Grade '.$p['grade_level'].' · '.$p['section']][]=$p;return $groups;
+}
+
+/** Class Demo: gold "Mark as done" button and its panel. */
+function class_done_demo_panel(array $u,int $level,int $grade,string $label):string{
+ $groups=class_done_pupils((int)$u['id'],$level,$grade);
+ $total=(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.($grade?' AND (m.grade_level IS NULL OR m.grade_level=?)':' AND m.grade_level IS NULL'),$grade?[$level,$grade]:[$level]);
+ $back='?page=class_demo&level='.$level.($grade?'&grade='.$grade:'');
+ $h='<div class="cd-ov" id="cd-panel" hidden><form method="post" class="cd-modal" role="dialog" aria-modal="true" aria-labelledby="cd-title">'.csrf_field().'<input type="hidden" name="action" value="class_done"><input type="hidden" name="level" value="'.$level.'"><input type="hidden" name="back" value="'.e($back).'" data-base="'.e($back).'"><input type="hidden" name="aid" value="0" data-cd-aid><input type="hidden" name="lid" value="0" data-cd-lid>'
+  .'<button type="button" class="iconbutton cd-x" data-cd-close aria-label="Close">'.icon('close').'</button><h2 id="cd-title">Mark as done in class</h2><p class="muted">'.e($label).'</p>'
+  .'<fieldset class="cd-scope"><legend>What did you finish?</legend>'
+  .'<label class="cd-choice"><input type="radio" name="scope" value="activity"><span><b>Only this activity</b><small data-cd-act>The slide on the screen now</small></span></label>'
+  .'<label class="cd-choice"><input type="radio" name="scope" value="lesson" checked><span><b>This whole lesson</b><small data-cd-les>The lesson on the screen now</small></span></label>'
+  .'<label class="cd-choice"><input type="radio" name="scope" value="level"><span><b>The whole level</b><small>'.e($label).': all '.$total.' lessons. The next level opens for these pupils.</small></span></label></fieldset>'
+  .'<fieldset class="cd-who"><legend>Who was in class?</legend>';
+ if(!$groups)$h.='<p class="muted">You have no pupils'.($grade?' in Grade '.$grade:'').' yet.</p>';
+ $one=count($groups)===1;
+ foreach($groups as $name=>$list){$h.='<div class="cd-group" data-cd-group><div class="cd-gh"><strong>'.e($name).'</strong><button type="button" class="linkbutton" data-cd-all>'.($one?'Clear all':'Select all').'</button></div>';
+  foreach($list as $p)$h.='<label class="cd-pupil"><input type="checkbox" name="pupils[]" value="'.(int)$p['id'].'"'.($one?' checked':'').'>'.avatar($p).'<span>'.e($p['name']).'</span><small>'.(int)$p['done'].' of '.$total.' lessons done</small></label>';
+  $h.='</div>';}
+ return $h.'</fieldset><p class="cd-note">'.icon('heart').'Answers a pupil already gave on their own are kept. Only unfinished parts are marked "Done in class". You can undo it on the pupil’s progress page.</p><div class="cd-foot"><button type="button" class="btn secondary" data-cd-close>Cancel</button><button class="btn primary" data-cd-submit>'.icon('check').'<span>Mark as done</span></button></div></form></div>';
+}
+
+/** Learning path with "Done in class" marking and undo. With $acts, each lesson also lists its activities. */
+function class_done_path(int $pid,string $back='',bool $acts=false):string{
+ $g=pupil_grade($pid);$start=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);if($back==='')$back='?page=pupil&id='.$pid.'#learning-path';
+ $levels=rows('SELECT b.id,b.title FROM bulig_levels b WHERE b.published=1 AND EXISTS(SELECT 1 FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=b.id AND l.published=1'.GRADE_SQL.') ORDER BY '.level_order_sql('b.id'),[$g]);
+ $h='<section class="card cd-path" id="learning-path"><h2>Learning path</h2><p class="muted">Tick the '.($acts?'lessons or activities':'lessons').' you did together in class, then choose <strong>Mark as done in class</strong>. The pupil’s next lesson or level opens right away.</p>';
+ $openDone=false;
+ foreach($levels as $lv){$lvid=(int)$lv['id'];
+  $ls=rows('SELECT l.id,l.position,l.subtitle,p.completed_at,(SELECT COUNT(*) FROM activities a WHERE a.lesson_id=l.id AND a.published=1) total,(SELECT COUNT(*) FROM activities a JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=l.id AND a.published=1 AND c.status IN (\'approved\',\'completed\')) ok,(SELECT COUNT(*) FROM activities a JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=l.id AND c.prompt_snapshot=?) marked FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL.' ORDER BY l.position,l.id',[$pid,$pid,CLASS_DONE_MARK,$pid,$lvid,$g]);
+  $done=count(array_filter($ls,fn($l)=>(bool)$l['completed_at']));$all=count($ls);$avail=level_available($pid,$lvid);$skipped=$start&&level_rank($lvid)<level_rank($start);
+  $open=!$openDone&&$avail&&!$skipped&&$done<$all;if($open)$openDone=true;
+  $state=$done===$all?'Complete':($skipped?'Skipped · optional':($avail?'Open':'Locked'));
+  $acRows=[];if($acts&&$ls){foreach(rows("SELECT a.id,a.lesson_id,a.phase,a.title,c.status,c.prompt_snapshot FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE m.level_id=? AND a.published=1 AND l.published=1".GRADE_SQL." ORDER BY FIELD(a.phase,'pre','learn','post'),a.position,a.id",[$pid,$lvid,$g]) as $a)$acRows[(int)$a['lesson_id']][]=$a;}
+  $h.='<details class="cd-level'.($done===$all?' is-done':'').'"'.($open?' open':'').'><summary><span class="cd-num">'.e(str_replace('Level ','',level_label($lvid))).'</span><span class="cd-lt"><b>'.e(level_label($lvid).' · '.preg_replace('~\s*·\s*Level \w+$~u','',(string)$lv['title'])).'</b><small>'.$done.' of '.$all.' lessons done · '.$state.'</small><span class="cd-bar"><i data-w="'.($all?round(100*$done/$all):0).'"></i></span></span>'.icon('arrow').'</summary>'
+   .'<form method="post" class="cd-lessons">'.csrf_field().'<input type="hidden" name="action" value="class_done"><input type="hidden" name="pupil" value="'.$pid.'"><input type="hidden" name="level" value="'.$lvid.'"><input type="hidden" name="back" value="'.e($back).'">';
+  foreach($ls as $l){$c=(bool)$l['completed_at'];$chip=$c?((int)$l['marked']?'<span class="cd-chip class">Done in class</span>':'<span class="cd-chip done">Done by pupil</span>'):((int)$l['ok']?'<span class="cd-chip cur">Working on it · '.(int)$l['ok'].' of '.(int)$l['total'].'</span>':'<span class="cd-chip none">Not started</span>');
+   $undo=(int)$l['marked']?'<button class="linkbutton cd-undo" name="undo" value="'.(int)$l['id'].'">Undo</button>':'';
+   $h.='<div class="cd-lesson"><label class="cd-row'.($c?' is-done':'').'"><input type="checkbox" name="lessons[]" value="'.(int)$l['id'].'"'.($c?' disabled checked':'').'><span>'.e(lesson_display_label($lvid,(int)$l['position']).' · '.$l['subtitle']).'</span>'.$chip.$undo.'</label>';
+   if($acts&&!empty($acRows[(int)$l['id']])){$list=$acRows[(int)$l['id']];
+    $h.='<details class="cd-acts"><summary>Activities · '.(int)$l['ok'].' of '.count($list).' done</summary>';
+    foreach($list as $a){$ok=in_array($a['status'],['approved','completed'],true);$mk=$a['prompt_snapshot']===CLASS_DONE_MARK;
+     $h.='<label class="cd-arow'.($ok?' is-done':'').'"><input type="checkbox" name="activities[]" value="'.(int)$a['id'].'"'.($ok?' disabled checked':'').'><span><small>'.e(['pre'=>'Before we begin','learn'=>'Let’s practice','post'=>'Show what you learned'][$a['phase']]).'</small>'.e($a['title']).'</span>'.($ok?($mk?'<span class="cd-chip class">In class</span>':'<span class="cd-chip done">Done</span>'):($a['status']==='submitted'?'<span class="cd-chip cur">Waiting for review</span>':($a['status']==='retry'?'<span class="cd-chip cur">Try again</span>':''))).'</label>';}
+    $h.='</details>';}
+   $h.='</div>';}
+  $h.=$done<$all?'<div class="cd-actions"><button class="btn primary" name="scope" value="lessons">'.icon('check').'Mark chosen as done in class</button><button class="btn secondary" name="scope" value="level" data-confirm="Mark every lesson in '.e(level_label($lvid)).' as done in class for this pupil?">Mark whole level as done</button></div>':'';
+  $h.='</form></details>';
+ }
+ return $h.'</section>';
+}
+
+/** Teacher page: manage pupils (starting level, done in class by level, lesson or activity). */
+function manage_pupils_view(array $u):void{pupil_list_view($u);}
+
+/* v208 Undo instead of "Are you sure?": the last change of a starting level or "Done in class" can be undone for a
+   short time from the bar that shows after saving. */
+function undo_set(string $kind,array $data,string $msg,string $back):void{$_SESSION['undo']=['kind'=>$kind,'data'=>$data,'msg'=>$msg,'back'=>$back,'t'=>time(),'tok'=>bin2hex(random_bytes(8))];}
+function undo_toast():string{
+ $u=$_SESSION['undo']??null;if(!$u)return '';if(time()-(int)$u['t']>20){unset($_SESSION['undo']);return '';}
+ static $here=false;if($here)return '';$rid=(string)($_SERVER['REQUEST_TIME_FLOAT']??microtime(true));if(!empty($u['shown'])&&$u['shown']!==$rid){unset($_SESSION['undo']);return '';}$_SESSION['undo']['shown']=$rid;$here=true;
+ return '<div class="undo-toast" role="status" data-undo><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><b>'.e((string)$u['msg']).'</b><form method="post">'.csrf_field().'<input type="hidden" name="action" value="undo_last"><input type="hidden" name="tok" value="'.e((string)$u['tok']).'"><button class="undo-btn">Undo</button></form><span class="undo-ring" aria-hidden="true"><i data-undo-n>5</i></span></div>';
+}
+function undo_run(array $teacher):never{
+ $u=$_SESSION['undo']??null;$back=(string)($u['back']??'?page=dashboard');
+ if(!$u||!hash_equals((string)$u['tok'],(string)($_POST['tok']??''))||time()-(int)$u['t']>30){unset($_SESSION['undo']);flash('It is too late to undo that change.');go($back);}
+ unset($_SESSION['undo']);$tid=(int)$teacher['id'];
+ db()->beginTransaction();try{
+  if($u['kind']==='level'){foreach((array)$u['data']['prev'] as $pid=>$lv){$pid=(int)$pid;if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))continue;
+    if($lv===null||$lv===false)q('DELETE FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);else q('UPDATE pupil_level_assignments SET level_id=?,assigned_by=? WHERE pupil_id=?',[(int)$lv,$tid,$pid]);}
+   audit('undo','start level');}
+  if($u['kind']==='done'){foreach((array)$u['data']['aids'] as $pid=>$aids){$pid=(int)$pid;if(!$aids||!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))continue;$in=implode(',',array_map('intval',$aids));
+    $made=rows('SELECT c.id,c.activity_id,a.lesson_id FROM activity_completion c JOIN activities a ON a.id=c.activity_id WHERE c.pupil_id=? AND c.activity_id IN('.$in.') AND c.prompt_snapshot=? AND c.reviewed_at>=?',[$pid,CLASS_DONE_MARK,(string)$u['data']['t0']]);$lessons=[];
+    foreach($made as $m){$xp=(int)val('SELECT amount FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$m['activity_id']]);q('DELETE FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$m['activity_id']]);if($xp)q('UPDATE pupil_xp SET total=GREATEST(0,CAST(total AS SIGNED)-?) WHERE pupil_id=?',[$xp,$pid]);
+     q('DELETE FROM response_history WHERE completion_id=?',[$m['id']]);q('DELETE FROM activity_completion WHERE id=?',[$m['id']]);$lessons[(int)$m['lesson_id']]=1;}
+    foreach(array_keys($lessons) as $lid){q('UPDATE pupil_progress SET completed_at=NULL WHERE pupil_id=? AND lesson_id=?',[$pid,$lid]);sync_assessments($pid,$lid);}}
+   audit('undo','done in class');}
+  db()->commit();
+ }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+ flash('Undone. Everything is back the way it was.');go($back);
+}
