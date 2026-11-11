@@ -1,0 +1,20 @@
+{
+  "name": "BULIG · Building Up Literacy, Inspiring Growth",
+  "short_name": "BULIG",
+  "description": "Bukidnon’s Unified Literacy and Intervention Gateway",
+  "id": "./",
+  "start_url": "./?page=dashboard&source=app",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f5a2f",
+  "theme_color": "#0f5a2f",
+  "lang": "en",
+  "icons": [
+    { "src": "apple-touch-icon.png?v=9", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/bulig-app-medium.png?v=9", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/bulig-app-large.png?v=9", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/bulig-app-round.png?v=9", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
+

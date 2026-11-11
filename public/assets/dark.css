@@ -1,0 +1,135 @@
+/* BULIG dark mode. Active when <html> has class "dark" (set by assets/mode.js). Class Demo stays light. */
+html.dark{color-scheme:dark;background:#0f1913}
+html.dark body:not(.demo-page){--bg:#0f1913;--sf:#16231b;--sf2:#1d2d23;--sf3:#243629;--ln:#2e4234;--tx:#e8f0ea;--mu:#a9bcb0;--ac:#56c58a}
+html.dark body:not(.demo-page),html.dark body:not(.demo-page),html.dark body:not(.demo-page) .workspace,html.dark body:not(.demo-page) .login-page,html.dark body:not(.demo-page) .main{background:var(--bg)!important;color:var(--tx)}
+html.dark body:not(.demo-page){--ivory:#0f1913;--ivory-2:#16231b;--ivory-3:#1d2d23;--ivory-line:#2e4234;--white:#16231b;--ink:#e8f0ea;--muted:#a9bcb0;--line:#2e4234;--g50:#1a2a20;--g100:#1f3326;--g200:#28432f;--y50:#2a2616;--y100:#3a3216}
+html.dark body:not(.demo-page) .card,html.dark body:not(.demo-page) .pupil-stat,html.dark body:not(.demo-page) .level-card,html.dark body:not(.demo-page) .level-card-content,html.dark body:not(.demo-page) .next-adventure,html.dark body:not(.demo-page) .tstat,html.dark body:not(.demo-page) .tf-stat,html.dark body:not(.demo-page) .class-tabs,html.dark body:not(.demo-page) .activity-main,html.dark body:not(.demo-page) .native-deck,html.dark body:not(.demo-page) .lesson-outline,html.dark body:not(.demo-page) .login-panel,html.dark body:not(.demo-page) .login-card,html.dark body:not(.demo-page) section.card,html.dark body:not(.demo-page) .tdash-table,html.dark body:not(.demo-page) .cd-level,html.dark body:not(.demo-page) .mp-item,html.dark body:not(.demo-page) .pf-cal-panel,html.dark body:not(.demo-page) .pf-shelf-item,html.dark body:not(.demo-page) .tour-bub,html.dark body:not(.demo-page) .tour-offer-card,html.dark body:not(.demo-page) .completion-card{background:var(--sf)!important;border-color:var(--ln)!important;color:var(--tx)!important;box-shadow:0 8px 24px -14px rgba(0,0,0,.6)!important}
+html.dark body:not(.demo-page) .pupil-stat.level-stat{background:linear-gradient(160deg,#1c3324,#16231b)!important}
+html.dark body:not(.demo-page) .next-adventure{background:radial-gradient(circle at 85% 20%,#2a2a16 0,transparent 45%),linear-gradient(120deg,#17261d,#122019)!important}
+html.dark body:not(.demo-page) h1,html.dark body:not(.demo-page) h2,html.dark body:not(.demo-page) h3,html.dark body:not(.demo-page) h4,html.dark body:not(.demo-page) strong,html.dark body:not(.demo-page) b,html.dark body:not(.demo-page) .stat-label,html.dark body:not(.demo-page) .activity-title,html.dark body:not(.demo-page) .adventure-copy h2,html.dark body:not(.demo-page) .level-card h3,html.dark body:not(.demo-page) .level-card h2,html.dark body:not(.demo-page) .pupil-stat strong,html.dark body:not(.demo-page) .login-card h2,html.dark body:not(.demo-page) label{color:var(--tx)!important}
+html.dark body:not(.demo-page) p,html.dark body:not(.demo-page) small,html.dark body:not(.demo-page) .muted,html.dark body:not(.demo-page) .stat-foot,html.dark body:not(.demo-page) .activity-instruction,html.dark body:not(.demo-page) .native-direction,html.dark body:not(.demo-page) .login-card .muted,html.dark body:not(.demo-page) span.tf-lbl{color:var(--mu)!important}
+html.dark body:not(.demo-page) .eyebrow,html.dark body:not(.demo-page) .adventure-tag,html.dark body:not(.demo-page) .ey{color:#ffd966!important}
+html.dark body:not(.demo-page) input,html.dark body:not(.demo-page) textarea,html.dark body:not(.demo-page) select{background:#122019!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) input::placeholder,html.dark body:not(.demo-page) textarea::placeholder{color:#7f9486!important}
+html.dark body:not(.demo-page) .btn.secondary,html.dark body:not(.demo-page) .btn.quiet,html.dark body:not(.demo-page) .btn.off-save,html.dark body:not(.demo-page) .back-levels,html.dark body:not(.demo-page) a.tab,html.dark body:not(.demo-page) .tab-manage,html.dark body:not(.demo-page) li.tf-fi,html.dark body:not(.demo-page) summary,html.dark body:not(.demo-page) .narration,html.dark body:not(.demo-page) .native-choices li,html.dark body:not(.demo-page) .pf-cal-hint,html.dark body:not(.demo-page) .level-lock,html.dark body:not(.demo-page) span.native-counter,html.dark body:not(.demo-page) .eyebrow.bg,html.dark body:not(.demo-page) .role-tabs{background:var(--sf2)!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .btn.off-save{color:#7fdcaa!important;border-color:#2f6b47!important}
+html.dark body:not(.demo-page) .role-tabs .active{background:var(--sf3)!important;color:#fff!important}
+html.dark body:not(.demo-page) a.tab.active{background:var(--btn-green)!important;border-color:var(--g800)!important;color:#fff!important}
+html.dark body:not(.demo-page) th{background:#1f2a1a!important;color:#ffd966!important}
+html.dark body:not(.demo-page) td{border-color:var(--ln)!important;color:var(--tx)}
+html.dark body:not(.demo-page) .pf-week span i,html.dark body:not(.demo-page) .pf-week span{color:var(--mu)}
+html.dark body:not(.demo-page) .pupil-tabbar{background:#0b2a18!important;box-shadow:0 -6px 20px rgba(0,0,0,.5)!important}
+html.dark body:not(.demo-page) .mobile-top,html.dark body:not(.demo-page) .app-topbar,html.dark body:not(.demo-page) .workspace>header{background:var(--bg)!important}
+html.dark body:not(.demo-page) .login-story{filter:brightness(.92)}
+html.dark body:not(.demo-page) .identity-banner{filter:brightness(.95)}
+html.dark body:not(.demo-page) .level-cover,html.dark body:not(.demo-page) .pf-garden,html.dark body:not(.demo-page) .pf-mapcard{filter:brightness(.82) saturate(.95)}
+html.dark body:not(.demo-page) .xp-stat progress::-webkit-progress-bar{background:#2a2a16}
+html.dark body:not(.demo-page) .tf-alert{background:#2a2614!important;border-color:#5a4b16!important}
+html.dark body:not(.demo-page) .activity-header{background:linear-gradient(90deg,#0b2a18,#0e3a22)!important}
+html.dark body:not(.demo-page) .native-question{color:#bfe8cf!important}
+html.dark body:not(.demo-page) .mobile-brand,html.dark body:not(.demo-page) .mainwrap{background:var(--bg)!important}
+html.dark body:not(.demo-page) .mobile-signout button,html.dark body:not(.demo-page) .mobile-menu-toggle{background:var(--sf2)!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .login-card .show-password{color:#7fdcaa!important}
+html.dark body:not(.demo-page) main a:not(.btn):not(.tab):not(.level-card a):not(.pupil-stat),html.dark body:not(.demo-page) .source-link,html.dark body:not(.demo-page) .linkbutton,html.dark body:not(.demo-page) .rolepill,html.dark body:not(.demo-page) .sitefooter,html.dark body:not(.demo-page) .status,html.dark body:not(.demo-page) .status-ok,html.dark body:not(.demo-page) .tab-count,html.dark body:not(.demo-page) .chip-count,html.dark body:not(.demo-page) .cd-chip.done,html.dark body:not(.demo-page) .adventure-link,html.dark body:not(.demo-page) .section-heading a,html.dark body:not(.demo-page) .section-help a{color:#86e0b0!important}
+html.dark body:not(.demo-page) .rolepill{background:var(--sf2)!important;border-color:#2f6b47!important}
+html.dark body:not(.demo-page) .sitefooter{color:#8fae9a!important}
+html.dark body:not(.demo-page) .status,html.dark body:not(.demo-page) .status-ok,html.dark body:not(.demo-page) .tab-count,html.dark body:not(.demo-page) .chip-count,html.dark body:not(.demo-page) span.status.completed{background:#1f3a2a!important}
+html.dark body:not(.demo-page) .status-warn,html.dark body:not(.demo-page) .xpchip,html.dark body:not(.demo-page) .journey-head span,html.dark body:not(.demo-page) .level-card-heading .status,html.dark body:not(.demo-page) .adventure-note,html.dark body:not(.demo-page) .pf-gnote,html.dark body:not(.demo-page) .cd-chip.cur,html.dark body:not(.demo-page) .chip.y{background:#3a3216!important;color:#ffd966!important;border-color:#6b5a1c!important}
+html.dark body:not(.demo-page) .cd-chip.none{background:var(--sf3)!important;color:#c3cfc7!important}
+html.dark body:not(.demo-page) .cd-chip.class,html.dark body:not(.demo-page) .off-tag{background:#1f2c46!important;color:#a9c4ff!important}
+html.dark body:not(.demo-page) .native-item-label,html.dark body:not(.demo-page) legend,html.dark body:not(.demo-page) .admin-entry,html.dark body:not(.demo-page) .pf-cal-leg span,html.dark body:not(.demo-page) .import-steps li,html.dark body:not(.demo-page) .import-steps{color:#c3d3c8!important}
+html.dark body:not(.demo-page) .pf-cal-sum>div,html.dark body:not(.demo-page) .pf-cd,html.dark body:not(.demo-page) .pf-cal-tip,html.dark body:not(.demo-page) .weekday,html.dark body:not(.demo-page) .default-password,html.dark body:not(.demo-page) pre.source-text,html.dark body:not(.demo-page) blockquote,html.dark body:not(.demo-page) .review-card blockquote{background:var(--sf2)!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .pf-cd.pf-learn{background:#3a2a12!important;color:#ffd08a!important}
+html.dark body:not(.demo-page) .pf-cd.pf-today{box-shadow:0 0 0 2px #ffc629 inset!important}
+html.dark body:not(.demo-page) .pf-cd.pf-future,html.dark body:not(.demo-page) .pf-cd.pf-empty{background:transparent!important;color:#6f8578!important}
+html.dark body:not(.demo-page) .weekday.active{background:#1f3a2a!important;color:#86e0b0!important}
+html.dark body:not(.demo-page) .default-password p,html.dark body:not(.demo-page) .default-password strong{color:var(--tx)!important}
+html.dark body:not(.demo-page) .tf-alert span,html.dark body:not(.demo-page) .tf-alert div span{color:#e9d49a!important}
+html.dark body:not(.demo-page) .narration .btn.quiet{background:linear-gradient(#ffe066,#f2b10c)!important;color:#3d2a00!important;border-color:transparent!important}
+html.dark body:not(.demo-page) .narration .btn.quiet *{color:#3d2a00!important}
+html.dark body:not(.demo-page) .narration .iconbutton,html.dark body:not(.demo-page) .iconbutton.light{background:var(--sf3)!important;color:var(--tx)!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .narration summary,html.dark body:not(.demo-page) .voice-settings summary{background:transparent!important;color:#86e0b0!important}
+html.dark body:not(.demo-page) .btn.primary,html.dark body:not(.demo-page) .btn.primary *{color:#fff!important}
+html.dark body:not(.demo-page) .level-card .btn.primary{color:#fff!important}
+html.dark body:not(.demo-page) .pf-week span{color:#a9bcb0!important}
+html.dark body:not(.demo-page) .mp-gh,html.dark body:not(.demo-page) .cd-level>summary{background:#1f2a1a!important}
+html.dark body:not(.demo-page) .identity-banner *,html.dark body:not(.demo-page) .level-banner *,html.dark body:not(.demo-page) .activity-header *,html.dark body:not(.demo-page) .pupil-tabbar *,html.dark body:not(.demo-page) .sidebar *,html.dark body:not(.demo-page) .login-story *{color:inherit}
+html.dark body:not(.demo-page) .pf-cal-grid .pf-cd.pf-sign,html.dark body:not(.demo-page) .pf-cal-grid .pf-cd.pf-sign b{background:#1f3a2a!important;color:#86e0b0!important}
+html.dark body:not(.demo-page) .pf-cal-grid .pf-cd b{color:inherit!important}
+html.dark body:not(.demo-page) .sidebar a,html.dark body:not(.demo-page) .sidebar nav a{color:#e8f3ec!important}
+html.dark body:not(.demo-page) .sidebar nav a.active,html.dark body:not(.demo-page) .sidebar nav a[aria-current]{color:#3d2a00!important}
+html.dark body:not(.demo-page) .pupil-tabbar a{color:#cfe9d9!important}
+html.dark body:not(.demo-page) .pupil-tabbar a.on,html.dark body:not(.demo-page) .pupil-tabbar .tab-play{color:#ffd23f!important}
+html.dark body:not(.demo-page) a.pupil-stat{color:var(--tx)!important}
+html.dark:has(body.demo-page){background:#fdf8e6;color-scheme:light}
+/* Green buttons and selected tabs look the same as in light mode: the one green, with white writing.
+   Links in the page are light green in dark mode with a long selector; :not(#_) makes this rule stronger than it. */
+html.dark body:not(.demo-page):not(#_) :is(a.l1-big,a.pt-tab.on,a.rv-tab.on,a.dc-tab.on,.ws-tabs a.on,a.lb-mini-go,.rv-item[open] .rv-go),html.dark body:not(.demo-page):not(#_) :is(a.l1-big,a.pt-tab.on,a.rv-tab.on,a.dc-tab.on,.ws-tabs a.on) *{color:#fff!important}
+/* v169: boxes that kept a white or cream background in dark mode (their text turned light and could not be seen) */
+html.dark body:not(.demo-page) :is(.ws-li,.ws-acts a,.ws-acts button,.ws-more>summary,.ws-tabs a:not(.on),.empty){background:var(--sf2)!important;border-color:var(--ln)!important;color:var(--tx)!important}
+html.dark body:not(.demo-page) :is(.ws-li,.ws-acts a,.ws-acts button,.ws-tabs a:not(.on),.empty) :is(span,b,strong,h2,h3){color:var(--tx)!important}
+html.dark body:not(.demo-page) :is(.ws-acts a,.ws-acts button) .icon,html.dark body:not(.demo-page) .ws-li>.icon{color:#7fdcaa!important}
+html.dark body:not(.demo-page) :is(.ws-acts a,.ws-acts button,.ws-tabs a:not(.on)):hover{background:var(--sf3)!important}
+html.dark body:not(.demo-page) .ws-acts :is(a,button).danger,html.dark body:not(.demo-page) .ws-acts :is(a,button)[class*="del"]{color:#ff9b87!important}
+html.dark body:not(.demo-page) .ws-li.warn{background:#2a2614!important;border-color:#5a4b16!important}
+html.dark body:not(.demo-page) .pf-cal-top,html.dark body:not(.demo-page) .pf-cal-inline .pf-cal-top{background:radial-gradient(circle at 30% 0,#3b2b12,transparent 70%),#18221b!important;border-color:var(--ln)!important}
+html.dark body:not(.demo-page) .goal-ring{background:conic-gradient(#3fbf7f calc(var(--p)*1%),#2a3a2f 0)!important}
+html.dark body:not(.demo-page) .goal-done .goal-ring{background:conic-gradient(#f2b10c calc(var(--p)*1%),#2a3a2f 0)!important}
+html.dark body:not(.demo-page) .goal-ring::before{background:var(--sf)!important}
+html.dark body:not(.demo-page) .tk-band b{color:#0f5a37!important}
+html.dark body:not(.demo-page) .nv-new{color:#0e3b28!important}
+html.dark body:not(.demo-page) .lc-pick .lc-count{color:var(--tx)!important}
+html.dark body:not(.demo-page) :is(.l2-cnum,.pf-cd b){color:#b9cabf!important}
+html.dark body:not(.demo-page) .ws-kpi em.bad{color:#ff8a73!important}
+html.dark body:not(.demo-page) .ws-table tr,html.dark body:not(.demo-page) .lesson-tabs a:not(.active):not(.on){background:var(--sf2)!important;border-color:var(--ln)!important;color:var(--tx)!important}
+html.dark body:not(.demo-page) .ws-pill.ok{background:#1f3a2a!important;color:#9fe0b8!important}html.dark body:not(.demo-page) .ws-pill.warn{background:#3a3216!important;color:#ffd966!important}
+html.dark body:not(.demo-page) .ws-pill.bad{background:#3d1f1a!important;color:#ff9b87!important}html.dark body:not(.demo-page) .ws-pill.off{background:var(--sf3)!important;color:#c3cfc7!important}
+html.dark body:not(.demo-page) .sx-mode span,html.dark body:not(.demo-page) .pf-future b{color:var(--mu)!important}
+html.dark body:not(.demo-page) .fs-bub span{color:#e8f3ec!important}html.dark body:not(.demo-page) .fs-bub b{color:color-mix(in srgb,var(--fs) 55%,#fff)!important}
+/* the report card and the sign-in tickets are paper: they stay light, with dark writing, in dark mode too */
+html.dark body:not(.demo-page) .rc-page :is(.ds b,.rc-signs b,td){color:#1d2a22!important}html.dark body:not(.demo-page) .rc-page tr.lock td.ds b{color:#7d8a81!important}
+html.dark body:not(.demo-page) .rc-page :is(.rc-info label,.rc-lh,th,.ds small,.rc-signs){color:#5f6f63!important}html.dark body:not(.demo-page) .rc-page th{background:transparent!important}
+html.dark body:not(.demo-page) .rc-page :is(.rc-title h1,.rc-info span){color:#0e3b28!important}html.dark body:not(.demo-page) .rc-title h1 small{color:#c48a10!important}
+html.dark body:not(.demo-page) .rc-page .rm.no{color:#6d6a5e!important}html.dark body:not(.demo-page) .rc-page .rm.pass{color:#176444!important}html.dark body:not(.demo-page) .rc-page .rm.now{color:#9a6a00!important}html.dark body:not(.demo-page) .rc-page .rm.skip{color:#2b5f8f!important}
+html.dark body:not(.demo-page) .rc-band :is(b,span,small,.rc-mid b){color:#fff!important}html.dark body:not(.demo-page) .rc-now{color:#fff!important}html.dark body:not(.demo-page) .rc-now b{color:#ffd966!important}
+html.dark body:not(.demo-page) .ids-formats span{color:#7fdcaa!important}
+/* v170: popups that stayed white (glass) in dark mode: the welcome popup, the tour bubbles, "I need help", the year-end steps */
+html.dark body:not(.demo-page) .pw-panel,html.dark:not(.lg-lite) body:not(.demo-page) .pw-panel,html.dark:not(.lg-lite) body:not(.demo-page) .pw-panel.lg-g{background:linear-gradient(160deg,rgba(32,50,39,.97),rgba(20,33,25,.96) 60%,rgba(26,42,32,.97))!important;border-color:rgba(255,255,255,.12)!important;border-top-color:#f6c02c!important}
+html.dark body:not(.demo-page) .pw-panel::before{background:linear-gradient(180deg,rgba(63,191,127,.14),rgba(63,191,127,0))!important}
+html.dark body:not(.demo-page) .pw-panel h2{color:#fff!important}html.dark body:not(.demo-page) .pw-msg{color:#c3d3c8!important}html.dark body:not(.demo-page) .pw-eyebrow{color:#7fdcaa!important}
+html.dark body:not(.demo-page) .pw-stat{background:var(--sf2)!important;border-color:var(--ln)!important;color:#c3d3c8!important}html.dark body:not(.demo-page) .pw-stat b{color:#fff!important}
+html.dark body:not(.demo-page) .tour-bub,html.dark:not(.lg-lite) body:not(.demo-page) .tour-bub{background:linear-gradient(160deg,rgba(32,50,39,.97),rgba(20,33,25,.96) 60%,rgba(26,42,32,.97))!important;border-color:rgba(255,255,255,.12)!important;color:var(--tx)!important}
+html.dark body:not(.demo-page) .tour-bub :is(p,span,small,li,div){color:#c3d3c8}html.dark body:not(.demo-page) .tour-bub :is(h2,h3,b,strong){color:#fff!important}
+html.dark body:not(.demo-page) :is(.hp-card,.ws-step){background:var(--sf)!important;border-color:var(--ln)!important;color:var(--tx)!important}
+html.dark body:not(.demo-page) .hp-opt{background:var(--sf2)!important;border-color:var(--ln)!important;color:var(--tx)!important}html.dark body:not(.demo-page) .hp-opt span{color:var(--tx)!important}
+html.dark body:not(.demo-page) .hp-opt:has(input:checked){background:#1f3a2a!important;border-color:#3fbf7f!important}
+html.dark body:not(.demo-page) .hp-off{background:#3a3216!important;border-color:#6b5414!important;color:#ffd966!important}html.dark body:not(.demo-page) p.hp-off{color:#ffd966!important}
+html.dark body:not(.demo-page) .sx-prev span{color:#b9cabf!important}
+html.dark body:not(.demo-page) .dk-ink,html.dark body:not(.demo-page) .dk-ink :not(svg):not(path){color:#1d2a22!important}
+/* v170: every popup in liquid glass (frosted, the page softly blurred behind), still easy to read. Slow phones and
+   "Reduce transparency" (html.lg-lite) keep the solid popups. */
+html:not(.lg-lite) body:not(.demo-page) :is(.pw-panel,.rt-ov .rt-card,.crop-box,.leave-box,.hp-card,.lgn-pop,.cd-modal,.pf-cal-ov:not(.pf-cal-inline) .pf-cal-panel,.np-box,.ab-dialog,.tour-offer-card,.tour-bub,.fr-panel,.empty-check){
+ background:linear-gradient(160deg,rgba(255,255,255,.82),rgba(255,251,238,.66) 55%,rgba(255,255,255,.76))!important;
+ -webkit-backdrop-filter:blur(26px) saturate(185%);backdrop-filter:blur(26px) saturate(185%);
+ border:1px solid rgba(255,255,255,.78)!important;
+ box-shadow:inset 1px 1.5px 0 rgba(255,255,255,.95),inset -1px -1px 0 rgba(255,255,255,.35),inset 0 -14px 22px -18px rgba(255,255,255,.8),0 30px 70px -22px rgba(8,28,16,.6),0 2px 8px rgba(8,28,16,.12)!important}
+html:not(.lg-lite) body:not(.demo-page) :is(.pw-overlay,.rt-ov,.crop-ov,.leave-ov,.hp-sheet,.np-ov,.fr-layer,.cd-ov,.lgn-pop-wrap){background:rgba(8,28,16,.34)!important;-webkit-backdrop-filter:blur(6px) saturate(140%);backdrop-filter:blur(6px) saturate(140%)}
+html:not(.lg-lite) body:not(.demo-page) :is(.pw-stat,.hp-opt,.crop-look,.crop-stage){background:rgba(255,255,255,.52)!important;border-color:rgba(255,255,255,.8)!important}
+html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-panel,.rt-ov .rt-card,.crop-box,.leave-box,.hp-card,.lgn-pop,.cd-modal,.pf-cal-ov:not(.pf-cal-inline) .pf-cal-panel,.np-box,.ab-dialog,.tour-offer-card,.tour-bub,.fr-panel,.empty-check){
+ background:linear-gradient(160deg,rgba(52,78,61,.66),rgba(16,28,21,.60) 55%,rgba(34,54,42,.64))!important;
+ border:1px solid rgba(255,255,255,.16)!important;
+ box-shadow:inset 1px 1.5px 0 rgba(255,255,255,.22),inset 0 -14px 22px -18px rgba(255,255,255,.14),0 30px 70px -22px rgba(0,0,0,.75)!important}
+html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-stat,.hp-opt,.crop-look,.crop-stage){background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.14)!important}
+html.dark:not(.lg-lite) body:not(.demo-page) :is(.pw-overlay,.rt-ov,.crop-ov,.leave-ov,.hp-sheet,.np-ov,.fr-layer,.cd-ov,.lgn-pop-wrap){background:rgba(0,0,0,.42)!important}
+/* v170: the phone top bar buttons (bell, light/dark, sign out) are yellow like the ? button, in light and dark mode */
+html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m),html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m).lg-g{background:var(--lg-gold,linear-gradient(#ffd84d,#f2b10c))!important;color:#0e3b28!important;border-color:rgba(255,255,255,.75)!important;box-shadow:inset 1px 1.5px 0 rgba(255,255,255,.8),0 4px 12px rgba(150,100,0,.35)!important}
+html body:not(.demo-page):not(#_):not(#__) :is(.mode-btn.mode-mobile,.mobile-signout button,.notif-bell.notif-m) :is(svg,.icon){color:#0e3b28!important;stroke:currentColor}
+/* I need help: the chosen option turns green, and every option and button darkens while pressed (v176) */
+html body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked){background:#dcfce7!important;border-color:#16a34a!important;box-shadow:0 0 0 3px rgba(22,163,74,.22)!important}
+html body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked) i{background:#16a34a!important;color:#fff!important}
+html body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked) span{color:#14532d!important}
+html.dark body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked){background:#14532d!important;border-color:#4ade80!important}
+html.dark body:not(.demo-page) .hp-sheet .hp-opt:has(input:checked) span{color:#ecfdf5!important}
+html body:not(.demo-page) .hp-sheet .hp-opt:active{transform:scale(.98);background:#bbf7d0!important}
+html body:not(.demo-page) .hp-sheet .btn:active{transform:scale(.97);filter:brightness(.88)}
+.l2-card.l2-skipped{opacity:.75}

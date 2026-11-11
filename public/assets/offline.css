@@ -1,0 +1,11 @@
+@font-face{font-family:Poppins;font-weight:600;font-display:swap;src:url(fonts/poppins-latin-600-normal.woff2) format("woff2")}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{font-family:Poppins,system-ui,sans-serif;background:linear-gradient(180deg,#e4f2df,#fffdf6);color:#183b26;display:grid;place-items:center;min-height:100vh;padding:16px}
+.off{width:min(420px,100%);background:#fff;border-radius:28px;padding:28px 24px;text-align:center;box-shadow:0 20px 50px rgba(15,61,36,.15);border-top:6px solid #f6c02c}
+.off-logo{width:150px;height:auto}.off-art{width:100%;max-width:240px;height:auto;display:block;margin:6px auto 0}
+.off h1{font-size:1.6rem;margin:8px 0 6px;color:#0f3d24}.off p{margin:0 0 18px;color:#4d6650;line-height:1.5}
+.off-btn{display:inline-block;background:linear-gradient(#17803f,#0f5a2f);color:#fff;text-decoration:none;font-weight:600;padding:12px 28px;border-radius:999px;box-shadow:0 6px 14px rgba(15,90,47,.3)}
+.off small{display:block;margin-top:14px;color:#6b8272}
+.off-book{animation:ob 3s ease-in-out infinite}.off-cloud{animation:oc 4s ease-in-out infinite alternate}.off-z{animation:oz 2s ease-in-out infinite}
+@keyframes ob{50%{transform:translateY(-4px)}}@keyframes oc{to{transform:translateX(10px)}}@keyframes oz{0%{opacity:0;transform:translateY(6px)}50%{opacity:1}100%{opacity:0;transform:translateY(-8px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}

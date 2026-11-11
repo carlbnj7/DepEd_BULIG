@@ -1,0 +1,89 @@
+<?php
+declare(strict_types=1);
+require __DIR__.'/../app/bootstrap.php';if($__missing=array_values(array_filter(['actions','views','teacher_demo'],fn($f)=>!is_file(__DIR__.'/../app/'.$f.'.php'))))bulig_missing_files($__missing);require __DIR__.'/../app/actions.php';require __DIR__.'/../app/views.php';require __DIR__.'/../app/teacher_demo.php';
+ob_start();
+try{
+ if($_SERVER['REQUEST_METHOD']==='POST')action();
+ $page=(string)($_GET['page']??'dashboard');$u=current_user();
+ if($page==='offline_sync'){offline_sync_info();}
+ if($page==='bug_updates')bugflow_poll();
+ $tk=$page==='login'&&isset($_GET['key'])?(string)$_GET['key']:'';
+ if($page==='privacy'&&!$u){head('Privacy Notice · BULIG','credits-public');echo '<main class="cr-public">';privacy_view(null);echo '</main>';foot();}
+ elseif(!$u&&$page==='credits'){head('Credits · BULIG','credits-public');echo '<main class="cr-public"><a class="btn secondary cr-back" href="?page=login">'.icon('arrow','flip').'Back to sign in</a>';credits_view();echo '</main>';foot();}
+ elseif(!$u){if($page!=='login'&&isset($_GET['page']))go('?page=login');   // the bare address shows sign-in at once (no extra redirect)
+ if($tk!=='')key_login_view($tk);else login_view();}
+ elseif(teacher_must_change($u)){teacher_first_password_view($u);foot();}
+ elseif($u['role']==='pupil'&&!in_array($page,['rcheck','credits','offline_manifest','offline_levels','offline_sync','login'],true)&&rc_needed($u)){go('?page=rcheck');}
+ elseif($page==='rcheck'&&$u['role']==='pupil'){rc_pupil_view($u);}
+ elseif($page==='rc_audio'){rc_audio($u);}
+ elseif($page==='login'){$cu=$tk!==''?card_user_any($tk):null;if($cu&&(int)$cu['id']!==(int)$u['id'])key_login_view($tk);else go('?page=dashboard');}
+ elseif($page==='source'){
+  $level=(int)($_GET['level']??1);
+  if(in_array($level,[2,3,4,9,5,6,7,8],true)){
+   $grade=per_grade_level($level)?(int)($_GET['grade']??0):null;
+   $n=(int)($_GET['n']??1);$meta=module_source_meta($level,$grade);if(!$meta)fail('Module not found.',404);$key=$meta['folder'];
+   if($n<1||$n>$meta['page_count'])fail('Page not found.',404);
+   if($u['role']==='pupil'){
+    if(!in_array($n,$meta['pupil_pages'],true)||!level_available((int)$u['id'],$level)||($grade&&$grade!==pupil_grade((int)$u['id'])))fail('This source page is reserved for your teacher or is not available yet.',403);
+   }
+   if(isset($_GET['image'])){header('Content-Type: image/webp');readfile(__DIR__.'/../storage/'.$key.'/page-'.sprintf('%03d',$n).'.webp');exit;}
+   head('Official '.module_label($level,$grade).' · page '.$n,'source-page');echo '<main><a class="btn secondary" href="?page=dashboard">Back to dashboard</a><h1>Official '.e(module_label($level,$grade)).' · PDF page '.$n.'</h1><img src="?page=source&amp;level='.$level.($grade?'&amp;grade='.$grade:'').'&amp;n='.$n.'&amp;image=1" alt="Original module page '.$n.'"></main>';foot();
+  }else{
+  $n=(int)($_GET['n']??1);$p=one('SELECT * FROM source_pages WHERE page_number=?',[$n]);if(!$p)fail('Page not found.',404);head('Official module · page '.$n,'source-page');echo '<main><a class="btn secondary" href="?page=dashboard">Back to dashboard</a><h1>Official Level 1 module · PDF page '.$n.'</h1><img src="'.e($p['image_path']).'" alt="Original module page '.$n.'"><details><summary>Extracted text</summary><pre class="source-text">'.e($p['text_content']).'</pre></details></main>';foot();
+  }
+ }
+ elseif(in_array($page,['report_csv','log_csv','backup_csv','backup_sql'],true)){require_role('admin');['report_csv'=>'admin_report_csv','log_csv'=>'admin_log_csv','backup_csv'=>'admin_backup_csv','backup_sql'=>'admin_backup_sql'][$page]();}
+ elseif($page==='ids_backup'||$page==='ids_csv'){require_role('admin');account_ids_download($page==='ids_backup'?'backup':'csv');}
+ elseif($page==='msg_media'){media_open($u);}
+ elseif($page==='chat_media'){chat_media($u);}
+ elseif($page==='my_data'){privacy_my_data(require_role('admin','teacher','pupil'));}
+ elseif($page==='bugs_csv'){bugs_csv(require_role('admin'));}
+ elseif($page==='import_template'||$page==='import_logins'){import_download($page==='import_template'?'template':'logins');}
+ elseif($page==='teacher_template'||$page==='teacher_logins'){teacher_import_download($page);}
+ elseif($page==='download_source'){require_role('admin','teacher');$level=(int)($_GET['level']??1);
+  if(per_grade_level($level)){$g=(int)($_GET['grade']??0);$meta=module_source_meta($level,$g);if(!$meta||!is_file(__DIR__.'/../storage/'.$meta['pdf']))fail('Module not found.',404);header('Content-Type: application/pdf');header('Content-Disposition: attachment; filename="BULIG-'.str_replace(' ','-',level_label($level)).'-Grade-'.$g.'-Original.pdf"');readfile(__DIR__.'/../storage/'.$meta['pdf']);exit;}
+  $key=[1=>'1',2=>'2a',3=>'2b',4=>'3'][$level]??null;if(!$key)fail('Module not found.',404);header('Content-Type: application/pdf');header('Content-Disposition: attachment; filename="BULIG-Level-'.$key.'-Original.pdf"');readfile(__DIR__.'/../storage/level'.$key.'-original.pdf');}
+ elseif($page==='class_demo'){require_role('teacher');class_demo_view($u);}
+ elseif($page==='lesson'){require_role('pupil');lesson_view($u);}
+ elseif($page==='reading_audio'){l1_recording($u);}
+ elseif($page==='recording'){l1_recording($u);}
+ elseif($page==='offline_manifest'){offline_manifest(require_role('pupil'));}
+ elseif($page==='offline_levels'){offline_levels(require_role('pupil'));}
+ elseif($page==='demo_offline'){demo_offline_info(require_role('teacher'));}
+ elseif($page==='story_data'){require_role('pupil','teacher','admin');story_data();}
+ else{
+  if(in_array($page,['content','edit_activity','media','issues'],true))go('?page=dashboard');   // the Lesson studio was removed: module content cannot be changed
+  if($page==='health')go('?page=print#pc-backup');   // System health was removed: backups are in Print & download
+  if($u['role']==='admin')school_filter_take();   // v174: Showing: All schools | PCES | MFCES
+  $permissions=['practice'=>['pupil'],'cleanup'=>['admin'],'reading_reviews'=>['teacher'],'bug_report'=>['admin','teacher','pupil'],'messages'=>['admin','teacher','pupil'],'directory'=>['admin'],'school'=>['admin'],'bugs'=>['admin'],'schools'=>['admin'],'visual_audit'=>['admin'],'sections'=>['teacher'],'leaderboard'=>['teacher'],'accounts'=>['admin','teacher'],'review'=>['teacher'],'notifications'=>['admin','teacher','pupil'],'credits'=>['admin','teacher','pupil'],'privacy'=>['admin','teacher','pupil'],'chat'=>['admin','teacher','pupil'],'story'=>['admin','teacher','pupil'],'qcheck'=>['teacher'],'report'=>['teacher'],'cards'=>['teacher'],'pupil'=>['teacher'],'manage'=>['teacher'],'guide'=>['teacher','admin'],'settings'=>['admin','pupil'],'reports'=>['admin'],'activity_log'=>['admin'],'health'=>['admin'],'checkup'=>['admin'],'teacher_cards'=>['admin'],'admin_pass'=>['admin'],'teacher_import'=>['admin'],'achievements'=>['pupil'],'board'=>['pupil'],'report_card'=>['teacher'],'section_report'=>['teacher'],'rcheck'=>['teacher'],'rcheck_pupil'=>['teacher'],'rcheck_rules'=>['teacher','admin'],'rcheck_print'=>['teacher'],'print'=>['teacher','admin'],'add_teachers'=>['admin'],'moved'=>['teacher','admin'],'certificate'=>['pupil'],'offline'=>['pupil'],'certificates'=>['teacher'],'progress'=>['teacher'],'calendar'=>['pupil'],'lessons'=>['pupil'],'profile'=>['admin','teacher','pupil'],'dashboard'=>['admin','teacher','pupil'],'rate'=>['teacher','pupil'],'ratings'=>['admin']];if(!isset($permissions[$page]))fail('Page not found.',404);require_role(...$permissions[$page]);if($page==='notifications')notif_open($u);shell($u,$page);
+  switch($page){case 'practice':practice_view($u);break;case 'cleanup':cleanup_view($u);break;case 'reading_reviews':rv_view($u);break;case 'bug_report':bugflow_view($u);break;case 'messages':messages_view($u);break;case 'directory':directory_view($u);break;case 'school':school_page_view();break;case 'bugs':bugs_view($u);break;case 'manage':manage_pupils_view($u);break;case 'visual_audit':visual_audit_view();break;case 'dashboard':if($u['role']==='pupil')pupil_dashboard($u);elseif($u['role']==='teacher')teacher_dashboard($u);else admin_overview();break;case 'reports':admin_reports_view();break;case 'activity_log':admin_log_view();break;case 'checkup':checkup_view();break;case 'schools':schools_view();break;case 'teacher_cards':teacher_cards_view();break;case 'admin_pass':admin_pass_view($u);break;case 'teacher_import':add_teachers_view($u);break;case 'sections':sections_view($u);break;case 'leaderboard':tf_leaderboard_view($u);break;case 'accounts':accounts_view($u);break;case 'rate':rate_page_view($u);break;case 'ratings':ratings_view();break;case 'review':/* v151: BULIG checks every answer; old links open the pupil's answers or Class results */$rp=(int)($_GET['pupil']??0);go($rp?'?page=pupil&id='.$rp.'&tab=answers':'?page=qcheck');case 'notifications':notifications_view($u);break;case 'story':story_view($u);break;case 'credits':credits_view();break;case 'privacy':privacy_view($u);break;case 'chat':go('?page=messages&tab=chat'.(isset($_GET['with'])?'&with='.(int)$_GET['with']:'').(isset($_GET['id'])?'&id='.(int)$_GET['id']:'').(!empty($_GET['class'])?'&class=1':'').'#msg-end');case 'qcheck':qcheck_view($u);class_glance($u);break;case 'report':pupil_report_view($u);break;case 'cards':login_cards_view($u);break;case 'certificate':certificate_view($u);break;case 'offline':offline_page_view($u);break;case 'certificates':certificates_view($u);break;case 'progress':progress_view($u);break;case 'pupil':pupil_detail();break;case 'guide':guide_view();break;case 'settings':if($u['role']==='pupil')pupil_settings_view($u);else admin_settings_view($u);break;case 'achievements':achievements_view($u);break;case 'board':rb_view($u);break;case 'report_card':rc_view($u);break;case 'section_report':section_report_view($u);break;case 'rcheck':staff_mark_seen((int)$u['id'],'rcheck');rc_teacher_view($u);break;case 'print':if($u['role']==='admin')admin_print_view($u);else print_centre_view($u);break;case 'add_teachers':add_teachers_view($u);break;case 'moved':moved_view($u);break;case 'rcheck_pupil':rc_teacher_pupil($u);break;case 'rcheck_rules':rc_rules_view();break;case 'rcheck_print':rc_print_view($u);break;case 'calendar':pupil_calendar_view($u);break;case 'lessons':pupil_lessons($u);break;case 'profile':profile_view($u);break;}
+  shell_end();
+ }
+ ob_end_flush();
+}catch(Throwable $ex){
+ if(db_in_transaction_safe())db()->rollBack();ob_end_clean();$isPublic=$ex instanceof RuntimeException&&!($ex instanceof PDOException);$code=$isPublic&&in_array($ex->getCode(),[400,401,403,404,429],true)?$ex->getCode():($isPublic?400:500);http_response_code($code);error_log((string)$ex);
+ $message=$isPublic?$ex->getMessage():bulig_setup_diagnostic($ex);
+ if(($_POST['action']??'')==='draft'||str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>false,'error'=>$message]);exit;}
+ head('Let’s try again','error-page');echo '<main class="card"><h1>'.($code===500?'A little setup is needed.':'Let’s check that.').'</h1><p>'.e($message).'</p><a class="btn primary" href="?page=dashboard">Return to BULIG '.icon('arrow').'</a><p class="muted">If you were completing an activity, return to its lesson to recover your saved draft.</p></main>';foot();
+}
+function db_in_transaction_safe():bool{try{return db()->inTransaction();}catch(Throwable $e){return false;}}
+
+// Only safe categories and code locations are shown; no SQL, credentials, or records.
+function bulig_setup_diagnostic(Throwable $error):string{
+ $location=basename($error->getFile()).':'.$error->getLine();
+ if($error instanceof PDOException){
+  $number=(int)($error->errorInfo[1]??0);
+  $state=(string)($error->errorInfo[0]??$error->getCode());
+  if(!preg_match('/^[A-Z0-9]{1,8}$/D',$state))$state='unknown';
+  $reasons=[1045=>'Database login was rejected. Check the database password and user permissions.',1044=>'The database user does not have access to this database.',1049=>'The configured database does not exist.',1146=>'A required database table is missing. The database and application versions do not match.',1054=>'A required database column is missing. The database and application versions do not match.',2002=>'PHP could not reach the database server. Check the database host and connection settings.',2006=>'The database connection was closed.',1064=>'A database query has a syntax error.'];
+  $reason=$reasons[$number]??'A database operation failed.';
+  if(str_contains(strtolower($error->getMessage()),'could not find driver'))$reason='PDO MySQL is not enabled for this website PHP configuration.';
+  return 'BULIG diagnostic: SQLSTATE '.$state.' / MySQL '.$number.'. '.$reason.' Location: '.$location;
+ }
+ $reason='A PHP application error occurred.';
+ if(preg_match('/Call to undefined function ([a-zA-Z0-9_]+)\(/',$error->getMessage(),$m))$reason='A required PHP function is unavailable: '.$m[1].'.';
+ return 'BULIG diagnostic: '.get_class($error).'. '.$reason.' Location: '.$location;
+}
+
+
+
