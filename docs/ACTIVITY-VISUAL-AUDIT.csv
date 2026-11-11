@@ -1,0 +1,226 @@
+activity_id,lesson,title,prompt_source_page,status,image_paths,image_source_pages
+1,1,Pre-assessment · 1,7,Personal/oral/practical task; no fixed visual assigned,,
+2,1,Pre-assessment · 2,7,Personal/oral/practical task; no fixed visual assigned,,
+3,1,Pre-assessment · 3,7,Personal/oral/practical task; no fixed visual assigned,,
+4,1,Pre-assessment · 4,7,Personal/oral/practical task; no fixed visual assigned,,
+5,1,Pre-assessment · 5,7,Personal/oral/practical task; no fixed visual assigned,,
+6,1,Post-assessment · 1,87,Personal/oral/practical task; no fixed visual assigned,,
+7,1,Post-assessment · 2,87,Personal/oral/practical task; no fixed visual assigned,,
+8,1,Post-assessment · 3,87,Personal/oral/practical task; no fixed visual assigned,,
+9,1,Post-assessment · 4,87,Personal/oral/practical task; no fixed visual assigned,,
+10,1,Post-assessment · 5,87,Personal/oral/practical task; no fixed visual assigned,,
+11,2,Pre-assessment · 1,8,Personal/oral/practical task; no fixed visual assigned,,
+12,2,Pre-assessment · 2,8,Personal/oral/practical task; no fixed visual assigned,,
+13,2,Pre-assessment · 3,8,Personal/oral/practical task; no fixed visual assigned,,
+14,2,Pre-assessment · 4,8,Personal/oral/practical task; no fixed visual assigned,,
+15,2,Pre-assessment · 5,8,Personal/oral/practical task; no fixed visual assigned,,
+16,2,Post-assessment · 1,88,Personal/oral/practical task; no fixed visual assigned,,
+17,2,Post-assessment · 2,88,Personal/oral/practical task; no fixed visual assigned,,
+18,2,Post-assessment · 3,88,Personal/oral/practical task; no fixed visual assigned,,
+19,2,Post-assessment · 4,88,Personal/oral/practical task; no fixed visual assigned,,
+20,2,Post-assessment · 5,88,Personal/oral/practical task; no fixed visual assigned,,
+21,3,Pre-assessment · 1,9,Personal/oral/practical task; no fixed visual assigned,,
+22,3,Pre-assessment · 2,9,Personal/oral/practical task; no fixed visual assigned,,
+23,3,Pre-assessment · 3,9,Personal/oral/practical task; no fixed visual assigned,,
+24,3,Pre-assessment · 4,9,Personal/oral/practical task; no fixed visual assigned,,
+25,3,Pre-assessment · 5,9,Personal/oral/practical task; no fixed visual assigned,,
+26,3,Post-assessment · 1,89,Personal/oral/practical task; no fixed visual assigned,,
+27,3,Post-assessment · 2,89,Personal/oral/practical task; no fixed visual assigned,,
+28,3,Post-assessment · 3,89,Personal/oral/practical task; no fixed visual assigned,,
+29,3,Post-assessment · 4,89,Personal/oral/practical task; no fixed visual assigned,,
+30,3,Post-assessment · 5,89,Personal/oral/practical task; no fixed visual assigned,,
+31,4,Pre-assessment · 1,10,Personal/oral/practical task; no fixed visual assigned,,
+32,4,Pre-assessment · 2,10,Personal/oral/practical task; no fixed visual assigned,,
+33,4,Pre-assessment · 3,10,Personal/oral/practical task; no fixed visual assigned,,
+34,4,Pre-assessment · 4,10,Personal/oral/practical task; no fixed visual assigned,,
+35,4,Pre-assessment · 5,10,Personal/oral/practical task; no fixed visual assigned,,
+36,4,Post-assessment · 1,90,Personal/oral/practical task; no fixed visual assigned,,
+37,4,Post-assessment · 2,90,Personal/oral/practical task; no fixed visual assigned,,
+38,4,Post-assessment · 3,90,Personal/oral/practical task; no fixed visual assigned,,
+39,4,Post-assessment · 4,90,Personal/oral/practical task; no fixed visual assigned,,
+40,4,Post-assessment · 5,90,Personal/oral/practical task; no fixed visual assigned,,
+41,5,Pre-assessment · 1,11,Assigned original module visuals,assets/images/level1/lesson05/image-210.jpeg,image-210.jpeg: 24
+42,5,Pre-assessment · 2,11,Personal/oral/practical task; no fixed visual assigned,,
+43,5,Pre-assessment · 3,11,Assigned original module visuals,assets/images/level1/lesson05/image-298.jpeg,image-298.jpeg: 33
+44,5,Pre-assessment · 4,11,Personal/oral/practical task; no fixed visual assigned,,
+45,5,Pre-assessment · 5,11,Assigned original module visuals,assets/images/level1/lesson05/image-235.jpeg,image-235.jpeg: 27
+46,5,Post-assessment · 1,91,Assigned original module visuals,assets/images/level1/lesson05/image-203.jpeg,image-203.jpeg: 24
+47,5,Post-assessment · 2,91,Personal/oral/practical task; no fixed visual assigned,,
+48,5,Post-assessment · 3,91,Teacher-supplied picture required: a rainbow,,
+49,5,Post-assessment · 4,91,Personal/oral/practical task; no fixed visual assigned,,
+50,5,Post-assessment · 5,91,Assigned original module visuals,assets/images/level1/lesson05/image-204.jpeg,image-204.jpeg: 24
+51,6,Pre-assessment · 1,12,Assigned original module visuals,assets/images/level1/lesson06/image-299.jpeg,image-299.jpeg: 33
+52,6,Pre-assessment · 2,12,Assigned original module visuals,assets/images/level1/lesson06/image-213.jpeg,image-213.jpeg: 25
+53,6,Pre-assessment · 3,12,Assigned original module visuals,assets/images/level1/lesson06/image-337.jpeg,image-337.jpeg: 40
+54,6,Pre-assessment · 4,12,Assigned original module visuals,assets/images/level1/lesson06/image-193.jpeg,image-193.jpeg: 23
+55,6,Pre-assessment · 5,12,Assigned original module visuals,assets/images/level1/lesson06/image-432.jpeg,image-432.jpeg: 70
+56,6,Post-assessment · 1,92,Assigned original module visuals,assets/images/level1/lesson06/image-225.jpeg,image-225.jpeg: 26
+57,6,Post-assessment · 2,92,Teacher-supplied picture required: a tree with apples,,
+58,6,Post-assessment · 3,92,Teacher-supplied picture required: a boy playing with a ball,,
+59,6,Post-assessment · 4,92,Teacher-supplied picture required: a book on a table,,
+60,6,Post-assessment · 5,92,Teacher-supplied picture required: a rainbow over a lake,,
+61,7,Pre-assessment · 1,13,Personal/oral/practical task; no fixed visual assigned,,
+62,7,Pre-assessment · 2,13,Personal/oral/practical task; no fixed visual assigned,,
+63,7,Pre-assessment · 3,13,Personal/oral/practical task; no fixed visual assigned,,
+64,7,Pre-assessment · 4,13,Personal/oral/practical task; no fixed visual assigned,,
+65,7,Pre-assessment · 5,13,Personal/oral/practical task; no fixed visual assigned,,
+66,7,Post-assessment · 1,93,Personal/oral/practical task; no fixed visual assigned,,
+67,7,Post-assessment · 2,93,Personal/oral/practical task; no fixed visual assigned,,
+68,7,Post-assessment · 3,93,Personal/oral/practical task; no fixed visual assigned,,
+69,7,Post-assessment · 4,93,Personal/oral/practical task; no fixed visual assigned,,
+70,7,Post-assessment · 5,93,Personal/oral/practical task; no fixed visual assigned,,
+71,8,Pre-assessment · 1,13,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg,image-235.jpeg: 27
+72,8,Pre-assessment · 2,13,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg,image-235.jpeg: 27
+73,8,Pre-assessment · 3,13,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg,image-235.jpeg: 27
+74,8,Post-assessment · 1,93,Assigned original module visuals,assets/images/level1/lesson08/image-236.jpeg,image-236.jpeg: 27
+75,8,Post-assessment · 2,93,Assigned original module visuals,assets/images/level1/lesson08/image-236.jpeg,image-236.jpeg: 27
+76,8,Post-assessment · 3,93,Assigned original module visuals,assets/images/level1/lesson08/image-236.jpeg,image-236.jpeg: 27
+77,9,Pre-assessment · 1,13,Personal/oral/practical task; no fixed visual assigned,,
+78,9,Pre-assessment · 2,13,Personal/oral/practical task; no fixed visual assigned,,
+79,9,Pre-assessment · 3,13,Personal/oral/practical task; no fixed visual assigned,,
+80,9,Post-assessment · 1,93,Personal/oral/practical task; no fixed visual assigned,,
+81,9,Post-assessment · 2,93,Personal/oral/practical task; no fixed visual assigned,,
+82,9,Post-assessment · 3,93,Personal/oral/practical task; no fixed visual assigned,,
+83,10,Pre-assessment · 1,13,Assigned original module visuals,assets/images/level1/lesson10/image-285.jpeg,image-285.jpeg: 32
+84,10,Pre-assessment · 2,13,Assigned original module visuals,assets/images/level1/lesson10/image-285.jpeg,image-285.jpeg: 32
+85,10,Pre-assessment · 3,13,Assigned original module visuals,assets/images/level1/lesson10/image-285.jpeg,image-285.jpeg: 32
+86,10,Post-assessment · 1,93,Personal/oral/practical task; no fixed visual assigned,,
+87,10,Post-assessment · 2,93,Personal/oral/practical task; no fixed visual assigned,,
+88,10,Post-assessment · 3,93,Personal/oral/practical task; no fixed visual assigned,,
+89,11,Pre-assessment · 1,14,Personal/oral/practical task; no fixed visual assigned,,
+90,11,Pre-assessment · 2,14,Personal/oral/practical task; no fixed visual assigned,,
+91,11,Pre-assessment · 3,14,Personal/oral/practical task; no fixed visual assigned,,
+92,11,Pre-assessment · 4,14,Personal/oral/practical task; no fixed visual assigned,,
+93,11,Pre-assessment · 5,14,Personal/oral/practical task; no fixed visual assigned,,
+94,11,Post-assessment · 1,95,Personal/oral/practical task; no fixed visual assigned,,
+95,11,Post-assessment · 2,95,Personal/oral/practical task; no fixed visual assigned,,
+96,11,Post-assessment · 3,95,Personal/oral/practical task; no fixed visual assigned,,
+97,11,Post-assessment · 4,95,Personal/oral/practical task; no fixed visual assigned,,
+98,11,Post-assessment · 5,95,Personal/oral/practical task; no fixed visual assigned,,
+99,12,Pre-assessment · 1,14,Personal/oral/practical task; no fixed visual assigned,,
+100,12,Pre-assessment · 2,14,Personal/oral/practical task; no fixed visual assigned,,
+101,12,Pre-assessment · 3,14,Personal/oral/practical task; no fixed visual assigned,,
+102,12,Post-assessment · 1,94,Personal/oral/practical task; no fixed visual assigned,,
+103,12,Post-assessment · 2,94,Personal/oral/practical task; no fixed visual assigned,,
+104,12,Post-assessment · 3,94,Personal/oral/practical task; no fixed visual assigned,,
+105,12,Post-assessment · 4,94,Personal/oral/practical task; no fixed visual assigned,,
+106,12,Post-assessment · 5,94,Personal/oral/practical task; no fixed visual assigned,,
+107,1,Hello Circle,47,Personal/oral/practical task; no fixed visual assigned,,
+108,1,Look and share,48,Assigned original module visuals,assets/images/level1/lesson01/image-97.jpeg,image-97.jpeg: 16
+109,1,Sentence starter,16,Assigned original module visuals,assets/images/level1/lesson01/image-97.jpeg,image-97.jpeg: 16
+110,1,Sentence starter,16,Assigned original module visuals,assets/images/level1/lesson01/image-97.jpeg,image-97.jpeg: 16
+111,1,Sentence starter,16,Assigned original module visuals,assets/images/level1/lesson01/image-97.jpeg,image-97.jpeg: 16
+112,1,Sentence starter,16,Assigned original module visuals,assets/images/level1/lesson01/image-97.jpeg,image-97.jpeg: 16
+113,1,Pair-and-Share,48,Assigned original module visuals,assets/images/level1/lesson01/image-97.jpeg,image-97.jpeg: 16
+114,2,Action Song,50,Personal/oral/practical task; no fixed visual assigned,,
+115,2,Secret Agent Mission Trail,51,Assigned original module visuals,assets/images/level1/lesson02/image-104.jpeg; assets/images/level1/lesson02/image-105.jpeg; assets/images/level1/lesson02/image-106.jpeg; assets/images/level1/lesson02/image-108.jpeg; assets/images/level1/lesson02/image-109.jpeg; assets/images/level1/lesson02/image-107.jpeg,image-104.jpeg: 17; image-105.jpeg: 17; image-106.jpeg: 17; image-108.jpeg: 17; image-109.jpeg: 17; image-107.jpeg: 17
+116,2,Secret Agent Mission Trail,51,Assigned original module visuals,assets/images/level1/lesson02/image-104.jpeg; assets/images/level1/lesson02/image-105.jpeg; assets/images/level1/lesson02/image-106.jpeg; assets/images/level1/lesson02/image-108.jpeg; assets/images/level1/lesson02/image-109.jpeg; assets/images/level1/lesson02/image-107.jpeg,image-104.jpeg: 17; image-105.jpeg: 17; image-106.jpeg: 17; image-108.jpeg: 17; image-109.jpeg: 17; image-107.jpeg: 17
+117,2,Secret Agent Mission Trail,51,Assigned original module visuals,assets/images/level1/lesson02/image-104.jpeg; assets/images/level1/lesson02/image-105.jpeg; assets/images/level1/lesson02/image-106.jpeg; assets/images/level1/lesson02/image-108.jpeg; assets/images/level1/lesson02/image-109.jpeg; assets/images/level1/lesson02/image-107.jpeg,image-104.jpeg: 17; image-105.jpeg: 17; image-106.jpeg: 17; image-108.jpeg: 17; image-109.jpeg: 17; image-107.jpeg: 17
+118,2,Secret Agent Mission Trail,51,Assigned original module visuals,assets/images/level1/lesson02/image-104.jpeg; assets/images/level1/lesson02/image-105.jpeg; assets/images/level1/lesson02/image-106.jpeg; assets/images/level1/lesson02/image-108.jpeg; assets/images/level1/lesson02/image-109.jpeg; assets/images/level1/lesson02/image-107.jpeg,image-104.jpeg: 17; image-105.jpeg: 17; image-106.jpeg: 17; image-108.jpeg: 17; image-109.jpeg: 17; image-107.jpeg: 17
+119,2,Secret Agent Mission Trail,51,Assigned original module visuals,assets/images/level1/lesson02/image-104.jpeg; assets/images/level1/lesson02/image-105.jpeg; assets/images/level1/lesson02/image-106.jpeg; assets/images/level1/lesson02/image-108.jpeg; assets/images/level1/lesson02/image-109.jpeg; assets/images/level1/lesson02/image-107.jpeg,image-104.jpeg: 17; image-105.jpeg: 17; image-106.jpeg: 17; image-108.jpeg: 17; image-109.jpeg: 17; image-107.jpeg: 17
+120,2,Secret Agent Mission Trail,51,Assigned original module visuals,assets/images/level1/lesson02/image-104.jpeg; assets/images/level1/lesson02/image-105.jpeg; assets/images/level1/lesson02/image-106.jpeg; assets/images/level1/lesson02/image-108.jpeg; assets/images/level1/lesson02/image-109.jpeg; assets/images/level1/lesson02/image-107.jpeg,image-104.jpeg: 17; image-105.jpeg: 17; image-106.jpeg: 17; image-108.jpeg: 17; image-109.jpeg: 17; image-107.jpeg: 17
+121,2,Secret Agent Mission Trail,51,Assigned original module visuals,assets/images/level1/lesson02/image-104.jpeg; assets/images/level1/lesson02/image-105.jpeg; assets/images/level1/lesson02/image-106.jpeg; assets/images/level1/lesson02/image-108.jpeg; assets/images/level1/lesson02/image-109.jpeg; assets/images/level1/lesson02/image-107.jpeg,image-104.jpeg: 17; image-105.jpeg: 17; image-106.jpeg: 17; image-108.jpeg: 17; image-109.jpeg: 17; image-107.jpeg: 17
+122,2,Secret Agent Mission Trail,51,Assigned original module visuals,assets/images/level1/lesson02/image-104.jpeg; assets/images/level1/lesson02/image-105.jpeg; assets/images/level1/lesson02/image-106.jpeg; assets/images/level1/lesson02/image-108.jpeg; assets/images/level1/lesson02/image-109.jpeg; assets/images/level1/lesson02/image-107.jpeg,image-104.jpeg: 17; image-105.jpeg: 17; image-106.jpeg: 17; image-108.jpeg: 17; image-109.jpeg: 17; image-107.jpeg: 17
+123,2,Mission card,16,Personal/oral/practical task; no fixed visual assigned,,
+124,2,Mission card,16,Personal/oral/practical task; no fixed visual assigned,,
+125,2,Mission card,16,Personal/oral/practical task; no fixed visual assigned,,
+126,2,Mission card,16,Personal/oral/practical task; no fixed visual assigned,,
+127,3,Follow My Lead,53,Personal/oral/practical task; no fixed visual assigned,,
+128,3,Look and share,53,Assigned original module visuals,assets/images/level1/lesson03/image-102.jpeg; assets/images/level1/lesson03/image-103.jpeg,"image-102.jpeg: 17,53; image-103.jpeg: 17"
+129,3,Kind directions,54,Assigned original module visuals,assets/images/level1/lesson03/image-102.jpeg; assets/images/level1/lesson03/image-103.jpeg,"image-102.jpeg: 17,53; image-103.jpeg: 17"
+130,3,Kind directions,54,Assigned original module visuals,assets/images/level1/lesson03/image-102.jpeg; assets/images/level1/lesson03/image-103.jpeg,"image-102.jpeg: 17,53; image-103.jpeg: 17"
+131,3,Kind directions,54,Assigned original module visuals,assets/images/level1/lesson03/image-102.jpeg; assets/images/level1/lesson03/image-103.jpeg,"image-102.jpeg: 17,53; image-103.jpeg: 17"
+132,3,Kind directions,54,Assigned original module visuals,assets/images/level1/lesson03/image-102.jpeg; assets/images/level1/lesson03/image-103.jpeg,"image-102.jpeg: 17,53; image-103.jpeg: 17"
+133,3,Kind directions,54,Assigned original module visuals,assets/images/level1/lesson03/image-102.jpeg; assets/images/level1/lesson03/image-103.jpeg,"image-102.jpeg: 17,53; image-103.jpeg: 17"
+134,3,Role-Play Activity,55,Assigned original module visuals,assets/images/level1/lesson03/image-102.jpeg; assets/images/level1/lesson03/image-103.jpeg,"image-102.jpeg: 17,53; image-103.jpeg: 17"
+135,3,Scenario card 2,17,Assigned original module visuals,assets/images/level1/lesson03/image-102.jpeg; assets/images/level1/lesson03/image-103.jpeg,"image-102.jpeg: 17,53; image-103.jpeg: 17"
+136,4,Word Clue,56,Personal/oral/practical task; no fixed visual assigned,,
+137,4,Word Clue,57,Assigned original module visuals,assets/images/level1/lesson04/image-384.jpeg; assets/images/level1/lesson04/image-219.jpeg,"image-384.jpeg: 57; image-219.jpeg: 25,57"
+138,4,Sizes and color,18,Assigned original module visuals,assets/images/level1/lesson04/page-018.jpg,page-018.jpg: 
+139,4,Color and shapes,19,Assigned original module visuals,assets/images/level1/lesson04/page-019.jpg,page-019.jpg: 
+140,4,Shapes and how things feel,20,Assigned original module visuals,assets/images/level1/lesson04/page-020.jpg,page-020.jpg: 
+141,4,How things look and feelings,21,Assigned original module visuals,assets/images/level1/lesson04/page-021.jpg,page-021.jpg: 
+142,4,Feelings and numbers,22,Assigned original module visuals,assets/images/level1/lesson04/page-022.jpg,page-022.jpg: 
+143,4,Describing words,58,Personal/oral/practical task; no fixed visual assigned,,
+144,4,Describing words,58,Personal/oral/practical task; no fixed visual assigned,,
+145,4,Describing words,58,Personal/oral/practical task; no fixed visual assigned,,
+146,4,Describing words,58,Personal/oral/practical task; no fixed visual assigned,,
+147,4,Describe It! Share It!,59,Assigned original module visuals,assets/images/level1/lesson04/image-219.jpeg,"image-219.jpeg: 25,57"
+148,5,Quick Share,60,Personal/oral/practical task; no fixed visual assigned,,
+149,5,Picture discussion,61,Assigned original module visuals,assets/images/level1/lesson05/image-210.jpeg,image-210.jpeg: 24
+150,5,Sentence starter,61,Assigned original module visuals,assets/images/level1/lesson05/image-210.jpeg,image-210.jpeg: 24
+151,5,Sentence starter,61,Assigned original module visuals,assets/images/level1/lesson05/image-210.jpeg,image-210.jpeg: 24
+152,5,Sentence starter,61,Assigned original module visuals,assets/images/level1/lesson05/image-210.jpeg,image-210.jpeg: 24
+153,5,Sentence starter,61,Assigned original module visuals,assets/images/level1/lesson05/image-210.jpeg,image-210.jpeg: 24
+154,5,Picture Card Pack,23,Assigned original module visuals,assets/images/level1/lesson05/page-023.jpg,page-023.jpg: 
+155,5,Picture Card Pack,24,Assigned original module visuals,assets/images/level1/lesson05/page-024.jpg,page-024.jpg: 
+156,5,Picture Card Pack,25,Assigned original module visuals,assets/images/level1/lesson05/page-025.jpg,page-025.jpg: 
+157,6,Quick Draw,63,Personal/oral/practical task; no fixed visual assigned,,
+158,6,Listen and draw,64,Personal/oral/practical task; no fixed visual assigned,,
+159,6,Check and discuss,64,Assigned original module visuals,assets/images/level1/lesson06/image-215.jpeg,image-215.jpeg: 25
+160,6,Talk about details,64,Assigned original module visuals,assets/images/level1/lesson06/image-215.jpeg,image-215.jpeg: 25
+161,6,Talk about details,64,Assigned original module visuals,assets/images/level1/lesson06/image-215.jpeg,image-215.jpeg: 25
+162,6,Pair Describe and Draw,65,Assigned original module visuals,assets/images/level1/lesson06/image-222.jpeg; assets/images/level1/lesson06/image-223.jpeg; assets/images/level1/lesson06/image-224.jpeg; assets/images/level1/lesson06/image-225.jpeg; assets/images/level1/lesson06/image-226.jpeg,image-222.jpeg: 26; image-223.jpeg: 26; image-224.jpeg: 26; image-225.jpeg: 26; image-226.jpeg: 26
+163,7,Guess the Next Picture,66,Assigned original module visuals,assets/images/level1/lesson07/image-227.jpeg; assets/images/level1/lesson07/image-228.jpeg,image-227.jpeg: 26; image-228.jpeg: 26
+164,7,Picture Story Chain,67,Assigned original module visuals,assets/images/level1/lesson07/image-227.jpeg; assets/images/level1/lesson07/image-228.jpeg; assets/images/level1/lesson07/image-229.jpeg; assets/images/level1/lesson07/image-230.jpeg; assets/images/level1/lesson07/image-231.jpeg; assets/images/level1/lesson07/image-232.jpeg,image-227.jpeg: 26; image-228.jpeg: 26; image-229.jpeg: 26; image-230.jpeg: 26; image-231.jpeg: 26; image-232.jpeg: 26
+165,7,Group Picture Story Chain,68,Assigned original module visuals,assets/images/level1/lesson07/page-068.jpg,page-068.jpg: 
+166,7,Group Picture Story Chain,69,Assigned original module visuals,assets/images/level1/lesson07/page-069.jpg,page-069.jpg: 
+167,7,Group Picture Story Chain,70,Assigned original module visuals,assets/images/level1/lesson07/page-070.jpg,page-070.jpg: 
+168,7,Share your story,70,Personal/oral/practical task; no fixed visual assigned,,
+169,8,Mystery Picture Peek,72,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg,image-235.jpeg: 27
+170,8,See & Say,73,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg; assets/images/level1/lesson08/image-236.jpeg,image-235.jpeg: 27; image-236.jpeg: 27
+171,8,Picture Question Circle,73,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg; assets/images/level1/lesson08/image-236.jpeg,image-235.jpeg: 27; image-236.jpeg: 27
+172,8,Picture Question Circle,73,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg; assets/images/level1/lesson08/image-236.jpeg,image-235.jpeg: 27; image-236.jpeg: 27
+173,8,Picture Question Circle,73,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg; assets/images/level1/lesson08/image-236.jpeg,image-235.jpeg: 27; image-236.jpeg: 27
+174,8,Picture Question Circle,73,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg; assets/images/level1/lesson08/image-236.jpeg,image-235.jpeg: 27; image-236.jpeg: 27
+175,8,Picture Question Circle,73,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg; assets/images/level1/lesson08/image-236.jpeg,image-235.jpeg: 27; image-236.jpeg: 27
+176,8,My Connection Share,73,Assigned original module visuals,assets/images/level1/lesson08/image-235.jpeg; assets/images/level1/lesson08/image-236.jpeg,image-235.jpeg: 27; image-236.jpeg: 27
+177,8,Let’s talk,74,Personal/oral/practical task; no fixed visual assigned,,
+178,9,Rhyme & Clap Dance,75,Personal/oral/practical task; no fixed visual assigned,,
+179,9,The Itsy-Bitsy Spider,76,Assigned original module visuals,assets/images/level1/lesson09/image-281.jpeg; assets/images/level1/lesson09/image-282.jpeg; assets/images/level1/lesson09/image-279.jpeg; assets/images/level1/lesson09/image-280.jpeg,image-281.jpeg: 31; image-282.jpeg: 31; image-279.jpeg: 31; image-280.jpeg: 31
+180,9,Talk about the poem,76,Assigned original module visuals,assets/images/level1/lesson09/image-281.jpeg; assets/images/level1/lesson09/image-282.jpeg; assets/images/level1/lesson09/image-279.jpeg; assets/images/level1/lesson09/image-280.jpeg,image-281.jpeg: 31; image-282.jpeg: 31; image-279.jpeg: 31; image-280.jpeg: 31
+181,9,Pick & Explore,76,Assigned original module visuals,assets/images/level1/lesson09/page-028.jpg; assets/images/level1/lesson09/page-029.jpg; assets/images/level1/lesson09/page-030.jpg; assets/images/level1/lesson09/page-031.jpg,page-028.jpg: ; page-029.jpg: ; page-030.jpg: ; page-031.jpg: 
+182,9,Practice with a Buddy & Props,77,Assigned original module visuals,assets/images/level1/lesson09/page-028.jpg; assets/images/level1/lesson09/page-029.jpg; assets/images/level1/lesson09/page-030.jpg; assets/images/level1/lesson09/page-031.jpg,page-028.jpg: ; page-029.jpg: ; page-030.jpg: ; page-031.jpg: 
+183,9,Polish with the Teacher,77,Personal/oral/practical task; no fixed visual assigned,,
+184,9,Little Voices Showcase,77,Personal/oral/practical task; no fixed visual assigned,,
+185,10,"Hello, Friend! Circle",78,Personal/oral/practical task; no fixed visual assigned,,
+186,10,"Our Toys, Our Stories",79,Assigned original module visuals,assets/images/level1/lesson10/image-285.jpeg; assets/images/level1/lesson10/image-286.jpeg,image-285.jpeg: 32; image-286.jpeg: 32
+187,10,Toy Show & Tell Chat,79,Assigned original module visuals,assets/images/level1/lesson10/image-285.jpeg; assets/images/level1/lesson10/image-286.jpeg,image-285.jpeg: 32; image-286.jpeg: 32
+188,10,Find a Toy Match,79,Assigned original module visuals,assets/images/level1/lesson10/image-285.jpeg; assets/images/level1/lesson10/image-286.jpeg,image-285.jpeg: 32; image-286.jpeg: 32
+189,10,Make a Toy Story Together,80,Assigned original module visuals,assets/images/level1/lesson10/image-285.jpeg; assets/images/level1/lesson10/image-286.jpeg,image-285.jpeg: 32; image-286.jpeg: 32
+190,10,Share Our Toy Stories,80,Personal/oral/practical task; no fixed visual assigned,,
+191,11,Word Catch!,81,Personal/oral/practical task; no fixed visual assigned,,
+192,11,Guess My Word Friend!,81,Assigned original module visuals,assets/images/level1/lesson11/image-292.jpeg; assets/images/level1/lesson11/image-293.jpeg; assets/images/level1/lesson11/image-294.jpeg; assets/images/level1/lesson11/image-295.jpeg; assets/images/level1/lesson11/image-296.jpeg; assets/images/level1/lesson11/image-297.jpeg; assets/images/level1/lesson11/image-298.jpeg; assets/images/level1/lesson11/image-299.jpeg; assets/images/level1/lesson11/image-300.jpeg,image-292.jpeg: 33; image-293.jpeg: 33; image-294.jpeg: 33; image-295.jpeg: 33; image-296.jpeg: 33; image-297.jpeg: 33; image-298.jpeg: 33; image-299.jpeg: 33; image-300.jpeg: 33
+193,11,Word Friends on the Board,82,Personal/oral/practical task; no fixed visual assigned,,
+194,11,How words connect,82,Personal/oral/practical task; no fixed visual assigned,,
+195,11,Word Chain Game,82,Personal/oral/practical task; no fixed visual assigned,,
+196,11,Why Word Friends?,82,Personal/oral/practical task; no fixed visual assigned,,
+197,11,Why Word Friends?,82,Personal/oral/practical task; no fixed visual assigned,,
+198,12,Copy the Sound!,84,Personal/oral/practical task; no fixed visual assigned,,
+199,12,Tongue twister,83,Assigned original module visuals,assets/images/level1/lesson12/image-291.jpeg,image-291.jpeg: 33
+200,12,Tongue twister,83,Assigned original module visuals,assets/images/level1/lesson12/image-289.jpeg,image-289.jpeg: 33
+201,12,Tongue twister,83,Assigned original module visuals,assets/images/level1/lesson12/image-290.jpeg,image-290.jpeg: 33
+202,12,Let’s talk,84,Personal/oral/practical task; no fixed visual assigned,,
+203,12,Let’s talk,84,Personal/oral/practical task; no fixed visual assigned,,
+204,12,Tongue Twister Game,84,Assigned original module visuals,assets/images/level1/lesson12/image-289.jpeg; assets/images/level1/lesson12/image-290.jpeg; assets/images/level1/lesson12/image-291.jpeg,image-289.jpeg: 33; image-290.jpeg: 33; image-291.jpeg: 33
+205,1,Teacher-guided lesson checklist,47,Assigned original module visuals,assets/images/level1/lesson01/page-047.jpg; assets/images/level1/lesson01/page-048.jpg; assets/images/level1/lesson01/page-049.jpg,page-047.jpg: ; page-048.jpg: ; page-049.jpg: 
+206,1,Additional intervention materials,35,Assigned original module visuals,assets/images/level1/lesson01/page-035.jpg,page-035.jpg: 
+207,2,Teacher-guided lesson checklist,50,Assigned original module visuals,assets/images/level1/lesson02/page-050.jpg; assets/images/level1/lesson02/page-051.jpg; assets/images/level1/lesson02/page-052.jpg,page-050.jpg: ; page-051.jpg: ; page-052.jpg: 
+208,2,Additional intervention materials,35,Assigned original module visuals,assets/images/level1/lesson02/page-035.jpg,page-035.jpg: 
+209,3,Teacher-guided lesson checklist,52,Assigned original module visuals,assets/images/level1/lesson03/page-052.jpg; assets/images/level1/lesson03/page-053.jpg; assets/images/level1/lesson03/page-054.jpg; assets/images/level1/lesson03/page-055.jpg,page-052.jpg: ; page-053.jpg: ; page-054.jpg: ; page-055.jpg: 
+210,3,Additional intervention materials,35,Assigned original module visuals,assets/images/level1/lesson03/page-035.jpg,page-035.jpg: 
+211,4,Teacher-guided lesson checklist,56,Assigned original module visuals,assets/images/level1/lesson04/page-056.jpg; assets/images/level1/lesson04/page-057.jpg; assets/images/level1/lesson04/page-058.jpg; assets/images/level1/lesson04/page-059.jpg,page-056.jpg: ; page-057.jpg: ; page-058.jpg: ; page-059.jpg: 
+212,4,Additional intervention materials,36,Assigned original module visuals,assets/images/level1/lesson04/page-036.jpg,page-036.jpg: 
+213,5,Teacher-guided lesson checklist,60,Assigned original module visuals,assets/images/level1/lesson05/page-060.jpg; assets/images/level1/lesson05/page-061.jpg; assets/images/level1/lesson05/page-062.jpg,page-060.jpg: ; page-061.jpg: ; page-062.jpg: 
+214,5,Additional intervention materials,36,Assigned original module visuals,assets/images/level1/lesson05/page-036.jpg; assets/images/level1/lesson05/page-037.jpg; assets/images/level1/lesson05/page-038.jpg,page-036.jpg: ; page-037.jpg: ; page-038.jpg: 
+215,6,Teacher-guided lesson checklist,63,Assigned original module visuals,assets/images/level1/lesson06/page-063.jpg; assets/images/level1/lesson06/page-064.jpg; assets/images/level1/lesson06/page-065.jpg,page-063.jpg: ; page-064.jpg: ; page-065.jpg: 
+216,6,Additional intervention materials,39,Assigned original module visuals,assets/images/level1/lesson06/page-039.jpg; assets/images/level1/lesson06/page-040.jpg; assets/images/level1/lesson06/page-041.jpg,page-039.jpg: ; page-040.jpg: ; page-041.jpg: 
+217,7,Teacher-guided lesson checklist,66,Assigned original module visuals,assets/images/level1/lesson07/page-066.jpg; assets/images/level1/lesson07/page-067.jpg; assets/images/level1/lesson07/page-068.jpg; assets/images/level1/lesson07/page-069.jpg; assets/images/level1/lesson07/page-070.jpg; assets/images/level1/lesson07/page-071.jpg,page-066.jpg: ; page-067.jpg: ; page-068.jpg: ; page-069.jpg: ; page-070.jpg: ; page-071.jpg: 
+218,7,Additional intervention materials,43,Assigned original module visuals,assets/images/level1/lesson07/page-043.jpg; assets/images/level1/lesson07/page-044.jpg; assets/images/level1/lesson07/page-045.jpg,page-043.jpg: ; page-044.jpg: ; page-045.jpg: 
+219,8,Teacher-guided lesson checklist,72,Assigned original module visuals,assets/images/level1/lesson08/page-072.jpg; assets/images/level1/lesson08/page-073.jpg; assets/images/level1/lesson08/page-074.jpg,page-072.jpg: ; page-073.jpg: ; page-074.jpg: 
+220,8,Additional intervention materials,45,Assigned original module visuals,assets/images/level1/lesson08/page-045.jpg,page-045.jpg: 
+221,9,Teacher-guided lesson checklist,75,Assigned original module visuals,assets/images/level1/lesson09/page-075.jpg; assets/images/level1/lesson09/page-076.jpg; assets/images/level1/lesson09/page-077.jpg,page-075.jpg: ; page-076.jpg: ; page-077.jpg: 
+222,10,Teacher-guided lesson checklist,78,Assigned original module visuals,assets/images/level1/lesson10/page-078.jpg; assets/images/level1/lesson10/page-079.jpg; assets/images/level1/lesson10/page-080.jpg,page-078.jpg: ; page-079.jpg: ; page-080.jpg: 
+223,11,Teacher-guided lesson checklist,81,Assigned original module visuals,assets/images/level1/lesson11/page-081.jpg; assets/images/level1/lesson11/page-082.jpg; assets/images/level1/lesson11/page-083.jpg,page-081.jpg: ; page-082.jpg: ; page-083.jpg: 
+224,12,Teacher-guided lesson checklist,83,Assigned original module visuals,assets/images/level1/lesson12/page-083.jpg; assets/images/level1/lesson12/page-084.jpg; assets/images/level1/lesson12/page-085.jpg,page-083.jpg: ; page-084.jpg: ; page-085.jpg: 
+225,12,Additional intervention materials,42,Assigned original module visuals,assets/images/level1/lesson12/page-042.jpg,page-042.jpg: 
