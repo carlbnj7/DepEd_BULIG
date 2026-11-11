@@ -1,0 +1,6 @@
+Options -Indexes
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^(app|config|database|storage|tools|tests|docs)/ - [F,L]
+RewriteRule ^$ public/ [L,R=302]
+</IfModule>
