@@ -1,0 +1,1248 @@
+# Level 6 Grade 6 cards. Edited by hand against the module pages; see README in build.py.
+
+######## LESSON 1 · pre · Pre-Assessment
+
+=== 1.1 | The Face in the Pool | Noting Details | pages 9,10
+pics: p009-1
+# SKILL A-NOTING DETAILS
+ins: Directions: Read the passages and answer the questions.
+¶ THE FACE IN THE POOL
+¶ Narcissus was out of breath from running when he came to a clear pool. He
+stopped to drink. Just as he was about to sip the cool water, he saw a face in
+the pool. It was handsome and he was attracted to it.
+¶ “Who are you?” he asked.
+¶ “Who are you?” echoed someone.
+¶ “Why are you mocking me?” asked Narcissus.
+¶ “Mocking me,” said the voice.
+¶ Narcissus was puzzled. He wanted to talk with the face in the pool but it
+would not answer. He tried to catch it but to no avail. At last, he lost hope and
+plunged into the pool hoping to see the owner of the face.
+q 1: Why was Narcissus out of breath?
+| A. He was running.
+| B. He was Jumping.
+| C. He was skipping.
+q 2: Which of these sentences is true?
+| A. Narcissus came to a clear lake.
+| B. Narcissus came to a clear pool.
+| C. Narcissus came to a clear path.
+q 3: He stopped to ____.
+| A. drink
+| B. swim
+| C. bathe
+q 4: He saw something which ____.
+| A. attracted him
+| B. frightened him
+| C. drove him away
+q 5: What did he see in the pool?
+| A. a boat
+| B. a face
+| C. a flower
+
+=== 1.2 | Jay’s Curiosity | Getting the General Significance | pages 11
+pics: p011-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+ins: Directions: Read the passages and answer the questions.
+¶ JAY’S CURIOSITY
+¶ “Is Father going hunting?” Jay asked his mother when he saw his father
+get his gun and go out of the house.
+¶ “Didn’t you listen to the radio, Jay?” asked her mother. “Every citizen
+who owns a gun without license is asked to surrender it to the government.”
+¶ “Will Father be punished for owning a gun?” asked Jay.
+¶ “No, Jay,” answered Mother. “No questions will be asked to citizens
+who surrender their guns. They will also be issued receipts.”
+¶ “That is a very good move to prevent crimes,” said Jay. “Ordinary
+citizens like us will have nothing to be afraid of anymore.”
+¶ “You’re right, Jay,” agreed Mother. “There is peace around us now.”
+q 1: Which word best describe what Mother thinks about our present society?
+| A. fearful
+| B. peaceful
+| C. same as before
+q 2: Which of these statements is true?
+| A. Citizen fear for their lives.
+| B. Citizen cannot rest easily.
+| C. Citizen are not afraid anymore.
+q 3: What is expected of every citizen who possesses firearms without license?
+| A. to keep it
+| B. to fight with it
+| C. to surrender it
+
+=== 1.3 | Rice | Predicting Outcomes and Making Inferences | pages 12
+pics: p012-1
+# SKILL C-PREDICTING OUTCOME OF A GIVEN EVENT AND MAKING INFERENCES
+ins: Directions: Read the passages and answer the questions.
+¶ RICE
+¶ Rice is a cereal native in Asia and Africa. It is the staple food of more
+than half of the people in the world.
+¶ Rice is a plant that grows the whole year round. It grows from two to four
+feet tall. It has round jointed stems, long-pointed leaves and seeds borne in
+dense heads on separate stalks.
+¶ Brown rice with bran layer is rice in vitamin B, a cure for beriberi. Polished
+white rice is rich in starch but low in protein, fat, and vitamin B. In the Orient,
+the fine soft straw of the rice plant is used for weaving hats and slippers.
+Powdered grain is used for making laundry starch and distilled liquor.
+q 1: What would happen if rice would suddenly disappear?
+| A. People would rejoice.
+| B. People would not mind.
+| C. Many people would starve.
+q 2: What will happen to a person with beriberi if he eats brown rice with the
+bran layer?
+| A. He will get weaker.
+| B. He will die of beriberi.
+| C. He will be cured of beriberi.
+q 3: Which do you think is more nutritious, brown rice, or white polished rice?
+| A. brown rice
+| B. neither of the two
+| C. white polished ric
+
+=== 1.4 | Wally’s Kite | Reading to Follow Precise Directions | pages 13
+pics: p013-1
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+ins: Directions: Read the passages and answer the questions.
+¶ WALLY’S KITE
+¶ It was Saturday morning and Wally was getting ready to fly his kite. Soon
+his friends Dennis and Berto came along. Together they went to the field. They
+tossed their kites up to the air. The kites flew up into the sky until they look like
+birds. The boys had a fine time. Suddenly the kite flew away up to the sky. He
+ran fast to follow his kite. Dennis ran to follow Wally. At last Wally’s kite landed
+on a treetop. Wally and Dennis reached the tree where the kite landed. Wally
+climbed the tree and brought his kite down, but it could not fly anymore. Its
+wings and tail were broken.
+q 1: What day was it?
+q 2: Write the words that tell who came along while Wally was flying his kite.
+q 3: Which of these phrases tell what the boys had. Copy the phrase.
+| A. had a fine time
+| B. had a bad time
+| C. had an accident
+q 4: Draw the things that looked like birds.
+q 5: Why Wally’s kite could not fly?
+q 6: If you have a kite what design do you like to have and why?
+q 7: What object you can compare with a kite? Explain why?
+
+=== 1.5 | A Fairy Tale from Japan | Reading Exercises for Speed and Comprehension | pages 14,15,16
+pics: p014-1
+# SKILL E- READING EXERCISES FOR SPEED AND COMPREHENSION
+ins: Directions: Read the passages and answer the questions.
+¶ A FAIRY TALE FROM JAPAN
+¶ Once upon a time there lived an old couple in one small village in
+Japan. They had no children so they went from temple to temple to offer
+prayers to their gods so that they might be blessed with a child. But their
+prayers were in vain.
+¶ One morning, after working in the garden, the couple sat down under a
+peach tree to rest. The husband was telling his wife how much he wanted to
+have a son to help him in his garden when a very big peach fell on his wife’s
+lap. She got the fruit and put it in her pocket.
+¶ After a while, they went home for breakfast. As the husband was about
+to cut the peach, he heard a cry. “Let me out!” said the voice. When the wife
+looked into the fruit, she saw a child as big as her little finger. The woman lifted
+the child and kissed him.
+¶ “I heard your prayers up there,” the child said, “So I came to be your
+son.”
+¶ “We will love you very much,” the couple said.
+¶ The couple called the tiny child Peaching. They devoted their time in
+making him happy. They treated him like a real son. But Peaching did not grow
+big like other children. Yet he could help his father plow the field by sitting on
+the right ear of the plow horse and directing him where to go. He could also
+go marketing for his mother by carrying the coins in a small bag. He would sit
+in the market basket carried by a dog.
+¶ He always did his marketing early to avoid curios people who might
+notice him. The couple found a good helper in their tiny son. They loved him
+more each day.
+¶ One night as Peaching’s parents were sleeping, they both have similar
+dreams. They dreamed that if they would dip their tiny son into the brook that
+was in their yard, he would grow up like other children.
+¶ The next morning the happy parents told each other about their dreams
+¶ They tiptoed to their tiny son’s room. The husband carried the bed where
+their tiny son was sleeping soundly. He immersed the bed with the tiny boy into
+the brook.
+¶ They were both surprised when the bed seemed to have disappeared
+from their hands. They were so frightened that they began looking for it among
+the waterlilies near the bank of the brook.
+¶ They heard a merry laughter behind them. When they turned, the
+couple saw a young man holding the tiny bed in his hands.
+¶ “Father, Mother, I am Peaching,” he said as he rushed and embraced
+the couple.
+¶ “A wicked fairy bewitched me and placed me inside a peach,”
+Peaching explained. “Because you loved me and baptized me in this brook,
+the enchantment was broken. Now I will really be a son to you.”
+¶ The more he became a great help to the couple. He loved his foster
+parents dearly. Not long after, Peaching met a lass from another barrio. He fell
+in love with her and they were married.
+¶ The old couple lived happily with their dear son and his family ever after.
+# 529 WORDS
+speed: 529
+q 1: The Japanese couple prayed for a ____.
+| A. daughter | B. son | C. child
+q 2: They sat down to rest under a ____.
+| A. peach tree
+| B. orange tree
+| C. mango tree
+q 3: A big peach fell on the woman’s ____.
+| A. shoulder | B. head | C. lap
+q 4: The child they saw was no bigger than the couple’s little ____.
+| A. head
+| B. toes
+| C. fingers
+q 5: They called him ____.
+| A. Peaching
+| B. Orangeling | C. Ting-a-ling
+q 6: The tiny boy went marketing early to avoid ____.
+| A. cars
+| B. curious people | C. his parents
+q 7: One night, the couple dreamed that they should dip their tiny son into a
+- .
+| A. river
+| B. well
+| C. brook
+q 8: The tiny boy was bewitched by a ____.
+| A. fairy
+| B. giant | C. kapre
+q 9: The enchantment was broken because the couple the boy ____.
+| A. hated
+| B. loved
+| C. killed
+q 10: The old couple lived with their dear son ____.
+| A. happily
+| B. sadly
+| C. poorly.
+
+######## LESSON 2 · lesson · Rules to Follow
+
+=== 2.1 | Rules to Follow | Noting Details | pages 18,19
+pics: p018-1
+# SKILL A-NOTING DETAILS
+# Activity 1 Exercise 1
+ins: Directions: Read the passages and answer the questions.
+read: Rules to Follow
+¶ The Grade Six pupils decided to make their room clean, orderly and beautiful. Here are some of the rules everyone needs to follow:
+¶ Wipe your shoes on the doormat before entering the room.
+¶ Put the wastepaper, fruit peelings and candy wrappers in the wastebasket.
+¶ Keep the walls, desks and tables free from pencil and chalk marks and scratches.
+¶ Put the cleaning materials in a box.
+¶ Arrange the furniture properly.
+¶ Put away your pencils, books, notebooks after using them.
+¶ Hang umbrellas and raincoats in one corner of the room.
+¶ Keep books clean and well- covered.
+q 1: What did the pupils decide to do?
+| A. make their room clean, orderly and beautiful
+| B. make their homes clean, orderly and beautiful
+| C. make their school surroundings clean, orderly and beautiful
+q 2: What did they agreed upon?
+| A. to form a society
+| B. to follow the rules
+| C. to work on the school ground
+q 3: What will they do with their shoes?
+| A. wipe on the doormat
+| B. leave on the doormat
+| C. put under the doormat
+q 4: From what will they keep the furniture free?
+| A. books
+| B. cover
+| C. scratches
+q 5: Where should the cleaning materials be kept?
+| A. box
+| B. drawer
+| C. bookcase
+q 6: How should the furniture be arranged?
+| A. properly | B. carelessly | C. artistically
+q 7: Where should one keep his pencils, books and notebooks after using
+¶ them?
+| A. in this bag
+| B. on the desk
+| C. on the teacher’s table
+q 8: Where should wastepaper be thrown?
+| A. in the desk
+| B. in the drawer
+| C. in the wastebasket
+q 9: Where should one hang raincoats and umbrellas?
+| A. on the desk
+| B. in the cabinet
+| C. on one corner of the room
+q 10: What should be kept clean and well-covered?
+| A. desks
+| B. books
+| C. tables
+
+######## LESSON 3 · lesson · Daphne
+
+=== 3.1 | Daphne | Noting Details | pages 20,21
+pics: p020-1
+# SKILL A-NOTING DETAILS
+# Activity 2 Exercise 2
+ins: Directions: Read the passages and answer the questions.
+¶ DAPHNE
+¶ Daphne was a beautiful nymph. The sun god, Apollo, fell in love with her
+but she rejected him. Once, Apollo saw here and pursued her. Daphne sought
+shelter behind a big tree. She was out of breath from running. Now, as she
+leaned on the tree, she looked back with threw herself upon her knees and
+prayed to be saved from her pursuer. She rose with outstretched arms. Then
+her fingers fluttered gently, as if blown by a gentle breeze. Little by little she was
+changed from a beautiful nymph to a laurel tree. Slowly she broke into a smile.
+Now, she was safe. Apollo could not carry her away anymore.
+q 1: Daphne sought shelter behind ____.
+| A. a big tree
+| B. a laurel tree
+| C. a large tree
+q 2: As she leaned on the tree, she looked back with ____.
+| A. round eyes
+| B. smiling eyes
+| C. frightened eyes
+q 3: She was out of breath from ____.
+| A. talking
+| B. running
+| C. laughing
+q 4: She prayed to be saved from her ____.
+| A. father
+| B. pursuer
+| C. husband
+q 5: Slowly she stretched out her ____.
+| A. feet
+| B. arms
+| C. hands
+q 6: She threw herself upon her ____.
+| A. bed
+| B. knees
+| C. pillow
+q 7: She was changed from a beautiful nymph into ____.
+| A. an oak tree
+| B. a narra tree
+| C. a laurel tree
+q 8: Her fingers fluttered ____.
+| A. slowly
+| B. gently
+| C. rapidly
+q 9: She felt safe, after she became a ____.
+| A. tree
+| B. nymph
+| C. goddess
+q 10: She could not be carried away anymore by ____.
+| A. Theus
+| B. Midas
+| C. Apollo
+
+######## LESSON 4 · lesson · How the Romans Cooked Their Food
+
+=== 4.1 | How the Romans Cooked Their Food | Noting Details | pages 22,23
+pics: p022-1
+# SKILL A-NOTING DETAILS
+# Activity 3 Exercise 3
+ins: Directions: Read the passages and answer the questions.
+¶ HOW THE ROMANS COOKED THEIR FOOD
+¶ Long ago the Romans used to cook their food just as the way hunters
+today sometimes do. They dug out an over in the ground, lined it with stones
+and made a fire in it. When the improvised oven was well heated, they raked
+out the ashes, put in the food and covered it. We learned about this from
+excavations in the city of Pompeii. Pompeii was destroyed and buried during
+the eruption of a volcano hundreds of years ago. When the city found
+excavated, ovens with wood and ashes were found among the ruins. It is
+believed that just as the cooks were about to bake, the fiery volcano rained
+out ashes and boiling lava and burned down the city.
+q 1: In ancient times, how did the Romans cook their food?
+| A. just as the cooks do today
+| B. just as the people do today
+| C. just as some hunters do today
+q 2: What did they use to line the ground where they built the ovens?
+| A. lime
+| B. clay
+| C. stones
+q 3: What did they do with the oven before putting in their food?
+| A. They cooled it.
+| B. They heated it.
+| C. They poured water in it.
+q 4: Where did they dig their ovens?
+| A. in the ground
+| B. in the cement
+| C. in the tree trunks
+q 5: What did they rake out of the oven before putting in their food?
+| A. sand
+| B. ashes
+| C. wood
+q 6: Who cooked their food in underground ovens?
+| A. the Jews
+| B. the Italians
+| C. the Romans
+q 7: Who had ovens with food ashes in them?
+| A. the British
+| B. the Romans
+| C. the people of Pompeii
+q 8: What destroyed Pompeii?
+| A. a great fire
+| B. a terrible flood
+| C. a volcanic eruption
+q 9: What were the cooks about to do when the volcano erupted?
+| A. eat
+| B. bake
+| C. wash dishes
+q 10: What was done with the buried city?
+| A. rebuilt
+| B. forgotten
+| C. excavated
+
+######## LESSON 5 · lesson · First Night in the City
+
+=== 5.1 | First Night in the City | Noting Details | pages 24,25
+pics: p024-1
+# SKILL A-NOTING DETAILS
+# Activity 4 Exercise 4
+ins: Directions: Read the passages and answer the questions.
+¶ FIRST NIGHT IN THE CITY
+¶ It was Lynn’s first night in the city. She woke up with a stun and then she
+remembered where she was. She had never spent the night in a city before.
+She lay still and listened. Cars and jeepneys seemed to race like ants heading
+straight towards here. A new house was being built next to her aunt’s house
+and the cement mixer was roaring angrily. Downstairs, in the kitchen, she heard
+the clattering of pans. Then, she heard the chime of the big clock. She turned
+over and fell asleep again.
+q 1: What did Lynn remember when she woke up?
+| A. She was in the city.
+| B. She was in their house.
+| C. She was in her country.
+q 2: Has Lynn ever spent a night before in the city?
+| A. No
+| B. Yes
+| C. Maybe
+q 3: Where did Lynn imagine the cars and jeeps going?
+| A. heading to the city
+| B. heading towards her
+| C. heading towards the house
+q 4: Where did the roaring sound come from?
+| A. a bulldozer
+| B. a cement mixer
+| C. a street sweeper
+q 5: How did she know the time?
+| A. from the radio
+| B. from the big clock
+| C. from the position of the sun
+q 6: Why did Lynn wake up with a stun?
+| A. She was afraid.
+| B. She had a dream.
+| C. She felt she was in a strange place.
+q 7: What did she do when she woke up?
+| A. She ran out to play.
+| B. She washed her face.
+| C. She lay still and listened
+q 8: What did Lynn hear passing in front of the house?
+| A. buses and trains
+| B. cars and jeepneys
+| C. streetcars and carts
+q 9: Where did she hear the clattering of the pans?
+| A. from the streets
+| B. from the kitchen
+| C. from the living room
+q 10: Did Lynn fall asleep again?
+| A. Yes
+| B. No
+| C. Maybe
+
+######## LESSON 6 · lesson · Ed’s Day
+
+=== 6.1 | Ed’s Day | Getting the General Significance | pages 26,27
+pics: p026-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Activity 5 Exercise 5
+ins: Directions: Read the passages and answer the questions.
+¶ ED’S DAY
+¶ As Ed passed in his neighbor’s yard, he saw Tiger, his neighbor’s dog,
+stumble and fall across the live fallen electric wire. Tiger gave one wild yell of
+pain and lay on the ground, kicking and struggling to set himself loose from the
+wire.
+¶ Ed stopped his neighbor’s two sons from going near the dog. He saw
+one of the boys rush towards the dog, crying. He ran to prevent the boy from
+touching the dog.
+¶ “Oh, poor Tiger!” Ed said with tears in his eyes as he saw Tiger, helplessly
+freeing himself. Then he turned to the boys and shouted, “Keep back there or
+that wire will kill you, too.”
+¶ “Run home quickly and call up the Electrical Company,” Ed told one of
+the brothers. “Tell them a live wire has killed a dog and may kill others too if
+they don’t hurry. Give the address. Run!”
+q 1: What did Ed see?
+| A. how a fallen electric wire killed the passerby
+| B. how a dog was killed by a live, fallen electric wire
+| C. how a boy was killed by a live, fallen electric wire
+q 2: Who did Ed save from harm?
+| A. Tiger
+| B. the two boys
+| C. the man from the Electric Company
+q 3: From whom would the boys ask for help?
+| A. from the people
+| B. from their parents
+| C. from the Electric Company
+
+######## LESSON 7 · lesson · The Crayfish
+
+=== 7.1 | The Crayfish | Getting the General Significance | pages 28
+pics: p028-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# activity 6 Exercise 6
+ins: Directions: Read the passages and answer the questions.
+¶ THE CRAYFISH
+¶ The most striking thing in the appearance of the crayfish is the pair of
+nippers at the tips of its front legs. Joined together are its “thumb and finger”.
+The “thumb” is jointed so that it can move back and forth freely. Both nippers
+are armed with saw teeth and a sharp claw at the tip so that they can get a
+firm grip of any object. The claws can be bent in any direction.
+q 1: What is the story about?
+| a. the crab
+| b. the crayfish
+| c. a water animal
+q 2: Which is true about the animal described?
+| a. It has a great pair of nippers on its sides.
+| b. It has a great pair of nippers on its hind legs.
+| c. It has a great pair of nippers on each tip of his front
+legs.
+q 3: Which sentence describes their claws?
+| a. It can be bent sideways.
+| b. It can be bent in any direction.
+| c. It can be bent forward and back
+
+######## LESSON 8 · lesson · Great Mind
+
+=== 8.1 | Great Mind | Getting the General Significance | pages 29
+pics: p029-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Activity 7 Exercise 7
+ins: Directions: Read the passages and answer the questions.
+¶ GREAT MIND
+¶ Not all great deeds are done in time of war. Here is the story of a man
+whose greatness was achieved in time of peace. He was Thomas Alva Edison.
+He was the greatest inventor that ever lived. He invented the talking machine
+and the electric light. He made instruments to measure the heat of far-off stars.
+He invented hundreds of things that gave comfort to the lives of millions of
+people. From childhood he showed an inquiring mind. He looked closely at
+things around him. His mind looked for causes and reasons. His mother had to
+answer and explain things to him. But Thomas was not contented. He tried to
+find out about things himself. So, he began performing experiments one after
+another.
+q 1: What is the story about?
+| A. the greatest painter of all times
+| B. the greatest sculpture of all times
+| C. the greatest inventor of all times
+q 2: What distinguishing trait had Thomas Edison?
+| A. He was very playful.
+| B. He was always busy.
+| C. He had an inquiring mind.
+q 3: Choose the best title of the story?
+| A. The Experiment
+| B. The Great Thinker
+| C. The Greatest Inventor
+
+######## LESSON 9 · lesson · The Bible
+
+=== 9.1 | The Bible | Getting the General Significance | pages 30
+pics: p030-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+# Activity 8 Exercise 8
+ins: Directions: Read the passages and answer the questions.
+¶ THE BIBLE
+¶ The Bible is the word of God. The evangelists who wrote the Bible did so
+at the command and inspiration of God Himself. What God wants to say to us,
+He has indicated in the Bible, in the Old and New Testament, we learn what
+God wants of us: to make us know Him, love Him, serve Him and be forever
+happy with Him in heaven. It is in the Bible where we learn His exact will for us,
+His commandments, His love and reward for us, and the Last Judgment.
+q 1: What is the selection about?
+| A. God’s physical appearance
+| B. The Old and New Testaments
+| C. The Bible as the Word of God
+q 2: Which sentence is true?
+| A. It is man’s word that is written in the Bible.
+| B. We learn the exact will of God for us from the Bible.
+| C. God will appear to us so that we may know what He expects of us
+q 3: What is the ultimate goal of God’s wishes for us?
+| A. to punish us
+| B. to appear before us
+| C. to be forever happy with Him in heaven
+
+######## LESSON 10 · lesson · The Fox and the Stork
+
+=== 10.1 | The Fox and the Stork | Predicting Outcomes and Making Inferences | pages 31
+pics: p031-1
+# SKILL C-PREDICTING OUTCOME OF A GIVEN EVENT AND MAKING INFERENCES
+# Activity 9 Exercise 9
+ins: Directions: Read the passages and answer the questions.
+¶ THE FOX AND THE STORK
+¶ The fox and the stork were formerly good friends. They often visited each
+other. One day, the fox invited the stork to dinner because he wanted to play
+a joke on her. At the dinner table, the fox put soup in a very shallow dish before
+the stork. The fox could easily lap the soup, but the poor stork could only wet
+the end of her long bill. So, she left the dinner table as hungry as when she
+came.
+¶ “I’m sorry you did not like the soup,” said the fox.
+¶ “Oh, please, don’t apologize,” said the stork sweetly. “I hope you will
+come and dine with me soon.”
+¶ So came the day when the fox visited the stork. The stork served their
+dinner in a jar with a very long neck and a narrow mouth. All the fox could do
+was lick the outside of the jar.
+q 1: How did the fox feel when he saw where the stork served dinner?
+| A. He was angry.
+| B. He was happy.
+| C. The story does not say.
+q 2: What do you think happened?
+| A. The fox thanked the stork.
+| B. The fox went away satisfied.
+| C. The fox went away as hungry as when he came.
+q 3: Was the stork right in what she did?
+| A. Yes
+| B. No
+| C. Maybe
+
+######## LESSON 11 · lesson · Pete’s Catch
+
+=== 11.1 | Pete’s Catch | Predicting Outcomes and Making Inferences | pages 32
+pics: p032-1
+# SKILL C-PREDICTING OUTCOME OF A GIVEN EVENT AND MAKING INFERENCES
+# Activity 10 Exercise 10
+ins: Directions: Read the passages and answer the questions.
+¶ PETE’S CATCH
+¶ Pete considered himself a fine fisherman. He stood on the riverbank as
+he held his fishing line with the patience only a fisherman knew. His heart beat
+faster as he felt a tug on the line. He was excited as he planted his feet firmly
+on the ground. He gave a big pull expecting to find a big fish at the hook of
+his fishing line. Disappointment clouded his face as he stared at his catch.
+q 1: What do you think did Pete catch?
+| A. a big fish
+| B. a big turtle
+| C. a boot
+q 2: What kind of fisherman was Pete?
+| A. He was an old fisherman.
+| B. He was a good fisherman.
+| C. He was an impatient fisherman.
+q 3: What did Pete do?
+| A. went away
+| B. sat on the riverbank
+| C. threw his fishing line again into the water
+
+######## LESSON 12 · lesson · The Red Sweater
+
+=== 12.1 | The Red Sweater | Predicting Outcomes and Making Inferences | pages 33
+pics: p033-1
+# SKILL C-PREDICTING OUTCOME OF A GIVEN EVENT AND MAKING
+# INFERENCES
+# Activity 11 Exercise 11
+ins: Directions: Read the passages and answer the questions.
+¶ THE RED SWEATER
+¶ Lourdes opened her piggy bank. She counted her money carefully and
+went straight to a downtown store. She looked with longing at the bright new
+sweater on display at the store window. She wanted to inquire about the price
+but as she was about to go in, she stopped and hesitated. She counted her
+money again, then shook her head. At last, she looked at the sweater with
+regret and returned the money into her pocket.
+q 1: How did Lourdes feel about the sweater?
+| A. She disliked it.
+| B. She liked it very much.
+| C. She just wanted to look at it.
+q 2: What did she intended to do?
+| A. She wanted to buy it.
+| B. She wanted to ask for it.
+| C. She wanted to ask Mother to buy it for her.
+q 3: Did she finally get the sweater?
+| A. Yes
+| B. No
+| C. Maybe
+
+######## LESSON 13 · lesson · The Graduation Gift
+
+=== 13.1 | The Graduation Gift | Predicting Outcomes and Making Inferences | pages 34,35
+pics: p034-1
+# SKILL C-PREDICTING OUTCOME OF A GIVEN EVENT AND MAKING INFERENCES
+# Activity 12 Exercise 12
+ins: Directions: Read the passages and answer the questions.
+¶ THE GRADUATION GIFT
+¶ “Thank you! O thank you, Father!” cried Jun embracing his father tightly.
+“This is the best gift I have received in my whole life. I have prayed and longed
+to own one and my prayer has been answered.”
+¶ I am very glad about that,” Father said putting his arms around his son.
+“I waited for your graduation to buy one.”
+¶ “I am not very happy about the bicycle,” put in Mother. “I hope it will
+not be a source of trouble.”
+¶ “You don’t know it, Mother, but I have been riding Rene’s bike every
+now and then,” said Jun. “I can ride very well now.”
+¶ One afternoon, as Mother was tending her garden, she saw Jun passed
+by on his bicycle. Suddenly there was a crash! People were looking at the
+direction where Jun has turned on a curb.
+q 1: What do you think happened?
+| A. Jun jumped out of his bicycle.
+| B. Jun made fancy driving on his bicycle.
+| C. The bicycle bumped against something.
+q 2: What made Jun happy on his graduation day?
+| A. his graduation
+| B. his Mother’s advice to him
+| C. the bicycle his father gave him
+q 3: What do you think happened to Jun’s bicycle?
+| A. It had a flat tire.
+| B. It became twisted.
+| C. The bicycle had some scratches.
+
+######## LESSON 14 · lesson · The Earthworm
+
+=== 14.1 | The Earthworm | Reading to Follow Precise Directions | pages 36
+pics: p036-1
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+# Activity 13 Exercise 13
+ins: Directions: Read the passages and answer the questions.
+¶ THE EARTHWORM
+¶ Have you seen an earthworm? Children are afraid of the earthworm. It
+lives in moist soil. It has no distinct head and it breathes through its skin. If you
+cut an earthworm in two, the parts will still live.
+¶ The earthworm is harmless. It helps the farmers and plant growers. The
+earthworm bores many holes in the soil. This way the soil becomes soft and well-
+mixed. Then more air goes into the soil. Soft, well-mixed and airy soil is good for
+the plants. Earthworms help the plants grow well.
+q 1: In what kind of soil does the earthworm live?
+q 2: Does the earthworm have a head? Write Yes or No.
+q 3: Write the word that tells where the earthworm breathes through.
+q 4: Write the earthworm have a head? Write Yes or No.
+q 5: Copy the correct sentence.
+| A. The earthworm is harmful
+| B. The earthworm kills the plants
+| C. The earthworm helps the plants
+
+######## LESSON 15 · lesson · Rizal and the Filipino Youth
+
+=== 15.1 | Rizal and the Filipino Youth | Reading to Follow Precise Directions | pages 37
+pics: p037-1
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+# Activity 14 Exercise 14
+read: RIZAL AND THE FILIPINO YOUTH
+¶ Jose Rizal loved his people especially the youth.
+¶ Jose Rizal believed in the young people of his country. He wrote a
+patriotic poem entitled, “To the Filipino Youth”, dedicated to his countrymen.
+In this poem, he called the young Filipino the “fair hope of his fatherland”.
+¶ Rizal also wrote “Noli Me Tangere”. In this novel, he called on the youth
+to serve their country. He called on them to study harder and do the best they
+could to achieve peace and progress for the Philippines.
+q 1: Copy the name of the poem Rizal wrote.
+q 2: To whom did he dedicate the poem?
+| A. to his mother
+| B. to his countrymen
+| C. to the Filipino youth
+q 3: Write the name of the book Rizal wrote.
+q 4: Copy the word that describes what kind of poem “To The Filipino Youth” is.
+q 5: What was Rizal’s counsel to the youth?
+| A. to study hard
+| B. to write books
+| C. to take up arms
+
+######## LESSON 16 · lesson · Christmas Eve
+
+=== 16.1 | Christmas Eve | Reading to Follow Precise Directions | pages 38
+pics: p038-1
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+# Activity 15 Exercise 15
+ins: Directions: Read the passages and answer the questions.
+¶ CHRISTMAS EVE
+¶ It was Christmas Eve. Mr. Cruz’s family had finished their Noche Buena.
+“Come on children,” Mother called. “Hang your stockings and go to bed.”
+Sonia hung one for her mother, one for her father and a very small one for her
+baby brother. Tess put hers on one corner of her mirror. Dennis pinned his on
+the curtain of his bedroom window and Edmer found a place near his Cabinet.
+q 1: Write the name of the holiday that the children were preparing for.
+q 2: What did the children do before going to bed? Copy the answer.
+q 3: Copy the phrase that tells what the family would do.
+| A. go to bed
+| B. go to a party
+| C. go to the movies
+q 4: Copy the sentence that is true.
+| A. Sonia hung one stocking for herself.
+| B. Sonia hung stockings for herself and her mother.
+| C. Sonia hung stockings for her mother, father and for her
+baby brother.
+q 5: Write the name of the boy who pinned his stockings on the curtain of his
+bedroom.
+
+######## LESSON 17 · lesson · Hints for Keeping Friends
+
+=== 17.1 | Hints for Keeping Friends | Reading to Follow Precise Directions | pages 39,40
+pics: p039-1
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+# Activity 16 Exercise 16
+ins: Directions: Read the passages and answer the questions.
+¶ HINTS FOR KEEPING FRIENDS
+¶ To have friends, you must genuinely like people and consider their
+feelings. Here are some hints for keeping friends:
+¶ Be true to your word. Get out of your way to be friendly and help others.
+Be a good listener. Avoid talking about people behind their backs. Avoid
+laughing at the mistakes of others and going around correcting people. Do
+your share of the work – don’t be lazy. Be neat and clean. Don’t insist on having
+your way. Don’t feel that you are better than others, and be careful not to give
+that impression. Treat others as you, yourself, would like to be treated.
+q 1: Copy the phrase that tells what the selection is about.
+| A. how to be popular
+| B. how to make and keep friends
+| C. how to be at ease in a gathering
+q 2: What should one avoid? Draw a circle around the letter of the correct
+¶ answer.
+| A. Avoid talking to people.
+| B. Avoid participating in a conversation.
+| C. Avoid talking about people behind their backs.
+q 3: Copy the sentence that is true.
+| A. Be neat
+| B. Talk every time
+| C. Wear new clothes every time.
+q 4: Write the sentence that tells what you should not do.
+| A. Do your share of the work.
+| B. Be friendly and help others.
+| C. Laugh at mistakes of others.
+q 5: Should you always insist on having your way? Write your answer.
+| A. No
+| B. Yes
+| C. Maybe
+
+######## LESSON 18 · lesson · Bethlehem
+
+=== 18.1 | Bethlehem | Reading Exercises for Speed | pages 41,42
+pics: p041-1
+# SKILL E- READING EXERCISES FOR SPEED
+# Activity 17 Exercise 17
+ins: Directions: Read the passages and answer the questions.
+¶ BETHLEHEM
+¶ Since the birth of Christ, there have been a number of beautiful carols
+sung all over the world. One of them is the “O Little Town of Bethlehem” and it
+is the best loved of all Christmas carols.
+¶ Christians know that our Lord Jesus Christ was born in the little, quiet town
+of Bethlehem which is not far from the city of Jerusalem. A long street leads to
+the Church of the Nativity. It is believed that Jesus was born on his very spot.
+Every year thousands of people all over the world visit Bethlehem, which is
+considered the most sacred place in the whole world. Beautiful gifts and
+offerings have been given to this famous Church of the Nativity.
+¶ Today, most people who come to Bethlehem are disappointed to see
+that it has greatly changed. Bethlehem today seems to have lost its solemnity.
+speed: 143
+ins: Direction: Write the letter of the correct answer on your answer sheet.
+q 1: Which of the following is true about the Christmas carol, “O Little Town
+¶ of Bethlehem”?
+| A. It is loved by a selected few.
+| B. It is the best loved of all Christmas carols.
+| C. It is the least known of all Christmas carols.
+q 2: Where was Jesus born?
+| A. Palestine
+| B. Jerusalem
+| C. Bethlehem
+q 3: What marks now the very spot where Jesus was born?
+| A. a stable
+| B. a church
+| C. a museum
+q 4: From where are the people who visited Bethlehem yearly?
+| A. Jerusalem
+| B. Bethlehem
+| C. all over the world
+q 5: How do people show their reverence to Jesus’ birthplace?
+| A. by visiting it often
+| B. by living near the place
+| C. by bringing gifts and offerings
+q 6: What disappoints people who visit the place nowadays?
+| A. its modernization
+| B. its austere simplicity
+| C. its poor accommodation
+q 7: What could be the religion of the people who come to visit
+¶ Bethlehem?
+| A. Hinduism
+| B. Christianity
+| C. Mohammedanism
+q 8: What do you think do many people visit Bethlehem?
+| A. For no reason at all.
+| B. To satisfy their curiosity.
+| C. To show their reverence to Jesus.
+q 9: How is Bethlehem known today? Write the phrase of your choice in
+¶ capital letters.
+| A. the richest city
+| B. most modern city
+| C. most sacred place
+q 10: What is the selection about?
+| A. Christmas all over the world
+| B. the birthplace of Jesus Christ
+| C . the life and sufferings of Jesus
+
+######## LESSON 19 · lesson · Birds of Paradise
+
+=== 19.1 | Birds of Paradise | Reading Exercises for Speed | pages 43,44
+pics: p043-1
+# SKILL E- READING EXERCISES FOR SPEED
+# Activity 18 Exercise 18
+read: BIRDS OF PARADISE
+¶ No bird in the world has a brighter color than the birds of paradise. No
+one can guess from their color that they belong to the crow family.
+¶ Most of the feathers of the birds of paradise have queer shapes. Some
+are used in making beautiful plumes. The male birds have bright colored
+feathers while the females’ feathers are dull in color. Some male birds of
+paradise do a great deal of dancing and strutting when they are courting.
+¶ There are about forty-five kinds of birds of paradise. They live mostly in
+the hot rainforest of the island of New Guinea. A few kinds are found in
+Australia.
+¶ For a time, there was a danger that all birds of paradise would be killed
+for their feathers. But now there are laws to protect them. So, we expect the
+species of the birds of paradise to be multiplied in the future.
+speed: 150
+ins: Direction: Fill in the blanks in each sentence with the correct answer.
+q 1: The story is about __________.
+| A. children
+| B. animal
+| C. birds
+q 2: They are called ___________.
+| A. birds of prey
+| B. birds of paradise
+| C. birds of feathers
+q 3: They belong to the ___________ family.
+| A. crow
+| B. maya
+| C. owl
+q 4: The male bird’s feathers have ___________.
+| A. dull colors
+| B. bright colors
+| C. green color
+q 5: The female birds’ feathers have ___________.
+| A. dull colors
+| B. bright colors
+| C. green color
+q 6: The male birds of paradise do a lot of ___________ when courting.
+| A. dancing and strutting
+| B. jumping and bending
+| C. kicking and prancing
+q 7: Birds of paradise are of __________.
+| A. twenty kinds
+| B. fifteen kinds
+| C. forty-two kinds
+q 8: They live mostly in the rainforest of ___________.
+| A. New Zealand | B. New Guinea | C. New Jersey
+q 9: A few kinds of birds of paradise are found in ___________.
+| A. America
+| B. Australia | C. Amsterdam
+q 10: With the passage of laws protecting birds, we can expect them to
+- .
+| A. become household pets.
+| B. multiply rapidly
+| C. disappear in no time at all
+
+######## LESSON 20 · lesson · Birthstones
+
+=== 20.1 | Birthstones | Reading Exercises for Speed | pages 45,46
+pics: p045-1
+# SKILL E- READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 19 Exercise 19
+read: BIRTHSTONES
+¶ Superstitions about the precious stones originated during the early times.
+Anyone who wore any of these stones was supposed to become strong and
+brave. There were those who believed that when worn, these stones protect
+the wearer from fire and lightning. Still many believed that they were supposed
+to bring good luck and good fortune.
+¶ Our present beliefs about birthstones are believed on these old
+superstitions. Wearing a birthstone is believed to bring good fortune especially
+when it is given by somebody as present.
+¶ Almost everybody nowadays do appreciate wearing birthstones.
+Although not everyone agrees on what particular birthstone is intended for
+each month, there is a grouping often followed in connection with birthstones.
+There are calendars that include the different birthstones for each month. We
+take interest in reading the meaning of the birthstones in our horoscopes. For
+who would not want to be protected and helped by his particular birthstone.
+# 151 WORDS
+speed: 151
+ins: Direction: Write the letter of the correct answer on your answer sheet.
+q 1: Superstitions about precious stones originated.
+| A. a very recently
+| B. a long time ago
+| C. in the modern times
+q 2: Wearer of these stones believed that they would.
+| A. meet bad luck
+| B. meet good luck
+| C. have supernatural powers
+q 3: It is believed that birthstones bring best luck when.
+| A. they are costly
+| B. they are given as presents
+| C. they match the birth month of the wearer
+q 4: Which of these is believed as an exemption from birthstones’ magical
+¶ influence?
+| A. Wearer can make an enemy sick.
+| B. Wearer will become strong and brave.
+| C. Wearer will be protected from fire and lightning.
+q 5: All these good things attributed to birthstones are.
+| A. not true
+| B. very true
+| C. somewhat true
+q 6: People nowadays wear birthstones for.
+| A. good luck
+| B. showing off
+| C. their beauty
+q 7: In buying birthstones, the first thing one should consider in his.
+| A. birth month
+| B. favorite color
+| C. favorite design
+q 8: As time goes by, do you think more and more people will believe in the
+¶ good luck associated with birthstones?
+| A. Yes
+| B. No
+| C. It depends
+q 9: The birthstone for June is pearl. Draw a ring with a single pearl.
+q 10: This selection as a whole tells us that good luck and birthstones.
+| A. cannot be separated
+| B. are closely associated
+| C. has nothing to do with each other
+
+######## LESSON 21 · lesson · Apples
+
+=== 21.1 | Apples | Reading Exercises for Speed | pages 47,48
+pics: p047-1
+# SKILL E- READING EXERCISES FOR SPEED AND COMPREHENSION
+# Activity 20 Exercise 20
+read: APPLES
+¶ Apples are valuable fruits. They provide important minerals and vitamins
+to people’s diet.
+¶ The first settlers in America brought apple trees with them to plant in the
+New World. The United States today grows more apples than any other country
+in the world.
+¶ Apple Trees can be grown from seeds as Johnny Appleseed or John
+Chapman in real life, did when he spread the trees across the United States in
+the 1800s.
+¶ Today, most apple trees are grown by budding. Buds are cut from a
+healthy apple tree. Then they are inserted into a slit in the bark near the roots
+of another tree.
+¶ The tree grows to about 40 feet high. The fragrant, pink, and white apple
+blossoms appear late in the spring. The beauty and the taste of the fruit have
+made the apple one of the most popular fruits. Apples have different beautiful
+colors, like dark red, yellow green, and green.
+# 154 WORDS
+speed: 154
+ins: Direction: Select the letter of your answer and write on your answer sheet.
+q 1: Why apples are considered valuable fruits?
+| A. They are rare and costly.
+| B. They come in attractive colors.
+| C. They are rich in vitamins and minerals.
+q 2: Who brought the apple trees to America?
+| A. the first settlers
+| B. the late settlers
+| C. the immigrants from other countries
+q 3: How did the apple trees fare in America?
+| A. They grew abundantly.
+| B. They almost did not survive.
+| C. They disappeared eventually.
+q 4: What does this show?
+| A. The Americans are not interested in apples.
+| B. The soil and climate in America is suited for apples.
+| C. The soil and climate in America is not suited for apples.
+q 5: In what kind of climate do you think will apple thrive?
+| A. cold climate
+| B. warm climate
+| C. any kind of climate
+q 6: How did Johnny Appleseed grow apples in America?
+| A. from buds
+| B. from seeds
+| C. from cuttings
+q 7: When did Johnny Appleseed spread apples in the United States?
+| A. about 1600
+| B. about 1800
+| C. about 1700
+q 8: Why do you think was Johnny called Johnny Appleseed?
+| A. He wanted to be called Appleseed.
+| B. His father’s surname was Appleseed.
+| C. People began calling him Appleseed because he grew apples from
+¶ seeds.
+q 9: How are most apples grown now?
+| A. by seeds
+| B. by cutting
+| C. by budding
+q 10: Draw an apple. Inside your drawing, write how many feet high the
+¶ apple trees grow.
+
+######## LESSON 22 · post · Post-Assessment
+
+=== 22.1 | The Face in the Pool | Noting Details | pages 50,51
+pics: p050-1
+# SKILL A-NOTING DETAILS
+ins: Directions: Read the passages and answer the questions.
+¶ THE FACE IN THE POOL
+¶ Narcissus was out of breath from running when he came to a clear pool.
+He stopped to drink. Just as he was about to sip the cool water, he saw a face
+in the pool. It was handsome and he was attracted to it.
+¶ “Who are you?” he asked.
+¶ “Who are you?” echoed someone.
+¶ “Why are you mocking me?” asked Narcissus.
+¶ “Mocking me,” said the voice.
+¶ Narcissus was puzzled. He wanted to talk with the face in the pool but it
+would not answer. He tried to catch it but to no avail. At last, he lost hope and
+plunged into the pool hoping to see the owner of the face.
+q 1: Why was Narcissus out of breath?
+| A. He was running.
+| B. He was Jumping.
+| C. He was skipping.
+q 2: Which of these sentences is true?
+| A. Narcissus came to a clear lake.
+| B. Narcissus came to a clear pool.
+| C. Narcissus came to a clear path.
+q 3: He stopped to ____.
+| A. drink
+| B. swim
+| C. bathe
+q 4: He saw something which ____.
+| A. attracted him
+| B. frightened him
+| C. drove him away
+q 5: What did he see in the pool?
+| A. a boat
+| B. a face
+| C. a flower
+
+=== 22.2 | Jay’s Curiosity | Getting the General Significance | pages 52
+pics: p052-1
+# SKILL B- GETTING THE GENERAL SIGNIFICANCE OF A SELECTION
+ins: Directions: Read the passages and answer the questions.
+¶ JAY’S CURIOSITY
+¶ “Is Father going hunting?” Jay asked his mother when he saw his father
+get his gun and go out of the house.
+¶ “Didn’t you listen to the radio, Jay?” asked her mother. “Every citizen
+who owns a gun without a license is asked to surrender it to the government.”
+¶ “Will Father be punished for owning a gun?” asked Jay.
+¶ “No, Jay,” answered Mother. “No questions will be asked to citizens
+who surrender their guns. They will also be issued receipts.”
+¶ “That is a very good move to prevent crimes,” said Jay. “Ordinary
+citizens like us will have nothing to be afraid of anymore.”
+¶ “You’re right, Jay,” agreed Mother. “There is peace around us now.”
+q 1: Which word best describe what Mother thinks about our present society?
+| A. fearful
+| B. peaceful
+| C. same as before
+q 2: Which of these statements is true?
+| A. Citizen fear for their lives.
+| B. Citizen cannot rest easily.
+| C. Citizen are not afraid anymore.
+q 3: What is expected of every citizen who possesses firearms without license?
+| A. to keep it
+| B. to fight with it
+| C. to surrender it
+
+=== 22.3 | Rice | Predicting Outcomes and Making Inferences | pages 53
+pics: p053-1
+# SKILL C-PREDICTING OUTCOME OF A GIVEN EVENT AND MAKING INFERENCES
+ins: Directions: Read the passages and answer the questions.
+¶ RICE
+¶ Rice is a cereal native in Asia and Africa. It is the staple food of more
+than half of the people in the world.
+¶ Rice is a plant that grows the whole year round. It grows from two to four
+feet tall. It has round jointed stems, long-pointed leaves and seeds borne in
+dense heads on separate stalks.
+¶ Brown rice with bran layer is rice rich in vitamin B, a cure for beriberi.
+Polished white rice is rich in starch but low in protein, fat, and vitamin B. In the
+Orient, the fine soft straw of the rice plant is used for weaving hats and slippers.
+Powdered grain is used for making laundry starch and distilled liquor.
+q 1: What would happen if rice would suddenly disappear?
+| A. People would rejoice.
+| B. People would not mind.
+| C. Many people would starve.
+q 2: What will happen to a person with beriberi if he eats brown rice with the
+bran layer?
+| A. He will get weaker.
+| B. He will die of beriberi.
+| C. He will be cured of beriberi.
+q 3: Which do you think is more nutritious, brown rice, or white polished rice?
+| A. brown rice
+| B. neither of the two
+| C. white polished rice
+
+=== 22.4 | Wally’s Kite | Reading to Follow Precise Directions | pages 54
+pics: p054-1
+# SKILL D-READING TO FOLLOW PRECISE DIRECTIONS
+ins: Directions: Read the passages and answer the questions.
+¶ WALLY’S KITE
+¶ It was Saturday morning and Wally was getting ready to fly his kite. Soon
+his friends Dennis and Berto came along. Together they went to the field. They
+tossed their kites up to the air. The kites flew up into the sky until they looked like
+birds. The boys had a fine time. Suddenly the kite fly way up to the sky. He ran
+fast to follow his kite. Dennis ran to follow Wally. At last Wally’s kite landed on a
+treetop. Wally and Dennis reached the tree where the kite landed. Wally
+climbed the tree and brought his kite down, but it could not fly anymore. Its
+wings and tail were broken.
+q 1: What day was it?
+q 2: Write the words that tell who came along while Wally was flying his kite.
+q 3: Which of these phrases tell what the boys had. Copy the phrase.
+| A. had a fine time
+| B. had a bad time
+| C. had an accident
+q 4: Draw the things that looked like birds.
+q 5: Why could Wally’s kite not fly?
+
+=== 22.5 | A Fairy Tale from Japan | Reading Exercises for Speed and Comprehension | pages 55,56,57
+pics: p055-1
+# SKILL E- READING EXERCISES FOR SPEED AND COMPREHENSION
+ins: Directions: Read the passages and answer the questions.
+¶ A FAIRY TALE FROM JAPAN
+¶ Once upon a time there lived an old couple in one small village in
+Japan. They had no children so they went from temple to temple to offer
+prayers to their gods so that they might be blessed with a child. But their prayers
+were in vain.
+¶ One morning, after working in the garden, the couple sat down under a
+peach tree to rest. The husband was telling his wife how much he wanted to
+have a son to help him in his garden when a very big peach fell on his wife’s
+lap. She got the fruit and put it in her pocket.
+¶ After a while, they went home for breakfast. As the husband was about
+to cut the peach, he heard a cry. “Let me out!” said the voice. When the wife
+looked into the fruit, she saw a child as big as her little finger. The woman lifted
+the child and kissed him.
+¶ “I heard your prayers up there,” the child said, “So I came to be your
+son.”
+¶ “We will love you very much,” the couple said.
+¶ The couple called the tiny child Peaching. They devoted their time in
+making him happy. They treated him like a real son. But Peaching did not grow
+big like other children. Yet he could help his father plow the field by sitting on
+the right ear of the plow horse and directing him where to go. He could also
+go marketing for his mother by carrying the coins in a small bag. He would sit
+in the market basket carried by a dog.
+¶ He always did his marketing early to avoid curios people who might
+notice him. The couple found a good helper in their tiny son. They loved him
+more each day.
+¶ One night as Peaching’s parents were sleeping, they both have similar
+dreams. They dreamed that if they would dip their tiny son into the brook that
+was in their yard, he would grow up like other children.
+¶ The next morning the happy parents told each other about their dreams
+¶ They tiptoed to their tiny son’s room. The husband carried the bed where
+their tiny son was sleeping soundly. He immersed the bed with the tiny boy into
+the brook.
+¶ They were both surprised when the bed seemed to have disappeared
+from their hands. They were so frightened that they began looking for it among
+the waterlilies near the bank of the brook.
+¶ They heard a merry laughter behind them. When they turned, the
+couple saw a young man holding the tiny bed in his hands.
+¶ “Father, Mother, I am Peaching,” he said as he rushed and embraced
+the couple.
+¶ “A wicked fairy bewitched me and placed me inside a peach,”
+Peaching explained. “Because you loved me and baptized me in this brook,
+the enchantment was broken. Now I will really be a son to you.”
+¶ The more he became a great help to the couple. He loved his foster
+parents dearly. Not long after, Peaching met a lass from another barrio. He fell
+in love with her and they were married.
+¶ The old couple lived happily with their dear son and his family ever after.
+# 529 WORDS
+speed: 529
+q 1: The Japanese couple prayed for a.
+| A. daughter
+| B. son
+| C. child
+q 2: They sat down to rest under a ___.
+| A. peach tree | B. orange tree | C. mango tree
+q 3: A big peach fell on the woman’s ___.
+| A. shoulder
+| B. head
+| C. lap
+q 4: The child they saw was no bigger than the couple’s little ___.
+| A. head
+| B. toes
+| C. fingers
+q 5: They called him ___.
+| A. Peaching
+| B. Orangeling | C. Ting-a-ling
+q 6: The tiny boy went marketing early to avoid ___.
+| A. cars
+| B. curious people | C. his parents
+q 7: One night, the couple dreamed that they should dip their tiny son into a
+- .
+| A. river
+| B. well
+| C. brook
+q 8: The tiny boy was bewitched by a ____.
+| A. fairy
+| B. giant
+| C. kapre
+q 9: The enchantment was broken because the couple the boy ___.
+| A. hated
+| B. loved
+| C. killed
+q 10: The old couple lived with their dear son ___.
+| A. happily
+| B. sadly
+| C. poorly.

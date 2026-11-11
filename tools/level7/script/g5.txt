@@ -1,0 +1,353 @@
+# Level 7 Grade 5 cards (Genuine Love for Reading) — checked by hand against the module pages.
+# The "Background Information for Learners" pages are shown with the activity that uses them.
+# The Editorial Log form printed on pp. 24–25 is the log Activity 8 asks for, so it is given with Activity 8.
+
+=== 1.1 | Writing a News Article | Activity 1 | pages 5,6,7,8
+pics:
+ins: Write a news article · Choose an interesting school club and write an article describing its activities, members, goals and achievements.
+read: Background Information for Learners
+¶ News is an account of an event, a fact or an opinion that interests people. It is a presentation of current events.
+read*: The Inverted Pyramid Style
+Lead: The “key” to the story. One to no more than two sentences. Includes the most important of the five Ws and H.
+Secondary information: Vital statistics and description. Extend on five Ws and H.
+Background information: Incidents leading up to or following the event.
+Additional information
+img: p005-1 The Inverted Pyramid Style
+read: Inverted Pyramid Format
+¶ When you write a story in inverted pyramid format, you put the most newsworthy information at the beginning and the least newsworthy information at the end. The inverted pyramid helps readers scan news stories quickly and efficiently, and it also helps you write them with ease. Once you train yourself to organize facts this way, you can apply the formula to almost any breaking news event—this is why the inverted pyramid has been a cornerstone of news writing for the past century.
+lead: Step 1: First, fill out the chart below.
+write: Who
+write: What
+write: When
+write: Where
+write: Why
+write: How
+lead: Step 2: Develop a list of interview questions about the subject. For each question, write down the question and identify the person you will ask. Then, record the person’s answer.
+write: Question: · Interviewee: · Response:
+write: Question: · Interviewee: · Response:
+write: Question: · Interviewee: · Response:
+lead: Step 3: Write a newspaper article about this subject. Try to include at least two quotations from your interviews and don’t forget to add a headline!
+write: Write your newspaper article with a headline.
+
+=== 2.1 | Journalistic Writing | Activity 2 | pages 10,11
+pics:
+ins: Directions: Read the following examples of journalistic writing, then identify whether each one is News, Opinion, Feature or Sports news.
+q 1: Eating chocolates not only satisfies your taste buds, it also improves your brain function. The flavonoids found in chocolate have been proven to increase blood flow to the brain. They can help boost memory and attention span, and it also inhance problem-solving skills.
+| News | Opinion | Feature | Sports news
+q 2: A retired police colonel died after being trapped inside one of the structures that collapsed in his family’s resort, as the town of Cataingan in Masbate bore the brunt of a 6.6 magnitude earthquake that suck the province on Tuesday morning. By: Nino Luces
+| News | Opinion | Feature | Sports news
+q 3: Manny Pacquiao scored a unanimous decision over the no. 1 pound-for-pound fighter, Floyd Mayweather Jr., in an epic boxing rematch on Sunday in Philippine Arena.
+| News | Opinion | Feature | Sports news
+q 4: Indeed, frontliners must be regarded as modern-day heroes. From battling the dreaded COVID-19 in the hospitals to ensuring safety in public spaces, our brave frontliners deserve commendation and respect from the people.
+| News | Opinion | Feature | Sports news
+q 5: The Magician, Efren “Bata” Reyes, has once again proven his magic on the pool table. Reyes captured the gold medal in the men’s 9-ball singles event at the 2020 Manila Billiard Tournament.
+| News | Opinion | Feature | Sports news
+
+=== 3.1 | Matching Type | Activity 3 | pages 11
+pics:
+ins: Direction: Match the types of journalistic writing in Column A with their corresponding contents in Column B.
+match: Column A | Column B
+A: 1. News
+A: 2. Feature
+A: 3. Sports News
+A: 4. Opinion
+B: A. sporting topics or competition
+B: B. editorial
+B: C. current or recent events
+B: D. in-depth about a certain topic
+
+=== 4.1 | Writing Activity | Activity 4 | pages 12
+pics:
+ins: Directions: Find any of the following: News, Features, Opinion and Sports News. Copy the first paragraph in your notebook, then identify its type.
+write: Copy the first paragraph, then identify its type (News, Feature, Opinion or Sports News).
+
+=== 5.1 | Mix Exercises | Activity 5 | pages 12
+pics:
+ins: I. Identifying the 5 Ws · Instruction/s: Read the scrambled information, identify the WHO, WHAT, WHY, WHEN, WHERE. Write your answers on the space provided. A sample is given for your guidance.
+read*: Exercise No. 1 Scrambled Information
+in preparation for the barangay and Sangguniang Kabataan (SK) elections next year.
+will resume in the voter’s registration at the City Hall
+Commission of Election on Monday
+write: Exercise No. 1 · WHO: · WHAT: · WHEN: · WHY: · WHERE:
+read*: Exercise No. 2
+yesterday.
+Three people riding on a motorcycle
+along Maharlika Highway, Barangay San Nicolas
+after their vehicle collided head-on with a passenger bus were killed
+write: Exercise No. 2 · WHO: · WHAT: · WHEN: · WHY: · WHERE:
+
+=== 6.1 | Writing a News Story | Activity 6 | pages 13
+pics:
+ins: Instruction/s: Write a news story of 5 to 7 paragraphs using the structure below.
+read*: The Structure
+THE LEAD. Who did what; or What happened? Perhaps When? and Where? might be in this paragraph.
+2ND PARAGRAPH In many cases this second paragraph will answer the questions Why? or How?
+3RD PARAGRAPH This is where a quote would often appear. This is viewed by most reporters as essential to keep the story lively.
+4TH PARAGRAPH Why are you telling me this/what are the implications of this? (significance)
+5TH PARAGRAPH What will other people think about this? (Moving the story on, giving it a human context)
+6TH PARAGRAPH How did the event continue? (Important background)
+write: The Lead
+write: 2nd Paragraph
+write: 3rd Paragraph
+write: 4th Paragraph
+write: 5th Paragraph
+write: 6th Paragraph
+
+=== 7.1 | Do What Is Asked | Activity 7 | pages 14,15
+pics:
+ins: Direction: Do the following tasks:
+read: Background Information for Learners: Feature Writing
+¶ Feature writing is an art that combines factual reporting with creative storytelling to produce an engaging and informative piece. By following these guidelines, writers can craft stories that resonate with their audience, providing depth and insight into a wide range of topics.
+read*: Key Components
+1. Headline: Captivate readers and summarizes the essence of the story.
+2. Lead: An opening paragraph that hooks the reader, often with an anecdote, striking fact, or question.
+3. Nut Graf: A paragraph that outlines the central theme or purpose of the story, providing a roadmap for what follows.
+4. Body:
+› Background Information: Provides Essential details that set the scene or give context.
+› Development: Present the story’s main content, including arguments, descriptions, and narratives.
+› Supporting Elements: Quotes, statistics, anecdotes, and examples that enrich the narrative.
+5. Conclusion: Wraps up the story, often tying back to the lead or looking forward to the future.
+6. Call to Action: (Optional) Directs readers toward further engagement or exploration of the topic.
+q 1: Enumerate the elements of a feature article. Describe each element based on your understanding.
+q 2: After enumerating the elements, write a feature article on your English notebook. Choose one that interests you the most from the given topics below.
+| a. A day at a beach | b. A Mother’s Day Celebration | c. A Surprise for Father | d. Life While staying at Home | e. Rizal Our National Hero
+q 3: Recall an unforgettable experience travelling out of town or abroad. Where was it, and why did you consider the experience as memorable? Write a feature article that observes the five elements f feature writing. The final output should be written on one whole intermediate paper.
+
+=== 8.1 | Editorial Log | Activity 8 | pages 16,17,18,19,24,25
+pics:
+ins: This activity will serve your opportunity to expressing your unique perspective on the editorial. Read the editorial article carefully to understand the author's viewpoint, then provide the expected details as instructed. Grab your pens and let your thoughts flow!
+read: Background Information for Learners: Editorial Cartooning
+¶ Cartooning is an illustration that depicts humorous events, whether serious or not. The word cartooning comes from two words related terms: Caricature and Lampoon.
+read*:
+› Caricature is an exaggerated illustration of someone or something, often enlarging certain body parts to create humorous effect.
+› Lampoon is a form of writing that publicly criticizes someone or something.
+read: Editorial Cartoon
+¶ An editorial cartoon (also called Political Cartoon) is an opinionated drawing about political or social issues. It may be created to attack, criticize, entertain or praise. Editorial cartoons are usually paired with editorials but may also appear in features, literary sections, or other parts of a publication wgen no appropriate photograph is available.
+read*: DOs
+• Do deal with a single topic and be original.
+• Do have humor and be entertaining if possible.
+• Do use symbols which are generally known by people in order to avoid confusion.
+• Drawings that represents something.
+Ex. A crocodile represents a greedy person or corrupt politician.
+• Do have less texts like captions, labels, and dialogs.
+• Do have a balance between the artwork created and the opinion of the cartoonist.
+read*: DONTs
+• Don’t over-exaggerate so as not to make it look corny.
+• Don’t or avoid hurting someone.
+• Don’t attack the person himself instead of his actions.
+• Don’t use several illustrations for it may confuse the reader. Around 3 – 5 illustrations will do.
+read*: Steps in Doing Editorial Cartooning
+1. Issue – Know the issue you are concerned with and know the facts related to it.
+2. Stand – Questions like “Which side do you agree or disagree with?” and “What elements affect the issue?”
+3. Sketching – The creation of the guide or draft of your cartoon.
+4. Outlining/Sketching – The detailed part of the cartoon is created by using a pen to trace the shape of the sketch.
+5. Shading – An optional step where in you give depth to your drawing making it more realistic.
+read: Editorial: Stop Bullying, Schools Must Be a Safe Place
+img: p018-1 Editorial cartoon
+¶ Schools are places where we learn and build meaningful relationships with fellow students we meet along the way. At their core, they must be safe spaces place for learners.
+¶ However, there lurks a disease in schools that needs to be cured -- bullying.
+¶ Throughout the years, we have heard countless stories of students being bullied. Some were severely bullied and it led them to do unimaginable things for someone their age. Some committed suicide while others harmed fellow students.
+¶ Davao City Councilor Enzo Villafuerte said schools have failed to address bullying cases within their premises.
+¶ "Nag-interview ko og mga parents kung naa ba silay experiences of bullying diri sa schools nato sa Davao, and daghan kog na-estoryahan nga naa gyud cases of bullying and wala'y ginabuhat ang mga teachers nato and principals nato para i-address ang bullying (I have talked to some parents and asked them if they have experiences of bullying here in the schools in the city, and I found out that there really existing cases but neither teachers nor principals have acted on it)," Villafuerte said during his interview on Davao City Disaster Radio on January 5, 2022.
+¶ Bullying takes a huge toll on the mental health of young people. Victims tend to show signs of depression, anxiety, stress, and detachment. They would harm themselves and be in a very dark place.
+¶ What is worse is the mental and emotional stress on these young people is being seen as just a phase. Parents would seldom seek professional health for their children who are victims of bullying. Others would just ask the victim to "pray the depression away."
+¶ For some, what some of these kids post on social media is just seen as trivial posts. We have to start taking their posts on depression, anxiety, and sadness more seriously. These posts should be seen as red flags and interventions must be made.
+¶ The responsibility of protecting students from being bullied or preventing the birth of bullies also lies with the school officials and the parents themselves. At home, parents must teach their kids the right values like being respectful of others. Schools themselves must have safeguards in place to protect students from bullies and reprimand the bullies.
+¶ Maybe it is time that we intensify topics on good manners and right conduct in schools.
+¶ Likewise, schools must truly and intentionally capacitate all teaching and non-teaching personnel with the knowledge on identifying students who are being bullied and those who are having mental or emotional issues.
+¶ Schools must be safe places. That's why it falls upon the responsibility of the schools and the parents that where their children go is also psychologically, mentally, and emotionally safe for other kids.
+lead: Editorial Log · ARTICLE TITLE: ____ DATE: ____
+write: Getting Started: Dive into the article and check out how the author introduces the topic. What caught your attention in the beginning?
+write: What's Inside: Take a stroll through the main points in the article. What are the key things the author is talking about? Identify any details that stood out to you?
+write: The Wrap-up: Look at how the article wraps things up. How did the author close the conversation? Is it a strong finish or something that leaves you thinking?
+write: Author's Take: What's the author's stand on the topic? Do they seem like they're sharing their personal take, giving us the facts, or maybe a bit of both?
+write: Impact on you: Let's get real for a moment. How did the article hit you? Do you think it might change how you see things or act in the future?
+write: HEART-TO-HEART: Now, spill the beans. What's your take on all of this? Do you agree with the author, or do you see things differently now? How did the article play with your thoughts?
+
+=== 9.1 | Writing Articles | Activity 9 | pages 20
+pics:
+ins: Directions: Write article on each of the following topics:
+q 1: Waste Segregation
+q 2: The Rise of Generative AI and Its Impact on Everyday Work
+q 3: The Science Behind Earthquakes and Disaster Preparedness
+q 4: Gamification in Learning and Workplace Productivity
+q 5: Indigenous Knowledge and Modern Scientific Collaboration
+
+=== 10.1 | Writing Articles | Activity 10 | pages 20
+pics:
+ins: Directions: Write article on each of the following topics:
+q 1: Why Society is Becoming Increasingly Dependent on Technology?
+q 2: Classroom Technologies That Actually Make Learning Harder
+q 3: How Online Misinformation Divides Communities?
+q 4: What I Learned After Moving Away From Home
+q 5: The Fear and Beauty of Starting Over
+q 6: How a Simple Routine Changed My Life?
+q 7: Lessons From a Year Of Uncertainty
+q 8: Rediscovering Childhood Passions as an Adult
+q 9: My Journey Toward Better Mental Health
+q 10: The Joy of Ordinary Days
+
+=== 11.1 | Writing a Paragraph | Activity 11 | pages 21
+pics:
+ins: Topic: Is social media helping or harming students today? · Instructions: Write 3–4 sentences giving your opinion about whether the school cafeteria should offer more healthy snacks.
+read*: Remember
+• State your opinion clearly.
+• Give one reason to support your opinion.
+• End with a short, convincing sentence.
+read: Example:
+¶ I think social media is harming students today. Many students spend too much time on apps and games, which can make them tired and distracted from their studies. For example, some students scroll through social media instead of doing homework. Students should use social media less so it does not affect their learning.
+write: Write 3–4 sentences giving your opinion.
+
+=== 12.1 | Editorial Writing | Activity 12 | pages 22,23,24
+pics:
+ins: Direction: Write a well-developed editorial (2 paragraphs).
+read*: Background Information for Learners: Editorial Writing
+› Editorials usually appear on the editorial or opinion page to differentiate them from news stories.
+› They comment on issues reported in the news articles. By weighing and presenting arguments, an editorial reaches a conclusion and makes a recommendation regarding an issue.
+› The editorial represents the official stand of a newspaper. Because of this, it is written in a way that conveys the opinion of the entire publication
+› “I” and “my” are not used because they indicate personal opinion of a single writer.
+› The editorial always includes a title.
+read: Parts of Editorial Writing · 1. Introduction
+¶ It is the opening paragraph. It may contain the news upon which the editorial is based, in such in case, the introduction briefly states the background and topic.
+¶ Last week the Parents Teachers Association (PTA) decided to close the school cafeteria because the place remained dirty despite repeated calls for cleaning up. Thrash left from lunches, used bottles and plastic cans were found on tables, chairs, floors. Even left-over food were piled to rot in a corner. PTA members had complained about these in the past to no avail.
+read: 2. Body
+¶ This section contains the facts about the news or issues including the writer’s opinion or viewpoints. It builds up the case through a logical arrangement of ideas supported by facts
+¶ • Reaction – sets the reader up to receive the opinion
+¶ The PTA decision was correct and necessary. Not only does the dirty cafeteria cause health problems to students, it gives a bad reflection of the school as well.
+¶ • Details – support your reaction and lead to a conclusion
+¶ The problem surfaced several months ago when the PTA inspected the school laboratories and facilities. The PTA members found the cafeteria messy and unclean that time.
+¶ After the inspection, Mr. Rene Ramirez, the PTA president, held a dialog with the cafeteria manager and appealed for the maintenance of canteen cleanliness.
+¶ The canteen became clean for about a month. After that, the place went back to its old dirty state.
+read: 3. Conclusion
+¶ This is the final of the editorial. It either summarizes or drives home the point. It ties up the ideas and arguments presented in the body. It is sometimes referred to as the clincher.
+¶ We support the closing of the canteen in the hope that when it opens again, a cleaner, safer cafeteria will serve the school. More than our support however, we believe that maintaining the cafeteria clean and safe is everybody’s duty. It is not the duty of the management alone, not the duty of the PTA alone, but the duty of all of us.
+read*: Paragraph 1:
+• Present your opinion clearly.
+• Explain one positive and one negative effect of social media.
+read*: Paragraph 2:
+• State which effect you think is stronger and why.
+• Provide evidence or examples (realistic, simple ones).
+• End with a strong call to action (e.g., encouraging balanced or responsible use)
+read: Example;
+¶ Social media is a powerful tool that can both help and harm students today. On the positive side, it allows students to connect with classmates, share ideas, and access educational content online. For example, students can join study groups or watch tutorials on difficult topics. However, social media can also distract students, cause stress, and reduce the time they spend on homework or outdoor activities.
+¶ I believe the negative effects are stronger than the positive ones if social media is not used carefully. Students should be taught to use social media responsibly and set daily time limits. Parents and teachers can also encourage activities like reading, sports, or hobbies to balance screen time. By using social media wisely, students can enjoy its benefits without letting it harm their health or learning.
+write: Paragraph 1
+write: Paragraph 2
+
+=== 13.1 | Copyreading and Headline Writing | Activity 13 | pages 26,27,28,29
+pics:
+ins: Direction: Copyread the article below using appropriate copy reading symbols. Write the slug, printers’ direction with two headline using barline and droplines.
+read: Background Information for Learners: Copyreading
+¶ Copyreading is editing or correcting errors made by the reporter and proofreading the errors made by the typesetter or printer.
+read*:
+• It is the art of arranging, correcting, and selecting the quality and type of news
+• It is also called copyediting.
+• One who edits copies is called a copyreader or copyeditor
+read*: What to copyread?
+1. Errors in fact
+2. Errors in grammar
+3. Errors in structure
+4. Errors in style
+5. Libelous and derogatory statements
+6. Seditious and rebellious matter
+7. Opinion, editorializing statements in news
+8. Verbal deadwoods, redundancy
+9. Errors in unity, coherence and emphasis
+read*: Procedure in Copyreading
+1. Read the whole article first to determine what kind of story it is.
+2. Having determined the type of story, read the article again. This time determine what the lead paragraph is.
+3. Take note of errors in fact. Check on the accuracy of the statements and information. Verify when in doubt.
+4. Read the story again and mark all paragraph beginnings. Then, correct errors in grammar, spelling, punctuations, and style using copyreading symbols.
+5. Improve the organization of the story. Make sure the lead features the lead fact.
+6. Go over the whole story and again. Remove all unnecessary and irrelevant materials.
+7. Check the length of the story and then prepare the clean copy.
+8. Write a very catchy and fitting headline for the story.
+9. Mark the copy for the printer (size, type, column, width, etc.)
+10. Encircle the slug line (short title, name of reporter),
+11. End pagewith a paragraph. Do no tcut paragraph and continue on the next page.
+12. Write “more” at the bottom of the page of unfinished story and continue the next sheet. Do not use the back page of the paper.
+13. On the second page, instead of numbering as page 2, label it “first add” or “add one” followed by the slug. For example, “first add nabbed” or “add one nabbed”.
+14. End the story with number 30 or sharp (#). Encircle it.
+15. If the copy could hardly be read because of so many corrections, retype it if time permits to facilitate editing and typesetting.
+read: Headline Writing
+¶ Headline is the title of the news story. It is the display window of the newspaper. It also serves as a source of information for busy newspaper readers.
+read*: Steps in Headline Writing
+1. Read the whole story to understand its message.
+2. Underline the key words from the lead.
+3. Using these key words, write a short telegraphic sentence summary of the news (omit articles, unnecessary auxiliary verbs, prepositions, details).
+4. Divide according to units of thought into the number of lines required.
+5. Substitute simple, effective synonyms to reduce width within the limits of space allotted.
+Example: Charter polls / must go on, say experts
+read*: Rules in Writing Headline
+1. The headline must have a verb and it must be in the present tense. Wrong: Ang Limbukad copped 5 trophies in DSPC. Correct: Ang Limbukad cops 5 trophies in DSPC
+2. The first letter of the first word and proper nouns are generally capitalized. Example: Iran offers more oil in RP
+3. Do not use period.
+4. Minimize punctuation marks. Wrong: Rolling stores to sell rice and groceries. Correct: Rolling stores to sell rice, groceries
+5. Don’t use the articles a, an, the. Wrong: A fire hits the squatters’ area in Tondo. Correct: Fire hits squatters’ area in Tondo
+6. Don’t use names unless the person is well-known. Wrong: Santos electrocuted. Correct: Carpenter electrocuted
+7. Use the infinitives for future events. Wrong: City Hall will push anti-squatting drive. Correct: City Hall to push anti-squatting drive
+8. Use specific terms instead of generalities. Wrong: School official gets scholarship. Correct: Principal gets US scholarship
+9. Assertions in a headline should have a source or attribution. Poor: Principal orders suspension of classes. Strong: Classes suspended today, says principal. Good: Even SC can err-Cuevas. Good: Cuevas: Even SC can err
+10. Use the shorter word whenever possible, e.g., use “cut” for decrease, or “hike” for increase. Example: School hikes tuition fee / Studes urge class boycott
+read*: The Article to Copyread
+doctor. Ma. Girlie Pinongan, provincial health officer, said there were 2,211 influenza-like cases reported from Jan. 1 to Dec. 2 this year in the 31 towns and cities of negros occidental compared to 616 cases in 2022.
+health officials urged the public to take precautions during the holiday as cases as cases of influenza-like illness in Negros Occidental increased by 258.93 percent this year.
+he highest number of cases were recorded in Isabela town with 1,680 followed by San Carlos City with 129; Murcia, 80; Bago City, 57; Talisay City, 50; Hinigaran, 20; Cadiz City, 19; and Don Salvador Benedicto, Silay City and Victorias City with 16 each.
+Still, she said, the public should avoid close contact with persons manifesting influenza-like symptoms
+Pinongan said the cases are not severe and are usually triggered by changes in conditions weather/
+She also urged people to wear mask in closed and crowded spaces as a precaution.
+write: Write the copyread article, the slug and the printers’ direction.
+write: Headline 1 (barline)
+write: Headline 2 (droplines)
+
+=== 14.1 | News Writing | Activity 14 | pages 31,32
+pics:
+ins: Developing Context and Main Body Content · Theme: Technology
+read: I. Background of the Task
+¶ You are a student journalist assigned to write a technology news article. Your task is to develop the context and main body content of the story based on the information below:
+read: News Scenario:
+¶ Three senior high school students developed a low-cost mobile app that detects early signs of dengue outbreaks using location-based reports and temperature data.
+read*: II. Review: What Is Context in News Writing?
+Context provides background information that helps the reader understand:
+• Why the news matters
+• What problem it addresses
+• The current situation related to the issue
+read*: III. Review: What Is the Main Body of a News Article?
+The main body expands the story by adding:
+• Important details
+• Quotes (real or simulated)
+• Effects or implications
+• Supporting data or explanations
+lead: IV. Activity Instructions · Using the news scenario above, complete the tasks below:
+write: A. Write the Context Paragraph · Explain the background of the dengue issue and why a detection app is important. (3–4 sentences)
+write: B. Write the Main Body Paragraph · Add more details about the app, how it works, who created it, and its possible impact. You may include invented quotes to enrich the story. (4–6 sentences)
+write: V. Reflection Question · How can technology created by students contribute to solving real community problems?
+
+=== 15.1 | Feature Writing | Activity 15 | pages 33,34
+pics:
+ins: A Day in the Life of ….
+read*: Instructions:
+1. Choose someone to feature: a classmate, teacher, family member, neighbor, or even a school staff member (e.g., librarian, guard, janitor).
+2. Interview the person using at least 5 questions (e.g., daily routine, hobbies, challenges, fun facts).
+3. Write a 3-4 paragraph feature article titled “A Day in the Life of ______.”
+4. Focus on capturing interesting details, personality, and real experiences.
+5. Add one photo or hand-drawn illustration (optional).
+read: Example: Title: A Day in the Life of Mr. Santos, the School Guard
+¶ Mr. Santos steps through the school gate before the sun has fully risen, his uniform crisp and his flashlight in hand. He smiles warmly as he greets the early students trickling in, locking the gate behind him. “I like being the first one here,” he says. “It gives me time to think and prepare for the day.”
+¶ Throughout the morning, he patrols the corridors, making sure classrooms are secure and reminding students to put their things away. When someone forgets a book or backpack, he helps them carry it to their classroom. At recess, he watches students play, sometimes pausing to chat he asks about their day, what subjects they like, and even what games they play at home.
+¶ In the afternoon, Mr. Santos helps guide students out of the school grounds safely. He stands by the gate, waving goodbye, and makes sure no one lags behind. After the last student leaves, he walks around to check every door and window. He says, “My job isn’t just to guard the school — I guard their memories too. I want them to leave knowing they're safe.” As he closes up, his face shows a quiet pride: even in the small moments, he knows he’s made a difference.
+write: A Day in the Life of ______ (3-4 paragraphs)
+read*: Instructions:
+1. Explore the school campus and identify a “hidden gem”—a place or feature students may overlook (e.g., a quiet reading corner, an art display, a garden spot).
+2. Describe what makes this place special or unique.
+3. Interview at least 1 person who knows something about the location (e.g., librarian, teacher, classmate).
+4. Write a short feature article (2–3 paragraphs) that includes descriptive details, sensory imagery, and interesting facts.
+5. Give the article a catchy title (e.g., “The Secret Garden Behind the Science Lab”).
+read: Example: Title: The Secret Garden Behind the Science Lab
+¶ Paragraph 1 – Description:
+¶ Tucked behind the science lab, away from the bustling hallways, lies a small garden that most students pass by without noticing. Sunlight filters through the branches of a tall jacaranda tree, casting dappled shadows on the neatly arranged flowerbeds. The air is fragrant with the scent of blooming marigolds and jasmine, and the gentle sound of rustling leaves creates a peaceful atmosphere. A worn wooden bench sits under the tree, inviting anyone to pause and enjoy the quiet.
+¶ Paragraph 2 – Stories and Facts:
+¶ Mrs. Alvarez, the school’s biology teacher, explains that the garden was planted by students five years ago as part of a sustainability project. “It started as a simple idea to grow flowers and herbs for the school, but it became a place where students could relax and observe nature,” she says. Over the years, students have added bird feeders, a small pond, and colorful stepping stones. Many report that spending time here helps them focus and feel calm between classes.
+¶ Paragraph 3 – Reflection / Significance:
+¶ Though it may seem small and unassuming, this garden is a hidden treasure in the school. It reminds everyone that even in a busy campus, there are spaces to pause, reflect, and connect with nature. For those who take the time to explore it, the garden offers more than beauty—it offers a moment of calm and inspiration in the middle of a hectic school day.
+write: Write your feature article with a catchy title (2–3 paragraphs).
