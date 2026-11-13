@@ -1,0 +1,17 @@
+{
+  "name": "BULIG Defense Panel",
+  "short_name": "Defense Panel",
+  "description": "Practice the BULIG Quest capstone defense: answer the panel out loud and get feedback.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1f6b45",
+  "theme_color": "#1f6b45",
+  "icons": [
+    { "src": "assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/img/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
