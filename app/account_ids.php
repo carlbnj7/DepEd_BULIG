@@ -2,7 +2,7 @@
 /* Account IDs (v2)
    Pupil    PCES260001   school code + year the account was made + number (a new count each year)
    Teacher  PCEST0001    school code + T + number
-   Admin    A260001      A + year + number
+   Admin    A0001        A + number (v215: no year, like teachers; role IDs too: DV0001, MA0001, DA0001, CD0001…)
    The school code has 3–10 letters (Settings › Account IDs). Numbers have at least 4 digits and simply grow
    longer after 9999. Each school code keeps its own numbers for pupils and for teachers in id_sequences
    (kind "p:PCES:26", "t:PCES", "a:26"). A number is only taken inside a transaction, so two people never get the
@@ -57,9 +57,9 @@ function school_code():string{
 /* ---------- making a new ID ---------- */
 function account_id_format(string $role,string $code,string $yy,int $n):string{
  $num=str_pad((string)$n,4,'0',STR_PAD_LEFT);
- return match($role){'pupil'=>$code.$yy.$num,'teacher'=>$code.'T'.$num,default=>'A'.$yy.$num};
+ return match($role){'pupil'=>$code.$yy.$num,'teacher'=>$code.'T'.$num,default=>'A'.$num};
 }
-function account_id_kind(string $role,string $code,string $yy):string{return match($role){'pupil'=>'p:'.$code.':'.$yy,'teacher'=>'t:'.$code,default=>'a:'.$yy};}
+function account_id_kind(string $role,string $code,string $yy):string{return match($role){'pupil'=>'p:'.$code.':'.$yy,'teacher'=>'t:'.$code,default=>'a'};}
 /** True when the ID belongs to an account now, or was an account's old ID (old IDs still sign in). */
 function account_id_taken(string $id):bool{
  if(val('SELECT 1 FROM users WHERE public_id=?',[$id]))return true;

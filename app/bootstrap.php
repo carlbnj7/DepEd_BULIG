@@ -43,7 +43,7 @@ function word_match(string $expected,string $heard):array{
  while($i||$j){if($i&&$j&&$d[$i][$j]===$d[$i-1][$j-1]+($a[$i-1]===$b[$j-1]?0:1)){$detail[]=['expected'=>$a[$i-1],'heard'=>$b[$j-1],'match'=>$a[$i-1]===$b[$j-1]];$i--;$j--;}elseif($i&&$d[$i][$j]===$d[$i-1][$j]+1){$detail[]=['expected'=>$a[$i-1],'heard'=>'','match'=>false];$i--;}else{$detail[]=['expected'=>'','heard'=>$b[$j-1],'match'=>false];$j--;}}
  return ['percent'=>count($a)?round(max(0,1-$d[count($a)][count($b)]/count($a))*100,2):0,'words'=>array_reverse($detail)];
 }
-function activities(int $lid,int $pid=0):array{return rows("SELECT a.*,c.status,c.response,c.feedback,c.drawing,c.id completion_id FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.published=1 ORDER BY FIELD(a.phase,'pre','learn','post'),a.position",[$pid,$lid]);}
+function activities(int $lid,int $pid=0):array{return rows("SELECT a.*,c.status,c.response,c.feedback,c.drawing,c.id completion_id FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND ".(studio_test_draft($pid,$lid)?'1':'a.published=1')." ORDER BY FIELD(a.phase,'pre','learn','post'),a.position",[$pid,$lid]);}
 function lesson_available(int $pid,int $lid):bool{
  if(isset($GLOBALS['bulig_map_availability'])&&($_SERVER['REQUEST_METHOD']??'GET')==='GET'){
   $key=$pid.':'.$lid;
@@ -53,6 +53,7 @@ function lesson_available(int $pid,int $lid):bool{
  return lesson_available_check($pid,$lid);
 }
 function lesson_available_check(int $pid,int $lid):bool{
+ if(function_exists('is_tester')&&is_tester($pid))return studio_tester_lesson_ok($pid,$lid);   // v215 Content Studio: the test pupil opens every lesson (and the studio drafts)
  $l=one('SELECT l.*,m.level_id,m.grade_level module_grade FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=? AND l.published=1',[$lid]);if(!$l)return false;
  if($l['module_grade']!==null&&(int)$l['module_grade']!==pupil_grade($pid))return false;
  if(!(int)val('SELECT published FROM bulig_levels WHERE id=?',[$l['level_id']]))return false;
@@ -64,12 +65,14 @@ function lesson_available_check(int $pid,int $lid):bool{
 function completion_ok(?array $row):bool{return $row&&in_array($row['status'],['approved','completed'],true);}
 function phase_available(int $pid,int $lid,string $phase):bool{
  $order=['pre'=>0,'learn'=>1,'post'=>2];if(!isset($order[$phase]))return false;
+ if(function_exists('is_tester')&&is_tester($pid))return true;
  if(function_exists('lesson_is_skipped')&&lesson_is_skipped($pid,$lid))return true;
  $earlier=array_slice(array_keys($order),0,$order[$phase]);
  foreach($earlier as $stage)if(val("SELECT COUNT(*) FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.phase=? AND a.published=1 AND (c.status IS NULL OR c.status NOT IN ('approved','completed'))",[$pid,$lid,$stage]))return false;
  return true;
 }
 function allowed_activity(int $pid,int $aid):array{
+ if(function_exists('is_tester')&&is_tester($pid)){$a=one('SELECT * FROM activities WHERE id=?',[$aid]);if(!$a||(!$a['published']&&!studio_draft_lesson((int)$a['lesson_id']))||!lesson_available($pid,(int)$a['lesson_id']))fail('Activity not found.',404);return $a;}   // v215 the test pupil answers in any order
  $a=one('SELECT * FROM activities WHERE id=? AND published=1',[$aid]);if(!$a)fail('Activity not found.',404);
  if(!lesson_available($pid,(int)$a['lesson_id'])||!phase_available($pid,(int)$a['lesson_id'],$a['phase']))fail('Complete the earlier learning steps first.',403);
  $before=val("SELECT COUNT(*) FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND a.phase=? AND a.position<? AND a.published=1 AND (c.status IS NULL OR c.status NOT IN ('approved','completed'))",[$pid,$a['lesson_id'],$a['phase'],$a['position']]);
@@ -218,19 +221,20 @@ function profile_avatar_choices():array{
 /** Remembered for the rest of the page (pages ask many times; every change to these ends with a redirect). */
 function pupil_start_level(int $pid):int{static $c=[];return $c[$pid]??=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);}
 function level_published(int $id):bool{static $c=null;$c??=array_map('intval',array_column(rows('SELECT id,published FROM bulig_levels'),'published','id'));return !empty($c[$id]);}
-function level_available(int $pid,int $level):bool{return level_progress_ready($pid,$level)&&!(function_exists('level_date_locked')&&level_date_locked($pid,$level));}
+function level_available(int $pid,int $level):bool{if(function_exists('is_tester')&&is_tester($pid))return level_published($level);return level_progress_ready($pid,$level)&&!(function_exists('level_date_locked')&&level_date_locked($pid,$level));}
 /** Open by progress: every earlier level from the starting level is finished (the level schedule is checked separately). */
 function level_progress_ready(int $pid,int $level):bool{
  static $c=[];return $c[$pid.':'.$level]??=level_progress_check($pid,$level);
 }
 function level_progress_check(int $pid,int $level):bool{
  if(!level_published($level))return false;
+ if(function_exists('is_tester')&&is_tester($pid))return true;   // v215 the Content Developer's test pupil: every published level is open
  $start=pupil_start_level($pid);
  if(!$start)return false;
  if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$level,pupil_grade($pid)]))return false;
  foreach(rows('SELECT id,published FROM bulig_levels WHERE '.level_order_sql('id').'>='.level_order_sql('?').' AND '.level_order_sql('id').'<'.level_order_sql('?').' ORDER BY '.level_order_sql('id'),[$start,$level]) as $prior){
   if(!$prior['published'])return false;
-  $counts=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$prior['id'],pupil_grade($pid)]);
+  $counts=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.(function_exists('studio_not_extra_sql')?studio_not_extra_sql():'').GRADE_SQL,[$pid,$prior['id'],pupil_grade($pid)]);
   if(!$counts['total']||$counts['total']!=$counts['done'])return false;
   if(function_exists('pt_passed')&&!pt_passed($pid,(int)$prior['id']))return false;
  }
@@ -274,7 +278,7 @@ function next_learning_lesson_check(int $pid):?array{
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['school_levels','coach','whats_new','privacy','chat','rbac','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support','streak'];
+const BULIG_PARTS=['school_levels','coach','whats_new','privacy','chat','rbac','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support','streak','studio'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
  if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}

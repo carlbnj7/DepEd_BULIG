@@ -8,6 +8,7 @@ function action():void{
  if(function_exists('rbac_guard_action'))rbac_guard_action($action);   // v210 viewer roles only look; system-wide actions are for the Central Admin
  if($action==='role_switch')role_switch_action();
  if(str_starts_with($action,'org_'))org_action($action);
+ if(str_starts_with($action,'studio_'))studio_action($action);   // v215 Content Studio (app/studio.php)
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
  if($action==='reading_decision'||$action==='reading_verify_batch')rv_action();

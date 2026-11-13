@@ -11,25 +11,27 @@
 function staff_nav_list(array $u):array{
  $l=staff_nav_list_all($u);
  /* v211 the system pages (bug reports, activity log, data cleanup) belong to the Division Admin only */
- if(($u['role']??'')==='admin'&&($u['active_role']??'central_admin')!=='central_admin')$l=array_values(array_filter($l,fn($x)=>!in_array($x[0],['bugs','activity_log','cleanup'],true)));
+ if(($u['role']??'')==='admin'&&($u['active_role']??'central_admin')!=='central_admin')$l=array_values(array_filter($l,fn($x)=>!in_array($x[0],['bugs','activity_log','cleanup','studio_review'],true)));
  if(($u['role']??'')==='admin'&&function_exists('rbac_can'))$l=array_values(array_filter($l,fn($x)=>!(in_array($x[0],ROLE_CAP_PAGES['teachers'],true)&&!rbac_can('teachers'))));
  return $l;
 }
 function staff_nav_list_all(array $u):array{
  if($u['role']==='pupil')return [['dashboard','home','Overview'],['g','LEARN'],['lessons','book','My lessons'],['board','ladder','My reading board'],['practice','sound','My practice words'],['story','comic','Story time'],['g','MY PROGRESS'],['calendar','cal','My calendar'],['achievements','star','My achievements'],['g','ABOUT ME'],['bug_report','alert','My bug reports'],['messages','comic','Messages',['count'=>(function_exists('messages_unread')?messages_unread($u):0)+(function_exists('chat_unread')?chat_unread($u):0)]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile'],['settings','settings','Settings']];
+ if($u['role']==='studio')return [['dashboard','home','Studio home'],['g','CONTENT STUDIO'],['studio_lessons','book','Levels and lessons'],['studio_test','play','Test as Pupil'],['hr'],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];   // v215
  if($u['role']==='teacher'){$tid=(int)$u['id'];$rc=function_exists('rc_todo_count')?rc_todo_count($tid):0;
   return [['dashboard','home','Home'],['g','MY CLASS'],['manage','people','My pupils'],['leaderboard','star','Leaderboard'],['accounts','useredit','Add pupils'],['rcheck','ladder','Reading check',$rc?['count'=>$rc]:(staff_seen($tid,'rcheck')?[]:['tag'=>'NEW'])],['sections','school','Sections'],
    ['g','TEACHING'],['reading_reviews','mic','Verify readings',['count'=>rv_count($tid)]],['class_demo','book','Class Demo'],['story','comic','Story time'],['qcheck','chart','Class results'],['g','PRINT'],['print','print','Print centre'],['hr'],['bug_report','alert','My bug reports'],['messages','comic','Messages',['count'=>(function_exists('messages_unread')?messages_unread($u):0)+(function_exists('chat_unread')?chat_unread($u):0)]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];}
  if(!empty($u['view_only']))return [['dashboard','home','My area'],['g','VIEW ONLY'],['org','school','Organization'],['reports','chart','School reports'],['directory','search','School directory'],['hr'],['messages','comic','Messages',['count'=>function_exists('messages_unread')?messages_unread($u):0]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];   // v210 viewers only look
  return [['dashboard','home','Home'],['g','PEOPLE'],['org','people','Organization'],['schools','school','Schools'],['accounts','people','Teachers'],['directory','search','School directory'],['checkup','shield','Account check'],
-  ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=bug_open_count((int)$u['id']))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['cleanup','db','Data cleanup'],['settings','settings','Settings'],['hr'],['messages','comic','Messages',['count'=>function_exists('messages_unread')?messages_unread($u):0]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
+  ['g','REPORTS & PRINT'],['reports','chart','School reports'],['ratings','star','App ratings'],['print','print','Print & download'],['g','SYSTEM'],['studio_review','book','Content review',function_exists('studio_review_count')&&($sr=studio_review_count())?['count'=>$sr]:[]],['bugs','alert','Bug reports',function_exists('notif_ready')&&notif_ready()&&($bn=bug_open_count((int)$u['id']))?['count'=>$bn]:[]],['activity_log','clock','Activity log'],['cleanup','db','Data cleanup'],['settings','settings','Settings'],['hr'],['messages','comic','Messages',['count'=>function_exists('messages_unread')?messages_unread($u):0]],['notifications','bell','Notifications',staff_notif_badge($u)],['profile','user','My profile']];
 }
 /** The number of new notifications beside Notifications in the menu. */
 function staff_notif_badge(array $u):array{$n=function_exists('notif_count')?notif_count($u):0;return $n?['count'=>$n]:[];}
 /** Which menu item a page belongs to. */
 function staff_nav_on(string $role,string $page):string{
  if($role==='teacher')return ['pupil'=>'manage','progress'=>'manage','cards'=>'print','certificates'=>'print','report'=>'print','report_card'=>'print','section_report'=>'print','rcheck_pupil'=>'rcheck','rcheck_rules'=>'rcheck','rcheck_print'=>'rcheck','review'=>'qcheck','guide'=>'class_demo','moved'=>'dashboard','rate'=>'profile'][$page]??$page;
- if($role==='admin')return ['school'=>'schools','add_teachers'=>'accounts','teacher_import'=>'accounts','teacher_cards'=>'print','guide'=>'dashboard','visual_audit'=>'dashboard','health'=>'print','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
+ if($role==='studio')return ['studio_lesson'=>'studio_lessons'][$page]??$page;
+ if($role==='admin')return ['studio_review'=>'studio_review','school'=>'schools','add_teachers'=>'accounts','teacher_import'=>'accounts','teacher_cards'=>'print','guide'=>'dashboard','visual_audit'=>'dashboard','health'=>'print','moved'=>'dashboard','rcheck_rules'=>'dashboard'][$page]??$page;
  return $page;
 }
 function staff_nav_html(array $u,string $page):string{
@@ -48,6 +50,7 @@ function staff_mark_seen(int $uid,string $what):void{q('INSERT INTO settings(set
 
 /** "Find a page": every page and common task, searched in the browser (assets/staff.js). */
 function staff_find_list(string $role):array{
+ if($role==='studio')return [['Studio home','Your drafts and lessons waiting for review','?page=dashboard','home'],['Levels and lessons','Every level · Add a new lesson','?page=studio_lessons','book'],['Add a new lesson','Levels and lessons › Add a new lesson','?page=studio_lessons#st-new','book'],['Test as Pupil','Answer every level as a hidden test pupil','?page=studio_test','play'],['Reset test pupil','Test as Pupil › Reset','?page=studio_test','replay'],['Notifications','Review results from the Division Admin','?page=notifications','bell'],['My profile and password','Photo, dark mode, password','?page=profile','user']];
  if($role==='teacher')return [
   ['Home','Things that need you, quick tasks','?page=dashboard','home'],['My pupils','Pupil list: open, edit, tick many','?page=manage','people'],['Add a pupil','Add pupils › One pupil','?page=accounts','useredit'],['Add a whole class','Add pupils › A whole class (Excel list, SF1)','?page=accounts&mode=class','excel'],
   ['Reading check','Starting levels from the reading check','?page=rcheck','ladder'],['Readers who need help','Home › Readers who need help (low Word Coach scores)','?page=dashboard#rs-readers','mic'],['Class reading challenge','Home › Class reading challenge · weekly goal','?page=dashboard#rs-challenge','flag'],['Work waiting to upload','Home › answers still on a pupil’s phone','?page=dashboard#tf-todo','download'],['How BULIG decides the starting level','Reading check › How BULIG decides','?page=rcheck_rules','info'],['Sections','Add or rename a section','?page=sections','school'],
@@ -395,7 +398,7 @@ function class_glance(array $u):void{
     on a laptop or computer (v174). The browser shows it only on small touch screens (assets/staff.js). */
 function staff_pc_tip(array $u):string{
  if(!empty($_SESSION['pc_tip']))return '';$_SESSION['pc_tip']=1;$first=explode(' ',trim((string)$u['name']))[0];
- return '<template id="pc-tip" data-img="'.e(friend_img('kai','letter')).'" data-hi="'.e(($u['role']==='admin'?'Hi, ':'Hi, Teacher ').$first.'!').'"></template>';
+ return '<template id="pc-tip" data-img="'.e(friend_img('kai','letter')).'" data-hi="'.e(($u['role']!=='teacher'?'Hi, ':'Hi, Teacher ').$first.'!').'"></template>';
 }
 
 

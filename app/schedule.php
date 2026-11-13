@@ -13,6 +13,7 @@ function schedule_get():array{
 function level_opens_on(int $level):?string{$s=schedule_get();if(!$s['on'])return null;$d=$s['dates'][$level]??null;return $d!==null&&$d>date('Y-m-d')?$d:null;}
 /** Locked by date for this pupil (never the starting level or a level before it). */
 function level_date_locked(int $pid,int $level):bool{
+ if(function_exists('is_tester')&&is_tester($pid))return false;   // v215 the test pupil is never held by the level schedule
  if(level_opens_on($level)===null)return false;
  $start=pupil_start_level($pid);
  return $start>0&&$level>$start;

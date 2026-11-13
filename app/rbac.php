@@ -18,21 +18,22 @@ const ROLES=[
  'district_supervisor'=>['District Supervisor','District monitoring · view only','admin','district'],
  'school_admin'=>['School Admin','School management','admin','school'],
  'principal'=>['School Principal','School monitoring · view only','admin','school'],
+ 'content_dev'=>['Content Developer','Lesson content · drafts for review','studio','system'],   // v215 Content Studio: lessons only, no people (app/studio.php)
  'teacher'=>['Teacher','Classes and reading verification','teacher','school'],
  'pupil'=>['Pupil','Lessons and activities','pupil','school']];
 const ROLE_VIEWERS=['municipal_viewer','district_supervisor','principal'];
 /** Who may appoint whom (a role can only appoint roles below it, inside its own scope). */
-const ROLE_APPOINTS=['central_admin'=>['municipal_admin','municipal_viewer'],
+const ROLE_APPOINTS=['central_admin'=>['municipal_admin','municipal_viewer','content_dev'],
  'municipal_admin'=>['district_admin','district_supervisor'],'district_admin'=>['school_admin','principal']];
 /** v211 School Admin creates Teacher and Pupil accounts for their own school (Organization page). */
 const ROLE_CREATES=['school_admin'=>['teacher','pupil']];
 /** Actions that make teacher accounts: the Central Admin (first setup) and the School Admin only. */
 const ROLE_TEACHER_MAKERS=['central_admin','school_admin'];
-/** v211 ID letters for each administrative role: DV260001 = Division Admin, MA = Municipal Admin, and so on. */
-const ROLE_ID_PREFIX=['central_admin'=>'DV','municipal_admin'=>'MA','municipal_viewer'=>'MV','district_admin'=>'DA','district_supervisor'=>'DS','school_admin'=>'SA','principal'=>'SP'];
-/** A new ID for an administrative account (inside a transaction): letters + year + number, e.g. MA260001. */
+/** v211 ID letters for each administrative role: DV0001 = Division Admin, MA = Municipal Admin, and so on (v215: no year, like teacher IDs). */
+const ROLE_ID_PREFIX=['central_admin'=>'DV','municipal_admin'=>'MA','municipal_viewer'=>'MV','district_admin'=>'DA','district_supervisor'=>'DS','school_admin'=>'SA','principal'=>'SP','content_dev'=>'CD'];
+/** A new ID for an administrative account (inside a transaction): letters + number, e.g. MA0001 (v215: no year, like teacher IDs). */
 function rbac_account_id(string $role):string{
- $pre=ROLE_ID_PREFIX[$role]??'A';$yy=date('y');$kind='r:'.$pre.':'.$yy;
+ $pre=ROLE_ID_PREFIX[$role]??'A';$yy='';$kind='r:'.$pre;
  q('INSERT IGNORE INTO id_sequences(kind,next_value) VALUES(?,1)',[$kind]);
  $n=max(1,(int)val('SELECT next_value FROM id_sequences WHERE kind=? FOR UPDATE',[$kind]));
  while(account_id_taken($pre.$yy.str_pad((string)$n,4,'0',STR_PAD_LEFT)))$n++;
@@ -74,6 +75,7 @@ function rbac_scope_name(string $role,int $scope):string{
 /** Called by current_user(): sets the active role. $u['role'] becomes admin, teacher or pupil for the pages,
     and $u['active_role'], $u['scope_id'], $u['scope_schools'] and $u['view_only'] tell what this role may do. */
 function rbac_apply(array $u):array{
+ if(($u['role']??'')==='tester')return ['base_role'=>'tester','role'=>'pupil','is_tester'=>true,'roles'=>[],'active_role'=>'pupil','scope_id'=>0,'scope_schools'=>null,'view_only'=>false]+$u;   // v215 the Content Developer's hidden test pupil uses the pupil pages
  $u['base_role']=$u['role'];$roles=rbac_roles($u);$u['roles']=$roles;
  $want=(string)($_SESSION['active_role']??'');$act=null;
  foreach($roles as $r)if(rbac_key($r)===$want)$act=$r;
@@ -105,6 +107,8 @@ function rbac_can(string $cap):bool{$u=function_exists('current_user')?current_u
 /** Server-side check for every form: viewers only look; system-wide actions are for the Central Admin. */
 function rbac_guard_action(string $action):void{
  $u=current_user();if(!$u||empty($u['active_role']))return;
+ if(($u['active_role']??'')==='content_dev'&&!in_array($action,array_merge(ROLE_VIEWER_ACTIONS,defined('STUDIO_ACTIONS')?STUDIO_ACTIONS:[]),true))fail('The Content Developer role works on lessons only.',403);   // v215
+ if(!empty($u['is_tester'])&&in_array($action,['rate_app','rate_later','message_send','message_preview','message_reply','chat_send','chat_class','privacy_delete_ask'],true))fail('This is not available in test mode.',403);
  if(!empty($u['view_only'])&&!in_array($action,ROLE_VIEWER_ACTIONS,true))fail('Your role ('.ROLES[$u['active_role']][0].') can view but not change this.',403);
  if(($u['role']??'')==='admin')foreach(ROLE_CAP_ACTIONS as $cap=>$acts)if(in_array($action,$acts,true)&&!rbac_can($cap))fail('Your role ('.ROLES[$u['active_role']][0].') cannot do this. '.($cap==='teachers'?'Teachers are managed by the School Admin.':'Ask the Division Admin.'),403);
  if(in_array($action,ROLE_CENTRAL_ACTIONS,true)&&$u['active_role']!=='central_admin')fail('Only the Division Admin can do this.',403);
@@ -122,7 +126,7 @@ function rbac_bug_admins():array{
 function rbac_guard_page(string $page):void{
  $u=current_user();if(!$u||($u['role']??'')!=='admin')return;
  foreach(ROLE_CAP_PAGES as $cap=>$pgs)if(in_array($page,$pgs,true)&&!rbac_can($cap))fail('Your role ('.(ROLES[$u['active_role']??'central_admin'][0]??'').') cannot open this page.'.($cap==='teachers'?' Teachers are managed by the School Admin.':''),403);
- if(in_array($page,['bugs','bugs_csv','cleanup','activity_log','backup_csv','backup_sql','log_csv','ids_backup'],true)&&($u['active_role']??'central_admin')!=='central_admin')fail('Only the Division Admin can open this page.',403);
+ if(in_array($page,['studio_review','bugs','bugs_csv','cleanup','activity_log','backup_csv','backup_sql','log_csv','ids_backup'],true)&&($u['active_role']??'central_admin')!=='central_admin')fail('Only the Division Admin can open this page.',403);
 }
 
 /** v211 Keeps existing data: the municipalities and districts already saved in Settings (Schools page) become
@@ -281,7 +285,7 @@ function org_in_my_scope(array $u,string $role,int $scope):bool{
 }
 /** The places the active role may appoint people to, by level. */
 function org_scope_options(array $u):array{
- $o=['municipality'=>[],'district'=>[],'school'=>[]];
+ $o=['system'=>$u['active_role']==='central_admin'?[0=>'Entire division (lessons only)']:[],'municipality'=>[],'district'=>[],'school'=>[]];
  foreach(org_my_munis($u) as $m)if($u['active_role']==='central_admin')$o['municipality'][(int)$m['id']]=$m['name'];
  $ds=rows('SELECT d.id,d.name,d.municipality_id FROM districts d ORDER BY d.name');foreach($ds as $d)if(org_in_my_scope($u,'district_admin',(int)$d['id']))$o['district'][(int)$d['id']]=$d['name'];
  foreach(rows('SELECT id,name,code FROM schools WHERE active=1 ORDER BY name') as $s)if(org_in_my_scope($u,'school_admin',(int)$s['id']))$o['school'][(int)$s['id']]=$s['name']?:$s['code'];
@@ -401,7 +405,7 @@ function role_manage_panel(array $u):string{
   $kp[]=[in_array($k,ROLE_VIEWERS,true)?'eye':($k==='pupil'?'user':($k==='teacher'?'people':'shield')),$c,ROLES[$k][0].($c===1?'':'s'),in_array($k,ROLE_VIEWERS,true)?'view only':'',false];}
  $wait=in_array($r,['central_admin','municipal_admin','district_admin'],true)?(int)val('SELECT COUNT(*) FROM schools WHERE active=1 AND district_id IS NULL'.($r==='central_admin'?'':' AND 0')):0;
  if($wait)$kp[]=['alert',$wait,'Schools waiting for a district','choose their district',true];
- $who=['central_admin'=>'Municipal Admins and Municipal Viewers','municipal_admin'=>'District Admins and District Supervisors','district_admin'=>'School Admins and School Principals','school_admin'=>'Teachers and Pupils'][$r]??'';
+ $who=['central_admin'=>'Municipal Admins, Municipal Viewers and Content Developers','municipal_admin'=>'District Admins and District Supervisors','district_admin'=>'School Admins and School Principals','school_admin'=>'Teachers and Pupils'][$r]??'';
  $idnote='';   // v211 IDs never change (the Get my ID button is removed)
  return '<section class="card mon-manage">'.$idnote.'<div class="ws-hd"><h2>'.icon('useredit').'Accounts you manage</h2></div><p class="muted">You create the '.e($who).' for your area. Each person gets an ID and a password from BULIG.</p>'.admin_kpis($kp)
   .'<div class="ws-btns"><a class="btn primary" href="?page=org#org-create">'.icon('useredit').'Create an account</a><a class="btn secondary" href="?page=org#org-people">'.icon('people').'Give a role to an existing account</a>'.($r==='school_admin'?'<a class="btn secondary" href="?page=add_teachers">'.icon('people').'Add many teachers</a>':'').($wait?'<a class="btn secondary" href="?page=org#org-review">'.icon('school').'Review schools</a>':'').'<a class="btn secondary" href="?page=org">'.icon('school').'Organization chart</a></div></section>';
