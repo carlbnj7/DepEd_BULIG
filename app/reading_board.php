@@ -18,7 +18,7 @@ const RB_COLORS=[1=>['#f6c02c','#c99400','#a77a00'],2=>['#f28c28','#c4650f','#d9
 function rb_levels(int $pid):array{
  static $c=[];if(isset($c[$pid]))return $c[$pid];
  $start=pupil_start_level($pid);$fin=function_exists('finished_levels')?finished_levels($pid):[];$grade=pupil_grade($pid);$out=[];$cur=0;
- foreach(LEVEL_ORDER as $L){$pub=level_published($L);
+ foreach(level_sequence() as $L){$pub=level_published($L);
   $n=$pub?one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$L,$grade]):['total'=>0,'done'=>0];
   $pct=(int)$n['total']?(int)floor(100*(int)$n['done']/(int)$n['total']):0;
   $pt=function_exists('pt_result')&&$pub?pt_result($pid,$L):['n'=>0];$post=$pt['n']&&($pt['done']??0)>=$pt['n']?(int)$pt['pct']:null;

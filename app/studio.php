@@ -9,7 +9,6 @@
    - Every "Send for review" and "Publish" saves a copy of the lesson (studio_revisions); a draft can be restored to a copy.
    - Existing (official) lessons are never changed here: the studio shows them read-only. */
 
-const STUDIO_LEVELS=[1];   // levels where new lessons can be added in this version (Level 1 uses screens built from the database)
 const STUDIO_TEMPLATES=[
  'speak'=>['Speak the answer','mic','open','answer','Share your answer by speaking or typing. Then choose Submit Answer.','The pupil answers by speaking (the microphone) or typing.'],
  'read'=>['Read aloud with Word Coach','sound','reading','answer','Share your answer by speaking or typing. Then choose Submit Answer.','The pupil reads the words aloud. Word Coach turns each word green when it hears it.'],
@@ -17,8 +16,8 @@ const STUDIO_TEMPLATES=[
  'do'=>['Do it!','hand','physical','perform','Try the activity with your partner or teacher, then choose Done when you have finished.','The pupil does an action, then chooses Done.'],
  'pair'=>['With a partner','people','group','perform','Try the activity with your partner or teacher, then choose Done when you have finished.','Partners or a group do it together, then choose Done.'],
  'draw'=>['Draw','edit','drawing','drawing','Draw your answer, or describe your paper drawing. Then submit your work.','The pupil draws on the screen, or takes a photo of a paper drawing.']];
-const STUDIO_ACTIONS=['studio_lesson_add','studio_lesson_save','studio_lesson_delete','studio_act_add','studio_act_save','studio_act_delete','studio_act_move','studio_send','studio_restore','studio_test_start','studio_test_reset'];
-const STUDIO_ADMIN_ACTIONS=['studio_approve','studio_sendback','studio_hide'];
+const STUDIO_ACTIONS=['studio_level_add','studio_level_save','studio_level_delete','studio_level_send','studio_import_page','studio_import_build','studio_lesson_add','studio_lesson_save','studio_lesson_delete','studio_act_add','studio_act_save','studio_act_delete','studio_act_move','studio_send','studio_restore','studio_test_start','studio_test_reset'];
+const STUDIO_ADMIN_ACTIONS=['studio_approve','studio_sendback','studio_hide','studio_level_approve','studio_level_sendback','studio_level_hide'];
 
 function studio_ready():bool{static $ok;if($ok===null){try{$ok=(bool)one("SHOW TABLES LIKE 'studio_lessons'");}catch(Throwable $e){$ok=false;}}return $ok;}
 /** A Content Developer's hidden test pupil. */
@@ -33,10 +32,32 @@ function studio_tester_lesson_ok(int $pid,int $lid):bool{
  $l=one('SELECT l.published,m.level_id,m.grade_level g FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);if(!$l)return false;
  if(!(int)$l['published']&&!studio_draft_lesson($lid))return false;
  if($l['g']!==null&&(int)$l['g']!==pupil_grade($pid))return false;
- return level_published((int)$l['level_id']);
+ return level_published((int)$l['level_id'])||studio_draft_level((int)$l['level_id']);
 }
 /** Studio lessons are extra: they never decide whether a level is finished (so publishing one never re-locks a level). */
-function studio_not_extra_sql(string $l='l'):string{return studio_ready()?' AND '.$l.'.id NOT IN (SELECT lesson_id FROM studio_lessons)':'';}
+function studio_not_extra_sql(string $l='l'):string{if(!studio_ready())return '';return ' AND '.$l.'.id NOT IN (SELECT sx.lesson_id FROM studio_lessons sx JOIN lessons lx ON lx.id=sx.lesson_id JOIN modules mx ON mx.id=lx.module_id'.(studio_levels_ready()?' WHERE mx.level_id NOT IN (SELECT level_id FROM studio_levels)':'').')';}   // a new level's own lessons do count for that level
+
+/* ---------- v216 new levels (database/migrations/047_studio_levels.sql) ---------- */
+function studio_levels_ready():bool{static $ok;if($ok===null){try{$ok=(bool)one("SHOW TABLES LIKE 'studio_levels'");}catch(Throwable $e){$ok=false;}}return $ok;}
+/** Every new level (any status), in the order they were made: they come after Level 7. */
+function studio_levels_all():array{static $c=null;if($c===null){$c=[];if(studio_levels_ready())foreach(rows('SELECT * FROM studio_levels ORDER BY level_id') as $r)$c[(int)$r['level_id']]=$r;}return $c;}
+function studio_extra_levels():array{return array_keys(studio_levels_all());}
+function studio_level(int $id):?array{return studio_levels_all()[$id]??null;}
+function studio_draft_level(int $id):bool{$l=studio_level($id);return $l!==null&&$l['status']!=='published';}
+/** "Level 8", "Level 9" … in order after Level 7. */
+function studio_level_label(int $id):string{$i=array_search($id,studio_extra_levels(),true);return $i===false?'Level '.$id:'Level '.(8+$i);}
+function studio_level_cover(int $id):string{$l=studio_level($id);return $l&&$l['cover_path']&&resolved_image_path((string)$l['cover_path'])?(string)resolved_image_path((string)$l['cover_path']):'';}
+/** Hides draft new levels from pupils and teachers (the Content Developer's test pupil and the studio still see them). */
+function studio_hide_levels_sql(string $col):string{
+ if(!studio_levels_ready())return '';$u=function_exists('current_user')?current_user():null;
+ if($u&&(!empty($u['is_tester'])||($u['role']??'')==='studio'))return '';
+ return ' AND '.$col." NOT IN (SELECT level_id FROM studio_levels WHERE status<>'published')";
+}
+/** Lessons a pupil sees: published ones; the test pupil also sees the studio's drafts. */
+function studio_pub_sql(string $l,int $pid):string{return is_tester($pid)&&studio_ready()?'('.$l.".published=1 OR ".$l.".id IN (SELECT lesson_id FROM studio_lessons WHERE status<>'published'))":$l.'.published=1';}
+/** Levels where the studio can add lessons: Level 1 and every new level (they use the Level 1 screens). */
+function studio_lessons_allowed(int $level):bool{return $level===1||studio_level($level)!==null;}
+function studio_level_module(int $level):int{return (int)(val('SELECT id FROM modules WHERE level_id=? ORDER BY id LIMIT 1',[$level])?:0);}
 function studio_css_link():string{$u=function_exists('current_user')?current_user():null;return ($u&&(($u['role']??'')==='studio'||($u['active_role']??'')==='central_admin'||!empty($_SESSION['studio_dev'])))?'<link rel="stylesheet" href="'.asset_url('studio.css').'">':'';}
 function studio_is_dev(?array $u):bool{return $u&&($u['role']??'')==='studio';}
 
@@ -139,6 +160,7 @@ function studio_action(string $action):never{
   go('?page='.(($b=(string)($_SESSION['studio_back']??''))!==''?$b:'studio_test'));}
  if(in_array($action,STUDIO_ADMIN_ACTIONS,true)){
   if(($u['active_role']??'')!=='central_admin'||($u['role']??'')!=='admin')fail('Only the Division Admin reviews lessons.',403);
+  if(str_starts_with($action,'studio_level_'))studio_level_admin_action($action,$u);
   $lid=(int)($_POST['lesson']??0);$s=studio_row($lid);if(!$s)fail('Lesson not found.',404);$l=studio_lesson($lid);
   if($action==='studio_approve'){if($s['status']!=='review')fail('This lesson is not waiting for review.');
    db()->beginTransaction();try{q('UPDATE activities SET published=1 WHERE lesson_id=?',[$lid]);q('UPDATE lessons SET published=1 WHERE id=?',[$lid]);
@@ -155,6 +177,7 @@ function studio_action(string $action):never{
    audit('studio_hide',(string)$lid);flash('Hidden from pupils. It is a draft again.');go('?page=studio_review');}
  }
  if(!studio_is_dev($u))fail('Only a Content Developer can do this.',403);
+ if(str_starts_with($action,'studio_level_')||str_starts_with($action,'studio_import_'))studio_level_action($action,$u);
  if($action==='studio_test_start'){
   $grade=max(1,min(10,(int)($_POST['grade']??1)));$tid=studio_tester_make($u,$grade);$to=(int)($_POST['lesson']??0);
   $_SESSION['studio_back']=$to?'studio_lesson&id='.$to:'studio_test';
@@ -163,7 +186,7 @@ function studio_action(string $action):never{
   go('?page=lessons');}
  if($action==='studio_test_reset'){$tid=studio_tester_of((int)$u['id']);if($tid)studio_tester_wipe($tid);audit('studio_test_reset','');flash('Your test pupil is fresh again: no answers, XP or badges.');go('?page=studio_test');}
  if($action==='studio_lesson_add'){
-  $level=(int)($_POST['level']??0);if(!in_array($level,STUDIO_LEVELS,true))fail('New lessons can be added to Level 1 in this version.');
+  $level=(int)($_POST['level']??0);if(!studio_lessons_allowed($level))fail('New lessons can be added to Level 1 and to the new levels.');if(($lv=studio_level($level))&&$lv['status']==='review')fail('This level is waiting for review.');
   $mod=(int)($_POST['module']??0);if(!val('SELECT 1 FROM modules WHERE id=? AND level_id=?',[$mod,$level]))fail('Choose the module.');
   $title=trim(mb_substr((string)($_POST['title']??''),0,200));$sub=trim(mb_substr((string)($_POST['subtitle']??''),0,80));if(mb_strlen($title)<3)fail('Type the lesson title.');if($sub==='')$sub=mb_substr($title,0,60);
   $obj=trim(mb_substr((string)($_POST['objectives']??''),0,3000));
@@ -197,7 +220,7 @@ function studio_action(string $action):never{
  if($action==='studio_act_move'){$dir=(string)($_POST['dir']??'')==='up'?-1:1;$ids=array_map('intval',array_column(rows("SELECT id FROM activities WHERE lesson_id=? AND phase='learn' ORDER BY position",[$lid]),'id'));$i=array_search($aid,$ids,true);$j=$i===false?false:$i+$dir;
   if($i!==false&&isset($ids[$j])){[$ids[$i],$ids[$j]]=[$ids[$j],$ids[$i]];db()->beginTransaction();try{foreach($ids as $n=>$id)q('UPDATE activities SET position=? WHERE id=?',[-($n+1),$id]);q("UPDATE activities SET position=-position WHERE lesson_id=? AND phase='learn'",[$lid]);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}}
   go('?page=studio_lesson&id='.$lid.'#st-a'.$aid);}
- if($action==='studio_send'){studio_editable($lid);if(!val('SELECT COUNT(*) FROM activities WHERE lesson_id=?',[$lid]))fail('Add at least one activity first.');
+ if($action==='studio_send'){studio_editable($lid);if(($lv=studio_level(lesson_level($lid)))&&$lv['status']!=='published')fail('This lesson is in a new level. Send the whole level for review from the level page.');if(!val('SELECT COUNT(*) FROM activities WHERE lesson_id=?',[$lid]))fail('Add at least one activity first.');
   if(empty($_POST['checked']))fail('Tick the box to confirm you tested the lesson and checked it against the module.');
   q("UPDATE studio_lessons SET status='review',sent_at=NOW(),note=NULL WHERE lesson_id=?",[$lid]);studio_snapshot($lid,'Sent for review');$l=studio_lesson($lid);
   foreach(rows("SELECT DISTINCT u.id FROM users u JOIN user_roles r ON r.user_id=u.id AND r.role='central_admin' WHERE u.active=1") as $x)notify((int)$x['id'],'note','A lesson is waiting for your review','“'.$l['title'].'” from '.name_case((string)$u['name']).'.','?page=studio_review&id='.$lid);
@@ -222,7 +245,9 @@ function studio_home(array $u):void{
 function studio_lessons_view(array $u):void{
  if(studio_setup_card())return;$level=(int)($_GET['level']??1);if(!val('SELECT 1 FROM bulig_levels WHERE id=?',[$level]))$level=1;
  echo hm_head('CONTENT STUDIO','Levels and Lessons','Official lessons are read-only. New lessons are added at the end of a level, as drafts.');
- echo '<nav class="st-levels" aria-label="Levels">';foreach(LEVEL_ORDER as $lv)echo '<a class="'.($lv===$level?'on':'').'" href="?page=studio_lessons&amp;level='.$lv.'">'.e(level_label($lv)).'</a>';echo '</nav>';
+ echo '<nav class="st-levels" aria-label="Levels">';$newL=isset($_GET['new_level'])&&studio_levels_ready();foreach(level_sequence() as $lv)echo '<a class="'.(!$newL&&$lv===$level?'on':'').(studio_draft_level($lv)?' st-lv-draft':'').'" href="?page=studio_lessons&amp;level='.$lv.'">'.e(level_label($lv)).(studio_draft_level($lv)?' · draft':'').'</a>';if(studio_levels_ready())echo '<a class="st-lv-new'.($newL?' on':'').'" href="?page=studio_lessons&amp;new_level=1">'.icon('book').'New level</a>';echo '</nav>';
+ if($newL){studio_new_level_form();return;}
+ if(studio_level($level))studio_level_card($level);
  $mods=studio_modules($level);$S=studio_ready()?array_column(rows('SELECT * FROM studio_lessons'),null,'lesson_id'):[];
  echo '<section class="card"><div class="ws-hd"><h2>'.icon('book').e(level_label($level)).' · '.e((string)val('SELECT title FROM bulig_levels WHERE id=?',[$level])).'</h2><form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_test_start"><input type="hidden" name="grade" value="'.(int)($mods[0]['grade_level']??1).'"><button class="btn secondary small">'.icon('eye').'Test this level as a pupil</button></form></div>';
  foreach($mods as $m){$ls=rows('SELECT l.*,(SELECT COUNT(*) FROM activities a WHERE a.lesson_id=l.id) acts FROM lessons l WHERE l.module_id=? ORDER BY l.position',[$m['id']]);
@@ -232,7 +257,7 @@ function studio_lessons_view(array $u):void{
   echo '</div></details>';}
  echo '</section>';
  echo '<section class="card" id="st-new"><div class="ws-hd"><h2>'.icon('book').'Add a new lesson</h2></div>';
- if(in_array($level,STUDIO_LEVELS,true)){
+ if(studio_lessons_allowed($level)){
   echo '<p class="muted">The lesson goes at the end of '.e(level_label($level)).', after the official lessons. It stays a draft, hidden from pupils, until the Division Admin approves it.</p><form method="post" class="st-form">'.csrf_field().'<input type="hidden" name="action" value="studio_lesson_add"><input type="hidden" name="level" value="'.$level.'">'
    .'<label>Module<select name="module" required>';foreach($mods as $m)echo '<option value="'.(int)$m['id'].'">'.e($m['title']).'</option>';
   echo '</select></label><label>Lesson title<input name="title" maxlength="200" required placeholder="e.g. Using Rhyming Words"></label><label>Short name on the road map<input name="subtitle" maxlength="80" placeholder="e.g. Rhyming Words"></label><label>What pupils will learn (one per line)<textarea name="objectives" rows="3" maxlength="3000" placeholder="1. Say words that rhyme.&#10;2. Find rhyming pairs in a poem."></textarea></label><button class="btn primary">'.icon('check').'Add lesson as a draft</button></form>';
@@ -267,7 +292,9 @@ function studio_lesson_view(array $u):void{
  echo '</div><aside>';
  /* test, send, history */
  echo '<section class="card st-side"><h2>'.icon('eye').'Test it as a pupil</h2><p class="muted">Answer every activity for real: speak, read with Word Coach, draw, earn XP. Your test pupil is hidden from every report.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_test_start"><input type="hidden" name="lesson" value="'.$lid.'"><input type="hidden" name="grade" value="'.(int)($l['module_grade']?:1).'"><button class="btn primary"'.($acts?'':' disabled').'>'.icon('play').'Test this lesson</button></form></section>';
- if($ed)echo '<section class="card st-side"><h2>'.icon('check').'Send for review</h2><form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_send"><input type="hidden" name="lesson" value="'.$lid.'"><label class="st-check"><input type="checkbox" name="checked" value="1" required><span>I tested this lesson as a pupil and checked every activity against the official module.</span></label><button class="btn primary"'.($acts?'':' disabled').'>'.icon('arrow').'Send to the Division Admin</button></form></section>';
+ $inDraftLevel=($lvR=studio_level((int)$l['level_id']))&&$lvR['status']!=='published';
+ if($ed&&$inDraftLevel)echo '<section class="card st-side"><h2>'.icon('check').'Send for review</h2><p class="muted">This lesson is in the new level <b>'.e(level_label((int)$l['level_id'])).' · '.e($lvR['name']).'</b>. The whole level is sent for review together, from the level page.</p><a class="btn primary" href="?page=studio_lessons&amp;level='.(int)$l['level_id'].'">'.icon('arrow').'Go to the level</a></section>';
+ elseif($ed)echo '<section class="card st-side"><h2>'.icon('check').'Send for review</h2><form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_send"><input type="hidden" name="lesson" value="'.$lid.'"><label class="st-check"><input type="checkbox" name="checked" value="1" required><span>I tested this lesson as a pupil and checked every activity against the official module.</span></label><button class="btn primary"'.($acts?'':' disabled').'>'.icon('arrow').'Send to the Division Admin</button></form></section>';
  $revs=rows('SELECT r.*,u.name FROM studio_revisions r LEFT JOIN users u ON u.id=r.made_by WHERE r.lesson_id=? ORDER BY r.revision DESC LIMIT 12',[$lid]);
  echo '<section class="card st-side"><h2>'.icon('clock').'Saved copies</h2><p class="muted">A copy is saved each time the lesson is sent for review or published.'.($was?' This lesson was published before, so pupils may have answers in it: activities can be edited, but not deleted or replaced by a copy.':'').'</p>';
  foreach($revs as $r)echo '<div class="st-hist"><span><b>Copy '.(int)$r['revision'].'</b><small>'.e($r['what']).' · '.e(date('M j, g:i A',strtotime((string)$r['made_at']))).'</small></span>'.($ed&&!$was?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_restore"><input type="hidden" name="lesson" value="'.$lid.'"><input type="hidden" name="rev" value="'.(int)$r['id'].'"><button class="btn secondary small" data-confirm="Restore copy '.(int)$r['revision'].'? The lesson now is saved as a copy first.">'.icon('replay').'Restore</button></form>':'').'</div>';
@@ -302,7 +329,7 @@ function studio_test_view(array $u):void{
 
 /* ---------- page: the Division Admin's review ---------- */
 function studio_review_view(array $u):void{
- if(studio_setup_card())return;if(($u['active_role']??'')!=='central_admin')fail('Only the Division Admin reviews lessons.',403);$lid=(int)($_GET['id']??0);
+ if(studio_setup_card())return;if(($u['active_role']??'')!=='central_admin')fail('Only the Division Admin reviews lessons.',403);if(($lvq=(int)($_GET['level']??0))&&studio_levels_ready()){studio_review_level($lvq);return;}$lid=(int)($_GET['id']??0);
  if($lid){$l=studio_lesson($lid);$s=studio_row($lid);if(!$s)fail('Lesson not found.',404);$by=$s['created_by']?one('SELECT name,public_id FROM users WHERE id=?',[$s['created_by']]):null;
   echo hm_head('CONTENT REVIEW',$l['title'],e(level_label((int)$l['level_id'])).' · Lesson '.(int)$l['position'].' · from '.e($by?name_case((string)$by['name']).' · '.$by['public_id']:'—').' · '.studio_status_tag($s),'<a class="btn secondary" href="?page=studio_review">'.icon('arrow','flip').'All lessons</a>');
   echo '<div class="st-two st-two-lesson"><section class="card"><h2>'.icon('plan').'Activities</h2><p class="muted">Pupils will learn: '.e($l['objectives']?:'—').'</p>';
@@ -314,11 +341,172 @@ function studio_review_view(array $u):void{
   if($s['status']==='published')echo '<section class="card st-side"><h2>'.icon('eye').'Published</h2><p class="muted">Hide it if it needs changes. Pupils’ saved work is kept.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_hide"><input type="hidden" name="lesson" value="'.$lid.'"><button class="btn secondary" data-confirm="Hide this lesson from pupils? It goes back to the Content Developer as a draft.">'.icon('lock').'Hide from pupils</button></form></section>';
   if($s['status']==='draft')echo '<section class="card st-side"><p class="muted">The Content Developer is still working on this draft.</p></section>';
   echo '</aside></div>';return;}
- echo hm_head('CONTENT REVIEW','Content Review','Lessons made by the Content Developers. Approve a lesson to publish it to pupils.');
+ echo hm_head('CONTENT REVIEW','Content Review','Lessons and new levels made by the Content Developers. Approve them to publish them to pupils.');
+ if(studio_levels_ready()&&studio_levels_all()){echo '<section class="card"><div class="ws-hd"><h2>'.icon('book').'New levels</h2><span class="rs-sub">'.count(studio_levels_all()).'</span></div>';
+  foreach(studio_levels_all() as $id=>$L)echo '<a class="st-row" href="?page=studio_review&amp;level='.$id.'"><span class="st-ic">'.icon('book').'</span><span class="st-rt"><small>'.e(level_label($id)).'</small><b>'.e($L['name']).'</b></span><span class="st-n">'.(int)val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=?',[$id]).' lessons</span>'.studio_status_tag($L).'</a>';
+  echo '</section>';}
  $groups=['review'=>'Waiting for your review','published'=>'Published','draft'=>'Drafts (still being made)'];
- foreach($groups as $st=>$tt){$ls=rows('SELECT s.*,l.title,l.position,m.level_id,u.name,(SELECT COUNT(*) FROM activities a WHERE a.lesson_id=l.id) acts FROM studio_lessons s JOIN lessons l ON l.id=s.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN users u ON u.id=s.created_by WHERE s.status=? ORDER BY s.updated_at DESC',[$st]);
+ foreach($groups as $st=>$tt){$ls=rows('SELECT s.*,l.title,l.position,m.level_id,u.name,(SELECT COUNT(*) FROM activities a WHERE a.lesson_id=l.id) acts FROM studio_lessons s JOIN lessons l ON l.id=s.lesson_id JOIN modules m ON m.id=l.module_id LEFT JOIN users u ON u.id=s.created_by WHERE s.status=?'.(studio_levels_ready()?" AND m.level_id NOT IN (SELECT level_id FROM studio_levels WHERE status<>'published')":'').' ORDER BY s.updated_at DESC',[$st]);
   echo '<section class="card"><div class="ws-hd"><h2>'.icon($st==='review'?'clock':($st==='published'?'check':'edit')).e($tt).'</h2><span class="rs-sub">'.count($ls).'</span></div>';
   foreach($ls as $r)echo '<a class="st-row" href="?page=studio_review&amp;id='.(int)$r['lesson_id'].'"><span class="st-ic">'.icon('book').'</span><span class="st-rt"><small>'.e(level_label((int)$r['level_id'])).' · Lesson '.(int)$r['position'].' · '.e(name_case((string)($r['name']??''))).'</small><b>'.e($r['title']).'</b></span><span class="st-n">'.(int)$r['acts'].' activities</span>'.studio_status_tag($r).'</a>';
   if(!$ls)echo '<p class="muted">None.</p>';echo '</section>';}
 }
-function studio_review_count():int{return studio_ready()?(int)val("SELECT COUNT(*) FROM studio_lessons WHERE status='review'"):0;}
+function studio_review_count():int{return (studio_ready()?(int)val("SELECT COUNT(*) FROM studio_lessons s JOIN lessons l ON l.id=s.lesson_id JOIN modules m ON m.id=l.module_id WHERE s.status='review'".(studio_levels_ready()?" AND m.level_id NOT IN (SELECT level_id FROM studio_levels WHERE status<>'published')":'')):0)+(studio_levels_ready()?(int)val("SELECT COUNT(*) FROM studio_levels WHERE status='review'"):0);}
+
+/* ---------- v216 the pages for a new level ---------- */
+function studio_new_level_form():void{
+ $n=count(studio_extra_levels())+8;
+ echo '<section class="card st-newlevel"><div class="ws-hd"><h2>'.icon('book').'Make a new level: Level '.$n.'</h2></div><p class="muted">The new level comes after Level 7 on every pupil’s road map, in the same design. It stays a draft, hidden from pupils and teachers, until the Division Admin approves it. Its activities use the same screens as Level 1: Max, the microphone, Word Coach, XP and badges.</p>'
+  .'<form method="post" enctype="multipart/form-data" class="st-form">'.csrf_field().'<input type="hidden" name="action" value="studio_level_add">'
+  .'<label>Level name<input name="name" maxlength="150" required placeholder="e.g. Reading for Fun"></label>'
+  .'<label>Short name on the road map<input name="short_name" maxlength="60" placeholder="e.g. Reading for Fun"></label>'
+  .'<label>Cover picture (optional: PNG, JPEG or WebP)<input type="file" name="cover" accept="image/png,image/jpeg,image/webp"><small>Leave it empty to use the first page of the module you upload.</small></label>'
+  .'<button class="btn primary">'.icon('check').'Make Level '.$n.' as a draft</button></form></section>';
+}
+function studio_level_card(int $level):void{
+ $L=studio_level($level);if(!$L)return;$ed=$L['status']==='draft';$cover=level_cover($level);
+ $les=rows('SELECT s.status,COUNT(a.id) acts FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN studio_lessons s ON s.lesson_id=l.id LEFT JOIN activities a ON a.lesson_id=l.id WHERE m.level_id=? GROUP BY l.id,s.status',[$level]);
+ $nl=count($les);$na=array_sum(array_column($les,'acts'));$pages=(int)val('SELECT COUNT(*) FROM studio_pages WHERE level_id=?',[$level]);
+ echo '<section class="card st-levelcard"><div class="st-lc-top"><img src="'.e($cover).'" alt=""><div><span class="eyebrow">NEW LEVEL · '.e(mb_strtoupper(level_label($level))).'</span><h2>'.e($L['name']).'</h2><p class="muted">'.$nl.' '.($nl===1?'lesson':'lessons').' · '.$na.' '.($na===1?'activity':'activities').($pages?' · module: '.$pages.' pages':'').'</p>'.studio_status_tag($L).'</div></div>';
+ if($L['note']&&$ed)echo '<div class="st-note">'.icon('alert').'<div><b>Note from the Division Admin</b><p>'.e($L['note']).'</p></div></div>';
+ if($L['status']==='review')echo '<div class="st-note st-blue">'.icon('clock').'<div><b>Waiting for the Division Admin</b><p>The level and its lessons are locked while they are reviewed. You can still test them as a pupil.</p></div></div>';
+ if($L['status']==='published')echo '<div class="st-note st-green">'.icon('check').'<div><b>Published</b><p>Pupils see this level after Level 7 on the road map. New lessons you add here are reviewed one by one.</p></div></div>';
+ echo '<div class="st-lc-grid">';
+ if($ed){
+  echo '<div class="st-lc-box"><h3>'.icon('download').'Upload the module</h3><p class="muted">Choose the module PDF. BULIG reads every page and makes draft lessons and activities from it, with the page pictures. Then you check and fix each one.</p>'
+   .'<form class="st-form st-import" data-st-import data-level="'.$level.'"><input type="file" accept="application/pdf" required data-st-pdf><label class="st-check"><input type="checkbox" data-st-replace'.($pages?'':' disabled').'><span>Replace the lessons made from an earlier upload</span></label><button class="btn primary">'.icon('download').'Upload and make the lessons</button>'
+   .'<div class="st-progress" hidden data-st-prog><progress max="100" value="0"></progress><span data-st-msg>Reading the module…</span></div></form>'
+   .'<script src="'.asset_url('pdfjs/pdf.min.js').'" defer></script><script src="'.asset_url('studio.js').'" defer data-worker="'.e(asset_url('pdfjs/pdf.worker.min.js')).'"></script></div>';
+  echo '<div class="st-lc-box"><h3>'.icon('edit').'Name and cover</h3><form method="post" enctype="multipart/form-data" class="st-form">'.csrf_field().'<input type="hidden" name="action" value="studio_level_save"><input type="hidden" name="level" value="'.$level.'"><label>Level name<input name="name" maxlength="150" required value="'.e($L['name']).'"></label><label>Short name on the road map<input name="short_name" maxlength="60" value="'.e($L['short_name']).'"></label><label>New cover picture<input type="file" name="cover" accept="image/png,image/jpeg,image/webp"></label><button class="btn secondary">'.icon('check').'Save</button></form></div>';
+  echo '<div class="st-lc-box"><h3>'.icon('check').'Send the level for review</h3><p class="muted">The level and all its draft lessons go to the Division Admin together.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_level_send"><input type="hidden" name="level" value="'.$level.'"><label class="st-check"><input type="checkbox" name="checked" value="1" required><span>I tested this level as a pupil and checked every lesson against the official module.</span></label><button class="btn primary"'.($na?'':' disabled').'>'.icon('arrow').'Send to the Division Admin</button></form>'
+   .(!$L['published_at']?'<form method="post" class="st-lc-del">'.csrf_field().'<input type="hidden" name="action" value="studio_level_delete"><input type="hidden" name="level" value="'.$level.'"><button class="linkbutton st-del" data-confirm="Delete this draft level, all its lessons, activities and the uploaded module pages?">'.icon('trash').'Delete this draft level</button></form>':'').'</div>';}
+ echo '</div></section>';
+}
+
+/* ---------- v216 level actions ---------- */
+function studio_level_action(string $action,array $u):never{
+ if(!studio_levels_ready())fail('Back up the database, then import database/migrations/047_studio_levels.sql to turn on new levels.');
+ if($action==='studio_level_add'){
+  $name=trim(mb_substr((string)($_POST['name']??''),0,150));if(mb_strlen($name)<3)fail('Type the level name.');$short=trim(mb_substr((string)($_POST['short_name']??''),0,60))?:mb_substr($name,0,60);
+  $cover=(!empty($_FILES['cover'])&&($_FILES['cover']['error']??UPLOAD_ERR_NO_FILE)!==UPLOAD_ERR_NO_FILE)?save_uploaded_image('cover'):null;
+  db()->beginTransaction();try{$id=max(10,(int)val('SELECT COALESCE(MAX(id),0)+1 FROM bulig_levels'));$mid=(int)val('SELECT COALESCE(MAX(id),0)+1 FROM modules');
+   q('INSERT INTO bulig_levels(id,title,published) VALUES(?,?,0)',[$id,$name]);q('INSERT INTO modules(id,level_id,title,grade_level) VALUES(?,?,?,NULL)',[$mid,$id,$name]);
+   q("INSERT INTO studio_levels(level_id,name,short_name,cover_path,status,created_by) VALUES(?,?,?,?,'draft',?)",[$id,$name,$short,$cover,$u['id']]);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  audit('studio_level_add',(string)$id);flash('New level made as a draft. Upload the module, or add lessons one by one.');go('?page=studio_lessons&level='.$id);}
+ $level=(int)($_POST['level']??0);$L=studio_level($level);if(!$L)fail('Level not found.',404);
+ if(in_array($action,['studio_level_save','studio_level_delete','studio_level_send','studio_import_page','studio_import_build'],true)&&$L['status']!=='draft')fail($L['status']==='review'?'This level is waiting for review.':'This level is published. Ask the Division Admin to hide it first if it needs changes.',403);
+ if($action==='studio_level_save'){$name=trim(mb_substr((string)($_POST['name']??''),0,150));if(mb_strlen($name)<3)fail('Type the level name.');$short=trim(mb_substr((string)($_POST['short_name']??''),0,60))?:mb_substr($name,0,60);
+  $cover=(!empty($_FILES['cover'])&&($_FILES['cover']['error']??UPLOAD_ERR_NO_FILE)!==UPLOAD_ERR_NO_FILE)?save_uploaded_image('cover'):$L['cover_path'];
+  q('UPDATE studio_levels SET name=?,short_name=?,cover_path=? WHERE level_id=?',[$name,$short,$cover,$level]);q('UPDATE bulig_levels SET title=? WHERE id=?',[$name,$level]);q('UPDATE modules SET title=? WHERE level_id=?',[$name,$level]);
+  flash('Level saved.');go('?page=studio_lessons&level='.$level);}
+ if($action==='studio_level_delete'){if($L['published_at'])fail('This level was published before. Keep it hidden instead of deleting it.',403);
+  if(val('SELECT COUNT(*) FROM pupil_level_assignments WHERE level_id=? AND pupil_id NOT IN (SELECT pupil_id FROM studio_testers)',[$level]))fail('Pupils are assigned to this level, so it cannot be deleted.',403);
+  db()->beginTransaction();try{foreach(rows('SELECT l.id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=?',[$level]) as $l){foreach(studio_acts((int)$l['id']) as $a)studio_act_wipe((int)$a['id']);q('DELETE FROM studio_revisions WHERE lesson_id=?',[$l['id']]);q('DELETE FROM studio_lessons WHERE lesson_id=?',[$l['id']]);studio_clear_refs('lessons',[(int)$l['id']]);q('DELETE FROM lessons WHERE id=?',[$l['id']]);}
+   q('UPDATE pupil_level_assignments SET level_id=? WHERE level_id=?',[LEVEL_ORDER[0],$level]);studio_clear_refs('modules',array_column(rows('SELECT id FROM modules WHERE level_id=?',[$level]),'id'));q('DELETE FROM modules WHERE level_id=?',[$level]);studio_clear_refs('bulig_levels',[$level]);q('DELETE FROM bulig_levels WHERE id=?',[$level]);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  audit('studio_level_delete',(string)$level);flash('Draft level deleted.');go('?page=studio_lessons');}
+ if($action==='studio_level_send'){if(empty($_POST['checked']))fail('Tick the box to confirm you tested the level.');
+  $ls=array_column(rows("SELECT s.lesson_id FROM studio_lessons s JOIN lessons l ON l.id=s.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND s.status='draft'",[$level]),'lesson_id');
+  if(!$ls||!val('SELECT COUNT(*) FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=?',[$level]))fail('Add lessons with activities first.');
+  foreach($ls as $lid){if(!val('SELECT COUNT(*) FROM activities WHERE lesson_id=?',[$lid]))fail('Every lesson needs at least one activity: “'.val('SELECT title FROM lessons WHERE id=?',[$lid]).'” has none. Add one, or delete the lesson.');}
+  db()->beginTransaction();try{foreach($ls as $lid){q("UPDATE studio_lessons SET status='review',sent_at=NOW(),note=NULL WHERE lesson_id=?",[$lid]);studio_snapshot((int)$lid,'Sent for review with the level');}
+   q("UPDATE studio_levels SET status='review',sent_at=NOW(),note=NULL WHERE level_id=?",[$level]);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  foreach(rows("SELECT DISTINCT u.id FROM users u JOIN user_roles r ON r.user_id=u.id AND r.role='central_admin' WHERE u.active=1") as $x)notify((int)$x['id'],'note','A new level is waiting for your review','“'.level_label($level).' · '.$L['name'].'” from '.name_case((string)$u['name']).'.','?page=studio_review&level='.$level);
+  audit('studio_level_send',(string)$level);flash('The level and its lessons are sent to the Division Admin.');go('?page=studio_lessons&level='.$level);}
+ if($action==='studio_import_page')studio_import_page($level);
+ if($action==='studio_import_build')studio_import_build($level,$u);
+ fail('Unknown action.');
+}
+function studio_level_admin_action(string $action,array $u):never{
+ $level=(int)($_POST['level']??0);$L=studio_level($level);if(!$L)fail('Level not found.',404);$back='?page=studio_review';
+ if($action==='studio_level_approve'){if($L['status']!=='review')fail('This level is not waiting for review.');
+  db()->beginTransaction();try{foreach(rows("SELECT s.lesson_id FROM studio_lessons s JOIN lessons l ON l.id=s.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND s.status='review'",[$level]) as $r){$lid=(int)$r['lesson_id'];
+    q('UPDATE activities SET published=1 WHERE lesson_id=?',[$lid]);q('UPDATE lessons SET published=1 WHERE id=?',[$lid]);q("UPDATE studio_lessons SET status='published',note=NULL,reviewed_by=?,published_at=NOW() WHERE lesson_id=?",[$u['id'],$lid]);studio_snapshot($lid,'Published with the level');}
+   q('UPDATE bulig_levels SET published=1 WHERE id=?',[$level]);q("UPDATE studio_levels SET status='published',note=NULL,reviewed_by=?,published_at=NOW() WHERE level_id=?",[$u['id'],$level]);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  if($L['created_by'])notify((int)$L['created_by'],'note','Your new level is published','“'.level_label($level).' · '.$L['name'].'” is approved. Pupils see it after Level 7.','?page=studio_lessons&level='.$level);
+  audit('studio_level_approve',(string)$level);flash('Published. Pupils see '.level_label($level).' on their road map after Level 7.');go($back);}
+ if($action==='studio_level_sendback'){if($L['status']!=='review')fail('This level is not waiting for review.');$note=trim(mb_substr((string)($_POST['note']??''),0,1000));if(mb_strlen($note)<3)fail('Write a short note: what should be changed?');
+  q("UPDATE studio_lessons s JOIN lessons l ON l.id=s.lesson_id JOIN modules m ON m.id=l.module_id SET s.status='draft' WHERE m.level_id=? AND s.status='review'",[$level]);
+  q("UPDATE studio_levels SET status='draft',note=?,reviewed_by=? WHERE level_id=?",[$note,$u['id'],$level]);
+  if($L['created_by'])notify((int)$L['created_by'],'note','Your new level needs changes','“'.$L['name'].'”: '.$note,'?page=studio_lessons&level='.$level);
+  audit('studio_level_sendback',(string)$level);flash('Sent back with your note.');go($back);}
+ if($action==='studio_level_hide'){if($L['status']!=='published')fail('This level is not published.');
+  if(val('SELECT COUNT(*) FROM pupil_level_assignments WHERE level_id=? AND pupil_id NOT IN (SELECT pupil_id FROM studio_testers)',[$level]))fail('Some pupils start at this level, so it cannot be hidden. Move them to another starting level first.',403);
+  q('UPDATE bulig_levels SET published=0 WHERE id=?',[$level]);q("UPDATE studio_levels SET status='draft',note=? WHERE level_id=?",['Hidden from pupils by the Division Admin. Pupils’ saved work is kept.',$level]);
+  if($L['created_by'])notify((int)$L['created_by'],'note','A level was hidden','“'.$L['name'].'” is hidden from pupils and back in your drafts.','?page=studio_lessons&level='.$level);
+  audit('studio_level_hide',(string)$level);flash('Hidden from pupils. It is a draft again.');go($back);}
+ fail('Unknown action.');
+}
+/** The Division Admin's page for one new level. */
+function studio_review_level(int $level):void{
+ $L=studio_level($level);if(!$L)fail('Level not found.',404);$by=$L['created_by']?one('SELECT name,public_id FROM users WHERE id=?',[$L['created_by']]):null;
+ echo hm_head('CONTENT REVIEW · NEW LEVEL',level_label($level).' · '.$L['name'],'From '.e($by?name_case((string)$by['name']).' · '.$by['public_id']:'—').' · '.studio_status_tag($L),'<a class="btn secondary" href="?page=studio_review">'.icon('arrow','flip').'All lessons</a>');
+ $ls=rows('SELECT l.id,l.position,l.title,s.status,(SELECT COUNT(*) FROM activities a WHERE a.lesson_id=l.id) acts FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN studio_lessons s ON s.lesson_id=l.id WHERE m.level_id=? ORDER BY l.position',[$level]);
+ echo '<div class="st-two st-two-lesson"><section class="card"><div class="st-lc-top"><img src="'.e(level_cover($level)).'" alt=""><div><h2>'.e($L['name']).'</h2><p class="muted">Short name on the road map: '.e($L['short_name']).'</p></div></div><h2>'.icon('plan').'Lessons</h2>';
+ foreach($ls as $r)echo '<a class="st-row" href="?page=studio_review&amp;id='.(int)$r['id'].'"><span class="st-num">'.(int)$r['position'].'</span><span class="st-rt"><b>'.e($r['title']).'</b></span><span class="st-n">'.(int)$r['acts'].' activities</span>'.studio_status_tag($r['status']?['status'=>$r['status']]:null).'</a>';
+ if(!$ls)echo '<p class="muted">No lessons.</p>';echo '</section><aside>';
+ if($L['status']==='review')echo '<section class="card st-side"><h2>'.icon('check').'Approve this level?</h2><p class="muted">Approving publishes the level and its lessons. Pupils see it after Level 7 on the road map. It never re-locks anything a pupil already finished.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_level_approve"><input type="hidden" name="level" value="'.$level.'"><button class="btn primary" data-confirm="Publish this level and its lessons to pupils?">'.icon('check').'Approve and publish</button></form>'
+  .'<form method="post" class="st-form">'.csrf_field().'<input type="hidden" name="action" value="studio_level_sendback"><input type="hidden" name="level" value="'.$level.'"><label>Or send it back with a note<textarea name="note" rows="3" maxlength="1000" required placeholder="What should be changed?"></textarea></label><button class="btn secondary">'.icon('arrow','flip').'Send back</button></form></section>';
+ if($L['status']==='published')echo '<section class="card st-side"><h2>'.icon('eye').'Published</h2><p class="muted">Hide it if it needs changes. Pupils’ saved work is kept.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="studio_level_hide"><input type="hidden" name="level" value="'.$level.'"><button class="btn secondary" data-confirm="Hide this level from pupils?">'.icon('lock').'Hide from pupils</button></form></section>';
+ if($L['status']==='draft')echo '<section class="card st-side"><p class="muted">The Content Developer is still working on this level.</p></section>';
+ echo '</aside></div>';
+}
+
+/* ---------- v216 upload the module: the browser reads the PDF (assets/studio.js with pdf.js) and sends each page:
+   its text and a picture. Then BULIG makes draft lessons and activities from the pages. ---------- */
+function studio_json(array $a):never{header('Content-Type: application/json');echo json_encode($a);exit;}
+function studio_import_page(int $level):never{
+ $n=(int)($_POST['n']??0);$total=(int)($_POST['total']??0);if($n<1||$n>400||$total<$n||$total>400)fail('The module can have up to 400 pages.');
+ if($n===1){foreach(rows('SELECT image_path FROM studio_pages WHERE level_id=?',[$level]) as $r)studio_unlink_upload((string)$r['image_path']);q('DELETE FROM studio_pages WHERE level_id=?',[$level]);}
+ $img=save_uploaded_image('page');$text=mb_substr(str_replace("\r",'',(string)($_POST['text']??'')),0,60000);
+ q('INSERT INTO studio_pages(level_id,page_no,text_content,image_path) VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE text_content=VALUES(text_content),image_path=VALUES(image_path)',[$level,$n,$text,$img]);
+ studio_json(['ok'=>true,'n'=>$n]);
+}
+function studio_unlink_upload(string $p):void{if($p!==''&&preg_match('~^assets/uploads/[a-f0-9]{32}\.(jpg|png|webp)$~',$p)&&!val('SELECT 1 FROM activities WHERE image_path=? OR image_paths LIKE ?',[$p,'%'.$p.'%']))@unlink(__DIR__.'/../public/'.$p);}
+/** The lines of a page, without empty ones. */
+function studio_lines(string $t):array{return array_values(array_filter(array_map(fn($x)=>trim(preg_replace('/\s+/u',' ',$x)),explode("\n",$t)),fn($x)=>$x!==''));}
+/** "Lesson 3: Using Rhyming Words", "LESSON PLAN 3", "Aralin 3" → [3, "Using Rhyming Words"]. */
+function studio_lesson_heading(string $line):?array{
+ if(!preg_match('/^(?:LESSON|Lesson|ARALIN|Aralin)\s*(?:PLAN\s*|Plan\s*)?(\d{1,2})\b\s*[:.\-–—]?\s*(.*)$/u',$line,$m))return null;
+ $t=trim($m[2]);if(preg_match('/^[.\s\d]+$/u',$t)||preg_match('/\.{4,}/',$t))$t='';   // a table of contents line ("Lesson 3 ........ 12")
+ return [(int)$m[1],$t];
+}
+/** Which template fits a numbered item from the module (the words stay the module's own). */
+function studio_guess_template(string $item):string{
+ if(preg_match('/[“"]([^”"]{3,200})[”"]/u',$item)&&preg_match('/\b(read|basahin)\b/iu',$item))return 'read';
+ if(preg_match('/\b(draw|iguhit|colou?r|kulayan)\b/iu',$item))return 'draw';
+ if(preg_match('/^(clap|jump|stand|sit|walk|point|touch|act|show|stomp|wave|turn|raise|hop|march|tap)\b/iu',$item))return 'do';
+ if(preg_match('/\b(partner|pairs?|group|classmates?|kapareha)\b/iu',$item))return 'pair';
+ return 'speak';
+}
+function studio_import_build(int $level,array $u):never{
+ $pages=rows('SELECT * FROM studio_pages WHERE level_id=? ORDER BY page_no',[$level]);if(!$pages)fail('Upload the module first.');
+ $mod=studio_level_module($level);if(!$mod)fail('This level has no module.');
+ if(!empty($_POST['replace']))foreach(rows("SELECT l.id FROM lessons l JOIN studio_lessons s ON s.lesson_id=l.id WHERE l.module_id=? AND s.status='draft' AND s.published_at IS NULL AND l.source_pages<>'[]'",[$mod]) as $l){
+  foreach(studio_acts((int)$l['id']) as $a)studio_act_wipe((int)$a['id']);q('DELETE FROM studio_revisions WHERE lesson_id=?',[$l['id']]);q('DELETE FROM studio_lessons WHERE lesson_id=?',[$l['id']]);studio_clear_refs('lessons',[(int)$l['id']]);q('DELETE FROM lessons WHERE id=?',[$l['id']]);}
+ /* 1. find where each lesson starts (a page with "Lesson N"); a contents page (3 or more lesson lines) is skipped */
+ $starts=[];$cur=null;$seen=[];
+ foreach($pages as $i=>$p){$hs=[];foreach(studio_lines((string)$p['text_content']) as $k=>$line)if($h=studio_lesson_heading($line)){$h[]=$k;$hs[$h[0]]??=$h;}
+  if(count($hs)>=3)continue;
+  foreach($hs as $num=>$h){if($cur!==$num){$cur=$num;if(isset($seen[$num])){$starts[]=['i'=>$i,'num'=>$num,'skip'=>true,'title'=>''];break;}$seen[$num]=1;$t=$h[1];if($t===''){$ls=studio_lines((string)$p['text_content']);for($j=$h[2]+1;$j<min(count($ls),$h[2]+4);$j++)if(mb_strlen($ls[$j])>=4&&!preg_match('/^\d+$/',$ls[$j])){$t=$ls[$j];break;}}
+   $starts[]=['i'=>$i,'num'=>$num,'title'=>mb_substr($t?:'Lesson '.$num,0,190)];}break;}}
+ if(!$starts){for($i=0;$i<count($pages);$i+=4)$starts[]=['i'=>$i,'num'=>intdiv($i,4)+1,'title'=>'Part '.(intdiv($i,4)+1).' · module pages '.$pages[$i]['page_no'].'–'.$pages[min(count($pages)-1,$i+3)]['page_no']];}
+ /* 2. each lesson: a "Look and listen" for each module page (its picture), then an activity for each numbered item */
+ $nl=0;$na=0;
+ db()->beginTransaction();try{
+  foreach($starts as $si=>$st){$from=$st['i'];$to=isset($starts[$si+1])?$starts[$si+1]['i']-1:count($pages)-1;$range=array_slice($pages,$from,$to-$from+1);if(!$range||!empty($st['skip']))continue;
+   $pos=(int)val('SELECT COALESCE(MAX(position),0)+1 FROM lessons WHERE module_id=?',[$mod]);$title=$st['title'];
+   q('INSERT INTO lessons(module_id,position,title,subtitle,objectives,teacher_guide,source_pages,image_path,published) VALUES(?,?,?,?,?,?,?,?,0)',[$mod,$pos,$title,mb_substr($title,0,60),'','',json_encode(array_map(fn($p)=>(int)$p['page_no'],$range)),$range[0]['image_path']]);$lid=(int)db()->lastInsertId();
+   q("INSERT INTO studio_lessons(lesson_id,status,created_by) VALUES(?,'draft',?)",[$lid,$u['id']]);$nl++;
+   foreach($range as $p){$ls=studio_lines((string)$p['text_content']);$head='';foreach($ls as $x)if(mb_strlen($x)>=6&&!preg_match('/^\d+$/',$x)){$head=$x;break;}
+    $prompt=mb_substr($head?:'Look at this page of the module.',0,300);
+    studio_act_insert($lid,['title'=>'Module page '.(int)$p['page_no'],'type'=>'reference','response_mode'=>'none','instructions'=>STUDIO_TEMPLATES['look'][4],'prompt'=>$prompt,'narration'=>$prompt,'expected_text'=>null,'xp_reward'=>0,'image_paths'=>json_encode($p['image_path']?[$p['image_path']]:[],JSON_UNESCAPED_SLASHES),'image_path'=>$p['image_path']]);$na++;}
+   $items=0;foreach($range as $p)foreach(studio_lines((string)$p['text_content']) as $x){if($items>=12)break 2;
+    if(!preg_match('/^\s*(\d{1,2})[.)]\s+(.{8,})$/u',$x,$m)||preg_match('/\.{4,}|\s\d{1,3}$/u',$m[2]))continue;
+    $k=studio_guess_template($m[2]);$t=STUDIO_TEMPLATES[$k];$expected=null;if($k==='read'&&preg_match('/[“"]([^”"]{3,200})[”"]/u',$m[2],$q))$expected=$q[1];
+    studio_act_insert($lid,['title'=>$t[0],'type'=>$t[2],'response_mode'=>$t[3],'instructions'=>$t[4],'prompt'=>mb_substr($k==='read'&&$expected?$expected:$m[2],0,1000),'narration'=>mb_substr($m[2],0,1000),'expected_text'=>$expected,'xp_reward'=>10,'image_paths'=>'[]','image_path'=>null]);$items++;$na++;}
+  }
+  $L=studio_level($level);if($L&&!$L['cover_path']&&$pages[0]['image_path'])q('UPDATE studio_levels SET cover_path=? WHERE level_id=?',[$pages[0]['image_path'],$level]);
+  db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+ audit('studio_import',$level.' · '.count($pages).' pages · '.$nl.' lessons');flash('Made '.$nl.' draft '.($nl===1?'lesson':'lessons').' with '.$na.' activities from '.count($pages).' module pages. Check each one, then test the level as a pupil.');
+ studio_json(['ok'=>true,'lessons'=>$nl,'activities'=>$na,'msg'=>'Made '.$nl.' lessons and '.$na.' activities.','url'=>'?page=studio_lessons&level='.$level]);
+}

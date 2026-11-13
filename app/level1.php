@@ -217,9 +217,9 @@ function lesson_start_page(array $lesson,array $all,array $first):void{
 }
 function l1_start_page(array $lesson,array $all,array $first):void{
  $lid=(int)$lesson['id'];$count=['pre'=>0,'learn'=>0,'post'=>0];foreach($all as $x)$count[$x['phase']]++;
- head('Level 1 · '.$lesson['subtitle'],'activity-page l1-page');
- echo '<div class="l1-app l1-start-app" data-l1-start>'.lesson_head($lesson,$all,$first,'?page=lessons&level=1#level1-path').'<main class="l1-main l1-start activity-main">';
- echo '<div class="l1-start-in">'.level_friend(lesson_level((int)$lesson['id'])).'<div class="l1-start-top"><img class="l1-cover" src="assets/images/covers/level-1.webp" alt=""><div><span class="l1-tag">'.(in_array(lesson_level((int)$lesson['id']),[7,8],true)||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
+ head(level_label(lesson_level((int)$lesson['id'])).' · '.$lesson['subtitle'],'activity-page l1-page');
+ echo '<div class="l1-app l1-start-app" data-l1-start>'.lesson_head($lesson,$all,$first,'?page=lessons&level='.lesson_level((int)$lesson['id']).'#level'.lesson_level((int)$lesson['id']).'-path').'<main class="l1-main l1-start activity-main">';
+ echo '<div class="l1-start-in">'.level_friend(lesson_level((int)$lesson['id'])).'<div class="l1-start-top"><img class="l1-cover" src="'.e(level_cover(lesson_level((int)$lesson['id']))).'" alt=""><div><span class="l1-tag">'.(in_array(lesson_level((int)$lesson['id']),[7,8],true)||(int)$lesson['position']>=100?'':'LESSON '.(int)$lesson['position'].' · ').e(mb_strtoupper((string)$lesson['subtitle'])).'</span><h1>'.e($lesson['title']).'</h1></div></div>';
  $goals=l1_goals((string)$lesson['objectives']);
  if($goals){echo '<div class="l1-goals"><p class="l1-lab">TODAY YOU WILL…'.l1_speaker(implode('. ',$goals),'Hear what you will learn','sm').'</p><ul>';foreach($goals as $g)echo '<li>'.e($g).'</li>';echo '</ul></div>';}
  echo lesson_parts($lesson,$all,$count);
@@ -232,8 +232,8 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  $c=$a['completion_id']?one('SELECT id,audio_path,drawing FROM activity_completion WHERE id=?',[(int)$a['completion_id']]):null;
  $phase=array_values(array_filter($all,fn($x)=>$x['phase']===$a['phase']));$at=0;foreach($phase as $i=>$x)if((int)$x['id']===(int)$a['id'])$at=$i+1;
  $doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));$say=pupil_wording(trim((string)($a['narration']?:$a['prompt'])));$tag=l1_tag($a,$kind);$pics=l1_pictures($a);
- head('Level 1 · '.$lesson['subtitle'],'activity-page l1-page');
- echo '<div class="l1-app l1-k-'.$kind.'">'.lesson_head($lesson,$all,$a,'?page=lessons&level=1#level1-path');
+ head(level_label(lesson_level((int)$lesson['id'])).' · '.$lesson['subtitle'],'activity-page l1-page');
+ echo '<div class="l1-app l1-k-'.$kind.'">'.lesson_head($lesson,$all,$a,'?page=lessons&level='.lesson_level((int)$lesson['id']).'#level'.lesson_level((int)$lesson['id']).'-path');
  echo '<main class="l1-main activity-main">';notice();
  echo '<form method="post" id="activity-form" class="activity-form l1-form"'.($readonly?'':' data-open="1"').' data-mode="'.e($mode).'" data-kind="'.$kind.'" data-draft="'.(!$readonly&&$kind==='draw'?'on':'off').'">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value="'.e($kind==='draw'?(string)($a['drawing']??''):'').'"><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><span id="draft-status" hidden></span>';
  if($a['feedback'])echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';

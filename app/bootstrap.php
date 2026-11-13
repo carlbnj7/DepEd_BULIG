@@ -182,15 +182,18 @@ function resolved_image_path(string $path):?string{
  }
  return null;
 }
-function level_label(int $id):string{return [1=>'Level 1',2=>'Level 2A',3=>'Level 2B',4=>'Level 3A',9=>'Level 3B',5=>'Level 4',6=>'Level 5',7=>'Level 6',8=>'Level 7'][$id]??'Level '.$id;}
+function level_label(int $id):string{return [1=>'Level 1',2=>'Level 2A',3=>'Level 2B',4=>'Level 3A',9=>'Level 3B',5=>'Level 4',6=>'Level 5',7=>'Level 6',8=>'Level 7'][$id]??(function_exists('studio_level_label')?studio_level_label($id):'Level '.$id);}
 /* v177: Level 3 is two levels, as in the module: 3A (id 4: short vowels and word families) and 3B (id 9: consonant blends and sight words).
    Level ids stay as they were, so progress, answers and keys keep working; LEVEL_ORDER is the order pupils climb them. */
 const LEVEL_ORDER=[1,2,3,4,9,5,6,7,8];
-function level_rank(int $id):int{$i=array_search($id,LEVEL_ORDER,true);return $i===false?($id<=0?-1:100+$id):$i;}
+/** v216 the order pupils climb: the module levels, then the new levels made in the Content Studio (Level 8, 9 …). */
+function level_sequence():array{static $s=null;if($s===null){$s=LEVEL_ORDER;if(function_exists('studio_extra_levels'))foreach(studio_extra_levels() as $x)$s[]=(int)$x;}return $s;}
+function level_rank(int $id):int{$i=array_search($id,level_sequence(),true);return $i===false?($id<=0?-1:100+$id):$i;}
 /** The level whose screens and content a level uses: 3B is built like Level 3 (3A). */
 function level_family(int $id):int{return $id===9?4:$id;}
-function level_order_sql(string $col):string{return 'FIELD('.$col.','.implode(',',LEVEL_ORDER).')';}
-function level_next(int $id):?int{return LEVEL_ORDER[level_rank($id)+1]??null;}
+/** A level's place in the climbing order, in SQL. The column appears once (it can be a ? placeholder); a level not in the order comes after all of them. */
+function level_order_sql(string $col):string{$q=level_sequence();return '('.(count($q)+1).'-FIELD('.$col.','.implode(',',array_reverse($q)).'))';}
+function level_next(int $id):?int{return level_sequence()[level_rank($id)+1]??null;}
 function selected_start_level(int $fallback=1,bool $check=false):int{
  $id=(int)($_POST['level_id']??$fallback);
  if($id===0&&$check&&function_exists('rc_ready')&&rc_ready())return 0;/* 0: no level yet, the pupil takes the reading check */
@@ -221,14 +224,14 @@ function profile_avatar_choices():array{
 /** Remembered for the rest of the page (pages ask many times; every change to these ends with a redirect). */
 function pupil_start_level(int $pid):int{static $c=[];return $c[$pid]??=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);}
 function level_published(int $id):bool{static $c=null;$c??=array_map('intval',array_column(rows('SELECT id,published FROM bulig_levels'),'published','id'));return !empty($c[$id]);}
-function level_available(int $pid,int $level):bool{if(function_exists('is_tester')&&is_tester($pid))return level_published($level);return level_progress_ready($pid,$level)&&!(function_exists('level_date_locked')&&level_date_locked($pid,$level));}
+function level_available(int $pid,int $level):bool{if(function_exists('is_tester')&&is_tester($pid))return level_published($level)||studio_draft_level($level);return level_progress_ready($pid,$level)&&!(function_exists('level_date_locked')&&level_date_locked($pid,$level));}
 /** Open by progress: every earlier level from the starting level is finished (the level schedule is checked separately). */
 function level_progress_ready(int $pid,int $level):bool{
  static $c=[];return $c[$pid.':'.$level]??=level_progress_check($pid,$level);
 }
 function level_progress_check(int $pid,int $level):bool{
+ if(function_exists('is_tester')&&is_tester($pid))return level_published($level)||studio_draft_level($level);   // v215 the Content Developer's test pupil: every level is open (v216: new draft levels too)
  if(!level_published($level))return false;
- if(function_exists('is_tester')&&is_tester($pid))return true;   // v215 the Content Developer's test pupil: every published level is open
  $start=pupil_start_level($pid);
  if(!$start)return false;
  if(!val('SELECT COUNT(*) FROM lessons l JOIN modules m ON m.id=l.module_id WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$level,pupil_grade($pid)]))return false;

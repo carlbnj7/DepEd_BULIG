@@ -16,7 +16,7 @@ function directory_view(array $u):void{
  if($tab==='pupils'){
   echo '<label>Grade<select name="grade">'.grade_options((int)$grade,null,'All grades');echo '</select></label>';
   echo '<label>Teacher<select name="teacher"><option value="0">All teachers</option>';foreach($teachers as $t)echo '<option value="'.(int)$t['id'].'"'.($tid===(int)$t['id']?' selected':'').'>'.e($t['name']).'</option>';echo '</select></label>';
-  echo '<label>Starting level<select name="level"><option value="-1">All levels</option>'.(function_exists('rc_ready')&&rc_ready()?'<option value="0"'.($lv===0?' selected':'').'>Reading check</option>':'');foreach(rows('SELECT id FROM bulig_levels ORDER BY '.level_order_sql('id')) as $l)echo '<option value="'.(int)$l['id'].'"'.($lv===(int)$l['id']?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';echo '</select></label>';
+  echo '<label>Starting level<select name="level"><option value="-1">All levels</option>'.(function_exists('rc_ready')&&rc_ready()?'<option value="0"'.($lv===0?' selected':'').'>Reading check</option>':'');foreach(rows('SELECT id FROM bulig_levels WHERE 1'.(function_exists('studio_hide_levels_sql')?studio_hide_levels_sql('id'):'').' ORDER BY '.level_order_sql('id')) as $l)echo '<option value="'.(int)$l['id'].'"'.($lv===(int)$l['id']?' selected':'').'>'.e(level_label((int)$l['id'])).'</option>';echo '</select></label>';
  }
  echo '<button class="btn primary">'.icon('search').'Show</button>'.($q!==''||$grade||$tid||$lv>=0?'<a class="btn quiet" href="?'.e(http_build_query($base)).'">Clear</a>':'').'</form>';
  if($tab==='pupils'){

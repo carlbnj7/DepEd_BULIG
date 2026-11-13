@@ -19,12 +19,13 @@ function jeepy_rides(?bool $girl=null):array{
 function jeepy_journey(int $pid):string{
  $assign=one('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);$start=(int)($assign['level_id']??0);
  $next=next_learning_lesson($pid);$nextLevel=(int)($next['level_id']??0);$items=[];$done=0;
- foreach(rows('SELECT id,title,published FROM bulig_levels ORDER BY '.level_order_sql('id')) as $l){
-  $id=(int)$l['id'];$c=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$id,pupil_grade($pid)]);
+ foreach(rows('SELECT id,title,published FROM bulig_levels WHERE 1'.(function_exists('studio_hide_levels_sql')?studio_hide_levels_sql('id'):'').' ORDER BY '.level_order_sql('id')) as $l){   // v216 draft levels from the Content Studio stay hidden (the test pupil sees them)
+  $sl=function_exists('studio_level')?studio_level((int)$l['id']):null;
+  $id=(int)$l['id'];$c=one('SELECT COUNT(*) total,COUNT(p.completed_at) done FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND '.(function_exists('studio_pub_sql')?studio_pub_sql('l',$pid):'l.published=1').GRADE_SQL,[$pid,$id,pupil_grade($pid)]);
   $n=(int)$c['total'];$complete=$n>0&&(int)$c['done']===$n;$available=level_available($pid,$id);$skipped=$start>0&&level_rank($id)<level_rank($start);
   $st=$complete?'done':($skipped?'skip':($available&&$id===$nextLevel?'cur':($available?'open':'lock')));
   if($complete||$skipped)$done++;
-  $items[]=['id'=>$id,'c'=>'assets/images/covers/level-'.$id.'.webp','title'=>stripos((string)$l['title'],'Level')!==false?(JEEPY_LEVEL_NAMES[$id]??''):(string)$l['title'],'d'=>(int)$c['done'],'all'=>$n,'n'=>str_replace('Level ','',level_label($id)),'t'=>JEEPY_LEVEL_NAMES[$id]??'','s'=>$st,'p'=>$n?(int)round(100*(int)$c['done']/$n):0,
+  $items[]=['id'=>$id,'c'=>$sl?level_cover($id):'assets/images/covers/level-'.$id.'.webp','title'=>$sl?(string)$sl['name']:(stripos((string)$l['title'],'Level')!==false?(JEEPY_LEVEL_NAMES[$id]??''):(string)$l['title']),'d'=>(int)$c['done'],'all'=>$n,'n'=>str_replace('Level ','',level_label($id)),'t'=>$sl?(string)$sl['short_name']:(JEEPY_LEVEL_NAMES[$id]??''),'s'=>$st,'p'=>$n?(int)round(100*(int)$c['done']/$n):0,
    'h'=>$available?'?page=lessons&level='.$id.'#level'.$id.'-path':'','x'=>$next&&$id===$nextLevel?(string)($next['subtitle']?:$next['title']):''];
  }
  if(!$items)return '';
@@ -41,6 +42,6 @@ function jeepy_journey(int $pid):string{
  return '<section class="card jy-card" aria-label="My reading journey"><div class="jy-head"><div><span class="eyebrow">MY BULIG JOURNEY</span><h2>'.e($first).'’s road map</h2></div>'
   .'<div class="jy-side"><div class="jy-links"><a class="btn secondary off-pagelink" href="?page=board">'.icon('ladder').'My reading board</a><a class="btn secondary off-pagelink" href="?page=offline">'.icon('download').'Offline lessons</a></div>'
   .'<div class="jy-prog"><b>'.$done.' of '.count($items).' levels done</b><progress max="'.count($items).'" value="'.$done.'" aria-label="Levels done"></progress></div></div></div>'
-  .'<div class="jy-map" data-jy-map="'.e(json_encode(['items'=>$items,'jy'=>jeepy_rides(),'cd'=>function_exists('castle_open')&&castle_open($pid)?1:0,'l8'=>1])).'">'.(function_exists('castle_art')?'<template class="jy-castle">'.castle_art('jy').'</template>':'').'</div>'
+  .'<div class="jy-map" data-jy-map="'.e(json_encode(['items'=>$items,'jy'=>jeepy_rides(),'cd'=>function_exists('castle_open')&&castle_open($pid)?1:0,'l8'=>1,'l8n'=>'Level '.(8+count(array_filter($items,fn($x)=>$x['id']>9&&!in_array($x['id'],LEVEL_ORDER,true))))])).'">'.(function_exists('castle_art')?'<template class="jy-castle">'.castle_art('jy').'</template>':'').'</div>'
   .'<ol class="jy-list">'.implode('',array_map(fn($it)=>'<li class="jy-'.$it['s'].'">'.($it['h']?'<a href="'.e($it['h']).'">':'<span>').'Level '.e($it['n']).' · '.e($it['t']).($it['h']?'</a>':'</span>').'</li>',$items)).'</ol>'.$bar.'</section>';
 }

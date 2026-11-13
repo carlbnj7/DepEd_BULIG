@@ -108,3 +108,21 @@ html.dark .st-pub{background:#173521;color:#9be0b0}html.dark .st-off{background:
 html.dark .st-note{background:#3a3417;color:#ffe9a6}html.dark .st-blue{background:#1c2c45;color:#cfe0ff}html.dark .st-green{background:#173521;color:#c8f0d3}
 html.dark .st-soon{background:#16231b;border-color:#2e4234}html.dark .st-tpl,html.dark .st-tplc span .icon{background:#1d2d23;color:#9be0b0}
 .st-side form+form{margin-top:18px;padding-top:14px;border-top:1px solid var(--ln,#e6ede2)}
+
+/* v216 new levels */
+.st-levels a.st-lv-draft{border-style:dashed;color:#7a5600;border-color:#f0d27a;background:#fffaf0}
+.st-levels a.st-lv-draft.on{background:#e0a800;border-color:#e0a800;color:#fff}
+.st-levels a.st-lv-new{display:inline-flex;align-items:center;gap:6px;background:#fff6d6;border-color:#ffd84d;color:#7a5600}
+.st-levels a.st-lv-new .icon{width:16px;height:16px}.st-levels a.st-lv-new.on{background:#ffd84d;color:#3d2c00}
+.st-levelcard{border-top:5px solid #ffd84d}
+.st-lc-top{display:flex;gap:16px;align-items:center;margin-bottom:12px}
+.st-lc-top img{width:150px;height:96px;object-fit:cover;border-radius:14px;border:2px solid var(--ln,#e1e9dc);flex:none;background:#fff}
+.st-lc-top h2{margin:2px 0 4px}.st-lc-top p{margin:0 0 6px}
+.st-lc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.st-lc-box{border:1px solid var(--ln,#e6ede2);border-radius:16px;padding:14px}
+.st-lc-box h3{display:flex;gap:8px;align-items:center;margin:0 0 6px;font-size:16px}
+.st-lc-del{margin-top:12px}
+.st-progress{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:13px}
+.st-progress progress{width:100%;height:12px;accent-color:#1d7a3e}
+.st-newlevel .st-form{max-width:640px}
+@media(max-width:640px){.st-lc-top{flex-direction:column;align-items:flex-start}.st-lc-top img{width:100%;height:140px}}
