@@ -1,6 +1,6 @@
 {
-  "name": "BULIG · Read, Play, Grow",
-  "short_name": "BULIG",
+  "name": "BULIG Quest · Read, Play, Grow",
+  "short_name": "BULIG Quest",
   "description": "Bukidnon’s Unified Literacy and Intervention Gateway",
   "id": "./",
   "start_url": "./?page=dashboard&source=app",
