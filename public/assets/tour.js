@@ -39,6 +39,9 @@
    [['.rs-plink'],'My practice words','Words that were hard for you. Tap to practise them with Max.'],
    [['.rl-stat','.xp-stat'],'Your level and rank','You earn XP for every activity you finish. XP makes your level go up, all the way to Level 100. Every 2 levels give a star, and 5 stars take you to the next rank! Tap to see all the ranks.'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
+   [['.nx-cont','.nx-next'],'Continue where you stopped','If you left an activity half done, tap Continue. Your answers are saved. Otherwise it shows your next lesson.'],
+   [['.ra-spk'],'Read it aloud','Tap the yellow speaker to hear a card read to you.'],
+   [['.wp-pupil'],'This week','The lessons your teacher picked for each day. A green card is done.'],
    [['.qx-mission'],'Zion’s weekly mission','Earn 10 stars this week and Zion gives you +30 XP. A new mission starts every Monday.'],
    [['.qx-race'],'Class Star Race','Every star you earn moves your section’s Jeepy. Which section earns the most stars this week?'],
    [['.qx-buddy'],'Reading Buddy','Listen to your first and your latest Level 4 reading. Hear how much you grew!'],
@@ -183,6 +186,7 @@
    ['.st-sfx','Sound effects','Turn the little sounds on or off on this device.'],
    [['.st-seg'],'How BULIG Quest looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.'],
    [['.st-row:has([data-a11y-switch="big"])'],'Bigger text','Makes words and buttons larger on every page of this device.'],
+   [['.st-row:has([data-a11y-switch="soft"])'],'Calm mode','Softer sounds, less moving pictures and no confetti. Turn on what helps you focus.'],
    [['.st-row:has([data-a11y-switch="easy"])'],'Easy-read letters','A plain letter style with more space between letters and words. It can make reading on the screen easier.'],
    ['.st-glass','Glass look','Menus and buttons look like clear glass. Turn it off if this phone feels slow.'],
    [['a.st-row[href="?page=offline"]'],'Offline lessons','Save lessons on this device so they open even without internet.'],
@@ -232,6 +236,7 @@
    ['#tf-todo','Needs you today','Pupils who need a check-in, reading checks, help requests and readings to verify. Only what needs you shows big; the rest is a green check.'],
    [['#rs-readers'],'Readers who need help','Pupils whose Word Coach scores stay under 60% in 3 or more readings, with the words they miss. BULIG Quest suggests a reread together, or a small group when several pupils on one level find the same reading hard.'],
    [['#rs-challenge'],'Class reading challenge','The words your pupils read right with Word Coach this week. Set the weekly goal here. Pupils see the same bar on their Home.'],
+   [['.th-tabs'],'Home tabs','Today, Readers and more: tap a tab to see only that part, so Home stays short.'],
    [['#qx-help'],'Pupils who may need you','Below 2 stars on several activities, a post-test under 80%, or much slower than the class (Roxanne’s times). Tap a pupil to see their answers.'],
    [['#rs-offline'],'Work waiting to upload','Pupils who answered offline and still have answers on their phone. Ask them to open BULIG Quest with internet; the answers upload by themselves.'],
    ['.hm-auto','BULIG Quest checks every answer','Pupils see their score and the right answers as soon as they finish. Nothing waits for you. To see one pupil’s answers, change a score or write a note, open the pupil › Answers and scores.'],
@@ -331,6 +336,7 @@
    ['#learning-path','Learning path','Every level and lesson with its status. Open a level to mark lessons done in class.'],
    [['.cd-actions'],'Mark as done in class','Tick lessons or activities you did together, then save. Use "Undo" if you made a mistake.'],
    [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.'],
+   [['#my-notes'],'My notes','Short notes about this pupil, like “needs glasses”. Only you can see them.'],
    [['.rg-two'],'Reading growth','This pupil’s pre-test and post-test for each level, and words per minute in Level 4 Fluency, first reading to latest.']],
   privacy:P.privacy,
   chat:[
@@ -344,6 +350,15 @@
    ['.rt-rows','Five quick questions','Tap 1 to 5 stars for each one. Your overall rating is the average.'],
    ['.rt-lab','Tell us more','Optional: write what we should improve.'],
    ['.rt-btn','Send','Send your evaluation. You can rate BULIG Quest again any time.']],
+  week_plan:[
+   ['.hm-head','Week plan','Pick a lesson for each school day. Your pupils see “This week” on their Overview.'],
+   ['.rg-filter','Choose a section','Each section has its own plan.'],
+   ['.wp-week','Choose the week','Go back or ahead a week with the arrows.'],
+   ['.wp-form table','A lesson for each day','Pick the lesson, then save. “Pupils done” shows how many finished it.']],
+  groups:[
+   ['.hm-head','Reading groups','Small groups of pupils, like “Frustration readers”. A pupil can be in more than one group.'],
+   ['#gr-form','Make a group','Give it a name, tick the pupils, then save.'],
+   [['.gr-card'],'Each group','Send the group a message, print their parent cards, change or delete it.']],
   growth:[
    ['.hm-head','Reading growth','How each pupil’s reading changed, from real answers only. Print it for your panel or download it for Excel.'],
    ['.rg-filter','Choose a section','Pick one of your sections.'],
@@ -436,6 +451,8 @@
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
+   [['.bk-remind'],'Backup reminder','Jarvis reminds you to download a backup once a month. Keep it on a USB drive or in Google Drive.'],
+   [['.rg-school'],'Reading growth by grade','The average pre-test and post-test of each grade, from every answered test.'],
    [['.bb'],'Bulletin Board','Announcements from the administrator are pinned here as notes, newest first. Tap Open to see them all.'],
    [['.ah-hero','.pageheading'],'Admin Home','The whole school at a glance: pupils, teachers, sections and activities this week.'],
    [['.ah-b-today','.hm-checkup'],'Needs you today','Only what needs you shows big. Everything that is fine is a green check.'],

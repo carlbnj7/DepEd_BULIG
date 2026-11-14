@@ -27,6 +27,7 @@ function action():void{
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
  if($action==='answer_hours_save'||$action==='parent_link')qx_actions($action);   // v216
+ if(in_array($action,['week_plan_save','group_save','group_delete','group_message','pupil_note_add','pupil_note_delete'],true))ct_action($action);   // v216 class tools
  if($action==='reading_decision'||$action==='reading_verify_batch')rv_action();
  if($action==='streak_revive'||$action==='streak_lost_ok')streak_action($action);
  if($action==='offline_report')rs_offline_report(require_role('pupil'));
@@ -363,6 +364,8 @@ function vx_result(array $a,int $xp):?array{
  $of=(int)$ms['of'];$st=(int)$ms['n'];$win=$of===5?$st>=4:$st>=2;$jar=function_exists('star_jar')?star_jar($pid,$lv):$jar;
  $out=['stars'=>min(3,$of===5?(int)round($st*3/5):$st),'of'=>$of,'lesson_stars'=>$st,'pct'=>$of?(int)round($st/$of*100):0,'win'=>$win,'xp'=>$xp,'name'=>$name,'pass'=>STAR_PASS,'lesson'=>1,'retry'=>'?page=lesson&id='.$lid,'jar'=>$jar,'friend'=>$fr];
  if(!$win)$out['retry']='?page=lesson&id='.$lid;
+ /* v216 Jeepy drives to the next lesson of this level (the "Lesson done" road) */
+ if($win&&function_exists('level_lessons')){$L=level_lessons($lv,function_exists('pupil_grade')?pupil_grade($pid):0);foreach($L as $i=>$l)if((int)$l['id']===$lid){$out['this_n']=$i+1;if(isset($L[$i+1])){$n=$L[$i+1];$out['next_n']=$i+2;$out['next_title']=trim((string)($n['subtitle']??''))!==''?(string)$n['subtitle']:(string)$n['title'];$out['next_url']='?page=lesson&id='.(int)$n['id'];}break;}}
  /* v216 Jeepy: the last lesson of a level is done */
  if($win&&function_exists('level_done_now')&&level_done_now($pid,$lv)){$out['level']=level_label($lv);$nx=null;$seq=function_exists('level_sequence')?level_sequence():[];$i=array_search($lv,$seq,true);if($i!==false&&isset($seq[$i+1]))$nx=$seq[$i+1];if($nx){$out['next_level']=level_label($nx);$out['next_url']='?page=lessons&level='.$nx;}}
  return $out;

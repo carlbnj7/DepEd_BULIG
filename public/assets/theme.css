@@ -8212,3 +8212,93 @@ html.dark .pd-side aside.cl-tip{background:#16261d;border-color:#2c4a38;border-t
  .goal-card .goal-go{width:100%;justify-content:center;min-height:42px;font-size:14px}
  .rs-chp{padding-right:78px!important}.rs-chp .rs-chc{height:74px;right:8px}
 }
+
+/* v216 Continue where I stopped / Next up (right under the name panel) */
+.nx-card{display:flex;align-items:center;gap:14px;margin:0 0 18px;border-top:6px solid #1c7a3e!important}
+.nx-card .nx-t{flex:1;min-width:0}.nx-card h2{margin:2px 0 4px;font-size:20px}.nx-card p{margin:0}
+.nx-ch{width:64px;height:auto;max-height:84px;object-fit:contain;flex:none}
+.nx-go{flex:none}
+.nx-next{display:none}
+@media(max-width:600px){.nx-next{display:flex}.nx-card{flex-wrap:wrap;padding:14px!important}.nx-go{width:100%;justify-content:center;min-height:50px}.nx-ch{width:48px}}
+/* v216 one card style on the pupil's Overview: the same corners; a top colour by kind */
+.pupil-stats .pupil-stat,.qx-row>.card,.pd-row>.card,.pd-side>.card,.pd-side>.cl-tip,.qx-buddy,.nx-card{border-radius:24px!important}
+.pd-side>.rs-chp{border-top-color:#1c7a3e}
+/* v216 Read aloud speaker */
+.ra-spk{display:inline-grid;place-items:center;width:34px;height:34px;margin-left:8px;vertical-align:middle;border-radius:50%;border:0;background:#ffd23f;color:#173d28;box-shadow:0 2px 0 #c98200;cursor:pointer;flex:none}
+.ra-spk:hover{transform:translateY(-1px)}.ra-spk:focus-visible{outline:3px solid #1d7a3e;outline-offset:2px}
+/* v216 Phone: smaller floating friends, and they step aside while scrolling */
+@media(max-width:600px){.pf-buddy,.fs-say.fs-float{transform:scale(.74);transform-origin:bottom right;transition:transform .25s,opacity .25s}
+ html.is-scrolling .pf-buddy,html.is-scrolling .fs-say.fs-float{opacity:0;transform:translateX(60px) scale(.74);pointer-events:none}}
+/* v216 Bigger tap targets on phones (at least 44 px) */
+@media(max-width:600px){main .btn,main .btn.small,.pt-tab,.pf-cal-link,.stat-foot a,.ws-tabs a,.vx-btn{min-height:44px}
+ main .btn.small{padding-top:10px;padding-bottom:10px}}
+/* v216 Lesson done: Jeepy drives on a little road to the next lesson */
+.vx-card.vx-ride{padding-top:168px}
+.jr-road{position:absolute;left:22px;right:22px;top:40px;height:112px}
+.jr-road svg.rd{position:absolute;inset:0;width:100%;height:100%}
+.jr-stop{position:absolute;top:58px;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:4px;z-index:2}
+.jr-stop.done{left:14%}.jr-stop.next{left:86%}
+.jr-stop i{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:4px solid #fff;box-shadow:0 4px 0 rgba(0,0,0,.18);font-style:normal;font-weight:800;color:#fff;font-size:18px}
+.jr-stop.done i{background:#1c7a3e}.jr-stop.next i{background:linear-gradient(#ffd54a,#f2b10c);color:#7a4a00;width:46px;height:46px;font-size:22px;animation:jr-pulse 1.4s ease-in-out infinite;box-shadow:0 0 0 6px rgba(245,197,24,.35),0 4px 0 rgba(0,0,0,.18)}
+.jr-stop small{font:800 11px Poppins,sans-serif;color:#17633a;background:#fff;border-radius:999px;padding:2px 8px;box-shadow:0 2px 6px rgba(0,0,0,.12);white-space:nowrap}
+.jr-stop.next small{color:#7a4a00;background:#fff6d6}
+.jr-jeep{position:absolute;top:8px;left:44%;width:96px;transform:translateX(-50%);z-index:3;filter:drop-shadow(0 6px 6px rgba(0,0,0,.25));animation:jr-drive 2.6s cubic-bezier(.45,0,.3,1) .4s forwards}
+.jr-smoke{position:absolute;top:56px;left:32%;z-index:1;display:flex;gap:4px;animation:jr-smoke 2.6s .4s forwards}.jr-smoke b{width:12px;height:12px;border-radius:50%;background:#e7ece6;opacity:.9}.jr-smoke b:nth-child(2){width:9px;height:9px;opacity:.7}.jr-smoke b:nth-child(3){width:6px;height:6px;opacity:.5}
+@keyframes jr-drive{to{left:62%}}@keyframes jr-smoke{to{left:47%}}@keyframes jr-pulse{50%{transform:scale(1.08)}}
+.jr-mini{display:flex;justify-content:center;gap:4px;margin:-4px 0 6px}.jr-mini .vx-star{position:static;width:32px;height:32px;margin:0;transform:none}
+@media(max-width:600px){.jr-road{left:10px;right:10px}.jr-jeep{width:80px}.jr-stop small{font-size:10px}}
+/* v216 Calm mode (Settings): still pictures, no confetti */
+html.a11y-still *,html.a11y-still *::before,html.a11y-still *::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important;scroll-behavior:auto!important}
+html.a11y-still .vx-rays{display:none}html.a11y-still .jr-jeep{left:62%}html.a11y-still .jr-smoke{left:47%}
+html.a11y-noconf .vx-conf,html.a11y-noconf .sx-conf,html.a11y-noconf [class*="confetti"]{display:none!important}
+/* v216 Dark mode: the new cards stay easy to read */
+html.dark .nx-card,html.dark .qx-card,html.dark .rg-card,html.dark .goal-card{color:#e6efe3}
+html.dark .nx-card h2,html.dark .qx-card h2,html.dark .qx-mp,html.dark .qx-ln{color:#f1f6ef}
+html.dark .qx-tip,html.dark .nx-card .muted,html.dark .rg-kpi small,html.dark .rx-tags span{color:#c9d6cc}
+html.dark .qx-chips span{background:#1d3a2a;border-color:#3f7a57;color:#cdeed9}html.dark .qx-chips span.o{background:#3a2c14;border-color:#a77a2c;color:#ffd99a}html.dark .qx-chips span.r{background:#3d1a17;border-color:#b24a3e;color:#ffb4ab}
+html.dark .rg-t th{color:#f2d27a}html.dark .rg-lv{background:#1e3350;color:#bcd6ff}html.dark .rg-lv.now{background:#4a3a12;color:#ffe08a}
+html.dark .rx-res{color:#f3ecd9}html.dark .fc-card{background:#16261d;color:#e6efe3}html.dark .fc-g div{border-color:#2c4a38}html.dark .fc-g b{color:#8fe0b0}
+html.dark .jr-stop small{background:#16261d;color:#cdeed9}html.dark .jr-stop.next small{background:#3a2c14;color:#ffd99a}
+
+/* v216 Teacher Home tabs, week plan, groups, notes */
+.th-tabs{margin:0 0 18px}.th-tabs .pt-tab{border:0;cursor:pointer;font:inherit}
+.wp-week{display:flex;align-items:center;gap:10px;margin:10px 0 14px;flex-wrap:wrap}.wp-week b{font-size:16px}
+.wp-form select{width:100%;min-width:220px}.wp-form .btn{margin-top:12px}
+.wp-pupil .ws-hd h2{display:flex;align-items:center;gap:8px}
+.wp-days{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.wp-day{display:grid;gap:3px;padding:12px;border-radius:16px;border:2px solid #e2e6df;background:#fff;color:#173d28;text-decoration:none;min-height:48px}
+.wp-day .wp-dn{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#17633a}.wp-day small{display:flex;gap:4px;align-items:center;color:#5b6b60;font-weight:700}
+.wp-day.today{border-color:#f5c518;box-shadow:0 0 0 3px rgba(245,197,24,.25)}.wp-day.done{background:#eefaf1;border-color:#9fd8a8}.wp-day.done small{color:#17633a}
+.gr-pick{border:0;padding:0;margin:10px 0 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px}.gr-pick legend{font-weight:800;margin-bottom:6px}
+.gr-pick label{display:flex;gap:8px;align-items:center;padding:8px 10px;border:2px solid #eef1ec;border-radius:12px;min-height:44px}
+.gr-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}.gr-card .buttonrow{margin-top:12px}
+.gr-msg{margin-top:10px}.gr-msg summary{list-style:none;display:inline-flex}.gr-msg summary::-webkit-details-marker{display:none}.gr-msg form{display:grid;gap:8px;margin-top:8px}
+form.inline{display:inline}
+.pn-list{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:6px}.pn-list li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 12px;border-radius:12px;background:#f3f6fb;border:1px solid #dde4f0}
+.pn-list li span{font-weight:700;color:#1d2f5c}.pn-list small{display:block;font-weight:600;color:#5b6b80}
+.pn-add{display:flex;gap:8px;flex-wrap:wrap}.pn-add input{flex:1;min-width:200px}
+html.dark .wp-day{background:#16261d;border-color:#2c4a38;color:#e6efe3}html.dark .wp-day.done{background:#1d3a2a}html.dark .pn-list li{background:#1a2433;border-color:#2c3a5c}html.dark .pn-list li span{color:#dbe3f5}
+@media(max-width:600px){.gr-list{grid-template-columns:1fr}}
+.gr-pick label{display:flex!important;flex-direction:row!important;justify-content:flex-start!important;align-items:center!important;text-align:left!important;font-weight:700}
+.gr-pick label input{width:20px!important;height:20px;margin:0;flex:none}
+.th-tabs .pt-tab{font-weight:800;color:#17633a}.th-tabs .pt-tab.on{color:#fff}
+
+.rg-school .rg-row{grid-template-columns:minmax(70px,90px) 1fr auto}.rg-school .qx-chips{margin-top:10px}
+.bk-remind{margin:0 0 18px}.bk-remind .buttonrow{margin-top:10px}
+html.dark .wp-day .wp-dn{color:#8fe0b0}html.dark .wp-day small{color:#c9d6cc}html.dark .wp-day.done small{color:#8fe0b0}
+
+/* v216 Today's goal without Roxanne: ring left, goal and button right; compact on phones */
+.goal-card{display:grid!important;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+.goal-card .goal-text h2{margin:4px 0 10px}
+.goal-card .goal-text ul{margin:0 0 10px}
+.goal-card .goal-go{margin-top:2px}
+@media(max-width:600px){.goal-card{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:14px!important}
+ .goal-card .goal-ring{width:64px!important;height:64px!important}
+ .goal-card .goal-text h2{font-size:16px!important;margin:2px 0 8px!important}
+ .goal-card .goal-go{width:100%;justify-content:center}}
+.rs-chp .rs-chh b .ra-spk{width:28px;height:28px;margin-left:6px}.rs-chp .rs-chh b .ra-spk svg{width:15px;height:15px}.rs-chp .rs-chh b{display:inline}
+
+/* v216 Arah cheers on Today's goal (bottom right, like Toby on the class challenge) */
+.goal-card{position:relative;padding-right:110px!important}
+.goal-card .goal-ch{position:absolute;right:16px;bottom:12px;width:auto;height:118px;object-fit:contain;filter:drop-shadow(0 6px 8px rgba(0,0,0,.15));pointer-events:none}
+@media(max-width:600px){.goal-card{padding-right:84px!important}.goal-card .goal-ch{height:84px;right:8px;bottom:8px}}

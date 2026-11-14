@@ -14,7 +14,7 @@
  /* Let the browser select a microphone-compatible session when recording starts. */
  try{if(navigator.audioSession)navigator.audioSession.type='auto';}catch(e){}
  let ctx=null,out=null,noiseBuf=null,pending=null;
- function audio(){if(!ctx){try{ctx=new AC();out=ctx.createGain();out.gain.value=.32;out.connect(ctx.destination);}catch(e){ctx=null;}}return ctx;}
+ function audio(){if(!ctx){try{ctx=new AC();out=ctx.createGain();out.gain.value=document.documentElement.classList.contains('a11y-soft')?.12:.32;out.connect(ctx.destination);}catch(e){ctx=null;}}return ctx;}
  function noise(){if(!noiseBuf){const n=ctx.sampleRate*.6;noiseBuf=ctx.createBuffer(1,n,ctx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<n;i++)d[i]=Math.random()*2-1;}return noiseBuf;}
  /* One note: wave type, start and end pitch, when (seconds from now), length, loudness. */
  function tone(type,f1,f2,at,len,vol){const t=ctx.currentTime+at,o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f1,t);if(f2&&f2!==f1)o.frequency.exponentialRampToValueAtTime(f2,t+len);

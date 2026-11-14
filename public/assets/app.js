@@ -1150,7 +1150,7 @@ document.querySelectorAll('[data-tab-more]').forEach(b=>b.addEventListener('clic
 
 /* v204: Bigger text and Easy-read letters (Settings, My profile) */
 (function(){const sw=[...document.querySelectorAll('[data-a11y-switch]')];if(!sw.length)return;const d=document.documentElement;
- const save=()=>{const v=['big','easy'].filter(k=>d.classList.contains('a11y-'+k)).join(' ');try{localStorage.setItem('bulig-a11y',v);}catch(e){}};
+ const save=()=>{const v=['big','easy','soft','still','noconf'].filter(k=>d.classList.contains('a11y-'+k)).join(' ');try{localStorage.setItem('bulig-a11y',v);}catch(e){}};
  sw.forEach(s=>{const k=s.dataset.a11ySwitch;s.checked=d.classList.contains('a11y-'+k);s.addEventListener('change',()=>{d.classList.toggle('a11y-'+k,s.checked);sw.forEach(o=>{if(o!==s&&o.dataset.a11ySwitch===k)o.checked=s.checked;});save();});});})();
 
 /* v211 Organization: the "For" list shows only places that fit the chosen role (municipality, district or school) */
@@ -1200,17 +1200,25 @@ function showVx(v,nextHref){
  const star=(on,i)=>{const ns='http://www.w3.org/2000/svg';const s=document.createElementNS(ns,'svg');s.setAttribute('viewBox','0 0 24 24');s.setAttribute('class','vx-star'+(on?' on':'')+(i===1?' mid':''));s.style.setProperty('--d',(0.25+i*0.28)+'s');const p=document.createElementNS(ns,'path');p.setAttribute('d',STAR);s.append(p);return s;};
  const win=!!v.win,ov=el('div','vx '+(win?'vx-win':'vx-lose'));ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label',win?'Victory':'Try again');
  ov.append(el('div','vx-bg'));if(win){ov.append(el('div','vx-rays'));const cf=el('div','vx-conf');for(let i=0;i<26;i++){const c=el('i');c.style.setProperty('--x',(Math.random()*100)+'%');c.style.setProperty('--d',(Math.random()*1.2)+'s');c.style.setProperty('--r',(Math.random()*360)+'deg');c.className='c'+(i%5);cf.append(c);}ov.append(cf);}
- const K=v.kind||'',lvlDone=!!v.level&&win&&!K;
- const card=el('div','vx-card'+(K?' vx-'+K:'')+(lvlDone?' vx-level':''));card.append(el('div','vx-banner',lvlDone?(v.level.toUpperCase()+' DONE!'):K==='best'?'NEW BEST!':K==='practice'?'PRACTICE!':K==='keep'?'KEEP TRYING!':(win?'VICTORY!':'TRY AGAIN!')));
- const st=el('div','vx-stars');for(let i=0;i<3;i++)st.append(star(i<v.stars,i));card.append(st);
+ const K=v.kind||'',lvlDone=!!v.level&&win&&!K,ride=win&&!K&&!lvlDone&&!!v.lesson&&!!v.next_url;   /* v216 Jeepy drives to the next lesson */
+ const card=el('div','vx-card'+(K?' vx-'+K:'')+(lvlDone?' vx-level':''));if(ride)card.classList.add('vx-ride');card.append(el('div','vx-banner',ride?'LESSON DONE!':lvlDone?(v.level.toUpperCase()+' DONE!'):K==='best'?'NEW BEST!':K==='practice'?'PRACTICE!':K==='keep'?'KEEP TRYING!':(win?'VICTORY!':'TRY AGAIN!')));
+ if(ride){const rd=el('div','jr-road');rd.setAttribute('aria-hidden','true');const ns='http://www.w3.org/2000/svg',sv=document.createElementNS(ns,'svg');sv.setAttribute('viewBox','0 0 400 112');sv.setAttribute('preserveAspectRatio','none');sv.setAttribute('class','rd');
+   const D='M0 70 C80 40 140 92 200 66 S320 40 400 64';[['#0e3b28','30','.15'],['#5f6570','28',''],['#ffd54a','3','']].forEach(([c,w,o],i)=>{const pa=document.createElementNS(ns,'path');pa.setAttribute('d',D);pa.setAttribute('fill','none');pa.setAttribute('stroke',c);pa.setAttribute('stroke-width',w);if(o)pa.setAttribute('stroke-opacity',o);if(i===0)pa.setAttribute('transform','translate(0 5)');if(i===1)pa.setAttribute('stroke-linecap','round');if(i===2)pa.setAttribute('stroke-dasharray','12 10');sv.append(pa);});
+   const stop=(cls,txt,lab)=>{const s=el('div','jr-stop '+cls);s.append(el('i','',txt),el('small','',lab));return s;};
+   const jp=el('img','jr-jeep');jp.src='assets/images/characters/jeepy-boy-driving.webp';jp.alt='';
+   const sm=el('div','jr-smoke');sm.append(el('b'),el('b'),el('b'));
+   rd.append(sv,stop('done','✓','Lesson '+(v.this_n||'')+' done'),sm,jp,stop('next',String(v.next_n||''),'Next: Lesson '+(v.next_n||'')));card.append(rd);
+   const mini=el('div','jr-mini');for(let i=0;i<3;i++)mini.append(star(i<v.stars,i));card.append(mini);}
+ else{const st=el('div','vx-stars');for(let i=0;i<3;i++)st.append(star(i<v.stars,i));card.append(st);}
  const kid=(src,cls)=>{const k=el('img','vx-kid '+cls);k.src='assets/images/characters/'+src;k.alt='';return k;};
  const fr=/^(max|mia|dracs)$/.test(v.friend||'')?v.friend:'mia';   /* v216 the friend of the activity's skill; Zion keeps the stars; Jeepy drives to the next level */
- if(lvlDone)card.append(kid('jeepy-cheer.webp?v=2','l jeepy'));else if(K==='best')card.append(kid('zion-cheer.webp?v=2','l'),kid('zion-emblem.webp?v=2','r'));else if(K==='practice')card.append(kid('zion-thumbs.webp?v=2','l'));
+ if(ride){}else if(lvlDone)card.append(kid('jeepy-cheer.webp?v=2','l jeepy'));else if(K==='best')card.append(kid('zion-cheer.webp?v=2','l'),kid('zion-emblem.webp?v=2','r'));else if(K==='practice')card.append(kid('zion-thumbs.webp?v=2','l'));
  else if(win){card.append(kid('toby-cheer.webp?v=2','l'),kid(fr+'-cheer.webp?v=2','r'));}else card.append(kid('bruno-tryagain.webp?v=2','l'));
  const nm=v.name?', '+v.name:'';
- card.append(el('h2','',lvlDone?('Beep beep'+nm+'!'):K==='best'?(v.stars+' stars now'+nm+'!'):K==='practice'?'Still 3 stars!':K==='keep'?('Your best stays '+v.best+' stars'):win?(v.stars>=3?'Perfect'+nm+'!':'Great job'+nm+'!'):'So close'+nm+'!'));
+ card.append(el('h2','',lvlDone||ride?('Beep beep'+nm+'!'):K==='best'?(v.stars+' stars now'+nm+'!'):K==='practice'?'Still 3 stars!':K==='keep'?('Your best stays '+v.best+' stars'):win?(v.stars>=3?'Perfect'+nm+'!':'Great job'+nm+'!'):'So close'+nm+'!'));
  const p=el('p');const b=el('b','vx-pct',v.pct+'%');
- if(lvlDone){p.append('You finished ',el('b','',v.level),'.');if(v.next_level)p.append(' Hop in, next stop: ',el('b','',v.next_level),'!');}
+ if(ride){p.append('Jeepy is driving you to ',el('b','',v.next_title),'.');}
+ else if(lvlDone){p.append('You finished ',el('b','',v.level),'.');if(v.next_level)p.append(' Hop in, next stop: ',el('b','',v.next_level),'!');}
  else if(K==='best'){p.append('You went from ',el('b','',v.from+' stars'),' to ',el('b','',v.stars+' stars'),'. Zion put it in your jar.');}
  else if(K==='practice'){p.append('Great practice! Your best score stays.');}
  else if(K==='keep'){p.append('You got ',b,' this time. Playing again never lowers your stars.');}
@@ -1220,12 +1228,13 @@ function showVx(v,nextHref){
  else{p.append('You got ',b,'. You need ',el('b','vx-need','2 stars ('+v.pass+'%)'),' to pass.');}
  card.append(p);
  const jar=v.jar&&v.jar.of?el('span','vx-chip jar','★ Star Jar '+v.jar.n+' / '+v.jar.of):null;
- if(win){const ch=el('div','vx-chips');if(v.xp)ch.append(el('span','vx-chip xp','+'+v.xp+' XP'));if(K==='practice'&&v.left!=null)ch.append(el('span','vx-chip ok',v.left+' practice XP left today'));else if(!K)ch.append(el('span','vx-chip ok',v.lesson?'Lesson complete':'Activity passed'));if(jar)ch.append(jar);card.append(ch);if(v.again&&!K&&!lvlDone)card.append(el('p','vx-sub','One more star is waiting!'));}
+ if(win){const ch=el('div','vx-chips');if(ride)ch.append(el('span','vx-chip ok',v.lesson_stars+' of '+v.of+' stars'));if(v.xp)ch.append(el('span','vx-chip xp','+'+v.xp+' XP'));if(K==='practice'&&v.left!=null)ch.append(el('span','vx-chip ok',v.left+' practice XP left today'));else if(!K&&!ride)ch.append(el('span','vx-chip ok',v.lesson?'Lesson complete':'Activity passed'));if(jar)ch.append(jar);card.append(ch);if(v.again&&!K&&!lvlDone)card.append(el('p','vx-sub','One more star is waiting!'));}
  else if(K==='keep'){const ch=el('div','vx-chips');if(jar)ch.append(jar);card.append(ch);}
  else{const bar=el('div','vx-bar');const f=el('i');f.style.width=Math.max(4,Math.min(100,v.pct))+'%';const m=el('b');m.style.left=v.pass+'%';const sm=el('small','',v.pass+'% to pass');sm.style.left=v.pass+'%';bar.append(f,m,sm);card.append(bar);}
  const btns=el('div','vx-btns');const close=()=>{ov.classList.add('out');setTimeout(()=>ov.remove(),250);document.removeEventListener('keydown',esc);};
  const esc=e=>{if(e.key==='Escape')close();};document.addEventListener('keydown',esc);
- if(lvlDone&&v.next_url){const a=el('a','vx-btn go','Go to '+v.next_level+' →');a.href=v.next_url;const s2=el('a','vx-btn ghost','Stay here');s2.href=nextHref||'?page=lessons';btns.append(a,s2);}
+ if(ride){const a=el('a','vx-btn go','Ride to Lesson '+v.next_n+' →');a.href=v.next_url;const s2=el('button','vx-btn ghost','Stay here');s2.type='button';s2.addEventListener('click',close);btns.append(a,s2);}
+ else if(lvlDone&&v.next_url){const a=el('a','vx-btn go','Go to '+v.next_level+' →');a.href=v.next_url;const s2=el('a','vx-btn ghost','Stay here');s2.href=nextHref||'?page=lessons';btns.append(a,s2);}
  else if(win){const a=el('a','vx-btn go','Next activity →');a.href=nextHref||'?page=lessons';btns.append(a);
   if(v.again&&!K){const g=el('a','vx-btn gold','↻ Play again for 3 stars');g.href=v.again;btns.append(g);}
   else{const s2=el('button','vx-btn ghost','Stay here');s2.type='button';s2.addEventListener('click',close);btns.append(s2);}}
@@ -1253,3 +1262,22 @@ document.addEventListener('change',e=>{const r=e.target.closest('.l1-choice inpu
 
 /* v216 answering hours: Roxanne's "not yet" sheet can be closed to just look at the lesson */
 document.addEventListener('click',e=>{if(e.target.closest('[data-qx-ov-close]')){const o=document.querySelector('[data-qx-ov]');if(o)o.remove();}});
+
+/* v216 Read aloud: a speaker beside the headings of the pupil's cards. Tap it to hear the heading and its sentence. */
+(function(){if(!document.querySelector('.pupil-tabbar:not(.staff-tabbar)')||!('speechSynthesis' in window))return;
+ const sel='main .qx-card h2, main .goal-card h2, main .nx-card h2, main .rs-chp .rs-chh b, main .next-adventure h1, main .jy-head h2';
+ const say=t=>{try{const s=window.speechSynthesis;s.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.9;const v=s.getVoices().find(x=>/^en(-|_)(US|PH|GB)/i.test(x.lang));if(v)u.voice=v;s.speak(u);}catch(e){}};
+ document.querySelectorAll(sel).forEach(h=>{if(h.querySelector('.ra-spk'))return;const card=h.closest('.card,section')||h.parentElement;
+  const b=document.createElement('button');b.type='button';b.className='ra-spk';b.setAttribute('aria-label','Read this aloud');b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+  b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const p=card.querySelector('p:not(.qx-chips),small');say((h.textContent+'. '+(p?p.textContent:'')).replace(/\s+/g,' ').trim());});h.append(b);});})();
+/* v216 Phone: the floating friends step aside while the pupil scrolls, and come back when the page stops */
+(function(){let t=0;addEventListener('scroll',()=>{if(innerWidth>600)return;document.documentElement.classList.add('is-scrolling');clearTimeout(t);t=setTimeout(()=>document.documentElement.classList.remove('is-scrolling'),700);},{passive:true});})();
+
+/* v216 Teacher Home: the parts below the green panel become tabs, so Home stays short. Only parts that are on the page get a tab. */
+(function(){const hero=document.querySelector('main .th-hero');if(!hero)return;
+ const parts=[['Today','main .ah-bento'],['May need you','main #qx-help'],['Readers','main .rs-cols'],['Waiting to upload','main #rs-offline']].map(([l,s])=>[l,document.querySelector(s)]).filter(x=>x[1]&&x[1].textContent.trim()!=='');
+ if(parts.length<2)return;let key='today';try{key=sessionStorage.getItem('bulig-th-tab')||'today';}catch(e){}
+ const nav=document.createElement('nav');nav.className='pupil-tabs th-tabs';nav.setAttribute('role','tablist');nav.setAttribute('aria-label','Home');
+ const show=k=>{parts.forEach(([l,el],i)=>{const on=l.toLowerCase()===k;el.hidden=!on;nav.children[i].classList.toggle('on',on);nav.children[i].setAttribute('aria-selected',on?'true':'false');});try{sessionStorage.setItem('bulig-th-tab',k);}catch(e){}};
+ parts.forEach(([l,el],i)=>{const b=document.createElement('button');b.type='button';b.className='pt-tab';b.setAttribute('role','tab');b.textContent=l;const n=el.querySelectorAll('.ah-li.hot,.qx-hrow,.rs-row').length;if(n&&l!=='Today'){const c=document.createElement('b');c.textContent=n;b.append(c);}b.addEventListener('click',()=>show(l.toLowerCase()));nav.append(b);});
+ hero.after(nav);if(!parts.some(([l])=>l.toLowerCase()===key))key=parts[0][0].toLowerCase();show(key);})();

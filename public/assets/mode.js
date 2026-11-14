@@ -77,5 +77,5 @@
 /* v204: Bigger text (a11y-big) and Easy-read letters (a11y-easy), chosen in Settings; kept on this device. */
 (function(){
  var d=document.documentElement,a='';try{a=localStorage.getItem('bulig-a11y')||'';}catch(e){}
- if(/big/.test(a))d.classList.add('a11y-big');if(/easy/.test(a))d.classList.add('a11y-easy');
+ ['big','easy','soft','still','noconf'].forEach(function(k){if(new RegExp('(^| )'+k+'( |$)').test(a))d.classList.add('a11y-'+k);});
 })();

@@ -133,3 +133,16 @@ function growth_csv(array $u):never{
  foreach($P as $p)fputcsv($h,[$p['no'],$p['name'],(string)($p['lrn']??''),rg_lv((int)$p['start']),rg_lv((int)$p['now']),$p['up']??'',$p['pre']??'',$p['post']??'',$p['pre']!==null&&$p['post']!==null?round($p['post']-$p['pre'],1):'',$p['nboth'],$p['wpm0']??'',$p['wpm1']??'',$p['acc0']??'',$p['acc1']??'',$p['lv0']??'',$p['lv1']??'',count($p['reads'])],',','"','\\');
  fclose($h);exit;
 }
+
+/* ---------- v216 the whole school or area: pre-test to post-test by grade (administrators) ---------- */
+/** $where limits pupils (alias u), for example " AND u.school_id IN (1,2)". Averages of every answered pre-test and
+    post-test activity (right answers ÷ points; Level 4 = the oral reading score), by the pupil's grade. */
+function growth_by_grade_card(string $where,string $link=''):string{
+ $R=[];foreach(rows("SELECT p.grade_level g,a.phase,SUM(c.score) s,SUM(c.max_score) m,COUNT(DISTINCT c.pupil_id) n FROM activity_completion c JOIN activities a ON a.id=c.activity_id AND a.phase IN ('pre','post') JOIN users u ON u.id=c.pupil_id AND u.active=1 AND u.role='pupil' JOIN pupils p ON p.user_id=u.id WHERE c.status IN ('completed','approved') AND c.max_score>0".$where." GROUP BY p.grade_level,a.phase") as $r){$g=(int)$r['g'];$R[$g][$r['phase']]=['pct'=>round((float)$r['s']/(float)$r['m']*100),'n'=>(int)$r['n']];}
+ ksort($R);$rows='';$both=0;$tp=0;
+ foreach($R as $g=>$x){$a=$x['pre']['pct']??null;$b=$x['post']['pct']??null;$tp+=$x['post']['n']??0;if($a!==null&&$b!==null)$both++;
+  $rows.='<div class="rg-row"><b>Grade '.$g.'</b><div class="rg-bar">'.($a!==null?'<span class="pre w'.(int)(round($a/5)*5).'">'.$a.'%</span>':'').($b!==null?'<span class="post w'.(int)(round($b/5)*5).'">'.$b.'%</span>':'').'</div>'.($a!==null&&$b!==null?'<span class="'.($b>=$a?'rg-up':'rg-dn').'">'.($b>=$a?'+':'').($b-$a).'</span>':'<span class="rg-na">'.($a===null?'no pre-test yet':'no post-test yet').'</span>').'</div>';}
+ $h='<section class="card rg-card rg-school"><div class="ws-hd"><h2>'.icon('chart').'Reading growth by grade</h2>'.($link!==''?'<a class="btn secondary small" href="'.$link.'">'.icon('print').'Reports</a>':'').'</div>';
+ if(!$R)return $h.'<p class="rg-na">Not yet. This fills in when pupils answer pre-tests and post-tests.</p></section>';
+ return $h.'<div class="rg-bars">'.$rows.'</div><div class="rg-leg"><span><i class="pre"></i>Pre-test</span><span><i class="post"></i>Post-test</span></div><div class="qx-chips"><span>'.number_format($tp).' '.($tp===1?'pupil':'pupils').' took a post-test</span></div><p class="muted rg-src">Averages of every answered pre-test and post-test, marked with the module answer keys. Pupils who answered only one of them still count in that bar.</p></section>';
+}

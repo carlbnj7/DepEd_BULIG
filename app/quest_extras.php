@@ -128,10 +128,11 @@ function parent_card_html(int $pid,bool $qr):string{
  return $h;
 }
 function parent_cards_view(array $u):void{
- $tid=(int)$u['id'];$sid=(int)($_GET['section']??0);$pid=(int)($_GET['id']??0);
+ $tid=(int)$u['id'];$sid=(int)($_GET['section']??0);$pid=(int)($_GET['id']??0);$gid=(int)($_GET['group']??0);
  if($pid){if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[$tid,$pid]))fail('Pupil not found.',404);$ids=[$pid];$title=(string)val('SELECT name FROM users WHERE id=?',[$pid]);}
+ elseif($gid&&function_exists('ct_ready')&&ct_ready()){$g=one('SELECT * FROM pupil_groups WHERE id=? AND teacher_id=?',[$gid,$tid]);if(!$g)fail('Group not found.',404);$ids=array_map('intval',array_column(rows('SELECT u.id FROM pupil_group_members m JOIN users u ON u.id=m.pupil_id AND u.active=1 JOIN teacher_pupils t ON t.pupil_id=u.id AND t.teacher_id=? WHERE m.group_id=? ORDER BY u.name',[$tid,$gid]),'id'));$title=(string)$g['name'];}
  else{$sec=owned_section($sid,$tid);$ids=array_map('intval',array_column(rows('SELECT u.id FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN teacher_pupils t ON t.pupil_id=u.id AND t.teacher_id=? WHERE ps.section_id=? AND u.active=1 ORDER BY u.name',[$tid,(int)$sec['id']]),'id'));$title='Grade '.(int)$sec['grade_level'].' – '.$sec['name'];}
- echo '<div class="no-print rc-actions"><div><span class="eyebrow">PARENT PROGRESS CARDS</span><h1>'.e($title).'</h1><p class="muted">'.count($ids).' '.(count($ids)===1?'card':'cards').'. The QR code opens a read-only page for the family.</p></div><div class="rc-btns"><a class="btn secondary" href="'.($pid?'?page=pupil&amp;id='.$pid:'?page=print#pc-parent').'">'.icon('arrow','flip').'Back</a><button type="button" class="btn primary" data-print>'.icon('download').'Print or save as PDF</button></div></div>';
+ echo '<div class="no-print rc-actions"><div><span class="eyebrow">PARENT PROGRESS CARDS</span><h1>'.e($title).'</h1><p class="muted">'.count($ids).' '.(count($ids)===1?'card':'cards').'. The QR code opens a read-only page for the family.</p></div><div class="rc-btns"><a class="btn secondary" href="'.($pid?'?page=pupil&amp;id='.$pid:($gid?'?page=groups':'?page=print#pc-parent')).'">'.icon('arrow','flip').'Back</a><button type="button" class="btn primary" data-print>'.icon('download').'Print or save as PDF</button></div></div>';
  if($pid){$off=parent_off($pid);echo '<form method="post" class="no-print fc-switch">'.csrf_field().'<input type="hidden" name="action" value="parent_link"><input type="hidden" name="id" value="'.$pid.'"><input type="hidden" name="off" value="'.($off?'0':'1').'"><span>'.icon($off?'lock':'eye').($off?'The family page is turned off.':'The family page is on (read only).').'</span><button class="btn secondary small">'.($off?'Turn on':'Turn off').'</button></form>';}
  echo '<div class="fc-sheet">';foreach($ids as $i)echo parent_card_html($i,true);echo '</div><script src="'.asset_url('qrcode.js').'" defer></script><script src="'.asset_url('cards.js').'" defer></script>';
 }
@@ -140,4 +141,24 @@ function family_view():void{
  $k=(string)($_GET['k']??'');$pid=(int)strtok($k,'-');
  if(!$pid||!hash_equals(parent_token($pid),$k)||parent_off($pid)||!val("SELECT 1 FROM users WHERE id=? AND role='pupil' AND active=1",[$pid])){http_response_code(404);echo '<section class="card fc-none"><h1>This page is not available</h1><p class="muted">Ask the teacher for a new progress card.</p></section>';return;}
  echo '<div class="fc-fam">'.parent_card_html($pid,false).'</div>';
+}
+
+/* v216 Right under the pupil's name panel: "Continue where I stopped" when an activity was left half done (answers saved
+   as a draft in the last 14 days), otherwise "Next up" with the next lesson (shown on phones, where it is far down). */
+function continue_card(int $pid):string{
+ $d=one("SELECT d.activity_id,d.updated_at,a.title,a.lesson_id,l.title ltitle,l.subtitle lsub FROM activity_drafts d JOIN activities a ON a.id=d.activity_id JOIN lessons l ON l.id=a.lesson_id LEFT JOIN activity_completion c ON c.pupil_id=d.pupil_id AND c.activity_id=d.activity_id WHERE d.pupil_id=? AND d.updated_at>=? AND (c.id IS NULL OR c.status='retry') AND (TRIM(COALESCE(d.response,''))<>'' OR TRIM(COALESCE(d.drawing,''))<>'') ORDER BY d.updated_at DESC LIMIT 1",[$pid,date('Y-m-d H:i:s',strtotime('-14 days'))]);
+ if($d&&function_exists('allowed_activity')){try{allowed_activity($pid,(int)$d['activity_id']);}catch(Throwable $e){$d=null;}}
+ if($d){$t=strtotime((string)$d['updated_at']);$when=$t?(date('Y-m-d',$t)===date('Y-m-d')?'today '.date('g:i A',$t):(date('Y-m-d',$t)===date('Y-m-d',strtotime('-1 day'))?'yesterday '.date('g:i A',$t):date('M j, g:i A',$t))):'';
+  $lt=trim((string)$d['lsub'])!==''?(string)$d['lsub']:(string)$d['ltitle'];
+  return '<section class="card nx-card nx-cont" aria-label="Continue where I stopped"><img class="nx-ch" src="'.e(friend_img('george','point')).'" alt="" width="70" height="90"><div class="nx-t"><span class="eyebrow">YOU STOPPED HERE'.($when!==''?' · '.e(mb_strtoupper($when)):'').'</span><h2>'.e($lt.' · '.$d['title']).'</h2><p class="muted">Your answers are saved. Pick up right where you left off.</p></div><a class="btn primary nx-go" href="?page=lesson&amp;id='.(int)$d['lesson_id'].'&amp;activity='.(int)$d['activity_id'].'">Continue where I stopped '.icon('arrow').'</a></section>';}
+ $nx=function_exists('next_learning_lesson')?next_learning_lesson($pid):null;if(!$nx)return '';
+ $t=trim((string)($nx['subtitle']??''))!==''?(string)$nx['subtitle']:(string)$nx['title'];
+ return '<section class="card nx-card nx-next" aria-label="Next up"><div class="nx-t"><span class="eyebrow">NEXT UP · '.e(mb_strtoupper(level_label((int)$nx['level_id']))).'</span><h2>'.e($t).'</h2></div><a class="btn primary nx-go" href="?page=lesson&amp;id='.(int)$nx['id'].'">Start my next lesson '.icon('arrow').'</a></section>';
+}
+
+/** v216 Jarvis reminds administrators to download a backup once a month (shown after 30 days, or if there is none). */
+function backup_remind_card():string{
+ $u=current_user();if(!$u||($u['role']??'')!=='admin'||!empty($u['view_only']))return '';
+ $b=admin_setting('last_backup_at','');$d=$b===''?null:admin_days_since($b);if($d!==null&&$d<30)return '';
+ return '<section class="card qx-card qx-mission bk-remind"><img class="qx-ch" src="'.e(friend_img('jarvis','idea')).'" alt="" width="90" height="90"><div class="qx-mt"><span class="eyebrow">JARVIS · BACKUP REMINDER</span><h2>'.($d===null?'No backup downloaded yet':'Last backup: '.$d.' days ago').'</h2><p class="muted qx-tip">Download a backup once a month, and keep it on a USB drive or in Google Drive.</p><div class="buttonrow"><a class="btn primary" href="?page=print#pc-backup">'.icon('download').'Download a backup</a></div></div></section>';
 }

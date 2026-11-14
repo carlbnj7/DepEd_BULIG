@@ -345,6 +345,14 @@ def run_pages(acc):
             check('The family page opens without signing in and shows only progress (v216)', fs == 200 and 'fc-card' in ft and 'Sign out' not in ft and not PHP_ERROR.search(ft), f'status {fs}')
             fs, _, _ = Client().req('?page=family&k=' + k[:-1] + ('0' if k[-1] != '0' else '1'))
             check('A wrong family link is not accepted (v216)', fs == 404, f'status {fs}')
+        ws, _, wt = t.req('?page=week_plan')
+        check('Week plan opens for the teacher with a lesson for each day (v216)', ws == 200 and 'week_plan_save' in wt and 'name="day[5]"' in wt and not PHP_ERROR.search(wt), f'status {ws}')
+        ws, _, wt = t.req('?page=groups')
+        check('Reading groups page opens (v216)', ws == 200 and 'group_save' in wt and not PHP_ERROR.search(wt), f'status {ws}')
+        ws, url, wt = t.req('index.php', {'action': 'group_save', 'csrf': t.token('?page=groups'), 'name': 'Test buddies', 'pupils[]': acc['pupil1']['uid']})
+        check('A teacher can make a reading group with a pupil (v216)', 'Test buddies' in wt and 'gr-card' in wt, wt[:200])
+        ws, url, wt = t.req('index.php', {'action': 'pupil_note_add', 'csrf': t.token(f"?page=pupil&id={acc['pupil1']['uid']}"), 'pupil': acc['pupil1']['uid'], 'note': 'Needs glasses'})
+        check('A teacher can keep a private note on a pupil (v216)', 'Needs glasses' in wt and 'my-notes' in wt, wt[:200])
         gstatus, _, gtext = t.req('?page=growth')
         check('Reading growth: the teacher sees each pupil, the four averages and Print / Excel (v216)', gstatus == 200 and 'rg-kpis' in gtext and 'rg-t' in gtext and 'growth_print' in gtext and 'growth_csv' in gtext and not PHP_ERROR.search(gtext), f'status {gstatus}')
         gstatus, _, gtext = t.req('?page=growth_print')
@@ -629,7 +637,7 @@ def test_friends(p):
     names = [f.get('name') for f in data.get('friends', [])]
     check('A pupil who has not met the friends gets the introduction: George first, then 13 friends (Jeepy last)', names[:1] == ['George'] and len(names) == 14 and names[-1] == 'Jeepy' and 'Bob' in names and 'Kai' in names and 'Sofie' in names and 'assets/friends' in text, names)
     check('Claude the Protector gives a safety tip on the pupil Home page', 'class="cl-tip"' in text and 'claude-' in text)
-    check('Roxanne the Timekeeper is on Today’s goal', 'class="rx-goal"' in text and 'roxanne-' in text)
+    check('Today’s goal is simple: the ring, the goal and the button, without a character (v216)', 'goal-card' in text and 'class="rx-goal"' not in text)
     m = re.search(r'<meta name="bulig-tour" content="([^"]+)"', text)
     tour = json.loads(m.group(1).replace('&quot;', '"').replace('&amp;', '&')) if m else {}
     pics = ' '.join([str(tour.get('char')), str(tour.get('hi'))] + list((tour.get('pals') or {}).values()))
