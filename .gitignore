@@ -12,3 +12,10 @@ __pycache__/
 
 # Database backups saved by BULIG (Settings › Account IDs) stay on the server only
 storage/backups/
+
+# Local UI previews (kept out of the repository)
+tests/ui-preview/
+# Pictures uploaded while testing on this computer (the files the app needs are already tracked)
+public/assets/uploads/*
+# Over GitHub's 100 MB limit: keep this ZIP outside the repository
+live-update/BULIG-Defense-Full.zip
