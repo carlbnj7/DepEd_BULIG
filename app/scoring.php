@@ -275,7 +275,7 @@ function stars_html(int $n,int $of,string $cls=''):string{if($of<1)return '';$n=
 function map_stars(int $pid,array $lids):array{
  done_scores_repair();
  $lids=array_values(array_filter(array_map('intval',$lids)));if(!$lids)return [];$by=[];
- foreach(rows('SELECT a.id,a.lesson_id,a.title,a.phase,c.status,c.score,c.max_score FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id IN ('.implode(',',$lids).') AND a.published=1 ORDER BY a.lesson_id,a.position',[$pid]) as $r)$by[(int)$r['lesson_id']][]=$r;
+ foreach(rows('SELECT a.id,a.lesson_id,a.title,a.phase,c.status,c.score,c.max_score FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id IN ('.implode(',',$lids).') AND '.(function_exists('is_tester')&&is_tester($pid)?'(a.published=1 OR a.lesson_id IN (SELECT lesson_id FROM studio_lessons))':'a.published=1').' ORDER BY a.lesson_id,a.position',[$pid]) as $r)$by[(int)$r['lesson_id']][]=$r;
  $out=[];foreach($by as $lid=>$acts){
   /* Lessons with mixed phases (Levels 1 and 3A keep a small pre/post check inside each lesson): the stars come from the lesson activities. */
   $phs=array_unique(array_column($acts,'phase'));$ph=in_array('learn',$phs,true)?'learn':(in_array('post',$phs,true)?'post':'pre');
@@ -286,6 +286,77 @@ function map_stars(int $pid,array $lids):array{
   $out[$lid]=['of'=>$of,'n'=>star_count($sum/count($acts),$ph),'a'=>$ph==='post'?[]:$list,'ph'=>$ph,'mx'=>$mx];}
  return $out;
 }
+/* ---------- v216 Play again and the Star Jars ----------
+   A finished lesson activity can be played again. The new answer is scored like a first answer; BULIG keeps the better one.
+   Going up a star gives +5 XP a star (2 → 3 stars). Playing an activity that already has 3 stars is practice: +2 XP, up to
+   3 times a day for each activity. A lower score never lowers the stars. The first score is kept for the teacher
+   (rubric_scores "first"). No new tables: the bonus XP is added to the activity's XP, and each play is in response_history. */
+const REPLAY_XP_STAR=5,REPLAY_XP_PRACTICE=2,REPLAY_PRACTICE_DAY=3;
+function replay_frac(?array $c):float{if(!$c)return 0.0;$f=completion_frac($c);return $f??(($c['status']??'')==='retry'?0.0:1.0);}
+function replay_practice_left(int $cid):int{return max(0,REPLAY_PRACTICE_DAY-(int)val("SELECT COUNT(*) FROM response_history WHERE completion_id=? AND status='practice' AND created_at>=CURDATE()",[$cid]));}
+function replay_settle(int $pid,array $a,array $old,int $cid):array{
+ $new=one('SELECT * FROM activity_completion WHERE id=?',[$cid]);$fo=replay_frac($old);$fn=replay_frac($new);$so=star_count($fo,'learn');$sn=star_count($fn,'learn');$xp=0;
+ $j=json_decode((string)($old['rubric_scores']??''),true);$first=is_array($j)&&isset($j['first'])?$j['first']:['score'=>$old['score'],'max'=>$old['max_score'],'at'=>$old['submitted_at']];
+ if($sn>$so){/* a new best: keep the new answer */
+  $nj=json_decode((string)($new['rubric_scores']??''),true);$nj=is_array($nj)?$nj:[];$nj['first']=$first;
+  q("UPDATE activity_completion SET status='completed',rubric_scores=? WHERE id=?",[json_encode($nj,JSON_UNESCAPED_UNICODE),$cid]);
+  $xp=REPLAY_XP_STAR*($sn-$so);$kind='best';$kept=true;}
+ else{/* not better: the best answer stays, exactly as it was */
+  $cols=array_values(array_filter(array_keys($old),fn($c)=>$c!=='id'&&preg_match('/^[a-z_]+$/',$c)));
+  if($cols){$oj=is_array($j)?$j:[];$oj['first']=$first;$old['rubric_scores']=json_encode($oj,JSON_UNESCAPED_UNICODE);q('UPDATE activity_completion SET '.implode(',',array_map(fn($c)=>"`$c`=?",$cols)).' WHERE id=?',array_merge(array_map(fn($c)=>$old[$c],$cols),[$cid]));}
+  $kept=false;
+  if($so>=3&&$sn>=3){$kind='practice';if(replay_practice_left($cid)>0)$xp=REPLAY_XP_PRACTICE;}else $kind='keep';}
+ if($xp>0){if(!q('UPDATE xp_transactions SET amount=amount+? WHERE pupil_id=? AND activity_id=?',[$xp,$pid,(int)$a['id']])->rowCount())q('INSERT IGNORE INTO xp_transactions(pupil_id,activity_id,amount) VALUES(?,?,?)',[$pid,(int)$a['id'],$xp]);
+  q('INSERT INTO pupil_xp(pupil_id,total) VALUES(?,?) ON DUPLICATE KEY UPDATE total=total+VALUES(total)',[$pid,$xp]);}
+ q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,'Play again: '.$sn.' stars (best '.max($so,$sn).')'.($xp?' · +'.$xp.' XP':''),$kind==='practice'?'practice':'replay',$pid]);
+ $msg=$kind==='best'?'New best! '.$sn.' stars now.':($kind==='practice'?($xp?'Great practice! Still 3 stars.':'Great practice! No more practice XP today for this one.'):'Your best stays '.$so.' stars.');
+ return ['kept_new'=>$kept,'xp'=>$xp,'kind'=>$kind,'from'=>$so,'to'=>$sn,'stars'=>max($so,$sn),'pct'=>(int)floor(max($fo,$fn)*100+1e-9),'now'=>(int)floor($fn*100+1e-9),'left'=>$kind==='practice'?replay_practice_left($cid):null,'message'=>$msg];
+}
+/** The "Play again" bar under a finished lesson activity: its best stars and the button (pupils only). */
+function replay_bar(array $a):string{
+ $u=function_exists('current_user')?current_user():null;if(!$u||($u['role']??'')!=='pupil'||($a['phase']??'')!=='learn'||($a['response_mode']??'none')==='none'||!completion_ok($a))return '';
+ $c=one('SELECT id,status,score,max_score FROM activity_completion WHERE pupil_id=? AND activity_id=?',[(int)$u['id'],(int)$a['id']]);if(!$c)return '';
+ $st=star_count(replay_frac($c),'learn');$url='?page=lesson&amp;id='.(int)$a['lesson_id'].'&amp;activity='.(int)$a['id'].'&amp;again=1';
+ if($st<3)return '<div class="rp-bar">'.stars_html($st,3).'<span class="rp-t">You got '.$st.' star'.($st===1?'':'s').'</span><a class="rp-btn gold" href="'.$url.'">'.l1_icon('again').'Play again for 3 stars</a><small>Get 3 stars: +'.REPLAY_XP_STAR.' XP for each new star, and more stars in your jar.</small></div>';
+ $left=replay_practice_left((int)$c['id']);
+ return '<div class="rp-bar rp-3">'.stars_html(3,3).'<span class="rp-t">Perfect! 3 stars</span><a class="rp-btn" href="'.$url.'">'.l1_icon('again').'Practice again</a><small>Practice for fun: +'.REPLAY_XP_PRACTICE.' XP'.($left?' ('.$left.' left today)':' (no more practice XP today)').'.</small></div>';
+}
+/** v216 On a finished lesson: every activity with its stars; those under 3 stars have Play again. */
+function replay_list(array $lesson,array $all):string{
+ $u=current_user();if(!$u||($u['role']??'')!=='pupil')return '';$rows='';$low=0;
+ foreach(array_values($all) as $i=>$a){if(($a['phase']??'')!=='learn'||($a['response_mode']??'none')==='none'||!completion_ok($a))continue;
+  $st=star_count(replay_frac($a),'learn');if($st<3)$low++;$url='?page=lesson&amp;id='.(int)$lesson['id'].'&amp;activity='.(int)$a['id'].($st<3?'&amp;again=1':'');
+  $rows.='<a class="rp-row'.($st<3?' low':'').'" href="'.$url.'"><span class="rp-n">'.($i+1).'</span><span class="rp-tt">'.e((string)$a['title']).'</span>'.stars_html($st,3).'<span class="rp-go">'.($st<3?l1_icon('again').'Play again':'Open').'</span></a>';}
+ if($rows==='')return '';
+ return '<section class="card rp-list"><h2>'.icon('star').'Your activities</h2><p class="muted">'.($low?'Get 3 stars on '.($low===1?'1 activity':$low.' activities').' to fill your Star Jar. Each new star gives +'.REPLAY_XP_STAR.' XP.':'Perfect! Every activity has 3 stars.').'</p>'.$rows.'</section>';}
+function replay_banner(array $a):string{$u=current_user();$c=one('SELECT status,score,max_score FROM activity_completion WHERE pupil_id=? AND activity_id=?',[(int)$u['id'],(int)$a['id']]);$st=star_count(replay_frac($c),'learn');
+ return '<div class="ac-practice rp-banner">'.l1_icon('again').'<div><b>'.($st<3?'Play again for 3 stars':'Practice again').'</b><p>Your best now: '.$st.' star'.($st===1?'':'s').'. BULIG Quest keeps your best score.</p></div></div>';}
+/** v216 The floating Star Jar on the road map (bottom left). Tap it: Zion the Star Keeper says how many stars are in it. */
+function star_jar_svg():string{return '<svg viewBox="0 0 84 100" aria-hidden="true"><defs><linearGradient id="sjg" x1="0" x2="1"><stop offset="0" stop-color="#e9f6ff"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#d7ecfa"/></linearGradient><linearGradient id="sjo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe680"/><stop offset="1" stop-color="#f2b10c"/></linearGradient><linearGradient id="sjl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcf3a"/><stop offset="1" stop-color="#c98200"/></linearGradient><clipPath id="sjc"><path d="M14 30c0-4 3-6 6-6h44c3 0 6 2 6 6v54c0 6-5 10-10 10H24c-5 0-10-4-10-10z"/></clipPath></defs><rect x="18" y="6" width="48" height="14" rx="6" fill="url(#sjl)"/><rect x="16" y="18" width="52" height="8" rx="4" fill="#c98200"/><path d="M14 30c0-4 3-6 6-6h44c3 0 6 2 6 6v54c0 6-5 10-10 10H24c-5 0-10-4-10-10z" fill="url(#sjg)" stroke="#a9d1ee" stroke-width="2.5"/><g clip-path="url(#sjc)"><path class="sj-fill" d="M10 48q16-8 32-2t32-4v60H10z" fill="url(#sjo)"/><g fill="#fff6c2" stroke="#e0a000" stroke-width="1"><path d="M27 58l2.4 5 5.4.6-4 3.7 1.1 5.3L27 70l-4.9 2.6 1.1-5.3-4-3.7 5.4-.6z"/><path d="M52 52l2 4.2 4.6.5-3.4 3.1.9 4.5-4.1-2.3-4.1 2.3.9-4.5-3.4-3.1 4.6-.5z"/><path d="M44 72l2.6 5.4 5.9.7-4.4 4 1.2 5.8L44 85l-5.3 2.9 1.2-5.8-4.4-4 5.9-.7z"/><path d="M24 80l1.8 3.8 4.1.5-3 2.8.8 4L24 89l-3.7 2.1.8-4-3-2.8 4.1-.5z"/><path d="M60 78l1.8 3.8 4.1.5-3 2.8.8 4L60 87l-3.7 2.1.8-4-3-2.8 4.1-.5z"/></g></g><path d="M22 34c-2 10-2 34 0 52" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".75" fill="none"/></svg>';}
+function star_jar_float(int $pid,int $level):string{
+ $j=star_jar($pid,$level);if(!$j['of'])return '';$n=$j['n'];$of=$j['of'];$left=$of-$n;$pct=(int)round($n/$of*100);
+ $title=$level?'Star Jar · '.level_label($level):'Big Star Jar · All levels';
+ $say=$left<=0?'Your jar is full! You are a star reader!':($n?'Great collecting! Play again any activity with 1 or 2 stars to fill your jar.':'Earn stars in every activity, and I will keep them in your jar!');
+ /* a small jar in the corner; tapping it opens a popup in the middle (v216) */
+ return '<details class="sjar'.($left<=0?' full':'').'"><summary aria-label="Star Jar: '.$n.' of '.$of.' stars"><span class="sj-ring">'.star_jar_svg().'</span><span class="sj-cnt"><b>★</b> '.$n.' / '.$of.'</span></summary>'
+  .'<div class="sj-pop" role="dialog" aria-modal="true" aria-label="'.e($title).'"><span class="sj-shade" data-sj-close></span><div class="sj-card">'
+  .'<button type="button" class="sj-x" data-sj-close aria-label="Close">✕</button>'
+  .'<div class="sj-top"><span class="sj-big">'.star_jar_svg().'</span><img src="'.e(friend_img('zion',$left<=0?'cheer':'point')).'" alt="" width="110" height="132"></div>'
+  .'<span class="sj-h">★ '.e(mb_strtoupper($title)).'</span><span class="sj-n">'.$n.' <small>/ '.$of.' stars</small></span><span class="sj-bar"><i class="p'.(int)(round($pct/5)*5).'"></i></span>'
+  .'<p class="sj-say"><b>Zion the Star Keeper</b>'.e($say).'</p><button type="button" class="sj-ok" data-sj-close>Keep going</button></div></div></details>';
+}
+/** The best stars of each finished lesson activity: [activity id => stars]. */
+function star_jar(int $pid,int $level=0):array{
+ static $c=[];$k=$pid.':'.$level;if(isset($c[$k]))return $c[$k];
+ $g=function_exists('pupil_grade')?pupil_grade($pid):null;$tester=function_exists('is_tester')&&is_tester($pid);
+ $levels=$level?[$level]:(function_exists('level_sequence')?level_sequence():array_map('intval',array_column(rows('SELECT id FROM bulig_levels ORDER BY id'),'id')));$n=0;$of=0;
+ foreach($levels as $lv){$lids=array_map('intval',array_column(rows('SELECT l.id FROM lessons l JOIN modules m ON m.id=l.module_id JOIN bulig_levels b ON b.id=m.level_id WHERE m.level_id=? AND '.($tester&&function_exists('studio_pub_sql')?studio_pub_sql('l',$pid):'l.published=1 AND b.published=1').GRADE_SQL,[$lv,$g]),'id'));
+  if(!$lids)continue;foreach(map_stars($pid,$lids) as $m){if(empty($m['of']))continue;$n+=(int)$m['n'];$of+=(int)$m['of'];}}   // v216 the same stars as on the road map: up to 3 a lesson, 5 on the post-test
+ return $c[$k]=['n'=>$n,'of'=>$of];
+}
+/** The friend who cheers on the Victory popup: the friend of the activity's skill. */
+function vx_friend(array $a):string{$lv=function_exists('level_family')?level_family(lesson_level((int)$a['lesson_id'])):lesson_level((int)$a['lesson_id']);
+ if(in_array($lv,[2,3,4],true))return 'mia';if($lv>=6&&$lv<=8)return 'dracs';return 'max';}
 /** A saved answer's share right (0 to 1), or null when it has no score. */
 function completion_frac(?array $c):?float{return $c&&$c['max_score']!==null&&(float)$c['max_score']>0?max(0,min(1,(float)$c['score']/(float)$c['max_score'])):null;}
 /** The card shown when a lesson activity is below 2 stars: the stars, the score and a fresh "Try again". */
@@ -299,11 +370,16 @@ function star_gate_card(array $a,float $frac):string{$st=star_count($frac,'learn
     $o: fresh (just sent), xp, practice (a "try again" answer), best (the score that is kept). */
 function ac_card(array $a,array $c,array $o=[]):string{
  if(!ac_keyed($a))return '';$s=key_score($a,(string)($c['response']??''));if(!$s||!$s['total'])return '';
+ /* v216 Pre-test: nothing is "wrong" for the pupil. BULIG thanks them and shows the answers; the real score is kept for the teacher. */
+ if(($a['phase']??'')==='pre'){$u0=function_exists('current_user')?current_user():null;if($u0&&($u0['role']??'')==='pupil'){$miss=ac_misses($a,$s);
+  $h='<div class="ac-panel ac-pre" role="status"><div class="ac-top"><span class="ac-badge" aria-hidden="true">'.l1_icon('ok').'</span><div><b>Thank you! This part is done.</b><small>The pre-test shows what you know now. There is no wrong answer here.</small></div></div>';
+  if($miss){$h.='<p class="ac-lab">LET’S LEARN THESE</p><ul class="ac-again ac-learn">';foreach(array_slice($miss,0,8) as [$n,$what,$want,$how])$h.='<li><em>'.e($n).'</em><span>'.($how==='goes with'?e($what).' goes with <b>'.e($want).'</b>':e($what).'<br>The answer is <b>'.e($want).'</b>').'</span></li>';if(count($miss)>8)$h.='<li class="ac-more"><span>and '.(count($miss)-8).' more</span></li>';$h.='</ul>';}
+  return $h.(function_exists('friend_say')?friend_say('george','thumbs','Great start! We will learn all of these together in the lessons.',false):'').'</div>';}}
  $right=$s['right'];$total=$s['total'];$j=json_decode((string)($c['rubric_scores']??''),true);$teacher=is_array($j)&&isset($j['teacher_score'])&&empty($o['fresh']);
  if($teacher&&(float)($c['max_score']??0)>0){$right=(float)$c['score'];$total=(float)$c['max_score'];}
  $num=fn($x)=>rtrim(rtrim(number_format((float)$x,1),'0'),'.');$pct=$total?$right/$total:0;$ph=(string)($a['phase']??'learn');
  $title=!empty($o['practice'])?'Practice checked!':($pct>=1?'Perfect! Every answer is right.':($pct>=.8?'Great work!':($pct>=.5?'Good try!':'Let’s look again together.')));
- $sub=!empty($o['practice'])?(string)($o['best']??''):(!empty($o['fresh'])?'BULIG checked your answers.':($teacher?'Your teacher checked this.':'BULIG checked this'.(!empty($c['submitted_at'])?' on '.date('F j',strtotime((string)$c['submitted_at'])):'').'.'));
+ $sub=!empty($o['practice'])?(string)($o['best']??''):(!empty($o['fresh'])?'BULIG Quest checked your answers.':($teacher?'Your teacher checked this.':'BULIG Quest checked this'.(!empty($c['submitted_at'])?' on '.date('F j',strtotime((string)$c['submitted_at'])):'').'.'));
  $h='<div class="ac-panel'.($pct>=1?' ac-perfect':'').'" role="status"><div class="ac-top"><span class="ac-badge" aria-hidden="true">'.l1_icon('ok').'</span><div><b>'.e($title).'</b><small>'.e($sub).'</small></div></div>';
  $h.='<div class="ac-score"><strong>'.$num($right).' <span>of '.$num($total).' right</span></strong>'.($ph==='learn'?stars_html(star_count($pct,'learn'),3):'').'</div>';   // v181: 3 stars on lesson activities; post-tests get 5 stars for the whole level
  if(!empty($o['xp']))$h.='<span class="ac-xp">+'.(int)$o['xp'].' XP</span>';
@@ -311,7 +387,7 @@ function ac_card(array $a,array $c,array $o=[]):string{
   foreach(array_slice($miss,0,6) as [$n,$what,$want,$how])$h.='<li><em>'.e($n).'</em><span>'.($how==='goes with'?e($what).' goes with <b>'.e($want).'</b>':e($what).'<br>The answer: <b>'.e($want).'</b>').'</span></li>';
   if(count($miss)>6)$h.='<li class="ac-more"><span>and '.(count($miss)-6).' more</span></li>';$h.='</ul>';}
  if($pct<1&&!$teacher&&function_exists('friend_say'))$h.=friend_say('bruno','tryagain','Made a mistake? That is okay! Tap Try it again and we will do it together.',false);
- if($pct<1&&!$teacher)$h.='<div class="ac-btns"><a class="ac-btn" href="?page=lesson&amp;id='.(int)$a['lesson_id'].'&amp;activity='.(int)$a['id'].'&amp;again=1">'.l1_icon('again').'Try it again</a></div>';
+ if(false&&$pct<1&&!$teacher)$h.='<div class="ac-btns"><a class="ac-btn" href="?page=lesson&amp;id='.(int)$a['lesson_id'].'&amp;activity='.(int)$a['id'].'&amp;again=1">'.l1_icon('again').'Try it again</a></div>';
  return $h.'</div>';
 }
 /** "Try it again": mark the new answer, keep the best one. No XP and no change to the pupil's progress. */
@@ -326,3 +402,26 @@ function ac_practice(int $pid,array $a,array $old,string $answer):array{
  return ['message'=>$msg,'card'=>ac_card($a,['response'=>$answer],['fresh'=>true,'practice'=>true,'best'=>$msg])];
 }
 
+
+/* v216 Roxanne the Timekeeper: how long each activity takes (the seconds the activity page was open in front of the
+   pupil; the browser stops counting when the pupil leaves the page). The pupil sees the time and their fastest time; the teacher
+   sees it on each answer, in red when it is much slower than the class usually takes. Needs 048_activity_time.sql. */
+function rx_ready():bool{static $r;if($r===null){try{$r=(bool)one("SHOW COLUMNS FROM activity_completion LIKE 'best_secs'");}catch(Throwable $e){$r=false;}}return $r;}
+function rx_fmt(int $s):string{$m=intdiv($s,60);$x=$s%60;return $m?$m.' min'.($x?' '.sprintf('%02d',$x).' s':''):$x.' s';}
+function rx_class_avg(int $aid):?int{static $c=[];if(!array_key_exists($aid,$c)){$v=one('SELECT AVG(best_secs) a,COUNT(*) n FROM activity_completion WHERE activity_id=? AND best_secs BETWEEN 3 AND 7200',[$aid]);$c[$aid]=$v&&(int)$v['n']>=3?(int)round((float)$v['a']):null;}return $c[$aid];}
+function rx_save(int $pid,int $aid,int $secs):void{
+ if($secs<1||$secs>7200||!rx_ready())return;$old=one('SELECT best_secs,status FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);if(!$old)return;
+ $done=($old['status']??'')!=='retry';$prev=$old['best_secs']!==null?(int)$old['best_secs']:null;
+ q('UPDATE activity_completion SET time_secs=?'.($done?',best_secs=IF(best_secs IS NULL OR best_secs>?,?,best_secs)':'').' WHERE pupil_id=? AND activity_id=?',$done?[$secs,$secs,$secs,$pid,$aid]:[$secs,$pid,$aid]);
+ $GLOBALS['bulig_rx']=['t'=>$secs,'prev'=>$prev,'best'=>$done&&($prev===null||$secs<$prev),'avg'=>rx_class_avg($aid)];}
+function rx_card(array $r):string{
+ $t=(int)$r['t'];$tags='';
+ if(!empty($r['best'])&&$r['prev']!==null)$tags.='<span class="g">New fastest time!</span><span>Before: '.e(rx_fmt((int)$r['prev'])).'</span>';
+ elseif($r['prev']!==null)$tags.='<span>Your fastest: '.e(rx_fmt((int)$r['prev'])).'</span>';
+ if(!empty($r['avg']))$tags.='<span>Your class usually: '.e(rx_fmt((int)$r['avg'])).'</span>';
+ $say=['Tick, tock! You finished in ','Right on time! That took ','Tick, tock! Your time: '][$t%3];
+ return '<div class="rx-res" role="status"><img src="assets/images/characters/roxanne-cheer.webp" alt="" width="70" height="70"><div><b>ROXANNE THE TIMEKEEPER</b><p>'.e($say.rx_fmt($t)).'.</p>'.($tags?'<div class="rx-tags">'.$tags.'</div>':'').'</div></div>';}
+/** the time tag on a teacher's answer row: red when it took much longer than the class usually takes */
+function rx_tag(array $c):string{
+ if(!rx_ready()||empty($c['time_secs']))return '';$t=(int)$c['time_secs'];$avg=rx_class_avg((int)$c['activity_id']);$slow=$avg&&$t>=60&&$t>2*$avg;
+ return '<span class="rx-tag'.($slow?' slow':'').'" title="'.e($slow?'Much slower than the class usually takes ('.rx_fmt($avg).')':'Time on this activity'.($avg?' · class usually '.rx_fmt($avg):'')).'"><img src="assets/images/characters/roxanne-time.webp?v=2" alt="" width="18" height="18">'.e(rx_fmt($t)).'</span>';}

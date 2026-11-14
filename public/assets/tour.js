@@ -27,8 +27,8 @@
  /* Steps: [target selector(s) or null for a centred card, title, text] */
  const P={
   credits:[
-   ['.cr-hero','Credits','BULIG is made from the official DepEd modules of the Schools Division of Bukidnon.'],
-   [['.cr-cols .cr-card'],'The BULIG module','The writers, designers and checkers who made the Reading Toolkit.'],
+   ['.cr-hero','Credits','BULIG Quest is made from the official DepEd modules of the Schools Division of Bukidnon.'],
+   [['.cr-cols .cr-card'],'The BULIG Quest module','The writers, designers and checkers who made the Reading Toolkit.'],
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
@@ -39,10 +39,13 @@
    [['.rs-plink'],'My practice words','Words that were hard for you. Tap to practise them with Max.'],
    [['.rl-stat','.xp-stat'],'Your level and rank','You earn XP for every activity you finish. XP makes your level go up, all the way to Level 100. Every 2 levels give a star, and 5 stars take you to the next rank! Tap to see all the ranks.'],
    ['.streak-stat','Your learning streak','Learn every day to make your flame grow. Tap here to see your calendar.'],
+   [['.qx-mission'],'Zion’s weekly mission','Earn 10 stars this week and Zion gives you +30 XP. A new mission starts every Monday.'],
+   [['.qx-race'],'Class Star Race','Every star you earn moves your section’s Jeepy. Which section earns the most stars this week?'],
+   [['.qx-buddy'],'Reading Buddy','Listen to your first and your latest Level 4 reading. Hear how much you grew!'],
    ['.badge-stat','Your badges','Badges are prizes for learning. Tap to see the ones you earned.'],
    [['.pg-gate'],'Post-test result','You need 80% on a level’s post-test to open the next level. Tap Try again to answer the parts you missed. You can do it!'],
    ['.goal-card','Today’s goal','Finish 3 activities a day. The ring fills up as you go!'],
-   [['.next-adventure .btn.primary','.next-adventure'],'Start learning','Tap this button to go to your next lesson. BULIG remembers where you stopped.'],
+   [['.next-adventure .btn.primary','.next-adventure'],'Start learning','Tap this button to go to your next lesson. BULIG Quest remembers where you stopped.'],
    [['.lb-mini-art'],'Your reading ladder','This is your reading ladder. You stand on the level you are on now, and every level you finish (or start above) gets a ribbon. Tap it to see your whole reading board.'],
    [['.pupil-tabbar .tab-play','.sidebar nav a[href="?page=lessons"]'],'All your lessons','Here you find all your levels and the road map of each level.'],
    [['.pupil-tabbar a[href="?page=calendar"]','.sidebar nav a[href="?page=calendar"]'],'Your calendar','See every day you learned.'],
@@ -50,8 +53,8 @@
    [['#schedule-wait'],'Next level date','You finished early! The next level opens on this date for your whole class. Practise while you wait.'],
    [['#month-recap'],'Your month','At the start of each month, see how much you did last month. Tap X to hide it.'],
    [['.notif-m','.notif-top'],'Your notifications','Tap the bell to see notes from your teacher, new badges and certificates. The yellow number shows how many are new.'],
-   [['.mode-mobile','.mode-top'],'Light or dark','Tap the moon to make BULIG dark, easy on your eyes at night. Tap the sun to make it bright again.'],
-   [['.mobile-signout button','.sidebar .signout'],'Signing out','Tap here when you are done. BULIG asks first, so you never leave by accident.'],
+   [['.mode-mobile','.mode-top'],'Light or dark','Tap the moon to make BULIG Quest dark, easy on your eyes at night. Tap the sun to make it bright again.'],
+   [['.mobile-signout button','.sidebar .signout'],'Signing out','Tap here when you are done. BULIG Quest asks first, so you never leave by accident.'],
    [null,'Need help again?','Tap the yellow ? button on any page and I will show you how it works. Have fun learning!']],
   notifications:[
    ['.pageheading','Notifications','Everything new for you, newest first: notes from your teacher, badges and certificates.'],
@@ -63,7 +66,8 @@
    [['.pg-gate'],'Post-test result','You need 80% on the post-test to open the next level. Tap Try again to answer the parts you missed.'],
    [['.jy-card'],'Your journey with Jeepy','Every level is a stop on this road. You ride in Jeepy the Jeepney! The pin shows where you are. Tap Continue to go on.'],
    [['.jy-more','.jy-card'],'More levels are coming','Past Level 8 the road goes on: Levels 9 to 14 are on the way. Tap them to hear from Bob.'],
-   [['.level-catalog .section-heading'],'Your levels','These are all the BULIG levels. Your teacher chose your starting level.'],
+   [['.level-catalog .section-heading'],'Your levels','These are all the BULIG Quest levels. Your teacher chose your starting level.'],
+   [['.sjar>summary'],'Big Star Jar','All the stars from every level go in this big jar. Tap it to see your stars. Zion the Star Keeper keeps them safe!'],
    [['.jy-now','.jy-card'],'Your level','Your level is under the road map. Tap Continue learning to open its road map and play your next lesson.'],
    [['a.off-pagelink[href="?page=board"]'],'My reading board','See all your levels as a ladder, with a ribbon for every level you finish or start above.'],
    [['.level-card.pf-current','.level-card.available'],'Your level','Your level is always at the top. Tap "Continue learning" to open your road map, see your progress and play your next lesson.'],
@@ -78,7 +82,8 @@
    [['.pfm-node.pfm-cur','.pf-mapcard'],'You are here','The big yellow stop is your next lesson. Tap it to start.'],
    [['.pfm-jeep'],'Jeepy the Jeepney','You ride in Jeepy! Jeepy waits beside your next lesson. When you finish a lesson, Jeepy drives you to the next stop.'],
    [['.pfm-node.pfm-done','.pf-mapcard'],'Finished lessons','Green stops with a check are done. You can open them again to practise.'],
-   [['.pfm-node.pfm-lock','.pf-mapcard'],'Coming next','Grey stops open one by one as you finish each lesson. Tap one to see which lesson to finish first.']],
+   [['.pfm-node.pfm-lock','.pf-mapcard'],'Coming next','Grey stops open one by one as you finish each lesson. Tap one to see which lesson to finish first.'],
+   [['.sjar>summary'],'Your Star Jar','Every star you earn in this level goes in this jar. Tap it to see how full it is. Zion the Star Keeper keeps your stars!']],
   activity:[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
    ['.narration','Listen','Tap Listen to hear the instructions. Tap again to pause. The dots button has Start again, Stop, Mute and the voice.'],
@@ -96,7 +101,7 @@
    [['.native-card-nav.deck-bar','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, the yellow button sends your activity. Your work saves by itself.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null,
    ['.lesson-outline','All activities','Open this to see every activity in this lesson and what you already finished.'],
-   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home. If something in BULIG is not working, choose Something is not working.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home. If something in BULIG Quest is not working, choose Something is not working.'],
    [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.']],
   'l1-start':[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
@@ -104,38 +109,42 @@
    ['.l1-goals','Today you will…','These are the things you will learn. Tap the yellow speaker to hear them.'],
    ['.l1-steps','Three parts','First a few questions, then practice, then show what you learned.'],
    ['.l1-go','Start','Tap Let’s start! when you are ready.'],
-   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home. If something in BULIG is not working, choose Something is not working.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home. If something in BULIG Quest is not working, choose Something is not working.'],
    [['.sk-pick'],'Start anywhere','This level was skipped for you, so everything is open. Tap a part to start there, or open Pick any activity.']],
   l1:[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
-   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home. If something in BULIG is not working, choose Something is not working.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home. If something in BULIG Quest is not working, choose Something is not working.'],
    [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.'],
    [['.l1-q .l1-spk','.l1-mission .l1-spk','.l1-listen .l1-spk','.l1-speed'],'Listen','Tap the yellow speaker to hear it again.'],
    [['.l1-mic'],'Say your answer','Tap the red microphone and say your answer. Tap it again to stop. Then listen to it, and tap Send.'],
    [['.l1-howto'],'Do it!','Listen, do the action, then tap I did it!'],
-   [['.pk-solo'],'BULIG is your buddy','You do this one on your own. Follow the steps, then tap I did it!'],
-   [['.pk-poems'],'Choose a poem','Tap a poem. BULIG reads one line, then you read the next. The words light up as they are read.'],
-   [['.pk-wordgame'],'Word game','Tap New word. BULIG says a word, then you say a word friend.'],
-   [['.wc-gate'],'Reading Coach','Tap Start. Max reads it first, the title too. Then you read it aloud, and each word turns green when you say it right. Missed a word? Say it again: you have 5 hearts for each word.'],
-   [['.l1-dchoice'],'Your drawing','Draw on paper and take a photo, or draw here in BULIG. Check it, then send it.'],
+   [['.pk-solo'],'BULIG Quest is your buddy','You do this one on your own. Follow the steps, then tap I did it!'],
+   [['.pk-poems'],'Choose a poem','Tap a poem. BULIG Quest reads one line, then you read the next. The words light up as they are read.'],
+   [['.pk-wordgame'],'Word game','Tap New word. BULIG Quest says a word, then you say a word friend.'],
+   [['.wc-gate'],'Reading Coach','Tap Start reading. Max reads it first, then you read it to him. Words turn green when you say them right. Roxanne’s little clock times your reading.'],
+   [['.l1-dchoice'],'Your drawing','Draw on paper and take a photo, or draw here in BULIG Quest. Check it, then send it.'],
+   [['.l1-choices'],'Choose the answer','Tap the answer you choose, then tap Check my answer.'],
+   [['.rp-bar'],'Play again','Got 1 or 2 stars? Tap Play again to get 3 stars and earn more XP. Already 3 stars? Practice again for fun. Your best score is always kept.'],
    offline?[null,'No internet?','If this level is saved for offline, you can still answer. Your answer is kept on this device and uploads by itself later.']:null],
   l2:[
    ['.activity-header','Your lesson','This shows the lesson name and how many activities you finished. Tap X to go back to your map.'],
    ['.l2-dir','What to do','These are the directions from your book. Tap the yellow speaker to hear them.'],
    [['.l2-cdots'],'Pages of this activity','A book means a story to read, an i means instructions to read. Only the numbered pages need an answer.'],
    [['.l2-cdots'],'Your cards','Each number is a card. Green cards are answered. Tap a number to jump to it.'],
+   [['.l2-card:not([hidden]) .l2-keys.qw'],'The keyboard','Tap the letters to write your answer, just like a phone keyboard. The red arrow erases.'],
    [['.l2-card:not([hidden]) .l2-keys'],'Letter tiles','Tap the letters to write your answer. The red arrow erases.'],
+   [['.rp-bar'],'Play again','Got 1 or 2 stars? Tap Play again to get 3 stars and earn more XP. Already 3 stars? Practice again for fun. Your best score is always kept.'],
    [['.l2-card:not([hidden]) .l3-bgrid'],'Letter boxes','Tap the letters in order. Each one jumps onto the next line. Tap a letter on a line to take it back.'],
-   [['.pk-solo'],'BULIG is your buddy','You do this one on your own. Follow the steps, then tap I did it!'],
-   [['.pk-poems'],'Choose a poem','Tap a poem. BULIG reads one line, then you read the next. The words light up as they are read.'],
-   [['.wc-gate'],'Reading Coach','Tap Start. Max reads it first, the title too. Then you read it aloud, and each word turns green when you say it right. Missed a word? Say it again: you have 5 hearts for each word.'],
+   [['.pk-solo'],'BULIG Quest is your buddy','You do this one on your own. Follow the steps, then tap I did it!'],
+   [['.pk-poems'],'Choose a poem','Tap a poem. BULIG Quest reads one line, then you read the next. The words light up as they are read.'],
+   [['.wc-gate'],'Reading Coach','Tap Start reading. Max reads it first, then you read it to him. Words turn green when you say them right. Roxanne’s little clock times your reading.'],
    [['.l2-card:not([hidden]) .l2-chips'],'Tap a word','Tap the word or sound you choose. It turns green.'],
    [['.l2-card:not([hidden]) button.l2-pic'],'Tap a picture','Tap the picture you choose. It gets a green check.'],
    [['.l2-card:not([hidden]) .l2-nums'],'Count','Tap the number of sounds you hear.'],
    [['.l2-card:not([hidden]) .wl-box'],'Read the words','Tap the microphone and read the words. Each word card turns green when you say it right.'],
    [['.l2-card:not([hidden]) .l1-mic'],'Say it','Tap the red microphone and say your answer. Tap again to stop.'],
    [['[data-l2-next]','#submit-answer'],'Next and Submit','Tap Next card to move on. On the last card, tap Submit.'],
-   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home. If something in BULIG is not working, choose Something is not working.'],
+   [['.hp-open'],'Need help?','Tap the hand to tell your teacher what is hard. Your teacher gets your message, in class or at home. If something in BULIG Quest is not working, choose Something is not working.'],
    [['.sk-all'],'All activities','In a skipped level, tap All to pick any activity, or tap a dot to jump to it.']],
   'lesson-done':[
    ['.completion-card','Lesson finished!','Great job! Tap the button to save the lesson and go back to your map.'],
@@ -148,7 +157,7 @@
    ['.rl-road','My rank','Your rank goes from Beginner to Mythic. Every 2 levels give a star; fill 5 stars to reach the next rank. The highest level is 100.'],
    [['.rk-ladder'],'All the ranks','Beginner, Learner, Explorer … all the way to Mythic. The one that says YOU ARE HERE is your rank now.'],
    [['.rk-how'],'How to rank up','Finish activities to earn XP. If your teacher moved you to a higher level, you got XP for the levels you skipped.'],
-   ['.pf-shelf','Your badge shelf','All the badges you can earn in BULIG.'],
+   ['.pf-shelf','Your badge shelf','All the badges you can earn in BULIG Quest.'],
    [['.pf-shelf-item.pf-got'],'Badges you earned','Shiny badges are yours! The date shows when you earned it.'],
    [['.pf-shelf-item.pf-locked'],'Badges to earn','Read what to do to unlock each badge.'],
    ['.cert-card','My certificates','Finish every lesson of a level and pass its post-test (80% or more) to get a certificate. Tap it to print.'],
@@ -165,66 +174,67 @@
   offline:[
    ['.off-sum','Your saved lessons','See how many levels are saved on this device, and how much space they use.'],
    [['.op-all'],'Download everything','One tap saves every level you can open. Use Wi-Fi for big downloads.'],
-   [['.op-row'],'Each level','Download, update or remove one level. “Needs update” means BULIG has new things.']],
+   [['.op-row'],'Each level','Download, update or remove one level. “Needs update” means BULIG Quest has new things.']],
   practice:[
    [['.rs-pwl li'],'Your practice words','Words that were hard when you read with Word Coach. The number shows how many times.'],
    [['.rs-pwl .l1-spk'],'Hear it','Tap the speaker. Max says the word slowly.'],
    [['.rs-pwl .rs-mic'],'Say it','Tap Say it, then say the word. It turns green when Max hears it right. This is only practice.']],
   settings:[
    ['.st-sfx','Sound effects','Turn the little sounds on or off on this device.'],
-   [['.st-seg'],'How BULIG looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.'],
+   [['.st-seg'],'How BULIG Quest looks','Choose Light, Dark, or Auto. Auto changes by itself when your device goes dark at night.'],
    [['.st-row:has([data-a11y-switch="big"])'],'Bigger text','Makes words and buttons larger on every page of this device.'],
    [['.st-row:has([data-a11y-switch="easy"])'],'Easy-read letters','A plain letter style with more space between letters and words. It can make reading on the screen easier.'],
    ['.st-glass','Glass look','Menus and buttons look like clear glass. Turn it off if this phone feels slow.'],
    [['a.st-row[href="?page=offline"]'],'Offline lessons','Save lessons on this device so they open even without internet.'],
    ['.st-pw','Your password','Tap here when you want to change your password.'],
-   ['.st-about','About BULIG','See who made BULIG.'],
-   [['.pv-card'],'My data and privacy','What BULIG keeps about you, and who can see it. Tap Download My Data to get a copy, or read the Privacy Notice.']],
+   ['.st-about','About BULIG Quest','See who made BULIG Quest.'],
+   [['.pv-card'],'My data and privacy','What BULIG Quest keeps about you, and who can see it. Tap Download My Data to get a copy, or read the Privacy Notice.']],
   privacy:pupil?[
-   ['.pv-page h1','Privacy Notice','How BULIG keeps your information safe.'],
+   ['.pv-page h1','Privacy Notice','How BULIG Quest keeps your information safe.'],
    [['.pv-item'],'What we keep','Your name, class and scores. No home address and no phone number.']]:[
-   ['.pv-page h1','Privacy Notice','How BULIG follows the Data Privacy Act of 2012 (RA 10173).'],
+   ['.pv-page h1','Privacy Notice','How BULIG Quest follows the Data Privacy Act of 2012 (RA 10173).'],
    [['.pv-item'],'Each part','What is collected, why, how it is protected, who sees it, how long it is kept, and your rights.']],
   profile:pupil?[
    ['.me-hero','Your profile','Your picture, your name and your class.'],
    [['.me-av .rf'],'Your rank frame','This frame shows your rank. The number at the bottom is your level. Keep learning to unlock wings and a crown!'],
    [['.me-week .weekdays'],'This week','The days you learned this week have a check.'],
    ['.me-pic','Your picture','Choose a character, or upload your own photo.'],
-   [['.me-setbtn','.sidebar nav a[href="?page=settings"]'],'Settings','Sound, colours, offline lessons, your password and About BULIG are in Settings.']]:[
-   ['#my-name','Your name','Change how your name shows in BULIG, on report cards and on your Teacher Pass. Your teacher character matches the sex on your account.'],
+   [['.me-setbtn','.sidebar nav a[href="?page=settings"]'],'Settings','Sound, colours, offline lessons, your password and About BULIG Quest are in Settings.']]:[
+   ['#my-name','Your name','Change how your name shows in BULIG Quest, on report cards and on your Teacher Pass. Your teacher character matches the sex on your account.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
-   ['.mode-card','How BULIG looks','Choose Light, Dark, or Auto. Auto follows your device setting.'],
+   ['.mode-card','How BULIG Quest looks','Choose Light, Dark, or Auto. Auto follows your device setting.'],
    [['.a11y-card'],'Easier to read','Bigger text and Easy-read letters, on this device.'],
-   [['.pv-card'],'My data and privacy','What BULIG keeps about you and who can see it. Download your data, read the Privacy Notice, or ask to delete your account. BULIG follows the Data Privacy Act (RA 10173).']],
+   [['.pv-card'],'My data and privacy','What BULIG Quest keeps about you and who can see it. Download your data, read the Privacy Notice, or ask to delete your account. BULIG Quest follows the Data Privacy Act (RA 10173).']],
   messages:[
-   [['.msg-list'],'Your messages','Every message you get in BULIG is listed here. Tap one to read it.'],
+   [['.msg-list'],'Your messages','Every message you get in BULIG Quest is listed here. Tap one to read it.'],
    [['.msg-search'],'Find a message','Type a word to find an older message.'],
    [['.msg-panel'],'Read it here','The message you tap opens here.']],
   chat:[
-   [['.mz-faces'],'Your teacher and your school','Tap a face to chat. A green dot means they are on BULIG now.'],
+   [['.mz-faces'],'Your teacher and your school','Tap a face to chat. A green dot means they are on BULIG Quest now.'],
    [['.mz-list','.mc-log'],'Your chats','Your chats, newest first. Bold means a new message. Your chat with your teacher is only for the two of you.'],
    [['[data-mc-photo]'],'Send a photo','Tap here to send a picture, for example a page that is hard for you.'],
    [['[data-mc-mic]'],'Send your voice','Tap the microphone and talk. Tap the arrow to send it, or the trash to stop.'],
    [['.mc-send textarea'],'Write a message','Type your message here, then tap the green arrow.']],
   bug_report:[
-   [['main .card form textarea','.bug-detail-header'],'Tell us what is wrong','Something not working? Write what happened here, then send it. The BULIG team reads every report.'],
+   [['main .card form textarea','.bug-detail-header'],'Tell us what is wrong','Something not working? Write what happened here, then send it. The BULIG Quest team reads every report.'],
    [['.br-list','.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']]
  };
  const T={
   credits:[
-   ['.cr-hero','Credits','BULIG is made from the official DepEd modules of the Schools Division of Bukidnon.'],
-   [['.cr-cols .cr-card'],'The BULIG module','The writers, designers and checkers who made the Reading Toolkit.'],
+   ['.cr-hero','Credits','BULIG Quest is made from the official DepEd modules of the Schools Division of Bukidnon.'],
+   [['.cr-cols .cr-card'],'The BULIG Quest module','The writers, designers and checkers who made the Reading Toolkit.'],
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
    [['.bb'],'Bulletin Board','Announcements from the administrator are pinned here as notes, newest first. Tap Open to see them all.'],
    [['.ah-hero','.hm-head'],'Teacher Home','Your class at a glance: your pupils, who learned this week and lessons finished. Tap your photo to change it.'],
    ['#tf-todo','Needs you today','Pupils who need a check-in, reading checks, help requests and readings to verify. Only what needs you shows big; the rest is a green check.'],
-   [['#rs-readers'],'Readers who need help','Pupils whose Word Coach scores stay under 60% in 3 or more readings, with the words they miss. BULIG suggests a reread together, or a small group when several pupils on one level find the same reading hard.'],
+   [['#rs-readers'],'Readers who need help','Pupils whose Word Coach scores stay under 60% in 3 or more readings, with the words they miss. BULIG Quest suggests a reread together, or a small group when several pupils on one level find the same reading hard.'],
    [['#rs-challenge'],'Class reading challenge','The words your pupils read right with Word Coach this week. Set the weekly goal here. Pupils see the same bar on their Home.'],
-   [['#rs-offline'],'Work waiting to upload','Pupils who answered offline and still have answers on their phone. Ask them to open BULIG with internet; the answers upload by themselves.'],
-   ['.hm-auto','BULIG checks every answer','Pupils see their score and the right answers as soon as they finish. Nothing waits for you. To see one pupil’s answers, change a score or write a note, open the pupil › Answers and scores.'],
+   [['#qx-help'],'Pupils who may need you','Below 2 stars on several activities, a post-test under 80%, or much slower than the class (Roxanne’s times). Tap a pupil to see their answers.'],
+   [['#rs-offline'],'Work waiting to upload','Pupils who answered offline and still have answers on their phone. Ask them to open BULIG Quest with internet; the answers upload by themselves.'],
+   ['.hm-auto','BULIG Quest checks every answer','Pupils see their score and the right answers as soon as they finish. Nothing waits for you. To see one pupil’s answers, change a score or write a note, open the pupil › Answers and scores.'],
    ['#tf-help','Asked for help','When a pupil taps “I need help” in a lesson, at school or at home, it shows here: who, what is hard and where. Tap See pupil, or Mark as helped when you are done.'],
    [['.ah-b-short','.hm-grid'],'Shortcuts','The jobs teachers do most: add pupils, and print tickets, report cards and certificates.'],
    ['.class-tabs','Grades and sections','Choose a grade or section to see only those pupils in My class below.'],
@@ -232,12 +242,12 @@
    [['.staff-tabbar'],'Your menu on phones','On a phone, your pages are at the bottom, like the pupils have. The gold button in the middle is the page you use most. Tap More for every other page.'],
    ['.nv-find','Search','Type what you need, for example “print” or “password”, then tap the page. Press Enter to open the first one.'],
    ['.sidebar .nv-g','The menu in groups','MY CLASS: your pupils, adding pupils, the reading check and sections. TEACHING: Class Demo and Class results. PRINT: everything you can print.'],
-   ['.sidebar nav a[href="?page=rcheck"]','Reading check','Pupils with no starting level take a short reading check the first time they sign in. BULIG places them, and you can change any level.'],
+   ['.sidebar nav a[href="?page=rcheck"]','Reading check','Pupils with no starting level take a short reading check the first time they sign in. BULIG Quest places them, and you can change any level.'],
    ['.sidebar nav a[href="?page=print"]','Print centre','Everything you can print, in one place: sign-in tickets, report cards, progress reports, certificates, the class sheet and reading check results.'],
    ['.mobile-menu-toggle','Menu','Tap here to open the menu. It has a Search box at the top. Each page has its own short tour.'],
    [['.notif-top','.notif-m'],'Notifications','Tap the bell for answers waiting for your feedback, pupils who finished a level, and pupils who need a check-in. The yellow number shows what is new.'],
-   [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
-   [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. On a shared computer, untick "Keep me saved" when BULIG asks.'],
+   [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG Quest between light and dark colours. Choose Auto in My profile to follow your device.'],
+   [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. On a shared computer, untick "Keep me saved" when BULIG Quest asks.'],
    [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it. Lost? Open “See what moved” from the note on Home.']],
   notifications:[
    ['.pageheading','Notifications','Work that needs you now is at the top. Notes about finished levels and new accounts come after.'],
@@ -257,7 +267,7 @@
   'l1-demo':[
    ['.l1d-ln','The lesson','The lesson and the part you are on.'],
    ['[data-d-stage]','The slide','Ask the question. Pupils answer out loud. No typing.'],
-   ['[data-d-listen]','Listen','BULIG reads the slide aloud.'],
+   ['[data-d-listen]','Listen','BULIG Quest reads the slide aloud.'],
    ['[data-d-next]','Next','Tap Next (or press the right arrow key) to move on.'],
    ['[data-d-lessons]','Jump to a lesson','Open any of the 12 lessons.'],
    ['[data-plan-open]','Lesson plan','The goals and the official module pages for this lesson.'],
@@ -273,16 +283,16 @@
   accounts:[
    ['.pupil-tabs','Add pupils','My pupils has three tabs: Pupil list, Add pupils (this one) and Class progress.'],
    ['.ap-choice','One pupil or a whole class','Add one pupil with a short form, or a whole class at once from an Excel list. The DepEd SF1 list works.'],
-   [['form.formgrid:not(.import-form)'],'Add one pupil','Type the first, middle and last name (and Jr., Sr. … if any), then the section, sex and starting level. BULIG makes the Pupil ID and an easy starter password for you.'],
-   [['form.formgrid:not(.import-form) select[name="level_id"]','form.formgrid:not(.import-form)'],'Let BULIG find the level','Leave the starting level on “Let BULIG find it”. The pupil takes the reading check at first sign-in and BULIG places them. You can change it later.'],
-   [['.sp-reg'],'Reading support','Choose how BULIG listens. Standard for most pupils. Accent-friendly for a different accent, for example pupils from the mountains or Lumad communities. Speech support for a speech need such as cleft palate: no word is marked wrong and you score the reading. Only you see it.'],
+   [['form.formgrid:not(.import-form)'],'Add one pupil','Type the first, middle and last name (and Jr., Sr. … if any), then the section, sex and starting level. BULIG Quest makes the Pupil ID and an easy starter password for you.'],
+   [['form.formgrid:not(.import-form) select[name="level_id"]','form.formgrid:not(.import-form)'],'Let BULIG Quest find the level','Leave the starting level on “Let BULIG Quest find it”. The pupil takes the reading check at first sign-in and BULIG Quest places them. You can change it later.'],
+   [['.sp-reg'],'Reading support','Choose how BULIG Quest listens. Standard for most pupils. Accent-friendly for a different accent, for example pupils from the mountains or Lumad communities. Speech support for a speech need such as cleft palate: no word is marked wrong and you score the reading. Only you see it.'],
    [['form.formgrid:not(.import-form) .btn.primary','form.formgrid:not(.import-form)'],'Their ticket, right away','After you save, a window shows the new pupil’s sign-in ticket with the QR code. Print it there, or add the next pupil.'],
    [['.bk-grid th.c-sup','#import'],'Reading support','Choose Standard, Accent-friendly or Speech support for each pupil. In an Excel list, add a column named Reading support.'],
    [['#import','.import-card'],'Add a whole class','Type the list: one row per pupil, Enter goes to the next. Choose one section for everyone or a section on each row, and change any pupil’s starting level on their row. Or choose Upload a file to use an Excel list. Nothing is saved until every row is right.']],
   cards:[
    ['.lc-upgrade','Starter passwords','Pupils still on the old password 12345678 can each get their own easy starter password here. Print their new tickets right away.'],
    ['.lc-filter','Choose a section','Print tickets for one section or for all your pupils.'],
-   [['.lc-opt'],'What to show','Turn the QR code or the starter password on or off. BULIG remembers your choice.'],
+   [['.lc-opt'],'What to show','Turn the QR code or the starter password on or off. BULIG Quest remembers your choice.'],
    ['.lc-pick','Choose and size','Untick the tickets you do not need, and choose Small (21 per page, 3 columns), Medium (10) or Large (8).'],
    ['[data-lc-print]','Print','Print on A4 paper and cut along the dashed lines.'],
    [['.tk'],'One ticket per pupil','One scan of the QR code signs the pupil in. The starter password shows until the pupil makes their own.'],
@@ -291,7 +301,7 @@
    ['.pupil-tabs','My pupils','Three tabs: Pupil list (this one), Add pupils, and Class progress.'],
    ['.mp-bar','Find a pupil','Search by name or ID, or choose a section.'],
    ['.mp-tbl','Every pupil in one list','Grouped by section, with each pupil’s starting level, reading check and last learning day. Tap a name to open the pupil’s page.'],
-   [['.mp-tbl .sp-mark'],'Reading support icons','A red plus beside a name means Speech support: BULIG does not mark that pupil’s spoken words wrong, and you score the readings. A blue speech bubble means Accent-friendly: BULIG accepts common accent sounds.'],
+   [['.mp-tbl .sp-mark'],'Reading support icons','A red plus beside a name means Speech support: BULIG Quest does not mark that pupil’s spoken words wrong, and you score the readings. A blue speech bubble means Accent-friendly: BULIG Quest accepts common accent sounds.'],
    [['.rk-inl'],'Level and rank','Each pupil’s reader level (1 to 100), rank emblem and stars. They go up as the pupil finishes activities.'],
    ['.mp-bulk','Many pupils at once','Tick pupils, then set one starting level for all of them, move them to another section, or print their sign-in tickets.']],
   progress:[
@@ -300,14 +310,14 @@
    [['.pg-table'],'The grid','Green is done, light green is started, yellow means no work for 7+ days. Tap a name to open that pupil.'],
    [['a[href*="page=certificates"]'],'Certificates','Print certificates for every pupil who finished this level.']],
   sections:[
-   ['.section-add','Add a section','Choose Elementary or Junior High School, then the grade (Grade 1 to 10), then type the section name. BULIG shows how it will look, and warns you if the section is already taken.'],
+   ['.section-add','Add a section','Choose Elementary or Junior High School, then the grade (Grade 1 to 10), then type the section name. BULIG Quest shows how it will look, and warns you if the section is already taken.'],
    [['.sx-card','.section-add'],'One card for each section','Add pupils straight into this section, see its pupils, print its report cards or rename it. Remove works only for an empty section.'],
    [['.sx-act a.sx-go','.section-add'],'Add pupils','Opens Add pupils with this section already chosen.']],
   review:[
-   [['.hm-head','.pageheading'],'Pupils’ answers','BULIG checks every answer. Open a pupil › Answers and scores to listen, look, change a score or write a note.']],
+   [['.hm-head','.pageheading'],'Pupils’ answers','BULIG Quest checks every answer. Open a pupil › Answers and scores to listen, look, change a score or write a note.']],
   report_card:[
    [['.rc-btns .btn.primary'],'Print','Print the cards or save them as a PDF. Each pupil gets one A4 page.'],
-   [['.rc-page'],'The report card','Name, LRN, grade and section, school and school year come from BULIG. The ladder and the remarks show each level’s result and date.'],
+   [['.rc-page'],'The report card','Name, LRN, grade and section, school and school year come from BULIG Quest. The ladder and the remarks show each level’s result and date.'],
    [['.rc-tip'],'Logos','Your administrator can upload the Division and school logos in Settings, School info.']],
   guide:[
    [['form.card'],'Choose a lesson','The full text of each lesson plan. In Class Demo, tap "Lesson plan" for a quick view.'],
@@ -315,12 +325,13 @@
    [['a.btn.secondary[href*="download_source"]'],'Download the module','Get the original module file for printing.']],
   'pupil-detail':[
    ['.hm-head','One pupil','The pupil’s name, ID, level and progress. The buttons print this pupil’s report card, progress report and sign-in ticket.'],
-   ['.pp-tabs','Everything about this pupil','Learning path, Answers and scores (every answer with BULIG’s score; change a score or write a note there), Reading check, Badges and Account (name, section, password and a new ticket).'],
+   ['.pp-tabs','Everything about this pupil','Learning path, Answers and scores (every answer with BULIG Quest’s score and Roxanne’s time; change a score or write a note there), Reading growth, Reading check, Badges and Account (name, section, password and a new ticket).'],
    ['.mp-start','Starting level','Change where this pupil begins. Earlier levels become optional practice.'],
-   [['#speech'],'How BULIG listens','Standard checks each word. Accent-friendly accepts a different accent (for example pupils from the mountains or Lumad communities). Speech support is for a pupil with a speech need such as cleft palate: no word is marked wrong, the pupil taps each word as they read, and you score the recording. A red plus (Speech support) or a blue speech bubble (Accent-friendly) then shows beside the name.'],
+   [['#speech'],'How BULIG Quest listens','Standard checks each word. Accent-friendly accepts a different accent (for example pupils from the mountains or Lumad communities). Speech support is for a pupil with a speech need such as cleft palate: no word is marked wrong, the pupil taps each word as they read, and you score the recording. A red plus (Speech support) or a blue speech bubble (Accent-friendly) then shows beside the name.'],
    ['#learning-path','Learning path','Every level and lesson with its status. Open a level to mark lessons done in class.'],
    [['.cd-actions'],'Mark as done in class','Tick lessons or activities you did together, then save. Use "Undo" if you made a mistake.'],
-   [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.']],
+   [['.pg-teacher'],'Post-tests','The post-test score of each level. At 80% or more the next level opens. Below that, the pupil answers the missed activities again.'],
+   [['.rg-two'],'Reading growth','This pupil’s pre-test and post-test for each level, and words per minute in Level 4 Fluency, first reading to latest.']],
   privacy:P.privacy,
   chat:[
    [['.mz-list'],'Chats with pupils','Your pupils, newest chat first. A green number shows new messages. School is your messages from the administrator.'],
@@ -328,36 +339,43 @@
    [['.mz-search'],'Find a pupil','Type a name to find a pupil quickly.'],
    [['[data-mc-photo]'],'Photos and voice','Send a photo or a voice message, like in Messenger. Files are deleted after 60 days.'],
    [['.mz-inbox'],'Private chats','A chat is only for you and that pupil, like Messenger. No administrator can read it.']],
-  profile:P.profile.concat([['.rt-pcard','Rate BULIG','Five quick questions with stars. Your answers help the Division improve BULIG.']]),
+  profile:P.profile.concat([['.rt-pcard','Rate BULIG Quest','Five quick questions with stars. Your answers help the Division improve BULIG Quest.']]),
   rate:[
    ['.rt-rows','Five quick questions','Tap 1 to 5 stars for each one. Your overall rating is the average.'],
    ['.rt-lab','Tell us more','Optional: write what we should improve.'],
-   ['.rt-btn','Send','Send your evaluation. You can rate BULIG again any time.']],
+   ['.rt-btn','Send','Send your evaluation. You can rate BULIG Quest again any time.']],
+  growth:[
+   ['.hm-head','Reading growth','How each pupil’s reading changed, from real answers only. Print it for your panel or download it for Excel.'],
+   ['.rg-filter','Choose a section','Pick one of your sections.'],
+   ['.rg-kpis','The section at a glance','Average pre-test to post-test, levels moved up, words correct per minute and reading accuracy. Only pupils with both numbers count.'],
+   ['.rg-t','Every pupil','Started at and now, pre-test to post-test, and Level 4 words per minute and accuracy, first to latest. “Not yet” means a number is still missing. Tap a name to see more.'],
+   ['.hm-head .buttonrow','Print or Excel','Print for the panel gives an A4 report with signature lines. Download Excel gives every number in a spreadsheet.']],
   qcheck:[
-   ['.hm-head','Class results','BULIG checks every answer. Here you see which questions your class finds hard, so you can read them again together.'],
+   ['.hm-head','Class results','BULIG Quest checks every answer. Here you see which questions your class finds hard, so you can read them again together.'],
    ['.qc-filter','Choose what to see','Pick a level, a grade and a lesson.'],
    [['.qc-act'],'Each activity','How many pupils got each question right, and the wrong answer chosen most. Re-teach the ones in red.'],
    [['#glance'],'Class at a glance','Class activity for the last 7 days, the class reading tree and pupil milestones.'],
    ['.sidebar nav a[href="?page=manage"]','One pupil’s answers','Open My pupils, then a pupil › Answers and scores to listen, look, change a score or write a note.']],
   rcheck:[
-   ['.hm-head','Reading check','Pupils with no starting level take this check the first time they sign in. BULIG uses the BULIG Assessment and Grouping guide and the module pre-tests.'],
-   ['.rk-sum','At a glance','How many pupils BULIG placed, how many you changed, how many need you to listen, and who has not finished.'],
-   ['.rk-tbl','Every pupil','The parts each pupil took, the starting level and the status. “Please listen” means BULIG could not hear the pupil, or Talk and listen needs your rating. Tap a name to open it.'],
-   [['.hm-head .buttonrow'],'How BULIG decides, and printing','Read the rules BULIG follows, or print the results for your records.']],
+   ['.hm-head','Reading check','Pupils with no starting level take this check the first time they sign in. BULIG Quest uses the BULIG Assessment and Grouping guide and the module pre-tests.'],
+   ['.rk-sum','At a glance','How many pupils BULIG Quest placed, how many you changed, how many need you to listen, and who has not finished.'],
+   ['.rk-tbl','Every pupil','The parts each pupil took, the starting level and the status. “Please listen” means BULIG Quest could not hear the pupil, or Talk and listen needs your rating. Tap a name to open it.'],
+   [['.hm-head .buttonrow'],'How BULIG Quest decides, and printing','Read the rules BULIG Quest follows, or print the results for your records.']],
   rcheck_pupil:[
-   ['.hm-head','One pupil’s reading check','The starting level BULIG chose and why.'],
+   ['.hm-head','One pupil’s reading check','The starting level BULIG Quest chose and why.'],
    ['.rk-whybox','Why this level','Which parts the pupil passed and where the check stopped.'],
-   [['.rk-levelform'],'Keep or change the level','Choose another starting level and write what you noticed, or tap “I checked it” to keep BULIG’s level. Work already done is kept.'],
-   [['.rk-cols section.card:nth-child(2)'],'Official result','Type the pupil’s official CRLA or Phil-IRI result. BULIG compares it with its own level.'],
+   [['.rk-levelform'],'Keep or change the level','Choose another starting level and write what you noticed, or tap “I checked it” to keep BULIG Quest’s level. Work already done is kept.'],
+   [['.rk-cols section.card:nth-child(2)'],'Official result','Type the pupil’s official CRLA or Phil-IRI result. BULIG Quest compares it with its own level.'],
    [['.rk-part audio','.rk-part'],'Listen to the pupil','Every part shows what the pupil answered. Play the recordings to hear the pupil read.'],
    [['.rk-rate'],'Rate Talk and listen','Rate the pupil’s spoken answers with the Level 1 module rubric. Good (9 of 12) passes.']],
   rcheck_rules:[
-   ['.hm-head','How BULIG decides','The rules BULIG follows to choose a starting level, and where each rule comes from.'],
+   ['.hm-head','How BULIG Quest decides','The rules BULIG Quest follows to choose a starting level, and where each rule comes from.'],
    [['.rk-tbl'],'The table','Each part, what it checks, the score needed to pass, and the level a pupil starts at when it is not passed.'],
    [['.rk-src'],'Sources','The BULIG Assessment and Grouping guide, the module pre-tests, and Phil-IRI for reading a story.']],
   print:[
    ['.hm-head','Print centre','Everything you can print, in one place. Each one opens a preview first.'],
    [['.pc-card'],'Choose what and for whom','Pick a section or a pupil on a card, then tap its print button.'],
+   [['#pc-parent'],'Parent progress cards','A card for each family with level, stars, streak, pre-test to post-test and reading speed. Its QR code opens a read-only page. Turn it off for a pupil from their card.'],
    [['#pc-reportcards'],'Report cards','One A4 page for each pupil, with the reading ladder. Choose a whole section or one pupil.'],
    [['#pc-rcheck'],'Reading check results','Each pupil’s starting level and the parts of the check, with the official CRLA or Phil-IRI result.'],
    ['.pc-tip','Save as PDF','In the print window, choose “Save as PDF” to keep a copy instead of printing.']],
@@ -365,22 +383,22 @@
    ['.hm-head','Where things are now','The menu has a new order. This page lists every old place and where it is now.'],
    [['.wm-tbl'],'Old place, new place','Find the old name on the left. The right side tells you where it is now. Tap it to go there.']],
   messages:[
-   [['.msg-list'],'Your messages','Every message you get in BULIG is listed here. Tap one to read it.'],
+   [['.msg-list'],'Your messages','Every message you get in BULIG Quest is listed here. Tap one to read it.'],
    [['.msg-search'],'Find a message','Type a word to find an older message.'],
    [['.msg-panel'],'Read it here','The message you tap opens here.']],
   bug_report:[
-   [['main .card form textarea','.bug-detail-header'],'Tell us what is wrong','Something not working? Write what happened here, then send it. The BULIG team reads every report.'],
+   [['main .card form textarea','.bug-detail-header'],'Tell us what is wrong','Something not working? Write what happened here, then send it. The BULIG Quest team reads every report.'],
    [['.br-list','.bug-report-grid .bug-report-tile'],'Your reports','Your reports and their status. Tap one to see the replies.']],
   reading_reviews:[
    ['.pagehead','Reading verification','Listen to your pupils’ read-aloud recordings. You decide if each reading is really the pupil’s own.'],
-   [['#rv-wait'],'Waiting for you','Readings BULIG could not score: Speech support pupils, readings it could not hear, or no microphone. The oldest is first. Tap Score to listen and give the score.'],
+   [['#rv-wait'],'Waiting for you','Readings BULIG Quest could not score: Speech support pupils, readings it could not hear, or no microphone. The oldest is first. Tap Score to listen and give the score.'],
    [['.rv-vtabs'],'Lists','To verify, recordings with missing audio, and the ones you already checked.'],
    [['.rv-recording'],'Listen and follow','The words the pupil had to read are on the left. Play the recording and follow along.'],
    [['.rv-decide'],'Your decision','Verify the reading, or reject it with a reason. Rejecting takes back that activity’s XP once and asks the pupil to read it again.']],
   leaderboard:[
    [['.class-tabs'],'Choose a class','Pick a grade or section to see its top readers.'],
    [['.lb-filter'],'Filter','Show one level or all levels.'],
-   [['.tf-top'],'Top 10 pupils','The ten pupils with the best average scores in BULIG.']],
+   [['.tf-top'],'Top 10 pupils','The ten pupils with the best average scores in BULIG Quest.']],
   certificates:[
    [['main h1'],'Certificates','Certificates for pupils who finished every lesson of a level. Print them from here.']]
  };
@@ -405,16 +423,16 @@
    [['.oc-root'],'Your organization','The Division at the top, then each municipality, its districts and their schools.'],
    [['.oc-m>summary'],'A municipality','Its Municipal Admin and Viewer. Tap it to fold or open its districts.'],
    [['.oc-d'],'A district','Its District Admin and Supervisor, and its schools with their teachers and pupils.'],
-   [['#org-review'],'Schools waiting for a district','Choose each school’s district. BULIG never guesses.'],
-   [['.org-addp'],'Add a person to a role','1. Choose the role and where. 2. A new person (BULIG makes the ID and password and shows their ID card) or someone who already has an account: type an ID or a name and pick them from the list.'],
+   [['#org-review'],'Schools waiting for a district','Choose each school’s district. BULIG Quest never guesses.'],
+   [['.org-addp'],'Add a person to a role','1. Choose the role and where. 2. A new person (BULIG Quest makes the ID and password and shows their ID card) or someone who already has an account: type an ID or a name and pick them from the list.'],
    [['.org-list'],'People and their roles','Everyone you manage, with their roles. New password makes a new password and shows their ID card; the × removes a role.'],
    [['.org-ph .btn'],'Print passes','Print an ID card for each person you manage.']],
   admin_passes:[
    [['.lc-tools'],'Print ID cards','Choose what to show, then press Print. Each ID card has the ID, the starting password and a QR code.'],
    [['.idc'],'One ID card','The QR code signs the person in, even after they change their password. A new password makes a new QR code.']],
   credits:[
-   ['.cr-hero','Credits','BULIG is made from the official DepEd modules of the Schools Division of Bukidnon.'],
-   [['.cr-cols .cr-card'],'The BULIG module','The writers, designers and checkers who made the Reading Toolkit.'],
+   ['.cr-hero','Credits','BULIG Quest is made from the official DepEd modules of the Schools Division of Bukidnon.'],
+   [['.cr-cols .cr-card'],'The BULIG Quest module','The writers, designers and checkers who made the Reading Toolkit.'],
    [['.cr-cols .cr-card:nth-child(2)'],'Management team','The Division leaders who guided the module.'],
    [['.cr-web'],'Web app','The people and tools that built this web app.']],
   dashboard:[
@@ -431,7 +449,7 @@
    ['.sidebar nav a[href="?page=print"]','Print & download','Teacher Passes, the school report, backups, the activity log and teacher lists, in one place.'],
    ['.mobile-menu-toggle','Menu','Tap here to open the menu. It has a Search box at the top. Each page has its own short tour.'],
    [['.notif-top','.notif-m'],'Notifications','Tap the bell for new pupil accounts and messages. The yellow number shows what is new.'],
-   [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG between light and dark colours. Choose Auto in My profile to follow your device.'],
+   [['.mode-top','.mode-mobile'],'Light or dark','Switch BULIG Quest between light and dark colours. Choose Auto in My profile to follow your device.'],
    [['.sidebar .signout','.mobile-menu-toggle'],'Signing out','Sign out at the bottom of the menu when you are done. Admin accounts are never saved on a device.'],
    [null,'You are all set!','Every page has its own short tour. Press the ? button anytime to see it.']],
   notifications:[
@@ -461,33 +479,34 @@
   teacher_import:[
    [['.import-card'],'Add many teachers','Download the template, fill it in, upload it and check every row before the accounts are made.']],
   schools:[
-   ['.ws-kpis','Your schools','How many schools, teachers, pupils and sections BULIG has.'],
+   ['.ws-kpis','Your schools','How many schools, teachers, pupils and sections BULIG Quest has.'],
    [['.sc-card'],'One card per school','Its code, name and the IDs it gives: pupils like PCES260001, teachers like PCEST0001. Open Edit to change the name, code or logo.'],
    [['.sc-types','.sc-gh'],'Elementary and Junior High','Schools are grouped as Elementary, Junior High or Integrated. Tap a group to see only those schools.'],
-   ['#add-school','Add a school','Type the name and the School ID. BULIG finds the type by itself (1xxxxx Elementary, 3xxxxx Junior High, 5xxxxx Integrated); you can change it under School type.']],
+   ['#add-school','Add a school','Type the name and the School ID. BULIG Quest finds the type by itself (1xxxxx Elementary, 3xxxxx Junior High, 5xxxxx Integrated); you can change it under School type.']],
   checkup:[
    ['.ws-kpis','At a glance','Red needs action now. Yellow is worth a look. Green is all good.'],
    [['.ck-card'],'Things to fix','Each problem has its fix next to it: unlock, compare, place in a section or tell the teacher.'],
    ['.ws-btns','Check again','Run the check again after you fix something.']],
   settings:[
+   [['#answer-hours'],'Answering hours','Choose the days and times pupils may answer. Outside them, pupils can still look at their lessons, and Roxanne tells them when answering opens. Work made without internet is always kept.'],
    [['.sch-card'],'Level schedule','Choose the date each level opens. Pupils who finish early wait for that date, so the class moves together. Fill the dates for me sets one level per week.'],
    ['nav.ws-tabs','Settings sections','Security, school details, announcements and the school year. You see the tabs your role may use.'],
    [['.rc-logoset'],'Report card logos','Upload the Division and school logos. They print at the top of every Reading Progress Report Card.'],
-   [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG protects accounts from wrong passwords.']],
+   [['.ws-g2 section.card:nth-child(2)'],'Sign-in rules','How BULIG Quest protects accounts from wrong passwords.']],
   ratings:[
-   ['.hm-head','App ratings','How pupils and teachers rate BULIG. Each person counts once: their latest rating.'],
+   ['.hm-head','App ratings','How pupils and teachers rate BULIG Quest. Each person counts once: their latest rating.'],
    ['.rt-per','Choose the period','The last 3 months, 12 months or all time.'],
    [['.rt-box'],'Pupils','The average stars, and how many pupils gave 5, 4, 3, 2 or 1 star.'],
    [['.rt-box:nth-child(2)'],'Teachers','The average, each of the five questions, and what teachers said.']],
   profile:[
    [['.char-pick'],'Your character','Choose a female or male admin character. It greets you after you sign in. Jarvis the Robot guides your tours.'],
-    ['.mode-card','How BULIG looks','Choose Light, Dark or Auto.'],
+    ['.mode-card','How BULIG Quest looks','Choose Light, Dark or Auto.'],
    [['.a11y-card'],'Easier to read','Bigger text and Easy-read letters, on this device.'],
    [['.card form.stack'],'Your photo','Upload your own photo for your account.'],
    [['.formgrid input[name="current_password"]'],'Password','Change your password here whenever you need to.'],
-   [['.pv-card'],'My data and privacy','What BULIG keeps about you and who can see it. Download your data, read the Privacy Notice,. BULIG follows the Data Privacy Act (RA 10173).']],
+   [['.pv-card'],'My data and privacy','What BULIG Quest keeps about you and who can see it. Download your data, read the Privacy Notice,. BULIG Quest follows the Data Privacy Act (RA 10173).']],
   privacy:[
-   ['.pv-page h1','Privacy Notice','How BULIG follows the Data Privacy Act of 2012 (RA 10173). Every teacher and pupil agrees to it the first time they sign in.'],
+   ['.pv-page h1','Privacy Notice','How BULIG Quest follows the Data Privacy Act of 2012 (RA 10173). Every teacher and pupil agrees to it the first time they sign in.'],
    [['.pv-item'],'Each part','What is collected, why, how it is protected, who sees it, how long it is kept, and everyone’s rights.']],
   chat:[
    [['.mz-list'],'Your messages','Your sent messages.']],
@@ -499,14 +518,14 @@
    [['.mz-sec'],'Class chats are private','Chats between a teacher and a pupil are private, like Messenger. No administrator can read them.']],
   cleanup:[
    [['.hm-head'],'Data cleanup','Join pupils with two accounts, put away last year’s sections, and clear old records.'],
-   [['.cu-grp'],'Pupils with two accounts','Pupils with the same name and grade. BULIG keeps the account with more work. Merge moves the answers, XP and progress, then switches the other account off.'],
+   [['.cu-grp'],'Pupils with two accounts','Pupils with the same name and grade. BULIG Quest keeps the account with more work. Merge moves the answers, XP and progress, then switches the other account off.'],
    [['.cu-secs'],'Last year’s sections','Sections made before June 1. Archive them in one step: pupils and their work stay, and teachers can place them in new sections.'],
    [['[data-cu-step]'],'Backup first','Download a backup first. The Delete buttons open after you make a backup today.'],
    [['#cu-clear'],'Clear old data','Delete old records such as the activity log, read notifications and sign-in attempts. Choose how old, tick the box, then tap Delete. Pupils’ answers, scores and XP are never removed. Make a backup first.']],
   add_teachers:[
    ['.tt-tabs','Add teachers','Adding teachers is a tab of the Teachers page. Teacher list shows your team.'],
    ['.ap-choice','One teacher or many','Add one teacher with a short form, or the whole team at once from an Excel list.'],
-   [['.ap-one form','form.formgrid'],'Add one teacher','Enter the first, middle and last name (and extension, if any) and the sex. BULIG makes the Teacher ID and a starter password. The teacher makes their own password at first sign-in.'],
+   [['.ap-one form','form.formgrid'],'Add one teacher','Enter the first, middle and last name (and extension, if any) and the sex. BULIG Quest makes the Teacher ID and a starter password. The teacher makes their own password at first sign-in.'],
    [['.import-card'],'Add many teachers','Download the template, fill it in, upload it and check every row before the accounts are made.']],
   print:[
    [['.hm-head','.pageheading'],'Print & download','Teacher Passes, the school report, backups, the activity log and teacher lists, in one place.'],
@@ -516,7 +535,7 @@
    ['.hm-head','Where things are now','The menu has a new order. This page lists every old place and where it is now.'],
    [['.wm-tbl'],'Old place, new place','Find the old name on the left. The right side tells you where it is now.']],
   messages:[
-   [['.msg-list'],'Your messages','Every message you get in BULIG is listed here. Tap one to read it.'],
+   [['.msg-list'],'Your messages','Every message you get in BULIG Quest is listed here. Tap one to read it.'],
    [['.msg-search'],'Find a message','Type a word to find an older message.'],
    [['.msg-panel'],'Read it here','The message you tap opens here.']],
   bugs:[
@@ -623,7 +642,7 @@ if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeo
   o.querySelector('.tour-offer-card').prepend(charImg('hello'));if(big)o.classList.add('tour-offer-george');
   const hi=pupil?'Hi, '+me.name+'!':me.role==='admin'?'Hello, '+me.name+'!':'Hello, Teacher '+me.name+'!';
   o.querySelector('b').textContent=big?(window.buligFriendsMet?'Ready, '+me.name+'?':hi+' I am Jarvis the Robot.'):(pupil?'New here?':'New page');
-  o.querySelector('.tour-offer-txt span').textContent=big?(pupil?(window.buligFriendsMet?'Now let me show you around BULIG. It only takes a minute!':'Beep boop! I am your tour guide. Do you want me to show you around BULIG?'):'I am BULIG’s guide. Would you like me to show you around your '+(me.role==='admin'?'admin area':'workspace')+'?'):'Jarvis can show you how this page works.';
+  o.querySelector('.tour-offer-txt span').textContent=big?(pupil?(window.buligFriendsMet?'Now let me show you around BULIG Quest. It only takes a minute!':'Beep boop! I am your tour guide. Do you want me to show you around BULIG Quest?'):'I am BULIG Quest’s guide. Would you like me to show you around your '+(me.role==='admin'?'admin area':'workspace')+'?'):'Jarvis can show you how this page works.';
   o.querySelector('.tour-yes').textContent=big?'Yes, show me!':'Show me';
   o.querySelector('.tour-yes').onclick=()=>{o.remove();markDone();if(big)metGeorge();start();};
   o.querySelector('.tour-no').onclick=()=>{o.remove();markDone();if(big)metGeorge();toast(pupil?'Okay! Tap the yellow ? anytime to see the tour.':'You can open the tour anytime with the ? button.');};
@@ -653,7 +672,7 @@ if(window.buligDlPending){document.addEventListener('bulig:dl-done',()=>setTimeo
   o.innerHTML='<div class="tour-offer-card"><div class="tour-offer-txt"><small class="tour-new">NEW FRIEND</small><b></b><span></span></div><div class="tour-offer-btns"><button type="button" class="btn primary tour-yes"></button><button type="button" class="tour-no">Show me around</button></div></div>';
   o.querySelector('.tour-offer-card').prepend(charImg('hello'));
   o.querySelector('b').textContent=(pupil?'Hi, '+me.name+'!':me.role==='admin'?'Hello, '+me.name+'!':'Hello, Teacher '+me.name+'!')+' I am Jarvis the Robot.';
-  o.querySelector('.tour-offer-txt span').textContent='Beep boop! I am BULIG’s new tour guide. Tap the ? button anytime and I will show you around.';
+  o.querySelector('.tour-offer-txt span').textContent='Beep boop! I am BULIG Quest’s new tour guide. Tap the ? button anytime and I will show you around.';
   o.querySelector('.tour-yes').textContent=pupil?'Hi, Jarvis!':'Nice to meet you!';
   o.querySelector('.tour-yes').onclick=()=>{o.remove();metGeorge();};
   o.querySelector('.tour-no').onclick=()=>{o.remove();metGeorge();start();};

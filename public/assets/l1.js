@@ -75,7 +75,7 @@
   const gap=$('.l1-gap'),qBox=gap?gap.closest('.l1-q')||gap.parentElement:$('.l1-q');let heardLine=null;
   function live(t,done){if(!t&&!done)return;if(gap){const w=gapWords(gap,t);gap.textContent=w||'?';gap.classList.toggle('live',!done&&!!w);gap.classList.toggle('done',!!done&&!!w);}
    if(!heardLine&&qBox){heardLine=document.createElement('p');heardLine.className='l1-said';heardLine.setAttribute('aria-live','polite');qBox.after(heardLine);}
-   if(heardLine){heardLine.hidden=!t;heardLine.classList.toggle('on',!done);heardLine.replaceChildren();const a=document.createElement('span');a.textContent=done?'BULIG heard: ':'BULIG is listening: ';const b=document.createElement('b');b.textContent='\u201c'+t+(done?'':'\u2026')+'\u201d';heardLine.append(a,b);
+   if(heardLine){heardLine.hidden=!t;heardLine.classList.toggle('on',!done);heardLine.replaceChildren();const a=document.createElement('span');a.textContent=done?'BULIG Quest heard: ':'BULIG Quest is listening: ';const b=document.createElement('b');b.textContent='\u201c'+t+(done?'':'\u2026')+'\u201d';heardLine.append(a,b);
     if(done){const c=document.createElement('small');c.textContent='Not right? Tap Try again and say it again.';heardLine.append(c);}}}
   function liveClear(){if(gap){gap.textContent='?';gap.classList.remove('live','done');}if(heardLine)heardLine.hidden=true;}
  /* Microphone: ask with clean-sound settings, then plain audio (some iPhones refuse the first). */
@@ -91,14 +91,17 @@
   if(!can)fallback('This device cannot record here.');
   /* Level 4: Roxanne the Timekeeper times the reading (v164) */
   const rx=rec.classList.contains('l4-rec')&&rec.parentElement?rec.parentElement.querySelector('[data-rx]'):null;
-  function rxSay(s){if(!rx)return;const im=rx.querySelector('img'),t=rx.querySelector('[data-rx-say]');rx.dataset.state=s;
-   if(s==='rec'){im.src=rx.dataset.go;t.textContent='Ready, set, read! I am timing you. Tap the button when you finish.';}
-   else if(s==='done'){im.src=rx.dataset.done;t.textContent='Tick, tock! You read it in '+fmt(secs)+'. Great reading!';}
-   else if(s==='idle'){im.src=rx.dataset.time;t.textContent='I will time your reading. Tap the microphone when you are ready!';}}
+  /* v216 Roxanne shows only while the pupil reads: a small ticking clock beside the recorder, then the time it took */
+  if(rx&&rx.parentElement!==rec){rec.append(rx);rx.setAttribute('aria-live','polite');}
+  let rxTick=null;
+  function rxSay(s){if(!rx)return;const im=rx.querySelector('img'),t=rx.querySelector('[data-rx-say]');rx.dataset.state=s;clearInterval(rxTick);
+   if(s==='rec'){im.src=rx.dataset.time;t.textContent='0:00';rxTick=setInterval(()=>{t.textContent=fmt((Date.now()-t0)/1000);},500);}
+   else if(s==='done'){im.src=rx.dataset.done;t.textContent=fmt(secs);}
+   else{im.src=rx.dataset.time;t.textContent='';}}
   function ui(s){rxSay(s);state=s;rec.dataset.state=s;go.classList.toggle('on',s==='rec');go.setAttribute('aria-label',s==='rec'?'Stop recording':'Tap and say your answer');
    go.hidden=s==='done';playBox.hidden=s!=='done';if(again)again.hidden=s!=='done';if(send)send.hidden=s!=='done';
    if(s==='idle'){label.textContent=startLabel;sub.textContent='';}
-   if(s==='rec'){label.textContent='0:00';sub.textContent=rec.classList.contains('l4-rec')?(listen?'Read now. BULIG is listening. Tap the button when you finish.':'Read now. Tap the button when you finish.'):'Speak now. Tap the button to stop.';}
+   if(s==='rec'){label.textContent='0:00';sub.textContent=rec.classList.contains('l4-rec')?(listen?'Read now. BULIG Quest is listening. Tap the button when you finish.':'Read now. Tap the button when you finish.'):'Speak now. Tap the button to stop.';}
    if(s==='done'){label.textContent='Listen to your answer';sub.textContent='Happy with it? Tap Send. Or tap Try again.';}}
   rec.addEventListener('wc:done',e=>{const d=e.detail||{};reset();secs=+d.secs||0;heardIn.value='1';if(saidIn)saidIn.value=d.said||'';const sIn=document.getElementById('l1-secs');if(sIn)sIn.value=String(Math.round(secs));ui('done');playBox.hidden=true;if(again)again.hidden=true;label.textContent='Read with Max';sub.textContent='Your reading is saved. Tap Send.';});   // v184: the Word Coach run is the reading
   function reset(){if(player){player.pause();player=null;}if(url){URL.revokeObjectURL(url);url='';}audioIn.value='';heardIn.value='';if(saidIn&&listen)saidIn.value='';bar.style.setProperty('--p','0');liveClear();}
@@ -115,7 +118,7 @@
    if(listen)setTimeout(()=>{const t=heardText();if(t)live(t,true);},900);}
   /* listening only (iPhone): the words are the answer */
   function finishSolo(){const t=heardText();if(saidIn)saidIn.value=t;if(!t||secs<.6){ui('idle');liveClear();sub.textContent='I could not hear anything. Tap the microphone and try again.';return;}
-   const sIn=$('#l1-secs');if(sIn)sIn.value=String(Math.round(secs));audioIn.value='';heardIn.value='1';ui('done');playBox.hidden=true;label.textContent=rec.classList.contains('l4-rec')?'BULIG heard your reading':'BULIG heard your answer';live(t,true);if(send)send.focus({preventScroll:true});}
+   const sIn=$('#l1-secs');if(sIn)sIn.value=String(Math.round(secs));audioIn.value='';heardIn.value='1';ui('done');playBox.hidden=true;label.textContent=rec.classList.contains('l4-rec')?'BULIG Quest heard your reading':'BULIG Quest heard your answer';live(t,true);if(send)send.focus({preventScroll:true});}
   function finish(){const kind=((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/'),blob=new Blob(chunks,{type:kind});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Tap the microphone and try again.';return;}
    url=URL.createObjectURL(blob);len.textContent=fmt(secs);const sIn=$('#l1-secs');if(sIn)sIn.value=String(Math.round(secs));
@@ -129,7 +132,7 @@
    player.currentTime=0;player.play().then(()=>listenB.classList.add('on')).catch(()=>{});});
   if(again)again.addEventListener('click',()=>{ui('idle');start();});
   heardB.addEventListener('click',()=>{audioIn.value='';heardIn.value='1';form.requestSubmit();});
-  if(gap&&listen)gap.setAttribute('title','Say the whole sentence. BULIG writes your words here.');
+  if(gap&&listen)gap.setAttribute('title','Say the whole sentence. BULIG Quest writes your words here.');
   /* After the answer is saved: only Next is left. */
   const fb=$('#answer-feedback');
   if(fb)new MutationObserver(()=>{if(fb.classList.contains('success')){if(again)again.hidden=true;go.hidden=true;heardB.hidden=true;sub.textContent='';label.textContent=state==='done'?'Your answer':'';}}).observe(fb,{attributes:true,attributeFilter:['class']});
@@ -167,7 +170,7 @@
     $('[data-pk-after]',pl).textContent=p.lines[idx+1]?(cls?'Next: ':'')+p.lines[idx+1]:'';
     $('[data-pk-dots]',pl).innerHTML=p.lines.map((x,i)=>'<i class="'+(i<idx?'d':i===idx?'n':'')+'"></i>').join('');
     $$('[data-pk-go]',pl).forEach(b=>{b.disabled=(+b.dataset.pkGo<0&&idx===0)||(+b.dataset.pkGo>0&&idx===n-1);});
-    const t=$('[data-pk-turn]',pl);if(t){t.className='pk-turn '+turn(idx);t.textContent=turn(idx)==='bulig'?'BULIG reads this line. Listen!':'Your turn! Read this line aloud.';}}
+    const t=$('[data-pk-turn]',pl);if(t){t.className='pk-turn '+turn(idx);t.textContent=turn(idx)==='bulig'?'BULIG Quest reads this line. Listen!':'Your turn! Read this line aloud.';}}
    /* BULIG reads the line: the words light up with the voice (or on a steady beat if the voice does not report words). */
    function sayLine(onend){const text=poems[key].lines[idx],ws=$$('.pk-w',pl),me=++my;clearBeat();
     if(!synth){beatLine(onend,me);return;}
@@ -236,7 +239,7 @@
   document.addEventListener('bulig:card',()=>{if(playing)stop();});
   document.addEventListener('click',e=>{if(playing&&e.target.closest&&e.target.closest('[data-say],[data-say-words],.l1-mic,[data-l2-next],[data-l2-prev]'))stop();},true);
   window.addEventListener('pagehide',()=>stop());
-  ui();small.textContent='Tap play: BULIG reads, you follow the words.';}
+  ui();small.textContent='Tap play: BULIG Quest reads, you follow the words.';}
  const raForm=$('#activity-form[data-readalong]');
  if(raForm)$$('.l2-card .l2-word.long',raForm).forEach(w=>{const t=w.textContent.trim();if(t.length>=60&&(t.match(/[.!?]["”’)]*(\s|$)/g)||[]).length>=2)readAlong(w);});
  $$('.l4-card[data-readalong] .fluency-text').forEach(readAlong);

@@ -78,12 +78,12 @@ function certificate_html(array $p,int $level,string $date,string $teacher):stri
  $grade='Grade '.e((string)$p['grade_level']).((string)($p['section']??'')!==''?' · '.e(name_case((string)$p['section'])):'');
  $sign=fn($n,$r)=>'<div class="cz-sg"><b>'.($n!==''?e($n):'&nbsp;').'</b><i></i><span>'.$r.'</span></div>';
  return '<article class="cert-page"><div class="cert cz">'
-  .'<aside class="cz-side">'.cert_band_art().'<img class="cz-bulig" src="assets/brand/bulig-quest.webp" alt="BULIG"><div class="cz-lvl"><b>'.e($code).'</b><span>LEVEL COMPLETED</span><small>'.e($title).'</small></div><img class="cz-kid" src="'.e($kid).'" alt=""></aside>'
+  .'<aside class="cz-side">'.cert_band_art().'<img class="cz-bulig" src="assets/brand/bulig-quest.webp" alt="BULIG Quest"><div class="cz-lvl"><b>'.e($code).'</b><span>LEVEL COMPLETED</span><small>'.e($title).'</small></div><img class="cz-kid" src="'.e($kid).'" alt=""></aside>'
   .'<div class="cz-main">'.cert_main_art().'<img class="cz-mark" src="assets/brand/bulig-quest-mark.webp" alt="" aria-hidden="true">'
   .'<header class="cz-hd"><span class="cz-logos">'.$logo($dlogo,'Division logo').($slogo!==''?$logo($slogo,'School logo'):'').'</span><p>Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon'.($school!==''?'<br><strong>'.e($school).'</strong>':'').'</p></header>'
   .'<h2 class="cz-t">Certificate of Completion</h2><i class="cz-gold"></i>'
   .'<p class="cz-s">This certificate is proudly presented to</p><h3 class="cert-name cz-name">'.e(name_case((string)$p['name'])).'</h3>'
-  .'<p class="cz-tx">'.$grade.', for successfully completing <b>'.e(level_label($level)).' · '.e($title).'</b> of the BULIG reading program. Given on '.e(date('F j, Y',strtotime($date))).'.</p>'
+  .'<p class="cz-tx">'.$grade.', for successfully completing <b>'.e(level_label($level)).' · '.e($title).'</b> of the BULIG Quest reading program. Given on '.e(date('F j, Y',strtotime($date))).'.</p>'
   .'<p class="cz-stars" aria-hidden="true">'.str_repeat('<svg viewBox="0 0 24 24"><path d="M12 2l3 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.8 5.7 21.4l1.5-7.1L1.8 9.4 9 8.6z" fill="#e2b93b" stroke="#c9a227" stroke-width="1"/></svg>',5).'</p>'
   .'<p class="cz-cheer">Congratulations! Keep reading, and keep growing.</p>'
   .'<div class="cz-sigs">'.$sign(name_case($teacher),'Class Adviser').$sign($head,'School Principal').'</div>'

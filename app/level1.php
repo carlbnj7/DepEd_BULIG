@@ -134,6 +134,7 @@ function l1_kind(array $a):string{
  if($m==='drawing')return 'draw';
  if($t==='reading')return $m==='answer'?'read':'look';
  if($t==='physical')return 'do';
+ if($t==='choice')return 'choice';if($t==='exact')return 'type';   // v216 answers with a key (new levels)
  if($t==='group'){$txt=$a['title'].' '.$a['prompt'];return preg_match('~\b(partner|pairs?|buddy|buddies|Student A|Ask a friend|your friend)\b~i',$txt)?'pair':'group';}
  if($m==='answer')return 'speak';
  return 'look';
@@ -151,7 +152,7 @@ function l1_goals(string $obj):array{
 /** Lesson header: level and lesson name, "n / N complete" and one dot per activity. */
 function lesson_head(array $lesson,array $all,array $a,string $back):string{
  $lv=lesson_level((int)$lesson['id']);$n=count($all);$done=count(array_filter($all,'completion_ok'));
- $u=current_user();$free=$u&&$u['role']==='pupil'&&lesson_is_skipped((int)$u['id'],(int)$lesson['id']);$bar='';if($n<=30){$bar='<div class="ap-seg'.($free?' sk-seg':'').'"'.($free?'':' aria-hidden="true"').'>';foreach($all as $k=>$x){$cl=(int)$x['id']===(int)$a['id']?'c':(completion_ok($x)?'d':'');$bar.=$free?'<a class="'.$cl.'" href="?page=lesson&amp;id='.(int)$lesson['id'].'&amp;activity='.(int)$x['id'].'" aria-label="Activity '.($k+1).': '.e((string)$x['title']).'"><i></i></a>':'<i class="'.$cl.'"></i>';}$cur=0;foreach(array_values($all) as $k=>$x)if((int)$x['id']===(int)$a['id'])$cur=$k;
+ $u=current_user();$free=$u&&$u['role']==='pupil'&&lesson_is_skipped((int)$u['id'],(int)$lesson['id']);$bar='';if($n<=30){$bar='<div class="ap-seg'.($free?' sk-seg':' rp-seg').'">';foreach($all as $k=>$x){$cl=(int)$x['id']===(int)$a['id']?'c':(completion_ok($x)?'d':'');$bar.=$free?'<a class="'.$cl.'" href="?page=lesson&amp;id='.(int)$lesson['id'].'&amp;activity='.(int)$x['id'].'" aria-label="Activity '.($k+1).': '.e((string)$x['title']).'"><i></i></a>':($cl==='d'&&$u&&$u['role']==='pupil'?'<a class="d" href="?page=lesson&amp;id='.(int)$lesson['id'].'&amp;activity='.(int)$x['id'].'" aria-label="Open finished activity '.($k+1).': '.e((string)$x['title']).'"><i></i></a>':'<i class="'.$cl.'"></i>');}/* v216 a finished dot opens it again (Play again) */$cur=0;foreach(array_values($all) as $k=>$x)if((int)$x['id']===(int)$a['id'])$cur=$k;
   /* v203 the dots sit on a little road like the level road map, and Jeepy drives to the current activity */
   if(function_exists('jeepy_rides')&&$u&&$u['role']==='pupil'){$bar=str_replace('<div class="ap-seg','<div class="ap-seg ap-road',$bar);$bar.='<img class="ap-jeep jp-'.(int)(round(($cur+.5)/max(1,$n)*20)*5).'" src="'.e(jeepy_rides()['drive']).'" alt="">';}
   $bar.='</div>';}else $bar='<progress max="'.$n.'" value="'.$done.'"></progress>';
@@ -195,7 +196,7 @@ function l1_steps(int $position):array{return in_array($position,[2,3],true)?['L
 
 function l1_tag(array $a,string $kind,bool $demo=false):string{
  if($kind==='do')return '';/* the mission card has its own label */
- if($kind==='pair'||$kind==='group')return $demo?($kind==='pair'?'WORK WITH A PARTNER':'WORK WITH YOUR GROUP'):'PRACTISE WITH BULIG';
+ if($kind==='pair'||$kind==='group')return $demo?($kind==='pair'?'WORK WITH A PARTNER':'WORK WITH YOUR GROUP'):'PRACTISE WITH BULIG QUEST';
  if($a['type']==='sentence')return 'FINISH THE SENTENCE';
  if($a['phase']!=='learn')return $kind==='do'?'LISTEN AND DO':($kind==='draw'?'LISTEN AND DRAW':'');
  return mb_strtoupper(preg_replace('~\s*·.*$~u','',(string)$a['title']));
@@ -228,16 +229,17 @@ function l1_start_page(array $lesson,array $all,array $first):void{
 
 /** One Level 1 activity screen. Uses the same form, saving and offline queue as every other level. */
 function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
- $pid=(int)$u['id'];$lid=(int)$lesson['id'];$kind=l1_kind($a);$mode=$a['response_mode'];if($mode==='drawing'&&!draw_allowed($a))$mode='answer';$readonly=completion_ok($a);
+ $pid=(int)$u['id'];$lid=(int)$lesson['id'];$kind=l1_kind($a);$mode=$a['response_mode'];if($mode==='drawing'&&!draw_allowed($a))$mode='answer';$replaying=completion_ok($a)&&!empty($_GET['again'])&&($a['phase']??'')==='learn'&&$mode!=='none';if($replaying){$a['drawing']='';$a['response']='';}$readonly=completion_ok($a)&&!$replaying;   // v216 Play again
  $c=$a['completion_id']?one('SELECT id,audio_path,drawing FROM activity_completion WHERE id=?',[(int)$a['completion_id']]):null;
  $phase=array_values(array_filter($all,fn($x)=>$x['phase']===$a['phase']));$at=0;foreach($phase as $i=>$x)if((int)$x['id']===(int)$a['id'])$at=$i+1;
  $doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));$say=pupil_wording(trim((string)($a['narration']?:$a['prompt'])));$tag=l1_tag($a,$kind);$pics=l1_pictures($a);
  head(level_label(lesson_level((int)$lesson['id'])).' · '.$lesson['subtitle'],'activity-page l1-page');
  echo '<div class="l1-app l1-k-'.$kind.'">'.lesson_head($lesson,$all,$a,'?page=lessons&level='.lesson_level((int)$lesson['id']).'#level'.lesson_level((int)$lesson['id']).'-path');
  echo '<main class="l1-main activity-main">';notice();
- echo '<form method="post" id="activity-form" class="activity-form l1-form"'.($readonly?'':' data-open="1"').' data-mode="'.e($mode).'" data-kind="'.$kind.'" data-draft="'.(!$readonly&&$kind==='draw'?'on':'off').'">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value="'.e($kind==='draw'?(string)($a['drawing']??''):'').'"><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><span id="draft-status" hidden></span>';
+ echo '<form method="post" id="activity-form" class="activity-form l1-form"'.($readonly?'':' data-open="1"').' data-mode="'.e($mode).'" data-kind="'.$kind.'" data-draft="'.(!$readonly&&$kind==='draw'?'on':'off').'">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'">'.($replaying?'<input type="hidden" name="replay" value="1">':'').'<input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value="'.e($kind==='draw'?(string)($a['drawing']??''):'').'"><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><span id="draft-status" hidden></span>';
  if($a['feedback'])echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
  if($tag!=='')echo '<span class="l1-tag">'.e($tag).'</span>';
+ if($replaying&&function_exists('replay_banner'))echo replay_banner($a);
  if($kind==='do'){
   echo '<div class="l1-mission"><span class="l1-mtag">'.(preg_match('~mission~i',$a['title'])?'MISSION CARD':e(mb_strtoupper($a['phase']==='learn'?(string)$a['title']:'Listen and do'))).'</span><p>'.nl2br(e($a['prompt'])).'</p>'.l1_speaker($say).'</div>';ob_start();echo $pics;
   echo '<div class="l1-howto">';foreach(l1_steps((int)$lesson['position']) as $i=>$s)echo '<span><b>'.($i+1).'</b>'.e($s).'</span>';echo '</div>';
@@ -258,6 +260,14 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
    echo '<div class="pp-done"'.($photo?'':' hidden').'><div class="l1-prev pp-photo"><img class="pp-img" src="'.($photo?e($a['drawing']):'').'" alt="Photo of your drawing"><span class="l1-ok">'.l1_icon('ok').'Your drawing</span></div><label class="l1-btn2 pp-btn">'.l1_icon('cam').'Change photo<input type="file" accept="image/*" class="pp-input"></label></div><p class="pp-status" role="status"></p></div>';
    echo '<div class="drawing-panel l1-canvas"'.($drawn?'':' hidden').'><div class="drawing-toolbar"><strong>Your drawing</strong><label>Color <input type="color" id="pen-color" value="#217c4b"></label><button class="btn quiet" type="button" id="clear-drawing">Clear my marks</button></div><div class="worksheet-scroll"><div class="worksheet-surface"><canvas id="drawing-canvas" width="900" height="600" aria-label="Drawing area"></canvas></div></div></div>';
   }
+ }elseif($kind==='choice'||$kind==='type'){
+  /* v216 an answer BULIG marks with the answer key: tap a choice, or type a word */
+  $opts=$kind==='choice'?array_column(rows('SELECT an.content FROM answers an JOIN questions q ON q.id=an.question_id WHERE q.activity_id=? ORDER BY an.id',[(int)$a['id']]),'content'):[];
+  $mine=$readonly?(string)(val('SELECT response FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,(int)$a['id']])?:''):'';
+  $say2=$say.($opts?' '.implode('. ',array_map(fn($i,$o)=>chr(65+$i).', '.$o,array_keys($opts),$opts)).'.':'');
+  echo '<div class="l1-q"><p>'.l1_question_html($a).'</p>'.l1_speaker($say2).'</div>';ob_start();echo $pics;
+  if($kind==='choice'){echo '<div class="l1-choices" role="radiogroup" aria-label="Choose your answer">';foreach($opts as $i=>$o)echo '<label class="l1-choice"><input type="radio" name="response" value="'.e($o).'" required'.($readonly?' disabled':'').(normalize_answer($mine)===normalize_answer($o)&&$mine!==''?' checked':'').'><span><b>'.chr(65+$i).'</b>'.e($o).'</span></label>';echo '</div>';}
+  else echo '<label class="l1-typed"><span>Your answer</span><input type="text" name="response" id="response" maxlength="200" autocomplete="off" autocapitalize="off" spellcheck="false" required'.($readonly?' disabled value="'.e($mine).'"':'').'></label>';
  }elseif($kind==='read'){
   ob_start();echo $pics.'<div class="l1-tw" data-words>'.l1_words_html((string)$a['prompt']).'</div><div class="l1-speed"><button type="button" class="l1-chip" data-say-words="0.6">'.l1_icon('spk').'Slow</button><button type="button" class="l1-chip" data-say-words="1.05">'.l1_icon('spk').'Fast</button></div>';
  }else{
@@ -268,8 +278,9 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  /* bottom: recorder, or one big button */
  $speakHere=in_array($kind,['speak','read'],true)&&$mode==='answer';
  if($readonly){
-  echo '<div class="l1-done">'.l1_icon('ok').'<b>'.($kind==='look'?'You saw this page.':($kind==='draw'?'Your drawing is saved.':($speakHere?'Your answer is saved.':'Well done!'))).'</b></div>';
+  echo '<div class="l1-done">'.l1_icon('ok').'<b>'.($kind==='look'?'You saw this page.':($kind==='draw'?'Your drawing is saved.':($speakHere||in_array($kind,['choice','type'],true)?'Your answer is saved.':'Well done!'))).'</b></div>';
   if($speakHere&&$c&&$c['audio_path'])echo '<div class="l1-mine"><span>Your answer</span><audio controls preload="none" src="?page=recording&amp;id='.(int)$c['id'].'"></audio></div>';
+  if(function_exists('replay_bar'))echo replay_bar($a);
  }elseif($speakHere){
   $recHtml=true;ob_start();   // v183: shown above the pictures and words (moved to the top of the card below)
   $wct=$kind==='read'&&(function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?trim((string)$a['expected_text']):'';   // v184: Word Coach on Level 1 reading
@@ -283,7 +294,7 @@ function l1_activity_page(array $u,array $lesson,array $all,array $a):void{
  echo '<div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns">';
  if(!$readonly){
   if($speakHere)echo '<button type="button" class="l1-btn2" data-rec-again hidden>'.l1_icon('again').'Try again</button><button id="submit-answer" class="l1-big" type="submit" hidden>Send '.l1_icon('next').'</button>';
-  else echo '<button id="submit-answer" class="l1-big" type="submit">'.(in_array($kind,['do','pair','group'],true)?'I did it! '.l1_icon('ok'):($kind==='draw'?'Send my drawing '.l1_icon('ok'):'Next '.l1_icon('next'))).'</button>';
+  else echo '<button id="submit-answer" class="l1-big" type="submit">'.(in_array($kind,['do','pair','group'],true)?'I did it! '.l1_icon('ok'):($kind==='draw'?'Send my drawing '.l1_icon('ok'):(in_array($kind,['choice','type'],true)?'Check my answer '.l1_icon('ok'):'Next '.l1_icon('next')))).'</button>';
  }
  $last=$doneAll===count($all);
  echo '<a id="next-activity" class="l1-big" href="?page=lesson&amp;id='.$lid.'"'.($readonly?'':' hidden').'>'.($last?'Finish lesson':'Next').' '.l1_icon('next').'</a></div></div></form></main></div>';
@@ -297,7 +308,7 @@ function l1_solo_data():array{static $d=null;if($d===null){$f=__DIR__.'/../datab
 function l1_solo(array $lesson,array $a):?array{return l1_solo_data()['acts'][(int)$lesson['position'].':'.$a['phase'].':'.(int)$a['position']]??null;}
 /** "BULIG is your buddy" and the steps to do it alone. */
 function l1_buddy(array $steps):string{
- $h='<div class="pk-solo"><img src="'.e(friend_img('george','cheer')).'" alt=""><div><b>BULIG is your buddy</b><ol>';
+ $h='<div class="pk-solo"><img src="'.e(friend_img('george','cheer')).'" alt=""><div><b>BULIG Quest is your buddy</b><ol>';
  foreach($steps as $s)$h.='<li>'.e($s).'</li>';return $h.'</ol></div></div>';
 }
 /** Lesson 9: choose a poem, then one picture and one line at a time; the words light up as they are read (l1.js).
@@ -313,7 +324,7 @@ function l1_poems_html(bool $demo):string{
 }
 /** Lesson 11: BULIG says a word, the pupil says a word friend. */
 function l1_word_game(array $words):string{
- return '<div class="pk-wordgame" data-wordgame="'.e(json_encode(array_values($words))).'"><span class="pk-wg-lab">BULIG’s word</span><b class="pk-wg-word" data-wg-word>?</b><button type="button" class="l1-big pk-wg-btn" data-wg-new>'.l1_icon('spk').'New word</button><small>Now say a word friend!</small></div>';
+ return '<div class="pk-wordgame" data-wordgame="'.e(json_encode(array_values($words))).'"><span class="pk-wg-lab">BULIG Quest’s word</span><b class="pk-wg-word" data-wg-word>?</b><button type="button" class="l1-big pk-wg-btn" data-wg-new>'.l1_icon('spk').'New word</button><small>Now say a word friend!</small></div>';
 }
 /** Lesson 12: the tongue twisters of this lesson, each with Slow and Fast. */
 function l1_twisters(array $list):string{
@@ -330,7 +341,7 @@ function l1_demo_view(array $u,array $slides):void{
  $deck=[];foreach($lessons as $lid=>$l){$deck[]=['start'=>true,'lesson'=>$l,'id'=>0];foreach($by[$lid] as $a)$deck[]=['start'=>false,'lesson'=>$l,'a'=>$a,'id'=>(int)$a['id']];}
  $index=0;$want=(int)($_GET['activity']??0);if($want){foreach($deck as $i=>$d)if($d['id']===$want){$index=$i;break;}}elseif(isset($_GET['lesson'])){foreach($deck as $i=>$d)if($d['start']&&(int)$d['lesson']['id']===(int)$_GET['lesson']){$index=$i;break;}}
  head('Class Demo · Level 1','demo-page l1-demo-page');
- echo '<div id="l1-demo" class="l1-demo" data-start="'.$index.'"><header class="l1d-top"><a class="l1d-logo" href="?page=class_demo"><img src="assets/brand/bulig-quest.webp" alt="BULIG"></a><div class="l1d-ln"><b data-d-lesson></b><small data-d-part></small></div><div class="l1d-prog" aria-hidden="true"><i data-d-prog></i></div>';
+ echo '<div id="l1-demo" class="l1-demo" data-start="'.$index.'"><header class="l1d-top"><a class="l1d-logo" href="?page=class_demo"><img src="assets/brand/bulig-quest.webp" alt="BULIG Quest"></a><div class="l1d-ln"><b data-d-lesson></b><small data-d-part></small></div><div class="l1d-prog" aria-hidden="true"><i data-d-prog></i></div>';
  echo '<label class="l1d-sel"><span class="sr-only">Go to a lesson</span><select id="demo-lesson" data-d-lessons>';foreach($deck as $i=>$d)if($d['start'])echo '<option value="'.$i.'">Lesson '.(int)$d['lesson']['position'].' · '.e($d['lesson']['subtitle']).'</option>';echo '</select></label><select id="demo-jump" hidden aria-hidden="true" tabindex="-1">';foreach($deck as $i=>$d)echo '<option value="'.$i.'"></option>';echo '</select>';
  echo '<button type="button" class="l1d-tb" data-plan-open aria-haspopup="dialog">'.l1_icon('book').'Lesson plan</button><button type="button" class="l1d-tb" data-cd-open>'.l1_icon('ok').'Mark as done</button><button type="button" class="l1d-tb" data-d-full>'.l1_icon('full').'<span>Full screen</span></button><a class="l1d-tb" href="?page=class_demo">'.l1_icon('x').'Exit</a></header>';
  if(isset($_SESSION['flash'])){echo '<div class="notice demo-notice" role="status">'.icon('check').'<span>'.e($_SESSION['flash']).'</span></div>';unset($_SESSION['flash']);}
@@ -374,7 +385,7 @@ function l1_review_media(array $r):string{
 }
 function l1_review_media_only(array $r):string{
  if(empty($r['audio_path'])){$resp=(string)$r['response'];
-  if(str_starts_with($resp,'Said: ')||str_starts_with($resp,'Read aloud (BULIG listened)'))return '<p class="rv-l1-heard">'.l1_icon('ear').'BULIG listened (no recording on this device) and heard: “'.e(trim((string)($r['transcript']??''))?:substr($resp,6)).'”</p>';
+  if(str_starts_with($resp,'Said: ')||str_starts_with($resp,'Read aloud (BULIG listened)'))return '<p class="rv-l1-heard">'.l1_icon('ear').'BULIG Quest listened (no recording on this device) and heard: “'.e(trim((string)($r['transcript']??''))?:substr($resp,6)).'”</p>';
   return str_starts_with($resp,'Answered out loud')?'<p class="rv-l1-heard">'.l1_icon('ear').'Answered out loud, marked Done (no recording).</p>':'';}
  return '<div class="rv-l1-audio"><span>'.l1_icon('mic').'Pupil’s recording</span><audio controls preload="metadata" src="?page=recording&amp;id='.(int)$r['id'].'"></audio></div>';
 }

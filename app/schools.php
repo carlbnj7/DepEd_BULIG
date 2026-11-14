@@ -94,7 +94,7 @@ function school_overview():string{
 
 /* ---------- the Schools page ---------- */
 function schools_view():void{
- if(!schools_ready()){admin_heading('PEOPLE','Schools','More than one school in one BULIG.');echo '<section class="card"><p>'.icon('info').' Import <b>live-update/031_schools.sql</b> in phpMyAdmin first. Then each school gets its own code, name and logo here.</p></section>';return;}
+ if(!schools_ready()){admin_heading('PEOPLE','Schools','More than one school in one BULIG Quest.');echo '<section class="card"><p>'.icon('info').' Import <b>live-update/031_schools.sql</b> in phpMyAdmin first. Then each school gets its own code, name and logo here.</p></section>';return;}
  $cnt=school_counts();$all=school_rows();$yy=date('y');
  admin_heading('PEOPLE','Schools','Each school has its own code, name and logo. Teachers belong to a school, and their pupils get IDs with that school’s code.','<a class="btn primary" href="#add-school">'.icon('useredit').'Add a school</a>');
  echo admin_kpis([['school',count($all),count($all)===1?'School':'Schools','',false],['user',array_sum(array_column($cnt,'t')),'Teachers','',false],['people',number_format(array_sum(array_column($cnt,'p'))),'Pupils','',false],['book',array_sum(array_column($cnt,'s')),'Sections','',false]]);
@@ -171,7 +171,7 @@ function school_actions(string $action):void{
  if($action==='teacher_school'){$t=admin_teacher($id);$sid=(int)($_POST['school_id']??0);if(!school_row($sid))fail('Choose a school.');
   db()->beginTransaction();try{q('UPDATE users SET school_id=? WHERE id=?',[$sid,$id]);q('UPDATE users SET school_id=? WHERE id IN (SELECT pupil_id FROM teacher_pupils WHERE teacher_id=?)',[$sid,$id]);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   audit('teacher_school',$t['public_id'].' → '.school_row($sid)['code']);flash($t['name'].' and their pupils are now in '.school_row($sid)['code'].'. Their IDs stay the same.');go('?page=accounts');}
- if($action==='school_delete'){$s=school_row($id);if(!$s)fail('School not found.',404);if(count(school_rows())<2)fail('BULIG needs at least one school. Add another school before deleting this one.');
+ if($action==='school_delete'){$s=school_row($id);if(!$s)fail('School not found.',404);if(count(school_rows())<2)fail('BULIG Quest needs at least one school. Add another school before deleting this one.');
   if(strtoupper(trim((string)($_POST['confirm']??'')))!==strtoupper((string)$s['code']))fail('Type the school code '.$s['code'].' in the box to confirm.');
   $u=current_user();db()->beginTransaction();try{$r=delete_school($id,(int)$u['id']);audit('school_delete',$s['code'].': '.count($r['teachers']).' teachers, '.count($r['pupils']).' pupils');db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   foreach($r['teachers'] as $t)del_files($t['avatar_path'],(int)$t['id'],false);foreach($r['pupils'] as $p)del_files($p['avatar_path'],(int)$p['id'],true);

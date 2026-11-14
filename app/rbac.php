@@ -12,6 +12,7 @@
 
 const ROLES=[
  'central_admin'=>['Division Admin','Entire division','admin','system'],
+ 'division_viewer'=>['Division Viewer','Entire division · view only','admin','system'],   // v216 looks at every school; changes nothing
  'municipal_admin'=>['Municipal Admin','Municipality management','admin','municipality'],
  'municipal_viewer'=>['Municipal Viewer','Municipality monitoring · view only','admin','municipality'],
  'district_admin'=>['District Admin','District management','admin','district'],
@@ -21,16 +22,19 @@ const ROLES=[
  'content_dev'=>['Content Developer','Lesson content · drafts for review','studio','system'],   // v215 Content Studio: lessons only, no people (app/studio.php)
  'teacher'=>['Teacher','Classes and reading verification','teacher','school'],
  'pupil'=>['Pupil','Lessons and activities','pupil','school']];
-const ROLE_VIEWERS=['municipal_viewer','district_supervisor','principal'];
+const ROLE_VIEWERS=['division_viewer','municipal_viewer','district_supervisor','principal'];
 /** Who may appoint whom (a role can only appoint roles below it, inside its own scope). */
-const ROLE_APPOINTS=['central_admin'=>['municipal_admin','municipal_viewer','content_dev'],
+const ROLE_APPOINTS=['central_admin'=>['division_viewer','municipal_admin','municipal_viewer','content_dev'],
  'municipal_admin'=>['district_admin','district_supervisor'],'district_admin'=>['school_admin','principal']];
+/** v216 Every role under this one (the roles it appoints, and theirs, and so on). A role manages all of them inside its
+    own area: remove them from the role, make a new password, print their pass. Appointing stays one level down. */
+function role_below(string $role):array{$out=[];foreach(ROLE_APPOINTS[$role]??[] as $x){$out[]=$x;foreach(role_below($x) as $y)$out[]=$y;}return array_values(array_unique($out));}
 /** v211 School Admin creates Teacher and Pupil accounts for their own school (Organization page). */
 const ROLE_CREATES=['school_admin'=>['teacher','pupil']];
 /** Actions that make teacher accounts: the Central Admin (first setup) and the School Admin only. */
 const ROLE_TEACHER_MAKERS=['central_admin','school_admin'];
 /** v211 ID letters for each administrative role: DV0001 = Division Admin, MA = Municipal Admin, and so on (v215: no year, like teacher IDs). */
-const ROLE_ID_PREFIX=['central_admin'=>'DV','municipal_admin'=>'MA','municipal_viewer'=>'MV','district_admin'=>'DA','district_supervisor'=>'DS','school_admin'=>'SA','principal'=>'SP','content_dev'=>'CD'];
+const ROLE_ID_PREFIX=['central_admin'=>'DV','municipal_admin'=>'MA','municipal_viewer'=>'MV','district_admin'=>'DA','district_supervisor'=>'DS','school_admin'=>'SA','principal'=>'SP','content_dev'=>'CD','division_viewer'=>'DW'];
 /** A new ID for an administrative account (inside a transaction): letters + number, e.g. MA0001 (v215: no year, like teacher IDs). */
 function rbac_account_id(string $role):string{
  $pre=ROLE_ID_PREFIX[$role]??'A';$yy='';$kind='r:'.$pre;
@@ -161,7 +165,7 @@ function role_cards(array $u):string{
  return $h.'</div>';
 }
 function role_view(array $u):void{
- echo '<section class="card role-pick"><span class="eyebrow">ONE ACCOUNT, MORE THAN ONE ROLE</span><h1>Choose Your Role</h1><p class="muted">'.e(name_case((string)$u['name'])).', choose how you want to use BULIG now. You can switch any time from the menu, without signing out.</p>'.role_cards($u).'</section>';
+ echo '<section class="card role-pick"><span class="eyebrow">ONE ACCOUNT, MORE THAN ONE ROLE</span><h1>Choose Your Role</h1><p class="muted">'.e(name_case((string)$u['name'])).', choose how you want to use BULIG Quest now. You can switch any time from the menu, without signing out.</p>'.role_cards($u).'</section>';
 }
 /** v211 Right after signing in, a person with several roles chooses in a popup over their last-used dashboard. */
 function rbac_start_popup(array $u):void{
@@ -170,7 +174,7 @@ function rbac_start_popup(array $u):void{
 }
 function role_popup(array $u):string{
  if(empty($_SESSION['role_pop'])||count($u['roles']??[])<2)return '';unset($_SESSION['role_pop']);$t=ROLES[$u['active_role']][0]??'';
- return '<div class="role-pop" role="dialog" aria-modal="true" aria-labelledby="rp-t" data-role-pop><div class="role-pop-box card"><span class="eyebrow">ONE ACCOUNT, MORE THAN ONE ROLE</span><h2 id="rp-t">Choose Your Role</h2><p class="muted">Hello, '.e(explode(' ',name_case(trim((string)$u['name'])))[0]).'! How do you want to use BULIG now? You can switch any time from the menu.</p>'.role_cards($u).'<button type="button" class="btn secondary role-pop-x" data-role-pop-close>Continue as '.e($t).'</button></div></div>';
+ return '<div class="role-pop" role="dialog" aria-modal="true" aria-labelledby="rp-t" data-role-pop><div class="role-pop-box card"><span class="eyebrow">ONE ACCOUNT, MORE THAN ONE ROLE</span><h2 id="rp-t">Choose Your Role</h2><p class="muted">Hello, '.e(explode(' ',name_case(trim((string)$u['name'])))[0]).'! How do you want to use BULIG Quest now? You can switch any time from the menu.</p>'.role_cards($u).'<button type="button" class="btn secondary role-pop-x" data-role-pop-close>Continue as '.e($t).'</button></div></div>';
 }
 /** The role switcher in the menu (only for people with more than one role). */
 function role_switcher(?array $u):string{
@@ -181,7 +185,7 @@ function role_switcher(?array $u):string{
 /* ---------- the Organization page: municipalities, districts, schools and appointments ---------- */
 function org_my_munis(array $u):array{
  $r=$u['active_role'];$s=(int)$u['scope_id'];
- if($r==='central_admin')return rows('SELECT * FROM municipalities ORDER BY id');
+ if($r==='central_admin'||(ROLES[$r][3]??'')==='system')return rows('SELECT * FROM municipalities ORDER BY id');   // v216 the Division Viewer sees the whole division
  if(ROLES[$r][3]==='municipality')return rows('SELECT * FROM municipalities WHERE id=?',[$s]);
  if(ROLES[$r][3]==='district')return rows('SELECT m.* FROM municipalities m JOIN districts d ON d.municipality_id=m.id WHERE d.id=?',[$s]);
  return [];
@@ -199,7 +203,7 @@ function org_view(array $u):void{
   $list=rows('SELECT s.id,s.code,s.name,s.district,s.district_id FROM schools s WHERE '.($sch===null?'1':($sch?'s.id IN ('.implode(',',$sch).')':'0')).($central?'':'').' ORDER BY s.district_id IS NOT NULL,s.name');
   if($central)$list=rows('SELECT s.id,s.code,s.name,s.district,s.district_id FROM schools s ORDER BY s.district_id IS NOT NULL,s.name');
   $wait=array_filter($list,fn($x)=>!$x['district_id']);
-  echo '<section class="card org-schools" id="org-review"><div class="ws-hd"><h2>'.icon('alert').'Schools waiting for a district</h2><span class="rs-sub">'.count($wait).' to review</span></div><p class="muted">BULIG never guesses. Choose each school’s district from DepEd’s official list. The school, its teachers and pupils stay the same.</p>';
+  echo '<section class="card org-schools" id="org-review"><div class="ws-hd"><h2>'.icon('alert').'Schools waiting for a district</h2><span class="rs-sub">'.count($wait).' to review</span></div><p class="muted">BULIG Quest never guesses. Choose each school’s district from DepEd’s official list. The school, its teachers and pupils stay the same.</p>';
   foreach($list as $x){if($x['district_id']&&!$wait)break;
    echo '<form method="post" class="org-srow'.($x['district_id']?' ok':'').'">'.csrf_field().'<input type="hidden" name="action" value="org_school_district"><input type="hidden" name="school" value="'.(int)$x['id'].'"><span><b>'.e($x['name']?:$x['code']).'</b><small>'.e($x['code']).($x['district']!==''?' · typed: '.e($x['district']):'').'</small></span>';
    if($view)echo '<span class="rs-sub">'.e($x['district_id']?(string)val('SELECT name FROM districts WHERE id=?',[$x['district_id']]):'Not set').'</span></form>';
@@ -208,7 +212,7 @@ function org_view(array $u):void{
   echo '</section>';
  }
  /* appointments */
- $can=ROLE_APPOINTS[$r]??[];
+ $can=ROLE_APPOINTS[$r]??[];$below=role_below($r);
  $rows=rows('SELECT ur.*,u.name,u.public_id FROM user_roles ur JOIN users u ON u.id=ur.user_id ORDER BY FIELD(ur.role,'."'".implode("','",array_keys(ROLES))."'".'),u.name');
  $rows=array_values(array_filter($rows,fn($x)=>org_in_my_scope($u,$x['role'],(int)$x['scope_id'])));
  echo '<section class="card org-people" id="org-people"><div class="ws-hd"><h2>'.icon('useredit').'Add a person to a role</h2></div>';
@@ -223,20 +227,20 @@ function org_view(array $u):void{
   foreach($mk as $k)echo '<option value="'.$k.'" data-level="'.ROLES[$k][3].'" data-new="'.(in_array($k,ROLE_CREATES[$r]??[],true)?$k:'admin').'">'.e(ROLES[$k][0]).(in_array($k,ROLE_VIEWERS,true)?' (view only)':'').'</option>';
   echo '</select></label><label>For<select name="scope" required data-org-scope>';foreach($scopes as $lv=>$opts)foreach($opts as $id=>$n)echo '<option value="'.$lv.':'.$id.'" data-level="'.$lv.'">'.e($n).'</option>';
   echo '</select></label></div><p class="org-step"><span>2</span>Who is it?</p>';
-  if($can)echo '<div class="org-who"><label class="org-opt"><input type="radio" name="mode" value="new" checked><span><b>A new person</b><small>BULIG makes their ID and password.</small></span></label><label class="org-opt"><input type="radio" name="mode" value="existing"><span><b>Already has a BULIG account</b><small>For example, a teacher who will also be School Admin. They keep one account.</small></span></label></div>';
+  if($can)echo '<div class="org-who"><label class="org-opt"><input type="radio" name="mode" value="new" checked><span><b>A new person</b><small>BULIG Quest makes their ID and password.</small></span></label><label class="org-opt"><input type="radio" name="mode" value="existing"><span><b>Already has a BULIG Quest account</b><small>For example, a teacher who will also be School Admin. They keep one account.</small></span></label></div>';
   else echo '<input type="hidden" name="mode" value="new">';
   echo '<div class="org-f-new">'.str_replace(' required','',name_fields()).'<div class="org-grid"><label data-for-new>Male or female<select name="sex"><option value="female">Female</option><option value="male">Male</option></select></label></div>';
   if(isset(ROLE_CREATES[$r])){$secs=rows("SELECT s.id,s.grade_level,s.name,t.name tn FROM sections s JOIN users t ON t.id=s.teacher_id AND t.active=1 WHERE s.archived_at IS NULL AND t.school_id=? ORDER BY s.grade_level,s.name",[(int)$u['scope_id']]);
    echo '<div class="org-grid"><label data-for="pupil">Pupil’s class<select name="section"><option value="0">Choose a class</option>';foreach($secs as $x)echo '<option value="'.(int)$x['id'].'">Grade '.(int)$x['grade_level'].' · '.e($x['name']).' · '.e(name_case((string)$x['tn'])).'</option>';echo '</select></label></div>';}
   echo '</div>';
-  if($can)echo '<div class="org-f-ex"><label>Their BULIG ID or name<input name="public_id" maxlength="30" placeholder="Type an ID or a name, e.g. TCEST0001" autocapitalize="characters" autocomplete="off" data-org-lookup role="combobox" aria-expanded="false" aria-controls="org-lk" aria-autocomplete="list"></label><div class="org-lk" id="org-lk" role="listbox" hidden></div></div>';
+  if($can)echo '<div class="org-f-ex"><label>Their BULIG Quest ID or name<input name="public_id" maxlength="30" placeholder="Type an ID or a name, e.g. TCEST0001" autocapitalize="characters" autocomplete="off" data-org-lookup role="combobox" aria-expanded="false" aria-controls="org-lk" aria-autocomplete="list"></label><div class="org-lk" id="org-lk" role="listbox" hidden></div></div>';
   echo '<button class="btn primary">'.icon('check').'Add to this role</button></form>';}
- echo '<div class="ws-hd org-ph"><h2>'.icon('people').'People and their roles</h2>'.($can&&!$view?'<a class="btn secondary small" href="?page=admin_passes">'.icon('print').'Print passes</a>':'<span class="rs-sub">'.count($rows).'</span>').'</div><p class="muted">One person can hold several roles with one account. They choose a role after signing in, and switch from the menu.</p><div class="org-list">';
+ echo '<div class="ws-hd org-ph"><h2>'.icon('people').'People and their roles</h2>'.($below&&!$view?'<a class="btn secondary small" href="?page=admin_passes">'.icon('print').'Print passes</a>':'<span class="rs-sub">'.count($rows).'</span>').'</div><p class="muted">One person can hold several roles with one account. They choose a role after signing in, and switch from the menu.</p><div class="org-list">';
  $by=[];foreach($rows as $x)$by[(int)$x['user_id']][]=$x;
  foreach($by as $uid=>$xs){$self=$uid===(int)$u['id'];
-  $mine=!$view&&!$self&&(bool)array_filter($xs,fn($x)=>in_array($x['role'],$can,true));
+  $mine=!$view&&!$self&&(bool)array_filter($xs,fn($x)=>in_array($x['role'],$below,true)&&org_in_my_scope($u,$x['role'],(int)$x['scope_id']));
   echo '<div class="org-prow"><span class="org-pn"><b>'.e(name_case((string)$xs[0]['name'])).'</b><small>'.e($xs[0]['public_id']).'</small>'.($mine?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_reset_pw"><input type="hidden" name="user" value="'.$uid.'"><button class="linkbutton org-pw" data-confirm="Make a new password for '.e(name_case((string)$xs[0]['name'])).'? The old password stops working.">'.icon('key').'New password</button></form>':'').'</span><span class="org-rc">';
-  foreach($xs as $x){$rm=!$view&&!$self&&in_array($x['role'],$can,true);
+  foreach($xs as $x){$rm=!$view&&!$self&&in_array($x['role'],$below,true)&&org_in_my_scope($u,$x['role'],(int)$x['scope_id']);
    echo '<span class="org-chip'.(in_array($x['role'],ROLE_VIEWERS,true)?' v':'').'">'.e(ROLES[$x['role']][0]).($x['scope_id']?'<small>'.e(rbac_scope_name($x['role'],(int)$x['scope_id'])).'</small>':'')
     .($rm?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="org_unappoint"><input type="hidden" name="id" value="'.(int)$x['id'].'"><button class="org-x" aria-label="Remove this role" title="Remove this role" data-confirm="Remove this role from '.e($x['name']).'? Their account and data stay.">'.icon('close').'</button></form>':'').'</span>';}
   echo '</span></div>';}
@@ -277,7 +281,7 @@ function org_chart(array $u,array $munis):string{
 }
 /** Is a role at this place inside the active role's area? */
 function org_in_my_scope(array $u,string $role,int $scope):bool{
- $r=$u['active_role'];if($r==='central_admin')return true;$lv=ROLES[$role][3]??'';$me=(int)$u['scope_id'];
+ $r=$u['active_role'];if($r==='central_admin'||(ROLES[$r][3]??'')==='system')return true;$lv=ROLES[$role][3]??'';$me=(int)$u['scope_id'];   // v216 the Division Viewer looks at the whole division (view only: it changes nothing)
  if(ROLES[$r][3]==='municipality'){if($lv==='municipality')return $scope===$me;if($lv==='district')return (int)val('SELECT municipality_id FROM districts WHERE id=?',[$scope])===$me;return in_array($scope,$u['scope_schools']??[],true);}
  if(ROLES[$r][3]==='district'){if($lv==='district')return $scope===$me;if($lv==='school')return in_array($scope,$u['scope_schools']??[],true);return false;}
  if(ROLES[$r][3]==='school')return $lv==='school'&&$scope===$me;
@@ -285,7 +289,7 @@ function org_in_my_scope(array $u,string $role,int $scope):bool{
 }
 /** The places the active role may appoint people to, by level. */
 function org_scope_options(array $u):array{
- $o=['system'=>$u['active_role']==='central_admin'?[0=>'Entire division (lessons only)']:[],'municipality'=>[],'district'=>[],'school'=>[]];
+ $o=['system'=>$u['active_role']==='central_admin'?[0=>'Entire division']:[],'municipality'=>[],'district'=>[],'school'=>[]];
  foreach(org_my_munis($u) as $m)if($u['active_role']==='central_admin')$o['municipality'][(int)$m['id']]=$m['name'];
  $ds=rows('SELECT d.id,d.name,d.municipality_id FROM districts d ORDER BY d.name');foreach($ds as $d)if(org_in_my_scope($u,'district_admin',(int)$d['id']))$o['district'][(int)$d['id']]=$d['name'];
  foreach(rows('SELECT id,name,code FROM schools WHERE active=1 ORDER BY name') as $s)if(org_in_my_scope($u,'school_admin',(int)$s['id']))$o['school'][(int)$s['id']]=$s['name']?:$s['code'];
@@ -300,14 +304,14 @@ function org_action(string $action):never{
  if($action==='org_muni_logo'){$mid=(int)($_POST['id']??0);if(!($r==='central_admin'||($r==='municipal_admin'&&(int)$u['scope_id']===$mid)))fail('Not allowed.',403);
   if(!val('SELECT 1 FROM municipalities WHERE id=?',[$mid]))fail('Municipality not found.',404);$f=save_uploaded_image('logo');$old=muni_logo($mid);
   admin_set('muni_logo_'.$mid,$f);if($old!==''&&str_starts_with($old,'assets/uploads/')&&$old!==$f)@unlink(__DIR__.'/../public/'.$old);audit('org_muni_logo',(string)$mid);flash('Municipality logo saved. It prints on the ID cards.');go('?page=org');}
- if($action==='org_id_design'){if($r!=='central_admin')fail('Only the Division Admin chooses the ID design.',403);$d=(string)($_POST['design']??'a');if(!in_array($d,['a','b','c'],true))$d='a';admin_set('id_design',$d);flash('ID card design saved.');go((string)($_POST['back']??'')==='teacher_cards'?'?page=teacher_cards':'?page=admin_passes');}
+ if($action==='org_id_design'){if($r!=='central_admin')fail('Only the Division Admin chooses the ID design.',403);$d=(string)($_POST['design']??'b');if(!isset(ID_THEMES[$d])&&$d!=='r')$d='b';admin_set('id_design',$d);flash('ID card design saved.');go((string)($_POST['back']??'')==='teacher_cards'?'?page=teacher_cards':'?page=admin_passes');}
  if($action==='org_new_ok'){unset($_SESSION['org_new']);go('?page=org#org-people');}
  if($action==='org_reset_pw'){$t=(int)($_POST['user']??0);if($t===(int)$u['id'])fail('Change your own password in My profile.',403);
-  $ok=false;foreach(rows('SELECT role,scope_id FROM user_roles WHERE user_id=?',[$t]) as $x)if(in_array($x['role'],ROLE_APPOINTS[$r]??[],true)&&org_in_my_scope($u,$x['role'],(int)$x['scope_id']))$ok=true;
-  $p=one("SELECT id,name,public_id FROM users WHERE id=? AND role='admin' AND active=1",[$t]);if(!$ok||!$p)fail('You can make a new password only for the people you manage.',403);
+  $ok=false;foreach(rows('SELECT role,scope_id FROM user_roles WHERE user_id=?',[$t]) as $x)if(in_array($x['role'],role_below($r),true)&&org_in_my_scope($u,$x['role'],(int)$x['scope_id']))$ok=true;
+  $p=one("SELECT id,name,public_id FROM users WHERE id=? AND role IN ('admin','teacher') AND active=1",[$t]);if(!$ok||!$p)fail('You can make a new password only for the people you manage.',403);
   $pw=substr(str_replace(['+','/','=','0','O','l','I'],'',base64_encode(random_bytes(12))),0,10);
   q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($pw,PASSWORD_DEFAULT),$t]);try{q('DELETE FROM remember_tokens WHERE user_id=?',[$t]);}catch(Throwable $e){}if(function_exists('saved_login_clear'))saved_login_clear($t);
-  rbac_keep_starter($t,$pw);audit('org_reset_pw',(string)$p['public_id']);$fr=one('SELECT role,scope_id FROM user_roles WHERE user_id=? ORDER BY id LIMIT 1',[$t]);$_SESSION['org_new']=['title'=>'New password made','name'=>name_case((string)$p['name']),'role'=>$fr?ROLES[$fr['role']][0].' · '.rbac_scope_name($fr['role'],(int)$fr['scope_id']):'BULIG account','id'=>$p['public_id'],'pw'=>$pw,'uid'=>$t,'rk'=>$fr['role']??'','scope'=>(int)($fr['scope_id']??0)];go('?page=org#org-people');}
+  rbac_keep_starter($t,$pw);audit('org_reset_pw',(string)$p['public_id']);$fr=one('SELECT role,scope_id FROM user_roles WHERE user_id=? ORDER BY id LIMIT 1',[$t]);$_SESSION['org_new']=['title'=>'New password made','name'=>name_case((string)$p['name']),'role'=>$fr?ROLES[$fr['role']][0].' · '.rbac_scope_name($fr['role'],(int)$fr['scope_id']):'BULIG Quest account','id'=>$p['public_id'],'pw'=>$pw,'uid'=>$t,'rk'=>$fr['role']??'','scope'=>(int)($fr['scope_id']??0)];go('?page=org#org-people');}
  if($action==='org_add')$action=((string)($_POST['mode']??'new'))==='existing'?'org_appoint':'org_create';   // v211 one form: a new person or an existing account
  $u=current_user();if(!$u||($u['role']??'')!=='admin')fail('Not allowed.',403);if(!rbac_ready())fail('Import 040_hierarchy_roles.sql first.');
  $r=$u['active_role'];$name=fn($k)=>name_case(mb_substr(trim((string)($_POST[$k]??'')),0,120));
@@ -324,10 +328,11 @@ function org_action(string $action):never{
  if($action==='org_appoint'){$role=(string)($_POST['role']??'');if(!in_array($role,ROLE_APPOINTS[$r]??[],true))fail('You cannot appoint this role.',403);
   [$lv,$sid]=array_pad(explode(':',(string)($_POST['scope']??'')),2,'0');$sid=(int)$sid;if($lv!==ROLES[$role][3])fail('Choose a '.ROLES[$role][3].' for this role.');
   if(!org_in_my_scope($u,$role,$sid))fail('Choose a place inside your area.',403);
-  $p=one('SELECT id,name,role FROM users WHERE public_id=? AND active=1',[strtoupper(trim((string)($_POST['public_id']??'')))]);if(!$p)fail('No active account has that ID.',404);
+  $p=one("SELECT id,name,role,active FROM users WHERE public_id=? AND (active=1 OR role='admin')",[strtoupper(trim((string)($_POST['public_id']??'')))]);if(!$p)fail('No active account has that ID.',404);
   if($p['role']==='pupil')fail('Pupils cannot hold administrative roles.',403);if((int)$p['id']===(int)$u['id'])fail('You cannot appoint yourself.',403);
   q('INSERT IGNORE INTO user_roles(user_id,role,scope_id,appointed_by) VALUES(?,?,?,?)',[$p['id'],$role,$sid,$u['id']]);
-  notify((int)$p['id'],'note','You have a new role in BULIG','You are now '.ROLES[$role][0].' · '.rbac_scope_name($role,$sid).'. Choose it from the menu (Switch role).','?page=role');
+  if(!(int)$p['active'])q('UPDATE users SET active=1 WHERE id=?',[$p['id']]);   // v216 an administrator account turned off when its last role was removed is turned back on
+  notify((int)$p['id'],'note','You have a new role in BULIG Quest','You are now '.ROLES[$role][0].' · '.rbac_scope_name($role,$sid).'. Choose it from the menu (Switch role).','?page=role');
   audit('org_appoint',$p['name'].' → '.$role.':'.$sid);flash(name_case((string)$p['name']).' is now '.ROLES[$role][0].'.');go('?page=org#org-people');}
  if($action==='org_create'&&in_array((string)($_POST['role']??''),ROLE_CREATES[$r]??[],true))org_create_school_account($u);
  if($action==='org_create'){$role=(string)($_POST['role']??'');if(!in_array($role,ROLE_APPOINTS[$r]??[],true))fail('You cannot create this role.',403);
@@ -342,9 +347,16 @@ function org_action(string $action):never{
    audit('org_create',$pid.' '.$role.':'.$sid);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
   $_SESSION['org_new']=['name'=>$nm,'role'=>ROLES[$role][0].' · '.rbac_scope_name($role,$sid),'id'=>$pid,'pw'=>$pw,'uid'=>$id,'rk'=>$role,'scope'=>$sid];go('?page=org#org-people');}
  if($action==='org_unappoint'){$x=one('SELECT * FROM user_roles WHERE id=?',[(int)($_POST['id']??0)]);if(!$x)fail('Not found.',404);
-  if((int)$x['user_id']===(int)$u['id']||!in_array($x['role'],ROLE_APPOINTS[$r]??[],true)||!org_in_my_scope($u,$x['role'],(int)$x['scope_id']))fail('You cannot remove this role.',403);
-  q('DELETE FROM user_roles WHERE id=?',[$x['id']]);audit('org_unappoint',$x['user_id'].' '.$x['role'].':'.$x['scope_id']);flash('Role removed. The account and its data stay.');go('?page=org#org-people');}
- if($action==='org_my_id')fail('IDs never change in BULIG.',403);   // v211 removed
+  if((int)$x['user_id']===(int)$u['id']||!in_array($x['role'],role_below($r),true)||!org_in_my_scope($u,$x['role'],(int)$x['scope_id']))fail('You cannot remove this role.',403);
+  q('DELETE FROM user_roles WHERE id=?',[$x['id']]);audit('org_unappoint',$x['user_id'].' '.$x['role'].':'.$x['scope_id']);
+  /* v216 an administrator account with no role left is turned off (an admin account with no roles would otherwise act
+     like an administrator from before the roles update, with full access). A teacher keeps the teacher account. */
+  $acc=one('SELECT role,name FROM users WHERE id=?',[$x['user_id']]);
+  if($acc&&$acc['role']==='admin'&&!val('SELECT COUNT(*) FROM user_roles WHERE user_id=?',[$x['user_id']])){q('UPDATE users SET active=0 WHERE id=?',[$x['user_id']]);try{q('DELETE FROM remember_tokens WHERE user_id=?',[$x['user_id']]);}catch(Throwable $e){}if(function_exists('saved_login_clear'))saved_login_clear((int)$x['user_id']);audit('org_account_off',(string)$x['user_id']);
+   flash(name_case((string)$acc['name']).' has no other role, so their account is turned off. Their records stay. Give them a role again with “Already has a BULIG Quest account” to turn it back on.');}
+  else flash('Role removed. The account and its data stay.');
+  go('?page=org#org-people');}
+ if($action==='org_my_id')fail('IDs never change in BULIG Quest.',403);   // v211 removed
  fail('Unknown action.');
 }
 
@@ -405,9 +417,9 @@ function role_manage_panel(array $u):string{
   $kp[]=[in_array($k,ROLE_VIEWERS,true)?'eye':($k==='pupil'?'user':($k==='teacher'?'people':'shield')),$c,ROLES[$k][0].($c===1?'':'s'),in_array($k,ROLE_VIEWERS,true)?'view only':'',false];}
  $wait=in_array($r,['central_admin','municipal_admin','district_admin'],true)?(int)val('SELECT COUNT(*) FROM schools WHERE active=1 AND district_id IS NULL'.($r==='central_admin'?'':' AND 0')):0;
  if($wait)$kp[]=['alert',$wait,'Schools waiting for a district','choose their district',true];
- $who=['central_admin'=>'Municipal Admins, Municipal Viewers and Content Developers','municipal_admin'=>'District Admins and District Supervisors','district_admin'=>'School Admins and School Principals','school_admin'=>'Teachers and Pupils'][$r]??'';
+ $who=['central_admin'=>'Division Viewers, Municipal Admins, Municipal Viewers and Content Developers','municipal_admin'=>'District Admins and District Supervisors','district_admin'=>'School Admins and School Principals','school_admin'=>'Teachers and Pupils'][$r]??'';
  $idnote='';   // v211 IDs never change (the Get my ID button is removed)
- return '<section class="card mon-manage">'.$idnote.'<div class="ws-hd"><h2>'.icon('useredit').'Accounts you manage</h2></div><p class="muted">You create the '.e($who).' for your area. Each person gets an ID and a password from BULIG.</p>'.admin_kpis($kp)
+ return '<section class="card mon-manage">'.$idnote.'<div class="ws-hd"><h2>'.icon('useredit').'Accounts you manage</h2></div><p class="muted">You create the '.e($who).' for your area. Each person gets an ID and a password from BULIG Quest.</p>'.admin_kpis($kp)
   .'<div class="ws-btns"><a class="btn primary" href="?page=org#org-create">'.icon('useredit').'Create an account</a><a class="btn secondary" href="?page=org#org-people">'.icon('people').'Give a role to an existing account</a>'.($r==='school_admin'?'<a class="btn secondary" href="?page=add_teachers">'.icon('people').'Add many teachers</a>':'').($wait?'<a class="btn secondary" href="?page=org#org-review">'.icon('school').'Review schools</a>':'').'<a class="btn secondary" href="?page=org">'.icon('school').'Organization chart</a></div></section>';
 }
 
@@ -431,9 +443,9 @@ function rbac_starter(int $uid):?string{
  return $pw!==''&&password_verify($pw,(string)val('SELECT password_hash FROM users WHERE id=?',[$uid]))?$pw:null;
 }
 function admin_passes_view(array $u):void{
- $r=$u['active_role']??'';$can=ROLE_APPOINTS[$r]??[];$one=strtoupper(trim((string)($_GET['id']??'')));
+ $r=$u['active_role']??'';$can=role_below($r);$one=strtoupper(trim((string)($_GET['id']??'')));
  echo '<div class="pageheading ws-head no-print"><div><span class="eyebrow">ORGANIZATION</span><h1>Admin Passes</h1><p class="muted">A pass for each person you manage, with their ID, starting password and a QR code. Print, cut along the dashed lines and give each one their pass.</p></div><div class="ws-btns"><a class="btn secondary" href="?page=org">'.icon('arrow','flip').'Back to Organization</a></div></div>';
- $rows=$can?rows("SELECT ur.role,ur.scope_id,u.id,u.name,u.public_id FROM user_roles ur JOIN users x ON x.id=ur.user_id JOIN users u ON u.id=ur.user_id WHERE u.active=1 AND u.role='admin' AND ur.role IN ('".implode("','",$can)."') ORDER BY FIELD(ur.role,'".implode("','",array_keys(ROLES))."'),u.name"):[];
+ $rows=$can?rows("SELECT ur.role,ur.scope_id,u.id,u.name,u.public_id FROM user_roles ur JOIN users x ON x.id=ur.user_id JOIN users u ON u.id=ur.user_id WHERE u.active=1 AND u.role IN ('admin','teacher') AND ur.role IN ('".implode("','",$can)."') ORDER BY FIELD(ur.role,'".implode("','",array_keys(ROLES))."'),u.name"):[];
  $rows=array_values(array_filter($rows,fn($x)=>org_in_my_scope($u,$x['role'],(int)$x['scope_id'])&&(int)$x['id']!==(int)$u['id']&&($one===''||strtoupper((string)$x['public_id'])===$one)));
  if(!$rows){echo '<section class="empty no-print">'.icon('people').'<h2>No passes yet.</h2><p>Add a person to a role on the Organization page, then come back to print their pass.</p></section>';return;}
  echo '<div class="lc-tools no-print card"><label class="lc-opt"><input type="checkbox" data-lc-toggle="lc-hide-qr" checked> QR code</label><label class="lc-opt"><input type="checkbox" data-lc-toggle="lc-hide-pass" checked> Starting password</label><button type="button" class="btn primary" data-lc-print>'.icon('download').'<span data-lc-print-label>Print passes</span></button></div>';
@@ -446,8 +458,8 @@ function admin_passes_view(array $u):void{
 /** v211 The staff ID card (portrait, like a school ID) for administrators and teachers. Pupils keep their tickets.
     $o: name, role, place, id, pw (null = their own password), qr, pic, scan, n */
 function staff_id_card(array $o):string{
- $d=id_design();$logos=id_logos((int)($o['school']??0),(int)($o['muni']??0),(int)($o['district']??0));
- return '<article class="idc idc-'.$d.(!empty($o['kid'])?' idc-kid':'').'"><header class="idc-top"><span class="idc-logos">'.$logos.'</span><span class="idc-org">Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon</span><img class="idc-bulig" src="assets/brand/bulig-quest.webp" alt="BULIG"></header>'
+ $d=id_design();if($d==='r')$d=role_theme((string)($o['role']??''));$logos=id_logos((int)($o['school']??0),(int)($o['muni']??0),(int)($o['district']??0));
+ return '<article class="idc idc-b'.id_theme_class($d).(!empty($o['kid'])?' idc-kid':'').'"><header class="idc-top"><span class="idc-logos">'.$logos.'</span><span class="idc-org">Republic of the Philippines<br><b>Department of Education</b><br>Schools Division of Bukidnon</span><img class="idc-bulig" src="assets/brand/bulig-quest.webp" alt="BULIG Quest"></header>'
   .'<div class="idc-photo"><img src="'.e($o['pic']).'" alt=""></div><strong class="idc-name'.(mb_strlen((string)$o['name'])>24?' sm':'').'">'.e($o['name']).'</strong>'
   .'<span class="idc-role">'.e(mb_strtoupper((string)$o['role'])).'</span>'.(($o['place']??'')!==''?'<span class="idc-place">'.e($o['place']).'</span>':'')
   .'<div class="idc-row"><span class="lc-qr tk-qr idc-qr" data-qr="'.e($o['qr']).'" aria-hidden="true"></span><dl><dt>'.e($o['idlab']??'ID').'</dt><dd class="idc-id">'.e($o['id']).'</dd><span class="tk-pass"><dt>'.($o['pw']!==null?'Starting password':'Password').'</dt><dd class="idc-pw'.($o['pw']===null?' own':'').'">'.e($o['pw']??'Your own password').'</dd></span></dl></div>'
@@ -459,7 +471,19 @@ function muni_logo(int $mid):string{if(!$mid||!function_exists('admin_setting'))
 function district_logo(int $did):string{if(!$did||!function_exists('admin_setting'))return '';$f=(string)admin_setting('district_logo_'.$did,'');return $f!==''&&is_file(__DIR__.'/../public/'.$f)?$f:'';}
 /** ID cards per A4 page for each size (Small, Medium, Large); the landscape design fits fewer. */
 function idc_per():array{return id_design()==='c'?['s'=>12,'m'=>8,'l'=>8]:['s'=>16,'m'=>9,'l'=>6];}
-function id_design():string{$d=function_exists('admin_setting')?(string)admin_setting('id_design','b'):'b';return in_array($d,['a','b','c'],true)?$d:'b';}
+/** v216 Card designs: the Green layout in different colours (ID cards for staff, and the pupils' Reading Pass tickets). */
+const ID_THEMES=['b'=>'Green','d'=>'Ocean Blue','e'=>'Maroon and Gold','f'=>'Sunset','g'=>'Royal Violet','h'=>'Teal Lagoon','i'=>'Night Sky'];
+function id_design():string{return 'r';}   // v216 one design: ID cards are coloured by role
+/** v216 "By role": each level has its own colour, so a card shows at a glance who it belongs to. */
+const ROLE_THEMES=['central_admin'=>'i','division_viewer'=>'i','municipal_admin'=>'e','municipal_viewer'=>'e','district_admin'=>'g','district_supervisor'=>'g','school_admin'=>'d','principal'=>'d','content_dev'=>'f','teacher'=>'b'];
+/** The colour for a role, from its key or its name on the card (Green when unknown). */
+function role_theme(string $role):string{if(isset(ROLE_THEMES[$role]))return ROLE_THEMES[$role];foreach(ROLES as $k=>$x)if(strcasecmp($x[0],$role)===0)return ROLE_THEMES[$k]??'b';return 'b';}
+/** The theme class for a design ('' for Green). */
+function id_theme_class(string $d):string{return $d!=='b'&&isset(ID_THEMES[$d])?' idt-'.$d:'';}
+/** The design of the pupils' Reading Pass tickets: each teacher chooses for their own pupils. */
+function ticket_design():string{$u=function_exists('current_user')?current_user():null;$d=$u&&($u['role']??'')==='teacher'?(string)(val('SELECT setting_value FROM settings WHERE setting_key=?',['tk_design_'.(int)$u['id']])?:'b'):'b';return isset(ID_THEMES[$d])?$d:'b';}
+/** The row of design choices, each with a small colour sample. */
+function id_theme_choices(string $cur,bool $byRole=false):string{$h=$byRole?'<label class="org-opt idt-opt"><input type="radio" name="design" value="r"'.($cur==='r'?' checked':'').'><span><i class="idt-sw idt-sw-r" aria-hidden="true"></i><b>By role</b></span></label>':'';foreach(ID_THEMES as $k=>$t)$h.='<label class="org-opt idt-opt"><input type="radio" name="design" value="'.$k.'"'.($k===$cur?' checked':'').'><span><i class="idt-sw idt-sw-'.$k.'" aria-hidden="true"></i><b>'.e($t).'</b></span></label>';return $h;}
 /** The logos on an ID card: Division, municipality and school (a school with no logo shows its code). */
 function id_logos(int $school,int $muni,int $district=0):string{
  $h='';$div=division_logo();if($div!=='')$h.='<img src="'.e($div).'" alt="Division logo">';
@@ -479,10 +503,8 @@ function role_place_ids(string $role,int $scope):array{
 }
 /** The Division Admin chooses the ID card design (three designs). */
 function id_design_picker(string $back):string{
- $u=current_user();if(($u['active_role']??'central_admin')!=='central_admin')return '';$cur=id_design();$n=['b'=>'Green','a'=>'Official','c'=>'Landscape'];
- $h='<form method="post" class="idc-pick no-print card">'.csrf_field().'<input type="hidden" name="action" value="org_id_design"><input type="hidden" name="back" value="'.e($back).'"><b>ID card design</b>';
- foreach($n as $k=>$t)$h.='<label class="org-opt"><input type="radio" name="design" value="'.$k.'"'.($k===$cur?' checked':'').'><span><b>'.$t.'</b></span></label>';
- return $h.'<button class="btn secondary small">Save design</button></form>';
+ $lg='';foreach(['central_admin'=>'Division','municipal_admin'=>'Municipal','district_admin'=>'District','school_admin'=>'School','content_dev'=>'Content Developer','teacher'=>'Teacher'] as $k=>$t)$lg.='<span><i class="idt-sw idt-sw-'.ROLE_THEMES[$k].'" aria-hidden="true"></i>'.e($t).'</span>';
+ return '<div class="idc-pick no-print card"><p class="idt-legend muted"><b>ID colours by role:</b> '.$lg.' <small>Admins and view-only roles at the same level share a colour; the role is printed under the name.</small></p></div>';
 }
 
 /** v211 The picture on an ID card: the person's own photo or avatar, or else the male or female BULIG character. */

@@ -88,8 +88,8 @@ function rv_waiting(int $tid):array{
 function rv_wait_card_safe(array $u):string{try{return rv_waiting_card((int)$u['id']);}catch(Throwable $e){return '';}}
 function rv_waiting_card(int $tid):string{
  $w=rv_waiting($tid);if(!$w)return '';$old=strtotime((string)$w[0]['created_at']);$days=$old?max(0,(int)floor((time()-$old)/86400)):0;
- $h='<section class="card rv-wait" id="rv-wait"><div class="rv-wait-hd"><h2>'.icon('clock').'Waiting for you <span class="rv-wait-n">'.count($w).'</span></h2>'.($days?'<span class="rv-wait-old">Oldest: '.$days.' '.($days===1?'day':'days').'</span>':'').'</div><p class="muted">BULIG could not score these readings. Listen, then score them so the pupil can move on.</p><div class="rv-wait-list">';
- foreach($w as $r){$why=$r['sp']?'Speech support':($r['state']==='missing'?'No recording':'BULIG could not hear it');$t=strtotime((string)$r['created_at']);$ago=$t?(date('Y-m-d',$t)===date('Y-m-d')?'today':((int)floor((time()-$t)/86400)<=1?'1 day ago':(int)floor((time()-$t)/86400).' days ago')):'';
+ $h='<section class="card rv-wait" id="rv-wait"><div class="rv-wait-hd"><h2>'.icon('clock').'Waiting for you <span class="rv-wait-n">'.count($w).'</span></h2>'.($days?'<span class="rv-wait-old">Oldest: '.$days.' '.($days===1?'day':'days').'</span>':'').'</div><p class="muted">BULIG Quest could not score these readings. Listen, then score them so the pupil can move on.</p><div class="rv-wait-list">';
+ foreach($w as $r){$why=$r['sp']?'Speech support':($r['state']==='missing'?'No recording':'BULIG Quest could not hear it');$t=strtotime((string)$r['created_at']);$ago=$t?(date('Y-m-d',$t)===date('Y-m-d')?'today':((int)floor((time()-$t)/86400)<=1?'1 day ago':(int)floor((time()-$t)/86400).' days ago')):'';
   $h.='<div class="rv-wait-row">'.avatar($r).'<div class="rv-wait-tx"><b>'.e($r['name']).(function_exists('speech_mark')?speech_mark((int)$r['pupil_id']):'').'</b><small>'.e(level_label((int)$r['level_id']).' · '.$r['title'].' · '.$why.($ago?' · '.$ago:'')).'</small></div><a class="btn primary small" href="?page=pupil&amp;id='.(int)$r['pupil_id'].'&amp;tab=answers">Score</a></div>';}
  return $h.'</div></section>';
 }

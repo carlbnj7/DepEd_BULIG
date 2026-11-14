@@ -86,7 +86,7 @@ function castle_pop(?array $u):string{
   .'<div class="rc-fx" aria-hidden="true" data-rc-fx></div>'
   .'<button type="button" class="rc-x" data-rc-close aria-label="Close">'.icon('close').'</button>'
   .'<div class="rc-stage">'
-  .'<div class="rc-text rc-text1"><span class="rc-badge">'.icon('star').'LEVEL 7 COMPLETE</span><h2 id="rc-title">You did it, '.e($first).'!</h2><p>You finished every level of BULIG. The great lamp of the Reading Castle is waiting for a True Reader to light it.</p></div>'
+  .'<div class="rc-text rc-text1"><span class="rc-badge">'.icon('star').'LEVEL 7 COMPLETE</span><h2 id="rc-title">You did it, '.e($first).'!</h2><p>You finished every level of BULIG Quest. The great lamp of the Reading Castle is waiting for a True Reader to light it.</p></div>'
   .'<div class="rc-text rc-text2" hidden><span class="rc-badge rc-badge-gold">'.icon('star').'TRUE READER</span><h2>Welcome to the Reading Castle!</h2><p>You lit the great lamp, '.e($first).'! The BULIG friends cheer for you, a True Reader. Keep reading every day!</p></div>'
   .'<div class="rc-scene">'.$castle.($ride?'<img class="rc-kid rc-ride rc-kid-a" src="'.e($ride['stop']).'" alt="" width="200" height="150"><img class="rc-kid rc-ride rc-kid-b" src="'.e($ride['done']).'" alt="" width="200" height="160" hidden>':'<img class="rc-kid rc-kid-a" src="'.$kid('hello').'" alt="" width="120" height="170"><img class="rc-kid rc-kid-b" src="'.$kid('cheer').'" alt="" width="120" height="170" hidden>').$pals.'</div>'
   .'<div class="rc-actions rc-act1"><button type="button" class="btn primary rc-go" data-rc-open>'.icon('arrow').'Open the gates</button></div>'

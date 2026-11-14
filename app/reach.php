@@ -88,6 +88,6 @@ function push_action(string $action):void{
  if(!$row){echo json_encode(['ok'=>false,'error'=>'Turn reminders on first.']);exit;}
  if($action==='push_prefs'){$p=push_prefs($row);foreach(['daily','teacher','lessons','weekends'] as $k)if(isset($_POST[$k]))$p[$k]=$_POST[$k]==='1'?1:0;if(isset($_POST['hour']))$p['hour']=max(6,min(20,(int)$_POST['hour']));
   q('UPDATE push_subscriptions SET prefs=? WHERE id=?',[json_encode($p),(int)$row['id']]);$row['prefs']=json_encode($p);}
- if($action==='push_test'){$code=push_send($row,['title'=>'BULIG reminders are on!','body'=>'This is how a reminder looks. See you at reading time!','url'=>'?page=dashboard','tag'=>'bulig-test','icon'=>push_icon($u['role']==='pupil'?'daily':'lessons')]);echo json_encode(['ok'=>$code>=200&&$code<300,'status'=>$code,'prefs'=>push_prefs($row)]);exit;}
+ if($action==='push_test'){$code=push_send($row,['title'=>'BULIG Quest reminders are on!','body'=>'This is how a reminder looks. See you at reading time!','url'=>'?page=dashboard','tag'=>'bulig-test','icon'=>push_icon($u['role']==='pupil'?'daily':'lessons')]);echo json_encode(['ok'=>$code>=200&&$code<300,'status'=>$code,'prefs'=>push_prefs($row)]);exit;}
  echo json_encode(['ok'=>true,'prefs'=>push_prefs($row)]);exit;
 }

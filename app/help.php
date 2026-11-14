@@ -13,7 +13,8 @@ function help_widget():string{
  $h.='<dialog class="hp-sheet" aria-labelledby="hp-title"><form method="post" class="hp-card">'.csrf_field().'<input type="hidden" name="action" value="help_request"><input type="hidden" name="lesson_id" value="'.$lid.'"><input type="hidden" name="activity_id" value="'.$aid.'"><input type="hidden" name="back" value="'.e('?'.(string)($_SERVER['QUERY_STRING']??'')).'">';
  $h.='<h2 id="hp-title">I need help</h2><p>Tell your teacher what is hard. Your teacher gets your message, in class or at home.</p>';
  foreach(HELP_REASONS as $k=>$t)$h.='<label class="hp-opt'.($k==='bug'?' hp-bug':'').'"><input type="radio" name="reason" value="'.$k.'"'.($k==='question'?' checked':'').'><i><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.$ic[$k].'</svg></i><span>'.e($t).'</span></label>';
- $h.='<label class="hp-what" data-bug-what hidden>What is not working? (you can skip this)<textarea name="note" maxlength="200" rows="2" placeholder="Example: the button does not work, the picture is missing"></textarea></label>';
+ /* v216 "Something is not working": a checklist of what is wrong, and an optional message */
+ $h.='<div class="hp-what" data-bug-what hidden>'.(defined('BUG_KINDS')?'<fieldset class="br-kinds hp-kinds"><legend>What is not working? <small>Tick all that fit.</small></legend>'.implode('',array_map(fn($k,$v)=>'<label class="br-kind"><input type="checkbox" name="kinds[]" value="'.$k.'"><span>'.icon($v[1]).e($v[0]).'</span></label>',array_keys(BUG_KINDS),BUG_KINDS)).'</fieldset>':'').'<label class="hp-more">Tell us more <small>(optional)</small><textarea name="note" maxlength="200" rows="2" placeholder="Example: question 4, the answer should be 40 pesos"></textarea></label></div>';
  $h.='<p class="hp-off" data-help-off hidden>You are offline, so your message can’t be sent yet. In class, raise your hand. At home, ask a grown-up near you.</p><button class="btn primary hp-send">Tell my teacher</button><button type="button" class="btn quiet hp-cancel" data-help-close>Cancel</button></form></dialog>';
  return $h;
 }
@@ -45,13 +46,14 @@ function help_bug(array $u,int $pid,int $lid,int $aid,string $back):never{
  $l=$lid?one('SELECT title,subtitle FROM lessons WHERE id=?',[$lid]):null;$a=$aid?one('SELECT title FROM activities WHERE id=?',[$aid]):null;
  $where=($lid?level_label(lesson_level($lid)).' · ':'').($l?lesson_home_name($l):'').($a?' › '.$a['title']:'').($card?' › page '.$card:'').($lid?' (lesson '.$lid.($aid?', activity '.$aid:'').')':'');
  $note=trim(preg_replace('/\s+/',' ',(string)($_POST['note']??'')));$note=mb_substr($note,0,200);
- $body=($note!==''?'“'.$note.'” · ':'').$where.' · '.help_device((string)($_SERVER['HTTP_USER_AGENT']??'')).($skipped?' · Skipped for this pupil':($card?' · Page '.$card.' skipped for this pupil':''));
+ $klab=defined('BUG_KINDS')?array_map(fn($k)=>BUG_KINDS[$k][0],array_values(array_intersect(array_keys(BUG_KINDS),array_map('strval',(array)($_POST['kinds']??[]))))):[];
+ $body=($note!==''?'“'.str_replace(' · ',', ',$note).'” · ':'').($klab?'Problem: '.implode(', ',$klab).' · ':'').$where.' · '.help_device((string)($_SERVER['HTTP_USER_AGENT']??'')).($skipped?' · Skipped for this pupil':($card?' · Page '.$card.' skipped for this pupil':''));
  $title='Bug report from '.$u['name'].' ('.$u['public_id'].')';
- if(function_exists('bugflow_ready')&&bugflow_ready()){db()->beginTransaction();try{bugflow_create($u,$note!==''?$note:'Something is not working',$body);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}}else foreach(rows("SELECT id FROM users WHERE role='admin' AND active=1") as $ad)notify((int)$ad['id'],'bug',$title,$body,'?page=bugs');
+ if(function_exists('bugflow_ready')&&bugflow_ready()){db()->beginTransaction();try{bugflow_create($u,mb_substr($klab?implode(' · ',$klab).($note!==''?': '.$note:''):($note!==''?$note:'Something is not working'),0,300),$body);db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}}else foreach(rows("SELECT id FROM users WHERE role='admin' AND active=1") as $ad)notify((int)$ad['id'],'bug',$title,$body,'?page=bugs');
  audit('bug_report',mb_substr($where.($note!==''?' · '.$note:''),0,250));
  if($ajax){header('Content-Type: application/json');echo json_encode(['ok'=>true]);exit;}
- if($skipped){$n=next_activity($pid,$lid);$_SESSION['help_toast']='Thank you! You told the BULIG team. You can skip this part for now. Here is the next one.';go('?page=lesson&id='.$lid.($n?'&activity='.(int)$n['id']:''));}
- $_SESSION['help_toast']='Thank you! You told the BULIG team. They will fix it. You can try again, or go to another activity.';go($back);
+ if($skipped){$n=next_activity($pid,$lid);$_SESSION['help_toast']='Thank you! You told the BULIG Quest team. You can skip this part for now. Here is the next one.';go('?page=lesson&id='.$lid.($n?'&activity='.(int)$n['id']:''));}
+ $_SESSION['help_toast']='Thank you! You told the BULIG Quest team. They will fix it. You can try again, or go to another activity.';go($back);
 }
 /** A bug report skips the activity for this pupil, so they can go on: it counts as done, with no score (it does not lower their results). */
 function help_bug_skip(int $pid,int $lid,int $aid):bool{

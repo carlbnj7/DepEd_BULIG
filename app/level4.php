@@ -103,25 +103,26 @@ function l4_level_class(string $lv):string{return $lv==='Independent'?'lv-ind':(
 function l4_result_card(array $a,array $s):string{
  $p=level4_passage_parts($a);$lv=(string)$s['level'];$cls=l4_level_class($lv);$pct=max(0,min(100,(float)$s['score']));
  $say=['lv-ind'=>'You read it on your own. Great job!','lv-ins'=>'Good reading! A little practice makes it great.','lv-frus'=>'Let’s practise this one more time.'][$cls];
- $h='<section class="l4a"><div class="l4a-head"><img src="'.e(char_src('george','cheer')).'" alt="" width="64" height="64"><div><span class="l4a-eye">BULIG LISTENED TO YOUR READING</span><h3>Here is how you read “'.e((string)($p['title']??'')).'”</h3></div></div>';
+ $h='<section class="l4a"><div class="l4a-head"><img src="'.e(char_src('george','cheer')).'" alt="" width="64" height="64"><div><span class="l4a-eye">BULIG QUEST LISTENED TO YOUR READING</span><h3>Here is how you read “'.e((string)($p['title']??'')).'”</h3></div></div>';
  $h.='<div class="l4a-stats"><div class="l4a-ring '.$cls.'"><svg viewBox="0 0 36 36" aria-hidden="true"><circle class="bg" cx="18" cy="18" r="15.9155"/><circle class="fg" cx="18" cy="18" r="15.9155" stroke-dasharray="'.$pct.' 100"/></svg><b>'.round($pct).'%</b><small>Oral reading score</small></div>';
  $h.='<div class="l4a-stat"><small>Reading level</small><b class="lv '.$cls.'">'.e($lv).'</b><span>'.e($say).'</span></div>';
  $h.='<div class="l4a-stat"><small>Reading speed</small><b>'.($s['wpm']?(int)$s['wpm']:'—').'</b><span>words per minute</span></div></div>';
  $h.='<div class="l4a-mis">';foreach(L4_MISCUES as $i=>$n){$c=(int)($s['m'][$i]??0);$h.='<span class="k-'.L4_KINDS[$i].($c?' on':'').'"><b>'.$c.'</b>'.e($n).'</span>';}$h.='</div>';
- return $h.l4_marked($a,$s,false).'<p class="l4a-note">'.l1_icon('teacher').'BULIG checked your reading. Your teacher can listen too.</p></section>';
+ return $h.l4_marked($a,$s,false).'<p class="l4a-note">'.l1_icon('teacher').'BULIG Quest checked your reading. Your teacher can listen too.</p></section>';
 }
 
 function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
- $lid=(int)$lesson['id'];$lv=lesson_level($lid);$readonly=completion_ok($a);$reading=$a['type']==='reading'&&level4_passage_parts($a);
+ $lid=(int)$lesson['id'];$lv=lesson_level($lid);$replaying=completion_ok($a)&&!empty($_GET['again'])&&($a['phase']??'')==='learn'&&$a['type']==='reading';$readonly=completion_ok($a)&&!$replaying;$reading=$a['type']==='reading'&&level4_passage_parts($a);   // v216 Play again
  $c=$a['completion_id']?one('SELECT id,audio_path,response,rubric_scores FROM activity_completion WHERE id=?',[(int)$a['completion_id']]):null;
  $doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));
  head(level_label($lv).' · '.$lesson['subtitle'],'activity-page l1-page l4-page');
  echo '<div class="l1-app l4-app">'.lesson_head($lesson,$all,$a,'?page=lessons&level='.$lv.'#level'.$lv.'-path').'<main class="l1-main activity-main">';notice();
- echo '<form method="post" id="activity-form" class="activity-form l1-form l4-form"'.($readonly?'':' data-open="1"').' data-mode="'.($reading?'answer':'none').'" data-kind="'.($reading?'read':'look').'" data-draft="off">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><input type="hidden" name="secs" id="l1-secs" value=""><span id="draft-status" hidden></span>';
+ echo '<form method="post" id="activity-form" class="activity-form l1-form l4-form"'.($readonly?'':' data-open="1"').' data-mode="'.($reading?'answer':'none').'" data-kind="'.($reading?'read':'look').'" data-draft="off">'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'">'.($replaying?'<input type="hidden" name="replay" value="1">':'').'<input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="audio" id="l1-audio" value=""><input type="hidden" name="heard" id="l1-heard" value=""><input type="hidden" name="secs" id="l1-secs" value=""><span id="draft-status" hidden></span>';
  if($a['feedback'])echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
  echo '<span class="l1-tag">'.e(l4_tag($a,$lesson)).'</span>';
+ if($replaying&&function_exists('replay_banner'))echo replay_banner($a);
  if($reading){
-  $say='Read the following passage aloud. Tap the microphone when you start, and tap it again when you finish. BULIG listens and scores your reading.';
+  $say='Read the following passage aloud. Tap the microphone when you start, and tap it again when you finish. BULIG Quest listens and scores your reading.';
   echo '<div class="l1-q sm l4-dir"><p>'.e($say).'</p>'.l1_speaker($say).'</div>';ob_start();
   /* v183: the microphone sits above the passage and stays at the top of the screen while the pupil scrolls and reads */
   if(!$readonly)echo roxanne_timer().'<div class="l1-rec l4-rec rec-top" data-l1-rec data-max="600"'.((function_exists('wc_on')&&wc_on($a)&&trim((string)($a['expected_text']??''))!=='')?wc_attr((string)$a['expected_text']).(($pp=level4_passage_parts($a))&&trim((string)$pp['title'])!==''?' data-wc-title="'.e(trim((string)$pp['title'])).'"':''):'').'><button type="button" class="l1-mic" data-rec-go aria-label="Tap and read the passage">'.l1_icon('mic').'</button><b class="l1-rl" data-rec-label>Tap and read the whole passage</b><small class="l1-rs" data-rec-sub role="status"></small>'
@@ -136,6 +137,7 @@ function l4_activity_page(array $u,array $lesson,array $all,array $a):void{
   echo '<div class="l1-done">'.l1_icon('ok').'<b>'.($reading?'Your reading is saved.'.($secs?' Time: '.intdiv($secs,60).':'.sprintf('%02d',$secs%60):''):'You saw this page.').'</b></div>';
   if($reading&&$c&&$c['audio_path'])echo '<div class="l1-mine"><span>Your reading</span><audio controls preload="none" src="?page=recording&amp;id='.(int)$c['id'].'"></audio></div>';
   $sc=$reading&&$c?l4_saved_score($c):null;if($sc&&!empty($sc['auto']))echo l4_result_card($a,$sc);
+  if(function_exists('replay_bar'))echo replay_bar($a);
  }
  $card=trim((string)ob_get_clean());if($card!=='')echo '<section class="l2-card l1-card l4-card"'.($reading&&$a['phase']==='learn'&&!$readonly?' data-readalong="1"':'').'>'.$card.'</section>';
  echo '<div class="l1-end"><div id="answer-feedback" role="status" aria-live="polite" class="answer-feedback l1-fb"></div><div class="l1-btns">';
@@ -158,7 +160,7 @@ function l4_review_form(array $r):string{
  $auto=!empty($s['auto']);$tot=(int)($s['total']??0);$lv=$s?(string)$s['level']:'';
  $hy=['Mispronunciation'=>'Mispronun&shy;ciation','Substitution'=>'Substi&shy;tution','Repetition'=>'Repe&shy;tition','Transposition'=>'Transpo&shy;sition'];
  $h='<fieldset class="rv-rub l4-score l4a-t" data-words="'.$words.'"><legend>'.l1_icon('list').'Score with the module · '.e($p['title']).($auto?' <span class="l4a-auto">FILLED IN BY BULIG</span>':'').'</legend>';
- $h.='<p class="rv-rub-note">'.($auto?'BULIG listened to the reading and counted the miscues. Listen too, and change any number if needed.':'Listen to the reading. Count each miscue by type.').'</p>';
+ $h.='<p class="rv-rub-note">'.($auto?'BULIG Quest listened to the reading and counted the miscues. Listen too, and change any number if needed.':'Listen to the reading. Count each miscue by type.').'</p>';
  $h.='<div class="l4a-tbl"><div class="l4a-row hd"><span>Types of Miscues</span>';foreach(L4_MISCUES as $m)$h.='<span>'.($hy[$m]??e($m)).'</span>';$h.='<span>Total</span></div>';
  $h.='<div class="l4a-row num l4-mis"><span>Number of Miscues</span>';foreach(L4_MISCUES as $i=>$m)$h.='<label data-n="'.e($m).'"><input'.($auto?' class="auto"':'').' type="number" inputmode="numeric" min="0" max="'.$words.'" name="miscue['.$i.']" value="'.(int)($s['m'][$i]??0).'" aria-label="'.e($m).'"></label>';
  $h.='<span data-n="Total"><output data-l4-total>'.$tot.'</output></span></div>';
@@ -168,7 +170,7 @@ function l4_review_form(array $r):string{
  $h.=$row('Reading Level <small>(Ind 98–100, Ins 90–96, Frus 89 below)</small>','<b class="lv '.($lv!==''?l4_level_class($lv):'').'" data-l4-level>'.e($lv).'</b>');
  $h.=$row('Reading time in seconds','<input type="number" min="0" max="3600" name="l4secs" value="'.($secs?:'').'" data-l4-secs aria-label="Reading time in seconds">');
  $h.=$row('Reading Speed = Words Read / Reading time in seconds × 60','<b data-l4-wpm>'.($s&&$s['wpm']?e($s['wpm'].' words per minute'):'').'</b>').'</div>';
- if($auto)$h.=l4_marked($act,$s,true).(trim((string)($s['said']??''))!==''?'<details class="l4a-heard"><summary>What BULIG heard</summary><p>“'.e((string)$s['said']).'”</p></details>':'');
+ if($auto)$h.=l4_marked($act,$s,true).(trim((string)($s['said']??''))!==''?'<details class="l4a-heard"><summary>What BULIG Quest heard</summary><p>“'.e((string)$s['said']).'”</p></details>':'');
  return $h.'</fieldset>';
 }
 /** Save the teacher's table: returns the stored values, or null when this is not a Level 4 reading. */

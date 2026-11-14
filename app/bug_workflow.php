@@ -63,9 +63,13 @@ function bugflow_action(string $action):void{
   header('Content-Type: application/json');echo json_encode(['ok'=>true]);exit;
  }
  if($action==='bug_report_submit'){
-  $u=require_role('pupil','teacher');$note=trim((string)($_POST['note']??''));if($note===''||mb_strlen($note)>2000)fail('Describe the problem in up to 2,000 characters.');
+  $u=require_role('pupil','teacher');$note=trim((string)($_POST['note']??''));if(mb_strlen($note)>2000)fail('Write the problem in up to 2,000 characters.');
+  $kinds=array_values(array_intersect(array_keys(BUG_KINDS),array_map('strval',(array)($_POST['kinds']??[]))));
+  if($note===''&&!$kinds)fail('Tick what is not working, or write it in the box.');
+  $klab=array_map(fn($k)=>BUG_KINDS[$k][0],$kinds);
   if((int)val('SELECT COUNT(*) FROM bug_reports WHERE reporter_id=? AND created_at>?',[$u['id'],date('Y-m-d H:i:s',time()-600)])>=3)fail('We already received your reports. Please wait before sending another.');
-  db()->beginTransaction();try{$id=bugflow_create($u,mb_substr($note,0,300),$note.' · '.help_device((string)($_SERVER['HTTP_USER_AGENT']??'')));db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=bug_report&id='.$id);
+  db()->beginTransaction();try{$sum=$klab?implode(' · ',$klab).($note!==''?': '.$note:''):$note;$ctx=($note!==''?'“'.str_replace(' · ',', ',$note).'”':'').($klab?' · Problem: '.implode(', ',$klab):'').' · '.help_device((string)($_SERVER['HTTP_USER_AGENT']??''));
+  $id=bugflow_create($u,mb_substr($sum,0,300),ltrim($ctx,' ·'));db()->commit();}catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}go('?page=bug_report&id='.$id);
  }
  $u=require_role('admin');if(!empty($_SESSION['pin_pending']))fail('Verify your admin PIN first.',403);
  if($action==='bug_adopt'){
@@ -89,8 +93,12 @@ function bugflow_poll():never{
 /** v209 how a date shows on the bug pages: "Nov 3, 2026 · 12:26 PM" */
 function bug_when(string $t):string{$x=strtotime($t);return $x?date('M j, Y · g:i A',$x):$t;}
 /** v209 the person who sent a report: a round initial, the name, and their role and ID */
-function bug_who(string $name,string $role,string $pid):string{
- return '<span class="bg-who"><span class="bg-av bg-av-'.e($role).'" aria-hidden="true">'.e(mb_strtoupper(mb_substr(trim($name),0,1))).'</span><span><b>'.e($name).'</b><small>'.e(ucfirst($role)).' · '.e($pid).'</small></span></span>';
+/* v216 the kinds of problems a reporter can tick (a checklist); the message is optional when one is ticked */
+const BUG_KINDS=['answer'=>['My right answer was marked wrong','check'],'content'=>['A word, picture or question looks wrong','image'],'sound'=>['No sound, or the microphone does not work','mic'],'stuck'=>['The page is stuck or will not open','clock'],'button'=>['A button does not work','hand'],'other'=>['Something else','comic']];
+/** v216 the reporter's grade level and section (pupils), shown to the administrator */
+function bug_grade(int $uid,string $role):string{if($role!=='pupil')return '';$g=one('SELECT grade_level,section FROM pupils WHERE user_id=?',[$uid]);if(!$g)return '';return 'Grade '.(int)$g['grade_level'].(trim((string)$g['section'])!==''?' · '.trim((string)$g['section']):'');}
+function bug_who(string $name,string $role,string $pid,string $grade=''):string{
+ return '<span class="bg-who"><span class="bg-av bg-av-'.e($role).'" aria-hidden="true">'.e(mb_strtoupper(mb_substr(trim($name),0,1))).'</span><span><b>'.e($name).'</b><small>'.e(ucfirst($role)).' · '.e($pid).($grade!==''?' · <b class="bg-grade">'.e($grade).'</b>':'').'</small></span></span>';
 }
 /** v209 the report's details: the reporter's words as a quote, then where and on which device, as short lines */
 function bug_context(string $c):string{
@@ -102,13 +110,13 @@ function bug_context(string $c):string{
 function bugflow_admin(array $u):void{
  $show=(string)($_GET['show']??'open');if(!isset(BUG_STATES[$show]))$show='open';
  $n=[];foreach(rows('SELECT status,COUNT(*) n FROM bug_reports GROUP BY status') as $r)$n[$r['status']]=(int)$r['n'];
- echo hm_head('SYSTEM','Bug reports','Reports from teachers and pupils. Choose a report to reply or change its status. BULIG tells the reporter right away.');
+ echo hm_head('SYSTEM','Bug reports','Reports from teachers and pupils. Choose a report to reply or change its status. BULIG Quest tells the reporter right away.');
  echo '<nav class="bug-filters bg-tabs" aria-label="Report status">';foreach(BUG_STATES as $k=>$label)echo '<a class="bg-tab bg-'.$k.($show===$k?' on':'').'" href="?page=bugs&show='.$k.'"'.($show===$k?' aria-current="page"':'').'><span class="bg-dot"></span>'.$label.'<b>'.number_format($n[$k]??0).'</b></a>';echo '</nav>';
- $p=max(1,min(100000,(int)($_GET['p']??1)));$list=rows('SELECT b.*,u.name,u.public_id,u.role,(SELECT COUNT(*) FROM bug_report_updates x WHERE x.report_id=b.id) replies FROM bug_reports b JOIN users u ON u.id=b.reporter_id WHERE b.status=? ORDER BY b.id DESC LIMIT 30 OFFSET '.(($p-1)*30),[$show]);
+ $p=max(1,min(100000,(int)($_GET['p']??1)));$list=rows('SELECT b.*,u.name,u.public_id,u.role,(SELECT CONCAT(\'Grade \',p.grade_level) FROM pupils p WHERE p.user_id=u.id) grade,(SELECT COUNT(*) FROM bug_report_updates x WHERE x.report_id=b.id) replies FROM bug_reports b JOIN users u ON u.id=b.reporter_id WHERE b.status=? ORDER BY b.id DESC LIMIT 30 OFFSET '.(($p-1)*30),[$show]);
  echo '<section class="card bg-list"><div class="bg-list-hd"><h2>'.e(BUG_STATES[$show]).' reports</h2><div class="buttonrow bug-toolbar"><a class="btn secondary small" href="?page=bugs_csv&show='.e($show).'">'.icon('download').'Download this list</a><a class="btn secondary small" href="?page=bugs_csv&show=all">'.icon('download').'Download all</a>'
   .(($n['open']??0)+($n['processing']??0)?'<form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_fixed_all"><button class="btn quiet small" data-confirm="Mark all open and processing reports as fixed and notify their reporters?">'.icon('check').'Mark all as fixed</button></form>':'').'</div></div>';
- foreach($list as $r)echo '<a class="bug-report-tile br-item bg-row" href="?page=bug_report&id='.(int)$r['id'].'"><span class="bug-status status-'.e($r['status']).'">'.e(BUG_STATES[$r['status']]).'</span><span class="br-txt"><b>'.e($r['summary']).'</b><small>Report #'.(int)$r['id'].' · '.e($r['name']).' · '.e(ucfirst((string)$r['role'])).' · '.e(bug_when((string)$r['created_at'])).((int)$r['replies']?' · '.(int)$r['replies'].' '.((int)$r['replies']===1?'reply':'replies'):'').'</small></span>'.icon('chev').'</a>';
- if(!$list)echo '<div class="bug-empty bg-empty"><img src="'.e(friend_img('bob','thumbs')).'" alt="" width="70" height="152"><div><b>'.($show==='open'?'No open reports. Everything is working!':'No '.mb_strtolower(BUG_STATES[$show]).' reports.').'</b><small>'.($show==='open'?'New reports from teachers and pupils show here.':'Reports move here when you change their status.').'</small></div></div>';
+ foreach($list as $r)echo '<a class="bug-report-tile br-item bg-row" href="?page=bug_report&id='.(int)$r['id'].'"><span class="bug-status status-'.e($r['status']).'">'.e(BUG_STATES[$r['status']]).'</span><span class="br-txt"><b>'.e($r['summary']).'</b><small>Report #'.(int)$r['id'].' · '.e($r['name']).' · '.e(ucfirst((string)$r['role'])).(!empty($r['grade'])?' · '.e($r['grade']):'').' · '.e(bug_when((string)$r['created_at'])).((int)$r['replies']?' · '.(int)$r['replies'].' '.((int)$r['replies']===1?'reply':'replies'):'').'</small></span>'.icon('chev').'</a>';
+ if(!$list)echo '<div class="bug-empty bg-empty"><img src="'.e(friend_img('bruno','thumbs')).'" alt="" width="70" height="152"><div><b>'.($show==='open'?'No open reports. Everything is working!':'No '.mb_strtolower(BUG_STATES[$show]).' reports.').'</b><small>'.($show==='open'?'New reports from teachers and pupils show here.':'Reports move here when you change their status.').'</small></div></div>';
  echo '</section><div class="buttonrow">'.($p>1?'<a class="btn secondary" href="?page=bugs&show='.$show.'&p='.($p-1).'">Previous</a>':'').(count($list)===30?'<a class="btn secondary" href="?page=bugs&show='.$show.'&p='.($p+1).'">Next</a>':'').'</div>';
 }
 function bugflow_view(array $u):void{
@@ -117,8 +125,8 @@ function bugflow_view(array $u):void{
  if(!$id){
   if($admin)go('?page=bugs');
   /* v203 tidy page: a short heading, the report form in its own card, then each report as one row with its status and replies. */
-  echo '<div class="pagehead"><div><span class="eyebrow">HELP</span><h1>My bug reports</h1><p>Something not working in BULIG? Tell us here. The BULIG team reads every report and replies on this page.</p></div></div>';
-  echo '<section class="card br-new"><span class="br-ic" aria-hidden="true">'.icon('alert').'</span><form method="post" class="br-form">'.csrf_field().'<input type="hidden" name="action" value="bug_report_submit"><label for="br-note">What is not working?</label><textarea id="br-note" name="note" rows="3" maxlength="2000" required placeholder="What happened? Which page were you on? Example: The microphone does not start in My lessons."></textarea><div class="br-row"><small>Your device type is sent with your report, so we can check it.</small><button class="btn primary">'.icon('check').'Send report</button></div></form></section>';
+  echo '<div class="pagehead"><div><span class="eyebrow">HELP</span><h1>My bug reports</h1><p>Something not working in BULIG Quest? Tell us here. The BULIG Quest team reads every report and replies on this page.</p></div></div>';
+  echo '<section class="card br-new"><span class="br-ic" aria-hidden="true">'.icon('alert').'</span><form method="post" class="br-form">'.csrf_field().'<input type="hidden" name="action" value="bug_report_submit"><fieldset class="br-kinds"><legend>What is not working? <small>Tick all that fit.</small></legend>'.implode('',array_map(fn($k,$v)=>'<label class="br-kind"><input type="checkbox" name="kinds[]" value="'.$k.'"><span>'.icon($v[1]).e($v[0]).'</span></label>',array_keys(BUG_KINDS),BUG_KINDS)).'</fieldset><label for="br-note">Tell us more <small class="muted">(optional)</small></label><textarea id="br-note" name="note" rows="3" maxlength="2000" placeholder="Which page or activity? What happened? Example: Level 7, School Needs, question 4."></textarea><div class="br-row"><small>Your device type is sent with your report, so we can check it.</small><button class="btn primary">'.icon('check').'Send report</button></div></form></section>';
   $mine=rows('SELECT b.id,b.summary,b.status,b.created_at,b.updated_at,(SELECT COUNT(*) FROM bug_report_updates x WHERE x.report_id=b.id) replies FROM bug_reports b WHERE b.reporter_id=? ORDER BY b.id DESC LIMIT 100',[$u['id']]);
   echo '<section class="card br-list"><div class="ws-hd"><h2>Your reports</h2><small class="muted">'.count($mine).' '.(count($mine)===1?'report':'reports').'</small></div>';
   if(!$mine)echo '<p class="muted br-none">No reports yet. If something does not work, write it above.</p>';
@@ -129,10 +137,10 @@ function bugflow_view(array $u):void{
  $r=one('SELECT b.*,u.name,u.role,u.public_id FROM bug_reports b JOIN users u ON u.id=b.reporter_id WHERE b.id=?'.($admin?'':' AND b.reporter_id=?'),$admin?[$id]:[$id,$u['id']]);if(!$r)fail('Report not found.',404);
  $last=(int)val('SELECT COALESCE(MAX(id),0) FROM bug_report_updates WHERE report_id=?',[$id]);$updates=array_reverse(rows('SELECT * FROM bug_report_updates WHERE report_id=? ORDER BY id DESC LIMIT 100',[$id]));   // v209: oldest first, like a chat
  echo '<div class="bug-detail-header"><a class="btn secondary small" href="'.($admin?'?page=bugs&show='.e($r['status']):'?page=bug_report').'">'.icon('arrow','flip').'Back to reports</a><span class="bug-status status-'.e($r['status']).'">'.e(BUG_STATES[$r['status']]).'</span></div><div class="bug-detail-layout'.($admin?'':' reporter-view').'"><div class="bug-conversation">'
-  .'<section class="card bug-report-summary"><span class="eyebrow">REPORT #'.$id.' · '.e(mb_strtoupper(bug_when((string)$r['created_at']))).'</span><h1>'.e($r['summary']).'</h1>'.bug_who((string)$r['name'],(string)$r['role'],(string)$r['public_id']).bug_context((string)$r['context'])
+  .'<section class="card bug-report-summary"><span class="eyebrow">REPORT #'.$id.' · '.e(mb_strtoupper(bug_when((string)$r['created_at']))).'</span><h1>'.e($r['summary']).'</h1>'.bug_who((string)$r['name'],(string)$r['role'],(string)$r['public_id'],$admin?bug_grade((int)$r['reporter_id'],(string)$r['role']):'').bug_context((string)$r['context'])
   .((int)$r['deducted_xp']?'<p class="bug-penalty-notice">XP deducted for this report: <strong>'.(int)$r['deducted_xp'].'</strong></p>':'').'</section><section class="card bug-thread"><h2>'.icon('comic').'Updates and replies</h2>';
  if(!$updates)echo '<p class="muted bg-none">No updates yet. Replies and status changes will show here.</p>';
- foreach($updates as $e)echo '<article class="bug-thread-entry"><img class="bg-bob" src="'.e(friend_img('bob','hello')).'" alt="" width="40" height="87"><div class="bg-bub"><div class="bug-update-meta"><strong>BULIG team</strong><span class="bug-status status-'.e($e['status']).'">'.e(BUG_STATES[$e['status']]).'</span></div><p>'.nl2br(e($e['body'])).'</p><time class="muted">'.e(bug_when((string)$e['created_at'])).'</time></div></article>';
+ foreach($updates as $e)echo '<article class="bug-thread-entry"><img class="bg-bob" src="'.e(friend_img('bruno','hello')).'" alt="" width="40" height="87"><div class="bg-bub"><div class="bug-update-meta"><strong>BULIG Quest team</strong><span class="bug-status status-'.e($e['status']).'">'.e(BUG_STATES[$e['status']]).'</span></div><p>'.nl2br(e($e['body'])).'</p><time class="muted">'.e(bug_when((string)$e['created_at'])).'</time></div></article>';
  echo '</section></div>';
  if($admin){echo '<aside class="card bug-moderation" aria-label="Update report"><h2>Update report</h2><p class="muted">Change the status or send a reply.</p><form method="post">'.csrf_field().'<input type="hidden" name="action" value="bug_report_update"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="version" value="'.$last.'"><label for="bug-status">Status<select id="bug-status" name="status">';foreach(BUG_STATES as $k=>$label)if($r['status']!=='rejected'||$k==='rejected')echo '<option value="'.$k.'"'.($r['status']===$k?' selected':'').'>'.$label.'</option>';
   echo '</select></label><label for="bug-reply">Reply or rejection reason<textarea id="bug-reply" name="reply" rows="6" maxlength="2000" placeholder="Explain the update to the reporter." data-bug-auto="'.e(json_encode(bugflow_auto_replies((string)$r['name'],(string)$r['role']),JSON_UNESCAPED_UNICODE)).'"></textarea></label><p class="bug-auto-note muted" data-bug-auto-note hidden>'.icon('edit').'<span>A message is ready for this status. You can change it before you send.</span><button type="button" class="btn quiet small" data-bug-auto-reset>Use the ready message again</button></p>';
@@ -152,9 +160,9 @@ function bugflow_view(array $u):void{
 function bugflow_auto_replies(string $name,string $role):array{
  $n=trim(explode(' ',trim($name))[0]??'');$hi=$n!==''?'Hi '.$n.'! ':'Hi! ';$kid=$role==='pupil';
  return [
-  'open'=>$hi.'We got your report. The BULIG team will check it soon. Thank you for telling us!',
+  'open'=>$hi.'We got your report. The BULIG Quest team will check it soon. Thank you for telling us!',
   'processing'=>$hi.'We are checking your report now. We will tell you as soon as it is fixed. Thank you for waiting!',
-  'fixed'=>'Thank you'.($n!==''?', '.$n:'').'! You were right, and we fixed it. Please try it again.'.($kid?' Keep reading!':' Thank you for helping make BULIG better.'),
+  'fixed'=>'Thank you'.($n!==''?', '.$n:'').'! You were right, and we fixed it. Please try it again.'.($kid?' Keep reading!':' Thank you for helping make BULIG Quest better.'),
   'rejected'=>$hi.'We checked your report carefully, but we did not find a problem this time.'.($kid?' Please send a report only when something is really not working.':' If it happens again, please send a picture of the screen.')];
 }
 function bugflow_legacy_fixed(array $u,bool $all):bool{

@@ -128,10 +128,10 @@ function import_check(array $rows,array $teacher,int $defaultSection,int $defaul
   }elseif($default)$row['section']=$default;
   else $err('Section is missing. Add a Section column or choose a section for the whole list.');
   $sec=$row['section']??$row['new_section'];if($sec)$row['grade']=(int)$sec['grade_level'];
-  $lv=import_level($get('level'),$defaultLevel);if($lv===null||($lv!==0&&!val('SELECT id FROM bulig_levels WHERE id=?',[$lv])))$err('Starting level “'.$get('level').'” is not a BULIG level (use 1, 2A, 2B, 3A, 3B, 4, 5, 6 or 7).');else $row['level']=$lv;
+  $lv=import_level($get('level'),$defaultLevel);if($lv===null||($lv!==0&&!val('SELECT id FROM bulig_levels WHERE id=?',[$lv])))$err('Starting level “'.$get('level').'” is not a BULIG Quest level (use 1, 2A, 2B, 3A, 3B, 4, 5, 6 or 7).');else $row['level']=$lv;
   if($row['status']==='ok'){
    if($lrn!==''&&isset($seenLrn[$lrn]))$err('Same LRN as line '.$seenLrn[$lrn].' in this file.');
-   elseif($lrn!==''&&val('SELECT pupil_id FROM pupil_details WHERE lrn=?',[$lrn])){$row['status']='skip';$row['notes'][]='Already in BULIG (same LRN).';}
+   elseif($lrn!==''&&val('SELECT pupil_id FROM pupil_details WHERE lrn=?',[$lrn])){$row['status']='skip';$row['notes'][]='Already in BULIG Quest (same LRN).';}
    else{$key=mb_strtolower($name).'|'.($sec['name']??'').'|'.$row['grade'];
     if(isset($seenName[$key]))$err('Same name and section as line '.$seenName[$key].' in this file.');
     elseif($row['section']&&val('SELECT 1 FROM users u JOIN pupil_sections ps ON ps.pupil_id=u.id JOIN teacher_pupils t ON t.pupil_id=u.id WHERE t.teacher_id=? AND ps.section_id=? AND LOWER(u.name) IN (LOWER(?),LOWER(?))',[$teacher['id'],$row['section']['id'],$name,$full?:$name])){$row['status']='skip';$row['notes'][]='Already in this section (same name).';}
@@ -203,7 +203,7 @@ function import_create(array $rows,array $u,string $file):never{
   audit('import_pupils',count($done).' from '.$file);db()->commit();
  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
  unset($_SESSION['pupil_import']);$_SESSION['pupil_import_done']=$done;$skip=count(array_filter($rows,fn($r)=>$r['status']==='skip'));
- flash(count($done).' pupil account'.(count($done)===1?'':'s').' created.'.($skip?' '.$skip.' already in BULIG '.($skip===1?'was':'were').' left out.':'').' Each pupil has their own starter password: print their sign-in tickets.');go('?page=accounts&mode=class&import=done#import');
+ flash(count($done).' pupil account'.(count($done)===1?'':'s').' created.'.($skip?' '.$skip.' already in BULIG Quest '.($skip===1?'was':'were').' left out.':'').' Each pupil has their own starter password: print their sign-in tickets.');go('?page=accounts&mode=class&import=done#import');
 }
 
 
@@ -239,9 +239,9 @@ function import_card(array $u):void{
  $tab=fn($k,$ic,$t)=>'<a href="?page=accounts&amp;mode=class&amp;how='.$k.'#import"'.($how===$k?' class="on" aria-current="page"':'').'>'.icon($ic).$t.'</a>';
  echo '<nav class="bk-tabs" aria-label="How to add the class">'.$tab('type','edit','Type the list').$tab('file','excel','Upload a file').'</nav>';
  if($how==='type'){echo import_typed_grid($sections).'</section>'.names_script();return;}
- echo '<ol class="import-steps"><li><strong>Have the DepEd SF1 (School Register) from LIS?</strong> Upload it just as it is — BULIG takes the LRN, name, sex, grade and section from it and leaves the rest. Using your own list? Keep a header row with <strong>Name</strong> (or Last name, First name, Middle name, Extension), <strong>LRN</strong>, <strong>Sex</strong> and, if you like, <strong>Grade</strong>, <strong>Section</strong> and <strong>Starting level</strong>.</li><li>Upload the file (.xls, .xlsx or .csv). Nothing is saved yet — you will see every row first.</li><li>Press <strong>Create accounts</strong>, then download the login list to give each pupil their ID.</li></ol>';
+ echo '<ol class="import-steps"><li><strong>Have the DepEd SF1 (School Register) from LIS?</strong> Upload it just as it is — BULIG Quest takes the LRN, name, sex, grade and section from it and leaves the rest. Using your own list? Keep a header row with <strong>Name</strong> (or Last name, First name, Middle name, Extension), <strong>LRN</strong>, <strong>Sex</strong> and, if you like, <strong>Grade</strong>, <strong>Section</strong> and <strong>Starting level</strong>.</li><li>Upload the file (.xls, .xlsx or .csv). Nothing is saved yet — you will see every row first.</li><li>Press <strong>Create accounts</strong>, then download the login list to give each pupil their ID.</li></ol>';
  echo '<form method="post" enctype="multipart/form-data" class="formgrid import-form">'.csrf_field().'<input type="hidden" name="action" value="import_preview"><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><label class="import-file">Class list file (SF1 .xls, .xlsx or .csv)<input type="file" name="class_list" accept=".csv,.xlsx,.xls,.txt,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>';
- echo '<label>Section for pupils without one<select name="section_id"><option value="0">Use the Section column (or the SF1 section)</option>';foreach($sections as $s)echo '<option value="'.$s['id'].'">Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';echo '</select></label>'.starting_level_field(function_exists('rc_ready')&&rc_ready()?0:1).'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' pupils, 2 MB. Sections not found are added when the file has a Grade column. Pupils already in BULIG (same LRN) are skipped.</small><button class="btn primary">'.icon('arrow').'Check the list</button></div></form></section>';
+ echo '<label>Section for pupils without one<select name="section_id"><option value="0">Use the Section column (or the SF1 section)</option>';foreach($sections as $s)echo '<option value="'.$s['id'].'">Grade '.$s['grade_level'].' · '.e($s['name']).'</option>';echo '</select></label>'.starting_level_field(function_exists('rc_ready')&&rc_ready()?0:1).'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' pupils, 2 MB. Sections not found are added when the file has a Grade column. Pupils already in BULIG Quest (same LRN) are skipped.</small><button class="btn primary">'.icon('arrow').'Check the list</button></div></form></section>';
 }
 
 /** "Type the list": one row per pupil. Enter goes to the next pupil; assets/names.js checks each row while typing.
@@ -275,6 +275,6 @@ function import_support_cell(string $n,string $v):string{$v=function_exists('spe
 function import_typed_choices(string $n,array $r,array $sections,int $level):string{
  $sec=(int)($r[6]??0);$lv=($r[7]??'')===''?$level:(int)$r[7];
  $o='<option value="">Choose</option>';foreach($sections as $s)$o.='<option value="'.$s['id'].'"'.((int)$s['id']===$sec?' selected':'').'>'.e('Gr. '.(int)$s['grade_level'].' · '.$s['name']).'</option>';
- $l=(function_exists('rc_ready')&&rc_ready()?'<option value="0"'.($lv===0?' selected':'').'>BULIG finds it</option>':'');foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $x)$l.='<option value="'.$x['id'].'"'.((int)$x['id']===$lv?' selected':'').'>'.e(level_label((int)$x['id'])).'</option>';
+ $l=(function_exists('rc_ready')&&rc_ready()?'<option value="0"'.($lv===0?' selected':'').'>BULIG Quest finds it</option>':'');foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $x)$l.='<option value="'.$x['id'].'"'.((int)$x['id']===$lv?' selected':'').'>'.e(level_label((int)$x['id'])).'</option>';
  return '<td class="c-sec" data-l="Section"><select name="t[sec]['.$n.']" aria-label="Section">'.$o.'</select></td><td class="c-lv" data-l="Starting level"><select name="t[level]['.$n.']" aria-label="Starting level" data-bk-lv'.($lv!==$level?' class="chg" data-own="1"':'').'>'.$l.'</select></td>';
 }

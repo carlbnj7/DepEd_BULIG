@@ -12,16 +12,16 @@ const BULIG_FRIENDS=[
  ['bruno','Bruno','the Helper',false,'#4d9f86','tryagain','Try again after a mistake',"Hey, friend! I am Bruno the Helper. Made a mistake? That is okay! We will try again together.",1.15,.88,'cheer'],
  ['mia','Mia','the Builder',true,'#ef7d14','blocks','Spelling and sounds',"Hi! I am Mia the Builder. Let's build words, one sound at a time!",1.35,1.05,'cheer'],
  ['toby','Toby','the Trailblazer',false,'#2f8f3a','flag','Progress, badges and level-ups',"Hello! I am Toby the Trailblazer. Every lesson you finish, we climb higher together!",.95,1.0,'cheer'],
- ['zion','Zion','the Rank Keeper',false,'#c62828','emblem','Ranks and stars',"Hello! I am Zion the Rank Keeper. Earn your stars, and I will give you a new rank emblem!",.85,.93,'cheer'],
+ ['zion','Zion','the Star Keeper',false,'#c62828','emblem','Your Star Jar, stars and ranks',"Hello! I am Zion the Star Keeper. Every star you earn goes in your Star Jar. Play again to get 3 stars, and I will give you a new rank emblem!",.85,.93,'cheer'],   /* v216 */
  ['arah','Arah','the Streak Keeper',true,'#e2508f','calendar','Your reading streak and calendar',"Hi! I am Arah the Streak Keeper. Read a little every day, and I will keep your flame burning!",1.22,1.0,'cheer'],
  ['roxanne','Roxanne','the Timekeeper',true,'#e58a00','time','Reading time and breaks',"Tick, tock! I am Roxanne the Timekeeper. I time your reading, I count your goal for today, and I tell you when it is time for a short break.",1.45,1.08,'cheer'],
  ['kai','Kai','the Messenger',false,'#2f5fd0','letter','Notifications and messages',"Special delivery! I am Kai the Messenger. When there is news for you, I bring it to you right away. Look for me on the bell!",1.05,1.06,'cheer'],
  ['sofie','Sofie','the Stylist',true,'#0ea5c6','mirror','Your profile and picture',"Hi! I am Sofie the Stylist. On your profile page, I help you pick a picture that looks just like you!",1.4,1.0,'cheer'],
  ['claude','Claude','the Protector',false,'#1d2f5c','shield','Keeping your account safe',"Hello! I am Claude the Protector. I keep your account safe. Never share your password with anyone!",.78,.9,'thumbs'],
  /* v178 */
- ['bob','Bob','the Worker',false,'#f2a900','blueprint','New updates in BULIG',"Hi, {n}! I am Bob the Worker. When BULIG gets something new, I work on it and I tell you about it first!",.9,1.0,'cheer'],
+ ['bob','Bob','the Worker',false,'#f2a900','blueprint','New updates in BULIG Quest',"Hi, {n}! I am Bob the Worker. When BULIG Quest gets something new, I work on it and I tell you about it first!",.9,1.0,'cheer'],
  /* v199 */
- ['jeepy','Jeepy','the Jeepney',false,'#2f5fd0','thumbs','Your ride on the road map',"Beep beep! Hello, {n}! I am Jeepy the Jeepney. Hop in! I will drive you through every level of BULIG. Finish your lessons and we go to the next stop!",.92,1.04,'cheer'],
+ ['jeepy','Jeepy','the Jeepney',false,'#2f5fd0','thumbs','Your ride on the road map',"Beep beep! Hello, {n}! I am Jeepy the Jeepney. Hop in! I will drive you through every level of BULIG Quest. Finish your lessons and we go to the next stop!",.92,1.04,'cheer'],
 ];
 
 function friend_img(string $id,string $pose):string{return $id==='george'?char_src('george',$pose):'assets/images/characters/'.$id.'-'.$pose.'.webp?v=2';}
@@ -62,7 +62,7 @@ function level_friend(int $lv):string{
  $lv=level_family($lv);   // 3B: Mia, like 3A
  if($lv===1)return friend_say('max','mic','Hi! I am Max the Listener. In Level 1 we listen and speak. When you see the microphone, tap it and talk to me!');
  if(in_array($lv,[2,3,4],true))return friend_say('mia','blocks','Hi! I am Mia the Builder. Let’s build words, one sound at a time!');
- if($lv===5)return friend_say('roxanne','time','Tick, tock! I am Roxanne the Timekeeper. Read the passage out loud and I will time your reading.');
+ if($lv===5)return friend_say('dracs','book','Hi! I am Dracs the Storyteller. Let’s read a story together. Max reads it first, then you read it to him!');   // v216 Roxanne shows only while the pupil reads
  if($lv>=6)return friend_say('dracs','book','Hi there! I am Dracs the Storyteller. Let’s open this story together. Stories are full of magic!');
  return '';
 }

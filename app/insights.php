@@ -13,7 +13,7 @@ function qc_text(array $set,int $n,string $t,int $blank=0):string{
 
 function qcheck_view(array $u):void{
  $tid=(int)$u['id'];
- echo hm_head('TEACHING · CLASS RESULTS · LEVELS 2A–7','Class results','BULIG checks every answer. For each lesson, see how many of your pupils got each question right and the wrong answer they chose most. Use it to plan what to read again together. To see one pupil’s answers, open the pupil › Answers and scores.');
+ echo hm_head('TEACHING · CLASS RESULTS · LEVELS 2A–7','Class results','BULIG Quest checks every answer. For each lesson, see how many of your pupils got each question right and the wrong answer they chose most. Use it to plan what to read again together. To see one pupil’s answers, open the pupil › Answers and scores.');
  $levels=[2,3,4,9,6,7,8];$level=(int)($_GET['level']??0);$grade=(int)($_GET['grade']??0);$lid=(int)($_GET['lesson']??0);
  /* Start with the lesson your pupils answered most recently. */
  if(!$lid&&!$level){$r=one("SELECT l.id,m.level_id,m.grade_level FROM activity_completion c JOIN teacher_pupils t ON t.pupil_id=c.pupil_id AND t.teacher_id=? JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id IN (2,3,4,9,6,7,8) AND c.status IN ('completed','approved') ORDER BY c.submitted_at DESC LIMIT 1",[$tid]);if($r){$lid=(int)$r['id'];$level=(int)$r['level_id'];$grade=(int)$r['grade_level'];}}
@@ -56,7 +56,7 @@ function pupil_report_view(array $u):void{
  $auto=one("SELECT SUM(c.score) s,SUM(c.max_score) m,COUNT(*) n FROM activity_completion c JOIN activities a ON a.id=c.activity_id JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE c.pupil_id=? AND m.level_id IN (6,7,8) AND c.max_score>0 AND c.status IN ('completed','approved')",[$pid]);
  $avg=$auto&&(float)$auto['m']>0?(int)round(100*(float)$auto['s']/(float)$auto['m']):null;
  echo '<div class="no-print rp-actions"><a class="btn quiet" href="?page=pupil&amp;id='.$pid.'">'.'Back to '.e(explode(' ',trim((string)$p['name']))[0]).'</a><button type="button" class="btn primary" data-print>'.icon('download').'Print or save as PDF</button></div>';
- echo '<article class="card rp-page"><header class="rp-top"><img src="assets/brand/bulig-quest.webp" alt="BULIG"><div><strong>Progress report</strong><span>'.e(date('F j, Y')).'</span></div></header>';
+ echo '<article class="card rp-page"><header class="rp-top"><img src="assets/brand/bulig-quest.webp" alt="BULIG Quest"><div><strong>Progress report</strong><span>'.e(date('F j, Y')).'</span></div></header>';
  echo '<h1 class="rp-name">'.e($p['name']).'</h1><p class="muted rp-who">Grade '.$grade.($sec?' · '.e($sec['name']):'').' · Pupil ID '.e($p['public_id']).' · Teacher: '.e($u['name']).'</p>';
  echo '<div class="rp-kpis"><div><small>Learning now</small><b>'.e($now?level_label($now):'—').'</b>'.($now?'<span>'.e((string)val('SELECT title FROM bulig_levels WHERE id=?',[$now])).'</span>':'').'</div><div><small>Lessons finished</small><b>'.(int)$s['completed'].'</b><span>'.(int)$s['xp'].' XP earned</span></div><div><small>Average score</small><b>'.($avg!==null?$avg.'%':'—').'</b><span>'.($avg!==null?'marked by the answer key':'no marked answers yet').'</span></div></div>';
  /* Lessons finished in each level the pupil has worked in. */

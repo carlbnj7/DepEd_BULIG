@@ -17,7 +17,7 @@ It never touches the live database. Settings (environment variables, all optiona
   BULIG_TEST_PORT     web port for the test server (default 8099)
 Needs: PHP 8 command line, the mysql command line client, Python 3 (standard library only).
 """
-import csv, glob, http.cookiejar, io, json, os, re, socket, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
+import csv, glob, html, http.cookiejar, io, json, os, re, socket, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -333,7 +333,26 @@ def run_pages(acc):
               all(g in text for g in ('>MY CLASS<', '>TEACHING<', '>PRINT<')) and 'data-find-input' in text and 'needs you today' in text.lower())
         check('Teacher Home shows the Top 10 pupils', 'top 10 pupils' in text.lower() and 'id="tf-top"' in text)
         check('Nothing waits for the teacher: no "Check answers", BULIG checks every answer, Class results in the menu',
-              'Check answers' not in text and 'Answers to check' not in text and 'BULIG checks every answer' in text and 'href="?page=qcheck"' in text)
+              'Check answers' not in text and 'Answers to check' not in text and 'BULIG Quest checks every answer' in text and 'href="?page=qcheck"' in text)
+        qs, _, qt = t.req('?page=print')
+        check('Print centre has Parent progress cards (v216)', qs == 200 and 'id="pc-parent"' in qt and 'parent_cards' in qt, f'status {qs}')
+        qs, _, qt = t.req(f"?page=parent_cards&id={acc['pupil1']['uid']}")
+        m = re.search(r'data-qr="([^"]+)"', qt)
+        check('A parent card shows the pupil’s progress and a QR code for the family (v216)', qs == 200 and 'fc-card' in qt and m and 'page=family' in m.group(1) and not PHP_ERROR.search(qt), f'status {qs}')
+        if m:
+            k = html.unescape(m.group(1)).split('k=')[1]
+            fs, _, ft = Client().req('?page=family&k=' + k)
+            check('The family page opens without signing in and shows only progress (v216)', fs == 200 and 'fc-card' in ft and 'Sign out' not in ft and not PHP_ERROR.search(ft), f'status {fs}')
+            fs, _, _ = Client().req('?page=family&k=' + k[:-1] + ('0' if k[-1] != '0' else '1'))
+            check('A wrong family link is not accepted (v216)', fs == 404, f'status {fs}')
+        gstatus, _, gtext = t.req('?page=growth')
+        check('Reading growth: the teacher sees each pupil, the four averages and Print / Excel (v216)', gstatus == 200 and 'rg-kpis' in gtext and 'rg-t' in gtext and 'growth_print' in gtext and 'growth_csv' in gtext and not PHP_ERROR.search(gtext), f'status {gstatus}')
+        gstatus, _, gtext = t.req('?page=growth_print')
+        check('Reading growth prints on an A4 page with signature lines (v216)', gstatus == 200 and 'Reading Growth Report' in gtext and 'sd-signs' in gtext and not PHP_ERROR.search(gtext), f'status {gstatus}')
+        gstatus, _, gtext = t.req('?page=growth_csv')
+        check('Reading growth downloads for Excel (v216)', gstatus == 200 and 'WPM first' in gtext and 'Pre-test %' in gtext, gtext[:200])
+        gstatus, _, gtext = t.req(f"?page=pupil&id={acc['pupil1']['uid']}&tab=growth")
+        check('One pupil’s reading growth shows in My pupils › pupil (v216)', gstatus == 200 and 'rg-two' in gtext and not PHP_ERROR.search(gtext), f'status {gstatus}')
         _, url, _ = t.req(f"?page=review&pupil={acc['pupil1']['uid']}")
         check('Old "Check answers" links open the pupil’s Answers and scores', f"page=pupil&id={acc['pupil1']['uid']}&tab=answers" in url, url)
         _, _, ans = t.req(f"?page=pupil&id={acc['pupil1']['uid']}&tab=answers")
@@ -381,6 +400,8 @@ def run_pages(acc):
             page_ok(a, f'?page={pg}', f'Admin page opens: {pg}')
         _, url, _ = a.req('?page=health')
         _, _, text = a.req('?page=settings')
+        hs, _, ht = a.req('?page=settings&tab=schedule')
+        check('Settings › Schedule has Answering hours (v216)', hs == 200 and 'id="answer-hours"' in ht and 'answer_hours_save' in ht, f'status {hs}')
         _, _, home = a.req('?page=dashboard')
         check('System health and Badges & rewards are gone: old link goes to Print & download, no menu link, no Settings tab',
               'page=print' in url and 'href="?page=health' not in home and 'System health' not in home and 'tab=badges' not in text, url)
@@ -391,7 +412,7 @@ def run_pages(acc):
         check('Module content cannot be changed by the administrator', 'Unknown action' in text or 'not found' in text.lower())
         status, _, text = a.req('?page=ratings&period=all')
         check('Reports › App ratings shows the pupils’ stars and the teachers’ evaluation',
-              status == 200 and 'how do pupils and teachers rate bulig?' in text.lower() and '1 pupil rated bulig' in text.lower() and '1 teacher answered' in text.lower()
+              status == 200 and 'how do pupils and teachers rate bulig quest?' in text.lower() and '1 pupil rated bulig quest' in text.lower() and '1 teacher answered' in text.lower()
               and '4.2' in text and 'More practice for Level 3, please.' in text and not PHP_ERROR.search(text), f'status {status}')
         test_delete_teacher(a)
         check('IDs never change: the Account IDs tab and the switch, undo and school-code actions are gone', 'tab=ids' not in a.req('?page=settings')[2] and all(a.req('index.php', {'action': x, 'school_code': 'TCES', 'csrf': a.token('?page=settings')})[0] == 403 for x in ('admin_ids_switch', 'admin_ids_undo', 'admin_school_code')))
@@ -421,15 +442,24 @@ def test_auto_check(p6, acc, act):
     aid, page = str(act['id']), f"?page=lesson&id={act['lesson_id']}&activity={act['id']}"
     _, _, text = p6.req('index.php', {'action': 'submit', 'activity_id': aid, 'response': ca['wrong'], 'csrf': p6.token(page)}, accept_json=True)
     j = jget(text)
-    check('Right after "Done", BULIG shows the score, the right answers and "Try it again"',
-          j.get('saved') and all(x in j.get('check', '') for x in ('ac-panel', 'LOOK AGAIN', 'Try it again')), text[:200])
     phase = mysql('-N', '-e', f"SELECT phase FROM activities WHERE id={int(aid)}", db=DB['name']).stdout.strip()
+    if phase == 'pre':
+        check('Pre-test: no "wrong" for the pupil, BULIG shows the answers (v216)', j.get('saved') and 'ac-pre' in j.get('check', '') and 'LEARN THESE' in j.get('check', '') and 'LOOK AGAIN' not in j.get('check', ''), text[:200])
+    else:
+        check('Right after "Done", BULIG shows the score and the right answers', j.get('saved') and all(x in j.get('check', '') for x in ('ac-panel', 'LOOK AGAIN')), text[:200])
     vx = j.get('vx')
     check('Victory / Try again popup data comes only after lesson activities (stars, score, 80% pass)',
           (isinstance(vx, dict) and {'stars', 'pct', 'win', 'pass', 'retry'} <= set(vx) and vx['win'] == (vx['stars'] >= 2)) if phase == 'learn' else vx is None, f'{phase}: {vx}')
     xp = php_cli('probe.php', 'xp', acc['pupil6']['uid'])['xp']
     status, _, text = p6.req(page + '&again=1')
-    check('"Try it again" opens a fresh copy for practice', 'name="again" value="1"' in text and 'ac-practice' in text, f'status {status}')
+    if phase == 'learn':
+        check('"Play again" opens a fresh copy (v216)', 'name="replay" value="1"' in text and 'rp-banner' in text, f'status {status}')
+        _, _, rtext = p6.req('index.php', {'action': 'submit', 'activity_id': aid, 'replay': '1', 'response': ca['wrong'], 'time_secs': '95', 'csrf': p6.token(page)}, accept_json=True)
+        rj = jget(rtext)
+        check('Roxanne tells how long the activity took (v216)', 'rx-res' in rj.get('check', '') and '1 min 35 s' in rj.get('check', ''), rtext[:300])
+        check('Play again with a worse answer keeps the best and gives no XP (v216)', 'stays' in rj.get('message', '') and rj.get('xp') == 0, rtext[:200])
+    else:
+        check('Pre-test and post-test answers are not played again (v216)', 'name="replay"' not in text and 'rp-bar' not in text, f'{phase}')
     _, _, text = p6.req('index.php', {'action': 'submit', 'activity_id': aid, 'again': '1', 'response': ca['right'], 'csrf': p6.token(page)}, accept_json=True)
     j = jget(text)
     check('A better practice try becomes the new best score', 'Better!' in j.get('message', '') and j.get('xp') == 0, text[:200])
@@ -437,7 +467,7 @@ def test_auto_check(p6, acc, act):
     check('A worse practice try keeps the best score', 'stays' in jget(text).get('message', ''), text[:200])
     check('Practice gives no extra XP', php_cli('probe.php', 'xp', acc['pupil6']['uid'])['xp'] == xp)
     _, _, text = p6.req(page)
-    check('The finished activity shows BULIG’s result card with the best score', 'Perfect! Every answer is right.' in text and 'ac-panel' in text)
+    check('The finished activity shows BULIG’s result card', ('Thank you! This part is done.' if phase == 'pre' else 'Perfect! Every answer is right.') in text and 'ac-panel' in text)
 
 
 def test_star_gate(p6, acc):
@@ -692,8 +722,8 @@ def test_privacy(p):
     check('A pupil cannot send an account delete request', st == 403 and q("SELECT COUNT(*) FROM notifications WHERE kind='privacy'") == '0')
     g = Client()
     status, url, text = g.req('?page=privacy')
-    check('Before signing in, the Privacy Notice opens too (not sent to sign in)', status == 200 and 'BULIG Privacy Notice' in text and 'page=login' not in urllib.parse.urlsplit(url).query)
-    check('The full Privacy Notice has every part', all(w in text for w in ('What BULIG collects', 'Voice recordings', 'How we protect it', 'Your rights', 'National Privacy Commission')))
+    check('Before signing in, the Privacy Notice opens too (not sent to sign in)', status == 200 and 'BULIG Quest Privacy Notice' in text and 'page=login' not in urllib.parse.urlsplit(url).query)
+    check('The full Privacy Notice has every part', all(w in text for w in ('What BULIG Quest collects', 'Voice recordings', 'How we protect it', 'Your rights', 'National Privacy Commission')))
     _, _, text = g.req('?page=login')
     check('The sign-in page links to the Privacy Notice', 'pv-login' in text and '?page=privacy' in text)
     tour = open(os.path.join(ROOT, 'public/assets/tour.js'), encoding='utf8').read()
@@ -892,7 +922,7 @@ def test_whats_new(p):
     _, _, text = p.req('?page=dashboard&whatsnew=1')
     check('The bell link opens the popup again', 'data-wn' in text)
     _, _, text = Client().req('?page=login&role=pupil')
-    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v214"' in text and 'bulig has a new update!' in text.lower() and ' hidden ' in text)
+    check('Before signing in, the login page carries Bob’s update popup (shown after the opening screen)', 'data-wn-guest="v216"' in text and 'bulig quest has a new update!' in text.lower() and ' hidden ' in text)
 
 
 def test_notifications(p):
@@ -1146,7 +1176,7 @@ def test_ratings_teacher(t):
     j = jget(text)
     check('A teacher can send the evaluation (overall = the average, 4.2)', j.get('ok') and float(j.get('overall', 0)) == 4.2, text[:160])
     _, _, text = t.req('?page=rate')
-    check('Rate BULIG then shows when the teacher last rated', 'You last rated BULIG on' in text and '4.2' in text)
+    check('Rate BULIG then shows when the teacher last rated', 'You last rated BULIG Quest on' in text and '4.2' in text)
 
 
 def test_reading_check(t, acc):

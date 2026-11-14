@@ -74,7 +74,7 @@ function chat_view(array $u):void{
   if($has||!$teacher)$rows.=$r;else $more.=$r;}
  echo $rows.chat_school_row($u,$school);
  if($more!=='')echo '<p class="mz-sec">MY PUPILS</p>'.$more;
- if(!$people)echo '<p class="mz-empty">'.($teacher?'Add pupils to your class first.':'You do not have a teacher in BULIG yet.').'</p>';
+ if(!$people)echo '<p class="mz-empty">'.($teacher?'Add pupils to your class first.':'You do not have a teacher in BULIG Quest yet.').'</p>';
  echo '<p class="mz-empty" data-mz-none hidden>No one with that name.</p></nav></aside><section class="mz-pane card" aria-label="Chat">';
  if($class)echo chat_class_form($u);
  elseif($sel)echo chat_box($u,$sel);

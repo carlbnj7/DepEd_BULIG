@@ -56,10 +56,10 @@ function sr_data(array $sec,int $level,int $tid,string $month):array{
 function sr_head(array $D,string $title,string $sub,string $teacher):string{
  $set=fn($k,$d='')=>function_exists('admin_setting')?admin_setting($k,$d):$d;$div=trim($set('division_name','Division of Bukidnon'))?:'Division of Bukidnon';
  return '<div class="rc-band">'.rc_logo('division').'<div class="rc-mid">Republic of the Philippines<b>Department of Education · Region X</b>'.e($div).'</div>'.rc_logo('school').'</div>'.rc_tribal(10,'srt'.substr(md5($title),0,6))
-  .'<div class="sd-title"><img src="assets/brand/bulig-quest.webp" alt="BULIG"><div><h2>'.e($title).'</h2><p>'.e($sub).'</p></div></div>'
+  .'<div class="sd-title"><img src="assets/brand/bulig-quest.webp" alt="BULIG Quest"><div><h2>'.e($title).'</h2><p>'.e($sub).'</p></div></div>'
   .'<div class="sd-info"><span><small>LEVEL</small><b>'.e(level_label($D['level'])).'</b></span><span><small>GRADE &amp; SECTION</small><b>Grade '.$D['grade'].' – '.e($D['sec']['name']).'</b></span><span><small>READING TEACHER</small><b>'.e($teacher).'</b></span><span><small>SCHOOL YEAR</small><b>'.e(function_exists('admin_school_year')?admin_school_year():'').'</b></span><span><small>PRINTED</small><b>'.date('F j, Y').'</b></span></div>';
 }
-function sr_page(string $inner,array $D,string $title,string $sub,string $teacher):string{return '<section class="sd-page">'.sr_head($D,$title,$sub,$teacher).$inner.'<div class="sd-foot"><span>BULIG · Read, Play, Grow</span><span class="sd-pn"></span></div></section>';}
+function sr_page(string $inner,array $D,string $title,string $sub,string $teacher):string{return '<section class="sd-page">'.sr_head($D,$title,$sub,$teacher).$inner.'<div class="sd-foot"><span>BULIG Quest · Read, Play, Grow</span><span class="sd-pn"></span></div></section>';}
 function sr_pct($v):string{return $v===null?'—':rtrim(rtrim(number_format((float)$v,1),'0'),'.').'%';}
 function sr_avg(array $a):?float{$a=array_values(array_filter($a,fn($x)=>$x!==null));return $a?round(array_sum($a)/count($a),1):null;}
 function sr_lv(?string $l):string{return $l?'<span class="sd-lv '.l4_level_class($l).'">'.($l==='Independent'?'Ind':($l==='Instructional'?'Ins':'Frus')).'</span>':'<span class="sd-na">—</span>';}
@@ -78,7 +78,7 @@ function sr_summary(array $D,string $t):string{
  foreach($P as $p){$w=$p['of']?round($p['done']/$p['of']*100):0;
   $h.='<tr><td>'.$p['no'].'</td><td class="l"><b>'.e($p['name']).'</b></td><td class="mono">'.e((string)($p['lrn']??'')).'</td><td><span class="sd-bar"><i class="w'.(int)(round($w/10)*10).'"></i></span>'.$p['done'].'/'.$p['of'].'</td><td>'.sr_pct($p['pre']).'</td><td>'.sr_pct($p['post']).'</td><td>'.($p['gain']===null?'—':($p['gain']>=0?'+':'').$p['gain']).'</td>'.($l4?'<td>'.sr_lv($p['lv']).'</td>':'').'<td>'.sr_passed($p['post']).'</td><td>'.($p['finished']?'Finished':($p['done']?'In progress':'Not started')).'</td></tr>';}
  if(!$P)$h.='<tr><td colspan="10">No pupils in this section yet.</td></tr>';
- $h.='</tbody></table><p class="sd-note">'.($l4?'Pre-test and post-test are the oral reading scores of the module’s pre-test and post-test passages (Phil-IRI). Reading level: Ind = Independent (98–100), Ins = Instructional (90–96), Frus = Frustration (89 and below).':'Pre-test and post-test are the right answers on the level’s pre-test and post-test, marked by BULIG with the answer keys.').' Passed = '.PT_PASS.'% or higher on the post-test.</p>';
+ $h.='</tbody></table><p class="sd-note">'.($l4?'Pre-test and post-test are the oral reading scores of the module’s pre-test and post-test passages (Phil-IRI). Reading level: Ind = Independent (98–100), Ins = Instructional (90–96), Frus = Frustration (89 and below).':'Pre-test and post-test are the right answers on the level’s pre-test and post-test, marked by BULIG Quest with the answer keys.').' Passed = '.PT_PASS.'% or higher on the post-test.</p>';
  return sr_page($h.sr_signs($t),$D,'Section Level Summary','Every pupil of the section in this level',$t);
 }
 function sr_prepost(array $D,string $t):string{
@@ -107,7 +107,7 @@ function sr_prepost(array $D,string $t):string{
 function sr_irl(array $D,string $t):string{
  $P=$D['pupils'];$MIS=['Mispron.','Omission','Substit.','Insertion','Repetition','Transpos.','Reversal'];$tested=array_filter($P,fn($p)=>$p['l4']!==null);
  $post=one("SELECT a.prompt,a.type,a.lesson_id FROM activities a JOIN lessons l ON l.id=a.lesson_id JOIN modules m ON m.id=l.module_id WHERE m.level_id=5 AND m.grade_level=? AND a.phase='post' AND a.type='reading' AND a.published=1 ORDER BY a.position DESC LIMIT 1",[$D['grade']]);$pp=$post?level4_passage_parts($post):null;
- $h='<p class="sd-lead">Post-test passage: '.($pp?'<b>“'.e($pp['title']).'”</b> · '.(int)$pp['words'].' words · ':'').'scored by BULIG with the module’s miscue table and checked by the teacher.</p>';
+ $h='<p class="sd-lead">Post-test passage: '.($pp?'<b>“'.e($pp['title']).'”</b> · '.(int)$pp['words'].' words · ':'').'scored by BULIG Quest with the module’s miscue table and checked by the teacher.</p>';
  $h.='<table class="sd-tbl sm"><thead><tr><th>No.</th><th class="l">Name of pupil</th>';foreach($MIS as $m)$h.='<th class="v">'.$m.'</th>';$h.='<th>Total</th><th>Oral reading score</th><th>Reading level</th><th>Words per minute</th></tr></thead><tbody>';
  $tot=array_fill(0,7,0);
  foreach($P as $p){$s=$p['l4'];$h.='<tr><td>'.$p['no'].'</td><td class="l"><b>'.e($p['name']).'</b></td>';
@@ -168,13 +168,13 @@ function sr_help(array $D,string $t):string{
 }
 function sr_activity(array $D,string $t):string{
  $days=$D['days'];$n=count($days);
- $h='<p class="sd-lead">School days <b>'.date('F j',strtotime($D['from'])).'–'.date('j, Y',strtotime($D['last'])).'</b> (Monday to Friday) · a filled box = the pupil used BULIG that day.</p>';
+ $h='<p class="sd-lead">School days <b>'.date('F j',strtotime($D['from'])).'–'.date('j, Y',strtotime($D['last'])).'</b> (Monday to Friday) · a filled box = the pupil used BULIG Quest that day.</p>';
  $h.='<table class="sd-tbl sm"><thead><tr><th>No.</th><th class="l">Name of pupil</th><th class="l">School days ('.$n.')</th><th>Days active</th><th>Activities done</th><th>Last sign-in</th><th>Sent offline</th></tr></thead><tbody>';
  $act=[];$idle=0;$week=date('Y-m-d',strtotime('-7 days'));
  foreach($D['pupils'] as $p){$a=count(array_filter($days,fn($d)=>isset($p['act'][$d])));$act[]=$a;if(!$p['lastday']||$p['lastday']<$week)$idle++;
   $h.='<tr><td>'.$p['no'].'</td><td class="l"><b>'.e($p['name']).'</b></td><td class="l"><span class="sd-days">'.implode('',array_map(fn($d)=>'<i'.(isset($p['act'][$d])?' class="on"':'').'></i>',$days)).'</span></td><td>'.$a.'</td><td>'.$p['acts'].'</td><td>'.($p['login']?date('M j',strtotime((string)$p['login'])):'—').'</td><td>'.$p['off'].'</td></tr>';}
- $h.='</tbody></table>'.sr_tiles([['Average days active',$act?round(array_sum($act)/count($act),1):0,'of '.$n],['Activities done',array_sum(array_column($D['pupils'],'acts')),'this month'],['Answers sent offline',array_sum(array_column($D['pupils'],'off')),'synced to BULIG'],['Not active 7+ days',$idle,'pupils']],' four');
- return sr_page($h,$D,'Activity and Attendance','How often each pupil used BULIG',$t);
+ $h.='</tbody></table>'.sr_tiles([['Average days active',$act?round(array_sum($act)/count($act),1):0,'of '.$n],['Activities done',array_sum(array_column($D['pupils'],'acts')),'this month'],['Answers sent offline',array_sum(array_column($D['pupils'],'off')),'synced to BULIG Quest'],['Not active 7+ days',$idle,'pupils']],' four');
+ return sr_page($h,$D,'Activity and Attendance','How often each pupil used BULIG Quest',$t);
 }
 
 /* ---------- the page ---------- */

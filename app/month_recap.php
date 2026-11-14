@@ -20,7 +20,7 @@ function recap_stats(int $pid,array $m):array{
 /** The compact card on the pupil's home page (and the pupil's notification, once a month). */
 function month_recap_card(array $u):string{
  $m=recap_month();if(!$m)return '';$pid=(int)$u['id'];$s=recap_stats($pid,$m);if(!$s['acts'])return '';
- $title='Your '.$m['name'].' in BULIG';
+ $title='Your '.$m['name'].' in BULIG Quest';
  if(function_exists('notif_ready')&&notif_ready()&&!val("SELECT 1 FROM notifications WHERE user_id=? AND kind='month' AND title=?",[$pid,$title]))
   notify($pid,'month',$title,$s['acts'].' '.($s['acts']===1?'activity':'activities').($s['lessons']?', '.$s['lessons'].' '.($s['lessons']===1?'lesson':'lessons'):'').($s['badges']?' and '.$s['badges'].' '.($s['badges']===1?'badge':'badges'):'').'. Great work!','?page=dashboard#month-recap');
  $diff=$s['acts']-$s['before'];$cmp=$s['before']===0?'Your first month of learning!':($diff>0?$diff.' more than last month!':($diff===0?'The same as last month. Keep going!':'Let’s read a little more this month!'));

@@ -101,7 +101,7 @@ function checkup_issue_html(array $i,array $sections,array $logins):string{
 function checkup_view():void{
  $d=checkup_data();$logins=admin_last_logins();
  $sections=rows('SELECT s.id,s.grade_level,s.name,t.name tname FROM sections s JOIN users t ON t.id=s.teacher_id AND t.active=1 WHERE 1'.ck_live_sql().' ORDER BY s.grade_level,s.name');
- admin_heading('ACCOUNTS · CHECK-UP','Keep accounts tidy.','BULIG checked '.number_format($d['pupils']).' pupil'.($d['pupils']===1?'':'s').' and '.$d['teachers'].' teacher'.($d['teachers']===1?'':'s').' just now.','<a class="btn secondary" href="?page=checkup">'.icon('replay').'Check again</a>');
+ admin_heading('ACCOUNTS · CHECK-UP','Keep accounts tidy.','BULIG Quest checked '.number_format($d['pupils']).' pupil'.($d['pupils']===1?'':'s').' and '.$d['teachers'].' teacher'.($d['teachers']===1?'':'s').' just now.','<a class="btn secondary" href="?page=checkup">'.icon('replay').'Check again</a>');
  echo admin_kpis([['alert',$d['bad'],'Need action now',$d['bad']?'Fix these first':'Nothing urgent',(bool)$d['bad']],['clock',$d['warn'],'Worth a look','',false],['check',count($d['good']),'All good','',false],['shield',date('g:i A'),'Last check','Today',false]]);
  echo '<div class="ws-g2 ck-grid"><section class="card ck-card"><div class="ws-hd"><h2>'.icon('alert').' Things to fix</h2><small class="muted">Most urgent first</small></div>';
  if(!$d['issues'])echo '<div class="ck-clear">'.icon('check').'<div><b>Everything looks good.</b><span>No account problems right now.</span></div></div>';
@@ -160,7 +160,7 @@ function checkup_action(string $action):never{
  if($action==='admin_ck_not_dupe'){
   $k=ck_name_key((string)($_POST['key']??''));if($k==='')fail('Choose a name from the list.');
   $list=ck_not_dupes();if(!in_array($k,$list,true))$list[]=$k;admin_set('checkup_not_dupes',json_encode(array_slice($list,-500)));audit('admin_not_duplicate',mb_substr($k,0,150));
-  flash('Got it. BULIG will not ask about these pupils again.');go('?page=checkup#ck-dupes');
+  flash('Got it. BULIG Quest will not ask about these pupils again.');go('?page=checkup#ck-dupes');
  }
  if($action==='admin_ck_tell'){
   if(admin_setting('checkup_told_on','')===date('Y-m-d')){flash('Teachers were already told today.');go('?page=checkup#ck-never');}

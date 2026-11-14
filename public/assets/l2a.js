@@ -55,7 +55,7 @@
   return kinds.map((k,p)=>k==='look'?'':(val.get(key(c,p))||'')).filter(Boolean).join(' · ');}
  function needs(c){return (c.dataset.kinds||'').split(' ').some(k=>k&&k!=='look');}
  function collect(){if(ro)return;out.value='BULIG card answers\n'+[...cards].sort((a,b)=>a.dataset.n-b.dataset.n).map(c=>'Card '+c.dataset.n+(c.dataset.t?' (no. '+c.dataset.t+')':'')+': '+cardAnswer(c)).join('\n')+triesLine();paintDots();}
- function set(c,p,v){val.set(key(c,p),v);collect();}
+ function set(c,p,v){val.set(key(c,p),v);collect();if(typeof autoQueue==='function')autoQueue(c);}
 
  /* ---------- BULIG checks each card right away (v172) ----------
     Lesson activities with an answer key (data-ck): a Check button on each marked card (letter blanks and Build a Word
@@ -67,27 +67,43 @@
  const keyed=c=>CK&&c.dataset.keyed==='1';
  const autoOnly=c=>{const k=(c.dataset.kinds||'').split(' ').filter(x=>x&&x!=='look');return k.length>0&&(k.every(x=>x==='build')||(k.every(x=>x==='tiles')&&!!$('[data-gap][data-n]',c)));};
  function ckRow(c){let r=$('.ck-row',c);if(r)return r;r=document.createElement('div');r.className='ck-row';
-  const b=document.createElement('button');b.type='button';b.className='l1-btn ck-go';b.textContent='Check';b.hidden=autoOnly(c);b.addEventListener('click',()=>checkCard(c));
+  const b=document.createElement('button');b.type='button';b.className='l1-btn ck-go';b.textContent='Check';b.hidden=true;   /* v216 no Check button: BULIG checks by itself */b.addEventListener('click',()=>checkCard(c));
   const m=document.createElement('p');m.className='ck-msg';m.setAttribute('role','status');m.setAttribute('aria-live','polite');r.append(b,m);c.append(r);return r;}
  /* Bruno the Helper says it: cheers when right, "try again" when not */
  const BRUNO={ok:'cheer',no:'tryagain',out:'thumbs'};
- function ckSay(c,k,t){const m=$('.ck-msg',ckRow(c));m.className='ck-msg'+(k?' '+k:'');m.textContent='';
-  if(k&&BRUNO[k]){const i=document.createElement('img');i.className='ck-pal';i.alt='';i.src='assets/images/characters/bruno-'+BRUNO[k]+'.webp?v=2';
-   const tx=document.createElement('span');tx.className='ck-bub';const who=document.createElement('small');who.textContent='Bruno the Helper';const w=document.createElement('b');w.textContent=t;tx.append(who,w);m.append(i,tx);}
+ function ckSay(c,k,t){const m=$('.ck-msg',ckRow(c));clearTimeout(m._fade);m.className='ck-msg'+(k?' '+k:'');m.textContent='';
+  if(k&&BRUNO[k]){/* v216 Mia the Builder cheers a word built with the letter tiles; Bruno helps everywhere else. Shown over the page, like Zion, then it fades. */
+   const built=k==='ok'&&c.querySelector('[data-kind="tiles"],[data-kind="build"]');let word='';if(built){const w0=c.querySelector('.l2-word');word=w0?w0.textContent.replace(/\s+/g,'').trim():'';}
+   const mia=built&&word&&word.length<=16;const who0=mia?'Mia the Builder':'Bruno the Helper';
+   const i=document.createElement('img');i.className='ck-pal';i.alt='';i.src='assets/images/characters/'+(mia?'mia-blocks':'bruno-'+BRUNO[k])+'.webp?v=2';
+   const tx=document.createElement('span');tx.className='ck-bub';const who=document.createElement('small');who.textContent=who0;const w=document.createElement('b');w.textContent=mia?'You built “'+word+'”! One sound at a time!':t;tx.append(who,w);m.append(i,tx);
+   m.classList.add('ck-float');if(mia)m.classList.add('ck-mia');clearTimeout(m._fade);m._fade=setTimeout(()=>{m.classList.add('ck-gone');},k==='no'?4200:3200);}
   else m.textContent=t;}
  function lock(c,how){cst[c.dataset.n]=how;c.classList.add(how==='ok'?'ck-ok':'ck-out');$$('.l2-ans',c).forEach(x=>x.classList.add('locked'));const b=$('.ck-go',c);if(b)b.hidden=true;paintDots();}
- function ask(n,g){const fd=new FormData();fd.set('action','card_check');fd.set('csrf',(form.querySelector('[name=csrf]')||{}).value||'');fd.set('activity_id',aid);fd.set('card',n);fd.set('answer',g);
+ function ask(n,g,auto){const fd=new FormData();fd.set('action','card_check');if(auto)fd.set('auto','1');fd.set('csrf',(form.querySelector('[name=csrf]')||{}).value||'');fd.set('activity_id',aid);fd.set('card',n);fd.set('answer',g);
   return fetch('index.php',{method:'POST',body:fd,credentials:'same-origin',headers:{Accept:'application/json'}}).then(r=>r.ok?r.json():null).catch(()=>null);}
- async function checkCard(c){const n=c.dataset.n;if(!keyed(c)||(cst[n]&&cst[n]!=='part'))return true;const g=cardAnswer(c);if(!g){ckSay(c,'no','Answer first, then tap Check.');return false;}
-  const b=$('.ck-go',c);if(b)b.disabled=true;const j=await ask(n,g);if(b)b.disabled=false;
-  if(!j){cst[n]='later';ckSay(c,'','Saved. BULIG will check it when you finish.');paintDots();return true;}
+ async function checkCard(c,auto){const n=c.dataset.n;if(!keyed(c)||(cst[n]&&cst[n]!=='part'))return true;const g=cardAnswer(c);if(!g){if(!auto)ckSay(c,'no','Answer first.');return false;}
+  const b=$('.ck-go',c);if(b)b.disabled=true;const j=await ask(n,g,auto==='soft');if(auto&&cardAnswer(c)!==g)return false;   /* changed while BULIG was checking */if(b)b.disabled=false;
+  if(!j){cst[n]='later';ckSay(c,'','Saved. BULIG Quest will check it when you finish.');paintDots();return true;}
   if(!j.keyed||j.ok){lock(c,'ok');ckSay(c,'ok',['Great job! You got it!','Yes! That is right!','Correct! Well done!','You did it! Great work!'][Math.floor(Math.random()*4)]);sfx('correct');return true;}
-  tries[n]=j.tries;collect();sfx('tryagain');
+  tries[n]=j.tries;collect();sfx('tryagain');c.classList.remove('ck-bad');void c.offsetWidth;c.classList.add('ck-bad');setTimeout(()=>c.classList.remove('ck-bad'),1200);
+  /* v216 the wrong choice turns red for a moment, then it is cleared for another try */
+  const red=$$('[aria-pressed="true"]',c);red.forEach(x=>x.classList.add('ck-red'));
+  if(auto!=='soft')setTimeout(()=>{red.forEach(x=>{x.classList.remove('ck-red');if(x.matches('button[data-val],.l2-pic[data-pick]'))x.setAttribute('aria-pressed','false');});(c.dataset.kinds||'').split(' ').forEach((k,p)=>{if(['chip','num','pick'].includes(k))val.set(key(c,p),'');});collect();},900);
+  else setTimeout(()=>red.forEach(x=>x.classList.remove('ck-red')),1200);
   /* v180: never stuck. A matching board says how many pairs are right; after 3 wrong tries any card may go on (it keeps its lower score). */
   const many=j.of>1,free=many||(j.tries||0)>=(j.max||3);if(free){cst[n]='part';paintDots();}
   ckSay(c,'no',many?j.pts+' of '+j.of+' are right. Fix the others and tap Check, or tap '+(at<cards.length-1?'Next':'Submit')+' to go on.':
    free?'Not yet. You can try again, or tap '+(at<cards.length-1?'Next':'Submit')+' to go on.':['Not yet. Try again! You can do it!','Oops! Look again and try once more.','Almost! Try again, I know you can.'][Math.min(2,(j.tries||1)-1)]);c.classList.remove('ck-shake');void c.offsetWidth;c.classList.add('ck-shake');
-  if(c._ckClear)c._ckClear();return false;}
+  if(c._ckClear&&auto!=='soft')c._ckClear();return false;}
+ /* v216 auto check: a tap answer (one word, number or picture) is checked right away; words, several picks, pairs and
+    splits are checked when the pupil stops for a moment (those quiet checks never take away points). */
+ const AUTO_NOW=['chip','num','pick'],AUTO_SKIP=['say','read','speed','draw','paper','words','spin','build'];
+ function autoQueue(c){if(!CK||!keyed(c)||cst[c.dataset.n]==='ok')return;clearTimeout(c._ak);
+  const kinds=(c.dataset.kinds||'').split(' ').filter(Boolean);const parts=kinds.map((k,p)=>[k,p]).filter(([k])=>k!=='look');
+  if(!parts.length||parts.some(([k])=>AUTO_SKIP.includes(k))||autoOnly(c))return;
+  if(parts.some(([k,p])=>!(val.get(key(c,p))||'').trim()))return;
+  const now=parts.every(([k])=>AUTO_NOW.includes(k));c._ak=setTimeout(()=>checkCard(c,now?'tap':'soft'),now?250:1400);}
  /* Build a Word: right or one more try (the server counts it too) */
  function buildTry(c,ok,w){const n=c.dataset.n;if(ok){lock(c,'ok');return false;}tries[n]=Math.min(3,(tries[n]||0)+1);collect();ask(n,w);
   ckSay(c,'no','Not yet. Try again! You can do it!');return false;}
@@ -300,7 +316,7 @@
    sub.textContent=ok&&SPM==='support'?'Thank you! Your teacher will listen to it.':ok?'Great! You said it right!':'Not yet. I heard \u201c'+w+'\u201d. Tap the microphone and try again.';if(ok)sfx('correct');else sfx('tryagain');};
   const vcEnd=w=>{if(SPM==='support'&&w)vcList.forEach((v,i)=>{if(!pcFound.has(i)&&pcChips[i]){pcFound.add(i);pcChips[i].className='pc-chip ok';pcChips[i].textContent=String(v).split('|')[0];}});pcMark(w);wlEnd(w);const h=vcHit(w);if(h===null)return;if(h){vcSay(true,w);return;}const n=c.dataset.n;tries[n]=Math.min(9,(tries[n]||0)+1);collect();vcSay(false,w);};
   function srStart(){if(!SRC)return;said=[];part='';srErr='';srOn=true;const make=()=>{sr=new SRC();sr.lang='en-US';sr.continuous=true;sr.interimResults=true;
-    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();pcMark(t);wlMark(t);if(wlWords.length&&r.dataset.state==='rec'&&wlCount()===wlWords.length&&!r.dataset.wlAuto){r.dataset.wlAuto='1';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}if(t&&r.dataset.state==='rec'){sub.textContent='BULIG is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
+    sr.onresult=e=>{part='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)said.push(e.results[i][0].transcript);else part+=' '+e.results[i][0].transcript;}const t=heardText();pcMark(t);wlMark(t);if(wlWords.length&&r.dataset.state==='rec'&&wlCount()===wlWords.length&&!r.dataset.wlAuto){r.dataset.wlAuto='1';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}if(t&&r.dataset.state==='rec'){sub.textContent='BULIG Quest is listening: \u201c'+t+'\u2026\u201d';if(!vcOk&&vcHit(t)){vcOk=true;r.classList.add('vc-ok');sub.textContent='Great! You said it right!';setTimeout(()=>{if(r.dataset.state==='rec')stop();},700);}}};
     sr.onerror=e=>{srErr=e.error||'';if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error))srOn=false;};
     sr.onend=()=>{if(part){said.push(part);part='';}if(srOn){try{make();sr.start();}catch(e){srOn=false;}}};};
    make();try{sr.start();}catch(e){srOn=false;}}
@@ -318,13 +334,13 @@
   function stop(){clearInterval(tick);secs=(Date.now()-t0)/1000;srStop();if(solo){r.dataset.state='starting';setTimeout(finSolo,900);return;}if(mr&&mr.state!=='inactive')mr.stop();if(st)st.getTracks().forEach(t=>t.stop());}
   /* listening only (iPhone): the words are the answer */
   function finSolo(){const w=heardText();if(!w||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
-   inp.value='';ui('done');play.hidden=true;label.textContent=rd?'BULIG heard your reading':'BULIG heard your answer';sub.textContent='BULIG heard: \u201c'+w+'\u201d';
+   inp.value='';ui('done');play.hidden=true;label.textContent=rd?'BULIG Quest heard your reading':'BULIG Quest heard your answer';sub.textContent='BULIG Quest heard: \u201c'+w+'\u201d';
    set(c,p,(rd?'(read aloud · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(spoken answer)')+' said: '+w);vcEnd(w);}
   function fin(){const blob=new Blob(ch,{type:((mr&&mr.mimeType)||'audio/webm').split(';')[0].replace('video/','audio/')});
    if(blob.size<800||secs<.6){ui('idle');sub.textContent='I could not hear anything. Try again.';return;}
    url=URL.createObjectURL(blob);len.textContent=fmt(secs);const fr=new FileReader();fr.onload=()=>{inp.value=String(fr.result);ui('done');const base=rd?'(voice recording · time '+fmt(secs)+(r.dataset.words?' · '+Math.round(+r.dataset.words*60/Math.max(1,secs))+' words per minute':'')+')':'(voice recording)';set(c,p,base);
     /* the last words BULIG heard arrive a moment after the recording stops */
-    setTimeout(()=>{const w=heardText();if(w&&r.dataset.state==='done'){set(c,p,base+' said: '+w);sub.textContent='BULIG heard: \u201c'+w+'\u201d';vcEnd(w);}},800);};fr.readAsDataURL(blob);}
+    setTimeout(()=>{const w=heardText();if(w&&r.dataset.state==='done'){set(c,p,base+' said: '+w);sub.textContent='BULIG Quest heard: \u201c'+w+'\u201d';vcEnd(w);}},800);};fr.readAsDataURL(blob);}
   r.addEventListener('wc:done',e=>{const d=e.detail||{};secs=+d.secs||0;inp.value='';if(url){URL.revokeObjectURL(url);url='';}ui('done');play.hidden=true;label.textContent='Read with Max';sub.textContent='Your reading is saved.';set(c,p,'(read with Word Coach'+(rd&&secs?' · time '+fmt(secs):'')+')'+(d.said?' said: '+d.said:''));});   // v184: the Word Coach run is the reading
   go.addEventListener('click',()=>{if(r.dataset.state==='rec'){if(Date.now()-t0<700)return;stop();}else if(r.dataset.state!=='starting')start();});
   again.addEventListener('click',()=>{if(pl){pl.pause();pl=null;}set(c,p,'');start();});
@@ -350,7 +366,7 @@
   const c=cards[at],fd=new FormData(hf);fd.set('card',c.dataset.n);fd.set('ajax','1');
   try{await fetch(location.href,{method:'POST',body:fd,credentials:'same-origin',headers:{'Accept':'application/json'}});}catch(_){}
   skip.add(c.dataset.n);cst[c.dataset.n]='skip';c.classList.add('l2-skipped');collect();const d=hf.closest('dialog');if(d&&d.close)d.close();
-  const t=document.createElement('div');t.className='hp-toast';t.setAttribute('role','status');t.textContent=at<cards.length-1?'Thank you! You told the BULIG team. This page is skipped. Here is the next one.':'Thank you! You told the BULIG team. This page is skipped. Tap Done to finish.';
+  const t=document.createElement('div');t.className='hp-toast';t.setAttribute('role','status');t.textContent=at<cards.length-1?'Thank you! You told the BULIG Quest team. This page is skipped. Here is the next one.':'Thank you! You told the BULIG Quest team. This page is skipped. Tap Done to finish.';
   document.body.appendChild(t);setTimeout(()=>t.classList.add('hp-gone'),6000);if(at<cards.length-1)show(at+1);else show(at);},true);
  if(next)next.addEventListener('click',async()=>{const c=cards[at];if(keyed(c)&&!autoOnly(c)&&!cst[c.dataset.n]&&cardAnswer(c)!==''&&!await checkCard(c))return;show(at+1);});
  /* Submit: say which cards are still empty first. */

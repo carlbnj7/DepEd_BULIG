@@ -38,12 +38,12 @@ function privacy_pop(?array $u):string{
   .'<img class="wn-bob" src="'.e(friend_img('claude','shield')).'" alt="Claude the Guard" width="150" height="326">'
   .'<form method="post" class="wn-body">'.csrf_field().'<input type="hidden" name="action" value="privacy_agree"><input type="hidden" name="back" value="'.e($back).'">'
   .'<span class="wn-badge">'.icon('shield').'DATA PRIVACY</span><h2 id="pv-title">Your Data Is Safe With BULIG</h2>'
-  .'<p class="wn-say"><b>Claude the Guard:</b> '.($kid?'I keep your data safe. Here is what you need to know.':'Before you start, here is how BULIG keeps personal information safe.').'</p>'
+  .'<p class="wn-say"><b>Claude the Guard:</b> '.($kid?'I keep your data safe. Here is what you need to know.':'Before you start, here is how BULIG Quest keeps personal information safe.').'</p>'
   .privacy_list(privacy_points((string)$u['role']))
-  .'<label class="pv-check"><input type="checkbox" name="agree" value="1" required data-pv-tick><span>'.($kid?'I understand, and I agree to the <a href="?page=privacy" data-pv-more>Privacy Notice</a>.':'I have read the <a href="?page=privacy" data-pv-more>Privacy Notice</a> and I agree to how BULIG uses my data.').'</span></label>'
-  .'<p class="pv-note">'.icon('shield').($kid?'BULIG follows the law that keeps your data safe (RA 10173)':'Following the Data Privacy Act of 2012 (RA 10173)').'</p>'
+  .'<label class="pv-check"><input type="checkbox" name="agree" value="1" required data-pv-tick><span>'.($kid?'I understand, and I agree to the <a href="?page=privacy" data-pv-more>Privacy Notice</a>.':'I have read the <a href="?page=privacy" data-pv-more>Privacy Notice</a> and I agree to how BULIG Quest uses my data.').'</span></label>'
+  .'<p class="pv-note">'.icon('shield').($kid?'BULIG Quest follows the law that keeps your data safe (RA 10173)':'Following the Data Privacy Act of 2012 (RA 10173)').'</p>'
   .'<button class="btn primary wn-ok" data-pv-ok disabled>'.icon('check').($kid?'I Agree, Let’s Go':'I Agree').'</button>'
-  .'<div class="pv-full" data-pv-full hidden><span class="wn-badge">'.icon('info').'PRIVACY NOTICE</span><h2>'.($kid?'All About Your Data':'BULIG Privacy Notice').'</h2>'.privacy_list(privacy_notice_parts($kid)).'<button type="button" class="btn secondary wn-ok" data-pv-back>'.icon('arrow','flip').'Back</button></div></form>'
+  .'<div class="pv-full" data-pv-full hidden><span class="wn-badge">'.icon('info').'PRIVACY NOTICE</span><h2>'.($kid?'All About Your Data':'BULIG Quest Privacy Notice').'</h2>'.privacy_list(privacy_notice_parts($kid)).'<button type="button" class="btn secondary wn-ok" data-pv-back>'.icon('arrow','flip').'Back</button></div></form>'
   .'<div class="wn-tape wn-tape-b" aria-hidden="true"></div></div></div>';
 }
 
@@ -53,23 +53,23 @@ function privacy_notice_parts(bool $kid=false):array{if($kid)return [
  ['book','Why we keep it','So your teacher can help you read better, and see how much you grow.'],
  ['mic','Your voice','Max records you only when you read. Your teacher listens to help you. After '.PRIVACY_KEEP_DAYS.' days, it is deleted.'],
  ['lock','How we keep it safe','Your password is locked, so no one can read it. Only you, your teacher and your school can open your work.'],
- ['people','Who can see it','Only you, your teacher and your school. BULIG never gives your data to strangers or to other companies.'],
+ ['people','Who can see it','Only you, your teacher and your school. BULIG Quest never gives your data to strangers or to other companies.'],
  ['clock','How long we keep it','While you study in your school.'],
  ['shield','You can ask','You can see your data, get a copy, fix it, or ask to delete it. Just ask your teacher.'],
  ['info','Need help?','Ask your teacher or your school. They can talk to the people in charge of keeping data safe.']];
  return [
- ['user','What BULIG collects','Pupils: name, LRN, sex, grade, section, school, reading levels, answers, scores, XP, badges, learning days and voice recordings of readings. Teachers and administrators: name, ID, school and sex. No home address, phone number or photo is required.'],
- ['book','Why we collect it','To teach reading with the official DepEd BULIG modules, to check pupils’ readings, to track progress and to print report cards and certificates. Nothing is used for advertising.'],
+ ['user','What BULIG Quest collects','Pupils: name, LRN, sex, grade, section, school, reading levels, answers, scores, XP, badges, learning days and voice recordings of readings. Teachers and administrators: name, ID, school and sex. No home address, phone number or photo is required.'],
+ ['book','Why we collect it','To teach reading with the official DepEd BULIG Quest modules, to check pupils’ readings, to track progress and to print report cards and certificates. Nothing is used for advertising.'],
  ['mic','Voice recordings','Max records a pupil’s reading only while the pupil reads. Teachers listen to check it. Recordings are deleted '.PRIVACY_KEEP_DAYS.' days after they are made; a reading that still waits for its teacher stays until it is checked.'],
  ['lock','How we protect it','Passwords are stored locked (hashed). Every page checks who is signed in and what their role allows: teachers see only their own pupils. Recordings are kept outside the public web folder. Wrong passwords are slowed down, and every change is written in the activity log.'],
- ['people','Who can see it','The pupil, the pupil’s teacher and the school administrator. BULIG does not share, sell or send personal data to other companies.'],
+ ['people','Who can see it','The pupil, the pupil’s teacher and the school administrator. BULIG Quest does not share, sell or send personal data to other companies.'],
  ['clock','How long we keep it','Records stay while the pupil studies in the school. The administrator can clear old records after making a backup, and can delete an account with all its work.'],
  ['shield','Your rights','You may be informed, see your data, download it, correct it, object, and ask for it to be deleted. Use My Data and Privacy on your profile or settings, or ask your teacher or the school administrator.'],
  ['info','Contact','For questions or complaints, contact the Data Protection Officer of the DepEd Schools Division of Bukidnon, or the National Privacy Commission (privacy.gov.ph).']];}
 
 function privacy_notice_html(bool $guest,bool $kid=false):string{
- $h='<section class="card pv-page"><span class="eyebrow">DATA PRIVACY</span><h1>'.icon('shield').($kid?'All About Your Data':'BULIG Privacy Notice').'</h1>'
-  .'<p class="muted">'.($kid?'BULIG follows the law that keeps your data safe (RA 10173).':'How BULIG follows the Data Privacy Act of 2012 (Republic Act 10173). Version '.e(PRIVACY_ID).'.').'</p><div class="pv-grid pv-grid-1">';
+ $h='<section class="card pv-page"><span class="eyebrow">DATA PRIVACY</span><h1>'.icon('shield').($kid?'All About Your Data':'BULIG Quest Privacy Notice').'</h1>'
+  .'<p class="muted">'.($kid?'BULIG Quest follows the law that keeps your data safe (RA 10173).':'How BULIG Quest follows the Data Privacy Act of 2012 (Republic Act 10173). Version '.e(PRIVACY_ID).'.').'</p><div class="pv-grid pv-grid-1">';
  foreach(privacy_notice_parts($kid) as [$i,$t,$d])$h.='<div class="pv-item">'.icon($i).'<span><b>'.e($t).'</b><small>'.e($d).'</small></span></div>';
  return $h.'</div>'.($guest?'<a class="btn primary" href="?page=login">'.icon('arrow').'Back to sign in</a>':'').'</section>';
 }
@@ -78,7 +78,7 @@ function privacy_view(?array $u):void{echo privacy_notice_html(!$u,($u['role']??
 /** "My Data and Privacy" on the profile (teachers, administrators) or the settings page (pupils). */
 function privacy_card(array $u):string{
  $kid=$u['role']==='pupil';$h='<section class="card pv-card" id="my-data"><span class="eyebrow">MY DATA</span><h2>'.icon('shield').'My Data and Privacy<span class="pv-law">RA 10173</span></h2>'
-  .'<p class="muted">'.($kid?'Here is what BULIG keeps about you, and what you can do with it.':'What BULIG keeps about you, and what you can do with it.').'</p><div class="pv-grid">';
+  .'<p class="muted">'.($kid?'Here is what BULIG Quest keeps about you, and what you can do with it.':'What BULIG Quest keeps about you, and what you can do with it.').'</p><div class="pv-grid">';
  foreach(privacy_points((string)$u['role']) as [$i,$t,$d])$h.='<div class="pv-item">'.icon($i).'<span><b>'.e($t).'</b><small>'.e($d).'</small></span></div>';
  $h.='</div><div class="pv-acts"><a class="btn primary" href="?page=my_data">'.icon('download').'Download My Data</a><a class="btn secondary" href="?page=privacy">'.icon('info').'Read the Privacy Notice</a>';
  if($u['role']==='teacher')$h.='<form method="post" class="pv-del">'.csrf_field().'<input type="hidden" name="action" value="privacy_delete_ask"><button class="btn quiet" data-confirm="'.e($kid?'Ask to delete your account? Your teacher and the school administrator will be told.':'Ask the school administrator to delete your account?').'">'.icon('trash').'Ask to Delete My Account</button></form>';
@@ -108,7 +108,7 @@ function privacy_action(string $action):never{
 /** Download My Data: the person's own records as JSON. Passwords, keys and tokens are never included. */
 function privacy_my_data(array $u):never{
  $id=(int)$u['id'];$safe=function(string $sql,array $a=[]){try{return rows($sql,$a);}catch(Throwable $e){return [];}};
- $d=['about'=>'BULIG · My data · '.date('Y-m-d H:i'),'law'=>'Data Privacy Act of 2012 (RA 10173): your right to see your data.',
+ $d=['about'=>'BULIG Quest · My data · '.date('Y-m-d H:i'),'law'=>'Data Privacy Act of 2012 (RA 10173): your right to see your data.',
   'account'=>one('SELECT public_id,role,name,active,created_at FROM users WHERE id=?',[$id]),
   'name_parts'=>$safe('SELECT first_name,middle_name,last_name,name_ext FROM user_names WHERE user_id=?',[$id]),
   'school'=>$safe('SELECT s.name FROM schools s JOIN users u ON u.school_id=s.id WHERE u.id=?',[$id]),

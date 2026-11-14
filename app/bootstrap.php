@@ -43,7 +43,7 @@ function word_match(string $expected,string $heard):array{
  while($i||$j){if($i&&$j&&$d[$i][$j]===$d[$i-1][$j-1]+($a[$i-1]===$b[$j-1]?0:1)){$detail[]=['expected'=>$a[$i-1],'heard'=>$b[$j-1],'match'=>$a[$i-1]===$b[$j-1]];$i--;$j--;}elseif($i&&$d[$i][$j]===$d[$i-1][$j]+1){$detail[]=['expected'=>$a[$i-1],'heard'=>'','match'=>false];$i--;}else{$detail[]=['expected'=>'','heard'=>$b[$j-1],'match'=>false];$j--;}}
  return ['percent'=>count($a)?round(max(0,1-$d[count($a)][count($b)]/count($a))*100,2):0,'words'=>array_reverse($detail)];
 }
-function activities(int $lid,int $pid=0):array{return rows("SELECT a.*,c.status,c.response,c.feedback,c.drawing,c.id completion_id FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND ".(studio_test_draft($pid,$lid)?'1':'a.published=1')." ORDER BY FIELD(a.phase,'pre','learn','post'),a.position",[$pid,$lid]);}
+function activities(int $lid,int $pid=0):array{return rows("SELECT a.*,c.status,c.response,c.feedback,c.drawing,c.id completion_id,c.score,c.max_score FROM activities a LEFT JOIN activity_completion c ON c.activity_id=a.id AND c.pupil_id=? WHERE a.lesson_id=? AND ".(studio_test_draft($pid,$lid)?'1':'a.published=1')." ORDER BY FIELD(a.phase,'pre','learn','post'),a.position",[$pid,$lid]);}
 function lesson_available(int $pid,int $lid):bool{
  if(isset($GLOBALS['bulig_map_availability'])&&($_SERVER['REQUEST_METHOD']??'GET')==='GET'){
   $key=$pid.':'.$lid;
@@ -252,7 +252,7 @@ function level5_manifest():array{static $m;if($m===null){$f=__DIR__.'/../databas
 /** Levels whose content is a separate module for each grade (Level 4 = id 5, Level 5 = id 6). */
 function level6_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level6-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
 function level7_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level7-meta.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['grades'=>[]];}return $m;}
-function per_grade_level(int $level):bool{return in_array($level,[5,6,7,8],true);}
+function per_grade_level(int $level):bool{return in_array($level,[5,6,7,8],true)||(function_exists('studio_level')&&studio_level($level)!==null&&studio_grade_modules($level));}   // v216 new levels with a module for each grade
 function lesson_level(int $lid):int{static $c=[];return $c[$lid]??=(int)val('SELECT m.level_id FROM lessons l JOIN modules m ON m.id=l.module_id WHERE l.id=?',[$lid]);}
 function level2_manifest():array{static $m;return $m??=json_decode(file_get_contents(__DIR__.'/../database/level2-manifest.json'),true);}
 function level3_manifest():array{static $m;if($m===null){$f=__DIR__.'/../database/level3-cards.json';$m=is_file($f)?json_decode(file_get_contents($f),true):['cards'=>[],'lessons'=>[],'pupil_pages'=>[],'page_count'=>0];}return $m;}
@@ -281,12 +281,12 @@ function next_learning_lesson_check(int $pid):?array{
 
 /* The app's parts, loaded in this order. If an update left one out, BULIG shows a clear message
    (status 503) instead of a blank "HTTP 500" page. */
-const BULIG_PARTS=['school_levels','coach','whats_new','privacy','chat','rbac','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support','streak','studio'];
+const BULIG_PARTS=['school_levels','coach','whats_new','privacy','chat','rbac','level2_cards','presentation','pupil_import','admin_pin','admin','pupil_welcome','pupil_fun','teacher_fun','class_done','growth','reach','cards','offline','saved_login','level1','level2a','level4','scoring','post_gate','reading_board','insights','notify','help','month_recap','schedule','skipped','reader_level','login_ui','checkup','teacher_accounts','account_ids','reading_check','staff_ui','ratings','section_report','reading_growth','quest_extras','names','sections','account_delete','friends','story','schools','school_page','directory','castle','cycles','jeepy','messages','bug_workflow','reading_verification','reading_support','streak','studio'];
 function bulig_missing_files(array $missing):never{
  $list=implode(', ',array_map(fn($f)=>'app/'.$f.'.php',$missing));
- if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG cannot start. Missing: '.$list."\n");exit(1);}
+ if(PHP_SAPI==='cli'){fwrite(STDERR,'BULIG Quest cannot start. Missing: '.$list."\n");exit(1);}
  http_response_code(503);header('Retry-After: 600');header('Content-Type: text/html; charset=utf-8');
- echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BULIG is being updated</title></head><body><main><h1>BULIG is being updated</h1><p>Please try again in a few minutes.</p><p>For the administrator: these files are missing on the server: <b>'.htmlspecialchars($list,ENT_QUOTES,'UTF-8').'</b>. Upload the complete update ZIP again, then open <a href="bulig-check.php">bulig-check.php</a> to confirm.</p></main></body></html>';
+ echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BULIG Quest is being updated</title></head><body><main><h1>BULIG Quest is being updated</h1><p>Please try again in a few minutes.</p><p>For the administrator: these files are missing on the server: <b>'.htmlspecialchars($list,ENT_QUOTES,'UTF-8').'</b>. Upload the complete update ZIP again, then open <a href="bulig-check.php">bulig-check.php</a> to confirm.</p></main></body></html>';
  exit;
 }
 if($__missing=array_values(array_filter(BULIG_PARTS,fn($f)=>!is_file(__DIR__.'/'.$f.'.php'))))bulig_missing_files($__missing);

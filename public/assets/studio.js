@@ -20,7 +20,7 @@
   return j;
  }
  form.addEventListener('submit',async e=>{
-  e.preventDefault();const file=form.querySelector('[data-st-pdf]').files[0];if(!file)return;
+  e.preventDefault();const file=form.querySelector('[data-st-pdf]').files[0];if(!file)return;const gs=form.querySelector('[data-st-grade]'),grade=gs?gs.value:'';if(gs&&!grade){gs.focus();return;}
   const prog=form.querySelector('[data-st-prog]'),bar=prog.querySelector('progress'),msg=form.querySelector('[data-st-msg]'),btn=form.querySelector('button');
   prog.hidden=false;btn.disabled=true;bar.value=0;
   try{
@@ -37,12 +37,13 @@
     await page.render({canvasContext:ctx,viewport:vp}).promise;
     const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.82));
     const fd=new FormData();fd.append('action','studio_import_page');fd.append('csrf',csrf);fd.append('level',form.dataset.level);
-    fd.append('n',String(i));fd.append('total',String(N));fd.append('text',text);fd.append('page',blob,'page-'+i+'.jpg');
+    fd.append('grade',grade);fd.append('n',String(i));fd.append('total',String(N));fd.append('text',text);fd.append('page',blob,'page-'+i+'.jpg');
     await post(fd);bar.value=Math.round(i/N*90);page.cleanup();
    }
+   if(form.querySelector('[data-st-replace]').checked){msg.textContent='Removing the lessons from the earlier upload…';const fc=new FormData();fc.append('action','studio_import_build');fc.append('csrf',csrf);fc.append('level',form.dataset.level);fc.append('grade',grade);fc.append('replace','1');fc.append('clear_only','1');await post(fc);bar.value=94;}
    msg.textContent='Making the lessons and activities…';
    const fd=new FormData();fd.append('action','studio_import_build');fd.append('csrf',csrf);fd.append('level',form.dataset.level);
-   fd.append('replace',form.querySelector('[data-st-replace]').checked?'1':'');
+   fd.append('grade',grade);fd.append('replace','');
    const j=await post(fd);bar.value=100;msg.textContent=j.msg||'Done.';setTimeout(()=>{location.href=j.url||location.href;},900);
   }catch(err){msg.textContent='The module could not be read: '+err.message;btn.disabled=false;}
  });

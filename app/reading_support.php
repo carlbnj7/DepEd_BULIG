@@ -36,7 +36,7 @@ function rs_groups(array $struggling):array{
 function rs_teacher_card(int $tid):string{
  $s=rs_struggling($tid);$groups=rs_groups($s);$inGroup=[];foreach($groups as $l)foreach($l as $p)$inGroup[(int)$p['id']]=1;
  $h='<section class="card rs-card" id="rs-readers"><div class="ws-hd"><h2>'.icon('mic').'Readers who need help</h2><span class="rs-sub">Word Coach scores in the last 30 days</span></div>';
- if(!$s)return $h.'<p class="rs-ok">'.icon('check').'No one is struggling. BULIG lists a pupil here when their last '.RS_MIN_READS.' or more Word Coach readings average under '.RS_LOW.'%.</p></section>';
+ if(!$s)return $h.'<p class="rs-ok">'.icon('check').'No one is struggling. BULIG Quest lists a pupil here when their last '.RS_MIN_READS.' or more Word Coach readings average under '.RS_LOW.'%.</p></section>';
  foreach($groups as $lv=>$list)$h.='<div class="rs-group">'.icon('people').'<div><b>Small group idea · '.e(level_label((int)$lv)).'</b><small>'.e(implode(', ',array_map(fn($p)=>tf_first($p),$list))).' find the same reading hard. Read the story with them together, then let each one read a part.</small></div></div>';
  $h.='<div class="rs-list">';
  foreach(array_slice($s,0,8) as $p)$h.='<a class="rs-row" href="?page=pupil&amp;id='.(int)$p['id'].'">'.avatar($p).'<span class="rs-tx"><b>'.e($p['name']).speech_mark((int)$p['id']).'</b><small>'.e(($p['level_id']?level_label((int)$p['level_id']):'No level yet').' · '.$p['reads'].' readings').'</small>'
@@ -87,7 +87,7 @@ function rs_challenge_teacher(int $tid):string{
 function rs_challenge_pupil(int $pid):string{
  $tid=(int)val('SELECT teacher_id FROM teacher_pupils WHERE pupil_id=?',[$pid]);if(!$tid)return '';
  $c=rs_class_words($tid);$done=$c['total']>=$c['goal'];
- return '<section class="card rs-ch rs-chp"><div class="rs-chh"><span class="rs-pic">'.icon('flag').'</span><div><b>Our class reading challenge</b><small>'.($done?'We did it! Our class reached the goal this week.':'Read with Word Coach to help our class reach the goal this week.').'</small></div></div>'
+ return '<section class="card rs-ch rs-chp"><img class="rs-chc" src="'.e(function_exists('friend_img')?friend_img('toby',$done?'cheer':'flag'):'').'" alt="" width="70" height="90" loading="lazy"><div class="rs-chh"><span class="rs-pic">'.icon('book').'</span><div><b>Our class reading challenge</b><small>'.($done?'We did it! Our class reached the goal this week.':'Read with Word Coach to help our class reach the goal this week.').'</small></div></div>'
   .'<p class="rs-big"><b>'.number_format($c['total']).'</b> of '.number_format($c['goal']).' words</p>'.rs_bar($c['total'],$c['goal']).'</section>';
 }
 
@@ -111,7 +111,7 @@ function rs_offline_waiting(int $tid):array{
 function rs_offline_card(int $tid):string{
  $w=rs_offline_waiting($tid);if(!$w)return '';$why=['signin'=>'needs to sign in again','order'=>'must finish an earlier activity','failed'=>'the upload stopped','wait'=>'waiting for internet'];
  $h='<section class="card rs-card" id="rs-offline"><div class="ws-hd"><h2>'.icon('download').'Work waiting to upload</h2><span class="rs-sub">Answers made offline, still on the pupil’s phone</span></div><div class="rs-list">';
- foreach($w as $p)$h.='<a class="rs-row" href="?page=pupil&amp;id='.$p['id'].'">'.avatar($p).'<span class="rs-tx"><b>'.e($p['name']).speech_mark((int)$p['id']).'</b><small>'.$p['n'].' '.($p['n']===1?'answer':'answers').' · '.e($why[$p['why']]??'waiting for internet').' · seen '.e(date('M j, g:i a',strtotime($p['at']))).'</small><em>Ask them to open BULIG with internet. The answers upload by themselves.</em></span><strong class="rs-pct">'.$p['n'].'</strong></a>';
+ foreach($w as $p)$h.='<a class="rs-row" href="?page=pupil&amp;id='.$p['id'].'">'.avatar($p).'<span class="rs-tx"><b>'.e($p['name']).speech_mark((int)$p['id']).'</b><small>'.$p['n'].' '.($p['n']===1?'answer':'answers').' · '.e($why[$p['why']]??'waiting for internet').' · seen '.e(date('M j, g:i a',strtotime($p['at']))).'</small><em>Ask them to open BULIG Quest with internet. The answers upload by themselves.</em></span><strong class="rs-pct">'.$p['n'].'</strong></a>';
  return $h.'</div></section>';
 }
 
@@ -170,7 +170,7 @@ function cleanup_action(string $action):never{
    are never touched. [label, table, date column, rows that may go] */
 const CLEANUP_AGES=['30'=>'older than 30 days','90'=>'older than 3 months','180'=>'older than 6 months','365'=>'older than 1 year','all'=>'everything'];
 function cleanup_kinds():array{
- $k=['log'=>['Activity log','audit_log','created_at','1=1','Every action in BULIG (sign-ins, changes, deletions). The cleanup itself is still written in the log.'],
+ $k=['log'=>['Activity log','audit_log','created_at','1=1','Every action in BULIG Quest (sign-ins, changes, deletions). The cleanup itself is still written in the log.'],
   'notif'=>['Read notifications','notifications','created_at','read_at IS NOT NULL','Bell notifications that were already read. Unread ones stay.'],
   'login'=>['Sign-in attempts','login_attempts','attempted_at','1=1','Records of wrong passwords, used to slow down guessing.'],
   'help'=>['“I need help” requests','help_requests','created_at','1=1','Old requests from pupils to their teachers.'],
@@ -181,7 +181,7 @@ function cleanup_kinds():array{
 }
 function cleanup_clear_card():string{
  $b=function_exists('admin_setting')?admin_setting('last_backup_at',''):'';$fresh=$b!==''&&function_exists('admin_days_since')&&admin_days_since($b)<1;$note=function_exists('admin_backup_note')?admin_backup_note():'';
- $h='<section class="card rs-card cu-clear" id="cu-clear"><div class="ws-hd"><h2>'.icon('trash').'Clear old data</h2><span class="rs-sub">Pupils’ answers, scores and XP are never removed</span></div><p class="muted">Old records make BULIG slower and backups bigger. Deleting cannot be undone, so BULIG asks for a backup first.</p>'
+ $h='<section class="card rs-card cu-clear" id="cu-clear"><div class="ws-hd"><h2>'.icon('trash').'Clear old data</h2><span class="rs-sub">Pupils’ answers, scores and XP are never removed</span></div><p class="muted">Old records make BULIG Quest slower and backups bigger. Deleting cannot be undone, so BULIG Quest asks for a backup first.</p>'
   .'<div class="cu-step'.($fresh?' done':'').'" data-cu-step><b class="cu-sn">1</b><div><b>Make a backup</b><small data-cu-note>'.e($fresh?'Done · '.$note:$note).'</small></div><span class="cu-bbtns"><a class="btn primary small" href="?page=backup_csv" data-cu-backup>'.icon('download').'Download backup now</a><a class="btn secondary small" href="?page=backup_sql" data-cu-backup>Full database (.sql)</a></span></div>'
   .'<p class="cu-step2"><b class="cu-sn">2</b>Choose how old, tick the box, then tap Delete.'.($fresh?'':' <span data-cu-wait>The Delete buttons open after you make a backup today.</span>').'</p><div class="cu-kinds">';
  foreach(cleanup_kinds() as $id=>[$label,$table,$col,$where,$note]){
@@ -234,7 +234,7 @@ function pupil_wording(string $t):string{
   '~Listen carefully to (?:your|the) teacher as (?:she|he) reads~iu'=>'Tap the speaker and listen carefully to',
   '~Listen carefully to (?:your|the) teacher as (?:she|he) gives~iu'=>'Listen carefully to',
   '~Listen (carefully )?as (?:your|the) teacher reads~iu'=>'Tap the speaker and listen $1to',
-  '~Listen to (?:your|the) teacher as (?:she|he) reads~iu'=>'Tap the speaker. Listen as BULIG reads',
+  '~Listen to (?:your|the) teacher as (?:she|he) reads~iu'=>'Tap the speaker. Listen as BULIG Quest reads',
   '~Listen to the sounds your teacher is saying~iu'=>'Tap the speaker and listen to the sounds',
   '~Listen to (?:the|your) teacher (carefully|attentively)~iu'=>'Listen $1',
   '~Listen to your teacher and look~iu'=>'Listen and look',
@@ -243,8 +243,8 @@ function pupil_wording(string $t):string{
   '~When the teacher says a word~iu'=>'When you hear a word',
   '~\bas the teacher says?\b~iu'=>'that you hear',
   '~Follow the jumping-and-sounds instructions shown with your teacher~iu'=>'Follow the jumping-and-sounds instructions',
-  '~Your teacher will (?:listen and )?check the words you sound out correctly~iu'=>'BULIG checks the words you sound out',
-  '~Teacher sound out or blend the sample word/s~iu'=>'Listen as BULIG sounds out and blends the sample word/s',
+  '~Your teacher will (?:listen and )?check the words you sound out correctly~iu'=>'BULIG Quest checks the words you sound out',
+  '~Teacher sound out or blend the sample word/s~iu'=>'Listen as BULIG Quest sounds out and blends the sample word/s',
   '~The teacher will present and read the following words, then ask the learners to sound out~iu'=>'Listen to the following words, then sound out',
   '~Teacher read the words and let learners identify~iu'=>'Listen to the words and find',
   '~The teacher shows a picture~iu'=>'Look at the picture',
@@ -256,10 +256,10 @@ function pupil_wording(string $t):string{
   '~Your teacher reads each word aloud twice~iu'=>'Tap the speaker to hear each word two times',
   '~Your teacher reads each word aloud~iu'=>'Tap the speaker to hear each word',
   '~Your teacher reads a word aloud twice~iu'=>'Tap the speaker to hear the word two times',
-  '~Repeat after (?:your|the) teacher~iu'=>'Repeat after BULIG',
-  '~after the teacher\b~iu'=>'after BULIG',
+  '~Repeat after (?:your|the) teacher~iu'=>'Repeat after BULIG Quest',
+  '~after the teacher\b~iu'=>'after BULIG Quest',
   '~Learner:\s*Circle the words that matche?s? the words teacher reads~iu'=>'Circle the words that match the words you hear',
-  '~Your teacher listens for accuracy and speed~iu'=>'BULIG listens for accuracy and speed',
+  '~Your teacher listens for accuracy and speed~iu'=>'BULIG Quest listens for accuracy and speed',
   '~Listen as the teacher gives the meaning of~iu'=>'Listen to the meaning of',
   '~as the teacher picks? and announces? them~iu'=>'as you hear them',
   '~Your teacher will read (?:a|the) (definition/clue|word) aloud~iu'=>'Listen to the $1',
@@ -412,9 +412,9 @@ function instruction_fixes():array{static $m=null;if($m===null){$f=__DIR__.'/../
    - support:  Speech support (for example cleft palate). BULIG never marks a spoken word wrong and takes no hearts.
                The pupil reads with Max and taps each word as they say it; the recording goes to the teacher, who
                listens and scores it. Pupils and classmates never see the setting. */
-const SPEECH_MODES=['standard'=>['Standard','BULIG listens and checks each word.'],
+const SPEECH_MODES=['standard'=>['Standard','BULIG Quest listens and checks each word.'],
  'accent'=>['Accent-friendly','For a different accent (for example pupils from the mountains or Lumad communities). Sounds like i and e, o and u, p and f, b and v, and a last sound that is not said count as right.'],
- 'support'=>['Speech support','For a pupil with a speech need, such as cleft palate. BULIG never marks a spoken word wrong and takes no hearts. The pupil taps each word as they read it, and you listen to the recording and score it.']];
+ 'support'=>['Speech support','For a pupil with a speech need, such as cleft palate. BULIG Quest never marks a spoken word wrong and takes no hearts. The pupil taps each word as they read it, and you listen to the recording and score it.']];
 function speech_mode(int $pid):string{static $c=[];if(isset($c[$pid]))return $c[$pid];
  try{$v=(string)val('SELECT setting_value FROM settings WHERE setting_key=?',['speech_'.$pid]);}catch(Throwable $e){$v='';}return $c[$pid]=isset(SPEECH_MODES[$v])?$v:'standard';}
 /** The signed-in pupil's speech setting ('standard' for everyone else). */
@@ -435,7 +435,7 @@ function speech_icon(string $m):string{
  return '';}
 function speech_mark(int $pid):string{
  $m=speech_mode($pid);if($m==='standard')return '';
- $t=$m==='support'?'Speech support: BULIG does not mark spoken words wrong. You listen and score.':'Accent-friendly: BULIG accepts common accent sounds.';
+ $t=$m==='support'?'Speech support: BULIG Quest does not mark spoken words wrong. You listen and score.':'Accent-friendly: BULIG Quest accepts common accent sounds.';
  return str_replace('aria-hidden="true">','title="'.e($t).'" aria-label="'.e($t).'" role="img">',speech_icon($m));}
 /** v208 Reading support written on a class list: "Accent", "Accent-friendly", "Speech", "Speech support", "Cleft palate"... */
 function speech_parse(string $v):string{$v=strtolower(trim($v));if($v==='')return 'standard';if(isset(SPEECH_MODES[$v]))return $v;
@@ -446,11 +446,11 @@ function speech_set(int $pid,string $m):void{if(!isset(SPEECH_MODES[$m]))$m='sta
  else q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['speech_'.$pid,$m]);}
 /** v208 Add one pupil: Reading support, chosen when the pupil is registered (Standard unless the teacher picks another). */
 function speech_reg_field():string{
- $h='<fieldset class="sp-reg"><legend>Reading support</legend><p class="muted">How BULIG listens when this pupil reads aloud. Only you see it, and you can change it later on the pupil’s page.</p><div class="sp-form">';
+ $h='<fieldset class="sp-reg"><legend>Reading support</legend><p class="muted">How BULIG Quest listens when this pupil reads aloud. Only you see it, and you can change it later on the pupil’s page.</p><div class="sp-form">';
  foreach(SPEECH_MODES as $k=>[$t,$d])$h.='<label class="sp-opt"><input type="radio" name="speech_mode" value="'.$k.'"'.($k==='standard'?' checked':'').'><span><b>'.e($t).($k!=='standard'?' '.speech_icon($k):'').'</b><small>'.e($d).'</small></span></label>';
  return $h.'</div></fieldset>';}
 function speech_save(array $u):void{
- $pid=(int)($_POST['pupil']??0);own_pupil($pid);$m=(string)($_POST['mode']??'');if(!isset(SPEECH_MODES[$m]))fail('Choose how BULIG listens.');
+ $pid=(int)($_POST['pupil']??0);own_pupil($pid);$m=(string)($_POST['mode']??'');if(!isset(SPEECH_MODES[$m]))fail('Choose how BULIG Quest listens.');
  speech_set($pid,$m);
  audit('speech_mode','Pupil '.$pid.': '.$m);flash('Saved: '.SPEECH_MODES[$m][0].'.');go('?page=pupil&id='.$pid.'#speech');
 }

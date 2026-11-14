@@ -161,7 +161,7 @@
   const lock=on=>{rec.classList.toggle('wc-locked',on);rec.querySelectorAll('button').forEach(b=>{if(on)b.setAttribute('aria-disabled','true');else b.removeAttribute('aria-disabled');});};
   rec.addEventListener('click',e=>{if(!rec.classList.contains('wc-locked'))return;e.preventDefault();e.stopImmediatePropagation();gate.classList.remove('wc-nudge');void gate.offsetWidth;gate.classList.add('wc-nudge');},true);
   const drawGate=res=>{
-   if(!res){gate.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><b>First, practise with Max!</b><p>Max reads it to you slowly. Then you read it, and Blue words were heard; green words matched the passage after checking. Fewer tries, more points! Your reading will be recorded for your teacher.</p></div><button type="button" class="btn wc-go">'+svg.mic+'Start</button>';
+   if(!res){gate.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><b>First, practise with Max!</b><p>Max reads it first. Then you read it to him.</p></div><button type="button" class="btn wc-go">'+svg.mic+'Start reading</button>';
     gate.querySelector('.wc-go').addEventListener('click',()=>open(false));lock(true);return;}
    const [p,w]=res.split('|');gate.classList.add('wc-done');
    gate.innerHTML='<img src="'+IMG('thumbs')+'" alt=""><div><b>'+(p==='na'?'You practised with Max!':'Word Coach: '+p+'%')+'</b>'+(p==='na'?'':starHtml(stars(+p),3))+(w?'<p>Practise: '+esc(w.split(' ').join(', '))+'</p>':(p==='na'?'<p>Your recording is saved for teacher review.</p>':'<p>Your reading is saved. Great work!</p>'))+'</div><button type="button" class="btn wc-again">Do it again</button>';
@@ -185,6 +185,11 @@
    ov.innerHTML='<div class="wc-panel"><button type="button" class="wc-x" aria-label="Close">'+svg.close+'</button><div class="wc-top"><span class="wc-eb">WORD COACH</span><div class="wc-prog"><span data-c></span><div class="wc-bar"><i data-bar></i></div></div></div><div class="wc-txt" data-txt></div><div class="wc-box" data-box></div></div>';
    document.body.appendChild(ov);document.body.classList.add('wc-open');if(window.buligSfx&&window.buligSfx.quiet)window.buligSfx.quiet();
    const $=s=>ov.querySelector(s),txt=$('[data-txt]'),box=$('[data-box]');
+   /* v216 Roxanne the Timekeeper: only while the pupil reads, a small ticking clock in the top bar with the reading time */
+   {const rx=document.createElement('span');rx.className='wc-rx';rx.setAttribute('aria-live','off');rx.innerHTML='<img src="assets/images/characters/roxanne-time.webp?v=2" alt="Roxanne the Timekeeper"><b>0:00</b>';$('.wc-top').append(rx);
+    let rxT=null,rx0=0;const rxB=rx.querySelector('b'),rxF=x=>Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0');
+    new MutationObserver(()=>{const on=ov.classList.contains('wc-reading');if(on&&!rxT){rx0=Date.now();rxB.textContent='0:00';rx.classList.add('on');rxT=setInterval(()=>{rxB.textContent=rxF((Date.now()-rx0)/1000);},500);}
+     else if(!on&&rxT){clearInterval(rxT);rxT=null;rx.classList.remove('on');}}).observe(ov,{attributes:true,attributeFilter:['class']});}
    /* v207: Max stands next to a speech bubble with the text to read; his pose follows the coach box */
    const scene=document.createElement('div');scene.className='wc-scene';const pal=document.createElement('img');pal.className='wc-pal';pal.alt='';pal.src=IMG('hello');
    txt.before(scene);scene.append(pal,txt);txt.classList.add('wc-bubble');
@@ -246,7 +251,7 @@
     if(SPM==='support'){readAlong();return;}
     let p=0,last=Date.now(),hintT=null,restartT=null,ended=false,finishing=false,heardFinal=false;t0=Date.now();W.forEach((x,i)=>paint(i,''));ov.classList.add('wc-reading');
     const PK='wcprog:'+key;
-    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Blue means Max heard you; green means confirmed.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG finishes by itself.</p></div>';
+    box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><div class="wc-step"><span>1 Max reads</span><span class="on">2 You read</span><span>3 Fix the missed words</span></div><p class="wc-say"><b>Your turn!</b> Read it out loud. Blue means Max heard you; green means confirmed.</p><div class="wc-row wc-dockrow"><span class="wc-mic">'+svg.mic+'</span><span class="wc-dockst"><b data-st>0:00</b><span data-recording-note></span></span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span></div><p class="wc-hear" data-hear aria-live="polite"></p><p class="wc-hint" data-hint hidden></p><div class="wc-row wc-dockbtns"><button type="button" class="btn ghost wc-skipw">'+svg.skip+'Skip this word</button><button type="button" class="btn primary wc-done">'+svg.ok+'I am done</button></div><p class="wc-auto">Read to the last word and BULIG Quest finishes by itself.</p></div>';
     box.querySelector('[data-recording-note]').textContent=recording?'Recording for your teacher':(SEPARATE?'Checking words — recording is the next step':'Audio unavailable — teacher review needed');liveMeter(box,recording,()=>alive,false);
     const hint=box.querySelector('[data-hint]');
     const show=()=>{for(let i=0;i<N;i++)if(!S[i])paint(i,i===p?'nx':'');if(p<N)W[p].scrollIntoView({block:'nearest',behavior:'smooth'});prog(Math.min(p,N-1),N,'Word');$('[data-bar]').style.width=Math.round(p/N*100)+'%';};
@@ -372,7 +377,7 @@
     box.querySelector('[data-audio-error]').textContent=(SEPARATE&&!why?'On this phone, Max checks your words first, then records your reading separately.':(why||'The recording stopped while Word Coach was listening.'))+' Your word-check result is kept until you finish this attempt.';
     box.querySelector('.wc-rec-start').onclick=async()=>{const st=box.querySelector('.wc-rec-start');st.disabled=true;st.textContent='Starting the microphone…';
      const clip=await captureReading(true);if(!alive){if(clip)clip.cancel();return;}
-     if(!clip){st.disabled=false;st.innerHTML=svg.mic+'Try again';box.querySelector('[data-audio-error]').textContent='BULIG could not open the microphone. In Settings, allow the microphone for this website, then try again.';return;}
+     if(!clip){st.disabled=false;st.innerHTML=svg.mic+'Try again';box.querySelector('[data-audio-error]').textContent='BULIG Quest could not open the microphone. In Settings, allow the microphone for this website, then try again.';return;}
      recording=clip;const t1=Date.now();
      box.innerHTML='<img src="'+IMG('mic')+'" alt=""><div><p class="wc-say"><b>Recording…</b> Read all the words out loud.</p><div class="wc-row"><span class="wc-mic">'+svg.mic+'</span><span class="wc-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span><b>Recording for your teacher</b></div><p class="wc-hear" data-hear aria-live="polite"></p><div class="wc-row"><button type="button" class="btn primary wc-rec-stop">'+svg.ok+'I finished reading</button></div></div>';liveMeter(box,clip,()=>alive,false);
      box.querySelector('.wc-rec-stop').onclick=async()=>{const b=box.querySelector('.wc-rec-stop');b.disabled=true;b.textContent='Saving recording…';recording=null;

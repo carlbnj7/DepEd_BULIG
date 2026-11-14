@@ -27,7 +27,7 @@ function teacher_create(string $name,string $sex):array{
  q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,'teacher',$name,password_hash(bin2hex(random_bytes(16)),PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();school_mark_user($id);
  q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sex);
  $card=card_issue($id,true);
- notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');
+ notify($id,'account','Welcome to BULIG Quest, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');
  return ['id'=>$id,'public'=>$public,'pw'=>$card['pw']];
 }
 
@@ -35,7 +35,7 @@ function teacher_create(string $name,string $sex):array{
 function teacher_ticket_html(array $t,?string $key,?string $pw,int $n):string{   // v211 an ID card (pupils keep tickets)
  $qr=$key?'?page=login&key='.rawurlencode($key):teacher_login_url($t);$sec=(string)($t['sections']??'');
  $sch=(int)val('SELECT COALESCE(school_id,0) FROM users WHERE id=?',[(int)$t['id']]);$sn=$sch?(string)(val("SELECT COALESCE(NULLIF(name,''),code) FROM schools WHERE id=?",[$sch])?:''):'';
- return staff_id_card(['school'=>$sch,'name'=>(string)$t['name'],'role'=>'Teacher','place'=>trim($sn.($sn!==''&&$sec!==''?' · ':'').$sec),'id'=>$t['public_id'],'pw'=>$pw,'qr'=>$qr,'pic'=>function_exists('staff_pic')?staff_pic((int)$t['id'],'teacher'):teacher_char((int)$t['id']),'scan'=>$key?'Scan to sign in':'Scan to open BULIG','n'=>$n]);
+ return staff_id_card(['school'=>$sch,'name'=>(string)$t['name'],'role'=>'Teacher','place'=>trim($sn.($sn!==''&&$sec!==''?' · ':'').$sec),'id'=>$t['public_id'],'pw'=>$pw,'qr'=>$qr,'pic'=>function_exists('staff_pic')?staff_pic((int)$t['id'],'teacher'):teacher_char((int)$t['id']),'scan'=>$key?'Scan to sign in':'Scan to open BULIG Quest','n'=>$n]);
 }
 
 /** Admin Pass (v172): the administrator's own card. Its QR code only fills in the admin ID on the sign-in page; the
@@ -53,7 +53,7 @@ function new_teacher_overlay(int $tid):string{
  $t=one("SELECT id,name,public_id FROM users WHERE id=? AND role='teacher'",[$tid]);if(!$t||!cards_ready())return '';
  $t['sections']=teacher_sections_label($tid);$info=card_info($tid);$pw=$info['pw']??null;$first=explode(' ',trim((string)$t['name']))[0];
  return '<div class="np-ov" data-np role="dialog" aria-modal="true" aria-labelledby="np-title"><div class="np-box"><button type="button" class="np-x" data-np-close aria-label="Close">'.icon('close').'</button>'
-  .'<div class="np-top"><span class="np-ok">'.icon('check').'</span><div><h2 id="np-title">'.e($first).' is ready!</h2><p class="muted">Give this Teacher Pass to '.e($first).'. One scan of the QR code signs them in, then BULIG asks them to make their own password right away.</p></div></div>'
+  .'<div class="np-top"><span class="np-ok">'.icon('check').'</span><div><h2 id="np-title">'.e($first).' is ready!</h2><p class="muted">Give this Teacher Pass to '.e($first).'. One scan of the QR code signs them in, then BULIG Quest asks them to make their own password right away.</p></div></div>'
   .'<div class="np-ticket">'.teacher_ticket_html($t,$info['key'],$pw,1).'</div>'
   .'<div class="np-facts"><div><span>Teacher ID</span><b>'.e($t['public_id']).'</b></div>'.($pw!==null?'<div><span>Starter password</span><b>'.e($pw).'</b></div>':'').'</div>'
   .'<div class="np-acts"><button type="button" class="btn primary" data-np-print>'.icon('download').'Print this pass</button><button type="button" class="btn secondary" data-np-add>'.icon('user').'Add another teacher</button><a class="btn secondary" href="?page=teacher_cards">'.icon('key').'All Teacher Passes</a><button type="button" class="btn quiet" data-np-close>Done</button></div></div></div>'
@@ -121,7 +121,7 @@ function teacher_import_check(array $rows):array{
    else $err('Add a Grade from 1 to 10 for the section, or leave Section blank.');
   }elseif($grade)$row['notes'][]='Grade without a Section is left out.';
   if($row['status']==='ok'){$k=ck_name_key($name);
-   if(isset($have[$k])){$row['status']='skip';$row['notes']=['Already in BULIG ('.$have[$k].').'];}
+   if(isset($have[$k])){$row['status']='skip';$row['notes']=['Already in BULIG Quest ('.$have[$k].').'];}
    elseif(isset($seen[$k]))$err('Same name as line '.$seen[$k].' in this file.');
    $seen[$k]=$row['line'];}
   $out[]=$row;
@@ -132,7 +132,7 @@ function teacher_import_check(array $rows):array{
 
 function teacher_import_view():void{
  $p=$_SESSION['teacher_import']??null;$done=$_SESSION['teacher_import_done']??null;$step=(string)($_GET['step']??'');
- admin_heading('TEACHERS · ADD MANY','Add the whole team at once.','Upload a list from Excel. BULIG makes every Teacher ID and starter password.','<a class="btn secondary" href="?page=accounts">'.icon('arrow','flip').'Back to teachers</a>');
+ admin_heading('TEACHERS · ADD MANY','Add the whole team at once.','Upload a list from Excel. BULIG Quest makes every Teacher ID and starter password.','<a class="btn secondary" href="?page=accounts">'.icon('arrow','flip').'Back to teachers</a>');
  if(!cards_ready()){echo teacher_needs_018();return;}
  echo '<section class="card import-card" id="import">';
  if($step==='check'&&$p){
@@ -156,21 +156,21 @@ function teacher_import_view():void{
  echo '<nav class="bk-tabs" aria-label="How to add the teachers">'.$tab('type','edit','Type the list').$tab('file','excel','Upload a file').'</nav>';
  if($how==='type'){echo teacher_typed_grid().'</section>'.names_script();return;}
  echo ''
-  .'<ol class="import-steps"><li>Open the template in Excel. Fill in <strong>Last name</strong>, <strong>First name</strong>, <strong>Middle name</strong>, <strong>Extension</strong> (Jr., Sr., II … or blank) and <strong>Sex</strong> (M or F). <strong>Grade</strong> and <strong>Section</strong> are optional: BULIG adds that section for the teacher.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet. You will see every row first.</li><li>Press <strong>Create accounts</strong>, then print the Teacher Passes.</li></ol>'
+  .'<ol class="import-steps"><li>Open the template in Excel. Fill in <strong>Last name</strong>, <strong>First name</strong>, <strong>Middle name</strong>, <strong>Extension</strong> (Jr., Sr., II … or blank) and <strong>Sex</strong> (M or F). <strong>Grade</strong> and <strong>Section</strong> are optional: BULIG Quest adds that section for the teacher.</li><li>Upload the .xlsx or .csv file. Nothing is saved yet. You will see every row first.</li><li>Press <strong>Create accounts</strong>, then print the Teacher Passes.</li></ol>'
   .'<div class="tablewrap import-preview tc-sample"><table><thead><tr><th>Last name</th><th>First name</th><th>Middle name</th><th>Extension <small>optional</small></th><th>Sex</th><th>Grade <small>optional</small></th><th>Section <small>optional</small></th></tr></thead><tbody><tr class="tc-what"><td>Family name</td><td>Given name</td><td>Middle name</td><td>Jr., Sr., II or blank</td><td>M or F</td><td>1 to 6</td><td>Section name</td></tr></tbody></table></div>'
   .'<form method="post" enctype="multipart/form-data" class="formgrid import-form">'.csrf_field().'<input type="hidden" name="action" value="timport_preview"><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><label class="import-file">Teacher list file (.xlsx, .xls or .csv)<input type="file" name="teacher_list" accept=".csv,.xlsx,.xls,.txt,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>'
-  .'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' teachers, 2 MB. Teachers already in BULIG (same name) are skipped.</small><button class="btn primary">'.icon('check').'Check the list</button></div></form></section>';
+  .'<div class="formend"><small>Up to '.IMPORT_MAX_ROWS.' teachers, 2 MB. Teachers already in BULIG Quest (same name) are skipped.</small><button class="btn primary">'.icon('check').'Check the list</button></div></form></section>';
 }
 /** "Type the list" for teachers: one row per teacher, like the pupils' list. Enter goes to the next teacher; assets/names.js
    checks each row while typing. Rows that need fixing come back here with the server's note (nothing is saved until every row is right). */
 function teacher_typed_grid():string{
  $back=$_SESSION['teacher_typed']??null;unset($_SESSION['teacher_typed']);$rows=$back['rows']??[];$notes=$back['notes']??[];
  $h='<form method="post" class="bk-form" data-bk data-who="teacher" data-mode="one">'.csrf_field().'<input type="hidden" name="action" value="timport_typed">'
-  .'<div class="bk-top">'.school_pick_field('School of these teachers',(int)($back['school']??0)).'</div><p class="sx-hint">Grade and Section are optional: BULIG adds that section for the teacher. Each teacher gets a Teacher ID and a starter password.</p>';
+  .'<div class="bk-top">'.school_pick_field('School of these teachers',(int)($back['school']??0)).'</div><p class="sx-hint">Grade and Section are optional: BULIG Quest adds that section for the teacher. Each teacher gets a Teacher ID and a starter password.</p>';
  $h.='<div class="bk-gridwrap"><table class="bk-grid bk-tgrid"><thead><tr><th>#</th><th>Last name</th><th>First name</th><th>Middle name</th><th class="c-ext">Ext.</th><th class="c-sex">Sex</th><th class="c-gr">Grade <small>optional</small></th><th class="c-tsec">Section <small>optional</small></th><th class="c-st"><span class="sr-only">Check</span></th></tr></thead><tbody data-bk-body>';
  for($i=0,$n=max(10,count($rows));$i<$n;$i++)$h.=teacher_typed_row($i,$rows[$i]??[],$notes[$i]??'');
  $h.='</tbody></table></div><template data-bk-tpl>'.teacher_typed_row(-1,[],'').'</template>';
- return $h.'<div class="bk-foot"><small>Press <b>Enter</b> for the next teacher. Empty rows are skipped. Teachers already in BULIG (same name) are left out. <span data-bk-count aria-live="polite"></span></small><span class="bk-btns"><button type="button" class="btn secondary" data-bk-more>+ 10 more rows</button><button class="btn primary" data-bk-go>'.icon('check').'<span data-bk-label>Create teacher accounts</span></button></span></div></form>';
+ return $h.'<div class="bk-foot"><small>Press <b>Enter</b> for the next teacher. Empty rows are skipped. Teachers already in BULIG Quest (same name) are left out. <span data-bk-count aria-live="polite"></span></small><span class="bk-btns"><button type="button" class="btn secondary" data-bk-more>+ 10 more rows</button><button class="btn primary" data-bk-go>'.icon('check').'<span data-bk-label>Create teacher accounts</span></button></span></div></form>';
 }
 function teacher_typed_row(int $i,array $r,string $note):string{
  $n=$i<0?'__':(string)$i;$v=fn($k)=>e((string)($r[$k]??''));$ext=(string)($r[3]??'');$sex=strtoupper((string)($r[4]??''));$gr=(int)($r[5]??0);
@@ -196,7 +196,7 @@ function teacher_import_create(array $rows,string $file):never{
  }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
  unset($_SESSION['teacher_import']);$_SESSION['teacher_import_done']=$done;
  $skip=count(array_filter($rows,fn($r)=>$r['status']==='skip'));
- flash(count($done).' teacher account'.(count($done)===1?'':'s').' made.'.($skip?' '.$skip.' already in BULIG '.($skip===1?'was':'were').' left out.':'').' Print their Teacher Passes.');go('?page=teacher_import&step=done');
+ flash(count($done).' teacher account'.(count($done)===1?'':'s').' made.'.($skip?' '.$skip.' already in BULIG Quest '.($skip===1?'was':'were').' left out.':'').' Print their Teacher Passes.');go('?page=teacher_import&step=done');
 }
 
 function teacher_import_download(string $page):never{
@@ -215,7 +215,7 @@ function teacher_first_password_view(array $u):void{
  $eye=fn($id)=>str_replace('data-password="password"','data-password="'.$id.'"',login_eye_button());
  echo login_shell_open(false,'teacher');notice();
  echo '<div class="login-top"><span class="tp-lock">'.icon('lock').'ONE MORE STEP</span><form method="post" class="tp-out">'.csrf_field().'<input type="hidden" name="action" value="logout"><button type="submit" class="admin-pill">'.icon('logout').'Sign out</button></form></div>'
-  .'<img class="tp-who" src="'.teacher_char((int)$u['id']).'" alt=""><h2>Welcome to BULIG, <br>'.e($first).'!</h2><p class="muted tp-why">Before you start, make your own password. Only you will know it.</p>';
+  .'<img class="tp-who" src="'.teacher_char((int)$u['id']).'" alt=""><h2>Welcome to BULIG Quest, <br>'.e($first).'!</h2><p class="muted tp-why">Before you start, make your own password. Only you will know it.</p>';
  if($err!=='')echo '<div class="pin-error" role="alert">'.icon('alert').'<span>'.e($err).'</span></div>';
  echo '<form method="post" class="stack" data-tp-form>'.csrf_field().'<input type="hidden" name="action" value="first_password">'
   .'<label>New password<span class="password-field"><input id="tp-new" name="new_password" type="password" required minlength="8" maxlength="72" autocomplete="new-password" placeholder="Letters and numbers">'.$eye('tp-new').'</span></label>'
@@ -236,7 +236,7 @@ function teacher_account_action(string $action):never{
   if($new!==(string)($_POST['confirm_password']??''))$back('The two passwords are not the same. Type them again.');
   if(password_verify($new,(string)$u['password_hash']))$back('Make a new password. The starter password cannot be used again.');
   q('UPDATE users SET password_hash=? WHERE id=?',[password_hash($new,PASSWORD_DEFAULT),$u['id']]);card_forget_starter((int)$u['id']);saved_login_clear((int)$u['id']);
-  session_regenerate_id(true);$_SESSION['teacher_welcome']=1;audit('first_password','teacher');flash('Your password is saved. Welcome to BULIG!');go('?page=dashboard');
+  session_regenerate_id(true);$_SESSION['teacher_welcome']=1;audit('first_password','teacher');flash('Your password is saved. Welcome to BULIG Quest!');go('?page=dashboard');
  }
  $u=require_role('admin');
  if($action==='admin_teacher_starter'){

@@ -158,7 +158,7 @@ function account_ids_switch(string $code,bool $ownBackup):array{
  if(!account_ids_ready())throw new RuntimeException('Import 027_account_ids.sql in phpMyAdmin first.');
  $backup='';
  account_ids_match_collation();
- try{$backup=account_ids_backup('before-new-ids');}catch(Throwable $e){if(!$ownBackup)throw new RuntimeException('BULIG could not save a backup copy ('.$e->getMessage().'), so nothing was changed. Download a backup from Print & download › Backup (or export the database in phpMyAdmin), then tick “I already saved a backup” and try again.');}
+ try{$backup=account_ids_backup('before-new-ids');}catch(Throwable $e){if(!$ownBackup)throw new RuntimeException('BULIG Quest could not save a backup copy ('.$e->getMessage().'), so nothing was changed. Download a backup from Print & download › Backup (or export the database in phpMyAdmin), then tick “I already saved a backup” and try again.');}
  db()->beginTransaction();
  try{
   /* rows left from a switch that was later reversed by restoring a backup: that account has its old ID again */
@@ -197,7 +197,7 @@ function account_ids_undo():int{
 /* ---------- admin: actions, downloads and the Settings › Account IDs tab ---------- */
 function account_ids_action(string $action):never{
  $u=require_role('admin');$back='?page=settings&tab=ids';
- if(in_array($action,['admin_school_code','admin_ids_switch','admin_ids_undo'],true))fail('IDs never change in BULIG. This was removed.',403);   // v211
+ if(in_array($action,['admin_school_code','admin_ids_switch','admin_ids_undo'],true))fail('IDs never change in BULIG Quest. This was removed.',403);   // v211
  if($action==='admin_school_code'){
   $c=strtoupper(trim((string)($_POST['school_code']??'')));
   if(!valid_school_code($c)){flash('Use 3 to 10 letters (A–Z) for the school code, for example PCES.');go($back);}
@@ -252,7 +252,7 @@ function account_ids_settings_view(array $u):void{
    foreach(array_slice($plan,0,80) as $p)echo '<tr><td><b>'.e($p['name']).'</b><small>'.e(ucfirst($p['role'])).'</small></td><td class="ids-old">'.e($p['old']).'</td><td class="ids-arrow" aria-hidden="true">'.icon('arrow').'</td><td class="ids-new">'.e($p['new']).'</td></tr>';
    echo '</tbody></table></div>'.(count($plan)>80?'<p class="muted">… and '.(count($plan)-80).' more. The full list is in the download after switching.</p>':'');
    echo '<form method="post" class="ids-go">'.csrf_field().'<input type="hidden" name="action" value="admin_ids_switch"><input type="hidden" name="school_code" value="'.e($code).'">'
-    .'<label class="ids-own"><input type="checkbox" name="own_backup" value="1"> I already saved a backup myself (only needed if BULIG cannot save one)</label>'
+    .'<label class="ids-own"><input type="checkbox" name="own_backup" value="1"> I already saved a backup myself (only needed if BULIG Quest cannot save one)</label>'
     .'<button class="btn primary" data-confirm="Save a backup copy and switch '.count($plan).' '.(count($plan)===1?'account':'accounts').' to the new IDs with school code '.e($code).'? Old IDs will keep working.">'.icon('swap').'Save a backup and switch '.count($plan).' '.(count($plan)===1?'account':'accounts').'</button></form></section>';
   }else{
    echo '<section class="card" id="switch-ids"><div class="ws-hd"><h2>'.icon('check').' Every account has a new ID</h2>'.($done?'<small class="muted">Switched '.e(date('M j, Y',strtotime((string)$done['at']))).' · '.(int)$done['count'].' accounts</small>':'').'</div>';

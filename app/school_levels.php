@@ -48,7 +48,7 @@ function grade_options(int $sel,?array $grades=null,string $all=''):string{
 function school_type_field(int $sid=0):string{
  $set=$sid&&function_exists('admin_setting')?(string)admin_setting('school_type_'.$sid,''):'';
  $o='<option value="">Detect automatically</option>';foreach(['Schools'=>['elementary','jhs','integrated'],'ALS (Alternative Learning System)'=>['als_elem','als_jhs','als_integrated']] as $g=>$ks){$o.='<optgroup label="'.e($g).'">';foreach($ks as $k)$o.='<option value="'.$k.'"'.($set===$k?' selected':'').'>'.e(SCHOOL_TYPES[$k]).'</option>';$o.='</optgroup>';}
- return '<label class="sc-type">School type<select name="school_type">'.$o.'</select><small class="muted">'.($sid?'Now: '.e(SCHOOL_TYPES[school_type($sid)]):'BULIG finds it from the School ID or the name').'</small></label>';
+ return '<label class="sc-type">School type<select name="school_type">'.$o.'</select><small class="muted">'.($sid?'Now: '.e(SCHOOL_TYPES[school_type($sid)]):'BULIG Quest finds it from the School ID or the name').'</small></label>';
 }
 function school_type_save(int $sid):void{
  if(!$sid||!function_exists('admin_set'))return;$t=(string)($_POST['school_type']??'');

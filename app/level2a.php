@@ -182,6 +182,8 @@ function l2a_match_board(array $c,bool $readonly,string $saved=''):string{
 /** Stories can be read along (karaoke) in Levels 5 to 7. Not in Level 6 and 7 tests, where the pupil reads alone;
     Level 5 tests are listening tests, where the module has the story read aloud. */
 function l2a_readalong(array $a):bool{$lv=lesson_level((int)$a['lesson_id']);return $lv===6||(in_array($lv,[7,8],true)&&$a['phase']==='learn');}
+/** v216 Letter clues on a card ("a e i o u", short sounds and blends): the pupil taps them instead of the whole keyboard. */
+function l2a_clue_tiles(array $c):array{$w=array_values(array_map('strval',$c['words']??[]));if(count($w)<2||count($w)>12)return [];foreach($w as $x)if(!preg_match('~^[a-zA-Z]{1,3}$~',$x))return [];return $w;}
 /** Card words: "___ og" shows the blank as a box the letter tiles fill. $n letters: one short line per missing letter. */
 function l2a_underlined_text(string $text,string $under=''):string{
  $h=nl2br(e($text));
@@ -214,7 +216,11 @@ function l2a_blank_counts(array $a,array $set,int $level):array{
     With $n letters: n short lines, which the letter tiles fill when $tiles. Otherwise the tiles fill one box,
     and any other blank for a word is one long line ("used for____." too). A blank inside a word ("a______e", "technolog__") stays as written. */
 function blank_html(string $h,int $n,bool $tiles=false):string{
- if($n>0)return preg_replace('~_{2,}~',$tiles?'<output class="l2-gap bl-n" data-gap data-n="'.$n.'" aria-label="'.$n.' missing letter'.($n>1?'s':'').'">'.str_repeat('<i></i>',$n).'</output>':'<span class="bl-n" role="img" aria-label="'.$n.' missing letter'.($n>1?'s':'').'">'.str_repeat('<i></i>',$n).'</span>',$h,1);
+ if($n>0){/* v216 the blank and the rest of its word are one word ("___ og" → [__]og): the letters stay next to the
+    word and never wrap to another line */
+  $b=$tiles?'<output class="l2-gap bl-n" data-gap data-n="'.$n.'" aria-label="'.$n.' missing letter'.($n>1?'s':'').'">'.str_repeat('<i></i>',$n).'</output>':'<span class="bl-n" role="img" aria-label="'.$n.' missing letter'.($n>1?'s':'').'">'.str_repeat('<i></i>',$n).'</span>';
+  return preg_replace_callback('~(\p{L}*)(\s*)_{2,}(\s*)(\p{L}*)~u',fn($m)=>($m[1]!==''||$m[4]!=='')?'<span class="bl-wd">'.$m[1].$b.$m[4].'</span>':$m[2].$b.$m[3],$h,1);}
+ if(false)return preg_replace('~_{2,}~',$tiles?'<output class="l2-gap bl-n" data-gap data-n="'.$n.'" aria-label="'.$n.' missing letter'.($n>1?'s':'').'">'.str_repeat('<i></i>',$n).'</output>':'<span class="bl-n" role="img" aria-label="'.$n.' missing letter'.($n>1?'s':'').'">'.str_repeat('<i></i>',$n).'</span>',$h,1);
  if($tiles)$h=preg_replace('~_{2,}~','<output class="l2-gap" data-gap></output>',$h,1);
  return preg_replace('~(?<![\p{L}\p{N}_])_{2,}(?![\p{L}\p{N}_])|(?<=[\p{L}\p{N}])_{4,}(?![\p{L}\p{N}_])|(?<![\p{L}\p{N}_])_{4,}(?=[\p{L}\p{N}])~u','<span class="bl-w" role="img" aria-label="blank">$0</span>',$h);
 }
@@ -254,9 +260,16 @@ function l2a_answer(array $c,int $n,bool $readonly):string{
  if($readonly)return '';$h='';
  foreach($c['ui']['answer']??[] as $p=>$kind){
   if($kind==='chip'&&!empty($c['ui']['body'])){$h.=module_body_answer($p);continue;}
-  if($kind==='tiles'){$t=$c['ui']['tiles']??str_split('abcdefghijklmnopqrstuvwxyz');
-   $h.='<div class="l2-tiles'.(count($t)<=15?' big':'').($t===['T','F']?' tf':'').'" data-part="'.$p.'" data-kind="tiles">'.(preg_match('~_{2,}~',$c['text'])?'':'<output class="l2-out" data-out aria-live="polite"></output>').'<div class="l2-keys">';foreach($t as $k)$h.='<button type="button" class="l2-key" data-key="'.e($k).'">'.e($k).'</button>';
-   $h.='<button type="button" class="l2-key sp" data-key=" " aria-label="Space">space</button><button type="button" class="l2-key er" data-erase aria-label="Erase">'.l1_icon('prev').'</button></div></div>';}
+  if($kind==='tiles'){$t=$c['ui']['tiles']??(l2a_clue_tiles($c)?:str_split('abcdefghijklmnopqrstuvwxyz'));   // v216 letter clues become the buttons
+   $h.='<div class="l2-tiles'.(count($t)<=15?' big':'').($t===['T','F']?' tf':'').'" data-part="'.$p.'" data-kind="tiles">'.(preg_match('~_{2,}~',$c['text'])?'':'<output class="l2-out" data-out aria-live="polite"></output>').'';
+   $abc=array_map('strtolower',$t);$full=!array_diff(str_split('abcdefghijklmnopqrstuvwxyz'),$abc)&&!array_diff($abc,str_split('abcdefghijklmnopqrstuvwxyz0123456789'));
+   $kb=fn($k)=>'<button type="button" class="l2-key" data-key="'.e($k).'">'.e($k).'</button>';$sp='<button type="button" class="l2-key sp" data-key=" " aria-label="Space">space</button>';$er='<button type="button" class="l2-key er" data-erase aria-label="Erase">'.l1_icon('prev').'</button>';
+   if($full){/* v216 the whole alphabet: a QWERTY keyboard, like a phone or computer */
+    $up=$t!==array_map('strtolower',$t);$cs=fn($k)=>$up?strtoupper($k):$k;$h.='<div class="l2-keys qw">';
+    if(array_intersect($abc,str_split('0123456789')))$h.='<div class="l2-kr">'.implode('',array_map($kb,str_split('1234567890'))).'</div>';
+    foreach(['qwertyuiop','asdfghjkl','zxcvbnm'] as $i=>$row)$h.='<div class="l2-kr">'.implode('',array_map(fn($k)=>$kb($cs($k)),str_split($row))).($i===2?$er:'').'</div>';
+    $h.='<div class="l2-kr">'.$sp.'</div></div></div>';}
+   else{$h.='<div class="l2-keys">';foreach($t as $k)$h.=$kb($k);$h.=(count($t)>15?$sp:'').$er.'</div></div>';}}   // a few letters or clues fill a blank: no space key
   elseif($kind==='build')$h.=l3_build_tiles($c['build'],$p);
   elseif($kind==='chip'||$kind==='chips'){$h.=(!empty($c['ui']['labels'][$p])?'<p class="l2-plab">'.e($c['ui']['labels'][$p]).'</p>':'').'<div class="l2-chips'.(!empty($c['ui']['labels'][$p])?' row':'').(max(array_map('mb_strlen',array_map('strval',$c['ui']['opts'][$p]??$c['choices']))+[0])>22?' long':'').'" data-part="'.$p.'" data-kind="'.$kind.'"'.(!empty($c['ui']['labels'][$p])?' data-lab="'.e($c['ui']['labels'][$p]).'"':'').' role="group">';foreach(($c['ui']['opts'][$p]??$c['choices']) as $ch)$h.='<button type="button" class="l2-chip" data-val="'.e($ch).'" aria-pressed="false">'.e($ch).'</button>';$h.='</div>'.($kind==='chips'?'<p class="l2-how">Tap every word that fits. Tap again to undo.</p>':'');}
   elseif($kind==='split'){$w=(string)($c['ui']['word']??$c['text']);$on=($c['ui']['split']??'')==='onset';$h.='<div class="l2-split'.($on?' onset':'').(mb_strlen($w)>9?' xl':(mb_strlen($w)>6?' l':'')).'" data-part="'.$p.'" data-kind="split" data-mode="'.($on?'onset':'syllable').'"><span class="l2-sw">';
@@ -296,7 +309,7 @@ function l2a_start_page(array $lesson,array $all,array $first):void{
 
 /** One Level 2A activity: its cards one at a time, answered on the card; Submit on the last card. */
 function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set):void{
- $lid=(int)$lesson['id'];$again=completion_ok($a)&&!empty($_GET['again'])&&function_exists('ac_keyed')&&ac_keyed($a);/* "Try it again" (v151): a fresh copy for practice */
+ $lid=(int)$lesson['id'];$again=completion_ok($a)&&!empty($_GET['again'])&&($a['phase']??'')==='learn';   // v216 Play again: every finished lesson activity/* "Try it again" (v151): a fresh copy for practice */
  $readonly=completion_ok($a)&&!$again;$cards=$set['cards'];$N=count($cards);
  $phase=array_values(array_filter($all,fn($x)=>$x['phase']===$a['phase']));$at=0;foreach($phase as $i=>$x)if((int)$x['id']===(int)$a['id'])$at=$i+1;$doneAll=count(array_filter($all,fn($x)=>completion_ok($x)));
  $saved=[];$resp=$again?'':str_replace(["\r\n","\r"],"\n",(string)($a['response']??''));if(str_starts_with($resp,"BULIG card answers\n"))foreach(preg_split('/\n(?=Card [0-9]+(?: \(no\. [0-9]+\))?:)/',substr($resp,19)) as $line)if(preg_match('/^Card ([0-9]+)(?: \(no\. [0-9]+\))?:\s?(.*)$/s',$line,$m))$saved[(int)$m[1]]=$m[2];
@@ -304,9 +317,10 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
  $lv=lesson_level($lid);$blanks=l2a_blank_counts($a,$set,$lv);head('Level '.l2a_code($lv).' · '.$set['module_title'],'activity-page l1-page l2-page');
  echo '<div class="l1-app l2-app">'.lesson_head($lesson,$all,$a,'?page=lessons&level='.$lv.'#level'.$lv.'-path');
  echo '<main class="l1-main activity-main">';notice();
- echo '<form method="post" id="activity-form" class="activity-form l1-form l2-form"'.($readonly?'':' data-open="1"').' data-mode="answer" data-kind="cards" data-draft="off"'.(l2a_readalong($a)?' data-readalong="1"':'').'>'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="response" id="response" value="'.e($resp).'">'.($again?'<input type="hidden" name="again" value="1">':'').'<span id="draft-status" hidden></span>';
+ echo '<form method="post" id="activity-form" class="activity-form l1-form l2-form"'.($readonly?'':' data-open="1"').' data-mode="answer" data-kind="cards" data-draft="off"'.(l2a_readalong($a)?' data-readalong="1"':'').'>'.csrf_field().'<input type="hidden" name="action" value="submit"><input type="hidden" name="activity_id" value="'.$a['id'].'"><input type="hidden" name="transcript" id="transcript" value=""><input type="hidden" name="drawing" id="drawing-data" value=""><input type="hidden" name="response" id="response" value="'.e($resp).'">'.($again?'<input type="hidden" name="replay" value="1">':'').'<span id="draft-status" hidden></span>';
  if($readonly&&$a['completion_id']&&function_exists('ac_card'))echo ac_card($a,one('SELECT response,score,max_score,rubric_scores,submitted_at FROM activity_completion WHERE id=?',[(int)$a['completion_id']])??[]);
- if($again)echo '<div class="ac-practice">'.l1_icon('again').'<div><b>Try it again</b><p>Practise as many times as you like. BULIG keeps your best score.</p></div></div>';
+ if($readonly&&function_exists('replay_bar'))echo replay_bar($a);
+ if($again)echo function_exists('replay_banner')?replay_banner($a):'';
  if($a['feedback']&&!$again)echo '<div class="l1-note">'.l1_icon('teacher').'<div><b>A note from your teacher</b><p>'.e($a['feedback']).'</p></div></div>';
  /* v186: one story with the Reading Coach comes first, before the questions about it (each card keeps its number);
     the page's directions then go with the card they are for. */
@@ -338,7 +352,7 @@ function l2a_activity_page(array $u,array $lesson,array $all,array $a,array $set
   if(!empty($c['ui']['grid'])){$g=$c['ui']['grid'];$lines=max(array_map('mb_strlen',$g))>14;echo '<div class="l3-grid'.(!empty($c['ui']['module_chart'])?' module-word-chart':'').($lines?' lines':'').(count($g)>12?' many':'').(!$lines&&count($g)<=10&&count($g)%2===0?' cols2':'').'">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$g)).'</div>'.l2a_pictures($c,$n);}
   elseif(in_array('match',$kinds,true))echo ((string)$c['text']!==''?l2a_text((string)$c['text'],false,'',$blanks[$i]??0):'').l2a_match_board($c,$readonly,$readonly?(string)($saved[$n]??''):'');
   else echo (in_array('words',$kinds,true)&&!$readonly?'':l2a_text((string)$c['text'],$tiles&&!$readonly,(string)($c['underline']??''),$blanks[$i]??0)).l2a_pictures($c,$n);
-  if(!empty($c['words']))echo '<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
+  if(!empty($c['words'])&&!(!$readonly&&in_array('tiles',$kinds,true)&&empty($c['ui']['tiles'])&&l2a_clue_tiles($c)))echo '<p class="l2-banklab">'.e($c['words_label']??'Words').'</p><div class="l2-bank">'.implode('',array_map(fn($w)=>'<span>'.e($w).'</span>',$c['words'])).'</div>';
   if(!empty($c['ui']['box']))echo l2a_letter_box($c['ui']['box']);
   if(!empty($c['strip']))echo l2a_strip($c['strip']);
   if($readonly&&(in_array('draw',$kinds,true)||!empty($c['ui']['was_draw']))&&str_starts_with((string)($a['drawing']??''),'data:image/')&&empty($drawShown)){$drawShown=true;echo '<div class="l1-prev l2-drawn"><img src="'.e($a['drawing']).'" alt="Your drawings"><span class="l1-ok">'.l1_icon('ok').'Your drawings</span></div>';}
@@ -372,7 +386,7 @@ function l2a_demo_view(array $u,int $level=2,int $grade=0):void{$code=l2a_code($
  $info=function(array $a)use($per):array{$li=l2a_lesson_info((int)$a['lesson_id']);if($li)return $li;return array_map(fn($v)=>$v??'',$per?['lesson'=>$a['lesson_title'],'activity'=>$a['subtitle'],'goals'=>l1_goals((string)$a['lesson_objectives']),'what'=>null,'model'=>null]:['lesson'=>$a['subtitle'],'activity'=>$a['lesson_title'],'goals'=>l1_goals((string)$a['lesson_objectives']),'what'=>null,'model'=>null]);};
  $titleOf=function(array $li)use($per):string{return !empty($li['covers'])?$li['activity']:($per?$li['lesson'].' · '.$li['activity']:$li['lesson'].' · '.preg_replace('~\s*[·].*$~u','',$li['activity']));};
  head('Class Demo · '.$label,'demo-page l1-demo-page');
- echo '<div id="l1-demo" class="l1-demo l2-demo'.($level>=5?' l5-demo':'').'" data-start="'.$index.'"><header class="l1d-top"><a class="l1d-logo" href="?page=class_demo"><img src="assets/brand/bulig-quest.webp" alt="BULIG"></a><div class="l1d-ln"><b data-d-lesson></b><small data-d-part></small></div><div class="l1d-prog" aria-hidden="true"><i data-d-prog></i></div>';
+ echo '<div id="l1-demo" class="l1-demo l2-demo'.($level>=5?' l5-demo':'').'" data-start="'.$index.'"><header class="l1d-top"><a class="l1d-logo" href="?page=class_demo"><img src="assets/brand/bulig-quest.webp" alt="BULIG Quest"></a><div class="l1d-ln"><b data-d-lesson></b><small data-d-part></small></div><div class="l1d-prog" aria-hidden="true"><i data-d-prog></i></div>';
  echo '<label class="l1d-sel"><span class="sr-only">Go to a lesson</span><select id="demo-lesson" data-d-lessons>';foreach($deck as $i=>$d)if($d['start']){$li=l2a_lesson_info((int)$d['a']['lesson_id']);echo '<option value="'.$i.'">'.e($li?(!empty($li['covers'])?$li['activity']:preg_replace('~\s*[·:.].*$~u','',$li['activity']).' · '.$li['lesson']):($per?$d['a']['lesson_title'].' · '.$d['a']['subtitle']:$d['a']['subtitle'])).'</option>';}echo '</select></label><select id="demo-jump" hidden aria-hidden="true" tabindex="-1">';foreach($deck as $i=>$d)echo '<option value="'.$i.'"></option>';echo '</select>';
  echo '<button type="button" class="l1d-tb" data-plan-open aria-haspopup="dialog" aria-label="Lesson plan">'.l1_icon('book').'Lesson plan</button><button type="button" class="l1d-tb" data-cd-open aria-label="Mark as done">'.l1_icon('ok').'Mark as done</button><button type="button" class="l1d-tb" data-d-full aria-label="Full screen">'.l1_icon('full').'<span>Full screen</span></button><a class="l1d-tb" href="?page=class_demo'.($per?'&amp;level='.$level:'').'" aria-label="Exit">'.l1_icon('x').'Exit</a></header>';
  if(isset($_SESSION['flash'])){echo '<div class="notice demo-notice" role="status">'.icon('check').'<span>'.e($_SESSION['flash']).'</span></div>';unset($_SESSION['flash']);}

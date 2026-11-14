@@ -1,16 +1,32 @@
 <?php
 /* After feedback, go back to the same Activity history tab and pupil filter. */
 /* Drawing answers (draw in the app or upload a photo) are only for the real drawing activities of Level 1. */
-function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing'&&lesson_level((int)$a['lesson_id'])===1;}
+function draw_allowed(array $a):bool{return ($a['response_mode']??'')==='drawing'&&l1_screens((int)$a['lesson_id']);}
+/** v216 Level 1 and the new levels made in the Content Studio share the Level 1 screens and scoring (stars, Victory). */
+function l1_screens(int $lid):bool{$lv=lesson_level($lid);return $lv===1||(function_exists('studio_level')&&studio_level($lv)!==null);}
+/* v216 answering hours and the family page switch */
+function qx_actions(string $action):void{
+ if($action==='answer_hours_save'){$u=require_role('admin');if(!empty($_SESSION['pin_pending']))fail('Verify your admin PIN first.',403);if(function_exists('rbac_can')&&!rbac_can('year'))fail('Not allowed.',403);
+  $d=(string)($_POST['days']??'weekdays');$f=(string)($_POST['from']??'07:00');$t=(string)($_POST['to']??'20:00');
+  if(!isset(QX_DAYS[$d])||!preg_match('/^\d{2}:\d{2}$/',$f)||!preg_match('/^\d{2}:\d{2}$/',$t)||$f===$t)fail('Choose the days and two different times.');
+  admin_set('ans_on',!empty($_POST['on'])?'1':'0');admin_set('ans_days',$d);admin_set('ans_from',$f);admin_set('ans_to',$t);
+  q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[(int)$u['id'],'answer_hours',(!empty($_POST['on'])?'on ':'off ').$d.' '.$f.'-'.$t]);
+  flash('Answering hours saved.');go('?page=settings&tab=schedule#answer-hours');}
+ if($action==='parent_link'){$u=require_role('teacher');$pid=(int)($_POST['id']??0);if(!val('SELECT 1 FROM teacher_pupils WHERE teacher_id=? AND pupil_id=?',[(int)$u['id'],$pid]))fail('Pupil not found.',404);
+  $off=array_values(array_filter(explode(',',admin_setting('parent_off','')),fn($x)=>$x!==''&&$x!==(string)$pid));if(($_POST['off']??'')==='1')$off[]=(string)$pid;admin_set('parent_off',implode(',',$off));
+  flash(($_POST['off']??'')==='1'?'The family page is turned off. The QR code no longer opens it.':'The family page is on again.');go('?page=parent_cards&id='.$pid);}
+}
 function review_back():string{$b=(string)($_POST['back']??'');return preg_match('~^\?page=(review&tab=(todo|done|all)(&pupil=[0-9]+)?|pupil&id=[0-9]+&tab=answers(&p=[0-9]+)?)$~',$b)?$b:'?page=qcheck';}
 function action():void{
  check_csrf();$action=(string)($_POST['action']??'');unset($_SESSION['notif_live']);
  if(function_exists('rbac_guard_action'))rbac_guard_action($action);   // v210 viewer roles only look; system-wide actions are for the Central Admin
  if($action==='role_switch')role_switch_action();
  if(str_starts_with($action,'org_'))org_action($action);
- if(str_starts_with($action,'studio_'))studio_action($action);   // v215 Content Studio (app/studio.php)
+ if(str_starts_with($action,'studio_'))studio_action($action);
+ if($action==='tk_design'){$t=require_role('teacher');$d=(string)($_POST['design']??'b');if(!function_exists('id_design')||!isset(ID_THEMES[$d]))$d='b';q('INSERT INTO settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)',['tk_design_'.(int)$t['id'],$d]);flash('Ticket design saved.');go('?page=cards'.(isset($_POST['section'])?'&section='.(int)$_POST['section']:''));}   // v216   // v215 Content Studio (app/studio.php)
  if(!in_array($action,['first_password','logout','login','key_login','quick_login'],true)&&teacher_must_change(current_user()))fail('Make your own password first.',403);
  if(in_array($action,['bug_report_update','bug_report_submit','bug_popup_ack','bug_adopt'],true))bugflow_action($action);
+ if($action==='answer_hours_save'||$action==='parent_link')qx_actions($action);   // v216
  if($action==='reading_decision'||$action==='reading_verify_batch')rv_action();
  if($action==='streak_revive'||$action==='streak_lost_ok')streak_action($action);
  if($action==='offline_report')rs_offline_report(require_role('pupil'));
@@ -103,7 +119,7 @@ function action():void{
   db()->beginTransaction();try{
    $public=new_account_id($role);
    q('INSERT INTO users(public_id,role,name,password_hash) VALUES(?,?,?,?)',[$public,$role,$name,password_hash($password,PASSWORD_DEFAULT)]);$id=(int)db()->lastInsertId();name_parts_save($id,$nm['parts']);school_mark_user($id);
-   if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);notify($id,'account','Welcome to BULIG, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');}else{
+   if($role==='teacher'){$sx=(string)($_POST['teacher_sex']??'');if(!in_array($sx,['female','male'],true))fail('Choose Male or Female for the teacher.');q('INSERT INTO teachers VALUES(?)',[$id]);tf_set_sex($id,$sx);notify($id,'account','Welcome to BULIG Quest, '.explode(' ',trim($name))[0].'!','Start by adding a section, then your pupils.','?page=sections');}else{
     $section=section_from_post((int)$u['id']);$grade=(int)$section['grade_level'];$level=selected_start_level(1,true);$details=pupil_details_input();
     q('INSERT INTO pupils(user_id,grade_level,section) VALUES(?,?,?)',[$id,$grade,$section['name']]);save_pupil_details($id,$details);q('INSERT INTO pupil_sections VALUES(?,?)',[$id,$section['id']]);q('INSERT INTO teacher_pupils VALUES(?,?)',[$u['id'],$id]);if(function_exists('speech_set'))speech_set($id,(string)($_POST['speech_mode']??'standard'));if($level)q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$id,$level,$u['id']]);$password=new_pupil_password($id);
    }audit('create_'.$role,$public);db()->commit();if($role==='pupil')$_SESSION['new_pupil']=$id;else flash('Account created. '.$role.' ID: '.$public.'. Share the password you set privately.');
@@ -158,7 +174,7 @@ function action():void{
     $aids=[];if($scope==='lessons'){foreach($lids as $lid)$aids=array_merge($aids,class_done_activities($pid,'lesson',$lid));foreach($acts as $aid)$aids=array_merge($aids,class_done_activities($pid,'activity',$aid));}
     else $aids=class_done_activities($pid,$scope,$scope==='level'?$level:(int)($_POST[$scope==='activity'?'aid':'lid']??0));
     $n=class_done_apply($tid,$pid,$aids);$marked+=$n;if($n)$madeAids[$pid]=array_values(array_unique(array_map('intval',$aids)));
-    if($n)push_queue($pid,'lessons','Your next lesson is open!','Your class did it together. Your next step in BULIG is ready.','?page=dashboard');
+    if($n)push_queue($pid,'lessons','Your next lesson is open!','Your class did it together. Your next step in BULIG Quest is ready.','?page=dashboard');
     if($n)class_done_note_set($pid,$scope==='level'?'Your teacher marked '.level_label($level).' as done.'.(($nx=level_next($level))&&level_available($pid,$nx)?' '.level_label($nx).' is open now.':''):'Your teacher marked '.($scope==='activity'?'an activity':'your lesson').' as done. Your next step is ready.');
    }
    audit('class_done',$what.' for '.count($pupils).' pupils, '.$marked.' activities');db()->commit();
@@ -193,17 +209,20 @@ function action():void{
   $a=allowed_activity((int)$u['id'],$aid);header('Content-Type: application/json');
   if(!key_checks_cards($a)||$n<1){echo json_encode(['keyed'=>false,'ok'=>true]);exit;}
   $r=key_check_card($a,$n,$g);$t=(int)($_SESSION['ck'][$aid][$n]??0);
-  if($r['keyed']&&!$r['ok']&&$t<999)$_SESSION['ck'][$aid][$n]=++$t;
+  if($r['keyed']&&!$r['ok']&&$t<999&&($_POST['auto']??'')!=='1')$_SESSION['ck'][$aid][$n]=++$t;   // v216 a quiet auto check never counts as a wrong try
   echo json_encode(['keyed'=>$r['keyed'],'ok'=>$r['ok'],'tries'=>$t,'pts'=>$r['pts']??null,'of'=>$r['of']??null,'max'=>KEY_TRIES],JSON_UNESCAPED_UNICODE);exit;
  }
  if(in_array($action,['draft','submit'],true)){
   $u=require_role('pupil');$pid=(int)$u['id'];$aid=(int)($_POST['activity_id']??0);$answer=trim((string)($_POST['response']??''));$drawing=(string)($_POST['drawing']??'');$transcript=trim((string)($_POST['transcript']??''));
   /* v177: room for long writing (editorials, copyreading); the column holds 65,535 bytes */if(strlen($answer)>60000||strlen($transcript)>12000||strlen($drawing)>1500000)fail('This response is too large.');
   if($drawing!==''&&!preg_match('~^data:image/(png|jpeg);base64,[a-zA-Z0-9+/=]+$~',$drawing))fail('Invalid drawing.');
+  /* v216 answering hours: outside them a new answer waits (work made on a phone without internet is always kept) */
+  if($action==='submit'&&function_exists('answering_open')&&!offline_answer_time()&&!(function_exists('is_tester')&&is_tester($pid))&&!answering_open()){$nx=answer_hours_next();fail('Tick, tock! Answering opens '.($nx!==''?'at '.$nx:'later').'. You can still look at your lessons now.',403);}
   $audio=$action==='submit'?(string)($_POST['audio']??''):'';if(isset($_POST['audio_card'])&&!is_array($_POST['audio_card']))fail('Invalid recording.');$heard=($_POST['heard']??'')==='1';if(strlen($audio)>12500000)fail('This recording is too long. Please record again.');
   db()->beginTransaction();try{
    q('SELECT id FROM users WHERE id=? FOR UPDATE',[$pid]);$a=allowed_activity($pid,$aid);if(!draw_allowed($a)&&!l2a_draw_ok($a))$drawing='';if($action==='submit'&&function_exists('key_merge_tries'))$answer=key_merge_tries($answer,$aid);if($action==='submit'&&function_exists('wc_merge'))$answer=wc_merge($answer);$old=one('SELECT * FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);
-   if(completion_ok($old)){
+   $replay=($action==='submit'&&!empty($_POST['replay'])&&completion_ok($old)&&($a['phase']??'')==='learn')?$old:null;   // v216 Play again: scored like a first answer, the best is kept
+   if(completion_ok($old)&&!$replay){
     /* "Try it again" (v151): practice on a finished card activity; BULIG keeps the best score, no extra XP */
     if($action==='submit'&&!empty($_POST['again'])&&function_exists('ac_keyed')&&ac_keyed($a)&&$answer!==''){$pr=ac_practice($pid,$a,$old,$answer);db()->commit();submission_reply($a,true,$pr['message'],0,$pr['card']);}
     db()->commit();submission_reply($a,true,'Already saved. You can continue.',0);}
@@ -214,7 +233,7 @@ function action():void{
    /* Level 1 is oral: the answer is a voice recording, or the teacher heard it in class. */
    /* Level 4 is read aloud the same way: the reading is recorded and its time is kept. */
    $l4read=$mode==='answer'&&lesson_level((int)$a['lesson_id'])===5&&level4_passage_parts($a)!==null;
-   $oral=$mode==='answer'&&!$exact&&(lesson_level((int)$a['lesson_id'])===1||$l4read);$apath=null;
+   $oral=$mode==='answer'&&!$exact&&(l1_screens((int)$a['lesson_id'])||$l4read);$apath=null;
    if($oral){if($audio===''&&!$heard)fail('Record your answer first.');$secs=max(0,min(3600,(int)($_POST['secs']??0)));
     /* v173: on iPhones BULIG only listens (no recording), so the words it heard are the answer */
     $heardOnly=$audio===''&&$transcript!=='';
@@ -228,25 +247,33 @@ function action():void{
     $ok=false;foreach($correct as $c)if(trim(normalize_answer($answer))===trim(normalize_answer($c['content'])))$ok=true;
     $score=$ok?1:0;$max=1;$outcome=$ok?'correct':'recorded';
    }
-   $status=$ok?'completed':'retry';$when=offline_answer_time()??date('Y-m-d H:i:s');
+   $test=$exact&&in_array($a['phase']??'learn',['pre','post'],true);   // v216 a test question: a wrong answer is kept (the score shows it); the post-test has its own Try again
+   $status=$ok||$test?'completed':'retry';$when=offline_answer_time()??date('Y-m-d H:i:s');
    q('INSERT INTO activity_completion(pupil_id,activity_id,response,drawing,transcript,prompt_snapshot,activity_revision,status,submitted_at,outcome,score,max_score) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE response=VALUES(response),drawing=VALUES(drawing),transcript=VALUES(transcript),prompt_snapshot=VALUES(prompt_snapshot),activity_revision=VALUES(activity_revision),status=VALUES(status),submitted_at=VALUES(submitted_at),outcome=VALUES(outcome),score=VALUES(score),max_score=VALUES(max_score),audio_path=NULL,audio_paths=NULL,rubric_scores=NULL,reviewed_by=NULL,reviewed_at=NULL',[$pid,$aid,$answer,$drawing?:null,$transcript?:null,level2_prompt_snapshot($a),$a['revision'],$status,$when,$outcome,$score,$max]);
+   if($test)$ok=true;
    if(!empty($_POST['audio_card'])&&is_array($_POST['audio_card'])&&in_array(lesson_level((int)$a['lesson_id']),[2,3,4,9,7],true)&&l2a_audio_supported()&&($ap=l2a_save_audios($_POST['audio_card'],$pid,$aid)))q('UPDATE activity_completion SET audio_paths=? WHERE pupil_id=? AND activity_id=?',[json_encode($ap),$pid,$aid]);
    if($apath)q('UPDATE activity_completion SET audio_path=? WHERE pupil_id=? AND activity_id=?',[$apath,$pid,$aid]);
    if(offline_answer_time())q('INSERT INTO audit_log(actor_id,action,details) VALUES(?,?,?)',[$pid,'offline_answer','activity '.$aid.' at '.$when]);
-   $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);$GLOBALS['bulig_vowel_lesson']=function_exists('vowel_lesson')&&vowel_lesson((int)$a['lesson_id']);key_save_score($cid);
+   $cid=(int)val('SELECT id FROM activity_completion WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);$GLOBALS['bulig_vowel_lesson']=function_exists('vowel_lesson')&&vowel_lesson((int)$a['lesson_id']);if(!$exact)key_save_score($cid);/* v216 an answer marked with its key keeps that score */
    if($oral&&!$l4read&&function_exists('l1_auto_score'))q('UPDATE activity_completion SET score=?,max_score=1 WHERE id=?',[l1_auto_score($a,$transcript,$apath!==null||$audio!==''),$cid]);/* Level 1: BULIG checks the talk and pronunciation (v172) */
    /* Level 4: BULIG scores the reading from what the speech recognizer heard (the module's miscue table). */
-   $l4s=$l4read&&$transcript!==''?l4_auto($a,$transcript,(int)($_POST['secs']??0)):null;if($l4s)q('UPDATE activity_completion SET rubric_scores=?,score=?,max_score=100 WHERE id=?',[json_encode(['l4'=>$l4s],JSON_UNESCAPED_UNICODE),$l4s['score'],$cid]);if($oral&&function_exists('wc_apply_single'))wc_apply_single($cid);/* v184: Word Coach */q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
+   $l4s=$l4read&&$transcript!==''?l4_auto($a,$transcript,(int)($_POST['secs']??0)):null;if($l4s){q('UPDATE activity_completion SET rubric_scores=?,score=?,max_score=100 WHERE id=?',[json_encode(['l4'=>$l4s],JSON_UNESCAPED_UNICODE),$l4s['score'],$cid]);if(function_exists('rg_log_reading')&&lesson_level((int)$a['lesson_id'])===5)rg_log_reading($pid,$aid,$l4s);}if($oral&&function_exists('wc_apply_single'))wc_apply_single($cid);/* v184: Word Coach */q('INSERT INTO response_history(completion_id,response,status,actor_id) VALUES(?,?,?,?)',[$cid,$answer,$status,$pid]);
    q('INSERT INTO pupil_progress(pupil_id,lesson_id,last_activity_id) VALUES(?,?,?) ON DUPLICATE KEY UPDATE last_activity_id=VALUES(last_activity_id)',[$pid,$a['lesson_id'],$aid]);
    if($a['expected_text']&&$transcript!==''){$match=word_match($a['expected_text'],$transcript);q('INSERT INTO reading_assessments(pupil_id,activity_id,transcript,expected_text,word_match_percent,detail) VALUES(?,?,?,?,?,?)',[$pid,$aid,$transcript,$a['expected_text'],$match['percent'],json_encode($match['words'])]);}
    /* Stars (v181): a lesson activity below 2 stars (80%) is not finished. It opens again for a fresh try (wrong tries reset). */
    $gate=null;if($ok&&($a['phase']??'')==='learn'&&function_exists('completion_frac')&&($fr=completion_frac(one('SELECT score,max_score FROM activity_completion WHERE id=?',[$cid])))!==null&&round($fr*100,6)<STAR_PASS){
     $gate=$fr;$ok=false;q("UPDATE activity_completion SET status='retry' WHERE id=?",[$cid]);unset($_SESSION['ck'][$aid]);}
-   rv_capture($cid,$a);
-   if($ok){q('DELETE FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);update_learning($pid,$aid);$awardedXp=(int)val('SELECT amount FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);}
-   db()->commit();$message=$ok?($exact?'Correct! Great work.':($mode==='none'?'You’re ready for the next step.':($mode==='perform'?'Activity completed. Well done!':($oral?'Your answer is saved. Great speaking!':'Your response is saved. Thank you for sharing!')))):'Not quite yet. Listen again and give it another try.';
+   if(!$replay)rv_capture($cid,$a);
+   if($replay){$rp=replay_settle($pid,$a,$replay,$cid);$ok=true;$gate=null;if($rp['kept_new'])rv_capture($cid,$a);}
+   if($ok&&!$replay){q('DELETE FROM activity_drafts WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);update_learning($pid,$aid);$awardedXp=(int)val('SELECT amount FROM xp_transactions WHERE pupil_id=? AND activity_id=?',[$pid,$aid]);}
+   db()->commit();$message=$ok?($test?'Your answer is saved.':($exact?'Correct! Great work.':($mode==='none'?'You’re ready for the next step.':($mode==='perform'?'Activity completed. Well done!':($oral?'Your answer is saved. Great speaking!':'Your response is saved. Thank you for sharing!'))))):'Not quite yet. Listen again and give it another try.';
   }catch(Throwable $e){if(db()->inTransaction())db()->rollBack();throw $e;}
+  if(function_exists('rx_save'))rx_save($pid,$aid,(int)($_POST['time_secs']??0));   // v216 Roxanne: how long this activity took
+  if($replay){$GLOBALS['bulig_replay']=$rp;submission_reply($a,true,$rp['message'],$rp['xp'],'');}   // v216 Play again: its own popup (new best, practice or keep trying)
   if($ok)$a['xp_reward']=$awardedXp??0;
+  if($ok&&!empty($test)&&($a['phase']??'')==='pre'){$want=array_column(rows('SELECT content FROM answers WHERE question_id=? AND correct=1',[(int)($question['id']??0)]),'content');
+   $check='<div class="ac-panel ac-pre" role="status"><div class="ac-top"><span class="ac-badge" aria-hidden="true">'.l1_icon('ok').'</span><div><b>Thank you! Your answer is saved.</b><small>The pre-test shows what you know now. There is no wrong answer here.</small></div></div>'.($want?'<p class="ac-lab">THE ANSWER</p><ul class="ac-again ac-learn"><li><span><b>'.e(implode(' or ',$want)).'</b></span></li></ul>':'').'</div>';
+   submission_reply($a,true,'Thank you! Your answer is saved.',0,$check);}   // v216 pre-test: no "wrong", the answer is shown
   if($ok&&function_exists('pt_after_answer'))pt_after_answer($pid,$a);
   $check=$ok&&function_exists('ac_keyed')&&ac_keyed($a)?ac_card($a,['response'=>$answer],['fresh'=>true,'xp'=>(int)$a['xp_reward']]):'';/* BULIG's result card (v151) */
   if($ok&&!empty($l4s))$check=l4_result_card($a,$l4s);
@@ -317,16 +344,34 @@ function action():void{
 }
 
 function submission_reply(array $a,bool $ok,string $message,int $xp,string $check=''):never{
- $url='?page=lesson&id='.$a['lesson_id'].'&activity='.$a['id'].'&feedback=1';
+ $url='?page=lesson&id='.$a['lesson_id'].'&activity='.$a['id'].'&feedback=1';if(!empty($GLOBALS['bulig_rx'])&&function_exists('rx_card'))$check.=rx_card($GLOBALS['bulig_rx']);
  if(str_contains($_SERVER['HTTP_ACCEPT']??'','application/json')){header('Content-Type: application/json');echo json_encode(['saved'=>$ok,'message'=>$message,'xp'=>$xp,'url'=>$url]+($check!==''?['check'=>$check]:[])+(($v=vx_result($a,$xp))?['vx'=>$v]:[]));exit;}
  flash($message);go($url);
 }
 /** v213 Victory or Try again (the popup after a lesson activity): its stars (2 or 3 = victory, 80%), score, XP and first name. */
 function vx_result(array $a,int $xp):?array{
- if(($a['phase']??'')!=='learn'||!function_exists('completion_frac'))return null;$u=current_user();if(!$u||($u['role']??'')!=='pupil')return null;
- $fr=completion_frac(one('SELECT score,max_score FROM activity_completion WHERE pupil_id=? AND activity_id=?',[(int)$u['id'],(int)$a['id']]));if($fr===null)return null;
- $st=star_count($fr,'learn');$name=explode(' ',trim((string)$u['name']))[0];
- return ['stars'=>$st,'pct'=>(int)floor($fr*100+1e-9),'win'=>$st>=2,'xp'=>$xp,'name'=>$name,'pass'=>STAR_PASS,'retry'=>'?page=lesson&id='.(int)$a['lesson_id'].'&activity='.(int)$a['id']];
+ if(!function_exists('completion_frac'))return null;$u=current_user();if(!$u||($u['role']??'')!=='pupil')return null;$pid=(int)$u['id'];
+ $name=explode(' ',trim((string)$u['name']))[0];$lid=(int)$a['lesson_id'];$lv=lesson_level($lid);
+ $jar=function_exists('star_jar')?star_jar($pid,$lv):null;$fr=function_exists('vx_friend')?vx_friend($a):'mia';$again='?page=lesson&id='.$lid.'&activity='.(int)$a['id'].'&again=1';
+ /* v216 Play again: a new best, practice, or the best stays */
+ if(!empty($GLOBALS['bulig_replay'])){$r=$GLOBALS['bulig_replay'];
+  return ['stars'=>$r['kind']==='keep'?$r['to']:$r['stars'],'best'=>$r['stars'],'pct'=>$r['kind']==='keep'?$r['now']:$r['pct'],'win'=>$r['kind']!=='keep','xp'=>$xp,'name'=>$name,'pass'=>STAR_PASS,'kind'=>$r['kind'],'from'=>$r['from'],'left'=>$r['left'],'jar'=>$jar,'friend'=>$fr,'again'=>$again,'retry'=>$again];}
+ /* v216 The Victory popup comes once, when the whole lesson (the stop on the road map) is finished. Its stars are the
+    lesson's stars on the road map. While the lesson is going on, each activity shows only its small result card. */
+ foreach(activities($lid,$pid) as $x)if(!completion_ok($x))return null;
+ $ms=function_exists('map_stars')?(map_stars($pid,[$lid])[$lid]??null):null;if(!$ms||empty($ms['of']))return null;
+ $of=(int)$ms['of'];$st=(int)$ms['n'];$win=$of===5?$st>=4:$st>=2;$jar=function_exists('star_jar')?star_jar($pid,$lv):$jar;
+ $out=['stars'=>min(3,$of===5?(int)round($st*3/5):$st),'of'=>$of,'lesson_stars'=>$st,'pct'=>$of?(int)round($st/$of*100):0,'win'=>$win,'xp'=>$xp,'name'=>$name,'pass'=>STAR_PASS,'lesson'=>1,'retry'=>'?page=lesson&id='.$lid,'jar'=>$jar,'friend'=>$fr];
+ if(!$win)$out['retry']='?page=lesson&id='.$lid;
+ /* v216 Jeepy: the last lesson of a level is done */
+ if($win&&function_exists('level_done_now')&&level_done_now($pid,$lv)){$out['level']=level_label($lv);$nx=null;$seq=function_exists('level_sequence')?level_sequence():[];$i=array_search($lv,$seq,true);if($i!==false&&isset($seq[$i+1]))$nx=$seq[$i+1];if($nx){$out['next_level']=level_label($nx);$out['next_url']='?page=lessons&level='.$nx;}}
+ return $out;
+}
+/** True when every lesson of the level is finished, the last one just now (Jeepy's level-done ride). */
+function level_done_now(int $pid,int $lv):bool{
+ $g=function_exists('pupil_grade')?pupil_grade($pid):null;
+ $r=one('SELECT COUNT(*) n,COUNT(p.completed_at) d,MAX(p.completed_at) last FROM lessons l JOIN modules m ON m.id=l.module_id LEFT JOIN pupil_progress p ON p.lesson_id=l.id AND p.pupil_id=? WHERE m.level_id=? AND l.published=1'.GRADE_SQL,[$pid,$lv,$g]);
+ return $r&&(int)$r['n']>0&&(int)$r['n']===(int)$r['d']&&$r['last']&&strtotime((string)$r['last'])>=time()-120;
 }
 
 

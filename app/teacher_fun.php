@@ -140,7 +140,7 @@ function tf_top_filter(int $level,string $period):string{
 function tf_leaderboard_view(array $u):void{
  [$grade,$sid]=teacher_class_selection($u);$tid=(int)$u['id'];
  $ids=array_map('intval',array_column(rows('SELECT u.id FROM users u JOIN pupils p ON p.user_id=u.id JOIN teacher_pupils t ON t.pupil_id=u.id WHERE t.teacher_id=? AND p.grade_level=? AND (?=0 OR u.id IN(SELECT pupil_id FROM pupil_sections WHERE section_id=?))',[$tid,$grade,$sid,$sid]),'id'));
- echo '<div class="pageheading"><div><span class="eyebrow">MY CLASS</span><h1>Leaderboard</h1><p class="muted">The top 10 pupils of your class by BULIG’s average score. Choose a level, or all levels.</p></div></div>';
+ echo '<div class="pageheading"><div><span class="eyebrow">MY CLASS</span><h1>Leaderboard</h1><p class="muted">The top 10 pupils of your class by BULIG Quest’s average score. Choose a level, or all levels.</p></div></div>';
  section_filter($u,'leaderboard',$sid,$grade);$sn=$sid?(string)val('SELECT name FROM sections WHERE id=?',[$sid]):'';
  echo $ids?tf_leaderboard($ids,'Grade '.$grade.($sn!==''?' · '.$sn:'')):'<section class="card"><p class="muted">No pupils in this class yet. <a href="?page=accounts">Add pupils</a></p></section>';
 }
@@ -148,7 +148,7 @@ function tf_leaderboard(array $ids,string $label=''):string{
  $level=max(0,(int)($_GET['lb_level']??0));$period=isset(TF_TOP_PERIODS[$_GET['lb_period']??''])?(string)$_GET['lb_period']:'all';
  $rows=tf_top_rows($ids,$level,$period);$label=implode(' · ',array_filter([$label,$level?level_label($level):'All levels',$period!=='all'?TF_TOP_PERIODS[$period]:'']));
  $h='<section class="card tf-top" id="tf-top"><div class="section-heading"><h2>'.icon('star').'Top 10 pupils</h2><small>By score and activities finished: the more you finish and the better you answer, the higher you go</small></div>'.tf_top_filter($level,$period);
- if(!$rows)return $h.'<p class="muted">'.($level||$period!=='all'?'No checked activities here yet. Choose another level or time.':'The board fills in when pupils finish activities that BULIG checks.').'</p></section>';
+ if(!$rows)return $h.'<p class="muted">'.($level||$period!=='all'?'No checked activities here yet. Choose another level or time.':'The board fills in when pupils finish activities that BULIG Quest checks.').'</p></section>';
  $h.='<div class="lb-tools"><button type="button" class="btn secondary" data-lb-save>'.icon('download').'Save as picture</button><button type="button" class="btn secondary" data-lb-print>'.icon('print').'Print</button></div>';
  $h.='<div class="lb-art" id="lb-art">'.tf_leaderboard_svg($rows,$label).'</div><ol class="lb-list">';
  foreach($rows as $i=>$r){$n=$i+1;
@@ -251,6 +251,6 @@ function tf_leaderboard_svg(array $rows,string $label):string{
    .'<text x="1140" y="'.($y+36).'" text-anchor="end" font-size="24" font-weight="900" fill="#17633a">'.(int)$r['pct'].'%</text>';$y+=62;}
  /* Toby the Trailblazer with his flag, like on the ladder */
  $g.='<image href="'.$x(friend_img('toby','flag')).'" x="0" y="560" width="128" height="230" preserveAspectRatio="xMidYMax meet"/>'
-  .'<text x="600" y="812" text-anchor="middle" font-size="14" font-weight="700" fill="#17633a">BULIG · Read, Play, Grow</text>';
+  .'<text x="600" y="812" text-anchor="middle" font-size="14" font-weight="700" fill="#17633a">BULIG Quest · Read, Play, Grow</text>';
  return $g.'</svg>';
 }

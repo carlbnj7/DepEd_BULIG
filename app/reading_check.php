@@ -163,7 +163,7 @@ function rc_decide(int $p,array &$P,bool $last,array $s):bool{
  $done=$P['total']+$P['unknown'];$left=$max-$done;
  if($P['right']>=$need){$P['st']='pass';return true;}
  if($P['right']+$P['unknown']+$left<$need){$P['st']='fail';return true;}
- if($last){$P['st']='fail';if($P['unknown'])$P['note']='BULIG could not hear some answers, so they were not counted.';return true;}
+ if($last){$P['st']='fail';if($P['unknown'])$P['note']='BULIG Quest could not hear some answers, so they were not counted.';return true;}
  return false;
 }
 
@@ -187,9 +187,9 @@ function rc_submit(array $u):void{
   $P['tasks'][$step]=['label'=>$label,'right'=>$right,'unknown'=>$unk,'of'=>count($words),'need'=>$need];
   if($P['streak']>=5){$P['st']='fail';$P['note']='Stopped after 5 wrong words in a row.';}
   elseif($right>=$need){if($step+1>=count(RC_WORD_TASKS))$P['st']='pass';}
-  else{$P['st']='fail';if($unk)$P['note']='BULIG could not hear some words, so they were not counted.';}}
+  else{$P['st']='fail';if($unk)$P['note']='BULIG Quest could not hear some words, so they were not counted.';}}
  elseif($p===5){$st=rc_story($g);$h=$heard('0');$au=$audio('0');$secs=max(0,min(1800,(int)($_POST['secs']??0)));$sr=(string)($_POST['sr']??'off');
-  if($h===''&&$sr!=='ok'){$P['st']='fail';$P['note']='BULIG could not hear the reading on this device.';$P['ans'][]=['q'=>'Story','got'=>'','ok'=>null,'audio'=>$au,'secs'=>$secs];}
+  if($h===''&&$sr!=='ok'){$P['st']='fail';$P['note']='BULIG Quest could not hear the reading on this device.';$P['ans'][]=['q'=>'Story','got'=>'','ok'=>null,'audio'=>$au,'secs'=>$secs];}
   else{$pct=$st?rc_accuracy($st[1],$h):0.0;$band=rc_band($pct);$P['pct']=$pct;$P['band']=$band;$P['secs']=$secs;$P['words']=$st?count($st[1]):0;$P['st']=$band==='Independent'?'pass':'fail';
    $P['ans'][]=['q'=>'Story','got'=>$h,'ok'=>$band==='Independent','audio'=>$au,'secs'=>$secs];}}
  else{$act=$P['acts'][$step]??null;$a=$act?one('SELECT * FROM activities WHERE id=?',[$act['aid']]):null;
@@ -229,7 +229,7 @@ function rc_finish(array $row,array $s):void{
  $tid=(int)val('SELECT teacher_id FROM teacher_pupils WHERE pupil_id=? LIMIT 1',[$pid]);
  if($tid&&!val('SELECT 1 FROM pupil_level_assignments WHERE pupil_id=?',[$pid]))q('INSERT INTO pupil_level_assignments(pupil_id,level_id,assigned_by) VALUES(?,?,?)',[$pid,$lv,$tid]);
  $name=(string)val('SELECT name FROM users WHERE id=?',[$pid]);
- if(function_exists('notify_teachers'))notify_teachers($pid,'reading',$name.' finished the reading check','BULIG placed '.explode(' ',trim($name))[0].' at '.level_label($lv).'.'.(rc_flags(rc_row($pid))?' Please take a look.':''),'?page=rcheck_pupil&id='.$pid);
+ if(function_exists('notify_teachers'))notify_teachers($pid,'reading',$name.' finished the reading check','BULIG Quest placed '.explode(' ',trim($name))[0].' at '.level_label($lv).'.'.(rc_flags(rc_row($pid))?' Please take a look.':''),'?page=rcheck_pupil&id='.$pid);
  audit('reading_check',$pid.' → '.level_label($lv));
 }
 
@@ -246,7 +246,7 @@ function rc_status(?array $row,int $level):array{
  if(!$row)return $level?['tch','Level chosen by you']:['wait','Waiting · takes it at first sign-in'];
  if($row['status']==='running'){$s=rc_state($row);return ['run','Taking the check · Part '.(int)$s['part'].' of 7'];}
  $f=rc_flags($row);if(in_array('check',$f,true))return ['chk','Please check'];if($f)return ['chk','Please listen'];
- return $row['changed_by']?['tch','Changed by you']:['auto','Placed by BULIG'];
+ return $row['changed_by']?['tch','Changed by you']:['auto','Placed by BULIG Quest'];
 }
 /** "Why this level" in a few words, for the pupil and the teacher. */
 function rc_why(array $s,bool $pupil=true):string{
@@ -255,7 +255,7 @@ function rc_why(array $s,bool $pupil=true):string{
  if($lv===8)return $pupil?'You did well in every part. You start at Level 7, where you read for fun and share stories.':'Passed every part.';
  $skill=rc_level_name($lv);
  if($pupil)return ($passed?'You did well in '.implode(', ',array_slice($passed,0,-1)).(count($passed)>1?' and ':'').end($passed).'. ':'').'Next, you will practise '.mb_strtolower($skill).'.';
- return trim(($passed?'Passed: '.implode(', ',$passed).'. ':'').($failed?'Not yet: '.$failed.'. ':'').($listen?'Please listen: BULIG could not hear the pupil in “'.$listen.'”, so it stopped there. Listen to the recording, then keep or change the level.':''));
+ return trim(($passed?'Passed: '.implode(', ',$passed).'. ':'').($failed?'Not yet: '.$failed.'. ':'').($listen?'Please listen: BULIG Quest could not hear the pupil in “'.$listen.'”, so it stopped there. Listen to the recording, then keep or change the level.':''));
 }
 /** Short result of each part for chips: [class, label]. */
 function rc_part_chip(int $p,array $P):array{
@@ -287,7 +287,7 @@ function rc_intro_page(array $u):void{
  $say='Hi '.$first.'! Let’s find your reading level. The check has short parts. Just do your best!';
  echo '<div class="l1-goals"><p class="l1-lab">THE PARTS OF THE CHECK'.l1_speaker($say,'Hear about the check','sm').'</p><ul class="rk-parts">';
  foreach(RC_PARTS as $n=>$x)echo '<li'.($g>=4&&$n<5?' class="maybe"':'').'><i>'.$n.'</i><span>'.e($x['name']).'<small>'.e($x['what']).'</small></span></li>';
- echo '</ul></div><div class="rk-note">'.l1_icon('ear').'<span>About 15 to 20 minutes. You can rest between parts. Just do your best! BULIG stops when it knows where you should start, so you may not do every part. A quiet place helps BULIG hear you.</span></div>';
+ echo '</ul></div><div class="rk-note">'.l1_icon('ear').'<span>About 15 to 20 minutes. You can rest between parts. Just do your best! BULIG Quest stops when it knows where you should start, so you may not do every part. A quiet place helps BULIG Quest hear you.</span></div>';
  echo '<form method="post">'.csrf_field().'<input type="hidden" name="action" value="rc_begin"><button class="l1-big l1-go" type="submit">Let’s start! '.l1_icon('next').'</button></form></div></main></div>';foot();
 }
 function rc_result_page(array $u,array $row):void{
@@ -341,7 +341,7 @@ function rc_words_page(array $u,array $row,array $s):void{
  echo '<section class="l2-card rk-wordcard"><div class="l2-cardtop"><span class="l2-cnum" data-rc-count>Word 1 of '.count($words).'</span><span class="rk-task">'.e($label).'</span></div>';
  foreach($words as $i=>$w)echo '<div class="rk-word" data-rc-w="'.$i.'"'.($i?' hidden':'').'>'.e($w).'<input type="hidden" name="heard['.$i.']" value="" disabled><input type="hidden" name="audio['.$i.']" value="" disabled></div>';
  echo '<div class="l2-ans"><div class="l2-say l1-rec rk-say" data-rc-say data-word><button type="button" class="l1-mic" data-rc-go aria-label="Tap and read the word">'.l1_icon('mic').'</button><b class="l1-rl" data-rc-label>Tap and read the word</b><small class="l1-rs" data-rc-sub role="status"></small></div></div>';
- echo '<p class="rk-hear">BULIG marks the word. Your teacher can listen again later.</p></section>';
+ echo '<p class="rk-hear">BULIG Quest marks the word. Your teacher can listen again later.</p></section>';
  echo '<div class="l1-end"><div class="l1-btns"><button type="button" class="l1-btn2" data-rc-skip>I don’t know this word '.l1_icon('next').'</button><button class="l1-big" type="submit" data-rc-send hidden>Done '.l1_icon('ok').'</button></div></div></form></main></div>';
  echo '<script defer src="'.asset_url('rcheck.js').'"></script>';foot();
 }
@@ -350,7 +350,7 @@ function rc_story_page(array $u,array $row,array $s):void{
  $g=(int)$s['grade'];$st=rc_story($g);if(!$st){$s['parts'][5]['st']='fail';rc_after_part($s,5);rc_save((int)$row['id'],$s);if(!empty($s['result']))rc_finish(rc_row((int)$row['pupil_id']),$s);go('?page=rcheck');}
  head('Reading check','activity-page l1-page l4-page rk-page');
  echo '<div class="l1-app l4-app">'.rc_head('Read a story',$s).'<main class="l1-main activity-main">';notice();
- $dir='Tap the microphone, then read the title and the story out loud. Each word turns green when BULIG hears it. When you read the last word, BULIG finishes and sends it to your teacher.';
+ $dir='Tap the microphone, then read the title and the story out loud. Each word turns green when BULIG Quest hears it. When you read the last word, BULIG Quest finishes and sends it to your teacher.';
  echo '<form method="post" class="rk-form" data-rc-story data-words="'.count($st[1]).'">'.csrf_field().'<input type="hidden" name="action" value="rc_submit"><input type="hidden" name="rc_token" value="'.e($s['token']).'"><input type="hidden" name="sr" value="" data-rc-sr><input type="hidden" name="heard[0]" value="" data-rc-heard><input type="hidden" name="audio[0]" value="" data-rc-audio><input type="hidden" name="secs" value="" data-rc-secs>';
  echo '<span class="l1-tag">READ A STORY</span><div class="l1-q sm l4-dir"><p>'.e($dir).'</p>'.l1_speaker($dir).'</div>';
  /* v205 new layout: three steps at the top; they light up as the pupil goes */
@@ -404,7 +404,7 @@ function rc_chip_icon(string $c):string{return ['ok'=>l1_icon('ok'),'no'=>l1_ico
 
 function rc_teacher_view(array $u):void{
  $tid=(int)$u['id'];$sid=(int)($_GET['section']??0);$list=rc_teacher_rows($tid,$sid);
- echo '<div class="hm-head"><div><span class="eyebrow">MY CLASS · READING CHECK</span><h1>Where does each pupil start?</h1><p class="muted">Pupils with no starting level take the reading check the first time they sign in. BULIG places them with the BULIG Assessment and Grouping guide and the module pre-tests. You can change any level.</p></div><div class="buttonrow"><a class="btn secondary" href="?page=rcheck_rules">'.icon('info').'How BULIG decides</a><a class="btn secondary" href="?page=rcheck_print'.($sid?'&amp;section='.$sid:'').'">'.icon('print').'Print results</a></div></div>';
+ echo '<div class="hm-head"><div><span class="eyebrow">MY CLASS · READING CHECK</span><h1>Where does each pupil start?</h1><p class="muted">Pupils with no starting level take the reading check the first time they sign in. BULIG Quest places them with the BULIG Assessment and Grouping guide and the module pre-tests. You can change any level.</p></div><div class="buttonrow"><a class="btn secondary" href="?page=rcheck_rules">'.icon('info').'How BULIG Quest decides</a><a class="btn secondary" href="?page=rcheck_print'.($sid?'&amp;section='.$sid:'').'">'.icon('print').'Print results</a></div></div>';
  if(!rc_ready()){echo '<section class="card"><h2>'.icon('alert').' One database file is needed first</h2><p>Import <b>database/migrations/028_reading_check.sql</b> once in phpMyAdmin. Until then, choose each new pupil’s starting level yourself.</p></section>';return;}
  $secs=teacher_sections($tid);
  if(count($secs)>1){echo '<form method="get" class="rk-filter"><input type="hidden" name="page" value="rcheck"><label>Section<select name="section" data-autosubmit><option value="0">All my pupils</option>';foreach($secs as $x)echo '<option value="'.(int)$x['id'].'"'.($sid===(int)$x['id']?' selected':'').'>Grade '.(int)$x['grade_level'].' · '.e($x['name']).'</option>';echo '</select></label><noscript><button class="btn quiet">Show</button></noscript></form>';}
@@ -413,26 +413,26 @@ function rc_teacher_view(array $u):void{
   $off=$row&&$row['official_result']?'<small class="rk-off">'.e($row['official_tool'].': '.$row['official_result']).'</small>':'';
   $rowsH.='<tr><td><div class="rk-who">'.avatar($r).'<span><b>'.e($r['name']).'</b><small>Grade '.(int)$r['grade_level'].($r['section']?' · '.e($r['section']):'').'</small></span></div></td>'
    .'<td>'.($row?rc_chips($s):'<span class="rk-pt na">Not taken yet · takes it at first sign-in</span>').'</td>'
-   .'<td>'.($lv?'<span class="rk-lv">'.e(level_label($lv)).'<small>'.e(rc_level_name($lv)).($row&&$row['bulig_level']&&(int)$row['bulig_level']!==$lv?' · BULIG said '.e(str_replace('Level ','',level_label((int)$row['bulig_level']))):'').'</small></span>':'<span class="muted">—</span>').$off.'</td>'
+   .'<td>'.($lv?'<span class="rk-lv">'.e(level_label($lv)).'<small>'.e(rc_level_name($lv)).($row&&$row['bulig_level']&&(int)$row['bulig_level']!==$lv?' · BULIG Quest said '.e(str_replace('Level ','',level_label((int)$row['bulig_level']))):'').'</small></span>':'<span class="muted">—</span>').$off.'</td>'
    .'<td><span class="rk-chip '.$cls.'">'.e($txt).'</span></td><td><div class="rk-btns"><a class="btn '.($lv?'secondary':'primary').' small" href="?page=rcheck_pupil&amp;id='.(int)$r['id'].'">'.($row?'Open':'Set level').'</a></div></td></tr>';}
  echo '<div class="rk-sum"><span><b>'.$cnt['auto'].'</b> placed by BULIG</span><span><b>'.$cnt['tch'].'</b> changed by you</span><span><b>'.$cnt['chk'].'</b> please check</span><span><b>'.($cnt['wait']+$cnt['run']).'</b> not finished yet</span></div>';
- echo '<section class="card"><div class="tablewrap"><table class="rk-tbl"><thead><tr><th>Pupil</th><th>Parts of the check</th><th>Starting level · official result</th><th>Status</th><th></th></tr></thead><tbody>'.($rowsH?:'<tr class="empty-row"><td colspan="5">No pupils are waiting for the reading check. When you add a pupil with “Let BULIG find it”, the pupil shows here.</td></tr>').'</tbody></table></div><p class="rk-src">The check stops at the first part not passed. That part’s level is the starting level. “Please listen”: BULIG could not hear the reading, or Talk and listen needs your rating. “Please check”: BULIG’s level is not one the guide gives for the official CRLA / Phil-IRI result you typed. Pupils whose level you chose yourself are not listed.</p></section>';
+ echo '<section class="card"><div class="tablewrap"><table class="rk-tbl"><thead><tr><th>Pupil</th><th>Parts of the check</th><th>Starting level · official result</th><th>Status</th><th></th></tr></thead><tbody>'.($rowsH?:'<tr class="empty-row"><td colspan="5">No pupils are waiting for the reading check. When you add a pupil with “Let BULIG Quest find it”, the pupil shows here.</td></tr>').'</tbody></table></div><p class="rk-src">The check stops at the first part not passed. That part’s level is the starting level. “Please listen”: BULIG Quest could not hear the reading, or Talk and listen needs your rating. “Please check”: BULIG Quest’s level is not one the guide gives for the official CRLA / Phil-IRI result you typed. Pupils whose level you chose yourself are not listed.</p></section>';
 }
 
 function rc_teacher_pupil(array $u):void{
  $pid=(int)($_GET['id']??0);own_pupil($pid);$p=one('SELECT u.id,u.name,u.public_id,p.grade_level,s.name section FROM users u JOIN pupils p ON p.user_id=u.id LEFT JOIN pupil_sections ps ON ps.pupil_id=u.id LEFT JOIN sections s ON s.id=ps.section_id WHERE u.id=?',[$pid]);if(!$p)fail('Pupil not found.',404);
  $row=rc_row($pid);$s=rc_state($row);$lv=(int)val('SELECT level_id FROM pupil_level_assignments WHERE pupil_id=?',[$pid]);[$cls,$txt]=rc_status($row,$lv);
  echo '<p class="crumb"><a href="?page=rcheck">Reading check</a>'.icon('chev').'<span>'.e($p['name']).'</span></p>';
- echo '<div class="hm-head"><div><span class="eyebrow">READING CHECK · GRADE '.(int)$p['grade_level'].($p['section']?' · '.e(mb_strtoupper($p['section'])):'').'</span><h1>'.e($p['name']).'</h1><p class="muted">'.($lv?'Starts at <b>'.e(level_label($lv).' · '.rc_level_name($lv)).'</b>':'No starting level yet').($row&&$row['bulig_level']?' · BULIG chose '.e(level_label((int)$row['bulig_level'])):'').'</p></div><div class="buttonrow"><span class="rk-chip '.$cls.'">'.e($txt).'</span><a class="btn secondary" href="?page=pupil&amp;id='.$pid.'">'.icon('user').'Pupil page</a></div></div>';
+ echo '<div class="hm-head"><div><span class="eyebrow">READING CHECK · GRADE '.(int)$p['grade_level'].($p['section']?' · '.e(mb_strtoupper($p['section'])):'').'</span><h1>'.e($p['name']).'</h1><p class="muted">'.($lv?'Starts at <b>'.e(level_label($lv).' · '.rc_level_name($lv)).'</b>':'No starting level yet').($row&&$row['bulig_level']?' · BULIG Quest chose '.e(level_label((int)$row['bulig_level'])):'').'</p></div><div class="buttonrow"><span class="rk-chip '.$cls.'">'.e($txt).'</span><a class="btn secondary" href="?page=pupil&amp;id='.$pid.'">'.icon('user').'Pupil page</a></div></div>';
  if($row&&$row['status']==='done'){echo '<div class="rk-whybox">'.icon('info').'<div><b>Why '.e(level_label((int)$row['bulig_level'])).'?</b> '.e(rc_why($s,false)).'</div></div>';}
  $flags=rc_flags($row);
  echo '<div class="rk-cols"><section class="card"><h2>'.icon('ladder').' Starting level</h2><form method="post" class="formgrid rk-levelform">'.csrf_field().'<input type="hidden" name="action" value="rc_level"><input type="hidden" name="id" value="'.$pid.'">';
- if($row&&$row['bulig_level']){$tool=$row['official_tool'];echo '<p class="rk-hint"><b>BULIG check:</b> '.e(level_label((int)$row['bulig_level']).' · '.rc_level_name((int)$row['bulig_level'])).'.'.($row['official_result']?'<br><b>Guide:</b> '.e($tool.' '.$row['official_result']).' → '.e(implode(', ',array_map(fn($x)=>str_replace('Level ','',level_label($x)),RC_OFFICIAL[$tool][$row['official_result']]??[]))).' (BULIG Assessment and Grouping).':'').'</p>';}
+ if($row&&$row['bulig_level']){$tool=$row['official_tool'];echo '<p class="rk-hint"><b>BULIG Quest check:</b> '.e(level_label((int)$row['bulig_level']).' · '.rc_level_name((int)$row['bulig_level'])).'.'.($row['official_result']?'<br><b>Guide:</b> '.e($tool.' '.$row['official_result']).' → '.e(implode(', ',array_map(fn($x)=>str_replace('Level ','',level_label($x)),RC_OFFICIAL[$tool][$row['official_result']]??[]))).' (BULIG Assessment and Grouping).':'').'</p>';}
  echo '<label>New starting level<select name="level_id">';foreach(rows('SELECT id FROM bulig_levels WHERE published=1 ORDER BY '.level_order_sql('id')) as $l)echo '<option value="'.(int)$l['id'].'"'.((int)$l['id']===($lv?:(int)($row['bulig_level']??1))?' selected':'').'>'.e(level_label((int)$l['id']).' · '.rc_level_name((int)$l['id'])).'</option>';echo '</select></label>';
  echo '<label>Your observation (why)<textarea name="note" rows="3" maxlength="1000" placeholder="For example: has difficulty blending two consonant sounds: reads “flag” as “falag”.">'.e((string)($row['teacher_note']??'')).'</textarea></label><p class="muted">Work already done is kept. Levels before the new starting level become free practice.</p><button class="btn primary">'.icon('check').'Save level</button></form>';
  if($flags)echo '<form method="post" class="rk-confirm">'.csrf_field().'<input type="hidden" name="action" value="rc_confirm"><input type="hidden" name="id" value="'.$pid.'"><button class="btn secondary">'.icon('check').'I checked it · keep '.e(level_label($lv)).'</button></form>';
  echo '</section>';
- if($row){$tool=rc_tool((int)$row['grade']);echo '<section class="card"><h2>'.icon('chart').' Official result (start of the year)</h2><p class="muted">Type the pupil’s BOSY '.$tool.' result. BULIG compares it with the table in the BULIG Assessment and Grouping guide.</p><form method="post" class="formgrid">'.csrf_field().'<input type="hidden" name="action" value="rc_official"><input type="hidden" name="id" value="'.$pid.'"><label>'.$tool.' result<select name="official"><option value="">Not typed</option>';
+ if($row){$tool=rc_tool((int)$row['grade']);echo '<section class="card"><h2>'.icon('chart').' Official result (start of the year)</h2><p class="muted">Type the pupil’s BOSY '.$tool.' result. BULIG Quest compares it with the table in the BULIG Assessment and Grouping guide.</p><form method="post" class="formgrid">'.csrf_field().'<input type="hidden" name="action" value="rc_official"><input type="hidden" name="id" value="'.$pid.'"><label>'.$tool.' result<select name="official"><option value="">Not typed</option>';
   foreach(RC_OFFICIAL[$tool] as $k=>$lvls)echo '<option value="'.e($k).'"'.($row['official_result']===$k?' selected':'').'>'.e($k.($k==='Advanced'?' pupils (guide)':'')).' → '.e(implode(', ',array_map(fn($x)=>str_replace('Level ','L',level_label($x)),$lvls))).'</option>';
   echo '</select></label><button class="btn secondary">'.icon('check').'Save result</button></form></section>';}
  echo '</div>';
@@ -441,7 +441,7 @@ function rc_teacher_pupil(array $u):void{
  foreach($s['order'] as $pn){$P=$s['parts'][$pn];[$c,$l]=rc_part_chip($pn,$P);
   echo '<section class="card rk-part" id="'.($pn===1?'rc-talk':'rc-part'.$pn).'"><div class="section-heading"><h2>Part '.$pn.' · '.e(RC_PARTS[$pn]['name']).' <small class="muted">'.e(level_label(RC_PARTS[$pn]['level']).' · '.rc_level_name(RC_PARTS[$pn]['level'])).'</small></h2><span class="rk-pt '.$c.'">'.rc_chip_icon($c).e($l).'</span></div>';
   if(!empty($P['note']))echo '<p class="muted">'.e($P['note']).'</p>';
-  if($pn===5&&isset($P['pct']))echo '<p class="rk-hint"><b>Word reading:</b> '.e((string)$P['pct']).'% of '.(int)$P['words'].' words · Phil-IRI '.e($P['band']).($P['secs']?' · '.intdiv((int)$P['secs'],60).':'.sprintf('%02d',(int)$P['secs']%60).' minutes':'').'. BULIG counts the words its speech recognition heard; listen to the recording to check.</p>';
+  if($pn===5&&isset($P['pct']))echo '<p class="rk-hint"><b>Word reading:</b> '.e((string)$P['pct']).'% of '.(int)$P['words'].' words · Phil-IRI '.e($P['band']).($P['secs']?' · '.intdiv((int)$P['secs'],60).':'.sprintf('%02d',(int)$P['secs']%60).' minutes':'').'. BULIG Quest counts the words its speech recognition heard; listen to the recording to check.</p>';
   if($pn===4&&!empty($P['tasks'])){echo '<p class="rk-hint">';foreach($P['tasks'] as $tk)echo '<b>'.e($tk['label']).':</b> '.(int)$tk['right'].' of '.(int)$tk['of'].' (pass '.(int)$tk['need'].')'.($tk['unknown']?' · '.(int)$tk['unknown'].' to listen to':'').'<br>';echo '</p>';}
   echo '<ol class="ks-list rk-ans">';foreach($P['ans'] as $i=>$a){$ok=$a['ok'];
    echo '<li class="'.($ok===true?'ok':($ok===false?'no':'part')).'"><span class="ks-q">'.e(mb_strimwidth((string)$a['q'],0,160,'…')).'</span><span class="ks-a">'.($a['got']!==''?e(mb_strimwidth((string)$a['got'],0,300,'…')):'<i>'.($a['audio']??null?'Recording':'No answer').'</i>').'</span><span class="ks-r">'.($ok===true?l1_icon('ok').'Right':($ok===false?'Not yet'.(!empty($a['want'])?' · Answer: '.e((string)$a['want']):''):l1_icon('ear').'Please listen')).'</span>'.(!empty($a['audio'])?'<audio controls preload="none" src="?page=rc_audio&amp;id='.(int)$row['id'].'&amp;p='.$pn.'&amp;i='.$i.'"></audio>':'').'</li>';}
@@ -458,7 +458,7 @@ function rc_teacher_pupil(array $u):void{
 
 function rc_rules_view():void{
  $Q='<span class="rk-q2">teacher</span>';
- echo '<p class="crumb"><a href="?page=rcheck">Reading check</a>'.icon('chev').'<span>How BULIG decides</span></p><div class="hm-head"><div><span class="eyebrow">READING CHECK</span><h1>How BULIG decides the starting level</h1><p class="muted">From the BULIG Assessment and Grouping guide (L. M. P. Solijon), the BULIG module pre-tests and Phil-IRI. BULIG adds no pass marks of its own.</p></div></div>';
+ echo '<p class="crumb"><a href="?page=rcheck">Reading check</a>'.icon('chev').'<span>How BULIG Quest decides</span></p><div class="hm-head"><div><span class="eyebrow">READING CHECK</span><h1>How BULIG Quest decides the starting level</h1><p class="muted">From the BULIG Assessment and Grouping guide (L. M. P. Solijon), the BULIG Quest module pre-tests and Phil-IRI. BULIG Quest adds no pass marks of its own.</p></div></div>';
  echo '<section class="card"><h2>1 · The parts of the check</h2><div class="tablewrap"><table class="rk-tbl"><thead><tr><th>Part</th><th>Checks</th><th>Questions from</th><th>Passed when</th></tr></thead><tbody>'
   .'<tr><td>1 Talk and listen</td><td>Level 1 · Oral Language</td><td>Level 1 pre-test, 5 questions (recorded)</td><td>“Good” or better on the module rubric: 9 of 12 '.$Q.' <span class="rk-src">(Level 1 module rubric; you rate the recordings)</span></td></tr>'
   .'<tr><td>2 Sound games</td><td>Level 2A · Phonological Awareness</td><td>Level 2A pretests, one item from each of the 10 skills</td><td>80–100% correct (8 of 10) <span class="rk-src">(Level 2B module, Annex A: proficient)</span></td></tr>'
@@ -468,8 +468,8 @@ function rc_rules_view():void{
   .'<tr><td>6 Listen and learn words</td><td>Level 5 · Listening Comprehension and Vocabulary</td><td>The grade’s Level 5 pre-test (its first pages, about 30 points)</td><td>Phil-IRI comprehension Independent: 80–100% <span class="rk-src">(Phil-IRI; the module has no pass mark)</span></td></tr>'
   .'<tr><td>7 Read and understand</td><td>Level 6 · Graded Reading Comprehension</td><td>The grade’s Level 6 reading comprehension test (about 30 points)</td><td>Phil-IRI comprehension Independent: 80–100% <span class="rk-src">(Phil-IRI; the module has no pass mark)</span></td></tr>'
   .'</tbody></table></div><p class="muted">Grades 1–3 start at Part 1 and go up. Grades 4–6 start at Part 5 (the grade’s story, like Phil-IRI): Independent goes up to Parts 6 and 7; Instructional starts at Level 4; Frustration goes down to Parts 4, 3, 2 and 1. The first part not passed gives the starting level. All parts passed: Level 7. A part also stops after 5 wrong answers in a row (Level 2B module, Annex A: discontinue rule).</p>'
-  .'<p class="muted">Reading aloud (Parts 3, 4 and 5) is scored with the browser’s speech recognition and recorded. When BULIG cannot hear the reading (no internet, no microphone), those answers are not counted and the recording is kept for you. Part 1 is rated by BULIG with the module rubric from how much the pupil said. You never have to check anything; you can still listen and change the level.</p></section>';
- echo '<section class="card"><h2>2 · Checked against the official result</h2><div class="rk-rules"><div><h3>Grades 1–3 · CRLA</h3><table><tr><th>CRLA profile</th><th>BULIG level</th></tr><tr><td>Low / High Emerging</td><td>Level 1 or 2</td></tr><tr><td>Developing</td><td>Level 2 or 3</td></tr><tr><td>Transitioning</td><td>Level 3, 4 or 5</td></tr><tr><td>Grade Ready</td><td>Level 5 or 6</td></tr><tr><td>Advanced pupils</td><td>Level 7</td></tr></table></div><div><h3>Grades 4–6 · Phil-IRI</h3><table><tr><th>Phil-IRI level</th><th>BULIG level</th></tr><tr><td>Frustration</td><td>Level 1, 2 or 3</td></tr><tr><td>Instructional</td><td>Level 4 or 5</td></tr><tr><td>Independent</td><td>Level 5 or 6</td></tr><tr><td>Advanced pupils</td><td>Level 7</td></tr></table></div></div><p class="muted">Type each pupil’s BOSY CRLA or Phil-IRI result on their reading check page. If BULIG’s level is not in the matching row, the pupil shows “Please check”. The guide says the group is the official result plus the teacher’s observation, so you can always change the level.</p></section>';
+  .'<p class="muted">Reading aloud (Parts 3, 4 and 5) is scored with the browser’s speech recognition and recorded. When BULIG Quest cannot hear the reading (no internet, no microphone), those answers are not counted and the recording is kept for you. Part 1 is rated by BULIG Quest with the module rubric from how much the pupil said. You never have to check anything; you can still listen and change the level.</p></section>';
+ echo '<section class="card"><h2>2 · Checked against the official result</h2><div class="rk-rules"><div><h3>Grades 1–3 · CRLA</h3><table><tr><th>CRLA profile</th><th>BULIG Quest level</th></tr><tr><td>Low / High Emerging</td><td>Level 1 or 2</td></tr><tr><td>Developing</td><td>Level 2 or 3</td></tr><tr><td>Transitioning</td><td>Level 3, 4 or 5</td></tr><tr><td>Grade Ready</td><td>Level 5 or 6</td></tr><tr><td>Advanced pupils</td><td>Level 7</td></tr></table></div><div><h3>Grades 4–6 · Phil-IRI</h3><table><tr><th>Phil-IRI level</th><th>BULIG Quest level</th></tr><tr><td>Frustration</td><td>Level 1, 2 or 3</td></tr><tr><td>Instructional</td><td>Level 4 or 5</td></tr><tr><td>Independent</td><td>Level 5 or 6</td></tr><tr><td>Advanced pupils</td><td>Level 7</td></tr></table></div></div><p class="muted">Type each pupil’s BOSY CRLA or Phil-IRI result on their reading check page. If BULIG Quest’s level is not in the matching row, the pupil shows “Please check”. The guide says the group is the official result plus the teacher’s observation, so you can always change the level.</p></section>';
 }
 
 function rc_print_view(array $u):void{
@@ -479,7 +479,7 @@ function rc_print_view(array $u):void{
  foreach($list as $r){$row=$r['rc_id']?rc_row((int)$r['id']):null;$s=rc_state($row);[$cls,$txt]=rc_status($row,(int)$r['level_id']);$lv=(int)$r['level_id'];
   $parts=[];foreach($s['order']??[] as $p)$parts[]=rc_part_chip($p,$s['parts'][$p])[1];
   echo '<tr><td><b>'.e($r['name']).'</b><br><small>'.e($r['public_id']).'</small></td><td>'.(int)$r['grade_level'].'</td><td>'.e($parts?implode('; ',$parts):'Not taken yet').'</td><td>'.($lv?e(level_label($lv).' · '.rc_level_name($lv)):'—').'</td><td>'.e($row&&$row['official_result']?$row['official_tool'].': '.$row['official_result']:'—').'</td><td>'.e($txt).'</td></tr>';}
- echo '</tbody></table><p class="rk-src">BULIG reading check: module pre-tests and the BULIG Assessment and Grouping guide. Standard assessment results + teacher’s observation = BULIG grouping.</p></section>';
+ echo '</tbody></table><p class="rk-src">BULIG Quest reading check: module pre-tests and the BULIG Assessment and Grouping guide. Standard assessment results + teacher’s observation = BULIG Quest grouping.</p></section>';
 }
 
 /** Play a reading check recording (the pupil's teacher only). */
